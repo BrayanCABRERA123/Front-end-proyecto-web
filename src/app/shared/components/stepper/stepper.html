@@ -1,0 +1,23 @@
+<div class="stepper-container">
+
+  @for (step of steps; track step) {
+
+    <!-- Círculo numerado del paso -->
+    <div
+      class="step-circle"
+      [class.active]="isActive(step)"
+      [class.completed]="isCompleted(step)">
+      {{ step }}
+    </div>
+
+    <!-- Línea conectora entre círculos, no aparece después del último -->
+    @if (step < steps.length) {
+      <div
+        class="step-line"
+        [class.line-active]="isCompleted(step + 1) || isActive(step + 1)">
+      </div>
+    }
+
+  }
+
+</div>

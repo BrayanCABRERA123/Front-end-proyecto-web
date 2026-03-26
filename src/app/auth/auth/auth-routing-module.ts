@@ -1,14 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login';
-import { Register } from './pages/register/register';
-import { ForgotPassword } from './pages/forgot-password/forgot-password';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: Register },
-  { path: 'forgot-password', component: ForgotPassword },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  {
+    // Ruta del login — página principal de auth
+    path: '',
+    loadComponent: () =>
+      import('./pages/login/login')
+      .then(c => c.LoginComponent)
+  },
+  {
+    // Ruta de recuperar contraseña
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./pages/forgot-password/forgot-password')
+      .then(c => c.ForgotPasswordComponent)
+  },
+  {
+    // Ruta de registro
+    path: 'register',
+    loadComponent: () =>
+      import('./pages/register/register')
+      .then(c => c.RegisterComponent)
+  }
 ];
 
 @NgModule({
