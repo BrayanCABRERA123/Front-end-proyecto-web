@@ -1,10 +1,11 @@
-/* se quitan los espacios por defecto del navegador*/
+/* quitamos espacios raros del navegador */
 html, body {
   margin: 0;
   padding: 0;
 }
 
-/* Contenedor principal que centra todo */
+
+/* contenedor principal */
 .register-page {
   min-height: 100vh; 
   display: flex;
@@ -15,8 +16,7 @@ html, body {
 }
 
 
-/* TARJETA DEL FORMULARIO */
-
+/* tarjeta donde está todo el formulario */
 .register-card {
   width: 100%;      
   max-width: 380px;   
@@ -28,56 +28,59 @@ html, body {
 }
 
 
-/* HEADER (LOGO Y TÍTULOS) */
-
+/* parte de arriba, logo y textos */
 .register-header {
   text-align: center;
   margin-bottom: 25px;
 }
 
-/* Contenedor del logo */
-.logo-icon {
-  display: flex;
-  justify-content: center;
-}
 
-/* Imagen del logo */
-.logo-icon img {
-  width: 50px;         
-  height: auto;
-  object-fit: contain; 
+/* contenedor del logo y el titulo */
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; 
   margin-bottom: 10px;
 }
 
-/* Título principal */
-.register-header h1 {
-  font-size: 18px;
-  margin: 0;
-  font-weight: 600;
+/* logo */
+.logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
-/* Subtítulo */
-.register-header h2 {
+/* titulo principal */
+.brand h1 {
   font-size: 16px;
-  margin: 5px 0;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+
+/* subtitulo */
+.register-header h2 {
+  font-size: 15px;
+  margin: 4px 0;
   color: #444;
 }
 
-/* Texto pequeño */
+/* texto pequeño */
 .register-header p {
   font-size: 12px;
   color: #888;
+  margin-top: 4px;
 }
 
 
-/* FORMULARIO*/
-
-/* Cada campo */
+/* cada grupo del formulario */
 .form-group {
   margin-bottom: 18px;
 }
 
-/* Labels */
+/* labels */
 label {
   font-size: 12px;
   color: #555;
@@ -85,31 +88,33 @@ label {
   margin-bottom: 5px;
 }
 
-/* Contenedor del input + iconos */
+
+/* contenedor del input */
 .input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-/* Campo input */
+/* input */
 .input-wrapper input {
   width: 100%;
-  padding: 10px 40px 10px 35px; /* espacio para iconos */
+  padding: 10px 40px 10px 35px;
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 13px;
   outline: none;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
-/* Cuando doy clic */
+/* cuando hago clic en el input */
 .input-wrapper input:focus {
   border-color: #4cafef;
   box-shadow: 0 0 0 2px rgba(76, 175, 239, 0.2);
 }
 
-/* Icono izquierdo */
+
+/* iconos de la izquierda */
 .input-icon {
   position: absolute;
   left: 10px;
@@ -118,7 +123,8 @@ label {
   font-family: 'Material Icons';
 }
 
-/* Botón del ojito */
+
+/* boton del ojito */
 .toggle-btn {
   position: absolute;
   right: 10px;
@@ -129,26 +135,25 @@ label {
   align-items: center;
 }
 
-/* Icono del ojito */
+/* icono del ojo */
 .toggle-btn .material-icons {
   font-size: 20px;
   color: #777;
   transition: 0.2s;
 }
 
-/* Efecto cuando paso el mouse */
+/* cuando paso el mouse por el ojo */
 .toggle-btn:hover .material-icons {
   color: #333;
 }
 
 
-/* VALIDACIONES*/
-/* Input con error */
+/* cuando hay error en input */
 .input-error {
   border-color: #e53935 !important;
 }
 
-/* Mensaje de error */
+/* mensaje de error */
 .error-msg {
   color: #e53935;
   font-size: 11px;
@@ -156,13 +161,13 @@ label {
 }
 
 
-/* BOTÓN*/
+/* boton registrarse */
 .btn-register {
   width: 100%;
   padding: 11px;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(90deg, #2ec4b6, #2aa7a1); /* degradado */
+  background: linear-gradient(90deg, #2ec4b6, #2aa7a1);
   color: white;
   font-size: 14px;
   font-weight: 600;
@@ -170,33 +175,49 @@ label {
   transition: 0.3s;
 }
 
-/* Hover (cuando paso el mouse) */
+/* cuando paso el mouse */
 .btn-register:hover {
   background: linear-gradient(90deg, #26b3a5, #239b95);
 }
 
-/* Botón deshabilitado */
+/* cuando está deshabilitado */
 .btn-register:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
 
-/*  FOOTER*/
+/* parte de abajo (login) */
 .login-link {
   margin-top: 15px;
   font-size: 12px;
   text-align: center;
 }
 
-/* Link */
+/* link */
 .login-link a {
   color: #2aa7a1;
   text-decoration: none;
   font-weight: 600;
 }
 
-/* Hover del link */
+/* hover del link */
 .login-link a:hover {
   text-decoration: underline;
+}
+
+
+/* esto quita el ojo automático del navegador */
+
+/* edge viejo */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+/* chrome / edge nuevo */
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
 }
