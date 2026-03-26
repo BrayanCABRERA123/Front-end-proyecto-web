@@ -1,0 +1,43 @@
+<div class="step-container">
+
+  <!-- Ícono de escudo -->
+  <div class="step-icon">
+    <iconify-icon
+      icon="mdi:shield-check-outline"
+      style="color: #29AEA0; font-size: 24px;">
+    </iconify-icon>
+  </div>
+
+  <h2 class="step-title">Verificación</h2>
+  <p class="step-description">
+    Ingresa el código de 6 dígitos enviado a
+    <span class="email-highlight">{{ email }}</span>
+  </p>
+
+  <div class="code-inputs">
+    @for (digit of codeDigits; track $index) {
+      <input
+        #digitInput
+        type="text"
+        inputmode="numeric"
+        maxlength="1"
+        class="digit-input"
+        [value]="digit"
+        (input)="onDigitInput($index, $event)"
+        (keydown)="onKeyDown($index, $event)"/>
+    }
+  </div>
+
+  <a class="resend-link" href="#">
+    ¿No recibiste el código? Reenviar
+  </a>
+
+  <button class="btn-primary" (click)="onVerify()">
+    Verificar Código
+  </button>
+
+  <a class="back-link" href="#">
+    ← Volver a Iniciar Sesión
+  </a>
+
+</div>

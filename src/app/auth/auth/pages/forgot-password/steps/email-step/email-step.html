@@ -1,0 +1,44 @@
+<div class="step-container">
+
+  <!-- Ícono de sobre con fondo circular -->
+  <div class="step-icon">
+    <iconify-icon
+      icon="mdi:email-outline"
+      style="color: #29AEA0; font-size: 24px;">
+    </iconify-icon>
+  </div>
+
+  <h2 class="step-title">Recuperar Contraseña</h2>
+  <p class="step-description">
+    Ingresa tu correo para recibir un código de verificación
+  </p>
+
+  <div class="form-group">
+    <label class="form-label">Correo Electrónico</label>
+    <div class="input-wrapper">
+
+      <!-- Ícono dentro del input -->
+      <iconify-icon
+        class="input-icon"
+        icon="mdi:email-outline"
+        style="color: #67777E; font-size: 18px;">
+      </iconify-icon>
+
+      <input
+        type="email"
+        class="form-input"
+        placeholder="tu@email.com"
+        [(ngModel)]="email"/>
+
+    </div>
+  </div>
+
+  <button class="btn-primary" (click)="onSubmit()">
+    Enviar Código
+  </button>
+
+  <a class="back-link" href="#">
+    ← Volver a Iniciar Sesión
+  </a>
+
+</div>

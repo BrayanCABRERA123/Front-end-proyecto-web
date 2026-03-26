@@ -7,4 +7,5 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet],
   templateUrl: './app.html'
 })
-export class AppComponent { }
+// Cambiamos el nombre a App para que coincida con main.ts
+export class App { }
