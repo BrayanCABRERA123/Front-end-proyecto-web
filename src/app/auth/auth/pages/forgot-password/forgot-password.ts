@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 // Importamos los componentes compartidos
 import { AuthCardComponent } from '../../../../shared/components/auth-card/auth-card';
@@ -15,6 +16,7 @@ import { NewPasswordStepComponent } from './steps/new-password-step/new-password
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     AuthCardComponent,        // tarjeta blanca contenedora
     StepperComponent,         // indicador de pasos 1-2-3
     EmailStepComponent,       // paso 1

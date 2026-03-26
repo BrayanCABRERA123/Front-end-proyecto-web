@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmailStep } from './email-step';
+import { EmailStepComponent } from './email-step';
 
 describe('EmailStep', () => {
-  let component: EmailStep;
-  let fixture: ComponentFixture<EmailStep>;
+  let component: EmailStepComponent;
+  let fixture: ComponentFixture<EmailStepComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmailStep],
+      imports: [EmailStepComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EmailStep);
+    fixture = TestBed.createComponent(EmailStepComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

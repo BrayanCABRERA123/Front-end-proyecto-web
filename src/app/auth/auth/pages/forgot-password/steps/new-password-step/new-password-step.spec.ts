@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewPasswordStep } from './new-password-step';
+import { NewPasswordStepComponent } from './new-password-step';
 
 describe('NewPasswordStep', () => {
-  let component: NewPasswordStep;
-  let fixture: ComponentFixture<NewPasswordStep>;
+  let component: NewPasswordStepComponent;
+  let fixture: ComponentFixture<NewPasswordStepComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewPasswordStep],
+      imports: [NewPasswordStepComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NewPasswordStep);
+    fixture = TestBed.createComponent(NewPasswordStepComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

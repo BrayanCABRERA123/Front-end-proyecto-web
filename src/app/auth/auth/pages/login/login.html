@@ -16,13 +16,16 @@
             <label>Contraseña</label>
             <input type="password" placeholder="********">
 
-            <a class="forgot">¿Olvidaste tu contraseña?</a>
+            <a class="forgot" routerLink="/auth/forgot-password">
+                ¿Olvidaste tu contraseña?
+            </a>
 
             <button type="submit">Iniciar Sesión</button>
         </form>
 
         <p class="register">
-            ¿No tienes cuenta? <span>Regístrate</span>
+            ¿No tienes cuenta?
+            <span routerLink="/auth/register">Regístrate</span>
         </p>
 
     </div>

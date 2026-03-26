@@ -2,8 +2,6 @@ import { Component, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angula
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// Importamos iconify para que cargue los íconos
-import 'iconify-icon';
 
 @Component({
   selector: 'app-email-step',
