@@ -1,0 +1,149 @@
+<div class="register-page">
+  <div class="register-card">
+
+    <!-- HEADER -->
+    <div class="register-header">
+      <div class="logo-icon">
+        <img src="images/logo.png" alt="Logo Lavado Vehicular">
+      </div>
+      
+      <h1>Lavado Vehicular</h1>
+      <h2>Crear Cuenta</h2>
+      <p>Regístrate para empezar a reservar</p>
+    </div>
+
+    <!-- FORMULARIO -->
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <!-- NOMBRE -->
+      <div class="form-group">
+        <label>Nombre Completo</label>
+
+        <div class="input-wrapper">
+          <span class="input-icon material-icons">person</span>
+
+          <input
+            type="text"
+            formControlName="nombre"
+            placeholder="Juan Pérez"
+            [class.input-error]="f['nombre'].invalid && f['nombre'].touched">
+        </div>
+
+        <span class="error-msg"
+          *ngIf="f['nombre'].invalid && f['nombre'].touched">
+          Ingresa tu nombre completo (mínimo 3 caracteres)
+        </span>
+      </div>
+
+      <!-- CORREO -->
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+
+        <div class="input-wrapper">
+          <span class="input-icon material-icons">mail</span>
+
+          <input
+            type="email"
+            formControlName="correo"
+            placeholder="tu@email.com"
+            [class.input-error]="f['correo'].invalid && f['correo'].touched">
+        </div>
+
+        <span class="error-msg"
+          *ngIf="f['correo'].invalid && f['correo'].touched">
+          Ingresa un correo válido
+        </span>
+      </div>
+
+      <!-- TELÉFONO -->
+      <div class="form-group">
+        <label>Teléfono</label>
+
+        <div class="input-wrapper">
+          <span class="input-icon material-icons">call</span>
+
+          <input
+            type="tel"
+            formControlName="telefono"
+            placeholder="1234567890"
+            [class.input-error]="f['telefono'].invalid && f['telefono'].touched">
+        </div>
+
+        <span class="error-msg"
+          *ngIf="f['telefono'].invalid && f['telefono'].touched">
+          Ingresa un teléfono de 10 dígitos
+        </span>
+      </div>
+
+      <!-- CONTRASEÑA -->
+      <div class="form-group">
+        <label>Contraseña</label>
+
+        <div class="input-wrapper">
+          <span class="input-icon material-icons">lock</span>
+
+          <input
+            [type]="mostrarContrasena ? 'text' : 'password'"
+            formControlName="contrasena"
+            placeholder="Mínimo 8 caracteres"
+            [class.input-error]="f['contrasena'].invalid && f['contrasena'].touched">
+
+          <!-- OJO -->
+          <button type="button" class="toggle-btn" (click)="toggleContrasena()">
+            <span class="material-icons" *ngIf="!mostrarContrasena">visibility</span>
+            <span class="material-icons" *ngIf="mostrarContrasena">visibility_off</span>
+          </button>
+        </div>
+
+        <span class="error-msg"
+          *ngIf="f['contrasena'].invalid && f['contrasena'].touched">
+          La contraseña debe tener mínimo 8 caracteres
+        </span>
+      </div>
+
+      <!-- CONFIRMAR CONTRASEÑA -->
+      <div class="form-group">
+        <label>Confirmar Contraseña</label>
+
+        <div class="input-wrapper">
+          <span class="input-icon material-icons">lock</span>
+
+          <input
+            [type]="mostrarConfirmar ? 'text' : 'password'"
+            formControlName="confirmar"
+            placeholder="Repite tu contraseña"
+            [class.input-error]="f['confirmar'].touched && !contrasenasCoinciden">
+
+          <!-- OJO -->
+          <button type="button" class="toggle-btn" (click)="toggleConfirmar()">
+            <span class="material-icons" *ngIf="!mostrarConfirmar">visibility</span>
+            <span class="material-icons" *ngIf="mostrarConfirmar">visibility_off</span>
+          </button>
+        </div>
+
+        <span class="error-msg"
+          *ngIf="f['confirmar'].touched && !contrasenasCoinciden">
+          Las contraseñas no coinciden
+        </span>
+      </div>
+
+      <!-- BOTÓN -->
+      <button
+        type="submit"
+        class="btn-register"
+        [disabled]="registerForm.invalid || !contrasenasCoinciden || cargando">
+
+        <span *ngIf="!cargando">Registrarse</span>
+        <span *ngIf="cargando">Registrando...</span>
+      </button>
+
+    </form>
+
+    <!-- FOOTER -->
+    <p class="login-link">
+      ¿Ya tienes cuenta?
+      <a routerLink="/auth/login">Inicia sesión</a>
+    </p>
+
+  </div>
+</div>

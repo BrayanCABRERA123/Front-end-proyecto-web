@@ -20,7 +20,7 @@ const routes: Routes = [
     // Ruta de registro
     path: 'register',
     loadComponent: () =>
-      import('./pages/register/register')
+      import('./pages/register/register.component')
       .then(c => c.RegisterComponent)
   }
 ];
