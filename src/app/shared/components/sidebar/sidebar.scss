@@ -1,0 +1,123 @@
+.sidebar {
+  width: 200px;
+  min-height: 100vh;
+  background-color: #1a2e2a;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+}
+
+// Logo
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 24px;
+  color: #1D9E75;
+  font-weight: 600;
+  font-size: 15px;
+
+  .logo-img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+// Info usuario
+.sidebar-usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 12px;
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #1D9E75;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .nombre {
+    font-size: 13px;
+    font-weight: 500;
+    color: white;
+    margin: 0;
+  }
+
+  .correo {
+    font-size: 11px;
+    color: #888;
+    margin: 0;
+  }
+}
+
+// Menú
+.sidebar-menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: #aaa;
+    text-decoration: none;
+    font-size: 13px;
+    transition: background 0.2s, color 0.2s;
+    margin-bottom: 2px;
+
+    &:hover {
+      background: rgba(255,255,255,0.06);
+      color: white;
+    }
+
+    // cuando la ruta está activa se pone verde
+    &.activo {
+      background: rgba(29, 158, 117, 0.15);
+      color: #1D9E75;
+    }
+
+    .menu-icono {
+      font-size: 15px;
+      width: 20px;
+      text-align: center;
+    }
+  }
+}
+
+// Cerrar sesión
+.sidebar-footer {
+  padding: 16px 20px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+
+  .btn-cerrar {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    transition: color 0.2s;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
