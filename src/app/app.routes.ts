@@ -2,16 +2,23 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    // Ruta raíz redirige al login
+    // ruta raíz redirige al login
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
-    // Carga el módulo de auth
+    // carga el módulo de auth
     path: 'auth',
     loadChildren: () =>
       import('./auth/auth/auth-module')
       .then(m => m.AuthModule)
+  },
+  {
+    // carga el módulo del cliente
+    path: 'cliente',
+    loadChildren: () =>
+      import('./modules/cliente/cliente/cliente-module')
+      .then(m => m.ClienteModule)
   }
 ];
