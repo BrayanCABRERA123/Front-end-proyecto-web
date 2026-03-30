@@ -1,41 +1,47 @@
+/* contenedor principal del sidebar */
 .sidebar {
-  width: 200px;
+  width: 240px;
   min-height: 100vh;
   background-color: #1a2e2a;
   display: flex;
   flex-direction: column;
   padding: 24px 0;
+  position: sticky;
+  top: 0;
 }
 
-// Logo
+
+/* LOGO */
 .sidebar-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px; /* espacio entre logo y texto */
   padding: 0 20px 24px;
   color: #1D9E75;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 16px;
 
   .logo-img {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
   }
 }
 
-// Info usuario
+
+/* USUARIO */
 .sidebar-usuario {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 16px 20px;
   border-top: 1px solid rgba(255,255,255,0.08);
   border-bottom: 1px solid rgba(255,255,255,0.08);
   margin-bottom: 12px;
 
   .avatar {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     background-color: #1D9E75;
     color: white;
@@ -44,7 +50,11 @@
     justify-content: center;
     font-size: 13px;
     font-weight: 600;
-    flex-shrink: 0;
+  }
+
+  .usuario-info {
+    display: flex;
+    flex-direction: column;
   }
 
   .nombre {
@@ -61,50 +71,54 @@
   }
 }
 
-// Menú
+
+/* MENU */
 .sidebar-menu {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 0 12px;
+}
 
-  .menu-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    color: #aaa;
-    text-decoration: none;
-    font-size: 13px;
-    transition: background 0.2s, color 0.2s;
-    margin-bottom: 2px;
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #aaa;
+  text-decoration: none;
+  font-size: 13px;
+  transition: 0.2s;
+  margin-bottom: 4px;
 
-    &:hover {
-      background: rgba(255,255,255,0.06);
-      color: white;
-    }
+  /* cuando paso el mouse */
+  &:hover {
+    background: rgba(255,255,255,0.06);
+    color: white;
+  }
 
-    // cuando la ruta está activa se pone verde
-    &.activo {
-      background: rgba(29, 158, 117, 0.15);
-      color: #1D9E75;
-    }
+  /* cuando está activo */
+  &.activo {
+    background: rgba(29, 158, 117, 0.2);
+    color: #1D9E75;
+    font-weight: 500;
+  }
 
-    .menu-icono {
-      font-size: 15px;
-      width: 20px;
-      text-align: center;
-    }
+  .menu-icono {
+    font-size: 18px;
+    width: 22px;
+    text-align: center;
   }
 }
 
-// Cerrar sesión
+/* FOOTER */ 
 .sidebar-footer {
   padding: 16px 20px 0;
   border-top: 1px solid rgba(255,255,255,0.08);
 
   .btn-cerrar {
+    width: 100%;
     background: none;
     border: none;
     color: #aaa;
@@ -113,8 +127,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 0;
-    transition: color 0.2s;
+    padding: 10px 0;
+    transition: 0.2s;
 
     &:hover {
       color: white;

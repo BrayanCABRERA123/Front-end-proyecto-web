@@ -2,7 +2,7 @@
 
   <!-- Logo -->
   <div class="sidebar-logo">
-    <img src="/images/logo.png" alt="logo" class="logo-img">
+    <img src="images/logo.png" alt="logo" class="logo-img">
     <span>Lavado Vehicular</span>
   </div>
 
@@ -17,14 +17,17 @@
 
   <!-- Menú de navegación -->
   <nav class="sidebar-menu">
-    
-      *ngFor="let item of menuItems"
-      [routerLink]="item.ruta"
-      routerLinkActive="activo"
-      class="menu-item">
-      <mat-icon class="menu-icono">{{ item.icono }}</mat-icon>
-      <span class="menu-label">{{ item.label }}</span>
-    </a>
+
+  <a
+    *ngFor="let item of menuItems"
+    [routerLink]="item.ruta"
+    routerLinkActive="activo"
+    class="menu-item"
+  >
+    <mat-icon class="menu-icono">{{ item.icono }}</mat-icon>
+    <span class="menu-label">{{ item.label }}</span>
+  </a>
+
   </nav>
 
   <!-- Botón cerrar sesión -->
