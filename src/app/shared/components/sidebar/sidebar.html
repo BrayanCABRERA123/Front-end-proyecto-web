@@ -22,6 +22,7 @@
     *ngFor="let item of menuItems"
     [routerLink]="item.ruta"
     routerLinkActive="activo"
+    [routerLinkActiveOptions]="{ exact: true }"
     class="menu-item"
   >
     <mat-icon class="menu-icono">{{ item.icono }}</mat-icon>
