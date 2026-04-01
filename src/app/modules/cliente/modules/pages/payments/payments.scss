@@ -1,0 +1,91 @@
+/* CONTENEDOR */
+.payments-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f4f6f8;
+}
+
+/* SIDEBAR */
+app-sidebar {
+    width: 260px;
+}
+
+/* CONTENIDO */
+.payments-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px;
+    margin-top: 60px;
+}
+
+/* CARD */
+.payments-card {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* TITULO */
+.payments-card h2 {
+    margin-bottom: 5px;
+}
+
+/* SUBTITULO */
+.subtitle {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* ITEM */
+.payment-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 15px;
+    border-radius: 12px;
+    background: #fafafa;
+    margin-bottom: 12px;
+
+    transition: 0.2s;
+}
+
+/* HOVER */
+.payment-item:hover {
+    background: #f0f0f0;
+}
+
+/* ICONO */
+.icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #e6f9f7;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-box mat-icon {
+    color: #2ec4b6;
+}
+
+/* TEXTO */
+.info .title {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+}
+
+.info .desc {
+    font-size: 12px;
+    color: #777;
+    margin: 2px 0 0;
+}

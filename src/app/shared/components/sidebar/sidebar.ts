@@ -28,7 +28,7 @@ export class SidebarComponent {
     { icono: 'person',           label: 'Perfil',           ruta: '/cliente/profile' },
     { icono: 'local_car_wash',   label: 'Reservar Lavado',  ruta: '/cliente/reservar' },
     { icono: 'notifications',    label: 'Notificaciones',   ruta: '/cliente/notificaciones' },
-    { icono: 'credit_card',      label: 'Métodos de Pago',  ruta: '/cliente/pagos' },
+    { icono: 'credit_card',      label: 'Métodos de Pago',  ruta: '/cliente/payments' },
     { icono: 'history',          label: 'Historial',        ruta: '/cliente/historial' },
     { icono: 'star_outline',     label: 'Calificaciones',   ruta: '/cliente/calificaciones' },
     { icono: 'settings',         label: 'Configuración',    ruta: '/cliente/configuracion' },
