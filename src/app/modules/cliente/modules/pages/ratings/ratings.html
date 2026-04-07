@@ -1,0 +1,35 @@
+<div class="ratings-container">
+
+    <app-sidebar></app-sidebar>
+
+    <div class="ratings-content">
+
+        <h2>Calificar Servicio</h2>
+        <p class="subtitle">Tu opinión nos ayuda a mejorar</p>
+
+        <div class="card ratings-card">
+
+            <p class="question">¿Cómo fue tu experiencia?</p>
+
+            <div class="stars">
+                <mat-icon *ngFor="let star of [1,2,3,4,5]" (click)="calificar(star)" [class.active]="star <= rating">
+                    star
+                </mat-icon>
+            </div>
+
+            <!-- COMENTARIO -->
+            <div class="form-group">
+                <label>Comentarios (opcional)</label>
+                <textarea placeholder="Cuéntanos más sobre tu experiencia..."></textarea>
+            </div>
+
+            <!-- BOTON -->
+            <button class="btn-submit">
+                Enviar Calificación
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
