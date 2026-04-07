@@ -30,7 +30,7 @@ export class SidebarComponent {
     { icono: 'notifications',    label: 'Notificaciones',   ruta: '/cliente/notificaciones' },
     { icono: 'credit_card',      label: 'Métodos de Pago',  ruta: '/cliente/payments' },
     { icono: 'history',          label: 'Historial',        ruta: '/cliente/historial' },
-    { icono: 'star_outline',     label: 'Calificaciones',   ruta: '/cliente/calificaciones' },
+    { icono: 'star_outline',     label: 'Calificaciones',   ruta: '/cliente/ratings' },
     { icono: 'settings',         label: 'Configuración',    ruta: '/cliente/configuracion' },
   ];
 

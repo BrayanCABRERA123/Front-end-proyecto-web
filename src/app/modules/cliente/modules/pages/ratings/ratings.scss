@@ -1,0 +1,119 @@
+.ratings-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f4f6f8;
+}
+
+app-sidebar {
+    width: 260px;
+}
+
+/* CONTENIDO */
+.ratings-content {
+    flex: 1;
+    text-align: center;
+    padding-top: 60px;
+}
+
+/* TITULOS */
+.ratings-content h2 {
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+/* CARD */
+.ratings-card {
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 50px;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* PREGUNTA */
+.question {
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+/* ESTRELLAS */
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.stars mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: #cfd8dc;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    /* Alinea el contenido interno */
+    align-items: center;
+    /* Centra verticalmente */
+    justify-content: center;
+    /* Centra horizontalmente */
+}
+
+/* ACTIVAS */
+.stars mat-icon.active {
+    color: #2ec4b6;
+}
+
+/* HOVER */
+.stars mat-icon:hover {
+    transform: scale(1.2);
+}
+
+/* FORM */
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.form-group label {
+    font-size: 13px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 13px;
+    resize: none;
+    outline: none;
+    background: #fafafa;
+}
+
+/* BOTON */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(90deg, #2ec4b6, #7fd1c8);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-submit:hover {
+    opacity: 0.9;
+}
