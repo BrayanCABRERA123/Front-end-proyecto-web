@@ -2,23 +2,32 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    // ruta raíz redirige al login
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
-    // carga el módulo de auth
     path: 'auth',
     loadChildren: () =>
-      import('./auth/auth/auth-module')
-      .then(m => m.AuthModule)
+      import('./features/auth/auth-module')
+        .then(m => m.AuthModule)
   },
   {
-    // carga el módulo del cliente
     path: 'cliente',
     loadChildren: () =>
-      import('./modules/cliente/cliente/cliente-module')
-      .then(m => m.ClienteModule)
+      import('./features/cliente/cliente-module')
+        .then(m => m.ClienteModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./features/admin/admin-module')
+        .then(m => m.AdminModule)
+  },
+  {
+    path: 'operario',
+    loadChildren: () =>
+      import('./features/operario/operario-module')
+        .then(m => m.OperarioModule)
   }
 ];
