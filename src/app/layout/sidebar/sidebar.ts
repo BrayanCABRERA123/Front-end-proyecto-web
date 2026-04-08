@@ -26,7 +26,7 @@ export class SidebarComponent {
   // lista de opciones del menú con iconos de Material
   menuItems = [
     { icono: 'person',           label: 'Perfil',           ruta: '/cliente/profile' },
-    { icono: 'local_car_wash',   label: 'Reservar Lavado',  ruta: '/cliente/reservar' },
+    { icono: 'local_car_wash',   label: 'Reservar Lavado',  ruta: '/cliente/reserve' },
     { icono: 'credit_card',      label: 'Métodos de Pago',  ruta: '/cliente/payments' },
     { icono: 'notifications',    label: 'Notificaciones',   ruta: '/cliente/notificaciones' },
     { icono: 'history',          label: 'Historial',        ruta: '/cliente/historial' },

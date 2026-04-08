@@ -1,0 +1,253 @@
+// tarjeta blanca contenedora
+.form-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin: 0 0 32px 150px;
+}
+
+// fila con 2 elementos lado a lado
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+// grupo de label + input
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+// label del campo
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #131C20;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  // ícono pequeño junto al label
+  .label-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: #67777E;
+  }
+}
+
+// contenedor input con ícono
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  // ícono izquierdo del input
+  .input-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 18px;
+    color: #67777E;
+    pointer-events: none;
+  }
+}
+
+// estilo base del input
+.form-input {
+  width: 100%;
+  padding: 11px 12px 11px 40px;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #131C20;
+  background-color: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: #29AEA0;
+  }
+
+  &::placeholder {
+    color: #67777E;
+  }
+}
+
+// input de hora sin ícono izquierdo
+.time-input {
+  padding-left: 12px;
+}
+
+// contenedor select con ícono
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  // ícono flecha derecho
+  .select-icon {
+    position: absolute;
+    right: 12px;
+    font-size: 20px;
+    color: #67777E;
+    pointer-events: none;
+  }
+}
+
+// estilo del select
+.form-select {
+  width: 100%;
+  padding: 11px 40px 11px 12px;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #131C20;
+  background-color: #ffffff;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: #29AEA0;
+  }
+}
+
+// select de operario con margen superior
+.operator-select {
+  margin-top: 8px;
+}
+
+// opción de radio personalizada
+.radio-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+// círculo del radio button
+.radio-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #DCE5E4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: border-color 0.2s ease;
+
+  // círculo seleccionado
+  &.selected {
+    border-color: #29AEA0;
+  }
+}
+
+// punto interior del radio seleccionado
+.radio-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #29AEA0;
+}
+
+// contenido del radio con descripción
+.radio-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+// texto del radio
+.radio-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #131C20;
+}
+
+// descripción pequeña del radio
+.radio-description {
+  font-size: 12px;
+  color: #67777E;
+}
+
+// contenedor de opciones de pago
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+// cada opción de pago
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  // borde teal cuando está seleccionado
+  &.selected {
+    border-color: #29AEA0;
+  }
+}
+
+// ícono del método de pago
+.payment-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background-color: #E0EBEA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    color: #29AEA0;
+    font-size: 20px;
+  }
+}
+
+// nombre del método de pago
+.payment-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #131C20;
+}
+
+// botón principal
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background-color: #29AEA0;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.2s ease;
+  margin-top: 8px;
+
+  &:hover {
+    background-color: #229990;
+  }
+}

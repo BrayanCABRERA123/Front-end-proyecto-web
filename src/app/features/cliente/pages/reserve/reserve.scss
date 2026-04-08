@@ -1,0 +1,28 @@
+// Contenedor que pone sidebar y contenido en fila
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #F9FBFB;
+}
+
+// Área de contenido derecho
+.main-content {
+  flex: 1;
+  padding: 40px 48px;
+  overflow-y: auto;
+}
+
+// Título principal
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #131C20;
+  margin: 0 0 18px 400px;
+}
+
+// Subtítulo debajo del título
+.page-subtitle {
+  font-size: 14px;
+  color: #67777E;
+  margin: 0 0 32px 370px;
+}
