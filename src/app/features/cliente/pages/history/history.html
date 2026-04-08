@@ -1,0 +1,104 @@
+<!-- Contenedor principal con sidebar y contenido -->
+<div class="page-container">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <div class="main-content">
+
+    <!-- Tarjeta de filtros -->
+    <div class="filters-card">
+
+      <!-- Fila de filtros de estado -->
+      <div class="filters-row">
+        <span class="filter-label">Filtros:</span>
+
+        <!-- Radio: Todos -->
+        <label class="radio-filter">
+          <input
+            type="radio"
+            name="filtro"
+            value="todos"
+            [(ngModel)]="filtroActivo"/>
+          Todos
+        </label>
+
+        <!-- Radio: Pagados -->
+        <label class="radio-filter">
+          <input
+            type="radio"
+            name="filtro"
+            value="pagados"
+            [(ngModel)]="filtroActivo"/>
+          Pagados
+        </label>
+
+        <!-- Radio: Pendientes de pagar -->
+        <label class="radio-filter">
+          <input
+            type="radio"
+            name="filtro"
+            value="pendientes"
+            [(ngModel)]="filtroActivo"/>
+          Pendientes de pagar
+        </label>
+      </div>
+
+      <!-- Fila de fechas -->
+      <div class="dates-row">
+        <span class="filter-label">Fecha:</span>
+
+        <div class="date-group">
+          <span class="date-label">Desde:</span>
+          <div class="date-input-wrapper">
+            <input
+              type="date"
+              class="date-input"
+              [(ngModel)]="fechaDesde"/>
+          </div>
+        </div>
+
+        <div class="date-group">
+          <span class="date-label">Hasta:</span>
+          <div class="date-input-wrapper">
+            <input
+              type="date"
+              class="date-input"
+              [(ngModel)]="fechaHasta"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscador -->
+      <div class="search-row">
+        <span class="filter-label">Buscar por dirección, servicio u operario</span>
+        <div class="search-input-wrapper">
+          <input
+            type="text"
+            class="search-input"
+            [(ngModel)]="busqueda"/>
+          <mat-icon class="search-icon">search</mat-icon>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Lista de servicios filtrados -->
+    <div class="history-list">
+      @for (servicio of serviciosFiltrados; track servicio.id) {
+        <app-history-card [servicio]="servicio"></app-history-card>
+      }
+
+      <!-- Mensaje cuando no hay resultados -->
+      @if (serviciosFiltrados.length === 0) {
+        <div class="empty-state">
+          <mat-icon>search_off</mat-icon>
+          <p>No se encontraron servicios</p>
+        </div>
+      }
+    </div>
+
+  </div>
+
+</div>

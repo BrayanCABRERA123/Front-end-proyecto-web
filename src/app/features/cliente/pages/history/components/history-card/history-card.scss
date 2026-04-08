@@ -1,0 +1,177 @@
+// tarjeta contenedora de cada servicio
+.history-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin:  0 80px 16px 80px;
+}
+
+// fila superior con ícono, título y precio
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// lado izquierdo del header
+.card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// ícono de estado
+.status-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+
+  // verde si está pagado
+  &.pagado {
+    color: #29AEA0;
+  }
+
+  // rojo si está pendiente
+  &.pendiente {
+    color: #E53935;
+  }
+}
+
+// grupo de título y fecha
+.card-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+// título del servicio
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #131C20;
+}
+
+// fecha del servicio
+.card-date {
+  font-size: 13px;
+  color: #67777E;
+}
+
+// precio del servicio
+.card-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #131C20;
+}
+
+// cuerpo con detalles y botones
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+// columna de detalles
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+// cada línea de detalle
+.detail-item {
+  font-size: 14px;
+  color: #131C20;
+  margin: 0;
+}
+
+// texto en negrita del label
+.detail-label {
+  font-weight: 600;
+}
+
+// columna de botones
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+// botón pagado — teal
+.btn-pagado {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: #29AEA0;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// botón pendiente — rojo
+.btn-pendiente {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: #E53935;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// botón calificar servicio — outline teal
+.btn-calificar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #29AEA0;
+  border: 1.5px solid #29AEA0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.2s ease;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: #29AEA0;
+    color: #ffffff;
+  }
+}

@@ -1,0 +1,185 @@
+// contenedor principal con sidebar y contenido en fila
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #F9FBFB;
+}
+
+// área de contenido derecho
+.main-content {
+  flex: 1;
+  padding: 40px 48px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// tarjeta de filtros
+.filters-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  margin:  0 80px 16px 80px;
+}
+
+// fila de filtros de estado
+.filters-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+// texto "Filtros:" o "Fecha:"
+.filter-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #131C20;
+}
+
+// cada opción de radio
+.radio-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #131C20;
+  cursor: pointer;
+
+  input[type="radio"] {
+    accent-color: #29AEA0;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+}
+
+// fila de fechas
+.dates-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+// grupo desde/hasta
+.date-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// texto "Desde:" o "Hasta:"
+.date-label {
+  font-size: 14px;
+  color: #131C20;
+  font-weight: 500;
+}
+
+// contenedor input fecha con ícono
+.date-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .date-icon {
+    position: absolute;
+    right: 10px;
+    font-size: 18px;
+    color: #67777E;
+    pointer-events: none;
+  }
+}
+
+// input de fecha
+.date-input {
+  padding: 8px 36px 8px 12px;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #131C20;
+  background-color: #ffffff;
+  outline: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: border-color 0.2s ease;
+  width: 150px;
+
+  &:focus {
+    border-color: #29AEA0;
+  }
+}
+
+// fila del buscador
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+// contenedor input buscador con ícono
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .search-icon {
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    color: #67777E;
+    pointer-events: none;
+  }
+}
+
+// input del buscador
+.search-input {
+  padding: 8px 36px 8px 12px;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #131C20;
+  background-color: #ffffff;
+  outline: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: border-color 0.2s ease;
+  width: 220px;
+
+  &:focus {
+    border-color: #29AEA0;
+  }
+
+  &::placeholder {
+    color: #67777E;
+  }
+}
+
+// lista de cards de historial
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// estado vacío cuando no hay resultados
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px;
+  color: #67777E;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+
+  p {
+    font-size: 16px;
+    margin: 0;
+  }
+}

@@ -1,0 +1,96 @@
+<!-- Tarjeta de cada servicio del historial -->
+<div class="history-card">
+
+  <!-- Fila superior: ícono + título + precio -->
+  <div class="card-header">
+    <div class="card-header-left">
+
+      <!-- Ícono de estado — verde si pagado, rojo si pendiente -->
+      <mat-icon
+        class="status-icon"
+        [class.pagado]="servicio.pagado"
+        [class.pendiente]="!servicio.pagado">
+        check_circle
+      </mat-icon>
+
+      <!-- Título y fecha -->
+      <div class="card-title-group">
+        <span class="card-title">{{ servicio.titulo }}</span>
+        <span class="card-date">{{ servicio.fecha }}</span>
+      </div>
+
+    </div>
+
+    <!-- Precio -->
+    <span class="card-price">${{ servicio.precio }}</span>
+  </div>
+
+  <!-- Contenido: detalles del servicio -->
+  <div class="card-body">
+
+    <div class="card-details">
+
+      <!-- Dirección -->
+      <p class="detail-item">
+        <span class="detail-label">Dirección:</span>
+        {{ servicio.direccion }}
+      </p>
+
+      <!-- Tipo de servicio -->
+      <p class="detail-item">
+        <span class="detail-label">Tipo de servicio:</span>
+        {{ servicio.tipoServicio }}
+      </p>
+
+      <!-- Servicios extra -->
+      <p class="detail-item">
+        <span class="detail-label">Servicios extra:</span>
+        {{ servicio.serviciosExtra }}
+      </p>
+
+      <!-- Asignación de operario -->
+      <p class="detail-item">
+        <span class="detail-label">Asignación de operario:</span>
+        {{ servicio.asignacion }}
+      </p>
+
+      <!-- Estado -->
+      <p class="detail-item">
+        <span class="detail-label">Estado:</span>
+        {{ servicio.estado }}
+      </p>
+
+    </div>
+
+    <!-- Botones del lado derecho -->
+    <div class="card-actions">
+
+      <!-- Botón Pagado — solo si está pagado -->
+      @if (servicio.pagado) {
+        <button class="btn-pagado">
+          Pagado
+          <mat-icon>check</mat-icon>
+        </button>
+      }
+
+      <!-- Botón Pendiente — solo si está pendiente -->
+      @if (!servicio.pagado) {
+        <button class="btn-pendiente">
+          Pendiente
+          <mat-icon>schedule</mat-icon>
+        </button>
+      }
+
+      <!-- Botón Calificar Servicio — solo si está pagado -->
+      @if (servicio.pagado) {
+        <button class="btn-calificar">
+          Calificar Servicio
+          <mat-icon>star_outline</mat-icon>
+        </button>
+      }
+
+    </div>
+
+  </div>
+
+</div>
