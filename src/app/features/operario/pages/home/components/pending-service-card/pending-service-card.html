@@ -1,0 +1,51 @@
+<!-- Card de cada reserva pendiente -->
+<div class="service-card">
+
+  <!-- Fila principal con info y acciones -->
+  <div class="card-content">
+
+    <!-- Info del servicio -->
+    <div class="service-info">
+
+      <!-- Título y fecha -->
+      <p class="service-title">{{ reserva.titulo }}</p>
+      <p class="service-date">{{ reserva.fecha }}</p>
+
+      <!-- Dirección y cliente -->
+      <p class="service-detail">
+        {{ reserva.direccion }}
+        <span class="detail-separator"> — </span>
+        {{ reserva.cliente }}
+      </p>
+
+    </div>
+
+    <!-- Acciones: estado + botones -->
+    <div class="card-actions">
+
+      <!-- Badge de estado -->
+      <span
+        class="estado-badge"
+        [class.confirmado]="reserva.estadoColor === 'confirmado'"
+        [class.pendiente]="reserva.estadoColor === 'pendiente'">
+        <mat-icon class="badge-icon">
+          {{ reserva.estadoColor === 'confirmado' ? 'check_circle' : 'schedule' }}
+        </mat-icon>
+        {{ reserva.estado }}
+      </span>
+
+      <!-- Botón iniciar -->
+      <button class="btn-iniciar">
+        Iniciar
+      </button>
+
+      <!-- Botón ver detalles -->
+      <button class="btn-ver">
+        <mat-icon>visibility</mat-icon>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
