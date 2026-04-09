@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
-// para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
-// importamos el sidebar que creamos
-import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
-// iconos de Angular Material
+// importamos el sidebar del operario
+import { SidebarOperarioComponent } from '../../../../layout/sidebar-operario/sidebar-operario';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, MatIconModule],
+  imports: [
+      CommonModule,
+      SidebarOperarioComponent,
+      MatIconModule
+    ],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
   
