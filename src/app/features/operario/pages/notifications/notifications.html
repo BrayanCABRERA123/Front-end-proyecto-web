@@ -1,0 +1,90 @@
+<div class="notifications-container">
+
+    <app-sidebar-operario></app-sidebar-operario>
+
+    <div class="content">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1>Notificaciones</h1>
+            <p>
+                Aquí puedes ver las notificaciones importantes relacionadas con tus servicios asignados,
+                cambios de estado y comunicaciones del sistema.
+            </p>
+        </div>
+
+        <!--filtro-->
+
+        <div class="filters-card">
+            <p class="filters-title">Filtros de búsqueda</p>
+        
+            <div class="filters-row">
+        
+                <div class="filter-group">
+                    <label class="filter-label">Filtrar por fecha</label>
+                    <div class="date-input-wrapper">
+                        <input type="date" class="filter-input" [(ngModel)]="filtroFecha" />
+                    </div>
+                </div>
+        
+                
+        
+                <div class="filter-group">
+                    <label class="filter-label">Buscar por servicio</label>
+                    <div class="select-wrapper">
+                        <input type="text" class="filter-select" placeholder="Buscar..." [(ngModel)]="filtroVehiculo" />
+                        <mat-icon class="select-icon">search</mat-icon>
+                    </div>
+                </div>
+        
+                <div class="filter-actions">
+                    <button class="btn-reset">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+        
+                    <button class="btn-filter">
+                        <mat-icon>search</mat-icon>
+                        Filtrar
+                    </button>
+                </div>
+        
+            </div>
+        </div>
+
+        <!-- LISTA -->
+        <div class="list">
+
+            <div class="item" *ngFor="let n of notifications">
+
+                <!-- IZQUIERDA -->
+                <div class="left">
+                    <mat-icon>{{ n.icon }}</mat-icon>
+
+                    <div>
+                        <p class="title">{{ n.title }}</p>
+                        <p class="desc">{{ n.desc }}</p>
+
+                        <span class="badge" [ngClass]="{ 'read': n.read }">
+                            {{ n.read ? 'Leído' : 'No leído' }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- DERECHA -->
+                <div class="right">
+                    <span class="date">{{ n.date }}</span>
+
+                    <button class="btn-detail">
+                        <mat-icon>visibility</mat-icon>
+                        Ver detalle
+                    </button>
+
+                    <mat-icon class="delete">delete</mat-icon>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

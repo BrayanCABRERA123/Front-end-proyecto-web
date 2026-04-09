@@ -5,13 +5,15 @@ import { TasksComponent } from './pages/tasks/tasks';
 import { HomeComponent } from './pages/home/home';
 import { ProfileComponent } from './pages/profile/profile';
 import { AssignedServicesComponent } from './pages/assigned-services/assigned-services';
+import { notificationsComponent } from '../operario/pages/notifications/notifications';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   // ruta para tareas
   { path: 'tasks', component: TasksComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'assigned-services', component: AssignedServicesComponent }
+  { path: 'assigned-services', component: AssignedServicesComponent },
+  { path: 'notifications', component: notificationsComponent }
 ];
 
 @NgModule({
