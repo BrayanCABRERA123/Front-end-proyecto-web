@@ -1,0 +1,60 @@
+<!-- Tarjeta contenedora de la tabla -->
+<div class="table-card">
+  <table class="service-table">
+
+    <!-- Encabezados de la tabla -->
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>TIPO DE SERVICIO</th>
+        <th>UBICACIÓN</th>
+        <th>FECHA Y HORA</th>
+        <th>VEHÍCULO</th>
+        <th>CLIENTE</th>
+        <th>ESTADO</th>
+      </tr>
+    </thead>
+
+    <!-- Filas de la tabla -->
+    <tbody>
+      @for (servicio of servicios; track servicio.id) {
+        <tr
+          class="table-row"
+          [class.selected]="servicioSeleccionado?.id === servicio.id"
+          (click)="onSelectService(servicio)">
+
+          <!-- ID -->
+          <td class="td-id">{{ servicio.id }}</td>
+
+          <!-- Tipo de servicio -->
+          <td>{{ servicio.tipoServicio }}</td>
+
+          <!-- Ubicación -->
+          <td class="td-ubicacion">{{ servicio.ubicacion }}</td>
+
+          <!-- Fecha y hora -->
+          <td>{{ servicio.fechaHora }}</td>
+
+          <!-- Vehículo -->
+          <td>{{ servicio.vehiculo }}</td>
+
+          <!-- Cliente -->
+          <td>{{ servicio.cliente }}</td>
+
+          <!-- Estado con badge -->
+          <td>
+            <span
+              class="estado-badge"
+              [class.pendiente]="servicio.estadoColor === 'pendiente'"
+              [class.progreso]="servicio.estadoColor === 'progreso'"
+              [class.finalizado]="servicio.estadoColor === 'finalizado'">
+              {{ servicio.estado }}
+            </span>
+          </td>
+
+        </tr>
+      }
+    </tbody>
+
+  </table>
+</div>

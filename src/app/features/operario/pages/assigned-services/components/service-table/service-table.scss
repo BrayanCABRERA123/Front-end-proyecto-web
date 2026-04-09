@@ -1,0 +1,99 @@
+// tarjeta contenedora de la tabla
+.table-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+// tabla principal
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+// encabezados
+thead tr {
+  background-color: #F9FBFB;
+  border-bottom: 1.5px solid #EDF2F2;
+}
+
+th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #67777E;
+  letter-spacing: 0.5px;
+}
+
+// filas del cuerpo
+.table-row {
+  border-bottom: 1px solid #F0F4F4;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  // hover sobre la fila
+  &:hover {
+    background-color: #F9FBFB;
+  }
+
+  // fila seleccionada
+  &.selected {
+    background-color: #E0EBEA;
+  }
+
+  // última fila sin borde
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+td {
+  padding: 14px 16px;
+  color: #131C20;
+  vertical-align: middle;
+}
+
+// columna ID en negrita
+.td-id {
+  font-weight: 700;
+  color: #131C20;
+}
+
+// columna ubicación con texto cortado
+.td-ubicacion {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #67777E;
+}
+
+// badge de estado
+.estado-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+
+  // pendiente — amarillo
+  &.pendiente {
+    background-color: #FFF8E1;
+    color: #F9A825;
+  }
+
+  // en progreso — azul
+  &.progreso {
+    background-color: #E3F2FD;
+    color: #1E88E5;
+  }
+
+  // finalizado — teal
+  &.finalizado {
+    background-color: #E0EBEA;
+    color: #29AEA0;
+  }
+}

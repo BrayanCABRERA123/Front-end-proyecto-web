@@ -1,0 +1,264 @@
+// card principal del detalle
+.detail-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+// header con título y badge
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+// título del detalle
+.detail-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #131C20;
+  margin: 0;
+}
+
+// badge de estado
+.estado-badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+
+  &.pendiente {
+    background-color: #FFF8E1;
+    color: #F9A825;
+  }
+
+  &.progreso {
+    background-color: #E3F2FD;
+    color: #1E88E5;
+  }
+
+  &.finalizado {
+    background-color: #E0EBEA;
+    color: #29AEA0;
+  }
+}
+
+// grid de 2 columnas para la info
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+// cada columna
+.detail-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// cada línea de información
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+// ícono pequeño de la línea
+.detail-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #67777E;
+}
+
+// label de la línea
+.detail-label {
+  color: #67777E;
+  font-weight: 400;
+}
+
+// valor de la línea
+.detail-value {
+  color: #131C20;
+
+  // valor en negrita
+  &.bold {
+    font-weight: 600;
+  }
+}
+
+// placeholder del mapa
+.map-placeholder {
+  background-color: #F9FBFB;
+  border-radius: 12px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1.5px dashed #DCE5E4;
+
+  .map-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: #67777E;
+  }
+
+  .map-label {
+    font-size: 14px;
+    color: #67777E;
+  }
+}
+
+// sección de acciones
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// título de sección
+.actions-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #131C20;
+  margin: 0;
+}
+
+// fila de botones de acción
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+// botón iniciar — teal
+.btn-iniciar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: #29AEA0;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: background-color 0.2s ease;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: #229990;
+  }
+}
+
+// botón reportar — outline teal
+.btn-reportar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: #E0EBEA;
+  color: #29AEA0;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.2s ease;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: #29AEA0;
+    color: #ffffff;
+  }
+}
+
+// botón finalizar — gris
+.btn-finalizar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: #EDF2F2;
+  color: #67777E;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.2s ease;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: #DCE5E4;
+  }
+}
+
+// sección de opciones adicionales
+.extra-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// botón contactar cliente
+.btn-contactar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #131C20;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.2s ease;
+  width: fit-content;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #67777E;
+  }
+
+  &:hover {
+    border-color: #29AEA0;
+    color: #29AEA0;
+
+    mat-icon {
+      color: #29AEA0;
+    }
+  }
+}
