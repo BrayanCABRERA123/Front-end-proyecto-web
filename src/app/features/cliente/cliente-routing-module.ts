@@ -6,7 +6,10 @@ import { ProfileComponent } from './pages/profile/profile';
 import { Payments } from './pages/payments/payments';
 import { RatingsComponent } from './pages/ratings/ratings';
 import { ReserveComponent } from './pages/reserve/reserve';
+
 import { HistoryComponent } from './pages/history/history';
+
+
 
 const routes: Routes = [
   // importamos las rutas
@@ -16,6 +19,7 @@ const routes: Routes = [
   { path: 'ratings', component: RatingsComponent},
   { path: 'reserve', component: ReserveComponent },
   { path: 'history', component: HistoryComponent }
+
 ];
 
 @NgModule({
