@@ -1,5 +1,4 @@
-
-/* SIDEBAR (ya lo tienes hecho) */
+/* SIDEBAR */
 app-sidebar {
     width: 260px;
     height: 100%;
@@ -16,14 +15,12 @@ app-sidebar {
 /* IZQUIERDA */
 .profile-left {
     flex: 1.5;
-    /* 👈 60% */
     padding: 30px;
 }
 
 /* DERECHA */
 .profile-right {
     flex: 1;
-    /* 👈 40% */
     padding: 85px;
     display: flex;
     flex-direction: column;
@@ -81,7 +78,7 @@ app-sidebar {
     width: 100%;
     padding: 15px 15px 15px 50px !important;
     /* espacio para el icono */
-    border:1px solid #dcdcdc;
+    border: 1px solid #dcdcdc;
     border-radius: 12px;
     font-size: 13px;
     outline: none;
@@ -89,7 +86,7 @@ app-sidebar {
     transition: 0.2s;
 
     box-sizing: border-box;
-    
+
 }
 
 /* ICONO DENTRO */
@@ -114,6 +111,7 @@ app-sidebar {
     border-color: #2ec4b6;
     box-shadow: 0 0 0 2px rgba(46, 196, 182, 0.15);
 }
+
 /* FORMULARIO */
 .form-group {
     text-align: left;
@@ -133,7 +131,6 @@ app-sidebar {
 .edit-container {
     display: flex;
     justify-content: flex-start;
-    /* 👈 izquierda */
     margin-top: 20px;
 }
 
@@ -144,7 +141,6 @@ app-sidebar {
     gap: 6px;
 
     padding: 6px 12px;
-    /* 👈 pequeño */
     font-size: 12px;
 
     border-radius: 8px;
@@ -231,7 +227,7 @@ app-sidebar {
     gap: 10px;
 }
 
-/* BLOQUE IZQUIERDO (icono + texto) */
+/* BLOQUE IZQUIERDO */
 .card-content .left {
     display: flex;
     align-items: center;
@@ -244,7 +240,6 @@ app-sidebar {
     height: 36px;
     border-radius: 10px;
     background: #e6f9f7;
-    /* fondo suave agua marina */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -253,25 +248,21 @@ app-sidebar {
 /* Ícono dentro del contenedor */
 .mini-icon mat-icon {
     color: #2ec4b6 !important;
-    /* azul agua marina */
     font-size: 20px;
 }
 
 /* VARIANTE ROJA */
 .mini-icon.red {
     background: #fdecea;
-    /* fondo suave rojo */
 }
 
 .mini-icon.red mat-icon {
     color: #e57373 !important;
-    /* rojo del ícono */
 }
 
 /* Íconos del header de las tarjetas */
 .card-header mat-icon {
     color: #2ec4b6 !important;
-    /* azul agua marina */
     font-size: 22px !important;
 }
 
@@ -293,8 +284,7 @@ app-sidebar {
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: #2ec4b6;
-    /* agua marina */
+    background: #e6f9f7;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -302,23 +292,20 @@ app-sidebar {
 
 /* Ícono dentro del contenedor */
 .icon-box mat-icon {
-    color: #fff !important;
-    /* ícono blanco */
-    font-size: 22px !important;
+    color: #2ec4b6 !important;
+    font-size: 20px;
 }
 
-/* VARIANTE ROJA PARA EL HEADER DE CUENTA */
 .danger .icon-box {
-    background: #2ec4b6;
-    /* rojo */
+    background: #e6f9f7;
 }
 
 .danger .icon-box mat-icon {
-    color: #fff !important;
+    color: #2ec4b6 !important;
 }
 
 
-/* 📱 TABLET */
+
 @media (max-width: 1024px) {
     .profile-container {
         flex-direction: column;
@@ -354,7 +341,6 @@ app-sidebar {
         padding: 20px;
     }
 
-    /* inputs más cómodos */
     .input-icon input {
         padding: 12px 12px 12px 45px;
     }
