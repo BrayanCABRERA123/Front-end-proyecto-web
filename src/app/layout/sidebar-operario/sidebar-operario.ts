@@ -22,7 +22,7 @@ export class SidebarOperarioComponent {
   // menú del operario — diferente al del cliente
   menuItems = [
     { icono: 'person',            label: 'Perfil',               ruta: '/operario/profile' },
-    { icono: 'assignment',        label: 'Servicios Asignados',   ruta: '/operario/home' },
+    { icono: 'assignment',        label: 'Servicios Asignados',   ruta: '/operario/assigned-services' },
     { icono: 'notifications',     label: 'Notificaciones',        ruta: '/operario/notifications' },
     { icono: 'history',           label: 'Historial',             ruta: '/operario/history' },
     { icono: 'star_outline',      label: 'Calificaciones',        ruta: '/operario/ratings' },

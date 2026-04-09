@@ -1,0 +1,94 @@
+<!-- Contenedor principal con sidebar y contenido -->
+<div class="page-container">
+
+    <!-- Sidebar izquierdo del operario -->
+    <app-sidebar-operario></app-sidebar-operario>
+
+    <!-- Contenido principal derecho -->
+    <div class="main-content">
+
+        <!-- Título y subtítulo -->
+        <div class="page-header">
+            <h1 class="page-title">Servicios Asignados</h1>
+            <p class="page-subtitle">
+                Aquí puedes ver todos los servicios que te han sido asignados.
+                Mantén actualizada la información del progreso.
+            </p>
+        </div>
+
+        <!-- Badges de estadísticas -->
+        <div class="stats-badges">
+            @for (stat of stats; track stat.label) {
+            <div class="stat-badge" [class]="stat.color">
+                <span class="stat-value">{{ stat.valor }}</span>
+                <span class="stat-label">{{ stat.label }}</span>
+            </div>
+            }
+        </div>
+
+        <!-- Card de filtros -->
+        <div class="filters-card">
+            <p class="filters-title">Filtros de búsqueda</p>
+
+            <div class="filters-row">
+
+                <!-- Filtrar por fecha -->
+                <div class="filter-group">
+                    <label class="filter-label">Filtrar por fecha</label>
+                    <div class="date-input-wrapper">
+                        <input type="date" class="filter-input" [(ngModel)]="filtroFecha" />
+                    </div>
+                </div>
+
+                <!-- Filtrar por tipo de servicio -->
+                <div class="filter-group">
+                    <label class="filter-label">Filtrar por tipo de servicio</label>
+                    <div class="select-wrapper">
+                        <select class="filter-select" [(ngModel)]="filtroTipoServicio">
+                            @for (tipo of tiposServicio; track tipo.value) {
+                            <option [value]="tipo.value">{{ tipo.label }}</option>
+                            }
+                        </select>
+                        <mat-icon class="select-icon">expand_more</mat-icon>
+                    </div>
+                </div>
+
+                <!-- Buscador -->
+                <div class="filter-group">
+                    <label class="filter-label">&nbsp;</label>
+                    <label class="filter-label">Buscar por servicio</label>
+                    <div class="select-wrapper">
+                        <input type="text" class="filter-select" placeholder="Buscar ..."
+                            [(ngModel)]="filtroVehiculo" />
+                        <mat-icon class="select-icon">search</mat-icon>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="filter-actions">
+                    <button class="btn-reset">
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+                    <button class="btn-filter">
+                        <mat-icon>search</mat-icon>
+                        Filtrar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tabla de servicios -->
+        <app-service-table [servicios]="serviciosFiltrados" [servicioSeleccionado]="servicioSeleccionado"
+            (serviceSelected)="onServiceSelected($event)">
+        </app-service-table>
+
+        <!-- Detalle del servicio seleccionado -->
+        @if (servicioSeleccionado) {
+        <app-service-detail [servicio]="servicioSeleccionado">
+        </app-service-detail>
+        }
+
+    </div>
+
+</div>

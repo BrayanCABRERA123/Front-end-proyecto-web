@@ -1,0 +1,113 @@
+<!-- Card de detalle del servicio seleccionado -->
+<div class="detail-card">
+
+  <!-- Header con título y badge de estado -->
+  <div class="detail-header">
+    <h3 class="detail-title">
+      Información del servicio ({{ servicio.id }})
+    </h3>
+    <span
+      class="estado-badge"
+      [class.pendiente]="servicio.estadoColor === 'pendiente'"
+      [class.progreso]="servicio.estadoColor === 'progreso'"
+      [class.finalizado]="servicio.estadoColor === 'finalizado'">
+      {{ servicio.estado }}
+    </span>
+  </div>
+
+  <!-- Grid de información -->
+  <div class="detail-grid">
+
+    <!-- Columna izquierda -->
+    <div class="detail-col">
+
+      <!-- ID -->
+      <div class="detail-item">
+        <span class="detail-label">ID</span>
+        <span class="detail-value">{{ servicio.id }}</span>
+      </div>
+
+      <!-- Cliente -->
+      <div class="detail-item">
+        <span class="detail-label">Cliente:</span>
+        <span class="detail-value">{{ servicio.cliente }}</span>
+      </div>
+
+      <!-- Dirección -->
+      <div class="detail-item">
+        <mat-icon class="detail-icon">location_on</mat-icon>
+        <span class="detail-label">Dirección:</span>
+        <span class="detail-value bold">{{ servicio.ubicacionCompleta }}</span>
+      </div>
+
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="detail-col">
+
+      <!-- Tipo de servicio -->
+      <div class="detail-item">
+        <span class="detail-label">Tipo de servicio:</span>
+        <span class="detail-value bold">{{ servicio.tipoServicio }}</span>
+      </div>
+
+      <!-- Hora programada -->
+      <div class="detail-item">
+        <mat-icon class="detail-icon">schedule</mat-icon>
+        <span class="detail-label">Hora programada:</span>
+        <span class="detail-value bold">{{ servicio.fechaHora }}</span>
+      </div>
+
+      <!-- Método de pago -->
+      <div class="detail-item">
+        <mat-icon class="detail-icon">calendar_today</mat-icon>
+        <span class="detail-label">Método de pago:</span>
+        <span class="detail-value bold">{{ servicio.metodoPago }}</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Mapa placeholder -->
+  <div class="map-placeholder">
+    <mat-icon class="map-icon">location_on</mat-icon>
+    <span class="map-label">Ubicación en mapa</span>
+  </div>
+
+  <!-- Estado y progreso -->
+  <div class="actions-section">
+    <p class="actions-title">Estado y progreso</p>
+    <div class="action-buttons">
+
+      <!-- Botón iniciar servicio -->
+      <button class="btn-iniciar">
+        <mat-icon>play_circle_outline</mat-icon>
+        Iniciar Servicio
+      </button>
+
+      <!-- Botón reportar progreso -->
+      <button class="btn-reportar">
+        <mat-icon>refresh</mat-icon>
+        Reportar progreso
+      </button>
+
+      <!-- Botón finalizar servicio -->
+      <button class="btn-finalizar">
+        <mat-icon>flag</mat-icon>
+        Finalizar Servicio
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Opciones adicionales -->
+  <div class="extra-section">
+    <p class="actions-title">Opciones adicionales</p>
+    <button class="btn-contactar">
+      <mat-icon>phone</mat-icon>
+      Contactar al cliente
+    </button>
+  </div>
+
+</div>
