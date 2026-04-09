@@ -5,13 +5,15 @@ import { ProfileComponent } from './pages/profile/profile';
 import { Payments } from './pages/payments/payments';
 import { RatingsComponent } from './pages/ratings/ratings';
 import { ReserveComponent } from './pages/reserve/reserve';
+import { notificationsComponent } from './pages/notifications/notifications';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'payments', component: Payments },
   { path: 'ratings', component: RatingsComponent},
-  { path: 'reserve', component: ReserveComponent }
+  { path: 'reserve', component: ReserveComponent },
+  { path: 'notifications', component: notificationsComponent}
 ];
 
 @NgModule({
