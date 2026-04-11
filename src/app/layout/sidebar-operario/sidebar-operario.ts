@@ -25,7 +25,7 @@ export class SidebarOperarioComponent {
     { icono: 'assignment',        label: 'Servicios Asignados',   ruta: '/operario/assigned-services' },
     { icono: 'notifications',     label: 'Notificaciones',        ruta: '/operario/notifications' },
     { icono: 'history',           label: 'Historial',             ruta: '/operario/service-history' },
-    { icono: 'star_outline',      label: 'Calificaciones',        ruta: '/operario/ratings' },
+    { icono: 'star_outline',      label: 'Calificaciones',        ruta: '/operario/qualifications' },
     { icono: 'settings',          label: 'Configuración',         ruta: '/operario/settings' },
   ];
 
