@@ -7,6 +7,7 @@ import { ProfileComponent } from './pages/profile/profile';
 import { AssignedServicesComponent } from './pages/assigned-services/assigned-services';
 import { notificationsComponent } from '../operario/pages/notifications/notifications';
 import { ServiceHistoryComponent } from './pages/service-history/service-history';
+import { QualificationsComponent } from './pages/qualifications/qualifications';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'assigned-services', component: AssignedServicesComponent },
   { path: 'notifications', component: notificationsComponent },
   { path: 'service-history', component: ServiceHistoryComponent },
+  { path: 'qualifications', component: QualificationsComponent }
 ];
 
 @NgModule({

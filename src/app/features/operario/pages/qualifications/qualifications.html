@@ -1,0 +1,103 @@
+<!-- Contenedor principal con sidebar y contenido -->
+<div class="page-container">
+
+  <!-- Sidebar izquierdo del operario -->
+  <app-sidebar-operario></app-sidebar-operario>
+
+  <!-- Contenido principal derecho -->
+  <div class="main-content">
+
+    <!-- Header con título y subtítulo -->
+    <div class="page-header">
+      <h1 class="page-title">Calificaciones recibidas</h1>
+      <p class="page-subtitle">
+        Consulta las valoraciones que han dejado los clientes sobre tu trabajo.
+      </p>
+    </div>
+
+    <!-- Stats de calificaciones -->
+    <app-qualification-stats
+      [calificacionPromedio]="calificacionPromedio"
+      [nivelSatisfaccion]="nivelSatisfaccion"
+      [porcentajeSatisfaccion]="porcentajeSatisfaccion"
+      [totalCalificaciones]="totalCalificaciones">
+    </app-qualification-stats>
+
+    <!-- Card de filtros -->
+    <div class="filters-card">
+      <p class="filters-title">Filtros de búsqueda</p>
+
+      <div class="filters-row">
+
+        <!-- Filtrar por fecha -->
+        <div class="filter-group">
+          <label class="filter-label">Filtrar por fecha</label>
+          <div class="date-input-wrapper">
+            <input
+              type="date"
+              class="filter-input"
+              [(ngModel)]="filtroFecha"/>
+          </div>
+        </div>
+
+        <!-- Filtrar por tipo de servicio -->
+        <div class="filter-group">
+          <label class="filter-label">Filtrar por tipo de servicio</label>
+          <div class="select-wrapper">
+            <select class="filter-select" [(ngModel)]="filtroTipoServicio">
+              @for (tipo of tiposServicio; track tipo.value) {
+                <option [value]="tipo.value">{{ tipo.label }}</option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+        </div>
+
+        <!-- Filtrar por estrellas -->
+        <div class="filter-group">
+          <label class="filter-label">&nbsp;</label>
+          <div class="select-wrapper">
+            <select class="filter-select" [(ngModel)]="filtroEstrellas">
+              @for (estrella of estrellas; track estrella.value) {
+                <option [value]="estrella.value">{{ estrella.label }}</option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="filter-actions">
+          <button class="btn-reset">
+            <mat-icon>refresh</mat-icon>
+          </button>
+          <button class="btn-filter">
+            <mat-icon>search</mat-icon>
+            Filtrar
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Lista de calificaciones -->
+    <div class="qualifications-list">
+      @for (calificacion of calificacionesFiltradas; track calificacion.id) {
+        <app-qualification-card
+          [calificacion]="calificacion"
+          [estrellas]="getEstrellas(calificacion.estrellas)">
+        </app-qualification-card>
+      }
+
+      <!-- Mensaje cuando no hay resultados -->
+      @if (calificacionesFiltradas.length === 0) {
+        <div class="empty-state">
+          <mat-icon>star_border</mat-icon>
+          <p>No se encontraron calificaciones</p>
+        </div>
+      }
+    </div>
+
+  </div>
+
+</div>

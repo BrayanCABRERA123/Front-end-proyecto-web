@@ -1,0 +1,133 @@
+// card contenedora
+.qualification-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// fila superior
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+// info del cliente
+.client-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+// nombre del cliente
+.client-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #131C20;
+  margin: 0;
+}
+
+// tipo de servicio
+.service-type {
+  font-size: 13px;
+  color: #67777E;
+  margin: 0;
+}
+
+// fila de estrellas
+.stars-row {
+  display: flex;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+// estrella individual
+.star {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #DCE5E4;
+
+  // estrella rellena
+  &.filled {
+    color: #29AEA0;
+  }
+}
+
+// columna derecha con fecha y botón
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// fecha de la calificación
+.card-date {
+  font-size: 13px;
+  color: #67777E;
+}
+
+// botón ver detalles
+.btn-ver {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  mat-icon {
+    font-size: 16px;
+    color: #67777E;
+  }
+
+  &:hover {
+    border-color: #29AEA0;
+
+    mat-icon {
+      color: #29AEA0;
+    }
+  }
+}
+
+// comentario del cliente
+.card-comment {
+  font-size: 14px;
+  color: #131C20;
+  margin: 0;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+// detalles del servicio
+.card-details {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+// cada detalle
+.detail-item {
+  font-size: 12px;
+  color: #67777E;
+}
+
+// separador entre detalles
+.detail-separator {
+  color: #DCE5E4;
+  font-size: 12px;
+}
