@@ -1,0 +1,63 @@
+<!-- Tarjeta contenedora de la tabla -->
+<div class="table-card">
+  <table class="history-table">
+
+    <!-- Encabezados -->
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>FECHA COMPLETADA</th>
+        <th>SERVICIO</th>
+        <th>VEHÍCULO</th>
+        <th>DURACIÓN</th>
+        <th>ESTADO FINAL</th>
+      </tr>
+    </thead>
+
+    <!-- Filas -->
+    <tbody>
+      @for (servicio of servicios; track servicio.id) {
+        <tr class="table-row">
+
+          <!-- ID -->
+          <td class="td-id">{{ servicio.id }}</td>
+
+          <!-- Fecha completada -->
+          <td>{{ servicio.fechaCompletada }}</td>
+
+          <!-- Tipo de servicio -->
+          <td>{{ servicio.servicio }}</td>
+
+          <!-- Vehículo -->
+          <td>{{ servicio.vehiculo }}</td>
+
+          <!-- Duración -->
+          <td>{{ servicio.duracion }}</td>
+
+          <!-- Estado final con badge -->
+          <td>
+            <span
+              class="estado-badge"
+              [class.finalizado]="servicio.estadoColor === 'finalizado'"
+              [class.cancelado]="servicio.estadoColor === 'cancelado'"
+              [class.reasignado]="servicio.estadoColor === 'reasignado'">
+              {{ servicio.estado }}
+            </span>
+          </td>
+
+        </tr>
+      }
+
+      <!-- Mensaje cuando no hay resultados -->
+      @if (servicios.length === 0) {
+        <tr>
+          <td colspan="6" class="empty-row">
+            No se encontraron servicios
+          </td>
+        </tr>
+      }
+
+    </tbody>
+
+  </table>
+</div>
