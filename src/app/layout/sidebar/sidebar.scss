@@ -2,12 +2,13 @@
 .sidebar {
   width: 270px;
   min-height: 93.1%;
-  background-color: #26403D;
+  background-color: var(--sidebar);
   display: flex;
   flex-direction: column;
   padding: 24px 0;
   position: sticky;
   top: 0;
+  transition: background-color 0.3s ease;
 }
 
 
@@ -15,7 +16,7 @@
 .sidebar-logo {
   display: flex;
   align-items: center;
-  gap: 12px; /* espacio entre logo y texto */
+  gap: 12px;
   padding: 0 20px 24px;
   color: #E9EDEC;
   font-weight: 600;
@@ -43,8 +44,8 @@
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background-color: #203C39;
-    border : 2px solid #30CFBF;
+    background-color: rgba(0,0,0,0.2);
+    border: 2px solid var(--primary);
     color: white;
     display: flex;
     align-items: center;
@@ -96,19 +97,16 @@
 
   /* HOVER */
   &:hover {
-    background: rgba(12, 255, 243, 0.08);
-    /* aguamarina suave */
+    background: rgba(var(--primary-rgb), 0.08);
     color: white;
   }
 
   /* ACTIVO */
   &.activo {
-    background: rgba(12, 255, 243, 0.15);
-    /* fondo suave */
-    color: #ffff;
+    background: rgba(var(--primary-rgb), 0.15);
+    color: #ffffff;
     font-weight: 500;
-
-    border-left: 4px solid #30CFBF;
+    border-left: 4px solid var(--primary);
     padding-left: 10px;
   }
 
@@ -119,7 +117,7 @@
   }
 
   &.activo .menu-icono {
-    color: #ffff;
+    color: var(--primary);
   }
 }
 
@@ -141,14 +139,12 @@
     transition: 0.2s;
 
     &:hover {
-      color: white;
+      color: var(--primary);
     }
   }
 }
 
-/* ========================= */
 /* TABLET */
-/* ========================= */
 
 @media screen and (max-width: 1024px) {
 
@@ -168,9 +164,7 @@
 }
 
 
-/* ========================= */
 /* MOVIL */
-/* ========================= */
 
 @media screen and (max-width: 768px) {
 
