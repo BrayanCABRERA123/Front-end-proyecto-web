@@ -31,7 +31,7 @@ export class SidebarComponent {
     { icono: 'notifications',    label: 'Notificaciones',   ruta: '/cliente/notifications' },
     { icono: 'history',          label: 'Historial',        ruta: '/cliente/history' },
     { icono: 'star_outline',     label: 'Calificaciones',   ruta: '/cliente/ratings' },
-    { icono: 'settings',         label: 'Configuración',    ruta: '/cliente/configuracion' },
+    { icono: 'settings',         label: 'Configuración',    ruta: '/cliente/configuration' },
   ];
 
   constructor(private router: Router) {}
