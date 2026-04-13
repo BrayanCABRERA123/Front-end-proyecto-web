@@ -1,13 +1,21 @@
 // tarjeta contenedora de cada servicio
 .history-card {
-  background-color: #ffffff;
+  background-color: var(--card);
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08); /* 🔥 mejor sombra */
   margin:  0 80px 16px 80px;
+  border: 1px solid rgba(var(--primary-rgb), 0.08); /* 🔥 detalle pro */
+  transition: all 0.25s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+  border-color: rgba(var(--primary-rgb), 0.25);
 }
 
 // fila superior con ícono, título y precio
@@ -30,14 +38,12 @@
   width: 24px;
   height: 24px;
 
-  // verde si está pagado
   &.pagado {
-    color: #29AEA0;
+    color: var(--primary);
   }
 
-  // rojo si está pendiente
   &.pendiente {
-    color: #E53935;
+    color: #ff4d4d; /* 🔥 mejor rojo */
   }
 }
 
@@ -52,20 +58,20 @@
 .card-title {
   font-size: 16px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
 }
 
 // fecha del servicio
 .card-date {
   font-size: 13px;
-  color: #67777E;
+  color: var(--text-muted); /* 🔥 clave */
 }
 
 // precio del servicio
 .card-price {
   font-size: 20px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--primary); /* 🔥 mejor jerarquía */
 }
 
 // cuerpo con detalles y botones
@@ -86,7 +92,7 @@
 // cada línea de detalle
 .detail-item {
   font-size: 14px;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
 
@@ -104,13 +110,13 @@
   flex-shrink: 0;
 }
 
-// botón pagado — teal
+// botón pagado — dinámico
 .btn-pagado {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 10px 20px;
-  background-color: #29AEA0;
+  background-color: var(--primary);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -118,6 +124,11 @@
   font-weight: 600;
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: 0.2s;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
 
   mat-icon {
     font-size: 18px;
@@ -126,13 +137,13 @@
   }
 }
 
-// botón pendiente — rojo
+// botón pendiente — mejor rojo
 .btn-pendiente {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 10px 20px;
-  background-color: #E53935;
+  background-color: #ff4d4d;
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -140,6 +151,11 @@
   font-weight: 600;
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: 0.2s;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
 
   mat-icon {
     font-size: 18px;
@@ -148,15 +164,15 @@
   }
 }
 
-// botón calificar servicio — outline teal
+// botón calificar servicio — outline pro
 .btn-calificar {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 10px 20px;
   background-color: transparent;
-  color: #29AEA0;
-  border: 1.5px solid #29AEA0;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
@@ -171,7 +187,7 @@
   }
 
   &:hover {
-    background-color: #29AEA0;
+    background-color: var(--primary);
     color: #ffffff;
   }
 }

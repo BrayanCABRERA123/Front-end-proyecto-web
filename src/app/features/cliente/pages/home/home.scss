@@ -1,7 +1,7 @@
 .home-layout {
   display: flex;
   min-height: 100vh;
-  background: #f4f6f8;
+  background: var(--bg);
 }
 
 
@@ -17,10 +17,11 @@
   font-size: 22px;
   margin: 0;
   font-weight: 600;
+  color: var(--text);
 }
 
 .home-header p {
-  color: #777;
+  color: var(--text-muted);
   font-size: 13px;
   margin-top: 5px;
 }
@@ -35,43 +36,71 @@
 }
 
 .resumen-card {
-  background: #ffffff;
-  border-radius: 12px;
+  background: var(--card);
+  border-radius: 14px;
   padding: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  transition: 0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  border: 1px solid var(--border);
+  transition: 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  color: var(--text);
 
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   }
 }
 
-.resumen-icono {
-  background: #e0f2f1;
-  color: #2aa7a1;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 20px;
+/* LINEA SUPERIOR PRO */
+.resumen-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--primary);
+  opacity: 0.7;
 }
 
+
+/* ICONO */
+.resumen-icono {
+  background: var(--primary-soft);
+  color: var(--primary);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* TEXTO */
 .resumen-cantidad {
   font-size: 22px;
   font-weight: bold;
   margin: 10px 0 5px 0;
+  color: var(--text);
 }
 
 .resumen-label {
   font-size: 12px;
-  color: #777;
+  color: var(--text-muted);
 }
 
 
 /* RESERVAS */
 .reservas-section {
-  background: #ffffff;
-  border-radius: 12px;
+  background: var(--card);
+  border-radius: 14px;
   padding: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  border: 1px solid var(--border);
+  color: var(--text);
 }
 
 .reservas-titulo {
@@ -83,40 +112,59 @@
   h2 {
     font-size: 14px;
     margin: 0;
+    color: var(--text);
   }
 }
 
+
+/* LISTA */
 .reservas-lista {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+
+/* ITEM */
 .reserva-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f7f9fa;
-  padding: 12px;
-  border-radius: 10px;
+  background: var(--item-bg);
+  padding: 14px;
+  border-radius: 12px;
+  transition: 0.2s;
+  border: 1px solid transparent;
 }
 
+.reserva-item:hover {
+  background: var(--item-hover);
+  border-color: var(--border);
+}
+
+
+/* TEXTO */
 .reserva-nombre {
   font-size: 13px;
   font-weight: 500;
   margin: 0;
+  color: var(--text);
 }
 
 .reserva-fecha {
   font-size: 11px;
-  color: #777;
+  color: var(--text-muted);
   margin: 2px 0 0 0;
 }
 
+
+/* ESTADO */
 .reserva-estado {
-  background: #2aa7a1;
+  background: var(--primary);
   color: white;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 20px;
   font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }

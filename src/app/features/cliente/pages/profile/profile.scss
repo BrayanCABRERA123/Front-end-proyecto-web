@@ -8,7 +8,7 @@ app-sidebar {
 .profile-container {
     display: flex;
     height: 100vh;
-    background: #f4f6f8;
+    background: var(--bg);
     gap: 20px;
 }
 
@@ -29,10 +29,11 @@ app-sidebar {
 
 /* TARJETAS GENERALES */
 .card {
-    background: #ffffff;
+    background: var(--card);
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    color: var(--text);
 }
 
 /* CARD PERFIL */
@@ -46,23 +47,24 @@ app-sidebar {
     height: 80px;
     margin: 0 auto 15px;
     border-radius: 50%;
-    background: #dff4f2;
+    background: color-mix(in srgb, var(--primary) 15%, transparent);
+    color: var(--primary);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    color: #2aa7a1;
     font-size: 22px;
 }
 
 /* TITULOS */
 .profile-card h2 {
     margin: 5px 0;
+    color: var(--text);
 }
 
 .subtitle {
     font-size: 13px;
-    color: #888;
+    color: var(--text-secondary, #888);
     margin-bottom: 20px;
 }
 
@@ -77,16 +79,14 @@ app-sidebar {
 .input-icon input {
     width: 100%;
     padding: 15px 15px 15px 50px !important;
-    /* espacio para el icono */
-    border: 1px solid #dcdcdc;
+    border: 1px solid rgba(0,0,0,0.15);
     border-radius: 12px;
     font-size: 13px;
     outline: none;
-    background: #f9fafb;
+    background: rgba(0,0,0,0.03);
     transition: 0.2s;
-
     box-sizing: border-box;
-
+    color: var(--text);
 }
 
 /* ICONO DENTRO */
@@ -95,21 +95,20 @@ app-sidebar {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: #9e9e9e !important;
+    color: var(--text-secondary, #9e9e9e) !important;
     font-size: 20px;
-
-
 }
 
 /* HOVER */
 .input-icon input:hover {
-    border-color: #bdbdbd;
+    border-color: rgba(0,0,0,0.3);
 }
 
 /* FOCUS */
 .input-icon input:focus {
-    border-color: #2ec4b6;
+    border-color: var(--primary);
     box-shadow: 0 0 0 2px rgba(46, 196, 182, 0.15);
+    background: rgba(46, 196, 182, 0.05);
 }
 
 /* FORMULARIO */
@@ -120,12 +119,10 @@ app-sidebar {
 
 .form-group label {
     font-size: 12px;
-    color: #555;
+    color: var(--text-secondary, #555);
     display: block;
     margin-bottom: 5px;
 }
-
-
 
 /* CONTENEDOR DEL BOTÓN */
 .edit-container {
@@ -139,14 +136,12 @@ app-sidebar {
     display: flex;
     align-items: center;
     gap: 6px;
-
     padding: 6px 12px;
     font-size: 12px;
-
     border-radius: 8px;
-    border: 1px solid #ddd;
-    background: #fff;
-
+    border: 1px solid rgba(0,0,0,0.15);
+    background: var(--card);
+    color: var(--text);
     cursor: pointer;
     transition: 0.2s;
 }
@@ -154,12 +149,12 @@ app-sidebar {
 /* ICONO */
 .btn-edit mat-icon {
     font-size: 16px;
-    color: #666;
+    color: var(--text-secondary, #666);
 }
 
 /* HOVER */
 .btn-edit:hover {
-    background: #f5f5f5;
+    background: rgba(0,0,0,0.05);
 }
 
 /* TARJETAS DERECHA */
@@ -175,8 +170,9 @@ app-sidebar {
     align-items: center;
     gap: 8px;
     font-weight: 600;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
     padding-bottom: 10px;
+    color: var(--text);
 }
 
 /* BODY */
@@ -188,12 +184,12 @@ app-sidebar {
 
 .card-body p {
     font-size: 13px;
-    color: #777;
+    color: var(--text-secondary, #777);
 }
 
 /* BOTON PRIMARY */
 .btn-primary {
-    background: #2ec4b6;
+    background: var(--primary);
     border: none;
     color: white;
     padding: 8px 16px;
@@ -203,7 +199,7 @@ app-sidebar {
 }
 
 .btn-primary:hover {
-    background: #25b3a5;
+    opacity: 0.9;
 }
 
 /* BOTON DANGER */
@@ -217,7 +213,9 @@ app-sidebar {
     transition: 0.2s;
 }
 
-
+.btn-danger:hover {
+    opacity: 0.9;
+}
 
 /* CONTENIDO DE LAS TARJETAS DERECHA */
 .card-content {
@@ -239,7 +237,7 @@ app-sidebar {
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: #e6f9f7;
+    background: rgba(46, 196, 182, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -247,13 +245,13 @@ app-sidebar {
 
 /* Ícono dentro del contenedor */
 .mini-icon mat-icon {
-    color: #2ec4b6 !important;
+    color: var(--primary) !important;
     font-size: 20px;
 }
 
 /* VARIANTE ROJA */
 .mini-icon.red {
-    background: #fdecea;
+    background: rgba(229, 115, 115, 0.15);
 }
 
 .mini-icon.red mat-icon {
@@ -262,7 +260,7 @@ app-sidebar {
 
 /* Íconos del header de las tarjetas */
 .card-header mat-icon {
-    color: #2ec4b6 !important;
+    color: var(--primary) !important;
     font-size: 22px !important;
 }
 
@@ -271,11 +269,12 @@ app-sidebar {
     font-weight: 600;
     font-size: 14px;
     margin: 0;
+    color: var(--text);
 }
 
 .card-content .subtitle {
     font-size: 12px;
-    color: #777;
+    color: var(--text-secondary, #777);
     margin: 2px 0 0;
 }
 
@@ -284,7 +283,7 @@ app-sidebar {
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: #e6f9f7;
+    background: rgba(46, 196, 182, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -292,20 +291,19 @@ app-sidebar {
 
 /* Ícono dentro del contenedor */
 .icon-box mat-icon {
-    color: #2ec4b6 !important;
+    color: var(--primary) !important;
     font-size: 20px;
 }
 
 .danger .icon-box {
-    background: #e6f9f7;
+    background: rgba(229, 115, 115, 0.15);
 }
 
 .danger .icon-box mat-icon {
-    color: #2ec4b6 !important;
+    color: #e57373 !important;
 }
 
-
-
+/* RESPONSIVE */
 @media (max-width: 1024px) {
     .profile-container {
         flex-direction: column;
@@ -324,7 +322,6 @@ app-sidebar {
         padding: 20px;
     }
 }
-
 
 @media (max-width: 600px) {
 

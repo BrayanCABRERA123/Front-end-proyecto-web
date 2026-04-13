@@ -2,7 +2,7 @@
 .page-container {
   display: flex;
   min-height: 100vh;
-  background-color: #F9FBFB;
+  background-color: var(--bg);
 }
 
 // Área de contenido derecho
@@ -16,13 +16,13 @@
 .page-title {
   font-size: 28px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0 0 18px 400px;
 }
 
 // Subtítulo debajo del título
 .page-subtitle {
   font-size: 14px;
-  color: #67777E;
+  color: #8a9aa3;
   margin: 0 0 32px 370px;
 }

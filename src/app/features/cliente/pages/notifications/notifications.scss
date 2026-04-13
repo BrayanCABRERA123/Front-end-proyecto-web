@@ -1,7 +1,7 @@
 .notifications-container {
     display: flex;
     min-height: 100vh;
-    background: #f4f6f8;
+    background: var(--bg);
 }
 
 app-sidebar {
@@ -21,10 +21,11 @@ app-sidebar {
 .notifications-card {
     width: 100%;
     max-width: 500px;
-    background: white;
+    background: var(--card);
     border-radius: 16px;
     padding: 25px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    color: var(--text);
 }
 
 /* HEADER */
@@ -36,11 +37,12 @@ app-sidebar {
 }
 
 .badge {
-    background: #2ec4b6;
-    color: white;
+    background: var(--primary);
+    color: #ffffff;
     font-size: 11px;
     padding: 4px 10px;
     border-radius: 20px;
+    font-weight: 500;
 }
 
 /* ITEM */
@@ -49,13 +51,13 @@ app-sidebar {
     gap: 15px;
     padding: 15px;
     border-radius: 12px;
-    background: #fafafa;
+    background: rgba(var(--primary-rgb), 0.05);
     margin-bottom: 12px;
-    transition: 0.2s;
+    transition: 0.2s ease;
 }
 
 .notification-item:hover {
-    background: #f0f0f0;
+    background: rgba(var(--primary-rgb), 0.12); 
 }
 
 /* ICONO */
@@ -63,14 +65,14 @@ app-sidebar {
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: #e6f9f7;
+    background: rgba(var(--primary-rgb), 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .icon-box mat-icon {
-    color: #2ec4b6;
+    color: var(--primary);
 }
 
 /* TEXTO */
@@ -78,15 +80,16 @@ app-sidebar {
     font-weight: 600;
     font-size: 14px;
     margin: 0;
+    color: var(--text);
 }
 
 .info .desc {
     font-size: 12px;
-    color: #777;
+    color: var(--text-secondary);
     margin: 2px 0;
 }
 
 .time {
     font-size: 11px;
-    color: #aaa;
+    color: var(--text-muted);
 }

@@ -1,7 +1,7 @@
 /* contenedor principal del sidebar */
 .sidebar {
   width: 270px;
-  min-height: 93.1%;
+  min-height: 95%;
   background-color: var(--sidebar);
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
   align-items: center;
   gap: 12px;
   padding: 0 20px 24px;
-  color: #E9EDEC;
+  color: #ffffff;
   font-weight: 600;
   font-size: 16px;
 
@@ -62,13 +62,13 @@
   .nombre {
     font-size: 13px;
     font-weight: 500;
-    color: white;
+    color: #ffffff;
     margin: 0;
   }
 
   .correo {
     font-size: 11px;
-    color: #888;
+    color: rgba(255,255,255,0.7);
     margin: 0;
   }
 }
@@ -83,13 +83,12 @@
 }
 
 .menu-item {
-
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
   border-radius: 10px;
-  color: #aaa;
+  color: rgba(255, 255, 255, 0.9); /* 🔥 SUPER LEGIBLE */
   text-decoration: none;
   font-size: 13px;
   transition: 0.2s;
@@ -97,13 +96,13 @@
 
   /* HOVER */
   &:hover {
-    background: rgba(var(--primary-rgb), 0.08);
-    color: white;
+    background: rgba(var(--primary-rgb), 0.15);
+    color: #ffffff;
   }
 
   /* ACTIVO */
   &.activo {
-    background: rgba(var(--primary-rgb), 0.15);
+    background: rgba(var(--primary-rgb), 0.25);
     color: #ffffff;
     font-weight: 500;
     border-left: 4px solid var(--primary);
@@ -114,12 +113,14 @@
     font-size: 18px;
     width: 22px;
     text-align: center;
+    color: rgba(255,255,255,0.8);
   }
 
   &.activo .menu-icono {
     color: var(--primary);
   }
 }
+
 
 /* FOOTER */ 
 .sidebar-footer {
@@ -130,7 +131,7 @@
     width: 100%;
     background: none;
     border: none;
-    color: #aaa;
+    color: rgba(255,255,255,0.8);
     font-size: 13px;
     cursor: pointer;
     display: flex;
@@ -144,8 +145,8 @@
   }
 }
 
-/* TABLET */
 
+/* TABLET */
 @media screen and (max-width: 1024px) {
 
   .sidebar {
@@ -165,7 +166,6 @@
 
 
 /* MOVIL */
-
 @media screen and (max-width: 768px) {
 
   .sidebar {

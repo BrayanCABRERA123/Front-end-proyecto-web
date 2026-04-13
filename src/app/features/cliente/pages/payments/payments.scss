@@ -1,91 +1,117 @@
 /* CONTENEDOR */
 .payments-container {
-    display: flex;
-    min-height: 100vh;
-    background: #f4f6f8;
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
 }
 
 /* SIDEBAR */
 app-sidebar {
-    width: 260px;
+  width: 260px;
 }
 
 /* CONTENIDO */
 .payments-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 60px 20px;
-    margin-top: 60px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px 20px;
 }
 
 /* CARD */
 .payments-card {
-    width: 100%;
-    max-width: 500px;
-    background: #fff;
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  color: var(--text);
 }
 
 /* TITULO */
 .payments-card h2 {
-    margin-bottom: 5px;
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
 }
 
 /* SUBTITULO */
 .subtitle {
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
 }
 
 /* ITEM */
 .payment-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 
-    padding: 15px;
-    border-radius: 12px;
-    background: #fafafa;
-    margin-bottom: 12px;
+  padding: 16px;
+  border-radius: 14px;
 
-    transition: 0.2s;
+  background: rgba(var(--primary-rgb), 0.08);
+  margin-bottom: 12px;
+
+  transition: all 0.2s ease;
 }
 
 /* HOVER */
 .payment-item:hover {
-    background: #f0f0f0;
+  background: rgba(var(--primary-rgb), 0.15);
+  transform: translateY(-1px);
 }
 
 /* ICONO */
 .icon-box {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: #e6f9f7;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: rgba(var(--primary-rgb), 0.15);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .icon-box mat-icon {
-    color: #2ec4b6;
+  color: var(--primary);
 }
 
 /* TEXTO */
-.info .title {
-    font-weight: 600;
-    font-size: 14px;
-    margin: 0;
+.info {
+  display: flex;
+  flex-direction: column;
 }
 
+/* TITULO ITEM */
+.info .title {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  color: var(--text);
+}
+
+/* DESCRIPCIÓN */
 .info .desc {
-    font-size: 12px;
-    color: #777;
-    margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .payments-content {
+    padding: 60px 12px;
+  }
+
+  .payments-card {
+    padding: 20px;
+  }
 }
