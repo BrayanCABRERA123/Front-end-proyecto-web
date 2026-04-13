@@ -28,12 +28,53 @@ body {
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
   // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  background-color: var(--bg);
+  color: var(--text);
   font: var(--mat-sys-body-medium);
 
   // Reset the user agent margin.
   margin: 0;
   height: 100%;
+
+  /* VARIABLES — Tema por defecto verde claro */
+  --primary: #2ec4b6;
+  --primary-rgb: 46, 196, 182;
+  --sidebar: #26403D;
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1a1a2e;
+
+
 }
+
+/* TEMA VERDE OSCURO */
+body.green-dark {
+  --primary: #2ec4b6;
+  --primary-rgb: 46, 196, 182;
+  --sidebar: #1a2e2b;
+  --bg: #1a1a1a;
+  --card: #2a2a2a;
+  --text: #ffffff;
+}
+
+/* TEMA ROSADO CLARO */
+body.pink {
+  --primary: #ff4fa3;
+  --primary-rgb: 255, 79, 163;
+  --sidebar: #3d1a2a;
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1a1a2e;
+}
+
+/* TEMA ROSADO OSCURO */
+body.pink-dark {
+  --primary: #ff4fa3;
+  --primary-rgb: 255, 79, 163;
+  --sidebar: #2a1020;
+  --bg: #1a1a1a;
+  --card: #2a2a2a;
+  --text: #ffffff;
+}
+
 /* You can add global styles to this file, and also import other style files */

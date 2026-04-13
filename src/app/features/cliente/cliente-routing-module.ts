@@ -8,7 +8,7 @@ import { RatingsComponent } from './pages/ratings/ratings';
 import { ReserveComponent } from './pages/reserve/reserve';
 import { notificationsComponent } from './pages/notifications/notifications';
 import { HistoryComponent } from './pages/history/history';
-import { configurationComponent } from './pages/configuration/configuration';
+import { ConfigurationComponent } from './pages/configuration/configuration';
 
 
 
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'reserve', component: ReserveComponent },
   { path: 'notifications', component: notificationsComponent},
   { path: 'history', component: HistoryComponent },
-  { path: 'configuration', component: configurationComponent}
+  { path: 'configuration', component: ConfigurationComponent}
 
 ];
 

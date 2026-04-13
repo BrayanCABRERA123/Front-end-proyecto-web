@@ -1,19 +1,19 @@
-/* LAYOUT */
+/*  LAYOUT  */
 .config-layout {
   display: flex;
   height: 100vh;
-  background: #f5f6f8;
+  background: var(--bg);
   overflow: hidden;
 }
 
-/* CONTENIDO */
+/*  CONTENIDO  */
 .config-content {
   flex: 1;
   padding: 32px 36px;
   overflow-y: auto;
 }
 
-/* HEADER */
+/*  HEADER  */
 .header {
   display: flex;
   align-items: center;
@@ -23,26 +23,25 @@
   h1 {
     font-size: 22px;
     font-weight: 700;
-    color: #1a1a2e;
+    color: var(--text);
     margin: 0;
   }
 
   mat-icon {
-    background: #e0f7f5;
+    background: rgba(0,0,0,0.05);
     padding: 8px;
     border-radius: 10px;
-    color: #2ec4b6;
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    color: var(--primary);
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
   }
 }
 
-/* GRID */
+/*  GRID  */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -54,15 +53,16 @@
   .card:nth-child(4) { grid-column: 1; grid-row: 3; }
 }
 
-/* CARDS */
+/*  CARDS  */
 .card {
-  background: #ffffff;
+  background: var(--card);
+  color: var(--text);
   border-radius: 18px;
   padding: 22px 24px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* CARD HEADER */
+/*  CARD HEADER  */
 .card-header {
   display: flex;
   align-items: center;
@@ -72,26 +72,25 @@
   h2 {
     font-size: 17px;
     font-weight: 700;
-    color: #1a1a2e;
+    color: var(--text);
     margin: 0;
   }
 
   mat-icon {
-    background: #e0f7f5;
+    background: rgba(0,0,0,0.05);
     padding: 6px;
     border-radius: 8px;
-    color: #2ec4b6;
+    color: var(--primary);
     font-size: 18px;
     width: 18px;
     height: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
   }
 }
 
-/* ITEMS */
+/*  ITEMS  */
 .item {
   display: flex;
   justify-content: space-between;
@@ -101,7 +100,7 @@
   .title {
     font-weight: 600;
     font-size: 14px;
-    color: #1a1a2e;
+    color: var(--text);
     margin: 0 0 3px 0;
   }
 
@@ -111,18 +110,18 @@
   }
 }
 
-/* DIVIDER */
+/*  DIVIDER  */
 .divider {
   height: 1px;
-  background: #f0f0f0;
+  background: rgba(0,0,0,0.08);
   margin: 4px 0;
 }
 
-/* SECTION TITLE */
+/*  SECTION TITLE  */
 .section-title {
   font-size: 14px;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--text);
   margin: 12px 0 2px 0;
 }
 
@@ -131,7 +130,7 @@
   color: #9e9e9e;
 }
 
-/* TEMAS */
+/*  TEMAS  */
 .themes {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -146,7 +145,7 @@
   border: 2px solid transparent;
   transition: all 0.2s ease;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-  max-width: 250px; 
+  max-width: 250px;
 
   &:hover {
     transform: translateY(-2px);
@@ -154,7 +153,7 @@
   }
 
   &.active {
-    border: 2px solid #2ec4b6;
+    border: 2px solid var(--primary);
   }
 }
 
@@ -186,7 +185,7 @@
   &.big   { width: 70%; }
 }
 
-/* VERDE CLARO */
+/* — Verde claro — */
 .green-light {
   .theme-top { background: #2ec4b6; }
   .theme-body { background: #f4f4f4; }
@@ -194,7 +193,7 @@
   .line.big { background: #2ec4b6; }
 }
 
-/* VERDE OSCURO */
+/* — Verde oscuro — */
 .green-dark {
   .theme-top { background: #2ec4b6; }
   .theme-body { background: #3a3a3a; }
@@ -202,7 +201,7 @@
   .line.big { background: #2ec4b6; }
 }
 
-/* ROSADO CLARO */
+/* — Rosa claro — */
 .pink {
   .theme-top { background: #ff4fa3; }
   .theme-body { background: #f4f4f4; }
@@ -210,7 +209,7 @@
   .line.big { background: #ff4fa3; }
 }
 
-/* ROSADO OSCURO */
+/* — Rosa oscuro — */
 .pink-dark {
   .theme-top { background: #ff4fa3; }
   .theme-body { background: #3a3a3a; }
@@ -218,7 +217,7 @@
   .line.big { background: #ff4fa3; }
 }
 
-/* IDIOMAS */
+/*  IDIOMAS  */
 .languages {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -227,7 +226,7 @@
 }
 
 .lang-card {
-  background: #f8f8f8;
+  background: var(--card);
   padding: 10px 12px;
   border-radius: 12px;
   cursor: pointer;
@@ -235,8 +234,8 @@
   transition: all 0.2s ease;
 
   &.active {
-    border-color: #2ec4b6;
-    background: #e8faf9;
+    border-color: var(--primary);
+    background: rgba(0,0,0,0.03);
   }
 
   &:hover {
@@ -268,7 +267,7 @@
   strong {
     font-size: 13px;
     font-weight: 600;
-    color: #1a1a2e;
+    color: var(--text);
   }
 }
 
@@ -281,7 +280,7 @@
   transition: color 0.2s;
 
   &.selected {
-    color: #2ec4b6;
+    color: var(--primary);
   }
 }
 
@@ -292,7 +291,7 @@
   display: block;
 }
 
-/* AYUDA */
+/*  AYUDA  */
 .help {
   display: flex;
   justify-content: space-between;
@@ -304,7 +303,7 @@
   align-items: center;
   gap: 10px;
   font-size: 14px;
-  color: #1a1a2e;
+  color: var(--text);
   font-weight: 500;
 
   mat-icon {
@@ -316,7 +315,7 @@
 }
 
 .btn {
-  background: #f0f0f0;
+  background: rgba(0,0,0,0.05);
   border: none;
   padding: 8px 16px;
   border-radius: 10px;
@@ -326,7 +325,7 @@
   gap: 4px;
   font-size: 13px;
   font-weight: 500;
-  color: #1a1a2e;
+  color: var(--text);
   transition: background 0.2s;
 
   mat-icon {
@@ -336,13 +335,13 @@
   }
 
   &:hover {
-    background: #e0e0e0;
+    background: rgba(0,0,0,0.1);
   }
 }
 
-/* TOGGLES */
+/*  TOGGLES  */
 :host ::ng-deep .mdc-switch--selected .mdc-switch__track::after {
-  background: #2ec4b6 !important;
+  background: var(--primary) !important;
 }
 
 :host ::ng-deep .mdc-switch--selected .mdc-switch__handle::after {

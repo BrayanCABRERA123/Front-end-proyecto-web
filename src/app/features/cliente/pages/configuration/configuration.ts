@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SidebarComponent } from "../../../../layout/sidebar/sidebar";
 import { MatIconModule } from "@angular/material/icon";
@@ -15,13 +15,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     FormsModule,
     MatSlideToggleModule
   ],
-
   templateUrl: './configuration.html',
-  styleUrls: ['./configuration.scss'] 
+  styleUrls: ['./configuration.scss']
 })
 
-export class configurationComponent {
+export class ConfigurationComponent implements OnInit {
 
+  //  CONFIGURACIONES 
   settings = {
     push: true,
     email: true,
@@ -29,25 +29,68 @@ export class configurationComponent {
     location: true
   };
 
-  selectedTheme: string = 'light';
-
+  //  ESTADOS 
+  selectedTheme: string = 'green-light';
   selectedLanguage: string = 'es';
 
-  constructor(  ){}
+  //  INICIO 
+  ngOnInit(): void {
 
-  changeTheme(theme: string){
+    // Obtener datos guardados
+    const savedTheme = localStorage.getItem('theme');
+    const savedLang = localStorage.getItem('lang');
+
+    // Aplicar tema guardado o default
+    if (savedTheme) {
+      this.selectedTheme = savedTheme;
+      this.applyTheme(savedTheme);
+    } else {
+      this.applyTheme(this.selectedTheme);
+    }
+
+    // Aplicar idioma guardado
+    if (savedLang) {
+      this.selectedLanguage = savedLang;
+    }
+  }
+
+  //  CAMBIAR TEMA 
+  changeTheme(theme: string): void {
     this.selectedTheme = theme;
+
+    localStorage.setItem('theme', theme);
+
+    this.applyTheme(theme);
   }
 
-  changeLanguage(lang: string) {
+  //  APLICAR TEMA 
+  applyTheme(theme: string): void {
+
+    const themes = ['green-light', 'green-dark', 'pink', 'pink-dark'];
+
+    document.body.classList.remove(...themes);
+
+    // Aplicar nueva clase
+    if (themes.includes(theme)) {
+      document.body.classList.add(theme);
+    }
+  }
+
+  //  CAMBIAR IDIOMA 
+  changeLanguage(lang: string): void {
     this.selectedLanguage = lang;
+
+    // Guardar idioma
+    localStorage.setItem('lang', lang);
+
   }
 
-  saveSecttings(){
-    console.log('Configuracion guardada',{
-    settings: this.settings,
-    theme: this.changeTheme,
-    language: this.changeLanguage
+  //  GUARDAR 
+  saveSettings(): void {
+    console.log('Configuración guardada', {
+      settings: this.settings,
+      theme: this.selectedTheme,
+      language: this.selectedLanguage
     });
   }
 }
