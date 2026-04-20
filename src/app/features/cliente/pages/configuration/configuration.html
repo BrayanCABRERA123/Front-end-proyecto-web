@@ -7,7 +7,7 @@
 
     <div class="header">
       <mat-icon>settings</mat-icon>
-      <h1>Configuración</h1>
+      <h1>{{ 'CONFIG.TITLE' | translate }}</h1>
     </div>
 
     <div class="grid">
@@ -17,13 +17,13 @@
 
         <div class="card-header">
           <mat-icon>notifications</mat-icon>
-          <h2>Notificaciones</h2>
+          <h2>{{ 'CONFIG.NOTIFICATIONS' | translate }}</h2>
         </div>
 
         <div class="item">
           <div>
-            <p class="title">Notificaciones Push</p>
-            <span class="subtitle">Recibe alertas de reservas y promociones</span>
+            <p class="title">{{ 'CONFIG.PUSH' | translate }}</p>
+            <span class="subtitle">{{ 'CONFIG.PUSH_DESC' | translate }}</span>
           </div>
           <mat-slide-toggle [(ngModel)]="settings.push"></mat-slide-toggle>
         </div>
@@ -32,8 +32,8 @@
 
         <div class="item">
           <div>
-            <p class="title">Recordatorios por Email</p>
-            <span class="subtitle">Un día antes de tu lavado programado</span>
+            <p class="title">{{ 'CONFIG.EMAIL' | translate }}</p>
+            <span class="subtitle">{{ 'CONFIG.EMAIL_DESC' | translate }}</span>
           </div>
           <mat-slide-toggle [(ngModel)]="settings.email"></mat-slide-toggle>
         </div>
@@ -42,8 +42,8 @@
 
         <div class="item">
           <div>
-            <p class="title">Promociones y Ofertas</p>
-            <span class="subtitle">Recibe descuentos exclusivos</span>
+            <p class="title">{{ 'CONFIG.PROMO' | translate }}</p>
+            <span class="subtitle">{{ 'CONFIG.PROMO_DESC' | translate }}</span>
           </div>
           <mat-slide-toggle [(ngModel)]="settings.promo"></mat-slide-toggle>
         </div>
@@ -56,13 +56,13 @@
 
         <div class="card-header">
           <mat-icon>public</mat-icon>
-          <h2>Apariencia</h2>
+          <h2>{{ 'CONFIG.APPEARANCE' | translate }}</h2>
         </div>
 
         <!-- TEMAS -->
-        <p class="section-title">Elegir tema</p>
+        <p class="section-title">{{ 'CONFIG.THEME' | translate }}</p>
         <span class="subtitle">
-          Cambiar interfaz (Personaliza los colores de la aplicación)
+          {{ 'CONFIG.THEME_DESC' | translate }}
         </span>
 
         <div class="themes">
@@ -140,8 +140,8 @@
         <div class="divider"></div>
 
         <!-- IDIOMAS -->
-        <p class="section-title">Idiomas</p>
-        <span class="subtitle">Cambiar idioma</span>
+        <p class="section-title">{{ 'CONFIG.LANGUAGE' | translate }}</p>
+        <span class="subtitle">{{ 'CONFIG.LANGUAGE_DESC' | translate }}</span>
 
         <div class="languages">
 
@@ -223,14 +223,14 @@
 
         <div class="card-header">
           <mat-icon>location_on</mat-icon>
-          <h2>Ubicación</h2>
+          <h2>{{ 'CONFIG.LOCATION' | translate }}</h2>
         </div>
 
         <div class="item">
           <div>
-            <p class="title">Compartir Ubicación</p>
+            <p class="title">{{ 'CONFIG.LOCATION_SHARE' | translate }}</p>
             <span class="subtitle">
-              Permitir que accedan a tu ubicación actual
+              {{ 'CONFIG.LOCATION_DESC' | translate }}
             </span>
           </div>
           <mat-slide-toggle [(ngModel)]="settings.location"></mat-slide-toggle>
@@ -244,18 +244,18 @@
 
         <div class="card-header">
           <mat-icon>help_outline</mat-icon>
-          <h2>Ayuda</h2>
+          <h2>{{ 'CONFIG.HELP' | translate }}</h2>
         </div>
 
         <div class="help">
 
           <div class="help-left">
             <mat-icon>help</mat-icon>
-            <span>Centro de ayuda</span>
+            <span>{{ 'CONFIG.HELP_CENTER' | translate }}</span>
           </div>
 
           <button class="btn">
-            Abrir
+            {{ 'CONFIG.OPEN' | translate }}
             <mat-icon>chevron_right</mat-icon>
           </button>
 

@@ -1,0 +1,39 @@
+{
+  "CONFIG": {
+    "TITLE": "Settings",
+    "NOTIFICATIONS": "Notifications",
+    "PUSH": "Push Notifications",
+    "PUSH_DESC": "Receive alerts for bookings and promotions",
+    "EMAIL": "Email Reminders",
+    "EMAIL_DESC": "One day before your scheduled wash",
+    "PROMO": "Promotions and Offers",
+    "PROMO_DESC": "Receive exclusive discounts",
+
+    "APPEARANCE": "Appearance",
+    "THEME": "Choose theme",
+    "THEME_DESC": "Customize the app colors",
+
+    "LANGUAGE": "Languages",
+    "LANGUAGE_DESC": "Change language",
+
+    "LOCATION": "Location",
+    "LOCATION_SHARE": "Share Location",
+    "LOCATION_DESC": "Allow access to your current location",
+
+    "HELP": "Help",
+    "HELP_CENTER": "Help Center",
+    "OPEN": "Open"
+  },
+  
+  "SIDEBAR": {
+    "TITLE": "Car Wash",
+    "PROFILE": "Profile",
+    "RESERVE": "Book Wash",
+    "PAYMENTS": "Payment Methods",
+    "NOTIFICATIONS": "Notifications",
+    "HISTORY": "History",
+    "RATINGS": "Ratings",
+    "CONFIG": "Settings",
+    "LOGOUT": "Log Out"
+  }
+}

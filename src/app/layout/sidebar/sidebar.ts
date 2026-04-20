@@ -6,11 +6,12 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 // iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule, TranslateModule],
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.scss']
 })
@@ -25,13 +26,13 @@ export class SidebarComponent {
 
   // lista de opciones del menú con iconos de Material
   menuItems = [
-    { icono: 'person',           label: 'Perfil',           ruta: '/cliente/profile' },
-    { icono: 'local_car_wash',   label: 'Reservar Lavado',  ruta: '/cliente/reserve' },
-    { icono: 'credit_card',      label: 'Métodos de Pago',  ruta: '/cliente/payments' },
-    { icono: 'notifications',    label: 'Notificaciones',   ruta: '/cliente/notifications' },
-    { icono: 'history',          label: 'Historial',        ruta: '/cliente/history' },
-    { icono: 'star_outline',     label: 'Calificaciones',   ruta: '/cliente/ratings' },
-    { icono: 'settings',         label: 'Configuración',    ruta: '/cliente/configuration' },
+    { icono: 'person',           label: 'SIDEBAR.PROFILE',           ruta: '/cliente/profile' },
+    { icono: 'local_car_wash',   label: 'SIDEBAR.RESERVE',  ruta: '/cliente/reserve' },
+    { icono: 'credit_card',      label: 'SIDEBAR.PAYMENTS',  ruta: '/cliente/payments' },
+    { icono: 'notifications',    label: 'SIDEBAR.NOTIFICATIONS',   ruta: '/cliente/notifications' },
+    { icono: 'history',          label: 'SIDEBAR.HISTORY',        ruta: '/cliente/history' },
+    { icono: 'star_outline',     label: 'SIDEBAR.RATINGS',   ruta: '/cliente/ratings' },
+    { icono: 'settings',         label: 'SIDEBAR.CONFIG',    ruta: '/cliente/configuration' },
   ];
 
   constructor(private router: Router) {}

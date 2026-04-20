@@ -237,7 +237,7 @@ app-sidebar {
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: rgba(46, 196, 182, 0.15);
+    background: rgba(43, 83, 79, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -283,7 +283,7 @@ app-sidebar {
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: rgba(46, 196, 182, 0.15);
+    background: rgba(43, 83, 79, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -296,11 +296,11 @@ app-sidebar {
 }
 
 .danger .icon-box {
-    background: rgba(229, 115, 115, 0.15);
+    background: rgba(43, 83, 79, 0.15);
 }
 
 .danger .icon-box mat-icon {
-    color: #e57373 !important;
+    color: var(--primary) !important;
 }
 
 /* RESPONSIVE */

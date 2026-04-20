@@ -4,6 +4,8 @@ import { SidebarComponent } from "../../../../layout/sidebar/sidebar";
 import { MatIconModule } from "@angular/material/icon";
 import { FormsModule } from "@angular/forms";
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-configuration',
@@ -13,7 +15,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     SidebarComponent,
     MatIconModule,
     FormsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    TranslateModule
   ],
   templateUrl: './configuration.html',
   styleUrls: ['./configuration.scss']
@@ -21,7 +24,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export class ConfigurationComponent implements OnInit {
 
-  //  CONFIGURACIONES 
+  // CONFIGURACIONES
   settings = {
     push: true,
     email: true,
@@ -29,18 +32,22 @@ export class ConfigurationComponent implements OnInit {
     location: true
   };
 
-  //  ESTADOS 
+  // ESTADOS
   selectedTheme: string = 'green-light';
   selectedLanguage: string = 'es';
 
-  //  INICIO 
+  constructor(private translate: TranslateService) {
+    this.translate.addLangs(['es', 'en', 'fr', 'pt']);
+    this.translate.setDefaultLang('es');
+  }
+
+  // INICIO
   ngOnInit(): void {
 
-    // Obtener datos guardados
     const savedTheme = localStorage.getItem('theme');
     const savedLang = localStorage.getItem('lang');
 
-    // Aplicar tema guardado o default
+    // TEMA
     if (savedTheme) {
       this.selectedTheme = savedTheme;
       this.applyTheme(savedTheme);
@@ -48,44 +55,42 @@ export class ConfigurationComponent implements OnInit {
       this.applyTheme(this.selectedTheme);
     }
 
-    // Aplicar idioma guardado
+    // IDIOMA
     if (savedLang) {
       this.selectedLanguage = savedLang;
+      this.translate.use(savedLang);
+    } else {
+      this.translate.use('es');
     }
   }
 
-  //  CAMBIAR TEMA 
+  // CAMBIAR TEMA
   changeTheme(theme: string): void {
     this.selectedTheme = theme;
-
     localStorage.setItem('theme', theme);
-
     this.applyTheme(theme);
   }
 
-  //  APLICAR TEMA 
+  // APLICAR TEMA
   applyTheme(theme: string): void {
-
     const themes = ['green-light', 'green-dark', 'pink', 'pink-dark'];
-
     document.body.classList.remove(...themes);
 
-    // Aplicar nueva clase
     if (themes.includes(theme)) {
       document.body.classList.add(theme);
     }
   }
 
-  //  CAMBIAR IDIOMA 
+  // CAMBIAR IDIOMA
   changeLanguage(lang: string): void {
     this.selectedLanguage = lang;
 
-    // Guardar idioma
-    localStorage.setItem('lang', lang);
+    this.translate.use(lang);
 
+    localStorage.setItem('lang', lang);
   }
 
-  //  GUARDAR 
+  // GUARDAR
   saveSettings(): void {
     console.log('Configuración guardada', {
       settings: this.settings,

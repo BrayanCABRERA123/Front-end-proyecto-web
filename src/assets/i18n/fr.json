@@ -1,0 +1,40 @@
+{
+  "CONFIG": {
+    "TITLE": "Paramètres",
+
+    "NOTIFICATIONS": "Notifications",
+    "PUSH": "Notifications Push",
+    "PUSH_DESC": "Recevez des alertes de réservations et promotions",
+    "EMAIL": "Rappels par Email",
+    "EMAIL_DESC": "Un jour avant votre lavage programmé",
+    "PROMO": "Promotions et Offres",
+    "PROMO_DESC": "Recevez des réductions exclusives",
+
+    "APPEARANCE": "Apparence",
+    "THEME": "Choisir un thème",
+    "THEME_DESC": "Personnalisez les couleurs de l'application",
+
+    "LANGUAGE": "Langues",
+    "LANGUAGE_DESC": "Changer la langue",
+
+    "LOCATION": "Localisation",
+    "LOCATION_SHARE": "Partager la localisation",
+    "LOCATION_DESC": "Autoriser l'accès à votre position actuelle",
+
+    "HELP": "Aide",
+    "HELP_CENTER": "Centre d'aide",
+    "OPEN": "Ouvrir"
+  },
+  
+  "SIDEBAR": {
+    "TITLE": "Lavage de Véhicules",
+    "PROFILE": "Profil",
+    "RESERVE": "Réserver lavage",
+    "PAYMENTS": "Méthodes de paiement",
+    "NOTIFICATIONS": "Notifications",
+    "HISTORY": "Historique",
+    "RATINGS": "Évaluations",
+    "CONFIG": "Paramètres",
+    "LOGOUT": "Se déconnecter"
+  }
+}
