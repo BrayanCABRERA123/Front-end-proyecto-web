@@ -36,5 +36,50 @@
     "RATINGS": "Évaluations",
     "CONFIG": "Paramètres",
     "LOGOUT": "Se déconnecter"
-  }
+  },
+    
+  "HISTORY": {
+    "FILTERS": "Filtres",
+    "ALL": "Tous",
+    "PAID": "Payés",
+    "PENDING": "En attente",
+    "DATE": "Date",
+    "FROM": "De",
+    "TO": "À",
+    "SEARCH_LABEL": "Rechercher par adresse, service ou opérateur",
+    "SEARCH_PLACEHOLDER": "Tapez pour rechercher...",
+    "EMPTY": "Aucun service trouvé"
+  },
+
+  "HISTORY_CARD": {
+    "ADDRESS": "Adresse",
+    "TYPE": "Type de service",
+    "EXTRA": "Services supplémentaires",
+    "OPERATOR": "Assignation de l'opérateur",
+    "STATUS": "Statut",
+    "PAID": "Payé",
+    "PENDING": "En attente",
+    "RATE": "Évaluer le service"
+  },
+
+  "SERVICE": {
+    "PREMIUM_CAR": "Premium — Voiture",
+    "BASIC_MOTO": "Basique — Moto",
+    "FULL_WASH": "Lavage complet"
+  },
+
+  "EXTRA": {
+    "WAX": "Cire",
+    "VACUUM": "Aspirateur"
+  },
+
+  "STATUS": {
+    "COMPLETED": "Terminé",
+    "PENDING": "En attente"
+  },
+
+  "ASSIGNMENT": {
+  "MANUAL": "Manuel",
+  "AUTO": "Automatique"
+}
 }

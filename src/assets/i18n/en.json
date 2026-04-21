@@ -35,5 +35,50 @@
     "RATINGS": "Ratings",
     "CONFIG": "Settings",
     "LOGOUT": "Log Out"
-  }
+  },
+
+  "HISTORY": {
+    "FILTERS": "Filters",
+    "ALL": "All",
+    "PAID": "Paid",
+    "PENDING": "Pending",
+    "DATE": "Date",
+    "FROM": "From",
+    "TO": "To",
+    "SEARCH_LABEL": "Search by address, service or operator",
+    "SEARCH_PLACEHOLDER": "Type to search...",
+    "EMPTY": "No services found"
+  },
+
+  "HISTORY_CARD": {
+    "ADDRESS": "Address",
+    "TYPE": "Service type",
+    "EXTRA": "Extra services",
+    "OPERATOR": "Operator assignment",
+    "STATUS": "Status",
+    "PAID": "Paid",
+    "PENDING": "Pending",
+    "RATE": "Rate Service"
+  },
+
+  "SERVICE": {
+    "PREMIUM_CAR": "Premium — Car",
+    "BASIC_MOTO": "Basic — Motorcycle",
+    "FULL_WASH": "Full wash"
+  },
+
+  "EXTRA": {
+    "WAX": "Wax",
+    "VACUUM": "Vacuum"
+  },
+
+  "STATUS": {
+    "COMPLETED": "Completed",
+    "PENDING": "Pending"
+  },
+
+  "ASSIGNMENT": {
+  "MANUAL": "Manual",
+  "AUTO": "Automatic"
+}
 }

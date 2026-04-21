@@ -10,93 +10,90 @@
     <!-- Tarjeta de filtros -->
     <div class="filters-card">
 
-      <!-- Fila de filtros de estado -->
+      <!-- Fila de filtros -->
       <div class="filters-row">
-        <span class="filter-label">Filtros:</span>
+        <span class="filter-label">
+          {{ 'HISTORY.FILTERS' | translate }}:
+        </span>
 
-        <!-- Radio: Todos -->
+        <!-- Todos -->
         <label class="radio-filter">
-          <input
-            type="radio"
-            name="filtro"
-            value="todos"
-            [(ngModel)]="filtroActivo"/>
-          Todos
+          <input type="radio" name="filtro" value="todos" [(ngModel)]="filtroActivo"/>
+          {{ 'HISTORY.ALL' | translate }}
         </label>
 
-        <!-- Radio: Pagados -->
+        <!-- Pagados -->
         <label class="radio-filter">
-          <input
-            type="radio"
-            name="filtro"
-            value="pagados"
-            [(ngModel)]="filtroActivo"/>
-          Pagados
+          <input type="radio" name="filtro" value="pagados" [(ngModel)]="filtroActivo"/>
+          {{ 'HISTORY.PAID' | translate }}
         </label>
 
-        <!-- Radio: Pendientes de pagar -->
+        <!-- Pendientes -->
         <label class="radio-filter">
-          <input
-            type="radio"
-            name="filtro"
-            value="pendientes"
-            [(ngModel)]="filtroActivo"/>
-          Pendientes de pagar
+          <input type="radio" name="filtro" value="pendientes" [(ngModel)]="filtroActivo"/>
+          {{ 'HISTORY.PENDING' | translate }}
         </label>
       </div>
 
-      <!-- Fila de fechas -->
+      <!-- Filtros por fecha -->
       <div class="dates-row">
-        <span class="filter-label">Fecha:</span>
+        <span class="filter-label">
+          {{ 'HISTORY.DATE' | translate }}:
+        </span>
 
         <div class="date-group">
-          <span class="date-label">Desde:</span>
+          <span class="date-label">
+            {{ 'HISTORY.FROM' | translate }}
+          </span>
           <div class="date-input-wrapper">
-            <input
-              type="date"
-              class="date-input"
-              [(ngModel)]="fechaDesde"/>
+            <input type="date" class="date-input" [(ngModel)]="fechaDesde"/>
           </div>
         </div>
 
         <div class="date-group">
-          <span class="date-label">Hasta:</span>
+          <span class="date-label">
+            {{ 'HISTORY.TO' | translate }}
+          </span>
           <div class="date-input-wrapper">
-            <input
-              type="date"
-              class="date-input"
-              [(ngModel)]="fechaHasta"/>
+            <input type="date" class="date-input" [(ngModel)]="fechaHasta"/>
           </div>
         </div>
       </div>
 
       <!-- Buscador -->
       <div class="search-row">
-        <span class="filter-label">Buscar por dirección, servicio u operario</span>
+        <span class="filter-label">
+          {{ 'HISTORY.SEARCH_LABEL' | translate }}
+        </span>
+
         <div class="search-input-wrapper">
           <input
             type="text"
             class="search-input"
-            [(ngModel)]="busqueda"/>
+            [(ngModel)]="busqueda"
+            [placeholder]="'HISTORY.SEARCH_PLACEHOLDER' | translate"
+          />
           <mat-icon class="search-icon">search</mat-icon>
         </div>
       </div>
 
     </div>
 
-    <!-- Lista de servicios filtrados -->
+    <!-- Lista -->
     <div class="history-list">
+
       @for (servicio of serviciosFiltrados; track servicio.id) {
         <app-history-card [servicio]="servicio"></app-history-card>
       }
 
-      <!-- Mensaje cuando no hay resultados -->
+      <!-- Vacío -->
       @if (serviciosFiltrados.length === 0) {
         <div class="empty-state">
           <mat-icon>search_off</mat-icon>
-          <p>No se encontraron servicios</p>
+          <p>{{ 'HISTORY.EMPTY' | translate }}</p>
         </div>
       }
+
     </div>
 
   </div>

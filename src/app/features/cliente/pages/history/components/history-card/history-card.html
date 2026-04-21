@@ -1,11 +1,11 @@
 <!-- Tarjeta de cada servicio del historial -->
 <div class="history-card">
 
-  <!-- Fila superior: ícono + título + precio -->
+  <!-- Header -->
   <div class="card-header">
     <div class="card-header-left">
 
-      <!-- Ícono de estado — verde si pagado, rojo si pendiente -->
+      <!-- Estado -->
       <mat-icon
         class="status-icon"
         [class.pagado]="servicio.pagado"
@@ -13,9 +13,11 @@
         check_circle
       </mat-icon>
 
-      <!-- Título y fecha -->
+      <!-- Título dinámico traducido -->
       <div class="card-title-group">
-        <span class="card-title">{{ servicio.titulo }}</span>
+        <span class="card-title">
+          {{ ('SERVICE.' + servicio.titulo) | translate }}
+        </span>
         <span class="card-date">{{ servicio.fecha }}</span>
       </div>
 
@@ -25,66 +27,80 @@
     <span class="card-price">${{ servicio.precio }}</span>
   </div>
 
-  <!-- Contenido: detalles del servicio -->
+  <!-- Body -->
   <div class="card-body">
 
     <div class="card-details">
 
       <!-- Dirección -->
       <p class="detail-item">
-        <span class="detail-label">Dirección:</span>
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.ADDRESS' | translate }}:
+        </span>
         {{ servicio.direccion }}
       </p>
 
       <!-- Tipo de servicio -->
       <p class="detail-item">
-        <span class="detail-label">Tipo de servicio:</span>
-        {{ servicio.tipoServicio }}
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.TYPE' | translate }}:
+        </span>
+        {{ ('SERVICE.' + servicio.tipoServicio) | translate }}
       </p>
 
       <!-- Servicios extra -->
       <p class="detail-item">
-        <span class="detail-label">Servicios extra:</span>
-        {{ servicio.serviciosExtra }}
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.EXTRA' | translate }}:
+        </span>
+        {{ getExtrasTraducidos(servicio.serviciosExtra).join(' / ') }}
       </p>
 
-      <!-- Asignación de operario -->
+      <!-- Operario -->
       <p class="detail-item">
-        <span class="detail-label">Asignación de operario:</span>
-        {{ servicio.asignacion }}
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.OPERATOR' | translate }}:
+        </span>
+         {{ ('ASSIGNMENT.' + servicio.asignacionTipo) | translate }}
+
+        <span *ngIf="servicio.operador">
+          ({{ servicio.operador }})
+        </span>
       </p>
 
       <!-- Estado -->
       <p class="detail-item">
-        <span class="detail-label">Estado:</span>
-        {{ servicio.estado }}
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.STATUS' | translate }}:
+        </span>
+        {{ ('STATUS.' + servicio.estado) | translate }}
       </p>
 
     </div>
 
-    <!-- Botones del lado derecho -->
+    <!-- Acciones -->
     <div class="card-actions">
 
-      <!-- Botón Pagado — solo si está pagado -->
+      <!-- Pagado -->
       @if (servicio.pagado) {
         <button class="btn-pagado">
-          Pagado
+          {{ 'HISTORY_CARD.PAID' | translate }}
           <mat-icon>check</mat-icon>
         </button>
       }
 
-      <!-- Botón Pendiente — solo si está pendiente -->
+      <!-- Pendiente -->
       @if (!servicio.pagado) {
         <button class="btn-pendiente">
-          Pendiente
+          {{ 'HISTORY_CARD.PENDING' | translate }}
           <mat-icon>schedule</mat-icon>
         </button>
       }
 
-      <!-- Botón Calificar Servicio — solo si está pagado -->
+      <!-- Calificar -->
       @if (servicio.pagado) {
         <button class="btn-calificar">
-          Calificar Servicio
+          {{ 'HISTORY_CARD.RATE' | translate }}
           <mat-icon>star_outline</mat-icon>
         </button>
       }

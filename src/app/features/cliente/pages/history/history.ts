@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// importamos el sidebar del layout
 import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
-// importamos el card de cada servicio
 import { HistoryCardComponent } from './components/history-card/history-card';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-history',
@@ -15,52 +14,62 @@ import { MatIconModule } from '@angular/material/icon';
     FormsModule,
     SidebarComponent,
     HistoryCardComponent,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './history.html',
   styleUrl: './history.scss'
 })
 export class HistoryComponent {
 
-  // filtro activo — 'todos', 'pagados', 'pendientes'
+  constructor(private translate: TranslateService) {}
+
+  // filtro activo
   filtroActivo: string = 'todos';
 
-  // fechas del filtro
+  // fechas
   fechaDesde: string = '';
   fechaHasta: string = '';
 
-  // texto del buscador
+  // buscador
   busqueda: string = '';
 
-  // lista de servicios del historial
+  // SERVICIOS 
   servicios = [
-    {
-      id: 1,
-      titulo: 'Premium — Automóvil',
-      fecha: '28/03/2026',
-      direccion: 'Calle Falsa 123, Springfield',
-      tipoServicio: 'Lavado completo',
-      serviciosExtra: 'Cera / Aspirado',
-      asignacion: 'Manual (Juan)',
-      estado: 'Finalizado',
-      precio: 35,
-      pagado: true
-    },
-    {
-      id: 2,
-      titulo: 'Básico — Moto',
-      fecha: '16/12/2025',
-      direccion: 'Calle 42 #13-33',
-      tipoServicio: 'Lavado completo',
-      serviciosExtra: 'Cera',
-      asignacion: 'Automática',
-      estado: 'Pendiente',
-      precio: 35,
-      pagado: false
-    }
-  ];
+  {
+    id: 1,
+    titulo: 'PREMIUM_CAR',
+    fecha: '28/03/2026',
+    direccion: 'Calle Falsa 123, Springfield',
+    tipoServicio: 'FULL_WASH',
+    serviciosExtra: ['WAX', 'VACUUM'],
+    asignacionTipo: 'MANUAL',
+    operador: 'Juan',
+    estado: 'COMPLETED',
+    precio: 35,
+    pagado: true
+  },
+  {
+    id: 2,
+    titulo: 'BASIC_MOTO',
+    fecha: '16/12/2025',
+    direccion: 'Calle 42 #13-33',
+    tipoServicio: 'FULL_WASH',
+    serviciosExtra: ['WAX'],
+    asignacionTipo: 'AUTO',
+    operador: '',
+    estado: 'PENDING',
+    precio: 35,
+    pagado: false
+  }
+];
 
-  // filtra los servicios según el filtro activo y la búsqueda
+  // TRADUCIR EXTRAS
+  getExtrasTraducidos(extras: string[]): string[] {
+    return extras.map(e => this.translate.instant('EXTRA.' + e));
+  }
+
+  // FILTRO COMPLETO
   get serviciosFiltrados() {
     return this.servicios.filter(servicio => {
 
@@ -68,15 +77,27 @@ export class HistoryComponent {
       if (this.filtroActivo === 'pagados' && !servicio.pagado) return false;
       if (this.filtroActivo === 'pendientes' && servicio.pagado) return false;
 
-      // filtro por búsqueda de texto
+      // filtro por texto
       if (this.busqueda) {
-        const texto = this.busqueda.toLowerCase();
-        return servicio.direccion.toLowerCase().includes(texto) ||
-               servicio.tipoServicio.toLowerCase().includes(texto) ||
-               servicio.asignacion.toLowerCase().includes(texto);
-      }
+      const texto = this.busqueda.toLowerCase();
 
-      return true;
-    });
+      return (
+        servicio.direccion.toLowerCase().includes(texto) ||
+
+        this.translate.instant('SERVICE.' + servicio.tipoServicio)
+          .toLowerCase()
+          .includes(texto) ||
+
+        this.translate.instant('ASSIGNMENT.' + servicio.asignacionTipo)
+          .toLowerCase()
+          .includes(texto) ||
+
+        (servicio.operador &&
+          servicio.operador.toLowerCase().includes(texto))
+      );
+    }
+
+    return true;
+  });
   }
 }

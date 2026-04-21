@@ -35,5 +35,50 @@
     "RATINGS": "Calificaciones",
     "CONFIG": "Configuración",
     "LOGOUT": "Cerrar Sesión"
-  }
+  },
+
+  "HISTORY": {
+    "FILTERS": "Filtros",
+    "ALL": "Todos",
+    "PAID": "Pagados",
+    "PENDING": "Pendientes de pagar",
+    "DATE": "Fecha",
+    "FROM": "Desde",
+    "TO": "Hasta",
+    "SEARCH_LABEL": "Buscar por dirección, servicio u operario",
+    "SEARCH_PLACEHOLDER": "Escribe para buscar...",
+    "EMPTY": "No se encontraron servicios"
+  },
+
+  "HISTORY_CARD": {
+    "ADDRESS": "Dirección",
+    "TYPE": "Tipo de servicio",
+    "EXTRA": "Servicios extra",
+    "OPERATOR": "Asignación de operario",
+    "STATUS": "Estado",
+    "PAID": "Pagado",
+    "PENDING": "Pendiente",
+    "RATE": "Calificar Servicio"
+  },
+
+  "SERVICE": {
+    "PREMIUM_CAR": "Premium — Automóvil",
+    "BASIC_MOTO": "Básico — Moto",
+    "FULL_WASH": "Lavado completo"
+  },
+
+  "EXTRA": {
+    "WAX": "Cera",
+    "VACUUM": "Aspirado"
+  },
+
+  "STATUS": {
+    "COMPLETED": "Finalizado",
+    "PENDING": "Pendiente"
+  },
+
+  "ASSIGNMENT": {
+  "MANUAL": "Manual",
+  "AUTO": "Automática"
+}
 }
