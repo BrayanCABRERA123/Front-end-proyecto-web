@@ -64,7 +64,10 @@
   "SERVICE": {
     "PREMIUM_CAR": "Premium — Car",
     "BASIC_MOTO": "Basic — Motorcycle",
-    "FULL_WASH": "Full wash"
+    "FULL_WASH": "Full wash",
+
+    "PREMIUM": "Premium",
+    "BASIC": "Basic"
   },
 
   "EXTRA": {
@@ -74,11 +77,53 @@
 
   "STATUS": {
     "COMPLETED": "Completed",
-    "PENDING": "Pending"
+    "PENDING": "Pending",
+
+    
+    "CONFIRMED": "Confirmed"
   },
 
   "ASSIGNMENT": {
   "MANUAL": "Manual",
   "AUTO": "Automatic"
+},
+
+  "HOME": {
+    "HELLO": "Hello, {{name}}!",
+    "WELCOME": "Welcome back to Car Wash",
+    "NEXT_RESERVATIONS": "Upcoming Reservations",
+
+    "RESUMEN": {
+      "ACTIVE": "Active bookings",
+      "VEHICLES": "Vehicles",
+      "NOTIFICATIONS": "Notifications"
+    }
+  },
+
+  "VEHICLE": {
+    "CAR": "Car",
+    "TRUCK": "Truck"
+  },
+
+  "NOTIFICATIONS": {
+  "TITLE": "Notifications",
+  "NEW": "{{count}} new",
+
+  "RESERVATION_CONFIRMED": "Reservation Confirmed",
+  "RESERVATION_DESC": "Your premium wash is scheduled for Feb 25 at 10:00 AM",
+
+  "REMINDER": "Reminder",
+  "REMINDER_DESC": "Your wash is scheduled for tomorrow. All set?",
+
+  "PROMO": "Special Promotion!",
+  "PROMO_DESC": "Get 20% off your next full wash. Use code: AQUA20",
+
+  "UPDATE": "Service Update",
+  "UPDATE_DESC": "We have expanded our coverage to new areas of the city",
+
+  "TIME_2H": "2 hours ago",
+  "TIME_1D": "1 day ago",
+  "TIME_2D": "2 days ago",
+  "TIME_3D": "3 days ago"
 }
 }

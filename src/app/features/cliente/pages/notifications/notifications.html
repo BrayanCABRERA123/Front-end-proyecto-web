@@ -1,34 +1,36 @@
 <div class="notifications-container">
 
-    <app-sidebar></app-sidebar>
+  <app-sidebar></app-sidebar>
 
-    <div class="notifications-content">
+  <div class="notifications-content">
 
-        <div class="card notifications-card">
+    <div class="card notifications-card">
 
-            <!-- HEADER -->
-            <div class="header">
-                <h2>Notificaciones</h2>
-                <span class="badge">4 nuevas</span>
-            </div>
+      <!-- HEADER -->
+      <div class="header">
+        <h2>{{ 'NOTIFICATIONS.TITLE' | translate }}</h2>
+        <span class="badge">
+          {{ 'NOTIFICATIONS.NEW' | translate:{count: 4} }}
+        </span>
+      </div>
 
-            <!-- LISTA -->
-            <div class="notification-item" *ngFor="let n of notifications">
+      <!-- LISTA -->
+      <div class="notification-item" *ngFor="let n of notifications">
 
-                <div class="icon-box">
-                    <mat-icon>{{ n.icon }}</mat-icon>
-                </div>
-
-                <div class="info">
-                    <p class="title">{{ n.title }}</p>
-                    <p class="desc">{{ n.desc }}</p>
-                    <span class="time">{{ n.time }}</span>
-                </div>
-
-            </div>
-
+        <div class="icon-box">
+          <mat-icon>{{ n.icon }}</mat-icon>
         </div>
 
+        <div class="info">
+          <p class="title">{{ n.title | translate }}</p>
+          <p class="desc">{{ n.desc | translate }}</p>
+          <span class="time">{{ n.time | translate }}</span>
+        </div>
+
+      </div>
+
     </div>
+
+  </div>
 
 </div>

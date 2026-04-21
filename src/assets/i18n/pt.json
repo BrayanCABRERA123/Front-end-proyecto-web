@@ -65,7 +65,10 @@
   "SERVICE": {
     "PREMIUM_CAR": "Premium — Carro",
     "BASIC_MOTO": "Básico — Moto",
-    "FULL_WASH": "Lavagem completa"
+    "FULL_WASH": "Lavagem completa",
+
+    "PREMIUM": "Premium",
+    "BASIC": "Básico"
   },
 
   "EXTRA": {
@@ -75,11 +78,52 @@
 
   "STATUS": {
     "COMPLETED": "Concluído",
-    "PENDING": "Pendente"
+    "PENDING": "Pendente",
+
+    "CONFIRMED": "Confirmado"
   },
 
   "ASSIGNMENT": {
   "MANUAL": "Manual",
   "AUTO": "Automático"
+},
+
+  "HOME": {
+    "HELLO": "Olá, {{name}}!",
+    "WELCOME": "Bem-vindo de volta à Lavagem de Veículos",
+    "NEXT_RESERVATIONS": "Próximas Reservas",
+
+    "RESUMEN": {
+      "ACTIVE": "Reservas ativas",
+      "VEHICLES": "Veículos",
+      "NOTIFICATIONS": "Notificações"
+    }
+  },
+
+  "VEHICLE": {
+    "CAR": "Carro",
+    "TRUCK": "Caminhonete"
+  },
+
+  "NOTIFICATIONS": {
+  "TITLE": "Notificações",
+  "NEW": "{{count}} novas",
+
+  "RESERVATION_CONFIRMED": "Reserva confirmada",
+  "RESERVATION_DESC": "Sua lavagem premium está agendada para 25 de fevereiro às 10:00",
+
+  "REMINDER": "Lembrete",
+  "REMINDER_DESC": "Sua lavagem está agendada para amanhã. Tudo pronto?",
+
+  "PROMO": "Promoção especial!",
+  "PROMO_DESC": "Ganhe 20% de desconto na sua próxima lavagem completa. Código: AQUA20",
+
+  "UPDATE": "Atualização de serviço",
+  "UPDATE_DESC": "Expandimos nossa cobertura para novas áreas da cidade",
+
+  "TIME_2H": "Há 2 horas",
+  "TIME_1D": "Há 1 dia",
+  "TIME_2D": "Há 2 dias",
+  "TIME_3D": "Há 3 dias"
 }
 }

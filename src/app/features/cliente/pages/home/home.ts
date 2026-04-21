@@ -2,15 +2,16 @@
 import { Component } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
-// importamos el sidebar que creamos
+// importamos el sidebar
 import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
 // iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, MatIconModule],
+  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule],
   templateUrl: './home.html',
   styleUrls: ['./home.scss']
 })
@@ -21,26 +22,26 @@ export class HomeComponent {
     nombre: 'Juan'
   };
 
-  // tarjetas de resumen arriba
+  // tarjetas de resumen (AHORA con claves)
   resumen = [
-    { icono: 'calendar_today', cantidad: 2, label: 'Reservas Activas' },
-    { icono: 'directions_car', cantidad: 3, label: 'Vehículos' },
-    { icono: 'notifications',  cantidad: 5, label: 'Notificaciones' },
+    { icono: 'calendar_today', cantidad: 2, label: 'HOME.RESUMEN.ACTIVE' },
+    { icono: 'directions_car', cantidad: 3, label: 'HOME.RESUMEN.VEHICLES' },
+    { icono: 'notifications',  cantidad: 5, label: 'HOME.RESUMEN.NOTIFICATIONS' },
   ];
 
-  // lista de próximas reservas
+  // próximas reservas (TODO con claves)
   proximasReservas = [
     {
-      tipo: 'Premium',
-      vehiculo: 'Automóvil',
-      fecha: '25 Feb 2026 a las 10:00 AM',
-      estado: 'Confirmado'
+      tipo: 'PREMIUM',
+      vehiculo: 'CAR',
+      fecha: '25/02/2026 10:00',
+      estado: 'CONFIRMED'
     },
     {
-      tipo: 'Básico',
-      vehiculo: 'Camioneta',
-      fecha: '28 Feb 2026 a las 2:00 PM',
-      estado: 'Confirmado'
+      tipo: 'BASIC',
+      vehiculo: 'TRUCK',
+      fecha: '28/02/2026 14:00',
+      estado: 'CONFIRMED'
     }
   ];
 }
