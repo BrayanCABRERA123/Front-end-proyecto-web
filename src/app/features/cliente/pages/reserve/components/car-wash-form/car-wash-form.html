@@ -6,7 +6,7 @@
 
     <div class="form-group">
       <label class="form-label">
-        Fecha
+        {{ 'RESERVE.DATE' | translate }}
         <mat-icon class="label-icon">calendar_today</mat-icon>
       </label>
       <div class="input-wrapper">
@@ -20,7 +20,7 @@
 
     <div class="form-group">
       <label class="form-label">
-        Hora
+        {{ 'RESERVE.TIME' | translate }}
         <mat-icon class="label-icon">schedule</mat-icon>
       </label>
       <div class="input-wrapper">
@@ -35,13 +35,15 @@
 
   <!-- Dirección del Lavado -->
   <div class="form-group">
-    <label class="form-label">Dirección del Lavado</label>
+    <label class="form-label">
+      {{ 'RESERVE.ADDRESS' | translate }}
+    </label>
     <div class="input-wrapper">
       <mat-icon class="input-icon">location_on</mat-icon>
       <input
         type="text"
         class="form-input"
-        placeholder="Calle, número, ciudad..."
+        [placeholder]="'RESERVE.ADDRESS_PLACEHOLDER' | translate"
         [(ngModel)]="direccion"/>
     </div>
   </div>
@@ -51,14 +53,18 @@
 
     <div class="form-group">
       <label class="form-label">
-        Tipo de Vehículo
+        {{ 'RESERVE.VEHICLE' | translate }}
         <mat-icon class="label-icon">directions_car</mat-icon>
       </label>
       <div class="select-wrapper">
         <select class="form-select" [(ngModel)]="tipoVehiculo">
-          <option value="" disabled>Seleccionar</option>
+          <option value="" disabled>
+            {{ 'RESERVE.SELECT' | translate }}
+          </option>
           @for (vehiculo of vehiculos; track vehiculo.value) {
-            <option [value]="vehiculo.value">{{ vehiculo.label }}</option>
+            <option [value]="vehiculo.value">
+              {{ ('VEHICLE.' + vehiculo.value) | translate }}
+            </option>
           }
         </select>
         <mat-icon class="select-icon">expand_more</mat-icon>
@@ -67,14 +73,18 @@
 
     <div class="form-group">
       <label class="form-label">
-        Tipo de Servicio
+        {{ 'RESERVE.SERVICE' | translate }}
         <mat-icon class="label-icon">settings</mat-icon>
       </label>
       <div class="select-wrapper">
         <select class="form-select" [(ngModel)]="tipoServicio">
-          <option value="" disabled>Seleccionar</option>
+          <option value="" disabled>
+            {{ 'RESERVE.SELECT' | translate }}
+          </option>
           @for (servicio of servicios; track servicio.value) {
-            <option [value]="servicio.value">{{ servicio.label }}</option>
+            <option [value]="servicio.value">
+              {{ ('SERVICE.' + servicio.value) | translate }}
+            </option>
           }
         </select>
         <mat-icon class="select-icon">expand_more</mat-icon>
@@ -85,40 +95,50 @@
 
   <!-- Asignación de Operario -->
   <div class="form-group">
-    <label class="form-label">Asignación de Operario</label>
+    <label class="form-label">
+      {{ 'RESERVE.ASSIGNMENT' | translate }}
+    </label>
 
-    <!-- Opción Automática -->
-    <div class="radio-option" (click)="asignacion = 'automatica'">
-      <div class="radio-circle" [class.selected]="asignacion === 'automatica'">
-        @if (asignacion === 'automatica') {
+    <!-- Automática -->
+    <div class="radio-option" (click)="asignacion = 'AUTO'">
+      <div class="radio-circle" [class.selected]="asignacion === 'AUTO'">
+        @if (asignacion === 'AUTO') {
           <div class="radio-dot"></div>
         }
       </div>
       <div class="radio-content">
-        <span class="radio-label">Automática</span>
+        <span class="radio-label">
+          {{ 'ASSIGNMENT.AUTO' | translate }}
+        </span>
         <span class="radio-description">
-          El sistema asignará automáticamente un operario disponible.
+          {{ 'ASSIGNMENT.AUTO_DESC' | translate }}
         </span>
       </div>
     </div>
 
-    <!-- Opción Manual -->
-    <div class="radio-option" (click)="asignacion = 'manual'">
-      <div class="radio-circle" [class.selected]="asignacion === 'manual'">
-        @if (asignacion === 'manual') {
+    <!-- Manual -->
+    <div class="radio-option" (click)="asignacion = 'MANUAL'">
+      <div class="radio-circle" [class.selected]="asignacion === 'MANUAL'">
+        @if (asignacion === 'MANUAL') {
           <div class="radio-dot"></div>
         }
       </div>
-      <span class="radio-label">Manual</span>
+      <span class="radio-label">
+        {{ 'ASSIGNMENT.MANUAL' | translate }}
+      </span>
     </div>
 
-    <!-- Select operario visible solo si eligió Manual -->
-    @if (asignacion === 'manual') {
+    <!-- Select operador -->
+    @if (asignacion === 'MANUAL') {
       <div class="select-wrapper operator-select">
         <select class="form-select" [(ngModel)]="operarioSeleccionado">
-          <option value="" disabled>Seleccione un operario</option>
+          <option value="" disabled>
+            {{ 'RESERVE.SELECT' | translate }}
+          </option>
           @for (operario of operarios; track operario.value) {
-            <option [value]="operario.value">{{ operario.label }}</option>
+            <option [value]="operario.value">
+              {{ operario.label }}
+            </option>
           }
         </select>
         <mat-icon class="select-icon">expand_more</mat-icon>
@@ -135,29 +155,28 @@
           [class.selected]="metodoPago === metodo.value"
           (click)="metodoPago = metodo.value">
 
-          <!-- Radio círculo -->
           <div class="radio-circle" [class.selected]="metodoPago === metodo.value">
             @if (metodoPago === metodo.value) {
               <div class="radio-dot"></div>
             }
           </div>
 
-          <!-- Ícono del método -->
           <div class="payment-icon">
             <mat-icon>{{ metodo.icono }}</mat-icon>
           </div>
 
-          <!-- Nombre del método -->
-          <span class="payment-label">{{ metodo.label }}</span>
+          <span class="payment-label">
+            {{ ('PAYMENTS.' + metodo.value + '.TITLE') | translate }}
+          </span>
 
         </div>
       }
     </div>
   </div>
 
-  <!-- Botón Reservar Ahora -->
+  <!-- Botón -->
   <button class="btn-primary" (click)="onSubmit()">
-    Reservar Ahora
+    {{ 'RESERVE.SUBMIT' | translate }}
   </button>
 
 </div>

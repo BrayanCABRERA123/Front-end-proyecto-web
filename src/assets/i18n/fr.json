@@ -68,7 +68,8 @@
     "FULL_WASH": "Lavage complet",
 
     "PREMIUM": "Premium",
-    "BASIC": "Basique"
+    "BASIC": "Basique",
+    "FULL": "Complet"
   },
 
   "EXTRA": {
@@ -85,7 +86,8 @@
 
   "ASSIGNMENT": {
   "MANUAL": "Manuel",
-  "AUTO": "Automatique"
+  "AUTO": "Automatique",
+  "AUTO_DESC": "Le système attribuera automatiquement un opérateur disponible."
 },
 
   "HOME": {
@@ -102,7 +104,11 @@
 
   "VEHICLE": {
     "CAR": "Voiture",
-    "TRUCK": "Camionnette"
+    "TRUCK": "Camionnette",
+    "SEDAN": "Berline",
+    "SUV": "SUV",
+    "PICKUP": "Pickup",
+    "MOTO": "Moto"
   },
 
   "NOTIFICATIONS": {
@@ -125,5 +131,75 @@
   "TIME_1D": "Il y a 1 jour",
   "TIME_2D": "Il y a 2 jours",
   "TIME_3D": "Il y a 3 jours"
+},
+
+"PAYMENTS": {
+  "TITLE": "Paiements",
+  "SUBTITLE": "Voici les méthodes de paiement disponibles",
+
+  "PSE": {
+    "TITLE": "PSE",
+    "DESC": "Payez en ligne via votre banque"
+  },
+
+  "CARD": {
+    "TITLE": "Carte bancaire",
+    "DESC": "Payez avec une carte de crédit ou débit"
+  },
+
+  "NEQUI": {
+    "TITLE": "Nequi",
+    "DESC": "Payez avec votre compte Nequi"
+  },
+
+  "CASH": {
+    "TITLE": "Paiement en espèces",
+    "DESC": "Le paiement est effectué directement à l'opérateur"
+  }
+},
+
+"PROFILE": {
+  "TITLE": "Mon Profil",
+  "MEMBER_SINCE": "Membre depuis {{date}}",
+
+  "NAME": "Nom",
+  "EMAIL": "Email",
+  "PHONE": "Téléphone",
+  "ADDRESS": "Adresse",
+
+  "EDIT": "Modifier le profil",
+  "SAVE": "Enregistrer",
+
+  "PASSWORD": "Mot de passe",
+  "CHANGE_PASSWORD": "Changer le mot de passe",
+  "PASSWORD_DESC": "Un mot de passe sécurisé est recommandé",
+  "CHANGE": "Changer",
+
+  "ACCOUNT": "Compte",
+  "DELETE": "Supprimer le compte",
+  "DELETE_DESC": "Supprimer définitivement votre compte et toutes vos données"
+},
+
+"RATINGS": {
+  "TITLE": "Évaluer le service",
+  "SUBTITLE": "Votre avis nous aide à nous améliorer",
+  "QUESTION": "Comment a été votre expérience ?",
+  "COMMENT": "Commentaires (optionnel)",
+  "PLACEHOLDER": "Parlez-nous de votre expérience...",
+  "SUBMIT": "Envoyer l’évaluation"
+},
+
+"RESERVE": {
+  "TITLE": "Réserver un lavage",
+  "SUBTITLE": "Planifiez votre prochain lavage en quelques étapes",
+  "DATE": "Date",
+  "TIME": "Heure",
+  "ADDRESS": "Adresse",
+  "ADDRESS_PLACEHOLDER": "Rue, numéro, ville...",
+  "VEHICLE": "Type de véhicule",
+  "SERVICE": "Type de service",
+  "ASSIGNMENT": "Affectation de l’opérateur",
+  "SELECT": "Sélectionner",
+  "SUBMIT": "Réserver"
 }
 }

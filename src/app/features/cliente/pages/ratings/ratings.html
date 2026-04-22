@@ -1,35 +1,46 @@
 <div class="ratings-container">
 
-    <app-sidebar></app-sidebar>
+  <app-sidebar></app-sidebar>
 
-    <div class="ratings-content">
+  <div class="ratings-content">
 
-        <h2>Calificar Servicio</h2>
-        <p class="subtitle">Tu opinión nos ayuda a mejorar</p>
+    <h2>{{ 'RATINGS.TITLE' | translate }}</h2>
 
-        <div class="card ratings-card">
+    <p class="subtitle">
+      {{ 'RATINGS.SUBTITLE' | translate }}
+    </p>
 
-            <p class="question">¿Cómo fue tu experiencia?</p>
+    <div class="card ratings-card">
 
-            <div class="stars">
-                <mat-icon *ngFor="let star of [1,2,3,4,5]" (click)="calificar(star)" [class.active]="star <= rating">
-                    star
-                </mat-icon>
-            </div>
+      <p class="question">
+        {{ 'RATINGS.QUESTION' | translate }}
+      </p>
 
-            <!-- COMENTARIO -->
-            <div class="form-group">
-                <label>Comentarios (opcional)</label>
-                <textarea placeholder="Cuéntanos más sobre tu experiencia..."></textarea>
-            </div>
+      <!-- ESTRELLAS -->
+      <div class="stars">
+        <mat-icon
+          *ngFor="let star of [1,2,3,4,5]"
+          (click)="calificar(star)"
+          [class.active]="star <= rating">
+          star
+        </mat-icon>
+      </div>
 
-            <!-- BOTON -->
-            <button class="btn-submit">
-                Enviar Calificación
-            </button>
+      <!-- COMENTARIO -->
+      <div class="form-group">
+        <label>{{ 'RATINGS.COMMENT' | translate }}</label>
+        <textarea
+          [placeholder]="'RATINGS.PLACEHOLDER' | translate">
+        </textarea>
+      </div>
 
-        </div>
+      <!-- BOTÓN -->
+      <button class="btn-submit">
+        {{ 'RATINGS.SUBMIT' | translate }}
+      </button>
 
     </div>
+
+  </div>
 
 </div>

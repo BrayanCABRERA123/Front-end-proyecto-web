@@ -68,7 +68,8 @@
     "FULL_WASH": "Lavagem completa",
 
     "PREMIUM": "Premium",
-    "BASIC": "Básico"
+    "BASIC": "Básico",
+    "FULL": "Completo"
   },
 
   "EXTRA": {
@@ -85,7 +86,8 @@
 
   "ASSIGNMENT": {
   "MANUAL": "Manual",
-  "AUTO": "Automático"
+  "AUTO": "Automático",
+  "AUTO_DESC": "O sistema atribuirá automaticamente um operador disponível."
 },
 
   "HOME": {
@@ -102,7 +104,11 @@
 
   "VEHICLE": {
     "CAR": "Carro",
-    "TRUCK": "Caminhonete"
+    "TRUCK": "Caminhonete",
+    "SEDAN": "Sedan",
+    "SUV": "SUV",
+    "PICKUP": "Pickup",
+    "MOTO": "Moto"
   },
 
   "NOTIFICATIONS": {
@@ -125,5 +131,75 @@
   "TIME_1D": "Há 1 dia",
   "TIME_2D": "Há 2 dias",
   "TIME_3D": "Há 3 dias"
+},
+
+"PAYMENTS": {
+  "TITLE": "Pagamentos",
+  "SUBTITLE": "Estes são os métodos de pagamento disponíveis",
+
+  "PSE": {
+    "TITLE": "PSE",
+    "DESC": "Pague online através do seu banco"
+  },
+
+  "CARD": {
+    "TITLE": "Cartão bancário",
+    "DESC": "Pague com cartão de crédito ou débito"
+  },
+
+  "NEQUI": {
+    "TITLE": "Nequi",
+    "DESC": "Pague com sua conta Nequi"
+  },
+
+  "CASH": {
+    "TITLE": "Pagamento em dinheiro",
+    "DESC": "O pagamento é feito diretamente ao operador"
+  }
+},
+
+"PROFILE": {
+  "TITLE": "Meu Perfil",
+  "MEMBER_SINCE": "Membro desde {{date}}",
+
+  "NAME": "Nome",
+  "EMAIL": "Email",
+  "PHONE": "Telefone",
+  "ADDRESS": "Endereço",
+
+  "EDIT": "Editar perfil",
+  "SAVE": "Salvar",
+
+  "PASSWORD": "Senha",
+  "CHANGE_PASSWORD": "Alterar senha",
+  "PASSWORD_DESC": "Recomenda-se uma senha segura",
+  "CHANGE": "Alterar",
+
+  "ACCOUNT": "Conta",
+  "DELETE": "Excluir conta",
+  "DELETE_DESC": "Excluir permanentemente sua conta e todos os seus dados"
+},
+
+"RATINGS": {
+  "TITLE": "Avaliar serviço",
+  "SUBTITLE": "Sua opinião nos ajuda a melhorar",
+  "QUESTION": "Como foi sua experiência?",
+  "COMMENT": "Comentários (opcional)",
+  "PLACEHOLDER": "Conte-nos mais sobre sua experiência...",
+  "SUBMIT": "Enviar avaliação"
+},
+
+"RESERVE": {
+  "TITLE": "Reservar lavagem",
+  "SUBTITLE": "Agende sua próxima lavagem em poucos passos",
+  "DATE": "Data",
+  "TIME": "Hora",
+  "ADDRESS": "Endereço",
+  "ADDRESS_PLACEHOLDER": "Rua, número, cidade...",
+  "VEHICLE": "Tipo de veículo",
+  "SERVICE": "Tipo de serviço",
+  "ASSIGNMENT": "Atribuição do operador",
+  "SELECT": "Selecionar",
+  "SUBMIT": "Reservar agora"
 }
 }

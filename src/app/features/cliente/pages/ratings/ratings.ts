@@ -4,9 +4,12 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
 // iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-ratings',
-  imports: [CommonModule, SidebarComponent, MatIconModule],
+  standalone: true,
+  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule],
   templateUrl: './ratings.html',
   styleUrl: './ratings.scss',
 })

@@ -67,7 +67,9 @@
   "FULL_WASH": "Lavado completo",
 
   "PREMIUM": "Premium",
-  "BASIC": "Básico"
+  "BASIC": "Básico",
+
+  "FULL": "Completo"
 },
 
   "EXTRA": {
@@ -83,7 +85,8 @@
 
   "ASSIGNMENT": {
   "MANUAL": "Manual",
-  "AUTO": "Automática"
+  "AUTO": "Automática",
+  "AUTO_DESC": "El sistema asignará automáticamente un operario disponible."
 },
 
   "HOME": {
@@ -100,7 +103,11 @@
 
   "VEHICLE": {
     "CAR": "Automóvil",
-    "TRUCK": "Camioneta"
+    "TRUCK": "Camioneta",
+    "SEDAN": "Sedán",
+    "SUV": "SUV",
+    "PICKUP": "Pickup",
+    "MOTO": "Moto"
   },
 
   "NOTIFICATIONS": {
@@ -123,5 +130,75 @@
   "TIME_1D": "Hace 1 día",
   "TIME_2D": "Hace 2 días",
   "TIME_3D": "Hace 3 días"
+},
+
+"PAYMENTS": {
+  "TITLE": "Pagos",
+  "SUBTITLE": "Estos son los tipos de pago que puedes utilizar",
+
+  "PSE": {
+    "TITLE": "PSE",
+    "DESC": "Paga en línea a través de tu banco"
+  },
+
+  "CARD": {
+    "TITLE": "Tarjeta bancaria",
+    "DESC": "Paga con tarjeta de crédito o débito"
+  },
+
+  "NEQUI": {
+    "TITLE": "Nequi",
+    "DESC": "Paga con tu cuenta Nequi"
+  },
+
+  "CASH": {
+    "TITLE": "Pago en efectivo",
+    "DESC": "El pago se realiza directamente al operario durante el servicio"
+  }
+},
+
+"PROFILE": {
+  "TITLE": "Mi Perfil",
+  "MEMBER_SINCE": "Cliente desde {{date}}",
+
+  "NAME": "Nombre",
+  "EMAIL": "Correo electrónico",
+  "PHONE": "Teléfono",
+  "ADDRESS": "Dirección",
+
+  "EDIT": "Editar perfil",
+  "SAVE": "Guardar",
+
+  "PASSWORD": "Contraseña",
+  "CHANGE_PASSWORD": "Cambiar contraseña",
+  "PASSWORD_DESC": "Se recomienda una contraseña segura",
+  "CHANGE": "Cambiar",
+
+  "ACCOUNT": "Cuenta",
+  "DELETE": "Eliminar cuenta",
+  "DELETE_DESC": "Eliminar permanentemente tu cuenta y todos tus datos"
+},
+
+"RATINGS": {
+  "TITLE": "Calificar servicio",
+  "SUBTITLE": "Tu opinión nos ayuda a mejorar",
+  "QUESTION": "¿Cómo fue tu experiencia?",
+  "COMMENT": "Comentarios (opcional)",
+  "PLACEHOLDER": "Cuéntanos más sobre tu experiencia...",
+  "SUBMIT": "Enviar calificación"
+},
+
+"RESERVE": {
+  "TITLE": "Reservar lavado",
+  "SUBTITLE": "Programa tu próximo lavado en pocos pasos",
+  "DATE": "Fecha",
+  "TIME": "Hora",
+  "ADDRESS": "Dirección",
+  "ADDRESS_PLACEHOLDER": "Calle, número, ciudad...",
+  "VEHICLE": "Tipo de vehículo",
+  "SERVICE": "Tipo de servicio",
+  "ASSIGNMENT": "Asignación de operario",
+  "SELECT": "Seleccionar",
+  "SUBMIT": "Reservar ahora"
 }
 }

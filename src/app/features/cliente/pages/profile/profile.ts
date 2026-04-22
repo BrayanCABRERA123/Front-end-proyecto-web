@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
-// para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
-// importamos el sidebar que creamos
 import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
-// iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, MatIconModule],
+  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
-  
 })
 export class ProfileComponent {
+
   editando: boolean = false;
 
   toggleEditar() {
@@ -24,4 +22,11 @@ export class ProfileComponent {
       console.log('Guardar cambios aquí');
     }
   }
+
+  usuario = {
+    nombre: 'Juan Díaz',
+    email: 'juan@email.com',
+    telefono: '+1234 567 890',
+    direccion: 'Calle Principal #123'
+  };
 }

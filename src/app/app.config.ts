@@ -15,12 +15,11 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
 
     provideTranslateService({
-      defaultLanguage: 'es'
-    }),
-
-    provideTranslateHttpLoader({
-      prefix: 'assets/i18n/',
-      suffix: '.json'
+      defaultLanguage: 'es',
+      loader: provideTranslateHttpLoader({
+        prefix: './assets/i18n/',
+        suffix: '.json'
+      })
     })
   ]
 };

@@ -67,7 +67,8 @@
     "FULL_WASH": "Full wash",
 
     "PREMIUM": "Premium",
-    "BASIC": "Basic"
+    "BASIC": "Basic",
+    "FULL": "Full"
   },
 
   "EXTRA": {
@@ -85,7 +86,8 @@
 
   "ASSIGNMENT": {
   "MANUAL": "Manual",
-  "AUTO": "Automatic"
+  "AUTO": "Automatic",
+  "AUTO_DESC": "The system will automatically assign an available operator."
 },
 
   "HOME": {
@@ -102,7 +104,12 @@
 
   "VEHICLE": {
     "CAR": "Car",
-    "TRUCK": "Truck"
+    "TRUCK": "Truck",
+
+    "SEDAN": "Sedan",
+    "SUV": "SUV",
+    "PICKUP": "Pickup",
+    "MOTO": "Motorcycle"
   },
 
   "NOTIFICATIONS": {
@@ -125,5 +132,75 @@
   "TIME_1D": "1 day ago",
   "TIME_2D": "2 days ago",
   "TIME_3D": "3 days ago"
+},
+
+"PAYMENTS": {
+  "TITLE": "Payments",
+  "SUBTITLE": "These are the payment methods you can use",
+
+  "PSE": {
+    "TITLE": "PSE",
+    "DESC": "Pay online through your bank"
+  },
+
+  "CARD": {
+    "TITLE": "Bank Card",
+    "DESC": "Pay with credit or debit card"
+  },
+
+  "NEQUI": {
+    "TITLE": "Nequi",
+    "DESC": "Pay with your Nequi account"
+  },
+
+  "CASH": {
+    "TITLE": "Cash Payment",
+    "DESC": "Payment is made directly to the operator during the service"
+  }
+},
+
+"PROFILE": {
+  "TITLE": "My Profile",
+  "MEMBER_SINCE": "Member since {{date}}",
+
+  "NAME": "Name",
+  "EMAIL": "Email",
+  "PHONE": "Phone",
+  "ADDRESS": "Address",
+
+  "EDIT": "Edit profile",
+  "SAVE": "Save",
+
+  "PASSWORD": "Password",
+  "CHANGE_PASSWORD": "Change password",
+  "PASSWORD_DESC": "A strong password is recommended",
+  "CHANGE": "Change",
+
+  "ACCOUNT": "Account",
+  "DELETE": "Delete account",
+  "DELETE_DESC": "Permanently delete your account and all your data"
+},
+
+"RATINGS": {
+  "TITLE": "Rate service",
+  "SUBTITLE": "Your feedback helps us improve",
+  "QUESTION": "How was your experience?",
+  "COMMENT": "Comments (optional)",
+  "PLACEHOLDER": "Tell us more about your experience...",
+  "SUBMIT": "Submit rating"
+},
+
+"RESERVE": {
+  "TITLE": "Book wash",
+  "SUBTITLE": "Schedule your next wash in a few steps",
+  "DATE": "Date",
+  "TIME": "Time",
+  "ADDRESS": "Address",
+  "ADDRESS_PLACEHOLDER": "Street, number, city...",
+  "VEHICLE": "Vehicle type",
+  "SERVICE": "Service type",
+  "ASSIGNMENT": "Operator assignment",
+  "SELECT": "Select",
+  "SUBMIT": "Book now"
 }
 }

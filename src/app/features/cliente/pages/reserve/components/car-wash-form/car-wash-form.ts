@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // iconos de Material que usa tu compañero
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-car-wash-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule],
   templateUrl: './car-wash-form.html',
   styleUrl: './car-wash-form.scss'
 })
@@ -21,7 +22,7 @@ export class CarWashFormComponent {
   tipoServicio: string = '';
 
   // asignación de operario — 'automatica' o 'manual'
-  asignacion: string = 'automatica';
+  asignacion: string = 'AUTO';
   operarioSeleccionado: string = '';
 
   // método de pago seleccionado
@@ -29,17 +30,17 @@ export class CarWashFormComponent {
 
   // opciones del select de vehículos
   vehiculos = [
-    { value: 'sedan',  label: 'Sedán' },
-    { value: 'suv',    label: 'SUV' },
-    { value: 'pickup', label: 'Pickup' },
-    { value: 'moto',   label: 'Moto' }
+    { value: 'SEDAN' },
+    { value: 'SUV' },
+    { value: 'PICKUP' },
+    { value: 'MOTO' }
   ];
 
   // opciones del select de servicios
   servicios = [
-    { value: 'basico',   label: 'Básico' },
-    { value: 'completo', label: 'Completo' },
-    { value: 'premium',  label: 'Premium' }
+    { value: 'BASIC' },
+    { value: 'FULL' },
+    { value: 'PREMIUM' }
   ];
 
   // opciones del select de operarios
@@ -49,12 +50,12 @@ export class CarWashFormComponent {
     { value: 'op3', label: 'Pedro Martínez' }
   ];
 
-  // métodos de pago con sus íconos de Material
+  // métodos de pago
   metodosPago = [
-    { value: 'pse',      label: 'PSE',                      icono: 'account_balance' },
-    { value: 'tarjeta',  label: 'Tarjeta Bancaria',          icono: 'credit_card' },
-    { value: 'nequi',    label: 'Nequi',                     icono: 'smartphone' },
-    { value: 'efectivo', label: 'Pagar en Físico (Efectivo)', icono: 'payments' }
+    { value: 'PSE', icono: 'account_balance' },
+    { value: 'CARD', icono: 'credit_card' },
+    { value: 'NEQUI', icono: 'smartphone' },
+    { value: 'CASH', icono: 'payments' }
   ];
 
   // se ejecuta cuando hace clic en "Reservar Ahora"

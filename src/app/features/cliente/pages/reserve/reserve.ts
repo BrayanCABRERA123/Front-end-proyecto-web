@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
 // importamos el formulario que está dentro de esta misma página
 import { CarWashFormComponent } from './components/car-wash-form/car-wash-form';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reserve',
@@ -11,7 +12,8 @@ import { CarWashFormComponent } from './components/car-wash-form/car-wash-form';
   imports: [
     CommonModule,
     SidebarComponent,     // menú izquierdo
-    CarWashFormComponent  // formulario de reserva
+    CarWashFormComponent, // formulario de reserva
+    TranslateModule
   ],
   templateUrl: './reserve.html',
   styleUrl: './reserve.scss'
