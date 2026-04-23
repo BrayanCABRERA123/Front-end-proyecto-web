@@ -12,7 +12,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-color: #E0EBEA;
+  background-color: var(--primary-soft);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,7 +23,7 @@
 .step-title {
   font-size: 22px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
   text-align: center;
 }
@@ -31,7 +31,7 @@
 // Texto descriptivo debajo del título
 .step-description {
   font-size: 14px;
-  color: #67777E;
+  color: var(--text-secondary);
   text-align: center;
   margin: 0;
   line-height: 1.5;
@@ -49,7 +49,7 @@
 .form-label {
   font-size: 14px;
   font-weight: 500;
-  color: #131C20;
+  color: var(--text);
 }
 
 // Contenedor del input con el ícono adentro
@@ -63,7 +63,7 @@
 .input-icon {
   position: absolute;
   left: 12px;
-  color: #67777E;
+  color: var(--text-muted);
   pointer-events: none;
 }
 
@@ -71,50 +71,47 @@
 .form-input {
   width: 100%;
   padding: 12px 12px 12px 40px;
-  border: 1.5px solid #DCE5E4;
+  border: 1.5px solid var(--border);
   border-radius: 10px;
   font-size: 14px;
-  color: #131C20;
-  background-color: #ffffff;
+  color: var(--text);
+  background-color: var(--card);
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.2s ease;
 
-  // Borde teal cuando el input está enfocado
   &:focus {
-    border-color: #29AEA0;
+    border-color: var(--primary);
   }
 
-  // Color del placeholder
   &::placeholder {
-    color: #67777E;
+    color: var(--text-muted);
   }
 }
 
-// Botón principal teal
+// Botón principal
 .btn-primary {
   width: 100%;
   padding: 14px;
-  background-color: #29AEA0;
+  background-color: var(--primary);
   color: #ffffff;
   border: none;
   border-radius: 10px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: 0.2s ease;
   margin-top: 4px;
 
-  // Oscurece el botón al pasar el mouse
   &:hover {
-    background-color: #229990;
+    opacity: 0.9;
   }
 }
 
 // Link de volver al login
 .back-link {
   font-size: 14px;
-  color: #29AEA0;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 500;
 

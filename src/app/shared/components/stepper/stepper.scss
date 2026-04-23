@@ -11,9 +11,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid #DCE5E4;
-  background-color: #ffffff;
-  color: #67777E;
+  border: 2px solid var(--border);
+  background-color: var(--card);
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,17 +21,17 @@
   font-weight: 600;
   transition: all 0.3s ease;
 
-  // Paso activo — círculo teal
+  // Paso activo — círculo principal
   &.active {
-    background-color: #29AEA0;
-    border-color: #29AEA0;
+    background-color: var(--primary);
+    border-color: var(--primary);
     color: #ffffff;
   }
 
-  // Paso completado — círculo teal con opacidad
+  // Paso completado — círculo suavizado
   &.completed {
-    background-color: #29AEA0;
-    border-color: #29AEA0;
+    background-color: var(--primary);
+    border-color: var(--primary);
     color: #ffffff;
     opacity: 0.7;
   }
@@ -41,11 +41,11 @@
 .step-line {
   width: 48px;
   height: 2px;
-  background-color: #DCE5E4;
+  background-color: var(--border);
   transition: background-color 0.3s ease;
 
   // Línea activa cuando el siguiente paso está activo o completado
   &.line-active {
-    background-color: #29AEA0;
+    background-color: var(--primary);
   }
 }

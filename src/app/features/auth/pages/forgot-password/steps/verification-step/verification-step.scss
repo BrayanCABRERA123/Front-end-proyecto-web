@@ -12,7 +12,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-color: #E0EBEA;
+  background-color: var(--primary-soft); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,7 +23,7 @@
 .step-title {
   font-size: 22px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text); 
   margin: 0;
   text-align: center;
 }
@@ -31,7 +31,7 @@
 // Descripción con el email resaltado
 .step-description {
   font-size: 14px;
-  color: #67777E;
+  color: var(--text-secondary); 
   text-align: center;
   margin: 0;
   line-height: 1.5;
@@ -39,7 +39,7 @@
 
 // Email en teal dentro de la descripción
 .email-highlight {
-  color: #29AEA0;
+  color: var(--primary); 
   font-weight: 500;
 }
 
@@ -54,27 +54,30 @@
 .digit-input {
   width: 44px;
   height: 52px;
-  border: 1.5px solid #DCE5E4;
+  border: 1.5px solid var(--border); 
   border-radius: 10px;
   text-align: center;
   font-size: 20px;
   font-weight: 600;
-  color: #131C20;
-  background-color: #ffffff;
+  color: var(--text); 
+  background-color: var(--item-bg); 
   outline: none;
   transition: border-color 0.2s ease;
 
-  // Borde teal cuando está enfocado
+  // Borde cuando está enfocado
   &:focus {
-    border-color: #29AEA0;
-    background-color: #F9FBFB;
+    border-color: var(--primary); 
+    background-color: var(--bg); 
+    
   }
+
+  box-shadow: 0 0 0 3px var(--primary-soft)
 }
 
 // Link de reenviar código
 .resend-link {
   font-size: 13px;
-  color: #29AEA0;
+  color: var(--primary); 
   text-decoration: none;
   font-weight: 500;
 
@@ -83,29 +86,29 @@
   }
 }
 
-// Botón principal teal
+// Botón principal
 .btn-primary {
   width: 100%;
   padding: 14px;
-  background-color: #29AEA0;
+  background-color: var(--primary); 
   color: #ffffff;
   border: none;
   border-radius: 10px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: 0.2s ease;
   margin-top: 4px;
 
   &:hover {
-    background-color: #229990;
+    opacity: 0.9;
   }
 }
 
 // Link de volver al login
 .back-link {
   font-size: 14px;
-  color: #29AEA0;
+  color: var(--primary); 
   text-decoration: none;
   font-weight: 500;
 

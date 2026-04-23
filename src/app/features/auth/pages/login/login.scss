@@ -1,7 +1,8 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: #f5f6f7;
+    background: var(--bg);
+    color: var(--text);
 }
 
 .login-container {
@@ -9,14 +10,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: var(--bg);
 }
 
 .login-card {
-    background: #fff;
+    background: var(--card);
+
     padding: 40px;
     width: 350px;
     border-radius: 15px;
+    /*  Sombra adaptada a tema  */
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
     text-align: center;
 }
 
@@ -37,14 +42,17 @@ body {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
+    color: var(--text);
 }
 
 h3 {
     margin-top: 20px;
+    color: var(--text);
 }
 
 .subtitle {
-    color: gray;
+    color: var(--text-secondary);
+
     font-size: 14px;
     margin-bottom: 20px;
 }
@@ -57,26 +65,36 @@ label {
     font-size: 14px;
     margin-top: 10px;
     display: block;
+    color: var(--text);
 }
 
 input {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
+
     border-radius: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border);
+    background: var(--item-bg);
+    color: var(--text);
+
     outline: none;
 }
 
+input::placeholder {
+    color: var(--text-muted);
+}
+
 input:focus {
-    border-color: #2bbbad;
+    border-color: var(--primary);
 }
 
 .forgot {
     display: block;
     margin-top: 10px;
     font-size: 13px;
-    color: #2bbbad;
+    color: var(--primary);
+
     text-align: right;
     cursor: pointer;
 }
@@ -87,7 +105,12 @@ button {
     padding: 12px;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(90deg, #2bbbad, #3ad1c2);
+    background: linear-gradient(
+        90deg,
+        var(--primary),
+        rgba(var(--primary-rgb), 0.7)
+    );
+
     color: white;
     font-weight: bold;
     cursor: pointer;
@@ -100,10 +123,11 @@ button:hover {
 .register {
     margin-top: 15px;
     font-size: 14px;
+    color: var(--text-secondary);
 }
 
 .register span {
-    color: #2bbbad;
+    color: var(--primary);
     cursor: pointer;
     font-weight: bold;
 }
