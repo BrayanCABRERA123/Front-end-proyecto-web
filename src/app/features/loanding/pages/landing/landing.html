@@ -1,0 +1,69 @@
+<div class="landing-container">
+
+  <!-- navbar fijo transparente -->
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <mat-icon class="logo-icon">water_drops</mat-icon>
+      <span class="logo-text">Lavado Vehicular</span>
+    </div>
+    <div class="navbar-actions">
+      <a routerLink="/auth" class="btn-login">Iniciar Sesión</a>
+      <a routerLink="/auth/register" class="btn-register">Registrarse</a>
+    </div>
+  </nav>
+
+  <!-- hero section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <mat-icon>settings</mat-icon>
+        Servicio móvil de lavado #1
+      </div>
+      <h1 class="hero-title">
+        Tu auto impecable,<br>donde estés
+      </h1>
+      <p class="hero-description">
+        Reserva tu lavado en minutos. Llegamos a tu ubicación con
+        todo el equipo profesional. Sin filas, sin esperas.
+      </p>
+      <div class="hero-buttons">
+        <a routerLink="/auth/register" class="btn-primary">
+          Comenzar Ahora
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
+        <a routerLink="/auth" class="btn-secondary">
+          Ya tengo cuenta
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- sección por qué elegirnos -->
+  <section class="features-section">
+    <h2 class="features-title">¿Por qué elegirnos?</h2>
+    <p class="features-subtitle">
+      Brindamos el mejor servicio de lavado móvil con calidad profesional.
+    </p>
+    <div class="features-grid">
+      @for (feature of features; track feature.titulo) {
+        <div class="feature-card">
+          <div class="feature-icon">
+            <mat-icon>{{ feature.icono }}</mat-icon>
+          </div>
+          <p class="feature-titulo">{{ feature.titulo }}</p>
+          <p class="feature-descripcion">{{ feature.descripcion }}</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="footer-logo">
+      <mat-icon class="logo-icon">water_drop</mat-icon>
+      <span class="logo-text">Lavado Vehicular</span>
+    </div>
+  </footer>
+
+</div>

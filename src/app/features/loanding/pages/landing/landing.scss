@@ -1,0 +1,338 @@
+// contenedor principal
+.landing-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+// ================================
+// NAVBAR
+// ================================
+
+// navbar fijo y transparente sobre el hero
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: transparent;
+  background-color: #ffffffb9;
+}
+
+// logo del navbar
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .logo-icon {
+    color: #2ec4b6;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000000;
+  }
+}
+
+// botones del navbar
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// botón iniciar sesión
+.btn-login {
+  padding: 10px 20px;
+  color: #000000;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+// botón registrarse
+.btn-register {
+  padding: 10px 20px;
+  background-color: #2ec4b6;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #229990;
+  }
+}
+
+// ================================
+// HERO
+// ================================
+
+// hero ocupa toda la pantalla
+.hero-section {
+  position: relative;
+  min-height: 80vh;
+  background-image: url('../../../../../../public/images/hero.png');
+  background-size: cover;
+  background-position: center;
+  background-color: #131C20;
+  display: flex;
+  align-items: flex-end;
+  padding: 80px 48px 60px;
+}
+
+// overlay oscuro con tono teal
+// overlay verde transparente sobre la imagen
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(19, 28, 32, 0.80) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+// contenido del hero
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 120px;
+}
+
+// badge superior
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  width: fit-content;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// título principal
+.hero-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+// descripción
+.hero-description {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+// botones del hero
+.hero-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+// botón primario blanco
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #ffffff;
+  color: #131C20;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: #2ec4b6;
+    color: #ffffff;
+  }
+}
+
+// botón secundario outline
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: transparent;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+  }
+}
+
+// ================================
+// FEATURES
+// ================================
+
+// sección por qué elegirnos
+.features-section {
+  padding: 64px 48px;
+  background-color: #F9FBFB;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+// título
+.features-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #131C20;
+  margin: 0;
+  text-align: center;
+}
+
+// subtítulo
+.features-subtitle {
+  font-size: 14px;
+  color: #67777E;
+  margin: 0 0 24px 0;
+  text-align: center;
+}
+
+// grid de 3 cards
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+}
+
+// cada card
+.feature-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// ícono de la card
+.feature-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: #E0EBEA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    color: #2ec4b6;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+// título de la card
+.feature-titulo {
+  font-size: 15px;
+  font-weight: 700;
+  color: #131C20;
+  margin: 0;
+}
+
+// descripción de la card
+.feature-descripcion {
+  font-size: 13px;
+  color: #67777E;
+  margin: 0;
+}
+
+// ================================
+// FOOTER
+// ================================
+
+.footer {
+  padding: 32px 48px;
+  background-color: #ffffff;
+  border-top: 1px solid #EDF2F2;
+  display: flex;
+  align-items: center;
+}
+
+// logo del footer
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .logo-icon {
+    color: #2ec4b6;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #131C20;
+  }
+}
