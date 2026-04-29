@@ -22,4 +22,24 @@ export class EmailStepComponent {
       this.emailSent.emit(this.email);
     }
   }
+
+  get emailInvalido(): boolean {
+    if(!this.email) return false;
+
+    return !/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(this.email);
+  }
+
+  limpiarEspaciosCorreo() {
+
+    if (!this.email) return;
+
+    this.email = this.email.replace(/\s /g, '');
+
+  }
+
+  bloquearEspacios(event: KeyboardEvent){
+      if ( event.key === ' '){
+        event.preventDefault();
+      }
+  }
 }

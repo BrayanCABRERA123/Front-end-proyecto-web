@@ -21,20 +21,30 @@ export class VerificationStepComponent {
   @ViewChildren('digitInput') digitInputs!: QueryList<ElementRef>;
 
   onDigitInput(index: number, event: Event): void {
+
     const input = event.target as HTMLInputElement;
-    const value = input.value;
 
-    if (!/^\d*$/.test(value)) {
-      this.codeDigits[index] = '';
-      return;
-    }
+    // eliminar todo lo que no sea número
+    let value = input.value.replace(/\D/g, '');
 
-    this.codeDigits[index] = value.slice(-1);
+    // permitir solo un carácter
+    value = value.substring(0, 1);
 
-    if (value && index < 5) {
+    // actualizar input visual
+    input.value = value;
+
+    // actualizar array
+    this.codeDigits[index] = value;
+
+    // avanzar automáticamente
+    if (value && index < this.codeDigits.length - 1) {
+
       const inputs = this.digitInputs.toArray();
+
       inputs[index + 1].nativeElement.focus();
+
     }
+
   }
 
   onKeyDown(index: number, event: KeyboardEvent): void {
@@ -49,5 +59,34 @@ export class VerificationStepComponent {
     if (fullCode.length === 6) {
       this.codeVerified.emit();
     }
+  }
+
+  // Validacion para que permita solo numeros
+  handleKeyDown(index: number, event: KeyboardEvent): void {
+
+    const tecla = event.key;
+
+    const teclasPermitidas = [
+      'Backspace',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab'
+    ];
+
+    // bloquear letras y símbolos
+    if (!/^[0-9]$/.test(tecla) && !teclasPermitidas.includes(tecla)) {
+      event.preventDefault();
+      return;
+    }
+
+    // retroceder con backspace
+    if (tecla === 'Backspace' && !this.codeDigits[index] && index > 0) {
+
+      const inputs = this.digitInputs.toArray();
+
+      inputs[index - 1].nativeElement.focus();
+
+    }
+
   }
 }

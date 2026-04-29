@@ -24,7 +24,7 @@
         class="digit-input"
         [value]="digit"
         (input)="onDigitInput($index, $event)"
-        (keydown)="onKeyDown($index, $event)"/>
+        (keydown)="handleKeyDown($index, $event)" />
     }
   </div>
 

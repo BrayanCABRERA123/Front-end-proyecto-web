@@ -230,3 +230,42 @@ input[type="password"]::-webkit-credentials-auto-fill-button {
   display: none !important;
   pointer-events: none;
 }
+// Campo contraseña
+.requirements {
+  margin-top: 8px;
+}
+
+.requirement {
+  font-size: 13px;
+  color: #67777E;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.req-dot {
+  width: 6px;
+  height: 6px;
+  background: #cfd8dc;
+  border-radius: 50%;
+}
+
+.requirement.met {
+  color: #29AEA0;
+}
+
+.requirement.met .req-dot {
+  background: #29AEA0;
+}
+
+.error-msg {
+  color: #e53935;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid #e53935 !important;
+}

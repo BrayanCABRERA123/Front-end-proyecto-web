@@ -131,3 +131,21 @@ button:hover {
     cursor: pointer;
     font-weight: bold;
 }
+.error-msg {
+    color: #e53935;
+    font-size: 11px;
+    margin-top: 4px;
+    display: block;
+}
+
+.input-wrapper input.ng-invalid.ng-touched {
+    border: 1px solid #e53935 !important;
+    background: #fff5f5;
+}
+
+// Cursor con icono bloqueado
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
