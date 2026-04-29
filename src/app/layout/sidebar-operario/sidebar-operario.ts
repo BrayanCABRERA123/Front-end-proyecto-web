@@ -12,26 +12,36 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class SidebarOperarioComponent {
 
-  // datos del operario que se muestran en el sidebar
+  // controla si el sidebar está abierto en mobile
+  isOpen: boolean = false;
+
   usuario = {
     nombre: 'Juan Díaz',
     correo: 'juan@email.com',
     iniciales: 'JD'
   };
 
-  // menú del operario — diferente al del cliente
   menuItems = [
-    { icono: 'person',            label: 'Perfil',               ruta: '/operario/profile' },
-    { icono: 'assignment',        label: 'Servicios Asignados',   ruta: '/operario/assigned-services' },
-    { icono: 'notifications',     label: 'Notificaciones',        ruta: '/operario/notifications' },
-    { icono: 'history',           label: 'Historial',             ruta: '/operario/service-history' },
-    { icono: 'star_outline',      label: 'Calificaciones',        ruta: '/operario/qualifications' },
-    { icono: 'settings',          label: 'Configuración',         ruta: '/operario/settings' },
+    { icono: 'person',       label: 'Perfil',             ruta: '/operario/profile' },
+    { icono: 'assignment',   label: 'Servicios Asignados', ruta: '/operario/assigned-services' },
+    { icono: 'notifications',label: 'Notificaciones',      ruta: '/operario/notifications' },
+    { icono: 'history',      label: 'Historial',           ruta: '/operario/service-history' },
+    { icono: 'star_outline', label: 'Calificaciones',      ruta: '/operario/qualifications' },
+    { icono: 'settings',     label: 'Configuración',       ruta: '/operario/settings' },
   ];
 
   constructor(private router: Router) {}
 
-  // navega al login al cerrar sesión
+  // abre o cierra el sidebar en mobile
+  toggleSidebar(): void {
+    this.isOpen = !this.isOpen;
+  }
+
+  // cierra el sidebar al hacer clic en un item
+  closeSidebar(): void {
+    this.isOpen = false;
+  }
+
   cerrarSesion() {
     this.router.navigate(['/auth/login']);
   }

@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as *;
+
 /* contenedor principal del sidebar */
 .sidebar {
   width: 270px;
@@ -134,38 +136,5 @@
     &:hover {
       color: white;
     }
-  }
-}
-
-/* TABLET */
-@media screen and (max-width: 1024px) {
-  .sidebar {
-    width: 220px;
-  }
-
-  .sidebar-logo {
-    font-size: 14px;
-  }
-
-  .menu-item {
-    font-size: 12px;
-    padding: 10px 12px;
-  }
-}
-
-/* MOVIL */
-@media screen and (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    left: -270px;
-    top: 0;
-    height: 100vh;
-    width: 270px;
-    z-index: 1000;
-    transition: 0.3s ease;
-  }
-
-  .sidebar.active {
-    left: 0;
   }
 }
