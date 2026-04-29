@@ -9,18 +9,36 @@
         <h3>Iniciar Sesión</h3>
         <p class="subtitle">Ingresa a tu cuenta para reservar</p>
 
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+
             <label>Correo Electrónico</label>
-            <input type="email" placeholder="tu@email.com">
+            <input ttype="email" formControlName="correo" placeholder="usuario@gmail.com" (input)="correoSinEspacios()">
+
+            <span class="error-msg" *ngIf="f['correo'].errors?.['required'] && f['correo'].touched">
+            
+                El correo es obligatorio
+            
+            </span>
+            
+            <span class="error-msg" *ngIf="f['correo'].errors?.['pattern'] && f['correo'].touched">
+            
+                Debe ingresar un correo válido @gmail.com
+            
+            </span>
 
             <label>Contraseña</label>
-            <input type="password" placeholder="********">
+            <input type="password" formControlName="contrasena" placeholder="********">
+
+            <span class="error-msg" *ngIf="f['contrasena'].errors?.['required'] && f['contrasena'].touched">
+
+                La contraseña es obligatoria
+            </span>
 
             <a class="forgot" routerLink="/auth/forgot-password">
                 ¿Olvidaste tu contraseña?
             </a>
 
-            <button type="submit">Iniciar Sesión</button>
+            <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
         </form>
 
         <p class="register">

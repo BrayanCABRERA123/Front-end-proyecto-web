@@ -24,16 +24,20 @@
         style="color: #67777E; font-size: 18px;">
       </iconify-icon>
 
-      <input
-        type="email"
-        class="form-input"
-        placeholder="tu@email.com"
-        [(ngModel)]="email"/>
+      <input type="email" class="form-input" placeholder="usuario@gmail.com" [(ngModel)]="email" name="email" required
+        pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" (keypress)="bloquearEspacios($event)" (input)="limpiarEspaciosCorreo()"
+        [class.input-error]="emailInvalido">
 
     </div>
+
+    <span class="error-msg" *ngIf="emailInvalido && emailInvalido">
+    
+      Debe ingresar un correo válido @gmail.com
+    
+    </span>
   </div>
 
-  <button class="btn-primary" (click)="onSubmit()">
+  <button class="btn-primary" (click)="onSubmit()" [disabled]="!email || emailInvalido">
     Enviar Código
   </button>
 

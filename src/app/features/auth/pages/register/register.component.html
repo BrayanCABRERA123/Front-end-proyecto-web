@@ -14,129 +14,203 @@
 
     <!-- FORMULARIO -->
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
-
+    
       <!-- NOMBRE -->
       <div class="form-group">
         <label>Nombre Completo</label>
-
+    
         <div class="input-wrapper">
           <span class="input-icon material-icons">person</span>
-
-          <input
-            type="text"
-            formControlName="nombre"
-            placeholder="Juan Pérez"
+    
+          <input type="text" formControlName="nombre" placeholder="Juan Pérez"
             [class.input-error]="f['nombre'].invalid && f['nombre'].touched">
         </div>
-
-        <span class="error-msg"
-          *ngIf="f['nombre'].invalid && f['nombre'].touched">
-          Ingresa tu nombre completo (mínimo 3 caracteres)
+    
+        <span class="error-msg" *ngIf="f['nombre'].errors?.['required'] && f['nombre'].touched">
+          El nombre es obligatorio
+        </span>
+    
+        <span class="error-msg" *ngIf="f['nombre'].errors?.['minlength'] && f['nombre'].touched">
+          Debe tener mínimo 3 caracteres
         </span>
       </div>
-
+    
+    
       <!-- CORREO -->
       <div class="form-group">
         <label>Correo Electrónico</label>
-
+    
         <div class="input-wrapper">
           <span class="input-icon material-icons">mail</span>
-
-          <input
-            type="email"
-            formControlName="correo"
-            placeholder="tu@email.com"
-            [class.input-error]="f['correo'].invalid && f['correo'].touched">
+    
+          <input type="email" formControlName="correo" placeholder="usuario@gmail.com" (keypress)="bloquearEspacios($event)"
+            (input)="limpiarEspaciosCorreo()" [class.input-error]="f['correo'].invalid && f['correo'].touched">
         </div>
-
-        <span class="error-msg"
-          *ngIf="f['correo'].invalid && f['correo'].touched">
-          Ingresa un correo válido
+    
+        <span class="error-msg" *ngIf="f['correo'].errors?.['required'] && f['correo'].touched">
+          El correo es obligatorio
+        </span>
+    
+        <span class="error-msg" *ngIf="f['correo'].errors?.['pattern'] && f['correo'].touched">
+          Solo se permiten correos @gmail.com
         </span>
       </div>
-
+    
+    
       <!-- TELÉFONO -->
       <div class="form-group">
+      
         <label>Teléfono</label>
-
+      
         <div class="input-wrapper">
+      
           <span class="input-icon material-icons">call</span>
-
-          <input
-            type="tel"
-            formControlName="telefono"
-            placeholder="1234567890"
-            [class.input-error]="f['telefono'].invalid && f['telefono'].touched">
+      
+          <input type="text" formControlName="telefono" placeholder="3001234567" maxlength="10" inputmode="numeric"
+            autocomplete="off" (input)="limpiarTelefono()" [class.input-error]="f['telefono'].invalid && f['telefono'].touched">
+      
         </div>
-
-        <span class="error-msg"
-          *ngIf="f['telefono'].invalid && f['telefono'].touched">
-          Ingresa un teléfono de 10 dígitos
+      
+      
+        <!-- obligatorio -->
+        <span class="error-msg" *ngIf="f['telefono'].errors?.['required'] && f['telefono'].touched">
+          El teléfono es obligatorio
         </span>
+      
+      
+        <!-- debe empezar en 3 -->
+        <span class="error-msg" *ngIf="f['telefono'].errors?.['pattern'] && f['telefono'].touched">
+          Debe comenzar con 3 (número celular colombiano)
+        </span>
+      
+      
+        <!-- longitud incorrecta -->
+        <span class="error-msg" *ngIf="f['telefono'].errors?.['minlength'] && f['telefono'].touched">
+          El número debe tener 10 dígitos
+        </span>
+      
       </div>
-
+    
+    
+      <!-- CONTRASEÑA -->
       <!-- CONTRASEÑA -->
       <div class="form-group">
+      
         <label>Contraseña</label>
-
+      
         <div class="input-wrapper">
-          <span class="input-icon material-icons">lock</span>
-
-          <input
-            [type]="mostrarContrasena ? 'text' : 'password'"
-            formControlName="contrasena"
-            placeholder="Mínimo 8 caracteres"
-            [class.input-error]="f['contrasena'].invalid && f['contrasena'].touched">
-
-          <!-- OJO -->
+      
+          <span class="input-icon material-icons">
+            lock
+          </span>
+      
+          <input [type]="mostrarContrasena ? 'text' : 'password'" formControlName="contrasena"
+            placeholder="Mínimo 8 caracteres" [class.input-error]="f['contrasena'].invalid && f['contrasena'].touched">
+      
           <button type="button" class="toggle-btn" (click)="toggleContrasena()">
-            <span class="material-icons" *ngIf="!mostrarContrasena">visibility</span>
-            <span class="material-icons" *ngIf="mostrarContrasena">visibility_off</span>
+      
+            <span class="material-icons" *ngIf="!mostrarContrasena">
+              visibility
+            </span>
+      
+            <span class="material-icons" *ngIf="mostrarContrasena">
+              visibility_off
+            </span>
+      
           </button>
+      
         </div>
-
-        <span class="error-msg"
-          *ngIf="f['contrasena'].invalid && f['contrasena'].touched">
-          La contraseña debe tener mínimo 8 caracteres
+      
+      
+        <!-- CHECKLIST DINÁMICO -->
+        <div class="requirements">
+      
+          <div class="requirement" [class.met]="hasMinLength">
+            <span class="req-dot"></span>
+            Mínimo 8 caracteres
+          </div>
+      
+          <div class="requirement" [class.met]="hasUppercase">
+            <span class="req-dot"></span>
+            Al menos una mayúscula
+          </div>
+      
+          <div class="requirement" [class.met]="hasNumber">
+            <span class="req-dot"></span>
+            Al menos un número
+          </div>
+      
+          <div class="requirement" [class.met]="hasSpecialChar">
+            <span class="req-dot"></span>
+            Al menos un carácter especial
+          </div>
+      
+        </div>
+      
+      
+        <!-- ERROR REQUIRED -->
+        <span class="error-msg" *ngIf="f['contrasena'].errors?.['required'] && f['contrasena'].touched">
+      
+          La contraseña es obligatoria
+      
         </span>
+      
       </div>
-
+    
+    
       <!-- CONFIRMAR CONTRASEÑA -->
       <div class="form-group">
         <label>Confirmar Contraseña</label>
-
+    
         <div class="input-wrapper">
           <span class="input-icon material-icons">lock</span>
-
-          <input
-            [type]="mostrarConfirmar ? 'text' : 'password'"
-            formControlName="confirmar"
+    
+          <input [type]="mostrarConfirmar ? 'text' : 'password'" formControlName="confirmar"
             placeholder="Repite tu contraseña"
-            [class.input-error]="f['confirmar'].touched && !contrasenasCoinciden">
-
-          <!-- OJO -->
+            [class.input-error]="f['confirmar'].errors?.['noCoincide'] && f['confirmar'].touched">
+    
           <button type="button" class="toggle-btn" (click)="toggleConfirmar()">
-            <span class="material-icons" *ngIf="!mostrarConfirmar">visibility</span>
-            <span class="material-icons" *ngIf="mostrarConfirmar">visibility_off</span>
+    
+            <span class="material-icons" *ngIf="!mostrarConfirmar">
+              visibility
+            </span>
+    
+            <span class="material-icons" *ngIf="mostrarConfirmar">
+              visibility_off
+            </span>
+    
           </button>
         </div>
-
-        <span class="error-msg"
-          *ngIf="f['confirmar'].touched && !contrasenasCoinciden">
+    
+        <span class="error-msg" *ngIf="f['confirmar'].errors?.['required'] && f['confirmar'].touched">
+          Debes confirmar la contraseña
+        </span>
+    
+        <span class="error-msg" *ngIf="f['confirmar'].errors?.['noCoincide'] && f['confirmar'].touched">
           Las contraseñas no coinciden
         </span>
       </div>
 
+      <span class="error-msg" *ngIf="loginError">
+      
+        Correo o contraseña incorrectos
+      
+      </span>
+    
+    
       <!-- BOTÓN -->
-      <button
-        type="submit"
-        class="btn-register"
-        [disabled]="registerForm.invalid || !contrasenasCoinciden || cargando">
-
-        <span *ngIf="!cargando">Registrarse</span>
-        <span *ngIf="cargando">Registrando...</span>
+      <button type="submit" class="btn-register" [disabled]="registerForm.invalid || cargando">
+    
+        <span *ngIf="!cargando">
+          Registrarse
+        </span>
+    
+        <span *ngIf="cargando">
+          Registrando...
+        </span>
+    
       </button>
-
+    
     </form>
 
     <!-- FOOTER -->
