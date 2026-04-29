@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as *;
+
 /* contenedor principal del sidebar */
 .sidebar {
   width: 270px;
@@ -145,10 +147,40 @@
   }
 }
 
+/* BOTÓN HAMBURGUESA — solo visible en mobile */
+.hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1100;
+  background-color: var(--primary);
+  border: none;
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+  mat-icon {
+    color: #ffffff;
+    font-size: 22px;
+  }
+}
+
+/* OVERLAY detrás del sidebar en mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
 
 /* TABLET */
-@media screen and (max-width: 1024px) {
-
+@include tablet {
   .sidebar {
     width: 220px;
   }
@@ -161,12 +193,17 @@
     font-size: 12px;
     padding: 10px 12px;
   }
-
 }
 
+/* MOBILE */
+@include mobile {
+  .hamburger-btn {
+    display: flex;
+  }
 
-/* MOVIL */
-@media screen and (max-width: 768px) {
+  .sidebar-overlay {
+    display: block;
+  }
 
   .sidebar {
     position: fixed;
@@ -175,12 +212,10 @@
     height: 100vh;
     width: 270px;
     z-index: 1000;
-    transition: 0.3s ease;
-  }
+    transition: left 0.3s ease;
 
-  /* Cuando se abre */
-  .sidebar.active {
-    left: 0;
+    &.active {
+      left: 0;
+    }
   }
-
 }

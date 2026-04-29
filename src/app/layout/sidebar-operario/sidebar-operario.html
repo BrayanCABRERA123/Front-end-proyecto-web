@@ -1,4 +1,14 @@
-<aside class="sidebar">
+<!-- botón hamburguesa solo visible en mobile -->
+<button class="hamburger-btn" (click)="toggleSidebar()">
+  <mat-icon>{{ isOpen ? 'close' : 'menu' }}</mat-icon>
+</button>
+
+<!-- overlay oscuro detrás del sidebar en mobile -->
+@if (isOpen) {
+  <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+}
+
+<aside class="sidebar" [class.active]="isOpen">
 
   <!-- Logo -->
   <div class="sidebar-logo">
@@ -15,13 +25,14 @@
     </div>
   </div>
 
-  <!-- Menú de navegación -->
+  <!-- Menú del operario — diferente al del cliente -->
   <nav class="sidebar-menu">
     @for (item of menuItems; track item.ruta) {
       <a [routerLink]="item.ruta"
          routerLinkActive="activo"
          [routerLinkActiveOptions]="{ exact: true }"
-         class="menu-item">
+         class="menu-item"
+         (click)="closeSidebar()">
         <mat-icon class="menu-icono">{{ item.icono }}</mat-icon>
         <span class="menu-label">{{ item.label }}</span>
       </a>

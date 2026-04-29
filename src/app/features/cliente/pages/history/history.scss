@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 // contenedor principal con sidebar y contenido en fila
 .page-container {
   display: flex;
@@ -183,5 +185,72 @@
   p {
     font-size: 16px;
     margin: 0;
+  }
+}
+
+// ================================
+// RESPONSIVE
+// ================================
+
+// tablet
+@include tablet {
+  .main-content {
+    padding: 24px 32px;
+  }
+
+  .filters-card {
+    margin: 0;
+  }
+
+  .filters-row {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .dates-row {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+// mobile
+@include mobile {
+  .page-container {
+    flex-direction: column;
+  }
+
+  .main-content {
+    padding: 72px 16px 24px;
+    gap: 16px;
+  }
+
+  .filters-card {
+    margin: 0;
+    padding: 16px;
+  }
+
+  .filters-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .dates-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .date-input {
+    width: 100%;
+  }
+
+  .search-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-input {
+    width: 100%;
   }
 }

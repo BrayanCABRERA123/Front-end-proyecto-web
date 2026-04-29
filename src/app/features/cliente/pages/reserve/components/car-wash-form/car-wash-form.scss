@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/mixins' as *;
+
 // tarjeta blanca contenedora
 .form-card {
   background-color: var(--card);
@@ -251,5 +253,51 @@
 
   &:hover {
     filter: brightness(1.1);
+  }
+}
+
+// ================================
+// RESPONSIVE
+// ================================
+
+// tablet
+@include tablet {
+  .form-card {
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 24px;
+  }
+}
+
+// mobile
+@include mobile {
+  .form-card {
+    margin: 0;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  // fecha y hora en columna en mobile
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  // tipo vehículo y servicio en columna en mobile
+  .form-row:nth-child(3) {
+    grid-template-columns: 1fr;
+  }
+
+  .form-input,
+  .form-select {
+    font-size: 16px;
+  }
+
+  .payment-option {
+    padding: 12px;
+  }
+
+  .btn-primary {
+    padding: 16px;
+    font-size: 16px;
   }
 }

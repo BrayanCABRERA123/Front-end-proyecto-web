@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 /* SIDEBAR */
 app-sidebar {
     width: 260px;
@@ -303,42 +305,64 @@ app-sidebar {
     color: var(--primary) !important;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-    .profile-container {
-        flex-direction: column;
-    }
+// ================================
+// RESPONSIVE
+// ================================
 
-    app-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
+// tablet
+@include tablet {
+  .profile-container {
+    flex-direction: column;
+  }
 
-    .profile-left,
-    .profile-right {
-        width: 100%;
-        max-width: 100%;
-        padding: 20px;
-    }
+  .profile-right {
+    padding: 20px 30px;
+  }
+
+  .profile-left {
+    padding: 20px 30px;
+  }
 }
 
-@media (max-width: 600px) {
+// mobile
+@include mobile {
+  .profile-container {
+    flex-direction: column;
+    gap: 0;
+  }
 
-    .profile-container {
-        flex-direction: column;
-    }
+  .profile-left {
+    padding: 16px;
+  }
 
-    .profile-left,
-    .profile-right {
-        padding: 15px;
-    }
+  .profile-right {
+    padding: 16px;
+    gap: 16px;
+  }
 
-    .profile-card {
-        padding: 20px;
-    }
+  .profile-card {
+    padding: 16px;
+  }
 
-    .input-icon input {
-        padding: 12px 12px 12px 45px;
-    }
+  .input-icon input {
+    padding: 12px 12px 12px 45px !important;
+    font-size: 14px;
+  }
+
+  .card-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .btn-primary,
+  .btn-danger {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .card-header h3 {
+    font-size: 15px;
+  }
 }

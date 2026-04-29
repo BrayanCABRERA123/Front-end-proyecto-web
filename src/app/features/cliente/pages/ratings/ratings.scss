@@ -1,141 +1,163 @@
+@use '../../../../../styles/mixins' as *;
+
+/* contenedor */
 .ratings-container {
-    display: flex;
-    min-height: 100vh;
-    background: var(--bg);
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
 }
 
 app-sidebar {
-    width: 260px;
+  width: 260px;
 }
 
-/* CONTENIDO */
+/* contenido */
 .ratings-content {
-    flex: 1;
-    text-align: center;
-    padding-top: 60px;
+  flex: 1;
+  text-align: center;
+  padding-top: 60px;
 }
 
-/* TITULOS */
+/* títulos */
 .ratings-content h2 {
-    margin-bottom: 5px;
-    color: var(--text);
+  margin-bottom: 5px;
+  color: var(--text);
 }
 
 .subtitle {
-    color: #9e9e9e;
-    font-size: 13px;
-    margin-bottom: 20px;
+  color: #9e9e9e;
+  font-size: 13px;
+  margin-bottom: 20px;
 }
 
-/* CARD */
+/* card */
 .ratings-card {
-    max-width: 420px;
-    margin: 40px auto;
-    padding: 50px;
-    border-radius: 16px;
-
-    background: var(--card);
-    color: var(--text);
-
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 50px;
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* PREGUNTA */
+/* pregunta */
 .question {
-    margin-bottom: 15px;
-    font-weight: 500;
-    color: var(--text);
+  margin-bottom: 15px;
+  font-weight: 500;
+  color: var(--text);
 }
 
-/* ESTRELLAS */
+/* estrellas */
 .stars {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding: 10px;
-}
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
 
-.stars mat-icon {
+  mat-icon {
     font-size: 32px;
     width: 32px;
     height: 32px;
-
     color: #9e9e9e;
-
     cursor: pointer;
     transition: 0.2s;
-
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &.active { color: var(--primary); }
+    &:hover { transform: scale(1.2); color: var(--primary); }
+  }
 }
 
-/* ACTIVAS */
-.stars mat-icon.active {
-    color: var(--primary);
-}
-
-/* HOVER */
-.stars mat-icon:hover {
-    transform: scale(1.2);
-    color: var(--primary);
-}
-
-/* FORM */
+/* form */
 .form-group {
-    text-align: left;
-    margin-bottom: 20px;
-    padding: 10px;
-}
+  text-align: left;
+  margin-bottom: 20px;
+  padding: 10px;
 
-.form-group label {
+  label {
     font-size: 13px;
     margin-bottom: 5px;
     display: block;
     color: var(--text);
+  }
 }
 
 textarea {
-    width: 100%;
-    height: 100px;
-    border-radius: 12px;
+  width: 100%;
+  height: 100px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
+  padding: 10px;
+  font-size: 13px;
+  resize: none;
+  outline: none;
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  color: var(--text);
+  transition: 0.2s;
+  box-sizing: border-box;
 
-    border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
-
-    padding: 10px;
-    font-size: 13px;
-    resize: none;
-    outline: none;
-
-    background: color-mix(in srgb, var(--primary) 8%, transparent);
-    color: var(--text);
-
-    transition: 0.2s;
-}
-
-/* FOCUS TEXTAREA */
-textarea:focus {
+  &:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
+  }
 }
 
-/* BOTON */
+/* botón */
 .btn-submit {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
 
-    background: var(--primary);
-    color: white;
-
-    font-weight: 500;
-    cursor: pointer;
-    transition: 0.2s;
+  &:hover { filter: brightness(1.1); }
 }
 
-/* HOVER */
-.btn-submit:hover {
-    filter: brightness(1.1);
+// ================================
+// RESPONSIVE
+// ================================
+
+// tablet
+@include tablet {
+  .ratings-content {
+    padding-top: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .ratings-card {
+    padding: 32px;
+    max-width: 100%;
+  }
+}
+
+// mobile
+@include mobile {
+  .ratings-container {
+    flex-direction: column;
+  }
+
+  .ratings-content {
+    padding: 72px 16px 24px;
+  }
+
+  .ratings-card {
+    margin: 0 auto;
+    padding: 24px 16px;
+    border-radius: 12px;
+  }
+
+  .stars mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
 }

@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/mixins' as *;
+
 // tarjeta contenedora de cada servicio
 .history-card {
   background-color: var(--card);
@@ -6,16 +8,16 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08); /* 🔥 mejor sombra */
-  margin:  0 80px 16px 80px;
-  border: 1px solid rgba(var(--primary-rgb), 0.08); /* 🔥 detalle pro */
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  margin: 0 80px 16px 80px;
+  border: 1px solid rgba(var(--primary-rgb), 0.08);
   transition: all 0.25s ease;
-}
 
-.history-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
-  border-color: rgba(var(--primary-rgb), 0.25);
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+    border-color: rgba(var(--primary-rgb), 0.25);
+  }
 }
 
 // fila superior con ícono, título y precio
@@ -43,7 +45,7 @@
   }
 
   &.pendiente {
-    color: #ff4d4d; /* 🔥 mejor rojo */
+    color: #ff4d4d;
   }
 }
 
@@ -64,14 +66,14 @@
 // fecha del servicio
 .card-date {
   font-size: 13px;
-  color: var(--text-muted); /* 🔥 clave */
+  color: var(--text-muted);
 }
 
 // precio del servicio
 .card-price {
   font-size: 20px;
   font-weight: 700;
-  color: var(--primary); /* 🔥 mejor jerarquía */
+  color: var(--primary);
 }
 
 // cuerpo con detalles y botones
@@ -110,7 +112,7 @@
   flex-shrink: 0;
 }
 
-// botón pagado — dinámico
+// botón pagado
 .btn-pagado {
   display: flex;
   align-items: center;
@@ -126,18 +128,12 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: 0.2s;
 
-  &:hover {
-    filter: brightness(1.1);
-  }
+  &:hover { filter: brightness(1.1); }
 
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
 }
 
-// botón pendiente — mejor rojo
+// botón pendiente
 .btn-pendiente {
   display: flex;
   align-items: center;
@@ -153,18 +149,12 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: 0.2s;
 
-  &:hover {
-    filter: brightness(1.1);
-  }
+  &:hover { filter: brightness(1.1); }
 
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
 }
 
-// botón calificar servicio — outline pro
+// botón calificar
 .btn-calificar {
   display: flex;
   align-items: center;
@@ -180,14 +170,58 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.2s ease;
 
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
 
   &:hover {
     background-color: var(--primary);
     color: #ffffff;
+  }
+}
+
+// ================================
+// RESPONSIVE
+// ================================
+
+// tablet
+@include tablet {
+  .history-card {
+    margin: 0;
+  }
+}
+
+// mobile
+@include mobile {
+  .history-card {
+    margin: 0;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  // cuerpo en columna en mobile
+  .card-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  // botones al ancho completo en mobile
+  .card-actions {
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .btn-pagado,
+  .btn-pendiente,
+  .btn-calificar {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .card-title {
+    font-size: 15px;
+  }
+
+  .card-price {
+    font-size: 18px;
   }
 }
