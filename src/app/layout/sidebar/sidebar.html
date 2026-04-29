@@ -13,7 +13,7 @@
   <!-- Logo -->
   <div class="sidebar-logo">
     <img src="images/logo.png" alt="logo" class="logo-img">
-    <span>Lavado Vehicular</span>
+    <span>{{ 'SIDEBAR.TITLE' | translate }}</span>
   </div>
 
   <!-- Info del usuario -->
@@ -34,7 +34,9 @@
          class="menu-item"
          (click)="closeSidebar()">
         <mat-icon class="menu-icono">{{ item.icono }}</mat-icon>
-        <span class="menu-label">{{ item.label }}</span>
+
+      
+        <span class="menu-label">{{ item.label | translate }}</span>
       </a>
     }
   </nav>
@@ -43,7 +45,8 @@
   <div class="sidebar-footer">
     <button class="btn-cerrar" (click)="cerrarSesion()">
       <mat-icon>logout</mat-icon>
-      <span>Cerrar Sesión</span>
+
+      <span>{{ 'SIDEBAR.LOGOUT' | translate }}</span>
     </button>
   </div>
 

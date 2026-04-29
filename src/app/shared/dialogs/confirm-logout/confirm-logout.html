@@ -1,0 +1,21 @@
+<div class="dialog-container">
+
+      <h2 class="dialog-title">
+        {{ 'LOGOUT.TITLE' | translate }}
+      </h2>
+
+      <p class="dialog-text">
+        {{ 'LOGOUT.MESSAGE' | translate }}
+      </p>
+
+      <div class="dialog-actions">
+        <button class="btn-cancel" (click)="cerrar(false)">
+          {{ 'LOGOUT.CANCEL' | translate }}
+        </button>
+
+        <button class="btn-confirm" (click)="cerrar(true)">
+          {{ 'LOGOUT.CONFIRM' | translate }}
+        </button>
+      </div>
+
+    </div>

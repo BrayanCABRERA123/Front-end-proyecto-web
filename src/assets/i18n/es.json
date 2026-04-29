@@ -238,6 +238,13 @@
         "DESC": "Calidad garantizada siempre"
       }
     }
-  }
+  },
+
+  "LOGOUT": {
+  "TITLE": "Cerrar sesión",
+  "MESSAGE": "¿Estás seguro de cerrar sesión?",
+  "CONFIRM": "Sí, cerrar",
+  "CANCEL": "Cancelar"
+}
 }
 

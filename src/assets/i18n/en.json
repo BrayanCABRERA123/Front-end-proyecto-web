@@ -240,5 +240,12 @@
         "DESC": "Guaranteed quality every time"
       }
     }
-  }
+  },
+
+  "LOGOUT": {
+  "TITLE": "Log out",
+  "MESSAGE": "Are you sure you want to log out?",
+  "CONFIRM": "Yes, log out",
+  "CANCEL": "Cancel"
+}
 }

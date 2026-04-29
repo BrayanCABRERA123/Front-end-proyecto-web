@@ -239,5 +239,12 @@
         "DESC": "Qualidade garantida sempre"
       }
     }
-  }
+  },
+
+  "LOGOUT": {
+  "TITLE": "Encerrar sessão",
+  "MESSAGE": "Tem certeza que deseja sair?",
+  "CONFIRM": "Sim, sair",
+  "CANCEL": "Cancelar"
+}
 }

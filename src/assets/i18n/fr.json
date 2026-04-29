@@ -240,5 +240,12 @@
         "DESC": "Qualité garantie à chaque fois"
       }
     }
-  }
+  },
+
+  "LOGOUT": {
+  "TITLE": "Se déconnecter",
+  "MESSAGE": "Êtes-vous sûr de vouloir vous déconnecter ?",
+  "CONFIRM": "Oui, quitter",
+  "CANCEL": "Annuler"
+}
 }
