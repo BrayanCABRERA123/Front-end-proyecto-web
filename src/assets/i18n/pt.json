@@ -201,5 +201,43 @@
   "ASSIGNMENT": "Atribuição do operador",
   "SELECT": "Selecionar",
   "SUBMIT": "Reservar agora"
-}
+},
+
+  "APP": {
+    "TITLE": "Lavagem de Veículos"
+  },
+
+  "NAV": {
+    "LOGIN": "Entrar",
+    "REGISTER": "Registrar"
+  },
+
+  "HERO": {
+    "BADGE": "Serviço móvel de lavagem #1",
+    "TITLE_1": "Seu carro impecável,",
+    "TITLE_2": "onde você estiver",
+    "DESCRIPTION": "Reserve sua lavagem em minutos. Trabalhamos com uma equipe profissional para que você possa agendar sem filas e sem espera.",
+    "START": "Começar agora",
+    "ALREADY_ACCOUNT": "Já tenho conta"
+  },
+
+  "FEATURES": {
+    "TITLE": "Por que nos escolher?",
+    "SUBTITLE": "Oferecemos o melhor serviço de lavagem móvel com qualidade profissional.",
+
+    "ITEMS": {
+      "ECO": {
+        "TITLE": "Lavagem ecológica",
+        "DESC": "Usamos produtos biodegradáveis"
+      },
+      "PROTECTION": {
+        "TITLE": "Proteção total",
+        "DESC": "Cuidamos de cada detalhe do seu carro"
+      },
+      "RATING": {
+        "TITLE": "5 estrelas",
+        "DESC": "Qualidade garantida sempre"
+      }
+    }
+  }
 }

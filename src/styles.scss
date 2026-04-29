@@ -1,7 +1,9 @@
 @use '@angular/material' as mat;
 
+/*CONFIGURACIÓN BASE ANGULAR MATERIAL */
 html {
   height: 100%;
+
   @include mat.theme(
     (
       color: (
@@ -14,6 +16,7 @@ html {
   );
 }
 
+/* TEMA BASE */
 body {
   color-scheme: light;
   background-color: var(--bg);
@@ -22,36 +25,54 @@ body {
   margin: 0;
   height: 100%;
 
-  /*  TEMA VERDE CLARO (DEFAULT)  */
+  /* COLOR PRINCIPAL */
   --primary: #2ec4b6;
   --primary-rgb: 46, 196, 182;
+  --primary-hover: #229990; 
 
+  /* SIDEBAR */
   --sidebar: #26403D;
 
+  /* BACKGROUNDS */
   --bg: #f5f6f8;
+  --bg-soft: #F9FBFB;
   --card: #ffffff;
 
+  /* TEXTOS */
   --text: #1a1a2e;
   --text-secondary: #5f6f75;  
   --text-muted: #9aa5ab;
 
+  /* BORDES */
   --border: #e6eaea;
+
+  /* EFECTOS */
   --primary-soft: rgba(var(--primary-rgb), 0.15);
 
+  /* ITEMS */
   --item-bg: rgba(0, 0, 0, 0.04);
   --item-hover: rgba(0, 0, 0, 0.07);
+
+  /* HERO */
+  --hero-image: url('/images/hero.png');
+
+  /* OVERLAY */
+  --overlay-dark: rgba(19, 28, 32, 0.80);
+  --overlay-light: rgba(0, 0, 0, 0.55);
 }
 
-/*  VERDE OSCURO  */
+/* VERDE OSCURO */
 body.green-dark {
   color-scheme: dark;
 
   --primary: #2ec4b6;
   --primary-rgb: 46, 196, 182;
+  --primary-hover: #1fa89c;
 
   --sidebar: #1a2e2b;
 
   --bg: #1a1a1a;
+  --bg-soft: #131C20;
   --card: #2a2a2a;
 
   --text: #ffffff;
@@ -63,18 +84,27 @@ body.green-dark {
 
   --item-bg: rgba(255, 255, 255, 0.05);
   --item-hover: rgba(255, 255, 255, 0.08);
+
+  /* HERO */
+  --hero-image: url('/images/hero.png');
+
+  /* OVERLAY MÁS FUERTE */
+  --overlay-dark: rgba(0, 0, 0, 0.85);
+  --overlay-light: rgba(0, 0, 0, 0.65);
 }
 
-/*  ROSADO CLARO  */
+/*  ROSADO CLARO */
 body.pink {
   color-scheme: light;
 
   --primary: #ff4fa3;
   --primary-rgb: 255, 79, 163;
+  --primary-hover: #e13b8c;
 
   --sidebar: #3d1a2a;
 
   --bg: #f5f6f8;
+  --bg-soft: #ffe4ef;
   --card: #ffffff;
 
   --text: #1a1a2e;
@@ -86,18 +116,27 @@ body.pink {
 
   --item-bg: rgba(0, 0, 0, 0.04);
   --item-hover: rgba(0, 0, 0, 0.07);
+
+  /* HERO ROSA*/
+  --hero-image: url('/images/car.png');
+
+  /* OVERLAY ROSADO */
+  --overlay-dark: rgba(255, 0, 120, 0.45);
+  --overlay-light: rgba(0, 0, 0, 0.45);
 }
 
-/*  ROSADO OSCURO  */
+/*ROSADO OSCURO*/
 body.pink-dark {
   color-scheme: dark;
 
   --primary: #ff4fa3;
   --primary-rgb: 255, 79, 163;
+  --primary-hover: #e13b8c;
 
   --sidebar: #2a1020;
 
   --bg: #1a1a1a;
+  --bg-soft: #1f0f18;
   --card: #2a2a2a;
 
   --text: #ffffff;
@@ -109,4 +148,40 @@ body.pink-dark {
 
   --item-bg: rgba(255, 255, 255, 0.05);
   --item-hover: rgba(255, 255, 255, 0.08);
+
+  /* HERO ROSA OSCURO */
+  --hero-image: url('/images/car.png');
+
+  /* OVERLAY */
+  --overlay-dark: rgba(0, 0, 0, 0.85);
+  --overlay-light: rgba(255, 0, 120, 0.35);
+}
+
+/* transiciones */
+* {
+  transition: 
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* selección de texto con color del tema */
+::selection {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
 }

@@ -202,5 +202,43 @@
   "ASSIGNMENT": "Operator assignment",
   "SELECT": "Select",
   "SUBMIT": "Book now"
-}
+},
+
+  "APP": {
+    "TITLE": "Car Wash Service"
+  },
+
+  "NAV": {
+    "LOGIN": "Login",
+    "REGISTER": "Register"
+  },
+
+  "HERO": {
+    "BADGE": "Mobile car wash service #1",
+    "TITLE_1": "Your car spotless,",
+    "TITLE_2": "wherever you are",
+    "DESCRIPTION": "Book your wash in minutes. We work with a professional team so you can schedule without lines or waiting.",
+    "START": "Get started",
+    "ALREADY_ACCOUNT": "I already have an account"
+  },
+
+  "FEATURES": {
+    "TITLE": "Why choose us?",
+    "SUBTITLE": "We provide the best mobile car wash service with professional quality.",
+
+    "ITEMS": {
+      "ECO": {
+        "TITLE": "Eco-friendly wash",
+        "DESC": "We use biodegradable products"
+      },
+      "PROTECTION": {
+        "TITLE": "Full protection",
+        "DESC": "We take care of every detail of your car"
+      },
+      "RATING": {
+        "TITLE": "5 stars",
+        "DESC": "Guaranteed quality every time"
+      }
+    }
+  }
 }

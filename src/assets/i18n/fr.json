@@ -201,5 +201,44 @@
   "ASSIGNMENT": "Affectation de l’opérateur",
   "SELECT": "Sélectionner",
   "SUBMIT": "Réserver"
-}
+},
+
+
+  "APP": {
+    "TITLE": "Lavage de Véhicules"
+  },
+
+  "NAV": {
+    "LOGIN": "Connexion",
+    "REGISTER": "S'inscrire"
+  },
+
+  "HERO": {
+    "BADGE": "Service de lavage mobile #1",
+    "TITLE_1": "Votre voiture impeccable,",
+    "TITLE_2": "où que vous soyez",
+    "DESCRIPTION": "Réservez votre lavage en quelques minutes. Nous travaillons avec une équipe professionnelle pour éviter les files et les attentes.",
+    "START": "Commencer",
+    "ALREADY_ACCOUNT": "J'ai déjà un compte"
+  },
+
+  "FEATURES": {
+    "TITLE": "Pourquoi nous choisir ?",
+    "SUBTITLE": "Nous offrons le meilleur service de lavage mobile avec une qualité professionnelle.",
+
+    "ITEMS": {
+      "ECO": {
+        "TITLE": "Lavage écologique",
+        "DESC": "Nous utilisons des produits biodégradables"
+      },
+      "PROTECTION": {
+        "TITLE": "Protection totale",
+        "DESC": "Nous prenons soin de chaque détail de votre voiture"
+      },
+      "RATING": {
+        "TITLE": "5 étoiles",
+        "DESC": "Qualité garantie à chaque fois"
+      }
+    }
+  }
 }

@@ -200,5 +200,44 @@
   "ASSIGNMENT": "Asignación de operario",
   "SELECT": "Seleccionar",
   "SUBMIT": "Reservar ahora"
+},
+
+  "APP": {
+    "TITLE": "Lavado Vehicular"
+  },
+
+  "NAV": {
+    "LOGIN": "Iniciar sesión",
+    "REGISTER": "Registrarse"
+  },
+
+  "HERO": {
+    "BADGE": "Servicio móvil de lavado #1",
+    "TITLE_1": "Tu auto impecable,",
+    "TITLE_2": "donde estés",
+    "DESCRIPTION": "Reserva tu lavado en minutos. Trabajamos con todo el equipo profesional para que puedas reservar sin filas, sin esperas y sin problemas.",
+    "START": "Comenzar ahora",
+    "ALREADY_ACCOUNT": "Ya tengo cuenta"
+  },
+
+  "FEATURES": {
+    "TITLE": "¿Por qué elegirnos?",
+    "SUBTITLE": "Brindamos el mejor servicio de lavado móvil con calidad profesional.",
+
+    "ITEMS": {
+      "ECO": {
+        "TITLE": "Lavado ecológico",
+        "DESC": "Usamos productos biodegradables"
+      },
+      "PROTECTION": {
+        "TITLE": "Protección total",
+        "DESC": "Cuidamos cada detalle de tu auto"
+      },
+      "RATING": {
+        "TITLE": "5 estrellas",
+        "DESC": "Calidad garantizada siempre"
+      }
+    }
+  }
 }
-}
+
