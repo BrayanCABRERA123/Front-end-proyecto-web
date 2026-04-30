@@ -14,7 +14,9 @@
         <input
           type="date"
           class="form-input"
-          [(ngModel)]="fecha"/>
+          [(ngModel)]="fecha"
+          [min]="minDate"
+          [max]="maxDate"/>
       </div>
     </div>
 
@@ -24,10 +26,20 @@
         <mat-icon class="label-icon">schedule</mat-icon>
       </label>
       <div class="input-wrapper">
-        <input
-          type="time"
-          class="form-input time-input"
-          [(ngModel)]="hora"/>
+        <select class="form-input time-input" [(ngModel)]="hora">
+        
+          <option value="" disabled selected>
+            {{ 'RESERVE.SELECT_TIME' | translate }}
+          </option>
+        
+          <option *ngFor="let h of horasDisponibles" [value]="h">
+        
+            {{ h }}
+        
+          </option>
+        
+        </select>
+
       </div>
     </div>
 

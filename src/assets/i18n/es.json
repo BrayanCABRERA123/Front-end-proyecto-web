@@ -48,6 +48,7 @@
     "SEARCH_LABEL": "Buscar por dirección, servicio u operario",
     "SEARCH_PLACEHOLDER": "Escribe para buscar...",
     "EMPTY": "No se encontraron servicios"
+
   },
 
   "HISTORY_CARD": {
@@ -193,6 +194,7 @@
   "SUBTITLE": "Programa tu próximo lavado en pocos pasos",
   "DATE": "Fecha",
   "TIME": "Hora",
+  "SELECT_TIME": "Selecciona una hora",
   "ADDRESS": "Dirección",
   "ADDRESS_PLACEHOLDER": "Calle, número, ciudad...",
   "VEHICLE": "Tipo de vehículo",

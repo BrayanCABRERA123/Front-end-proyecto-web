@@ -195,6 +195,7 @@
   "SUBTITLE": "Schedule your next wash in a few steps",
   "DATE": "Date",
   "TIME": "Time",
+  "SELECT_TIME": "Select a time",
   "ADDRESS": "Address",
   "ADDRESS_PLACEHOLDER": "Street, number, city...",
   "VEHICLE": "Vehicle type",

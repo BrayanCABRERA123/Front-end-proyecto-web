@@ -194,6 +194,7 @@
   "SUBTITLE": "Agende sua próxima lavagem em poucos passos",
   "DATE": "Data",
   "TIME": "Hora",
+  "SELECT_TIME": "Selecione um horário",
   "ADDRESS": "Endereço",
   "ADDRESS_PLACEHOLDER": "Rua, número, cidade...",
   "VEHICLE": "Tipo de veículo",

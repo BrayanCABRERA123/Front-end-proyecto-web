@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // iconos de Material que usa tu compañero
@@ -12,11 +12,14 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './car-wash-form.html',
   styleUrl: './car-wash-form.scss'
 })
-export class CarWashFormComponent {
+export class CarWashFormComponent implements OnInit {
 
   // datos del formulario
   fecha: string = '';
   hora: string = '';
+  minDate: string = '';
+  maxDate: string = '';
+  horasDisponibles: string[] = [];
   direccion: string = '';
   tipoVehiculo: string = '';
   tipoServicio: string = '';
@@ -61,5 +64,45 @@ export class CarWashFormComponent {
   // se ejecuta cuando hace clic en "Reservar Ahora"
   onSubmit(): void {
     console.log('Reserva enviada');
+  }
+
+  ngOnInit(): void {
+
+    const hoy = new Date();
+
+    // fecha mínima = hoy
+    this.minDate = hoy.toISOString().split('T')[0];
+
+    // fecha máxima = hoy + 30 días
+    const max = new Date();
+    max.setDate(hoy.getDate() + 60);
+
+    this.maxDate = max.toISOString().split('T')[0];
+
+    this.generarHoras();
+
+  }
+  generarHoras(): void {
+
+    this.horasDisponibles = [];
+
+    // mañana → 08:00 a 12:00
+    for (let h = 8; h <= 12; h++) {
+
+      this.horasDisponibles.push(
+        h.toString().padStart(2, '0') + ':00'
+      );
+
+    }
+
+    // tarde → 13:00 a 18:00
+    for (let h = 13; h <= 18; h++) {
+
+      this.horasDisponibles.push(
+        h.toString().padStart(2, '0') + ':00'
+      );
+
+    }
+
   }
 }
