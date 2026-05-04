@@ -32,12 +32,56 @@
     </div>
 
     <div class="navbar-actions">
+
+      <!-- dropdown idioma -->
+      <div class="language-dropdown">
+
+        <button class="lang-btn" (click)="toggleLangMenu($event)">
+          <span class="fi fi-{{ getFlag(idiomaActual) }}"></span>
+          {{ idiomaActual.toUpperCase() }}
+        </button>
+
+        @if (isLangOpen) {
+          <div class="lang-menu" (click)="$event.stopPropagation()">
+
+            @for (lang of idiomas; track lang.code) {
+              <div class="lang-option"
+                   (click)="cambiarIdioma(lang.code); cerrarMenuIdioma()">
+
+                <div class="lang-top">
+                  <div class="lang-left">
+                    <span class="fi fi-{{ getFlag(lang.code) }}"></span>
+                    <strong>{{ lang.label }}</strong>
+                  </div>
+
+                  <mat-icon 
+                    class="lang-check"
+                    [class.selected]="idiomaActual === lang.code">
+                    check_circle
+                  </mat-icon>
+                </div>
+
+                <span class="lang-sub">
+                  {{ 'CONFIG.LANGUAGE_DESC' | translate }}
+                </span>
+
+              </div>
+            }
+
+          </div>
+        }
+
+      </div>
+
+      <!-- botones -->
       <a routerLink="/auth" class="btn-login">
         {{ 'NAV.LOGIN' | translate }}
       </a>
+
       <a routerLink="/auth/register" class="btn-register">
         {{ 'NAV.REGISTER' | translate }}
       </a>
+
     </div>
   </nav>
 
@@ -92,7 +136,6 @@
             <mat-icon>{{ feature.icono }}</mat-icon>
           </div>
 
-          <!-- 👇 esto ya depende de cómo guardes tus datos -->
           <p class="feature-titulo">
             {{ feature.titulo | translate }}
           </p>
