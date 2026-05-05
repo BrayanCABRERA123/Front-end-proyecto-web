@@ -2,6 +2,11 @@
 @use 'styles/variables' as *;
 @use 'styles/breakpoints' as *;
 @use 'styles/mixins' as *;
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
 
 /*CONFIGURACIÓN BASE ANGULAR MATERIAL */
 html {

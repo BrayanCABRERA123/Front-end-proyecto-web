@@ -6,6 +6,8 @@ import { provideHttpClient } from '@angular/common/http';
 
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+//Importamos ionic
+import { provideIonicAngular } from '@ionic/angular/standalone';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +22,8 @@ export const appConfig: ApplicationConfig = {
         prefix: './assets/i18n/',
         suffix: '.json'
       })
-    })
+    }),
+    //Ionic
+    provideIonicAngular()
   ]
 };
