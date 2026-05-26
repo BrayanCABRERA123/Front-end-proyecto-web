@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ServiceModal } from '../../../../../../shared/components/service-modal/service-modal'; // importamos el componente
 // iconos de Material que usa tu compañero
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
@@ -8,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-car-wash-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule, ServiceModal],
   templateUrl: './car-wash-form.html',
   styleUrl: './car-wash-form.scss'
 })
@@ -23,6 +24,7 @@ export class CarWashFormComponent implements OnInit {
   direccion: string = '';
   tipoVehiculo: string = '';
   tipoServicio: string = '';
+  mostrarModal: boolean = false;
 
   // asignación de operario — 'automatica' o 'manual'
   asignacion: string = 'AUTO';
@@ -64,6 +66,16 @@ export class CarWashFormComponent implements OnInit {
   // se ejecuta cuando hace clic en "Reservar Ahora"
   onSubmit(): void {
     console.log('Reserva enviada');
+  }
+
+  abrirModalServicio(): void {
+
+    if (this.tipoServicio) {
+
+      this.mostrarModal = true;
+
+    }
+
   }
 
   ngOnInit(): void {

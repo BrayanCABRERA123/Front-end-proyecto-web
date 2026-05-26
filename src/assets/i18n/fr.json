@@ -61,15 +61,23 @@
     "PENDING": "En attente",
     "RATE": "Évaluer le service"
   },
+  "COMMON": {
+    "CLOSE": "Fermer"
+  },
 
   "SERVICE": {
-    "PREMIUM_CAR": "Premium — Voiture",
-    "BASIC_MOTO": "Basique — Moto",
-    "FULL_WASH": "Lavage complet",
-
-    "PREMIUM": "Premium",
     "BASIC": "Basique",
-    "FULL": "Complet"
+    "FULL": "Complet",
+    "PREMIUM": "Premium",
+    "BASIC_DESC": "Lavage extérieur du véhicule",
+    "FULL_DESC": "Lavage extérieur et intérieur",
+    "PREMIUM_DESC": "Lavage complet avec cirage",
+    "BASIC_PRICE": "20€",
+    "FULL_PRICE": "35€",
+    "PREMIUM_PRICE": "50€",
+    "BASIC_TIME": "30 minutes",
+    "FULL_TIME": "1 heure",
+    "PREMIUM_TIME": "1 heure 30 minutes"
   },
 
   "EXTRA": {

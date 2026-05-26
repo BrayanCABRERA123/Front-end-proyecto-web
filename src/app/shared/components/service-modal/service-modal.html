@@ -1,0 +1,49 @@
+<div class="modal-backdrop">
+
+    <div class="modal-box">
+
+        <h2 class="modal-title">
+            {{ ('SERVICE.' + servicio) | translate }}
+        </h2>
+
+        <p class="modal-description">
+            {{ ('SERVICE.' + servicio + '_DESC') | translate }}
+        </p>
+
+        <div class="service-info">
+
+            <div class="info-item">
+
+                <mat-icon>payments</mat-icon>
+
+                <span>
+                    {{ ('SERVICE.' + servicio + '_PRICE') | translate }}
+                </span>
+
+            </div>
+
+            <div class="info-item">
+
+                <mat-icon>schedule</mat-icon>
+
+                <span>
+                    {{ ('SERVICE.' + servicio + '_TIME') | translate }}
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="modal-actions">
+
+            <button class="btn-close" (click)="cerrar.emit()">
+
+                {{ 'COMMON.CLOSE' | translate }}
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

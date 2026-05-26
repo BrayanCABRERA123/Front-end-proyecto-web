@@ -89,7 +89,7 @@
         <mat-icon class="label-icon">settings</mat-icon>
       </label>
       <div class="select-wrapper">
-        <select class="form-select" [(ngModel)]="tipoServicio">
+        <select class="form-select" [(ngModel)]="tipoServicio" (change)="abrirModalServicio()">
           <option value="" disabled>
             {{ 'RESERVE.SELECT' | translate }}
           </option>
@@ -157,6 +157,11 @@
       </div>
     }
   </div>
+    <!-- MODAL DE SERVICIO -->
+    
+    <app-service-modal *ngIf="mostrarModal" [servicio]="tipoServicio" (cerrar)="mostrarModal = false">
+    
+    </app-service-modal>
 
   <!-- Métodos de Pago -->
   <div class="form-group">

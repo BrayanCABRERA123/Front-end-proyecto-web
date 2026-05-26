@@ -3,7 +3,10 @@
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "rootDir": "./src",
-    "types": []
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "src/**/*.d.ts",

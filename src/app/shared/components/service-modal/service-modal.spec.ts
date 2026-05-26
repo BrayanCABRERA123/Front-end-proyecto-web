@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CarWashFormComponent } from './car-wash-form';
+import { ServiceModal } from './service-modal';
 
-describe('CarWashFormComponent', () => {
-  let component: CarWashFormComponent;
-  let fixture: ComponentFixture<CarWashFormComponent>;
+describe('ServiceModal', () => {
+  let component: ServiceModal;
+  let fixture: ComponentFixture<ServiceModal>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CarWashFormComponent],
+      imports: [ServiceModal],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CarWashFormComponent);
+    fixture = TestBed.createComponent(ServiceModal);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

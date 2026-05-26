@@ -1,0 +1,107 @@
+/*
+  Styles para el modal de servicio
+  - .modal-backdrop: Fondo oscuro y centro del modal.
+  - .modal-box: Caja blanca del modal con sombra y animación.
+  - .modal-title / .modal-description: Texto principal del modal.
+  - .service-info: Lista de información del servicio.
+  - .modal-actions: Botones de acción.
+  - .btn-close: Estilo del botón de cierre.
+*/
+
+/* Fondo/transparencia y centrado del modal */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--overlay-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+/* Caja principal del modal */
+.modal-box {
+    background: var(--card);
+    width: 380px;
+    border-radius: 24px;
+    padding: 28px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    animation: aparecer .2s ease;
+}
+
+/* Título grande del modal */
+.modal-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+/* Texto descriptivo debajo del título */
+.modal-description {
+    color: var(--text-secondary);
+    font-size: 15px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+/* Contenedor vertical para la información del servicio */
+.service-info {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Cada fila de información con icono */
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--item-bg);
+}
+
+/* Color del icono dentro de cada fila */
+.info-item mat-icon {
+    color: var(--primary);
+}
+
+/* Alinea los botones a la derecha */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 28px;
+}
+
+/* Botón principal de cerrar o confirmar */
+.btn-close {
+    border: none;
+    background: var(--primary);
+    color: white;
+    padding: 10px 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Efecto visual al pasar el cursor sobre el botón */
+.btn-close:hover {
+    background: var(--primary-hover);
+}
+
+/* Animación de aparición del modal */
+@keyframes aparecer {
+    from {
+        transform: scale(.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

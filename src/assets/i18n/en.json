@@ -60,15 +60,23 @@
     "PENDING": "Pending",
     "RATE": "Rate Service"
   },
+  "COMMON": {
+    "CLOSE": "Close"
+  },
 
   "SERVICE": {
-    "PREMIUM_CAR": "Premium — Car",
-    "BASIC_MOTO": "Basic — Motorcycle",
-    "FULL_WASH": "Full wash",
-
-    "PREMIUM": "Premium",
     "BASIC": "Basic",
-    "FULL": "Full"
+    "FULL": "Complete",
+    "PREMIUM": "Premium",
+    "BASIC_DESC": "Exterior vehicle wash",
+    "FULL_DESC": "Exterior and interior wash",
+    "PREMIUM_DESC": "Complete wash with waxing",
+    "BASIC_PRICE": "$20",
+    "FULL_PRICE": "$35",
+    "PREMIUM_PRICE": "$50",
+    "BASIC_TIME": "30 minutes",
+    "FULL_TIME": "1 hour",
+    "PREMIUM_TIME": "1 hour 30 minutes"
   },
 
   "EXTRA": {

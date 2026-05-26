@@ -61,17 +61,24 @@
     "PENDING": "Pendiente",
     "RATE": "Calificar Servicio"
   },
+  "COMMON": {
+    "CLOSE": "Cerrar"
+  },
 
   "SERVICE": {
-  "PREMIUM_CAR": "Premium — Automóvil",
-  "BASIC_MOTO": "Básico — Moto",
-  "FULL_WASH": "Lavado completo",
-
-  "PREMIUM": "Premium",
-  "BASIC": "Básico",
-
-  "FULL": "Completo"
-},
+    "BASIC": "Básico",
+    "FULL": "Completo",
+    "PREMIUM": "Premium",
+    "BASIC_DESC": "Lavado exterior del vehículo",
+    "FULL_DESC": "Lavado exterior e interior",
+    "PREMIUM_DESC": "Lavado completo con encerado",
+    "BASIC_PRICE": "$20.000",
+    "FULL_PRICE": "$35.000",
+    "PREMIUM_PRICE": "$50.000",
+    "BASIC_TIME": "30 minutos",
+    "FULL_TIME": "1 hora",
+    "PREMIUM_TIME": "1 hora 30 minutos"
+  },
 
   "EXTRA": {
     "WAX": "Cera",
