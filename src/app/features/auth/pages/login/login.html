@@ -3,47 +3,73 @@
 
         <div class="logo">
             <img src="images/logo.png" alt="logo">
-            <h2>Lavado Vehicular</h2>
+            <h2>{{ 'APP.TITLE' | translate }}</h2>
         </div>
 
-        <h3>Iniciar Sesión</h3>
-        <p class="subtitle">Ingresa a tu cuenta para reservar</p>
+        <h3>{{ 'LOGIN.TITLE' | translate }}</h3>
+
+        <p class="subtitle">
+            {{ 'LOGIN.SUBTITLE' | translate }}
+        </p>
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
 
-            <label>Correo Electrónico</label>
-            <input ttype="email" formControlName="correo" placeholder="usuario@gmail.com" (input)="correoSinEspacios()">
+            <label>
+                {{ 'LOGIN.EMAIL' | translate }}
+            </label>
+
+            <input
+                type="email"
+                formControlName="correo"
+                [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
+                (input)="correoSinEspacios()"
+            >
 
             <span class="error-msg" *ngIf="f['correo'].errors?.['required'] && f['correo'].touched">
-            
-                El correo es obligatorio
-            
-            </span>
-            
-            <span class="error-msg" *ngIf="f['correo'].errors?.['pattern'] && f['correo'].touched">
-            
-                Debe ingresar un correo válido @gmail.com
-            
+
+                {{ 'LOGIN.ERROR_EMAIL_REQUIRED' | translate }}
+
             </span>
 
-            <label>Contraseña</label>
-            <input type="password" formControlName="contrasena" placeholder="********">
+            <span class="error-msg" *ngIf="f['correo'].errors?.['pattern'] && f['correo'].touched">
+
+                {{ 'LOGIN.ERROR_EMAIL_PATTERN' | translate }}
+
+            </span>
+
+            <label>
+                {{ 'LOGIN.PASSWORD' | translate }}
+            </label>
+
+            <input
+                type="password"
+                formControlName="contrasena"
+                placeholder="********"
+            >
 
             <span class="error-msg" *ngIf="f['contrasena'].errors?.['required'] && f['contrasena'].touched">
 
-                La contraseña es obligatoria
+                {{ 'LOGIN.ERROR_PASSWORD_REQUIRED' | translate }}
+
             </span>
 
             <a class="forgot" routerLink="/auth/forgot-password">
-                ¿Olvidaste tu contraseña?
+                {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
             </a>
 
-            <button type="submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+            <button type="submit" [disabled]="loginForm.invalid">
+                {{ 'LOGIN.BUTTON' | translate }}
+            </button>
         </form>
 
         <p class="register">
-            ¿No tienes cuenta?
-            <span routerLink="/auth/register">Regístrate</span>
+
+            {{ 'LOGIN.NO_ACCOUNT' | translate }}
+
+            <span routerLink="/auth/register">
+                {{ 'LOGIN.REGISTER' | translate }}
+            </span>
+
         </p>
 
     </div>

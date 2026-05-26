@@ -248,5 +248,120 @@
   "MESSAGE": "Êtes-vous sûr de vouloir vous déconnecter ?",
   "CONFIRM": "Oui, quitter",
   "CANCEL": "Annuler"
+},
+
+"LOGIN": {
+  "TITLE": "Connexion",
+  "SUBTITLE": "Accédez à votre compte pour réserver",
+
+  "EMAIL": "Adresse e-mail",
+  "EMAIL_PLACEHOLDER": "utilisateur@gmail.com",
+
+  "PASSWORD": "Mot de passe",
+  "PASSWORD_PLACEHOLDER": "********",
+
+  "EMAIL_REQUIRED": "L'e-mail est obligatoire",
+  "EMAIL_INVALID": "Veuillez entrer un e-mail valide @gmail.com",
+
+  "PASSWORD_REQUIRED": "Le mot de passe est obligatoire",
+
+  "FORGOT_PASSWORD": "Mot de passe oublié ?",
+
+  "BUTTON": "Se connecter",
+
+  "NO_ACCOUNT": "Vous n'avez pas de compte ?",
+  "REGISTER": "S'inscrire",
+
+  "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect"
+},
+
+"REGISTER": {
+  "TITLE": "Créer un Compte",
+  "SUBTITLE": "Inscrivez-vous pour commencer à réserver",
+
+  "FULL_NAME": "Nom Complet",
+  "FULL_NAME_PLACEHOLDER": "Jean Dupont",
+
+  "EMAIL": "Adresse e-mail",
+  "EMAIL_PLACEHOLDER": "utilisateur@gmail.com",
+
+  "PHONE": "Téléphone",
+  "PHONE_PLACEHOLDER": "3001234567",
+
+  "PASSWORD": "Mot de passe",
+  "PASSWORD_PLACEHOLDER": "Minimum 8 caractères",
+
+  "CONFIRM_PASSWORD": "Confirmer le Mot de Passe",
+  "CONFIRM_PASSWORD_PLACEHOLDER": "Répétez votre mot de passe",
+
+  "NAME_REQUIRED": "Le nom est obligatoire",
+  "NAME_MIN": "Doit contenir au moins 3 caractères",
+
+  "EMAIL_REQUIRED": "L'e-mail est obligatoire",
+  "EMAIL_INVALID": "Seuls les e-mails @gmail.com sont autorisés",
+
+  "PHONE_REQUIRED": "Le téléphone est obligatoire",
+  "PHONE_INVALID": "Doit commencer par 3 (numéro mobile colombien)",
+  "PHONE_MIN": "Le numéro doit contenir 10 chiffres",
+
+  "PASSWORD_REQUIRED": "Le mot de passe est obligatoire",
+
+  "CONFIRM_REQUIRED": "Vous devez confirmer le mot de passe",
+  "PASSWORDS_NOT_MATCH": "Les mots de passe ne correspondent pas",
+
+  "REQUIREMENTS": {
+    "MIN": "Minimum 8 caractères",
+    "UPPERCASE": "Au moins une majuscule",
+    "NUMBER": "Au moins un chiffre",
+    "SPECIAL": "Au moins un caractère spécial"
+  },
+
+  "BUTTON": "S'inscrire",
+  "BUTTON_LOADING": "Inscription...",
+
+  "ALREADY_ACCOUNT": "Vous avez déjà un compte ?",
+  "LOGIN": "Se connecter",
+
+  "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect"
+},
+
+"FORGOT": {
+  "BACK_LOGIN": "Retour à la Connexion",
+
+  "EMAIL": {
+    "TITLE": "Récupérer le Mot de Passe",
+    "DESCRIPTION": "Entrez votre e-mail pour recevoir un code de vérification",
+    "LABEL": "Adresse E-mail",
+    "PLACEHOLDER": "utilisateur@gmail.com",
+    "INVALID": "Veuillez entrer un e-mail @gmail.com valide",
+    "BUTTON": "Envoyer le Code"
+  },
+
+  "VERIFICATION": {
+    "TITLE": "Vérification",
+    "DESCRIPTION": "Entrez le code à 6 chiffres envoyé à",
+    "RESEND": "Vous n'avez pas reçu le code ? Renvoyer",
+    "BUTTON": "Vérifier le Code"
+  },
+
+  "NEW_PASSWORD": {
+    "TITLE": "Nouveau Mot de Passe",
+    "DESCRIPTION": "Créez votre nouveau mot de passe sécurisé",
+
+    "LABEL": "Nouveau Mot de Passe",
+    "PLACEHOLDER": "••••••••",
+
+    "CONFIRM": "Confirmer le Mot de Passe",
+    "CONFIRM_PLACEHOLDER": "••••••••",
+
+    "BUTTON": "Mettre à Jour le Mot de Passe",
+
+    "REQUIREMENTS": {
+      "MIN": "Minimum 8 caractères",
+      "UPPERCASE": "Au moins une majuscule",
+      "NUMBER": "Au moins un chiffre",
+      "SPECIAL": "Au moins un caractère spécial"
+    }
+  }
 }
 }

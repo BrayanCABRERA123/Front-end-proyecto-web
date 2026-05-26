@@ -248,5 +248,120 @@
   "MESSAGE": "Are you sure you want to log out?",
   "CONFIRM": "Yes, log out",
   "CANCEL": "Cancel"
+},
+
+"LOGIN": {
+  "TITLE": "Login",
+  "SUBTITLE": "Access your account to book a service",
+
+  "EMAIL": "Email Address",
+  "EMAIL_PLACEHOLDER": "user@gmail.com",
+
+  "PASSWORD": "Password",
+  "PASSWORD_PLACEHOLDER": "********",
+
+  "EMAIL_REQUIRED": "Email is required",
+  "EMAIL_INVALID": "Please enter a valid @gmail.com email",
+
+  "PASSWORD_REQUIRED": "Password is required",
+
+  "FORGOT_PASSWORD": "Forgot your password?",
+
+  "BUTTON": "Login",
+
+  "NO_ACCOUNT": "Don't have an account?",
+  "REGISTER": "Sign up",
+
+  "INVALID_CREDENTIALS": "Incorrect email or password"
+},
+
+"REGISTER": {
+  "TITLE": "Create Account",
+  "SUBTITLE": "Sign up to start booking",
+
+  "FULL_NAME": "Full Name",
+  "FULL_NAME_PLACEHOLDER": "John Doe",
+
+  "EMAIL": "Email Address",
+  "EMAIL_PLACEHOLDER": "user@gmail.com",
+
+  "PHONE": "Phone Number",
+  "PHONE_PLACEHOLDER": "3001234567",
+
+  "PASSWORD": "Password",
+  "PASSWORD_PLACEHOLDER": "Minimum 8 characters",
+
+  "CONFIRM_PASSWORD": "Confirm Password",
+  "CONFIRM_PASSWORD_PLACEHOLDER": "Repeat your password",
+
+  "NAME_REQUIRED": "Name is required",
+  "NAME_MIN": "Must contain at least 3 characters",
+
+  "EMAIL_REQUIRED": "Email is required",
+  "EMAIL_INVALID": "Only @gmail.com emails are allowed",
+
+  "PHONE_REQUIRED": "Phone number is required",
+  "PHONE_INVALID": "Must start with 3 (Colombian mobile number)",
+  "PHONE_MIN": "The number must contain 10 digits",
+
+  "PASSWORD_REQUIRED": "Password is required",
+
+  "CONFIRM_REQUIRED": "You must confirm the password",
+  "PASSWORDS_NOT_MATCH": "Passwords do not match",
+
+  "REQUIREMENTS": {
+    "MIN": "Minimum 8 characters",
+    "UPPERCASE": "At least one uppercase letter",
+    "NUMBER": "At least one number",
+    "SPECIAL": "At least one special character"
+  },
+
+  "BUTTON": "Register",
+  "BUTTON_LOADING": "Registering...",
+
+  "ALREADY_ACCOUNT": "Already have an account?",
+  "LOGIN": "Log in",
+
+  "INVALID_CREDENTIALS": "Incorrect email or password"
+},
+
+"FORGOT": {
+  "BACK_LOGIN": "Back to Login",
+
+  "EMAIL": {
+    "TITLE": "Recover Password",
+    "DESCRIPTION": "Enter your email to receive a verification code",
+    "LABEL": "Email Address",
+    "PLACEHOLDER": "user@gmail.com",
+    "INVALID": "Please enter a valid @gmail.com email",
+    "BUTTON": "Send Code"
+  },
+
+  "VERIFICATION": {
+    "TITLE": "Verification",
+    "DESCRIPTION": "Enter the 6-digit code sent to",
+    "RESEND": "Didn't receive the code? Resend",
+    "BUTTON": "Verify Code"
+  },
+
+  "NEW_PASSWORD": {
+    "TITLE": "New Password",
+    "DESCRIPTION": "Create your new secure password",
+
+    "LABEL": "New Password",
+    "PLACEHOLDER": "••••••••",
+
+    "CONFIRM": "Confirm Password",
+    "CONFIRM_PLACEHOLDER": "••••••••",
+
+    "BUTTON": "Update Password",
+
+    "REQUIREMENTS": {
+      "MIN": "Minimum 8 characters",
+      "UPPERCASE": "At least one uppercase letter",
+      "NUMBER": "At least one number",
+      "SPECIAL": "At least one special character"
+    }
+  }
 }
 }

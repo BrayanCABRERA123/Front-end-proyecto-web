@@ -247,5 +247,120 @@
   "MESSAGE": "Tem certeza que deseja sair?",
   "CONFIRM": "Sim, sair",
   "CANCEL": "Cancelar"
+},
+
+"LOGIN": {
+  "TITLE": "Entrar",
+  "SUBTITLE": "Acesse sua conta para reservar",
+
+  "EMAIL": "E-mail",
+  "EMAIL_PLACEHOLDER": "usuario@gmail.com",
+
+  "PASSWORD": "Senha",
+  "PASSWORD_PLACEHOLDER": "********",
+
+  "EMAIL_REQUIRED": "O e-mail é obrigatório",
+  "EMAIL_INVALID": "Digite um e-mail válido @gmail.com",
+
+  "PASSWORD_REQUIRED": "A senha é obrigatória",
+
+  "FORGOT_PASSWORD": "Esqueceu sua senha?",
+
+  "BUTTON": "Entrar",
+
+  "NO_ACCOUNT": "Não tem uma conta?",
+  "REGISTER": "Cadastre-se",
+
+  "INVALID_CREDENTIALS": "E-mail ou senha incorretos"
+},
+
+"REGISTER": {
+  "TITLE": "Criar Conta",
+  "SUBTITLE": "Cadastre-se para começar a reservar",
+
+  "FULL_NAME": "Nome Completo",
+  "FULL_NAME_PLACEHOLDER": "João Silva",
+
+  "EMAIL": "E-mail",
+  "EMAIL_PLACEHOLDER": "usuario@gmail.com",
+
+  "PHONE": "Telefone",
+  "PHONE_PLACEHOLDER": "3001234567",
+
+  "PASSWORD": "Senha",
+  "PASSWORD_PLACEHOLDER": "Mínimo de 8 caracteres",
+
+  "CONFIRM_PASSWORD": "Confirmar Senha",
+  "CONFIRM_PASSWORD_PLACEHOLDER": "Repita sua senha",
+
+  "NAME_REQUIRED": "O nome é obrigatório",
+  "NAME_MIN": "Deve ter pelo menos 3 caracteres",
+
+  "EMAIL_REQUIRED": "O e-mail é obrigatório",
+  "EMAIL_INVALID": "Somente e-mails @gmail.com são permitidos",
+
+  "PHONE_REQUIRED": "O telefone é obrigatório",
+  "PHONE_INVALID": "Deve começar com 3 (número celular colombiano)",
+  "PHONE_MIN": "O número deve ter 10 dígitos",
+
+  "PASSWORD_REQUIRED": "A senha é obrigatória",
+
+  "CONFIRM_REQUIRED": "Você deve confirmar a senha",
+  "PASSWORDS_NOT_MATCH": "As senhas não coincidem",
+
+  "REQUIREMENTS": {
+    "MIN": "Mínimo de 8 caracteres",
+    "UPPERCASE": "Pelo menos uma letra maiúscula",
+    "NUMBER": "Pelo menos um número",
+    "SPECIAL": "Pelo menos um caractere especial"
+  },
+
+  "BUTTON": "Cadastrar",
+  "BUTTON_LOADING": "Cadastrando...",
+
+  "ALREADY_ACCOUNT": "Já tem uma conta?",
+  "LOGIN": "Entrar",
+
+  "INVALID_CREDENTIALS": "E-mail ou senha incorretos"
+},
+
+"FORGOT": {
+  "BACK_LOGIN": "Voltar ao Login",
+
+  "EMAIL": {
+    "TITLE": "Recuperar Senha",
+    "DESCRIPTION": "Digite seu e-mail para receber um código de verificação",
+    "LABEL": "E-mail",
+    "PLACEHOLDER": "usuario@gmail.com",
+    "INVALID": "Digite um e-mail @gmail.com válido",
+    "BUTTON": "Enviar Código"
+  },
+
+  "VERIFICATION": {
+    "TITLE": "Verificação",
+    "DESCRIPTION": "Digite o código de 6 dígitos enviado para",
+    "RESEND": "Não recebeu o código? Reenviar",
+    "BUTTON": "Verificar Código"
+  },
+
+  "NEW_PASSWORD": {
+    "TITLE": "Nova Senha",
+    "DESCRIPTION": "Crie sua nova senha segura",
+
+    "LABEL": "Nova Senha",
+    "PLACEHOLDER": "••••••••",
+
+    "CONFIRM": "Confirmar Senha",
+    "CONFIRM_PLACEHOLDER": "••••••••",
+
+    "BUTTON": "Atualizar Senha",
+
+    "REQUIREMENTS": {
+      "MIN": "Mínimo de 8 caracteres",
+      "UPPERCASE": "Pelo menos uma letra maiúscula",
+      "NUMBER": "Pelo menos um número",
+      "SPECIAL": "Pelo menos um caractere especial"
+    }
+  }
 }
 }

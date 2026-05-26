@@ -1,6 +1,5 @@
 <div class="step-container">
 
-  <!-- Ícono de sobre con fondo circular -->
   <div class="step-icon">
     <iconify-icon
       icon="mdi:email-outline"
@@ -8,41 +7,68 @@
     </iconify-icon>
   </div>
 
-  <h2 class="step-title">Recuperar Contraseña</h2>
+  <h2 class="step-title">
+    {{ 'FORGOT.EMAIL.TITLE' | translate }}
+  </h2>
+
   <p class="step-description">
-    Ingresa tu correo para recibir un código de verificación
+    {{ 'FORGOT.EMAIL.DESCRIPTION' | translate }}
   </p>
 
   <div class="form-group">
-    <label class="form-label">Correo Electrónico</label>
+
+    <label class="form-label">
+      {{ 'FORGOT.EMAIL.LABEL' | translate }}
+    </label>
+
     <div class="input-wrapper">
 
-      <!-- Ícono dentro del input -->
       <iconify-icon
         class="input-icon"
         icon="mdi:email-outline"
         style="color: #67777E; font-size: 18px;">
       </iconify-icon>
 
-      <input type="email" class="form-input" placeholder="usuario@gmail.com" [(ngModel)]="email" name="email" required
-        pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" (keypress)="bloquearEspacios($event)" (input)="limpiarEspaciosCorreo()"
-        [class.input-error]="emailInvalido">
+      <input
+        type="email"
+        class="form-input"
+
+        [placeholder]="
+          'FORGOT.EMAIL.PLACEHOLDER'
+          | translate
+        "
+
+        [(ngModel)]="email"
+        name="email"
+        required
+        pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+
+        (keypress)="bloquearEspacios($event)"
+        (input)="limpiarEspaciosCorreo()"
+
+        [class.input-error]="emailInvalido"
+      >
 
     </div>
 
-    <span class="error-msg" *ngIf="emailInvalido && emailInvalido">
-    
-      Debe ingresar un correo válido @gmail.com
-    
+    <span class="error-msg" *ngIf="emailInvalido">
+
+      {{ 'FORGOT.EMAIL.INVALID' | translate }}
+
     </span>
+
   </div>
 
-  <button class="btn-primary" (click)="onSubmit()" [disabled]="!email || emailInvalido">
-    Enviar Código
+  <button
+    class="btn-primary"
+    (click)="onSubmit()"
+    [disabled]="!email || emailInvalido"
+  >
+    {{ 'FORGOT.EMAIL.BUTTON' | translate }}
   </button>
 
   <a class="back-link" href="#">
-    ← Volver a Iniciar Sesión
+    ← {{ 'FORGOT.BACK_LOGIN' | translate }}
   </a>
 
 </div>

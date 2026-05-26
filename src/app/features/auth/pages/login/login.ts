@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
@@ -15,7 +16,8 @@ import { CommonModule } from '@angular/common';
   imports: [
     RouterModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    TranslateModule
   ],
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],

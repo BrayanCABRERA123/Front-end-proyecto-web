@@ -5,218 +5,400 @@
     <div class="register-header">
       <div class="brand">
         <img src="images/logo.png" alt="Logo Lavado Vehicular" class="logo">
-        <h1>Lavado Vehicular</h1>
+        <h1>{{ 'APP.TITLE' | translate }}</h1>
       </div>
-      
-      <h2>Crear Cuenta</h2>
-      <p>Regístrate para empezar a reservar</p>
+
+      <h2>{{ 'REGISTER.TITLE' | translate }}</h2>
+
+      <p>
+        {{ 'REGISTER.SUBTITLE' | translate }}
+      </p>
     </div>
 
     <!-- FORMULARIO -->
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
-    
+
       <!-- NOMBRE -->
       <div class="form-group">
-        <label>Nombre Completo</label>
-    
+
+        <label>
+          {{ 'REGISTER.FULL_NAME' | translate }}
+        </label>
+
         <div class="input-wrapper">
-          <span class="input-icon material-icons">person</span>
-    
-          <input type="text" formControlName="nombre" placeholder="Juan Pérez"
-            [class.input-error]="f['nombre'].invalid && f['nombre'].touched">
+
+          <span class="input-icon material-icons">
+            person
+          </span>
+
+          <input
+            type="text"
+            formControlName="nombre"
+
+            [placeholder]="
+              'REGISTER.FULL_NAME_PLACEHOLDER'
+              | translate
+            "
+
+            [class.input-error]="
+              f['nombre'].invalid &&
+              f['nombre'].touched
+            "
+          >
+
         </div>
-    
-        <span class="error-msg" *ngIf="f['nombre'].errors?.['required'] && f['nombre'].touched">
-          El nombre es obligatorio
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['nombre'].errors?.['required'] &&
+            f['nombre'].touched
+          "
+        >
+          {{ 'REGISTER.NAME_REQUIRED' | translate }}
         </span>
-    
-        <span class="error-msg" *ngIf="f['nombre'].errors?.['minlength'] && f['nombre'].touched">
-          Debe tener mínimo 3 caracteres
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['nombre'].errors?.['minlength'] &&
+            f['nombre'].touched
+          "
+        >
+          {{ 'REGISTER.NAME_MIN' | translate }}
         </span>
+
       </div>
-    
-    
+
       <!-- CORREO -->
       <div class="form-group">
-        <label>Correo Electrónico</label>
-    
+
+        <label>
+          {{ 'REGISTER.EMAIL' | translate }}
+        </label>
+
         <div class="input-wrapper">
-          <span class="input-icon material-icons">mail</span>
-    
-          <input type="email" formControlName="correo" placeholder="usuario@gmail.com" (keypress)="bloquearEspacios($event)"
-            (input)="limpiarEspaciosCorreo()" [class.input-error]="f['correo'].invalid && f['correo'].touched">
+
+          <span class="input-icon material-icons">
+            mail
+          </span>
+
+          <input
+            type="email"
+            formControlName="correo"
+
+            [placeholder]="
+              'REGISTER.EMAIL_PLACEHOLDER'
+              | translate
+            "
+
+            (keypress)="bloquearEspacios($event)"
+            (input)="limpiarEspaciosCorreo()"
+
+            [class.input-error]="
+              f['correo'].invalid &&
+              f['correo'].touched
+            "
+          >
+
         </div>
-    
-        <span class="error-msg" *ngIf="f['correo'].errors?.['required'] && f['correo'].touched">
-          El correo es obligatorio
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['correo'].errors?.['required'] &&
+            f['correo'].touched
+          "
+        >
+          {{ 'REGISTER.EMAIL_REQUIRED' | translate }}
         </span>
-    
-        <span class="error-msg" *ngIf="f['correo'].errors?.['pattern'] && f['correo'].touched">
-          Solo se permiten correos @gmail.com
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['correo'].errors?.['pattern'] &&
+            f['correo'].touched
+          "
+        >
+          {{ 'REGISTER.EMAIL_INVALID' | translate }}
         </span>
+
       </div>
-    
-    
+
       <!-- TELÉFONO -->
       <div class="form-group">
-      
-        <label>Teléfono</label>
-      
+
+        <label>
+          {{ 'REGISTER.PHONE' | translate }}
+        </label>
+
         <div class="input-wrapper">
-      
-          <span class="input-icon material-icons">call</span>
-      
-          <input type="text" formControlName="telefono" placeholder="3001234567" maxlength="10" inputmode="numeric"
-            autocomplete="off" (input)="limpiarTelefono()" [class.input-error]="f['telefono'].invalid && f['telefono'].touched">
-      
+
+          <span class="input-icon material-icons">
+            call
+          </span>
+
+          <input
+            type="text"
+            formControlName="telefono"
+
+            [placeholder]="
+              'REGISTER.PHONE_PLACEHOLDER'
+              | translate
+            "
+
+            maxlength="10"
+            inputmode="numeric"
+            autocomplete="off"
+
+            (input)="limpiarTelefono()"
+
+            [class.input-error]="
+              f['telefono'].invalid &&
+              f['telefono'].touched
+            "
+          >
+
         </div>
-      
-      
-        <!-- obligatorio -->
-        <span class="error-msg" *ngIf="f['telefono'].errors?.['required'] && f['telefono'].touched">
-          El teléfono es obligatorio
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['telefono'].errors?.['required'] &&
+            f['telefono'].touched
+          "
+        >
+          {{ 'REGISTER.PHONE_REQUIRED' | translate }}
         </span>
-      
-      
-        <!-- debe empezar en 3 -->
-        <span class="error-msg" *ngIf="f['telefono'].errors?.['pattern'] && f['telefono'].touched">
-          Debe comenzar con 3 (número celular colombiano)
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['telefono'].errors?.['pattern'] &&
+            f['telefono'].touched
+          "
+        >
+          {{ 'REGISTER.PHONE_INVALID' | translate }}
         </span>
-      
-      
-        <!-- longitud incorrecta -->
-        <span class="error-msg" *ngIf="f['telefono'].errors?.['minlength'] && f['telefono'].touched">
-          El número debe tener 10 dígitos
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['telefono'].errors?.['minlength'] &&
+            f['telefono'].touched
+          "
+        >
+          {{ 'REGISTER.PHONE_MIN' | translate }}
         </span>
-      
+
       </div>
-    
-    
-      <!-- CONTRASEÑA -->
+
       <!-- CONTRASEÑA -->
       <div class="form-group">
-      
-        <label>Contraseña</label>
-      
+
+        <label>
+          {{ 'REGISTER.PASSWORD' | translate }}
+        </label>
+
         <div class="input-wrapper">
-      
+
           <span class="input-icon material-icons">
             lock
           </span>
-      
-          <input [type]="mostrarContrasena ? 'text' : 'password'" formControlName="contrasena"
-            placeholder="Mínimo 8 caracteres" [class.input-error]="f['contrasena'].invalid && f['contrasena'].touched">
-      
-          <button type="button" class="toggle-btn" (click)="toggleContrasena()">
-      
-            <span class="material-icons" *ngIf="!mostrarContrasena">
+
+          <input
+            [type]="mostrarContrasena ? 'text' : 'password'"
+            formControlName="contrasena"
+
+            [placeholder]="
+              'REGISTER.PASSWORD_PLACEHOLDER'
+              | translate
+            "
+
+            [class.input-error]="
+              f['contrasena'].invalid &&
+              f['contrasena'].touched
+            "
+          >
+
+          <button
+            type="button"
+            class="toggle-btn"
+            (click)="toggleContrasena()"
+          >
+
+            <span
+              class="material-icons"
+              *ngIf="!mostrarContrasena"
+            >
               visibility
             </span>
-      
-            <span class="material-icons" *ngIf="mostrarContrasena">
+
+            <span
+              class="material-icons"
+              *ngIf="mostrarContrasena"
+            >
               visibility_off
             </span>
-      
+
           </button>
-      
+
         </div>
-      
-      
-        <!-- CHECKLIST DINÁMICO -->
+
+        <!-- CHECKLIST -->
         <div class="requirements">
-      
+
           <div class="requirement" [class.met]="hasMinLength">
             <span class="req-dot"></span>
-            Mínimo 8 caracteres
+
+            {{
+              'REGISTER.REQUIREMENTS.MIN'
+              | translate
+            }}
           </div>
-      
+
           <div class="requirement" [class.met]="hasUppercase">
             <span class="req-dot"></span>
-            Al menos una mayúscula
+
+            {{
+              'REGISTER.REQUIREMENTS.UPPERCASE'
+              | translate
+            }}
           </div>
-      
+
           <div class="requirement" [class.met]="hasNumber">
             <span class="req-dot"></span>
-            Al menos un número
+
+            {{
+              'REGISTER.REQUIREMENTS.NUMBER'
+              | translate
+            }}
           </div>
-      
+
           <div class="requirement" [class.met]="hasSpecialChar">
             <span class="req-dot"></span>
-            Al menos un carácter especial
+
+            {{
+              'REGISTER.REQUIREMENTS.SPECIAL'
+              | translate
+            }}
           </div>
-      
+
         </div>
-      
-      
-        <!-- ERROR REQUIRED -->
-        <span class="error-msg" *ngIf="f['contrasena'].errors?.['required'] && f['contrasena'].touched">
-      
-          La contraseña es obligatoria
-      
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['contrasena'].errors?.['required'] &&
+            f['contrasena'].touched
+          "
+        >
+          {{ 'REGISTER.PASSWORD_REQUIRED' | translate }}
         </span>
-      
-      </div>
-    
-    
-      <!-- CONFIRMAR CONTRASEÑA -->
-      <div class="form-group">
-        <label>Confirmar Contraseña</label>
-    
-        <div class="input-wrapper">
-          <span class="input-icon material-icons">lock</span>
-    
-          <input [type]="mostrarConfirmar ? 'text' : 'password'" formControlName="confirmar"
-            placeholder="Repite tu contraseña"
-            [class.input-error]="f['confirmar'].errors?.['noCoincide'] && f['confirmar'].touched">
-    
-          <button type="button" class="toggle-btn" (click)="toggleConfirmar()">
-    
-            <span class="material-icons" *ngIf="!mostrarConfirmar">
-              visibility
-            </span>
-    
-            <span class="material-icons" *ngIf="mostrarConfirmar">
-              visibility_off
-            </span>
-    
-          </button>
-        </div>
-    
-        <span class="error-msg" *ngIf="f['confirmar'].errors?.['required'] && f['confirmar'].touched">
-          Debes confirmar la contraseña
-        </span>
-    
-        <span class="error-msg" *ngIf="f['confirmar'].errors?.['noCoincide'] && f['confirmar'].touched">
-          Las contraseñas no coinciden
-        </span>
+
       </div>
 
-      <span class="error-msg" *ngIf="loginError">
-      
-        Correo o contraseña incorrectos
-      
-      </span>
-    
-    
-      <!-- BOTÓN -->
-      <button type="submit" class="btn-register" [disabled]="registerForm.invalid || cargando">
-    
+      <!-- CONFIRMAR -->
+      <div class="form-group">
+
+        <label>
+          {{ 'REGISTER.CONFIRM_PASSWORD' | translate }}
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon material-icons">
+            lock
+          </span>
+
+          <input
+            [type]="mostrarConfirmar ? 'text' : 'password'"
+            formControlName="confirmar"
+
+            [placeholder]="
+              'REGISTER.CONFIRM_PASSWORD_PLACEHOLDER'
+              | translate
+            "
+
+            [class.input-error]="
+              f['confirmar'].errors?.['noCoincide'] &&
+              f['confirmar'].touched
+            "
+          >
+
+          <button
+            type="button"
+            class="toggle-btn"
+            (click)="toggleConfirmar()"
+          >
+
+            <span
+              class="material-icons"
+              *ngIf="!mostrarConfirmar"
+            >
+              visibility
+            </span>
+
+            <span
+              class="material-icons"
+              *ngIf="mostrarConfirmar"
+            >
+              visibility_off
+            </span>
+
+          </button>
+
+        </div>
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['confirmar'].errors?.['required'] &&
+            f['confirmar'].touched
+          "
+        >
+          {{ 'REGISTER.CONFIRM_REQUIRED' | translate }}
+        </span>
+
+        <span
+          class="error-msg"
+          *ngIf="
+            f['confirmar'].errors?.['noCoincide'] &&
+            f['confirmar'].touched
+          "
+        >
+          {{ 'REGISTER.PASSWORDS_NOT_MATCH' | translate }}
+        </span>
+
+      </div>
+
+      <button
+        type="submit"
+        class="btn-register"
+        [disabled]="registerForm.invalid || cargando"
+      >
+
         <span *ngIf="!cargando">
-          Registrarse
+          {{ 'REGISTER.BUTTON' | translate }}
         </span>
-    
+
         <span *ngIf="cargando">
-          Registrando...
+          {{ 'REGISTER.BUTTON_LOADING' | translate }}
         </span>
-    
+
       </button>
-    
+
     </form>
 
     <!-- FOOTER -->
     <p class="login-link">
-      ¿Ya tienes cuenta?
-      <a routerLink="/auth">Inicia sesión</a>
+
+      {{ 'REGISTER.ALREADY_ACCOUNT' | translate }}
+
+      <a routerLink="/auth">
+        {{ 'REGISTER.LOGIN' | translate }}
+      </a>
+
     </p>
 
   </div>

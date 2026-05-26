@@ -15,6 +15,8 @@ import {
 // para navegar entre pantallas
 import { Router, RouterModule } from '@angular/router';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-register',
@@ -22,7 +24,8 @@ import { Router, RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
@@ -116,7 +119,7 @@ export class RegisterComponent {
     }
 
   }
-  
+
   limpiarTelefono() {
 
     let telefono = this.registerForm.get('telefono')?.value;
@@ -145,7 +148,7 @@ export class RegisterComponent {
   get f() {
     return this.registerForm.controls;
   }
-  
+
   // Validar contraseña correcta
   get password(): string {
     return this.registerForm.get('contrasena')?.value || '';

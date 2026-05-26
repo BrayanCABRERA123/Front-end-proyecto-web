@@ -247,6 +247,121 @@
   "MESSAGE": "¿Estás seguro de cerrar sesión?",
   "CONFIRM": "Sí, cerrar",
   "CANCEL": "Cancelar"
+},
+
+"LOGIN": {
+  "TITLE": "Iniciar Sesión",
+  "SUBTITLE": "Ingresa a tu cuenta para reservar",
+
+  "EMAIL": "Correo Electrónico",
+  "EMAIL_PLACEHOLDER": "usuario@gmail.com",
+
+  "PASSWORD": "Contraseña",
+  "PASSWORD_PLACEHOLDER": "********",
+
+  "EMAIL_REQUIRED": "El correo es obligatorio",
+  "EMAIL_INVALID": "Debe ingresar un correo válido @gmail.com",
+
+  "PASSWORD_REQUIRED": "La contraseña es obligatoria",
+
+  "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
+
+  "BUTTON": "Iniciar Sesión",
+
+  "NO_ACCOUNT": "¿No tienes cuenta?",
+  "REGISTER": "Regístrate",
+
+  "INVALID_CREDENTIALS": "Correo o contraseña incorrectos"
+},
+
+"REGISTER": {
+  "TITLE": "Crear Cuenta",
+  "SUBTITLE": "Regístrate para empezar a reservar",
+
+  "FULL_NAME": "Nombre Completo",
+  "FULL_NAME_PLACEHOLDER": "Juan Pérez",
+
+  "EMAIL": "Correo Electrónico",
+  "EMAIL_PLACEHOLDER": "usuario@gmail.com",
+
+  "PHONE": "Teléfono",
+  "PHONE_PLACEHOLDER": "3001234567",
+
+  "PASSWORD": "Contraseña",
+  "PASSWORD_PLACEHOLDER": "Mínimo 8 caracteres",
+
+  "CONFIRM_PASSWORD": "Confirmar Contraseña",
+  "CONFIRM_PASSWORD_PLACEHOLDER": "Repite tu contraseña",
+
+  "NAME_REQUIRED": "El nombre es obligatorio",
+  "NAME_MIN": "Debe tener mínimo 3 caracteres",
+
+  "EMAIL_REQUIRED": "El correo es obligatorio",
+  "EMAIL_INVALID": "Solo se permiten correos @gmail.com",
+
+  "PHONE_REQUIRED": "El teléfono es obligatorio",
+  "PHONE_INVALID": "Debe comenzar con 3 (número celular colombiano)",
+  "PHONE_MIN": "El número debe tener 10 dígitos",
+
+  "PASSWORD_REQUIRED": "La contraseña es obligatoria",
+
+  "CONFIRM_REQUIRED": "Debes confirmar la contraseña",
+  "PASSWORDS_NOT_MATCH": "Las contraseñas no coinciden",
+
+  "REQUIREMENTS": {
+    "MIN": "Mínimo 8 caracteres",
+    "UPPERCASE": "Al menos una mayúscula",
+    "NUMBER": "Al menos un número",
+    "SPECIAL": "Al menos un carácter especial"
+  },
+
+  "BUTTON": "Registrarse",
+  "BUTTON_LOADING": "Registrando...",
+
+  "ALREADY_ACCOUNT": "¿Ya tienes cuenta?",
+  "LOGIN": "Inicia sesión",
+
+  "INVALID_CREDENTIALS": "Correo o contraseña incorrectos"
+},
+
+"FORGOT": {
+  "BACK_LOGIN": "Volver a Iniciar Sesión",
+
+  "EMAIL": {
+    "TITLE": "Recuperar Contraseña",
+    "DESCRIPTION": "Ingresa tu correo para recibir un código de verificación",
+    "LABEL": "Correo Electrónico",
+    "PLACEHOLDER": "usuario@gmail.com",
+    "INVALID": "Debe ingresar un correo válido @gmail.com",
+    "BUTTON": "Enviar Código"
+  },
+
+  "VERIFICATION": {
+    "TITLE": "Verificación",
+    "DESCRIPTION": "Ingresa el código de 6 dígitos enviado a",
+    "RESEND": "¿No recibiste el código? Reenviar",
+    "BUTTON": "Verificar Código"
+  },
+
+  "NEW_PASSWORD": {
+    "TITLE": "Nueva Contraseña",
+    "DESCRIPTION": "Crea tu nueva contraseña segura",
+
+    "LABEL": "Nueva Contraseña",
+    "PLACEHOLDER": "••••••••",
+
+    "CONFIRM": "Confirmar Contraseña",
+    "CONFIRM_PLACEHOLDER": "••••••••",
+
+    "BUTTON": "Actualizar Contraseña",
+
+    "REQUIREMENTS": {
+      "MIN": "Mínimo 8 caracteres",
+      "UPPERCASE": "Al menos una mayúscula",
+      "NUMBER": "Al menos un número",
+      "SPECIAL": "Al menos un carácter especial"
+    }
+  }
 }
 }
 
