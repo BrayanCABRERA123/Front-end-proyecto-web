@@ -1,0 +1,294 @@
+@use '../../../../styles/mixins' as *;
+// contenedor principal en fila
+.profile-wrapper {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  padding: 30px;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+// título de la página
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 20px 0;
+}
+
+// columna izquierda
+.profile-left {
+  flex: 1.5;
+}
+
+// columna derecha
+.profile-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 55px;
+}
+
+// tarjetas generales
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+// card de perfil centrada
+.profile-card {
+  text-align: center;
+}
+
+// avatar con iniciales
+.avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  background: rgba(var(--primary-rgb), 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 22px;
+}
+
+// nombre del usuario
+.user-name {
+  margin: 5px 0;
+  color: var(--text);
+}
+
+// subtítulo
+.subtitle {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+// grupo de label + input
+.form-group {
+  text-align: left;
+  margin-bottom: 15px;
+
+  label {
+    font-size: 12px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+// contenedor input con ícono
+.input-icon {
+  position: relative;
+  display: block;
+
+  input {
+    width: 100%;
+    padding: 15px 15px 15px 50px;
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+    font-size: 13px;
+    outline: none;
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.2s;
+    box-sizing: border-box;
+
+    &:hover { border-color: #bdbdbd; }
+
+    &:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15);
+    }
+  }
+
+  mat-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9e9e9e;
+    font-size: 20px;
+  }
+}
+
+// contenedor del botón editar
+.edit-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+// botón editar
+.btn-edit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.2s;
+
+  mat-icon { font-size: 16px; color: #666; }
+
+  &:hover { background: rgba(0,0,0,0.05); }
+}
+
+// header de las cards derechas
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+// divider
+.divider {
+  height: 1px;
+  background: rgba(0,0,0,0.08);
+  margin-bottom: 16px;
+}
+
+// contenido de las cards derechas
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+// bloque izquierdo
+.card-content .left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// mini íconos
+.mini-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(var(--primary-rgb), 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon { color: var(--primary); font-size: 20px; }
+
+  &.red {
+    background: #fdecea;
+    mat-icon { color: #e57373; }
+  }
+}
+
+// ícono del header
+.icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(var(--primary-rgb), 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon { color: var(--primary); font-size: 20px; }
+}
+
+// títulos dentro de las cards
+.card-content .title {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0;
+  color: var(--text);
+}
+
+.card-content .subtitle {
+  font-size: 12px;
+  color: #777;
+  margin: 2px 0 0;
+}
+
+// botón primario
+.btn-primary {
+  background: var(--primary);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+
+  &:hover { filter: brightness(1.1); }
+}
+
+// botón eliminar cuenta
+.btn-danger {
+  background: #e57373;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s;
+
+  &:hover { filter: brightness(1.1); }
+}
+
+// ================================
+// RESPONSIVE
+// ================================
+
+// tablet
+@include tablet {
+  .profile-wrapper {
+    padding: 24px;
+    gap: 16px;
+  }
+
+  .profile-right {
+    padding-top: 55px;
+  }
+}
+
+// mobile
+@include mobile {
+  .profile-wrapper {
+    flex-direction: column;
+    padding: 72px 16px 24px;
+    gap: 16px;
+    min-height: auto;
+  }
+
+  .profile-right {
+    padding-top: 0;
+  }
+
+  .card-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .btn-primary,
+  .btn-danger {
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+  }
+}

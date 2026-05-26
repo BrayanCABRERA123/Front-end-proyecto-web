@@ -1,0 +1,122 @@
+<div class="profile-wrapper">
+
+  <!-- IZQUIERDA — datos del usuario -->
+  <div class="profile-left">
+    <h1 class="page-title">{{ 'PROFILE.TITLE' | translate }}</h1>
+
+    <div class="card profile-card">
+
+      <!-- Avatar con iniciales -->
+      <div class="avatar">{{ usuario.iniciales }}</div>
+
+      <!-- Nombre y fecha de registro -->
+      <h2 class="user-name">{{ usuario.nombre }}</h2>
+      <p class="subtitle">
+        {{ 'PROFILE.MEMBER_SINCE' | translate:{date: usuario.miembroDesde} }}
+      </p>
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label>{{ 'PROFILE.NAME' | translate }}</label>
+        <div class="input-icon">
+          <mat-icon>person</mat-icon>
+          <input type="text" [value]="usuario.nombre" [readonly]="!editando"/>
+        </div>
+      </div>
+
+      <!-- Correo -->
+      <div class="form-group">
+        <label>{{ 'PROFILE.EMAIL' | translate }}</label>
+        <div class="input-icon">
+          <mat-icon>email</mat-icon>
+          <input type="text" [value]="usuario.email" [readonly]="!editando"/>
+        </div>
+      </div>
+
+      <!-- Teléfono -->
+      <div class="form-group">
+        <label>{{ 'PROFILE.PHONE' | translate }}</label>
+        <div class="input-icon">
+          <mat-icon>phone</mat-icon>
+          <input type="text" [value]="usuario.telefono" [readonly]="!editando"/>
+        </div>
+      </div>
+
+      <!-- Dirección -->
+      <div class="form-group">
+        <label>{{ 'PROFILE.ADDRESS' | translate }}</label>
+        <div class="input-icon">
+          <mat-icon>home</mat-icon>
+          <input type="text" [value]="usuario.direccion" [readonly]="!editando"/>
+        </div>
+      </div>
+
+      <!-- Botón editar/guardar -->
+      <div class="edit-container">
+        <button class="btn-edit" (click)="toggleEditar()">
+          <mat-icon>{{ editando ? 'save' : 'edit' }}</mat-icon>
+          <span>
+            {{ editando ? ('PROFILE.SAVE' | translate) : ('PROFILE.EDIT' | translate) }}
+          </span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DERECHA — contraseña y cuenta -->
+  <div class="profile-right">
+
+    <!-- Card contraseña -->
+    <div class="card modern-card">
+      <div class="card-header">
+        <div class="icon-box">
+          <mat-icon>password</mat-icon>
+        </div>
+        <h3>{{ 'PROFILE.PASSWORD' | translate }}</h3>
+      </div>
+      <div class="divider"></div>
+      <div class="card-content">
+        <div class="left">
+          <div class="mini-icon">
+            <mat-icon>vpn_key</mat-icon>
+          </div>
+          <div>
+            <p class="title">{{ 'PROFILE.CHANGE_PASSWORD' | translate }}</p>
+            <p class="subtitle">{{ 'PROFILE.PASSWORD_DESC' | translate }}</p>
+          </div>
+        </div>
+        <button class="btn-primary">
+          {{ 'PROFILE.CHANGE' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Card cuenta -->
+    <div class="card modern-card danger">
+      <div class="card-header">
+        <div class="icon-box">
+          <mat-icon>person</mat-icon>
+        </div>
+        <h3>{{ 'PROFILE.ACCOUNT' | translate }}</h3>
+      </div>
+      <div class="divider"></div>
+      <div class="card-content">
+        <div class="left">
+          <div class="mini-icon red">
+            <mat-icon>delete</mat-icon>
+          </div>
+          <div>
+            <p class="title">{{ 'PROFILE.DELETE' | translate }}</p>
+            <p class="subtitle">{{ 'PROFILE.DELETE_DESC' | translate }}</p>
+          </div>
+        </div>
+        <button class="btn-danger">
+          {{ 'PROFILE.DELETE' | translate }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

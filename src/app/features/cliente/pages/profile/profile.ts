@@ -1,32 +1,26 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// importamos el sidebar del cliente
 import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
-import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+// importamos el componente compartido de perfil
+import { ProfileCardComponent } from '../../../../shared/components/profile-card/profile-card';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule],
+  imports: [CommonModule, SidebarComponent, ProfileCardComponent],
   templateUrl: './profile.html',
-  styleUrl: './profile.scss',
+  styleUrl: './profile.scss'
 })
 export class ProfileComponent {
 
-  editando: boolean = false;
-
-  toggleEditar() {
-    this.editando = !this.editando;
-
-    if (!this.editando) {
-      console.log('Guardar cambios aquí');
-    }
-  }
-
+  // datos del usuario cliente
   usuario = {
     nombre: 'Juan Díaz',
     email: 'juan@email.com',
     telefono: '+1234 567 890',
-    direccion: 'Calle Principal #123'
+    direccion: 'Calle Principal #123',
+    iniciales: 'JD',
+    miembroDesde: 'Enero 2026'
   };
 }
