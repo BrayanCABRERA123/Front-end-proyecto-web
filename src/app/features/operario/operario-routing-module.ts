@@ -8,6 +8,7 @@ import { AssignedServicesComponent } from './pages/assigned-services/assigned-se
 import { notificationsComponent } from '../operario/pages/notifications/notifications';
 import { ServiceHistoryComponent } from './pages/service-history/service-history';
 import { QualificationsComponent } from './pages/qualifications/qualifications';
+import { ConfigurationOperarioComponent } from './pages/configuration-operario/configuration-operario';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'assigned-services', component: AssignedServicesComponent },
   { path: 'notifications', component: notificationsComponent },
   { path: 'service-history', component: ServiceHistoryComponent },
-  { path: 'qualifications', component: QualificationsComponent }
+  { path: 'qualifications', component: QualificationsComponent },
+  { path: 'settings', component: ConfigurationOperarioComponent }
 ];
 
 @NgModule({

@@ -1,0 +1,38 @@
+@use '../../../../../styles/mixins' as *;
+
+.config-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* contenido */
+.config-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* tablet */
+@include tablet {
+
+  .config-content {
+    padding: 0;
+  }
+
+}
+
+/* mobile */
+@include mobile {
+
+  .config-layout {
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .config-content {
+    width: 100%;
+    padding-top: 70px;
+  }
+
+}
