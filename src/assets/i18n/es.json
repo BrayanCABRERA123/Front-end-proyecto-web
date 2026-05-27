@@ -184,7 +184,10 @@
 
   "ACCOUNT": "Cuenta",
   "DELETE": "Eliminar cuenta",
-  "DELETE_DESC": "Eliminar permanentemente tu cuenta y todos tus datos"
+  "DELETE_DESC": "Eliminar permanentemente tu cuenta y todos tus datos",
+
+  "SAVED_MODE": "Modo visualización",
+  "EDIT_MODE": "Modo edición"
 },
 
 "RATINGS": {

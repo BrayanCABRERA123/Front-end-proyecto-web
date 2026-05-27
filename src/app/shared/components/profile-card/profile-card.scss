@@ -1,294 +1,472 @@
 @use '../../../../styles/mixins' as *;
-// contenedor principal en fila
+
+// WRAPPER PRINCIPAL
 .profile-wrapper {
   display: flex;
-  flex: 1;
-  gap: 20px;
-  padding: 30px;
+  gap: 24px;
+  padding: 32px;
   background: var(--bg);
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
-// título de la página
+// TÍTULO
 .page-title {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 800;
   color: var(--text);
-  margin: 0 0 20px 0;
+  margin: 0 0 24px;
 }
 
-// columna izquierda
+// COLUMNAS
 .profile-left {
-  flex: 1.5;
+  flex: 1.4;
+  min-width: 0;
 }
 
-// columna derecha
 .profile-right {
-  flex: 1;
+  flex: 0.9;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-top: 55px;
+  min-width: 320px;
+  padding-top: 72px;
 }
 
-// tarjetas generales
+// CARDS
 .card {
   background: var(--card);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  border-radius: 24px;
+  padding: 28px;
+  border: 1px solid rgba(var(--primary-rgb), 0.08);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.06),
+    0 2px 10px rgba(0,0,0,0.03);
+  transition: 0.25s ease;
 }
 
-// card de perfil centrada
 .profile-card {
   text-align: center;
 }
 
-// avatar con iniciales
+// AVATAR
 .avatar {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 15px;
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 18px;
   border-radius: 50%;
-  background: rgba(var(--primary-rgb), 0.15);
+  background: rgba(var(--primary-rgb), 0.14);
+  border: 3px solid rgba(var(--primary-rgb), 0.18);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+
+  font-size: 32px;
+  font-weight: 800;
   color: var(--primary);
-  font-size: 22px;
 }
 
-// nombre del usuario
+// TEXTO USUARIO
 .user-name {
-  margin: 5px 0;
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
   color: var(--text);
 }
 
-// subtítulo
 .subtitle {
-  font-size: 13px;
-  color: #888;
-  margin-bottom: 20px;
+  margin-top: 6px;
+  color: #8d8d8d;
+  font-size: 14px;
 }
 
-// grupo de label + input
-.form-group {
-  text-align: left;
-  margin-bottom: 15px;
+// ESTADO EDITANDO / GUARDADO
+.edit-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 
-  label {
-    font-size: 12px;
-    color: #555;
-    display: block;
-    margin-bottom: 5px;
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  margin: 18px auto 24px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition: 0.25s ease;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  // cuando esta editando
+  &.editing {
+    background: rgba(var(--primary-rgb), 0.14);
+    color: var(--primary);
+    border: 1px solid rgba(var(--primary-rgb), 0.24);
+  }
+
+  // cuando ya guardo
+  &.saved {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid rgba(var(--primary-rgb), 0.22);
+
+    box-shadow:
+      0 0 0 3px rgba(var(--primary-rgb), 0.05);
   }
 }
 
-// contenedor input con ícono
+// FORMULARIOS
+.form-group {
+  text-align: left;
+  margin-bottom: 18px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+}
+
+// INPUTS
 .input-icon {
   position: relative;
-  display: block;
 
   input {
     width: 100%;
-    padding: 15px 15px 15px 50px;
-    border: 1px solid #dcdcdc;
-    border-radius: 12px;
-    font-size: 13px;
-    outline: none;
-    background: var(--bg);
+    height: 56px;
+
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.10);
+
+    background: rgba(120,120,120,0.06);
     color: var(--text);
-    transition: 0.2s;
+
+    padding: 0 18px 0 52px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    outline: none;
     box-sizing: border-box;
 
-    &:hover { border-color: #bdbdbd; }
+    transition: 0.25s ease;
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:hover {
+      border-color: rgba(var(--primary-rgb), 0.20);
+    }
 
     &:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15);
+      background: rgba(var(--primary-rgb), 0.06);
+
+      box-shadow:
+        0 0 0 4px rgba(var(--primary-rgb), 0.12);
+    }
+
+    // cuando esta editable
+    &:not([readonly]) {
+      background: rgba(var(--primary-rgb), 0.10);
+      border: 1px solid rgba(var(--primary-rgb), 0.35);
+
+      box-shadow:
+        0 0 0 3px rgba(var(--primary-rgb), 0.08);
+    }
+
+    // cuando esta guardado
+    &[readonly] {
+      background: transparent;
+      border: 1px solid rgba(var(--primary-rgb), 0.18);
+
+      box-shadow:
+        inset 0 0 0 1px rgba(var(--primary-rgb), 0.04);
     }
   }
 
   mat-icon {
     position: absolute;
-    left: 15px;
+    left: 18px;
     top: 50%;
     transform: translateY(-50%);
-    color: #9e9e9e;
     font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
   }
 }
 
-// contenedor del botón editar
+// BOTÓN EDITAR
 .edit-container {
+  margin-top: 26px;
   display: flex;
   justify-content: flex-start;
-  margin-top: 20px;
 }
 
-// botón editar
 .btn-edit {
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 14px;
+  border: none;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  font-size: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background: var(--card);
-  color: var(--text);
+  gap: 10px;
   cursor: pointer;
-  transition: 0.2s;
+  font-size: 14px;
+  font-weight: 700;
+  transition: 0.25s ease;
+  background: var(--primary);
+  color: #fff;
 
-  mat-icon { font-size: 16px; color: #666; }
+  box-shadow:
+    0 10px 20px rgba(var(--primary-rgb), 0.25);
 
-  &:hover { background: rgba(0,0,0,0.05); }
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+  }
+
+  // cuando ya guardo
+  &.saved-mode {
+    background: transparent;
+    color: var(--primary);
+
+    border: 1px solid rgba(var(--primary-rgb), 0.25);
+
+    box-shadow:
+      0 0 0 3px rgba(var(--primary-rgb), 0.05);
+
+    mat-icon {
+      color: var(--primary);
+    }
+
+    &:hover {
+      background: rgba(var(--primary-rgb), 0.06);
+      transform: translateY(-1px);
+      filter: none;
+    }
+  }
 }
 
-// header de las cards derechas
+// HEADER DERECHA
 .card-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  padding-bottom: 10px;
+  gap: 14px;
+
+  h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+  }
 }
 
-// divider
+// ICON BOX
+.icon-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+
+  background: rgba(var(--primary-rgb), 0.12);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    color: var(--primary);
+    font-size: 22px;
+  }
+}
+
+// DIVIDER
 .divider {
   height: 1px;
   background: rgba(0,0,0,0.08);
-  margin-bottom: 16px;
+  margin: 18px 0;
 }
 
-// contenido de las cards derechas
+// CARD CONTENT
 .card-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
-// bloque izquierdo
 .card-content .left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
-// mini íconos
+// MINI ICON
 .mini-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
   background: rgba(var(--primary-rgb), 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 
-  mat-icon { color: var(--primary); font-size: 20px; }
+  mat-icon {
+    color: var(--primary);
+    font-size: 22px;
+  }
 
   &.red {
-    background: #fdecea;
-    mat-icon { color: #e57373; }
+    background: rgba(244, 67, 54, 0.12);
+
+    mat-icon {
+      color: #ef5350;
+    }
   }
 }
 
-// ícono del header
-.icon-box {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: rgba(var(--primary-rgb), 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  mat-icon { color: var(--primary); font-size: 20px; }
-}
-
-// títulos dentro de las cards
+// TEXTOS
 .card-content .title {
-  font-weight: 600;
-  font-size: 14px;
   margin: 0;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--text);
 }
 
 .card-content .subtitle {
-  font-size: 12px;
-  color: #777;
-  margin: 2px 0 0;
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #8f8f8f;
 }
 
-// botón primario
+// BOTONES
+.btn-primary,
+.btn-danger {
+  border: none;
+  border-radius: 12px;
+  height: 44px;
+  padding: 0 18px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition: 0.25s ease;
+  white-space: nowrap;
+}
+
 .btn-primary {
   background: var(--primary);
-  border: none;
   color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-  white-space: nowrap;
 
-  &:hover { filter: brightness(1.1); }
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+  }
 }
 
-// botón eliminar cuenta
 .btn-danger {
-  background: #e57373;
-  border: none;
+  background: #ef5350;
   color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: 0.2s;
 
-  &:hover { filter: brightness(1.1); }
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+  }
 }
 
-// ================================
-// RESPONSIVE
-// ================================
-
-// tablet
+// TABLET
 @include tablet {
+
   .profile-wrapper {
+    flex-direction: column;
     padding: 24px;
-    gap: 16px;
   }
 
   .profile-right {
-    padding-top: 55px;
+    padding-top: 0;
+    min-width: 100%;
+  }
+
+  .page-title {
+    font-size: 28px;
   }
 }
 
-// mobile
+// MOBILE
 @include mobile {
+
   .profile-wrapper {
     flex-direction: column;
-    padding: 72px 16px 24px;
-    gap: 16px;
+    padding: 76px 16px 24px;
+    gap: 18px;
     min-height: auto;
+  }
+
+  .profile-left,
+  .profile-right {
+    width: 100%;
+    min-width: 100%;
   }
 
   .profile-right {
     padding-top: 0;
   }
 
+  .page-title {
+    font-size: 24px;
+    margin-bottom: 18px;
+  }
+
+  .card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .user-name {
+    font-size: 28px;
+  }
+
+  .avatar {
+    width: 82px;
+    height: 82px;
+    font-size: 28px;
+  }
+
   .card-content {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
   }
 
   .btn-primary,
-  .btn-danger {
+  .btn-danger,
+  .btn-edit {
     width: 100%;
-    padding: 12px;
-    text-align: center;
+    justify-content: center;
+  }
+
+  .edit-container {
+    width: 100%;
+  }
+
+  .input-icon input {
+    height: 52px;
+    font-size: 14px;
   }
 }

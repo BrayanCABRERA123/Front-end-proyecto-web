@@ -1,6 +1,27 @@
-// contenedor con sidebar y contenido en fila
+@use '../../../../../styles/mixins' as *;
+
 .profile-container {
   display: flex;
   min-height: 100vh;
   background: var(--bg);
+  overflow: hidden;
+}
+
+/* contenido */
+app-profile-card {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* mobile */
+@include mobile {
+
+  .profile-container {
+    flex-direction: column;
+  }
+
+  app-profile-card {
+    width: 100%;
+  }
+
 }

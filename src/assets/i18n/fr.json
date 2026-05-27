@@ -185,7 +185,10 @@
 
   "ACCOUNT": "Compte",
   "DELETE": "Supprimer le compte",
-  "DELETE_DESC": "Supprimer définitivement votre compte et toutes vos données"
+  "DELETE_DESC": "Supprimer définitivement votre compte et toutes vos données",
+
+  "SAVED_MODE": "Mode visualisation",
+  "EDIT_MODE": "Mode édition"
 },
 
 "RATINGS": {

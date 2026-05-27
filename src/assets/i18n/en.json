@@ -186,7 +186,10 @@
 
   "ACCOUNT": "Account",
   "DELETE": "Delete account",
-  "DELETE_DESC": "Permanently delete your account and all your data"
+  "DELETE_DESC": "Permanently delete your account and all your data",
+
+  "SAVED_MODE": "View mode",
+  "EDIT_MODE": "Edit mode"
 },
 
 "RATINGS": {
