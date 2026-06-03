@@ -29,6 +29,21 @@
   }
 }
 
+/*boton hamburguesa*/
+/* oculto por defecto */
+.hamburger-btn {
+  display: none;
+}
+
+/* solo visible en móvil */
+@include mobile {
+  .hamburger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 /* USUARIO */
 .sidebar-usuario {
   display: flex;
