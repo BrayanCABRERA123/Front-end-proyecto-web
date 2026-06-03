@@ -1,54 +1,47 @@
 @use '../../../../../styles/mixins' as *;
 
-/* contenedor */
 .ratings-container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: var(--bg);
 }
 
-app-sidebar {
-  width: 260px;
-}
-
-/* contenido */
 .ratings-content {
   flex: 1;
-  text-align: center;
-  padding-top: 60px;
+  padding: 32px 36px;
+  overflow-y: auto;
 }
 
-/* títulos */
 .ratings-content h2 {
-  margin-bottom: 5px;
+  margin: 0 0 5px 0;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--text);
 }
 
 .subtitle {
   color: #9e9e9e;
   font-size: 13px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-/* card */
 .ratings-card {
-  max-width: 420px;
-  margin: 40px auto;
-  padding: 50px;
+  width: 100%;
+  max-width: 600px;
+  padding: 32px;
   border-radius: 16px;
   background: var(--card);
   color: var(--text);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* pregunta */
 .question {
   margin-bottom: 15px;
   font-weight: 500;
   color: var(--text);
 }
 
-/* estrellas */
 .stars {
   display: flex;
   justify-content: center;
@@ -66,13 +59,11 @@ app-sidebar {
     display: flex;
     align-items: center;
     justify-content: center;
-
     &.active { color: var(--primary); }
     &:hover { transform: scale(1.2); color: var(--primary); }
   }
 }
 
-/* form */
 .form-group {
   text-align: left;
   margin-bottom: 20px;
@@ -99,14 +90,12 @@ textarea {
   color: var(--text);
   transition: 0.2s;
   box-sizing: border-box;
-
   &:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent);
   }
 }
 
-/* botón */
 .btn-submit {
   width: 100%;
   padding: 12px;
@@ -117,47 +106,17 @@ textarea {
   font-weight: 500;
   cursor: pointer;
   transition: 0.2s;
-
   &:hover { filter: brightness(1.1); }
 }
 
-// ================================
-// RESPONSIVE
-// ================================
-
-// tablet
 @include tablet {
-  .ratings-content {
-    padding-top: 40px;
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  .ratings-card {
-    padding: 32px;
-    max-width: 100%;
-  }
+  .ratings-content { padding: 24px 32px; }
+  .ratings-card { max-width: 100%; }
 }
 
-// mobile
 @include mobile {
-  .ratings-container {
-    flex-direction: column;
-  }
-
-  .ratings-content {
-    padding: 72px 16px 24px;
-  }
-
-  .ratings-card {
-    margin: 0 auto;
-    padding: 24px 16px;
-    border-radius: 12px;
-  }
-
-  .stars mat-icon {
-    font-size: 28px;
-    width: 28px;
-    height: 28px;
-  }
+  .ratings-container { flex-direction: column; height: auto; min-height: 100vh; }
+  .ratings-content { padding: 72px 16px 24px; }
+  .ratings-card { margin: 0; padding: 24px 16px; border-radius: 12px; }
+  .stars mat-icon { font-size: 28px; width: 28px; height: 28px; }
 }

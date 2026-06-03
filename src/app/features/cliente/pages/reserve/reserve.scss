@@ -1,71 +1,37 @@
 @use '../../../../../styles/mixins' as *;
 
-// contenedor que pone sidebar y contenido en fila
 .page-container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: var(--bg);
 }
 
-// área de contenido derecho
 .main-content {
   flex: 1;
-  padding: 40px 230px;
+  padding: 32px 36px;
   overflow-y: auto;
 }
 
-// título principal
 .page-title {
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text);
-  margin: 0 0 18px 400px;
+  margin: 0 0 6px 0;
 }
 
-// subtítulo debajo del título
 .page-subtitle {
   font-size: 14px;
   color: #8a9aa3;
-  margin: 0 0 32px 370px;
+  margin: 0 0 24px 0;
 }
 
-// ================================
-// RESPONSIVE
-// ================================
-
-// tablet
 @include tablet {
-  .main-content {
-    padding: 24px 32px;
-  }
-
-  .page-title {
-    margin: 0 0 12px 0;
-    font-size: 24px;
-  }
-
-  .page-subtitle {
-    margin: 0 0 24px 0;
-  }
+  .main-content { padding: 24px 32px; }
 }
 
-// mobile
 @include mobile {
-  .page-container {
-    flex-direction: column;
-  }
-
-  .main-content {
-    padding: 72px 16px 24px;
-  }
-
-  .page-title {
-    margin: 0 0 8px 0;
-    font-size: 22px;
-  }
-
-  .page-subtitle {
-    margin: 0 0 20px 0;
-    font-size: 13px;
-  }
+  .page-container { flex-direction: column; height: auto; min-height: 100vh; }
+  .main-content { padding: 72px 16px 24px; }
+  .page-title { font-size: 20px; }
 }

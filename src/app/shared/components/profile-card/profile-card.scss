@@ -1,371 +1,281 @@
 @use '../../../../styles/mixins' as *;
 
-// WRAPPER PRINCIPAL
 .profile-wrapper {
   display: flex;
   gap: 24px;
-  padding: 32px;
-  background: var(--bg);
-  min-height: 100vh;
+  padding: 32px 36px;
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
   box-sizing: border-box;
+  align-items: flex-start;
 }
 
-// TÍTULO
 .page-title {
-  font-size: 32px;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--text);
-  margin: 0 0 24px;
+  margin: 0 0 20px;
 }
 
-// COLUMNAS
 .profile-left {
-  flex: 1.4;
+  flex: 1 ;
   min-width: 0;
 }
 
 .profile-right {
-  flex: 0.9;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  min-width: 320px;
-  padding-top: 72px;
+  min-width: 0;
+  padding-top: 40px;
 }
 
-// CARDS
 .card {
   background: var(--card);
-  border-radius: 24px;
-  padding: 28px;
+  border-radius: 18px;
+  padding: 22px 24px;
   border: 1px solid rgba(var(--primary-rgb), 0.08);
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.06),
-    0 2px 10px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   transition: 0.25s ease;
+}
+
+.modern-card {
+  width: 100%;
+  min-width: 340px;
+  box-sizing: border-box;
 }
 
 .profile-card {
   text-align: center;
 }
 
-// AVATAR
 .avatar {
-  width: 92px;
-  height: 92px;
-  margin: 0 auto 18px;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
   border-radius: 50%;
   background: rgba(var(--primary-rgb), 0.14);
   border: 3px solid rgba(var(--primary-rgb), 0.18);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 800;
   color: var(--primary);
 }
 
-// TEXTO USUARIO
 .user-name {
   margin: 0;
-  font-size: 34px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 700;
   color: var(--text);
 }
 
 .subtitle {
-  margin-top: 6px;
+  margin-top: 4px;
   color: #8d8d8d;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-// ESTADO EDITANDO / GUARDADO
 .edit-status {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: 999px;
-
-  margin: 18px auto 24px;
-
+  margin: 12px auto 16px;
   font-size: 13px;
   font-weight: 700;
-
   transition: 0.25s ease;
 
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
 
-  // cuando esta editando
   &.editing {
     background: rgba(var(--primary-rgb), 0.14);
     color: var(--primary);
     border: 1px solid rgba(var(--primary-rgb), 0.24);
   }
 
-  // cuando ya guardo
   &.saved {
     background: transparent;
     color: var(--primary);
     border: 1px solid rgba(var(--primary-rgb), 0.22);
-
-    box-shadow:
-      0 0 0 3px rgba(var(--primary-rgb), 0.05);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.05);
   }
 }
 
-// FORMULARIOS
 .form-group {
   text-align: left;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 
   label {
     display: block;
-    margin-bottom: 8px;
-
+    margin-bottom: 6px;
     font-size: 13px;
     font-weight: 700;
     color: var(--text);
   }
 }
 
-// INPUTS
 .input-icon {
   position: relative;
 
   input {
     width: 100%;
-    height: 56px;
-
-    border-radius: 16px;
+    height: 48px;
+    border-radius: 14px;
     border: 1px solid rgba(0,0,0,0.10);
-
     background: rgba(120,120,120,0.06);
     color: var(--text);
-
-    padding: 0 18px 0 52px;
-
-    font-size: 15px;
+    padding: 0 18px 0 48px;
+    font-size: 14px;
     font-weight: 500;
-
     outline: none;
     box-sizing: border-box;
-
     transition: 0.25s ease;
 
-    &::placeholder {
-      color: #999;
-    }
-
-    &:hover {
-      border-color: rgba(var(--primary-rgb), 0.20);
-    }
-
+    &::placeholder { color: #999; }
+    &:hover { border-color: rgba(var(--primary-rgb), 0.20); }
     &:focus {
       border-color: var(--primary);
       background: rgba(var(--primary-rgb), 0.06);
-
-      box-shadow:
-        0 0 0 4px rgba(var(--primary-rgb), 0.12);
+      box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.12);
     }
-
-    // cuando esta editable
     &:not([readonly]) {
       background: rgba(var(--primary-rgb), 0.10);
       border: 1px solid rgba(var(--primary-rgb), 0.35);
-
-      box-shadow:
-        0 0 0 3px rgba(var(--primary-rgb), 0.08);
+      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.08);
     }
-
-    // cuando esta guardado
     &[readonly] {
       background: transparent;
       border: 1px solid rgba(var(--primary-rgb), 0.18);
-
-      box-shadow:
-        inset 0 0 0 1px rgba(var(--primary-rgb), 0.04);
+      box-shadow: inset 0 0 0 1px rgba(var(--primary-rgb), 0.04);
     }
   }
 
   mat-icon {
     position: absolute;
-    left: 18px;
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
     color: var(--primary);
   }
 }
 
-// BOTÓN EDITAR
 .edit-container {
-  margin-top: 26px;
+  margin-top: 18px;
   display: flex;
   justify-content: flex-start;
 }
 
 .btn-edit {
-  height: 48px;
-  padding: 0 22px;
-  border-radius: 14px;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 12px;
   border: none;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 700;
   transition: 0.25s ease;
   background: var(--primary);
   color: #fff;
+  box-shadow: 0 8px 16px rgba(var(--primary-rgb), 0.25);
 
-  box-shadow:
-    0 10px 20px rgba(var(--primary-rgb), 0.25);
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  &:hover { transform: translateY(-2px); filter: brightness(1.05); }
 
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.05);
-  }
-
-  // cuando ya guardo
   &.saved-mode {
     background: transparent;
     color: var(--primary);
-
     border: 1px solid rgba(var(--primary-rgb), 0.25);
-
-    box-shadow:
-      0 0 0 3px rgba(var(--primary-rgb), 0.05);
-
-    mat-icon {
-      color: var(--primary);
-    }
-
-    &:hover {
-      background: rgba(var(--primary-rgb), 0.06);
-      transform: translateY(-1px);
-      filter: none;
-    }
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.05);
+    mat-icon { color: var(--primary); }
+    &:hover { background: rgba(var(--primary-rgb), 0.06); transform: translateY(-1px); filter: none; }
   }
 }
 
-// HEADER DERECHA
 .card-header {
   display: flex;
   align-items: center;
-  gap: 14px;
-
-  h3 {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--text);
-  }
+  gap: 12px;
+  h3 { margin: 0; font-size: 17px; font-weight: 700; color: var(--text); }
 }
 
-// ICON BOX
 .icon-box {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   background: rgba(var(--primary-rgb), 0.12);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  mat-icon {
-    color: var(--primary);
-    font-size: 22px;
-  }
+  mat-icon { color: var(--primary); font-size: 20px; }
 }
 
-// DIVIDER
 .divider {
   height: 1px;
   background: rgba(0,0,0,0.08);
-  margin: 18px 0;
+  margin: 14px 0;
 }
 
-// CARD CONTENT
 .card-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 }
 
 .card-content .left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
-// MINI ICON
 .mini-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   background: rgba(var(--primary-rgb), 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-
-  mat-icon {
-    color: var(--primary);
-    font-size: 22px;
-  }
-
+  mat-icon { color: var(--primary); font-size: 20px; }
   &.red {
     background: rgba(244, 67, 54, 0.12);
-
-    mat-icon {
-      color: #ef5350;
-    }
+    mat-icon { color: #ef5350; }
   }
 }
 
-// TEXTOS
 .card-content .title {
   margin: 0;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text);
 }
 
 .card-content .subtitle {
-  margin: 4px 0 0;
-  font-size: 13px;
+  margin: 3px 0 0;
+  font-size: 12px;
   color: #8f8f8f;
 }
 
-// BOTONES
 .btn-primary,
 .btn-danger {
   border: none;
-  border-radius: 12px;
-  height: 44px;
-  padding: 0 18px;
+  border-radius: 10px;
+  height: 40px;
+  padding: 0 16px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   transition: 0.25s ease;
   white-space: nowrap;
@@ -374,99 +284,26 @@
 .btn-primary {
   background: var(--primary);
   color: white;
-
-  &:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.06);
-  }
+  &:hover { transform: translateY(-2px); filter: brightness(1.06); }
 }
 
 .btn-danger {
   background: #ef5350;
   color: white;
-
-  &:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.06);
-  }
+  &:hover { transform: translateY(-2px); filter: brightness(1.06); }
 }
 
-// TABLET
 @include tablet {
-
-  .profile-wrapper {
-    flex-direction: column;
-    padding: 24px;
-  }
-
-  .profile-right {
-    padding-top: 0;
-    min-width: 100%;
-  }
-
-  .page-title {
-    font-size: 28px;
-  }
+  .profile-wrapper { flex-direction: column; padding: 24px; }
+  .profile-right { min-width: 100%; }
 }
 
-// MOBILE
 @include mobile {
-
-  .profile-wrapper {
-    flex-direction: column;
-    padding: 76px 16px 24px;
-    gap: 18px;
-    min-height: auto;
-  }
-
-  .profile-left,
-  .profile-right {
-    width: 100%;
-    min-width: 100%;
-  }
-
-  .profile-right {
-    padding-top: 0;
-  }
-
-  .page-title {
-    font-size: 24px;
-    margin-bottom: 18px;
-  }
-
-  .card {
-    padding: 20px;
-    border-radius: 20px;
-  }
-
-  .user-name {
-    font-size: 28px;
-  }
-
-  .avatar {
-    width: 82px;
-    height: 82px;
-    font-size: 28px;
-  }
-
-  .card-content {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .btn-primary,
-  .btn-danger,
-  .btn-edit {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .edit-container {
-    width: 100%;
-  }
-
-  .input-icon input {
-    height: 52px;
-    font-size: 14px;
-  }
+  .profile-wrapper { flex-direction: column; padding: 72px 16px 24px; gap: 16px; }
+  .profile-left, .profile-right { width: 100%; min-width: 100%; }
+  .card { padding: 18px; border-radius: 16px; }
+  .card-content { flex-direction: column; align-items: flex-start; }
+  .btn-primary, .btn-danger, .btn-edit { width: 100%; justify-content: center; }
+  .edit-container { width: 100%; }
+  .input-icon input { height: 48px; }
 }

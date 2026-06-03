@@ -1,27 +1,13 @@
-@use '../../../../../styles/mixins' as *;
-
 .profile-container {
   display: flex;
-  min-height: 100vh;
-  background: var(--bg);
+  height: 100vh;
   overflow: hidden;
-}
-
-/* contenido */
-app-profile-card {
-  flex: 1;
-  overflow-y: auto;
-}
-
-/* mobile */
-@include mobile {
-
-  .profile-container {
-    flex-direction: column;
-  }
+  background: var(--bg);
 
   app-profile-card {
-    width: 100%;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    overflow-y: auto;
   }
-
 }
