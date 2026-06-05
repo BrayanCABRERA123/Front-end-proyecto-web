@@ -7,6 +7,7 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 // iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,7 @@ export class HomeComponent {
   resumen = [
     { icono: 'calendar_today', cantidad: 2, label: 'HOME.RESUMEN.ACTIVE' },
     { icono: 'directions_car', cantidad: 3, label: 'HOME.RESUMEN.VEHICLES' },
-    { icono: 'notifications',  cantidad: 5, label: 'HOME.RESUMEN.NOTIFICATIONS' },
+    { icono: 'notifications',  cantidad: 5, label: 'HOME.RESUMEN.NOTIFICATIONS', ruta: 'notifications' },
   ];
 
   // próximas reservas (TODO con claves)
@@ -44,4 +45,15 @@ export class HomeComponent {
       estado: 'CONFIRMED'
     }
   ];
+
+  //CONSTRUCTOR
+  constructor(private router: Router) {}
+
+  // METODO
+  irA(ruta: string | null | undefined) {
+    if (ruta) {
+      this.router.navigate(['/cliente', ruta]);
+    }
+  }
+
 }

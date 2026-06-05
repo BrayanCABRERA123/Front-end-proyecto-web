@@ -19,7 +19,10 @@
 
     <!-- Tarjetas de resumen -->
     <div class="resumen-grid">
-      <div class="resumen-card" *ngFor="let item of resumen">
+      <div class="resumen-card" 
+      *ngFor="let item of resumen"
+      (click)="irA(item.ruta)"
+      [class.clickable]="item.ruta !== null">
         <mat-icon class="resumen-icono">{{ item.icono }}</mat-icon>
 
         <p class="resumen-cantidad">{{ item.cantidad }}</p>
