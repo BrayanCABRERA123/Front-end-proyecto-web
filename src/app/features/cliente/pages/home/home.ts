@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
 // importamos el sidebar
-import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';

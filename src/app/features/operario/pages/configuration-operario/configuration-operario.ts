@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SidebarOperarioComponent } from '../../../../layout/sidebar-operario/sidebar-operario';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { SettingsPanelComponent } from '../../../../shared/components/settings-panel/settings-panel';
 
 @Component({
@@ -9,7 +9,7 @@ import { SettingsPanelComponent } from '../../../../shared/components/settings-p
   standalone: true,
   imports: [
     CommonModule,
-    SidebarOperarioComponent,
+    SidebarComponent,
     SettingsPanelComponent
   ],
   templateUrl: './configuration-operario.html',

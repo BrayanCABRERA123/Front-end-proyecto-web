@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { HistoryCardComponent } from './components/history-card/history-card';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // importamos el sidebar del operario
-import { SidebarOperarioComponent } from '../../../../layout/sidebar-operario/sidebar-operario';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // importamos los componentes hijos
 import { StatsCardComponent } from './components/stats-card/stats-card';
 import { PendingServiceCardComponent } from './components/pending-service-card/pending-service-card';
@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [
     CommonModule,
-    SidebarOperarioComponent,
+    SidebarComponent,
     StatsCardComponent,
     PendingServiceCardComponent,
     MatIconModule

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // importamos el sidebar que creamos
-import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// importamos el sidebar del operario
-import { SidebarOperarioComponent } from '../../../../layout/sidebar-operario/sidebar-operario';
+// importamos el sidebar 
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // importamos el componente compartido de perfil
 import { ProfileCardComponent } from '../../../../shared/components/profile-card/profile-card';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, SidebarOperarioComponent, ProfileCardComponent],
+  imports: [CommonModule, SidebarComponent, ProfileCardComponent],
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })

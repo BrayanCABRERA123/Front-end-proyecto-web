@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { SettingsPanelComponent } from '../../../../shared/components/settings-panel/settings-panel';
 
 @Component({

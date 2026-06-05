@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // importamos el sidebar del cliente
-import { SidebarComponent } from '../../../../layout/sidebar/sidebar';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // importamos el componente compartido de perfil
 import { ProfileCardComponent } from '../../../../shared/components/profile-card/profile-card';
 

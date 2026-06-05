@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarOperarioComponent } from '../../../../layout/sidebar-operario/sidebar-operario';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-notifications',
     standalone: true,
-    imports: [CommonModule, SidebarOperarioComponent, MatIconModule, FormsModule],
+    imports: [CommonModule, SidebarComponent, MatIconModule, FormsModule],
     templateUrl: './notifications.html',
     styleUrls: ['./notifications.scss']
 })

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// importamos el sidebar del operario
-import { SidebarOperarioComponent } from '../../../../layout/sidebar-operario/sidebar-operario';
+// importamos el sidebar 
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // importamos los componentes hijos
 import { ServiceTableComponent } from './components/service-table/service-table';
 import { ServiceDetailComponent } from './components/service-detail/service-detail';
@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     FormsModule,
-    SidebarOperarioComponent,
+    SidebarComponent,
     ServiceTableComponent,
     ServiceDetailComponent,
     MatIconModule
