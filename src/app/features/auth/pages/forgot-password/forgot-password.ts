@@ -11,6 +11,10 @@ import { EmailStepComponent } from './steps/email-step/email-step';
 import { VerificationStepComponent } from './steps/verification-step/verification-step';
 import { NewPasswordStepComponent } from './steps/new-password-step/new-password-step';
 
+import { BackButtonComponent } from '../../../../shared/components/back-button/back-button';
+
+import { AuthSidePanelComponent } from '../../../../shared/components/auth-side-panel/auth-side-panel';
+
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
@@ -21,7 +25,9 @@ import { NewPasswordStepComponent } from './steps/new-password-step/new-password
     StepperComponent,         // indicador de pasos 1-2-3
     EmailStepComponent,       // paso 1
     VerificationStepComponent, // paso 2
-    NewPasswordStepComponent  // paso 3
+    NewPasswordStepComponent,  // paso 3
+    BackButtonComponent,
+    AuthSidePanelComponent
   ],
   templateUrl: './forgot-password.html',
   styleUrl: './forgot-password.scss'

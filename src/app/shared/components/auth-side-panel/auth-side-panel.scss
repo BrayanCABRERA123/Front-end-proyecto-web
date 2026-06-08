@@ -1,0 +1,216 @@
+.side-panel {
+  flex: 1;
+  min-height: 100vh;
+  min-width: 500px;
+  max-width: 850px;
+
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    rgba(var(--primary-rgb), .85)
+  );
+
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: white;
+  box-sizing: border-box;
+  box-shadow:
+    60px 0 120px rgba(var(--primary-rgb), .20);
+
+  animation: slideLeft .8s ease;
+}
+
+/* círculo superior */
+.side-panel::before {
+  content: '';
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  top: -220px;
+  right: -220px;
+}
+
+/* círculo inferior */
+.side-panel::after {
+  content: '';
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
+  bottom: -160px;
+  left: -160px;
+}
+
+.panel-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.panel-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.panel-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.panel-image img {
+  width: 100%;
+  max-width: 620px;
+  max-height: 32vh;
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 25px 40px rgba(0,0,0,.25)
+    );
+}
+
+.side-panel h1 {
+  margin: 0 0 15px;
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.description {
+  margin: 0 0 25px;
+  font-size: 18px;
+  line-height: 1.6;
+  opacity: .95;
+  max-width: 550px;
+}
+
+.benefits {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.benefit-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,.15);
+  transition: all .25s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,.16);
+}
+
+.benefit-card .material-icons {
+  font-size: 30px;
+}
+
+.benefit-card h4 {
+  margin: 0 0 4px;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.benefit-card p {
+  margin: 0;
+  font-size: 13px;
+  opacity: .95;
+}
+
+/* MONITORES GRANDES */
+@media (min-width: 1800px) {
+
+  .panel-content {
+    max-width: 760px;
+  }
+
+  .side-panel h1 {
+    font-size: 58px;
+  }
+
+  .description {
+    font-size: 22px;
+  }
+
+  .panel-image img {
+    max-width: 650px;
+  }
+}
+
+/* LAPTOPS */
+@media (max-width: 1400px) {
+
+  .panel-image img {
+    max-width: 450px;
+  }
+
+  .side-panel h1 {
+    font-size: 40px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+}
+
+/* PANTALLAS BAJAS */
+
+@media (max-height: 800px) {
+
+  .panel-image img {
+    max-height: 22vh;
+  }
+
+  .side-panel h1 {
+    font-size: 32px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+}
+
+/* TABLETS Y MÓVILES */
+
+@media (max-width: 1100px) {
+
+  .side-panel {
+    display: none;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

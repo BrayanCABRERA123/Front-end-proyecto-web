@@ -374,5 +374,20 @@
       "SPECIAL": "Au moins un caractère spécial"
     }
   }
-}
+},
+
+
+  "AUTH_PANEL": {
+    "TITLE": "Votre véhicule mérite le meilleur entretien",
+    "SUBTITLE": "Gérez vos services de lavage, planifiez vos rendez-vous et gardez un contrôle total de votre véhicule depuis une seule plateforme.",
+
+    "BENEFIT1_TITLE": "Service Premium",
+    "BENEFIT1_DESC": "Des lavages de haute qualité pour garder votre véhicule impeccable.",
+
+    "BENEFIT2_TITLE": "Réservations rapides",
+    "BENEFIT2_DESC": "Planifiez vos rendez-vous en quelques secondes depuis n'importe quel appareil.",
+
+    "BENEFIT3_TITLE": "Informations sécurisées",
+    "BENEFIT3_DESC": "Vos données et réservations sont protégées à tout moment."
+  }
 }

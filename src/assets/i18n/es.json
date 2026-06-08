@@ -372,6 +372,20 @@
       "SPECIAL": "Al menos un carácter especial"
     }
   }
-}
-}
+},
 
+  "AUTH_PANEL": {
+    "TITLE": "Tu vehículo merece el mejor cuidado",
+    "SUBTITLE": "Administra tus servicios de lavado, agenda citas y mantén el control total de tu vehículo desde una sola plataforma.",
+
+    "BENEFIT1_TITLE": "Servicio Premium",
+    "BENEFIT1_DESC": "Lavados de alta calidad para mantener tu vehículo impecable.",
+
+    "BENEFIT2_TITLE": "Reservas rápidas",
+    "BENEFIT2_DESC": "Agenda tus citas en segundos desde cualquier dispositivo.",
+
+    "BENEFIT3_TITLE": "Información segura",
+    "BENEFIT3_DESC": "Tus datos y reservas están protegidos en todo momento."
+  }
+
+}

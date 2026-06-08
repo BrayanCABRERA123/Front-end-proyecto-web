@@ -1,51 +1,61 @@
-// Contenedor principal en fila
 .stepper-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 16px 0;
+  margin-bottom: 30px;
 }
 
-// Estilo base de cada círculo
 .step-circle {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 2px solid var(--border);
-  background-color: var(--card);
+  background: var(--card);
   color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-
-  // Paso activo — círculo principal
-  &.active {
-    background-color: var(--primary);
-    border-color: var(--primary);
-    color: #ffffff;
-  }
-
-  // Paso completado — círculo suavizado
-  &.completed {
-    background-color: var(--primary);
-    border-color: var(--primary);
-    color: #ffffff;
-    opacity: 0.7;
-  }
+  font-size: 15px;
+  font-weight: 700;
+  transition: all .25s ease;
 }
 
-// Línea conectora entre círculos
-.step-line {
-  width: 48px;
-  height: 2px;
-  background-color: var(--border);
-  transition: background-color 0.3s ease;
+.step-circle.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
 
-  // Línea activa cuando el siguiente paso está activo o completado
-  &.line-active {
-    background-color: var(--primary);
+.step-circle.completed {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  opacity: .75;
+}
+
+.step-line {
+  width: 60px;
+  height: 2px;
+
+  background: var(--border);
+
+  transition: all .25s ease;
+}
+
+.step-line.line-active {
+  background: var(--primary);
+}
+
+@media (max-width: 600px) {
+
+  .step-circle {
+    width: 36px;
+    height: 36px;
+
+    font-size: 14px;
+  }
+
+  .step-line {
+    width: 40px;
   }
 }

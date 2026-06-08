@@ -1,271 +1,392 @@
-/* quitamos espacios raros del navegador */
-html, body {
+body {
   margin: 0;
-  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
-
-/* contenedor principal */
+/* CONTENEDOR GENERAL */
 .register-page {
-  min-height: 100vh; 
+  min-height: 100vh;
   display: flex;
-  justify-content: center; 
-  align-items: center;    
-  background: var(--bg);     
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  overflow-x: hidden;
+  position: relative;
 }
 
+/* PANEL IZQUIERDO */
+app-auth-side-panel {
+  flex: 1.35;
+  display: flex;
+}
 
-/* tarjeta donde está todo el formulario */
+/* SECCIÓN FORMULARIO */
+.register-form-section {
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  position: relative;
+  z-index: 2;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(var(--primary-rgb), 0.05),
+      transparent 60%
+    );
+}
+
+/* TARJETA */
 .register-card {
-  width: 100%;      
-  max-width: 380px;   
-  background: var(--card);   
-
-  padding: 30px;        
-  margin: 20px;       
-  border-radius: 16px;  
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 600px;
+  background: var(--card);
+  padding: 40px;
+  border-radius: 28px;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.15);
+  position: relative;
+  animation: slideRight .8s ease;
+  margin-right: 100px;
 }
 
-
-/* parte de arriba, logo y textos */
-.register-header {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-
-/* contenedor del logo y el titulo */
+/* LOGO */
 .brand {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; 
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 15px;
 }
 
-/* logo */
-.logo {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
+.logo-img {
+  flex-shrink: 0;
 }
 
-/* titulo principal */
 .brand h1 {
-  font-size: 16px;
-  font-weight: 600;
   margin: 0;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--text);
 }
 
+/* HEADER */
+.register-header {
+  text-align: center;
 
-/* subtitulo */
+  margin-bottom: 30px;
+}
+
 .register-header h2 {
-  font-size: 15px;
-  margin: 4px 0;
+  margin: 0 0 10px;
+  font-size: 34px;
+  font-weight: 700;
   color: var(--text);
 }
 
-/* texto pequeño */
 .register-header p {
-  font-size: 12px;
-  color: var(--text-muted);
-
-  margin-top: 4px;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
+/* FORM */
+form {
+  width: 100%;
+}
 
-/* cada grupo del formulario */
 .form-group {
   margin-bottom: 18px;
 }
 
-/* labels */
 label {
-  font-size: 12px;
-  color: var(--text-secondary);
-
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+
+  color: var(--text);
 }
 
-
-/* contenedor del input */
+/* INPUTS */
 .input-wrapper {
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
-/* input */
 .input-wrapper input {
   width: 100%;
-  padding: 10px 40px 10px 35px;
+  padding: 14px 45px 14px 45px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   background: var(--item-bg);
   color: var(--text);
-
-  border-radius: 10px;
-  font-size: 13px;
-  outline: none;
-  transition: all 0.3s ease;
+  font-size: 15px;
+  transition: all .25s ease;
+  box-sizing: border-box;
 }
 
-/* cuando hago clic en el input */
+.input-wrapper input::placeholder {
+  color: var(--text-muted);
+}
+
 .input-wrapper input:focus {
+  outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px var(--primary-soft);
+  box-shadow:
+    0 0 0 3px rgba(var(--primary-rgb), .15);
 }
 
-
-/* iconos de la izquierda */
+/* ICONOS */
 .input-icon {
   position: absolute;
-  left: 10px;
-  font-size: 18px;
-  color: var(--text-muted);
 
+  left: 14px;
+  top: 50%;
+
+  transform: translateY(-50%);
+  color: var(--text-muted);
   font-family: 'Material Icons';
+  font-size: 20px;
 }
 
-
-/* boton del ojito */
+/* BOTON OJO */
 .toggle-btn {
   position: absolute;
-  right: 10px;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   border: none;
-  background: none;
+  background: transparent;
+
   cursor: pointer;
+
   display: flex;
   align-items: center;
 }
 
-/* icono del ojo */
 .toggle-btn .material-icons {
-  font-size: 20px;
   color: var(--text-muted);
-
-  transition: 0.2s;
+  font-size: 22px;
 }
 
-/* cuando paso el mouse por el ojo */
 .toggle-btn:hover .material-icons {
   color: var(--text);
 }
 
+/* ERRORES */
+.error-msg {
+  display: block;
 
-/* cuando hay error en input */
+  margin-top: 6px;
+
+  color: #e53935;
+
+  font-size: 12px;
+}
+
 .input-error {
   border-color: #e53935 !important;
 }
 
-/* mensaje de error */
-.error-msg {
-  color: #e53935;
-  font-size: 11px;
-  margin-top: 4px;
+input.ng-invalid.ng-touched {
+  border-color: #e53935;
 }
 
+input.ng-invalid.ng-touched:focus {
+  box-shadow:
+    0 0 0 3px rgba(229, 57, 53, .15);
+}
 
-/* boton registrarse */
+/* REQUISITOS PASSWORD */
+.requirements {
+  margin-top: 12px;
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 6px;
+
+  font-size: 13px;
+
+  color: var(--text-muted);
+
+  transition: all .25s ease;
+}
+
+.req-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(var(--primary-rgb), .20);
+  transition: all .25s ease;
+}
+
+.requirement.met {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.requirement.met .req-dot {
+  background: var(--primary);
+
+  box-shadow:
+    0 0 8px rgba(var(--primary-rgb), .35);
+}
+
+/* BOTÓN */
 .btn-register {
   width: 100%;
-  padding: 11px;
+  margin-top: 22px;
+  padding: 15px;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, var(--primary), rgba(var(--primary-rgb), 0.8));
+  border-radius: 14px;
+
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    rgba(var(--primary-rgb), .8)
+  );
 
   color: white;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.3s;
+
+  transition: all .25s ease;
 }
 
-/* cuando paso el mouse */
-.btn-register:hover {
-  opacity: 0.9;
+.btn-register:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(var(--primary-rgb), .30);
 }
 
-/* cuando está deshabilitado */
 .btn-register:disabled {
-  opacity: 0.6;
+  opacity: .6;
   cursor: not-allowed;
 }
 
-
-/* parte de abajo (login) */
+/* FOOTER */
 .login-link {
-  margin-top: 15px;
-  font-size: 12px;
+  margin-top: 25px;
   text-align: center;
+  color: var(--text-secondary);
+  font-size: 15px;
 }
 
-/* link */
 .login-link a {
   color: var(--primary);
+  font-weight: 700;
   text-decoration: none;
-  font-weight: 600;
 }
 
-/* hover del link */
 .login-link a:hover {
   text-decoration: underline;
 }
 
+/* MONITORES GRANDES */
+@media (min-width: 1800px) {
 
-/* esto quita el ojo automático del navegador */
+  .register-card {
+    max-width: 680px;
+  }
 
-/* edge viejo */
-input[type="password"]::-ms-reveal,
-input[type="password"]::-ms-clear {
-  display: none;
+  .register-header h2 {
+    font-size: 42px;
+  }
+
+  .brand h1 {
+    font-size: 24px;
+  }
 }
 
-/* chrome / edge nuevo */
-input[type="password"]::-webkit-credentials-auto-fill-button {
-  visibility: hidden;
-  display: none !important;
-  pointer-events: none;
-}
-// Campo contraseña
-.requirements {
-  margin-top: 8px;
+/* LAPTOPS */
+@media (max-width: 1400px) {
+  app-auth-side-panel {
+    flex: 1;
+  }
+
+  .register-card {
+    max-width: 560px;
+    margin-right: 0;
+  }
+
+  .register-header h2 {
+    font-size: 32px;
+  }
 }
 
-.requirement {
-  font-size: 13px;
-  color: #67777E;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
+/* TABLETS */
+@media (max-width: 1100px) {
+
+  app-auth-side-panel {
+    display: none;
+  }
+
+  .register-form-section {
+    width: 100%;
+    padding: 25px;
+  }
+
+  .register-card {
+    max-width: 650px;
+    margin-right: 0;
+  }
 }
 
-.req-dot {
-  width: 6px;
-  height: 6px;
-  background: #cfd8dc;
-  border-radius: 50%;
+/* CELULARES */
+@media (max-width: 600px) {
+
+  .register-form-section {
+    padding: 15px;
+  }
+
+  .register-card {
+    padding: 25px;
+    border-radius: 20px;
+    margin-right: 0;
+  }
+
+  .register-header h2 {
+    font-size: 28px;
+  }
+
+  .brand h1 {
+    font-size: 18px;
+  }
+
+  .register-header p {
+    font-size: 14px;
+  }
+
+  .input-wrapper input {
+    padding: 12px 42px 12px 42px;
+  }
+
+  .btn-register {
+    padding: 14px;
+  }
 }
 
-.requirement.met {
-  color: #29AEA0;
-}
+/* ANIMACIÓN */
+@keyframes slideRight {
 
-.requirement.met .req-dot {
-  background: #29AEA0;
-}
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
 
-.error-msg {
-  color: #e53935;
-  font-size: 12px;
-  margin-top: 4px;
-  display: block;
-}
-
-input.ng-invalid.ng-touched {
-  border: 1px solid #e53935 !important;
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

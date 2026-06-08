@@ -373,5 +373,19 @@
       "SPECIAL": "Pelo menos um caractere especial"
     }
   }
-}
+},
+
+  "AUTH_PANEL": {
+    "TITLE": "Seu veículo merece o melhor cuidado",
+    "SUBTITLE": "Gerencie seus serviços de lavagem, agende horários e mantenha controle total do seu veículo em uma única plataforma.",
+
+    "BENEFIT1_TITLE": "Serviço Premium",
+    "BENEFIT1_DESC": "Lavagens de alta qualidade para manter seu veículo impecável.",
+
+    "BENEFIT2_TITLE": "Agendamentos rápidos",
+    "BENEFIT2_DESC": "Marque seus horários em segundos a partir de qualquer dispositivo.",
+
+    "BENEFIT3_TITLE": "Informações seguras",
+    "BENEFIT3_DESC": "Seus dados e reservas estão protegidos o tempo todo."
+  }
 }

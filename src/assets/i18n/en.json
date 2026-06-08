@@ -374,5 +374,21 @@
       "SPECIAL": "At least one special character"
     }
   }
+},
+
+
+  "AUTH_PANEL": {
+    "TITLE": "Your vehicle deserves the best care",
+    "SUBTITLE": "Manage your car wash services, schedule appointments, and keep full control of your vehicle from a single platform.",
+
+    "BENEFIT1_TITLE": "Premium Service",
+    "BENEFIT1_DESC": "High-quality washes to keep your vehicle spotless.",
+
+    "BENEFIT2_TITLE": "Quick Bookings",
+    "BENEFIT2_DESC": "Schedule your appointments in seconds from any device.",
+
+    "BENEFIT3_TITLE": "Secure Information",
+    "BENEFIT3_DESC": "Your data and reservations are protected at all times."
+  }
 }
-}
+

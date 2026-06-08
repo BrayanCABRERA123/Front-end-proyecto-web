@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { BackButtonComponent } from '../../../../shared/components/back-button/back-button';
+import { AuthSidePanelComponent } from '../../../../shared/components/auth-side-panel/auth-side-panel';
 import {
   FormBuilder,
   FormGroup,
@@ -17,7 +19,9 @@ import { TranslateModule } from '@ngx-translate/core';
     RouterModule,
     ReactiveFormsModule,
     CommonModule,
-    TranslateModule
+    TranslateModule,
+    BackButtonComponent,
+    AuthSidePanelComponent
   ],
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],

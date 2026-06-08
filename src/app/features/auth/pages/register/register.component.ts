@@ -4,6 +4,10 @@ import { Component } from '@angular/core';
 // sirve para usar cosas basicas de HTML
 import { CommonModule } from '@angular/common';
 
+import { BackButtonComponent } from '../../../../shared/components/back-button/back-button';
+
+import { AuthSidePanelComponent } from '../../../../shared/components/auth-side-panel/auth-side-panel';
+
 // nos sirve para crear el formulario y sus validaciones
 import {
   FormBuilder,
@@ -25,7 +29,9 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    BackButtonComponent,
+    AuthSidePanelComponent
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']

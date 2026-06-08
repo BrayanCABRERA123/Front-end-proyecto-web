@@ -4,22 +4,19 @@
   display: flex;
   min-height: 100vh;
   background: var(--bg);
-  overflow: hidden;
 }
 
-/* contenido */
 .config-content {
   flex: 1;
+  padding: 32px 36px;
   overflow-y: auto;
 }
 
 /* tablet */
 @include tablet {
-
   .config-content {
-    padding: 0;
+    padding: 24px 20px;
   }
-
 }
 
 /* mobile */
@@ -27,12 +24,10 @@
 
   .config-layout {
     flex-direction: column;
-    min-height: 100vh;
   }
 
   .config-content {
-    width: 100%;
-    padding-top: 70px;
+    padding: 72px 16px 24px;
   }
 
 }
