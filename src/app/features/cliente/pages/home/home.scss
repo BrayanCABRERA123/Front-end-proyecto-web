@@ -168,3 +168,15 @@
   font-weight: 500;
   letter-spacing: 0.3px;
 }
+
+.resumen-card {
+  &.clickable {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
