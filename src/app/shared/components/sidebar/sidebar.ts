@@ -13,10 +13,12 @@ import { ConfirmLogoutDialogComponent } from '../../../shared/dialogs/confirm-lo
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.scss']
 })
+
 export class SidebarComponent implements OnInit {
   @Input() rol: 'CLIENTE' | 'OPERARIO' | 'ADMIN' = 'CLIENTE';
   // controla si el sidebar está abierto en mobile
   isOpen: boolean = false;
+  logoRoute = '/';
 
   usuario = {
     nombre: 'Juan Díaz',
@@ -64,14 +66,18 @@ export class SidebarComponent implements OnInit {
 
       case 'CLIENTE':
         this.menuItems = this.clienteMenu;
+        this.logoRoute = '/cliente';
         break;
 
       case 'OPERARIO':
         this.menuItems = this.operarioMenu;
+        this.logoRoute = '/operario';
+
         break;
 
       case 'ADMIN':
         this.menuItems = this.adminMenu;
+        this.logoRoute = '/admin';
         break;
 
     }
