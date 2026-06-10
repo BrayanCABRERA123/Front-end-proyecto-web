@@ -34,7 +34,8 @@
     "HISTORY": "Historial",
     "RATINGS": "Calificaciones",
     "CONFIG": "Configuración",
-    "LOGOUT": "Cerrar Sesión"
+    "LOGOUT": "Cerrar Sesión",
+    "ASSIGNED_SERVICES": "servicios asignados"
   },
 
   "HISTORY": {

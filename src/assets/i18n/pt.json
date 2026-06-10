@@ -35,7 +35,8 @@
     "HISTORY": "Histórico",
     "RATINGS": "Avaliações",
     "CONFIG": "Configurações",
-    "LOGOUT": "Sair"
+    "LOGOUT": "Sair",
+    "ASSIGNED_SERVICES": "serviços atribuídos"
   },
 
   "HISTORY": {

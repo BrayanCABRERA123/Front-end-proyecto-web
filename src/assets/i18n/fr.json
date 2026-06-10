@@ -35,7 +35,8 @@
     "HISTORY": "Historique",
     "RATINGS": "Évaluations",
     "CONFIG": "Paramètres",
-    "LOGOUT": "Se déconnecter"
+    "LOGOUT": "Se déconnecter",
+    "ASSIGNED_SERVICES": "services assignés"
   },
     
   "HISTORY": {

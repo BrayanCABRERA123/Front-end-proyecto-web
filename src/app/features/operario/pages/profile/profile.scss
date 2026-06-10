@@ -3,4 +3,11 @@
   height: 100vh;
   overflow: hidden;
   background: var(--bg);
+
+  app-profile-card {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    overflow-y: auto;
+  }
 }
