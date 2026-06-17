@@ -19,10 +19,10 @@ export const routes: Routes = [
         .then(m => m.AuthModule)
   },
   {
-    path: 'cliente',
+    path: 'client',
     loadChildren: () =>
-      import('./features/cliente/cliente-module')
-        .then(m => m.ClienteModule)
+      import('./features/client/client-module')
+        .then(m => m.ClientModule)
   },
   {
     path: 'admin',
@@ -31,9 +31,9 @@ export const routes: Routes = [
         .then(m => m.AdminModule)
   },
   {
-    path: 'operario',
+    path: 'operator',
     loadChildren: () =>
-      import('./features/operario/operario-module')
-        .then(m => m.OperarioModule)
+      import('./features/operator/operator-module')
+        .then(m => m.OperatorModule)
   }
 ];

@@ -34,20 +34,20 @@ export class notificationsComponent {
         {
             icon: 'notifications',
             title: 'Actualización de estado',
-            desc: 'El cliente confirmó la dirección para el servicio SV-1783.',
+            desc: 'El client confirmó la dirección para el servicio SV-1783.',
             date: '11/03/2025 - 14:30',
             read: true
         },
         {
             icon: 'warning',
             title: 'Cancelación',
-            desc: 'El cliente ha cancelado el servicio SV-1690.',
+            desc: 'El client ha cancelado el servicio SV-1690.',
             date: '10/03/2025 - 10:00',
             read: false
         },
         {
             icon: 'chat',
-            title: 'Mensaje del cliente',
+            title: 'Mensaje del client',
             desc: '"Voy a estar 5 minutos tarde, por favor esperarme."',
             date: '04/03/2025 - 16:45',
             read: true

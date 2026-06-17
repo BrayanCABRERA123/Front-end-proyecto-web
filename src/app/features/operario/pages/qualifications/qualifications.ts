@@ -56,7 +56,7 @@ export class QualificationsComponent {
   calificaciones = [
     {
       id: 1,
-      cliente: 'Carlos H.',
+      client: 'Carlos H.',
       tipoServicio: 'Lavado Premium',
       fecha: '15/07/2024',
       estrellas: 4,
@@ -67,7 +67,7 @@ export class QualificationsComponent {
     },
     {
       id: 2,
-      cliente: 'Ana M.',
+      client: 'Ana M.',
       tipoServicio: 'Lavado Básico',
       fecha: '14/07/2024',
       estrellas: 5,
@@ -78,7 +78,7 @@ export class QualificationsComponent {
     },
     {
       id: 3,
-      cliente: 'Pedro L.',
+      client: 'Pedro L.',
       tipoServicio: 'Lavado Completo',
       fecha: '12/07/2024',
       estrellas: 5,
@@ -89,7 +89,7 @@ export class QualificationsComponent {
     },
     {
       id: 4,
-      cliente: 'María G.',
+      client: 'María G.',
       tipoServicio: 'Lavado Premium',
       fecha: '10/07/2024',
       estrellas: 3,
@@ -100,7 +100,7 @@ export class QualificationsComponent {
     },
     {
       id: 5,
-      cliente: 'Jorge D.',
+      client: 'Jorge D.',
       tipoServicio: 'Lavado Básico',
       fecha: '08/07/2024',
       estrellas: 5,
@@ -111,7 +111,7 @@ export class QualificationsComponent {
     },
     {
       id: 6,
-      cliente: 'Sofía R.',
+      client: 'Sofía R.',
       tipoServicio: 'Lavado Completo',
       fecha: '05/07/2024',
       estrellas: 4,

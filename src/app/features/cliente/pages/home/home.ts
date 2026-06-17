@@ -52,7 +52,7 @@ export class HomeComponent {
   // METODO
   irA(ruta: string | null | undefined) {
     if (ruta) {
-      this.router.navigate(['/cliente', ruta]);
+      this.router.navigate(['/client', ruta]);
     }
   }
 

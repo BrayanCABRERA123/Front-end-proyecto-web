@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// importamos el sidebar del operario
+// importamos el sidebar del operator
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // importamos los componentes hijos
 import { StatsCardComponent } from './components/stats-card/stats-card';
@@ -22,8 +22,8 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class HomeComponent {
 
-  // datos del operario
-  nombreOperario: string = 'Camilo';
+  // datos del operator
+  nombreOperator: string = 'Camilo';
 
   // estadísticas que se muestran en las cards superiores
   stats = [
@@ -46,7 +46,7 @@ export class HomeComponent {
       titulo: 'Premium — Automovil',
       fecha: '28 Feb 2026 a las 2:00 PM',
       direccion: 'calle sur 123, los rosales',
-      cliente: 'Juan Felipe Gonzales',
+      client: 'Juan Felipe Gonzales',
       estado: 'Confirmado',
       estadoColor: 'confirmado'
     },
@@ -55,7 +55,7 @@ export class HomeComponent {
       titulo: 'Básico — Camioneta',
       fecha: '28 Feb 2026 a las 2:00 PM',
       direccion: 'calle norte 7 06, mira flores',
-      cliente: 'Esneider Sanchez',
+      client: 'Esneider Sanchez',
       estado: 'Pendiente',
       estadoColor: 'pendiente'
     }

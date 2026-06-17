@@ -26,9 +26,9 @@ export class CarWashFormComponent implements OnInit {
   tipoServicio: string = '';
   mostrarModal: boolean = false;
 
-  // asignación de operario — 'automatica' o 'manual'
+  // asignación de operator — 'automatica' o 'manual'
   asignacion: string = 'AUTO';
-  operarioSeleccionado: string = '';
+  operatorSeleccionado: string = '';
 
   // método de pago seleccionado
   metodoPago: string = '';
@@ -48,8 +48,8 @@ export class CarWashFormComponent implements OnInit {
     { value: 'PREMIUM' }
   ];
 
-  // opciones del select de operarios
-  operarios = [
+  // opciones del select de operators
+  operators = [
     { value: 'op1', label: 'Carlos López' },
     { value: 'op2', label: 'María García' },
     { value: 'op3', label: 'Pedro Martínez' }

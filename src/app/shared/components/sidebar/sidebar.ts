@@ -26,23 +26,23 @@ export class SidebarComponent implements OnInit {
     iniciales: 'JD'
   };
 
-  /*Menu opciones Cliente */
-  clienteMenu = [
-    { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/cliente/profile' },
-    { icono: 'local_car_wash', label: 'SIDEBAR.RESERVE', ruta: '/cliente/reserve' },
-    { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/cliente/notifications' },
-    { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/cliente/history' },
-    { icono: 'star_outline', label: 'SIDEBAR.RATINGS', ruta: '/cliente/ratings' },
-    { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/cliente/configuration' }
+  /*Menu opciones Client */
+  clientMenu = [
+    { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/client/profile' },
+    { icono: 'local_car_wash', label: 'SIDEBAR.RESERVE', ruta: '/client/reserve' },
+    { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/client/notifications' },
+    { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/client/history' },
+    { icono: 'star_outline', label: 'SIDEBAR.RATINGS', ruta: '/client/ratings' },
+    { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/client/configuration' }
   ];
-  /*Menu opciones Operario */
-  operarioMenu = [
-  { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/operario/profile' },
-  { icono: 'assignment', label: 'SIDEBAR.ASSIGNED_SERVICES', ruta: '/operario/assigned-services' },
-  { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/operario/notifications' },
-  { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/operario/service-history' },
-  { icono: 'star_outline', label: 'SIDEBAR.RATINGS', ruta: '/operario/qualifications' },
-  { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/operario/settings' }
+  /*Menu opciones Operator */
+  operatorMenu = [
+  { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/operator/profile' },
+  { icono: 'assignment', label: 'SIDEBAR.ASSIGNED_SERVICES', ruta: '/operator/assigned-services' },
+  { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/operator/notifications' },
+  { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/operator/service-history' },
+  { icono: 'star_outline', label: 'SIDEBAR.RATINGS', ruta: '/operator/qualifications' },
+  { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/operator/settings' }
 ];
 /*Menu opciones administrador */
   adminMenu = [
@@ -64,13 +64,13 @@ export class SidebarComponent implements OnInit {
     switch (this.rol) {
 
       case 'CLIENTE':
-        this.menuItems = this.clienteMenu;
-        this.logoRoute = '/cliente';
+        this.menuItems = this.clientMenu;
+        this.logoRoute = '/client';
         break;
 
       case 'OPERARIO':
-        this.menuItems = this.operarioMenu;
-        this.logoRoute = '/operario';
+        this.menuItems = this.operatorMenu;
+        this.logoRoute = '/operator';
 
         break;
 

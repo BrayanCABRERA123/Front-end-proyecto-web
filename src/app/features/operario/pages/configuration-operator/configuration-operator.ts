@@ -5,16 +5,16 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { SettingsPanelComponent } from '../../../../shared/components/settings-panel/settings-panel';
 
 @Component({
-  selector: 'app-configuration-operario',
+  selector: 'app-configuration-operator',
   standalone: true,
   imports: [
     CommonModule,
     SidebarComponent,
     SettingsPanelComponent
   ],
-  templateUrl: './configuration-operario.html',
-  styleUrl: './configuration-operario.scss'
+  templateUrl: './configuration-operator.html',
+  styleUrl: './configuration-operator.scss'
 })
-export class ConfigurationOperarioComponent {
+export class ConfigurationOperatorComponent {
 
 }

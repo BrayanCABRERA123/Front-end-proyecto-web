@@ -105,7 +105,7 @@
 
   </div>
 
-  <!-- Asignación de Operario -->
+  <!-- Asignación de Operator -->
   <div class="form-group">
     <label class="form-label">
       {{ 'RESERVE.ASSIGNMENT' | translate }}
@@ -143,13 +143,13 @@
     <!-- Select operador -->
     @if (asignacion === 'MANUAL') {
       <div class="select-wrapper operator-select">
-        <select class="form-select" [(ngModel)]="operarioSeleccionado">
+        <select class="form-select" [(ngModel)]="operatorSeleccionado">
           <option value="" disabled>
             {{ 'RESERVE.SELECT' | translate }}
           </option>
-          @for (operario of operarios; track operario.value) {
-            <option [value]="operario.value">
-              {{ operario.label }}
+          @for (operator of operators; track operator.value) {
+            <option [value]="operator.value">
+              {{ operator.label }}
             </option>
           }
         </select>

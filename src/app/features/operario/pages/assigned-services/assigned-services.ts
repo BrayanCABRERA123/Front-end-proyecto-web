@@ -55,7 +55,7 @@ export class AssignedServicesComponent {
       ubicacionCompleta: 'Calle Falsa 123, Springfield',
       fechaHora: '15/07/2026 - 10:00 AM',
       vehiculo: 'Mazda 3 - ABC123',
-      cliente: 'Juan Pérez',
+      client: 'Juan Pérez',
       estado: 'Pendiente',
       estadoColor: 'pendiente',
       metodoPago: 'Efectivo'
@@ -67,7 +67,7 @@ export class AssignedServicesComponent {
       ubicacionCompleta: 'Av. Siempre Viva 742, Springfield',
       fechaHora: '15/07/2026 - 11:30 AM',
       vehiculo: 'Toyota Corolla - DEF456',
-      cliente: 'María García',
+      client: 'María García',
       estado: 'En progreso',
       estadoColor: 'progreso',
       metodoPago: 'Tarjeta'
@@ -79,7 +79,7 @@ export class AssignedServicesComponent {
       ubicacionCompleta: 'Calle del Sol 10, Ciudad',
       fechaHora: '14/07/2026 - 03:00 PM',
       vehiculo: 'Ford F-150 - GHI789',
-      cliente: 'Empresa XYZ',
+      client: 'Empresa XYZ',
       estado: 'Finalizado',
       estadoColor: 'finalizado',
       metodoPago: 'PSE'
@@ -91,7 +91,7 @@ export class AssignedServicesComponent {
       ubicacionCompleta: 'Blvd. Norte 456, Centro',
       fechaHora: '16/07/2026 - 09:00 AM',
       vehiculo: 'Honda Civic - JKL012',
-      cliente: 'Ana López',
+      client: 'Ana López',
       estado: 'Pendiente',
       estadoColor: 'pendiente',
       metodoPago: 'Nequi'
@@ -103,7 +103,7 @@ export class AssignedServicesComponent {
       ubicacionCompleta: 'Av. Libertad 89, Col. Reforma',
       fechaHora: '16/07/2026 - 02:00 PM',
       vehiculo: 'Nissan Sentra - MNO345',
-      cliente: 'Carlos Ruiz',
+      client: 'Carlos Ruiz',
       estado: 'En progreso',
       estadoColor: 'progreso',
       metodoPago: 'Efectivo'

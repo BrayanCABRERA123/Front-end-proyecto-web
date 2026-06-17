@@ -114,7 +114,7 @@ export class LoginComponent {
 
       this.loginError = false;
 
-      this.router.navigate(['/cliente']);
+      this.router.navigate(['/client']);
 
     } else {
 

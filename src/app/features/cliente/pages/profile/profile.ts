@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// importamos el sidebar del cliente
+// importamos el sidebar del client
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // importamos el componente compartido de perfil
 import { ProfileCardComponent } from '../../../../shared/components/profile-card/profile-card';
@@ -14,7 +14,7 @@ import { ProfileCardComponent } from '../../../../shared/components/profile-card
 })
 export class ProfileComponent {
 
-  // datos del usuario cliente
+  // datos del usuario client
   usuario = {
     nombre: 'Juan Díaz',
     email: 'juan@email.com',

@@ -14,7 +14,7 @@ import { ProfileCardComponent } from '../../../../shared/components/profile-card
 })
 export class ProfileComponent {
 
-  // datos del usuario operario
+  // datos del usuario operator
   usuario = {
     nombre: 'Juan Díaz',
     email: 'juan@email.com',

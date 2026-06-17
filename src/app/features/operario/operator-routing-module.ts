@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TasksComponent } from './pages/tasks/tasks';
-// importamos el home del operario
+// importamos el home del operator
 import { HomeComponent } from './pages/home/home';
 import { ProfileComponent } from './pages/profile/profile';
 import { AssignedServicesComponent } from './pages/assigned-services/assigned-services';
-import { notificationsComponent } from '../operario/pages/notifications/notifications';
+import { notificationsComponent } from '../operator/pages/notifications/notifications';
 import { ServiceHistoryComponent } from './pages/service-history/service-history';
 import { QualificationsComponent } from './pages/qualifications/qualifications';
-import { ConfigurationOperarioComponent } from './pages/configuration-operario/configuration-operario';
+import { ConfigurationOperatorComponent } from './pages/configuration-operator/configuration-operator';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,11 +19,11 @@ const routes: Routes = [
   { path: 'notifications', component: notificationsComponent },
   { path: 'service-history', component: ServiceHistoryComponent },
   { path: 'qualifications', component: QualificationsComponent },
-  { path: 'settings', component: ConfigurationOperarioComponent }
+  { path: 'settings', component: ConfigurationOperatorComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class OperarioRoutingModule {}
+export class OperatorRoutingModule {}
