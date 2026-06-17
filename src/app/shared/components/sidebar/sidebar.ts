@@ -30,7 +30,6 @@ export class SidebarComponent implements OnInit {
   clienteMenu = [
     { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/cliente/profile' },
     { icono: 'local_car_wash', label: 'SIDEBAR.RESERVE', ruta: '/cliente/reserve' },
-    { icono: 'credit_card', label: 'SIDEBAR.PAYMENTS', ruta: '/cliente/payments' },
     { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/cliente/notifications' },
     { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/cliente/history' },
     { icono: 'star_outline', label: 'SIDEBAR.RATINGS', ruta: '/cliente/ratings' },
