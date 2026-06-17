@@ -71,7 +71,7 @@ export class SidebarComponent implements OnInit {
       case 'OPERARIO':
         this.menuItems = this.operatorMenu;
         this.logoRoute = '/operator';
-
+                                  
         break;
 
       case 'ADMIN':
