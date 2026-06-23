@@ -5,9 +5,19 @@
 
   <!-- Contenido principal derecho -->
   <main class="home-content">
-
+    
     <!-- Saludo -->
     <div class="home-header">
+
+      <!-- Notificaciones -->
+      <div class="icon_notifications"
+        *ngFor="let item of notificaciones"
+        (click)="irA(item.camp)"
+        [class.clickable]="item.camp !== null">
+        <mat-icon class="icon-notifications">{{ item.camp }}</mat-icon>
+
+      </div>
+
       <h1>
         {{ 'HOME.HELLO' | translate:{ name: usuario.nombre } }}
       </h1>
@@ -21,8 +31,7 @@
     <div class="resumen-grid">
       <div class="resumen-card" 
       *ngFor="let item of resumen"
-      (click)="irA(item.ruta)"
-      [class.clickable]="item.ruta !== null">
+      [class.clickable]="">
         <mat-icon class="resumen-icono">{{ item.icono }}</mat-icon>
 
         <p class="resumen-cantidad">{{ item.cantidad }}</p>
