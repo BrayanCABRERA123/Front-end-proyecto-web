@@ -34,6 +34,12 @@ export class HistoryComponent {
   // buscador
   busqueda: string = '';
 
+  mostrarModalCalificacion = false;
+
+  abrirModalCalificacion(): void {
+    this.mostrarModalCalificacion = true;
+  }
+
   // SERVICIOS 
   servicios = [
   {

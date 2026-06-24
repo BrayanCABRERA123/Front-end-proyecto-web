@@ -1,0 +1,53 @@
+<div class="modal-backdrop">
+
+  <div class="modal-box">
+
+    <button class="btn-close-icon" (click)="cerrarModal()">
+
+      ✕
+
+    </button>
+
+    <h2>
+      {{ 'RATINGS.TITLE' | translate }}
+    </h2>
+
+    <p class="subtitle">
+      {{ 'RATINGS.SUBTITLE' | translate }}
+    </p>
+
+    <p class="question">
+      {{ 'RATINGS.QUESTION' | translate }}
+    </p>
+
+    <div class="stars">
+
+      <mat-icon *ngFor="let star of [1,2,3,4,5]" (click)="calificar(star)" [class.active]="star <= rating">
+
+        star
+
+      </mat-icon>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        {{ 'RATINGS.COMMENT' | translate }}
+      </label>
+
+      <textarea [(ngModel)]="comentario" [placeholder]="'RATINGS.PLACEHOLDER' | translate">
+
+      </textarea>
+
+    </div>
+
+    <button class="btn-submit" (click)="enviar()">
+
+      {{ 'RATINGS.SUBMIT' | translate }}
+
+    </button>
+
+  </div>
+
+</div>

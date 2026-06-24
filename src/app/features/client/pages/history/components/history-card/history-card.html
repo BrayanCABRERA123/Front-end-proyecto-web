@@ -61,7 +61,7 @@
         <span class="detail-label">
           {{ 'HISTORY_CARD.OPERATOR' | translate }}:
         </span>
-         {{ ('ASSIGNMENT.' + servicio.asignacionTipo) | translate }}
+        {{ ('ASSIGNMENT.' + servicio.asignacionTipo) | translate }}
 
         <span *ngIf="servicio.operador">
           ({{ servicio.operador }})
@@ -99,7 +99,7 @@
 
       <!-- Calificar -->
       @if (servicio.pagado) {
-        <button class="btn-calificar">
+        <button class="btn-calificar" (click)="abrirCalificacion(servicio)">
           {{ 'HISTORY_CARD.RATE' | translate }}
           <mat-icon>star_outline</mat-icon>
         </button>

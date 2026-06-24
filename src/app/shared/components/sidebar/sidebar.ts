@@ -32,7 +32,6 @@ export class SidebarComponent implements OnInit {
     { icono: 'local_car_wash', label: 'SIDEBAR.RESERVE', ruta: '/client/reserve' },
     { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/client/notifications' },
     { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/client/history' },
-    { icono: 'star_outline', label: 'SIDEBAR.RATINGS', ruta: '/client/ratings' },
     { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/client/configuration' }
   ];
   /*Menu opciones Operator */
