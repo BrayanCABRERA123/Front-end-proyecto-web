@@ -19,97 +19,145 @@
 .filters-card {
   background-color: var(--card);
   border-radius: 16px;
-  padding: 24px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-.filters-row {
+.filters-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.07);
+  margin: 16px 0;
+}
+
+.filter-section {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .filter-label {
-  font-size: 14px;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
   color: var(--text-secondary);
+  white-space: nowrap;
+  min-width: 80px;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: var(--primary);
+  }
+}
+
+.radio-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .radio-filter {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 400;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--text);
   cursor: pointer;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(var(--primary-rgb), 0.18);
+  background: transparent;
+  transition: all 0.2s ease;
 
   input[type="radio"] {
-    accent-color: var(--primary);
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
+    display: none;   
+  }
+
+  &:hover {
+    border-color: rgba(var(--primary-rgb), 0.40);
+    background: rgba(var(--primary-rgb), 0.04);
+  }
+
+  &.active {
+    background: rgba(var(--primary-rgb), 0.12);
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 700;
   }
 }
 
-.dates-row {
+.date-search-row {
   display: flex;
   align-items: center;
   gap: 24px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.date-block,
+.search-block {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.date-inputs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .date-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .date-label {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-secondary);
   font-weight: 400;
+  white-space: nowrap;
 }
 
-.date-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  .date-icon {
-    position: absolute;
-    right: 10px;
-    font-size: 18px;
-    color: var(--text-muted);
-    pointer-events: none;
-  }
+.date-separator {
+  font-size: 14px;
+  color: var(--text-secondary);
+  opacity: 0.5;
 }
 
 .date-input {
-  padding: 8px 36px 8px 12px;
-  border: 1.5px solid rgba(var(--primary-rgb), 0.2);
+  padding: 7px 12px;
+  border: 1.5px solid rgba(var(--primary-rgb), 0.18);
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 13px;
   color: var(--text);
   background-color: var(--card);
   outline: none;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.2s ease;
-  width: 150px;
+  width: 140px;
 
   &:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.12);
   }
 }
 
-.search-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.vertical-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
 }
 
 .search-input-wrapper {
@@ -119,65 +167,128 @@
 
   .search-icon {
     position: absolute;
-    right: 10px;
-    font-size: 20px;
+    left: 10px;
+    font-size: 18px;
     color: var(--text-muted);
     pointer-events: none;
   }
 }
 
 .search-input {
-  padding: 8px 36px 8px 12px;
-  border: 1.5px solid rgba(var(--primary-rgb), 0.2);
+  padding: 7px 12px 7px 36px;  
+  border: 1.5px solid rgba(var(--primary-rgb), 0.18);
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 13px;
   color: var(--text);
   background-color: var(--card);
   outline: none;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.2s ease;
-  width: 220px;
+  width: 240px;
 
   &:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.12);
   }
 
   &::placeholder { color: var(--text-muted); }
 }
 
-.history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.empty-state {
-  display: flex;
-  flex-direction: column;
+// Fila inline: fecha y búsqueda en la misma línea
+.row-inline {
+  flex-wrap: nowrap;     // ← no rompe en dos líneas
   align-items: center;
-  gap: 12px;
-  padding: 48px;
-  color: var(--text-muted);
-
-  mat-icon { font-size: 48px; width: 48px; height: 48px; }
-  p { font-size: 15px; font-weight: 400; margin: 0; }
 }
+
+// El bloque de búsqueda crece para llenar el espacio restante
+.search-block.flex-grow {
+  flex: 1;               // ← ocupa todo lo que sobra
+  min-width: 0;
+}
+
+// El wrapper del input también crece
+.search-input-wrapper.flex-grow {
+  flex: 1;
+  min-width: 0;
+}
+
+// El input ocupa todo el ancho de su wrapper
+.search-input {
+  width: 100%;           // ← sobreescribe el width: 240px fijo
+  padding: 7px 12px 7px 36px;
+  border: 1.5px solid rgba(var(--primary-rgb), 0.18);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--text);
+  background-color: var(--card);  
+  outline: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.2s ease;
+  box-sizing: border-box; // ← importante para que no desborde
+
+  &:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.12);
+  }
+
+  &::placeholder { color: var(--text-muted); }
+}
+
+// En móvil sí puede romper
+@include mobile {
+  .row-inline {
+    flex-wrap: wrap;
+  }
+
+  .search-block.flex-grow {
+    flex: unset;
+    width: 100%;
+  }
+}
+
 
 @include tablet {
   .main-content { padding: 24px 32px; }
-  .filters-row { flex-wrap: wrap; gap: 12px; }
-  .dates-row { flex-wrap: wrap; gap: 12px; }
+  .filter-section { gap: 14px; }
+  .date-search-row { gap: 16px; }
+  .vertical-divider { display: none; }
 }
 
 @include mobile {
   .page-container { flex-direction: column; height: auto; min-height: 100vh; }
   .main-content { padding: 72px 16px 24px; gap: 16px; }
+
   .filters-card { padding: 16px; }
-  .filters-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .dates-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+  .filter-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .date-search-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .date-block,
+  .search-block {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .date-inputs {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 8px;
+  }
+
   .date-input { width: 100%; }
-  .search-row { flex-direction: column; align-items: flex-start; }
+  .date-separator { display: none; }
+  .vertical-divider { display: none; }
   .search-input { width: 100%; }
 }

@@ -8,12 +8,11 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { CdkObserveContent } from "@angular/cdk/observers";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule, CdkObserveContent],
+  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule],
   templateUrl: './home.html',
   styleUrls: ['./home.scss']
 })
@@ -29,12 +28,6 @@ export class HomeComponent {
     {
       camp: 'notifications', ruta: 'notifications',
     },
-  ];
-
-  // tarjetas de resumen (AHORA con claves)
-  resumen = [
-    { icono: 'calendar_today', cantidad: 2, label: 'HOME.RESUMEN.ACTIVE' },
-    { icono: 'directions_car', cantidad: 3, label: 'HOME.RESUMEN.VEHICLES' },
   ];
 
   // próximas reservas (TODO con claves)

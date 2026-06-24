@@ -27,21 +27,6 @@
       </p>
     </div>
 
-    <!-- Tarjetas de resumen -->
-    <div class="resumen-grid">
-      <div class="resumen-card" 
-      *ngFor="let item of resumen"
-      [class.clickable]="">
-        <mat-icon class="resumen-icono">{{ item.icono }}</mat-icon>
-
-        <p class="resumen-cantidad">{{ item.cantidad }}</p>
-
-        <p class="resumen-label">
-          {{ item.label | translate }}
-        </p>
-      </div>
-    </div>
-
     <!-- Próximas reservas -->
     <div class="reservas-section">
 

@@ -10,6 +10,7 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(var(--primary-rgb), 0.08);
   transition: all 0.25s ease;
+  margin-bottom: 16px;
 
   &:hover {
     transform: translateY(-3px);
