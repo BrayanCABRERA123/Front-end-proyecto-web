@@ -1,61 +1,57 @@
 .stepper-container {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   margin-bottom: 30px;
 }
 
 .step-circle {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  background: var(--bg-soft);
   border: 2px solid var(--border);
-  background: var(--card);
   color: var(--text-muted);
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  font-weight: 700;
   transition: all .25s ease;
 }
 
-.step-circle.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: white;
+:host-context(body.green-dark) .step-circle,
+:host-context(body.pink-dark) .step-circle {
+  border-color: rgba(255, 255, 255, .12);
+  background: rgba(255, 255, 255, .06);
 }
 
+.step-circle.active,
 .step-circle.completed {
   background: var(--primary);
   border-color: var(--primary);
   color: white;
-  opacity: .75;
+}
+:host-context(body.green-dark) .step-circle.active,
+:host-context(body.green-dark) .step-circle.completed,
+:host-context(body.pink-dark) .step-circle.active,
+:host-context(body.pink-dark) .step-circle.completed {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
 }
 
 .step-line {
-  width: 60px;
+  width: 56px;
   height: 2px;
-
   background: var(--border);
-
   transition: all .25s ease;
+}
+
+:host-context(body.green-dark) .step-line,
+:host-context(body.pink-dark) .step-line {
+  background: rgba(255, 255, 255, .12);
 }
 
 .step-line.line-active {
   background: var(--primary);
-}
-
-@media (max-width: 600px) {
-
-  .step-circle {
-    width: 36px;
-    height: 36px;
-
-    font-size: 14px;
-  }
-
-  .step-line {
-    width: 40px;
-  }
 }

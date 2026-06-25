@@ -1,57 +1,72 @@
 <div class="side-panel">
 
+  <div class="panel-overlay"></div>
+
   <div class="panel-content">
 
-    <div class="panel-logo">
+    <div class="panel-brand">
 
-      <svg
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M9.33333 21.7333C12.2667 21.7333 14.6667 19.2933 14.6667 16.3333C14.6667 14.7867 13.9067 13.32 12.3867 12.08C10.8667 10.84 9.72 8.99998 9.33333 7.06665C8.94667 8.99998 7.81333 10.8533 6.28 12.08C4.74667 13.3067 4 14.8 4 16.3333C4 19.2933 6.4 21.7333 9.33333 21.7333Z"
-          stroke="white"
-          stroke-width="2.66667"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+      <div class="brand-logo">
 
-        <path
-          d="M16.7467 8.79994C17.6637 7.33478 18.3137 5.71867 18.6667 4.02661C19.3333 7.35994 21.3333 10.5599 24 12.6933C26.6667 14.8266 28 17.3599 28 20.0266C28.0076 21.8697 27.4678 23.6735 26.4491 25.2094C25.4303 26.7453 23.9784 27.9441 22.2775 28.6539C20.5766 29.3637 18.7032 29.5525 16.8949 29.1963C15.0866 28.8401 13.4247 27.9551 12.12 26.6533"
-          stroke="white"
-          stroke-width="2.66667"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
 
-      <span>
-        {{ 'APP.TITLE' | translate }}
-      </span>
+          <path
+            d="M9.33333 21.7333C12.2667 21.7333 14.6667 19.2933 14.6667 16.3333C14.6667 14.7867 13.9067 13.32 12.3867 12.08C10.8667 10.84 9.72 8.99998 9.33333 7.06665C8.94667 8.99998 7.81333 10.8533 6.28 12.08C4.74667 13.3067 4 14.8 4 16.3333C4 19.2933 6.4 21.7333 9.33333 21.7333Z"
+            stroke="white"
+            stroke-width="2.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
 
-    </div>
+          <path
+            d="M16.7467 8.79994C17.6637 7.33478 18.3137 5.71867 18.6667 4.02661C19.3333 7.35994 21.3333 10.5599 24 12.6933C26.6667 14.8266 28 17.3599 28 20.0266C28.0076 21.8697 27.4678 23.6735 26.4491 25.2094C25.4303 26.7453 23.9784 27.9441 22.2775 28.6539C20.5766 29.3637 18.7032 29.5525 16.8949 29.1963C15.0866 28.8401 13.4247 27.9551 12.12 26.6533"
+            stroke="white"
+            stroke-width="2.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+        </svg>
 
-    <div class="panel-image">
+      </div>
 
-      <img
-        src="images/image_auth.png"
-        alt="Lavado Vehicular"
-      >
+      <div class="brand-text">
+
+        <h3>
+          {{ 'APP.TITLE' | translate }}
+        </h3>
+        
+      </div>
 
     </div>
 
-    <h1>
-      {{ 'AUTH_PANEL.TITLE' | translate }}
-    </h1>
+    <div class="hero-text">
 
-    <p class="description">
-      {{ 'AUTH_PANEL.SUBTITLE' | translate }}
-    </p>
+      <h1>
+        {{ 'AUTH_PANEL.TITLE' | translate }}
+      </h1>
+
+      <p>
+        {{ 'AUTH_PANEL.SUBTITLE' | translate }}
+      </p>
+
+    </div>
 
     <div class="benefits">
+
+      <div class="benefit-card">
+
+        <span class="material-icons">
+          verified_user
+        </span>
+
+        <span>
+          {{ 'AUTH_PANEL.BENEFIT3_TITLE' | translate }}
+        </span>
+
+      </div>
 
       <div class="benefit-card">
 
@@ -59,17 +74,9 @@
           auto_awesome
         </span>
 
-        <div>
-
-          <h4>
-            {{ 'AUTH_PANEL.BENEFIT1_TITLE' | translate }}
-          </h4>
-
-          <p>
-            {{ 'AUTH_PANEL.BENEFIT1_DESC' | translate }}
-          </p>
-
-        </div>
+        <span>
+          {{ 'AUTH_PANEL.BENEFIT1_TITLE' | translate }}
+        </span>
 
       </div>
 
@@ -79,37 +86,9 @@
           schedule
         </span>
 
-        <div>
-
-          <h4>
-            {{ 'AUTH_PANEL.BENEFIT2_TITLE' | translate }}
-          </h4>
-
-          <p>
-            {{ 'AUTH_PANEL.BENEFIT2_DESC' | translate }}
-          </p>
-
-        </div>
-
-      </div>
-
-      <div class="benefit-card">
-
-        <span class="material-icons">
-          verified_user
+        <span>
+          {{ 'AUTH_PANEL.BENEFIT2_TITLE' | translate }}
         </span>
-
-        <div>
-
-          <h4>
-            {{ 'AUTH_PANEL.BENEFIT3_TITLE' | translate }}
-          </h4>
-
-          <p>
-            {{ 'AUTH_PANEL.BENEFIT3_DESC' | translate }}
-          </p>
-
-        </div>
 
       </div>
 

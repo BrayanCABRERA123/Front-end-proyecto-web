@@ -62,6 +62,14 @@ body {
   /* OVERLAY */
   --overlay-dark: rgba(19, 28, 32, 0.80);
   --overlay-light: rgba(0, 0, 0, 0.55);
+
+  --auth-shell: rgba(255,255,255,.75);
+--auth-card: #ffffff;
+--auth-panel: #f8fafb;
+--auth-glow: rgba(var(--primary-rgb), .20);
+
+--panel-overlay: rgba(255,255,255, .50);
+--panel-image: url('/images/panelLight.png');
 }
 
 /* VERDE OSCURO */
@@ -94,6 +102,14 @@ body.green-dark {
   /* OVERLAY MÁS FUERTE */
   --overlay-dark: rgba(0, 0, 0, 0.85);
   --overlay-light: rgba(0, 0, 0, 0.65);
+
+  --auth-shell: #1f2324;
+--auth-card: #262b2c;
+--auth-panel: #202425;
+--auth-glow: rgba(var(--primary-rgb), .18);
+
+--panel-overlay: rgba(10,15,18, .52);
+--panel-image: url('/images/panelDark.png');
 }
 
 /*  ROSADO CLARO */
@@ -126,6 +142,14 @@ body.pink {
   /* OVERLAY ROSADO */
   --overlay-dark: rgba(255, 0, 120, 0.45);
   --overlay-light: rgba(0, 0, 0, 0.45);
+
+  --auth-shell: rgba(255,255,255,.80);
+--auth-card: #ffffff;
+--auth-panel: #fff7fb;
+--auth-glow: rgba(var(--primary-rgb), .18);
+
+--panel-overlay: rgba(255,255,255, .50);
+--panel-image: url('/images/panelLight.png');
 }
 
 /*ROSADO OSCURO*/
@@ -158,6 +182,14 @@ body.pink-dark {
   /* OVERLAY */
   --overlay-dark: rgba(0, 0, 0, 0.85);
   --overlay-light: rgba(255, 0, 120, 0.35);
+
+  --auth-shell: #241d22;
+--auth-card: #2d252a;
+--auth-panel: #241d22;
+--auth-glow: rgba(var(--primary-rgb), .18);
+
+--panel-overlay: rgba(15,10,14, .52);
+--panel-image: url('/images/panelDark.png');
 }
 
 /* transiciones */
