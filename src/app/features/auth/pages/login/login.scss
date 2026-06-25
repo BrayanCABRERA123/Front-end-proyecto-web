@@ -7,16 +7,12 @@
   padding: 16px;
   box-sizing: border-box;
   background:
-    radial-gradient(
-      circle at 15% 15%,
+    radial-gradient(circle at 15% 15%,
       var(--auth-glow),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 85% 85%,
+      transparent 32%),
+    radial-gradient(circle at 85% 85%,
       rgba(var(--primary-rgb), .12),
-      transparent 28%
-    ),
+      transparent 700%),
     var(--bg);
 }
 
@@ -63,6 +59,9 @@ app-auth-side-panel {
   background: var(--auth-panel);
   padding: 40px;
   border-left: 1px solid var(--border);
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 body.green-dark .login-form-section,
