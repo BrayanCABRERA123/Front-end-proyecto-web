@@ -7,17 +7,18 @@
   padding: 16px;
   box-sizing: border-box;
   background:
-    radial-gradient(
-      circle at 15% 15%,
-      var(--auth-glow),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 85% 85%,
-      rgba(var(--primary-rgb), .12),
-      transparent 700%
-    ),
-    var(--bg);
+  radial-gradient(
+    circle at top left,
+    rgba(48, 207, 191, .55),
+    rgba(48, 207, 191, .18) 35%,
+    transparent 65%
+  ),
+  radial-gradient(
+    circle at bottom right,
+    rgba(48, 207, 191, .55),
+    transparent 60%
+  ),
+  var(--bg);
 }
 
 :host {
