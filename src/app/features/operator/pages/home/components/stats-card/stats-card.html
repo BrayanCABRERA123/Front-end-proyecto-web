@@ -1,22 +1,17 @@
-<!-- Card de estadística -->
 <div class="stats-card">
 
-  <!-- Ícono con notificación si aplica -->
   <div class="icon-wrapper">
     <div class="stat-icon">
       <mat-icon>{{ stat.icono }}</mat-icon>
     </div>
 
-    <!-- Burbuja de notificación — solo si hay notificaciones -->
     @if (stat.notificacion > 0) {
       <span class="notification-badge">{{ stat.notificacion }}</span>
     }
   </div>
 
-  <!-- Valor numérico -->
   <p class="stat-value">{{ stat.valor }}</p>
 
-  <!-- Label descriptivo -->
-  <p class="stat-label">{{ stat.label }}</p>
+  <p class="stat-label">{{ stat.label | translate }}</p>
 
 </div>

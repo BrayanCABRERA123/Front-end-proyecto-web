@@ -1,46 +1,44 @@
-<!-- Contenedor principal con sidebar y contenido -->
 <div class="page-container">
 
-  <!-- Sidebar izquierdo del operator -->
   <app-sidebar rol="OPERARIO"></app-sidebar>
 
-  <!-- Contenido principal derecho -->
   <div class="main-content">
 
-    <!-- Fila superior: saludo + botón -->
     <div class="top-row">
       <div class="welcome-text">
-        <h1 class="page-title">¡Hola, {{ nombreOperator }}! 👋 ¡Bienvenido!</h1>
-        <p class="page-subtitle">Tienes {{ pendientes }} servicios pendientes para hoy</p>
+        <h1 class="page-title">
+          {{ 'OPERATOR_HOME.TITLE' | translate: { name: nombreOperator } }}
+        </h1>
+        <p class="page-subtitle">
+          {{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: pendientes } }}
+        </p>
       </div>
       <button class="btn-ver-servicios">
         <mat-icon>visibility</mat-icon>
-        ver servicios asignados
+        {{ 'OPERATOR_HOME.BTN_SERVICES' | translate }}
       </button>
     </div>
 
-    <!-- Grid de stats cards -->
     <div class="stats-grid">
       @for (stat of stats; track stat.label) {
         <app-stats-card [stat]="stat"></app-stats-card>
       }
     </div>
 
-    <!-- Fila de progreso y contadores -->
     <div class="progress-row">
 
-      <!-- Card de progreso del día -->
       <div class="progress-card">
         <div class="progress-header">
           <div class="progress-icon">
             <mat-icon>check_circle_outline</mat-icon>
           </div>
-          <span class="progress-label">Servicios completados hoy</span>
+          <span class="progress-label">
+            {{ 'OPERATOR_HOME.PROGRESS_LABEL' | translate }}
+          </span>
         </div>
         <p class="progress-numbers">
           {{ serviciosCompletados }} / {{ totalServicios }}
         </p>
-        <!-- Barra de progreso -->
         <div class="progress-bar">
           <div
             class="progress-fill"
@@ -49,34 +47,32 @@
         </div>
       </div>
 
-      <!-- Card en progreso -->
       <div class="counter-card">
         <div class="counter-icon">
           <mat-icon>history</mat-icon>
         </div>
         <p class="counter-value">{{ enProgreso }}</p>
-        <p class="counter-label">En Progreso</p>
+        <p class="counter-label">{{ 'OPERATOR_HOME.IN_PROGRESS' | translate }}</p>
       </div>
 
-      <!-- Card pendientes -->
       <div class="counter-card">
         <div class="counter-icon">
           <mat-icon>calendar_month</mat-icon>
         </div>
         <p class="counter-value">{{ pendientes }}</p>
-        <p class="counter-label">Pendientes</p>
+        <p class="counter-label">{{ 'OPERATOR_HOME.PENDING' | translate }}</p>
       </div>
 
     </div>
 
-    <!-- Sección de reservas pendientes -->
     <div class="reservas-section">
       <div class="section-header">
         <mat-icon class="section-icon">trending_up</mat-icon>
-        <h2 class="section-title">Reservas Pendientes</h2>
+        <h2 class="section-title">
+          {{ 'OPERATOR_HOME.RESERVATIONS_TITLE' | translate }}
+        </h2>
       </div>
 
-      <!-- Lista de reservas -->
       <div class="reservas-list">
         @for (reserva of reservasPendientes; track reserva.id) {
           <app-pending-service-card

@@ -1,39 +1,41 @@
-// tarjeta de estadística
 .stats-card {
-  background-color: #ffffff;
+  background-color: var(--card);
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
 }
 
-// contenedor del ícono con posición relativa para la burbuja
+:host-context(body.green-dark) .stats-card,
+:host-context(body.pink-dark) .stats-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
 .icon-wrapper {
   position: relative;
   width: fit-content;
 }
 
-// círculo con ícono
 .stat-icon {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background-color: #E0EBEA;
+  background-color: var(--primary-soft);
   display: flex;
   align-items: center;
   justify-content: center;
 
   mat-icon {
-    color: #29AEA0;
+    color: var(--primary);
     font-size: 20px;
     width: 20px;
     height: 20px;
   }
 }
 
-// burbuja roja de notificación
 .notification-badge {
   position: absolute;
   top: -6px;
@@ -50,17 +52,15 @@
   justify-content: center;
 }
 
-// valor numérico grande
 .stat-value {
   font-size: 28px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
 
-// label descriptivo
 .stat-label {
   font-size: 13px;
-  color: #67777E;
+  color: var(--text-secondary);
   margin: 0;
 }

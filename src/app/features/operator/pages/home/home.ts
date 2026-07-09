@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// importamos el sidebar del operator
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
-// importamos los componentes hijos
 import { StatsCardComponent } from './components/stats-card/stats-card';
 import { PendingServiceCardComponent } from './components/pending-service-card/pending-service-card';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -15,31 +14,28 @@ import { MatIconModule } from '@angular/material/icon';
     SidebarComponent,
     StatsCardComponent,
     PendingServiceCardComponent,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
 export class HomeComponent {
 
-  // datos del operator
   nombreOperator: string = 'Camilo';
 
-  // estadísticas que se muestran en las cards superiores
   stats = [
-    { icono: 'calendar_today',  valor: 5,   label: 'Reservas Asignadas',  notificacion: 0 },
-    { icono: 'directions_car',  valor: 3,   label: 'Vehículos',           notificacion: 0 },
-    { icono: 'notifications',   valor: 5,   label: 'Notificaciones',      notificacion: 2 },
-    { icono: 'star_outline',    valor: 4.3, label: 'Calificación',        notificacion: 0 }
+    { icono: 'calendar_today', valor: 5,   label: 'OPERATOR_HOME.STATS.ASSIGNED',     notificacion: 0 },
+    { icono: 'directions_car', valor: 3,   label: 'OPERATOR_HOME.STATS.VEHICLES',      notificacion: 0 },
+    { icono: 'notifications',  valor: 5,   label: 'OPERATOR_HOME.STATS.NOTIFICATIONS', notificacion: 2 },
+    { icono: 'star_outline',   valor: 4.3, label: 'OPERATOR_HOME.STATS.RATING',        notificacion: 0 }
   ];
 
-  // datos de progreso del día
   serviciosCompletados: number = 1;
   totalServicios: number = 5;
   enProgreso: number = 2;
   pendientes: number = 2;
 
-  // lista de reservas pendientes
   reservasPendientes = [
     {
       id: 1,
@@ -61,7 +57,6 @@ export class HomeComponent {
     }
   ];
 
-  // calcula el porcentaje de progreso del día
   get porcentajeProgreso(): number {
     return (this.serviciosCompletados / this.totalServicios) * 100;
   }

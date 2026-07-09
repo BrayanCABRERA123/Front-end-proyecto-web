@@ -1,12 +1,18 @@
 // card principal del detalle
 .detail-card {
-  background-color: #ffffff;
+  background-color: var(--card);
   border-radius: 16px;
   padding: 28px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
+}
+
+:host-context(body.green-dark) .detail-card,
+:host-context(body.pink-dark) .detail-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 // header con título y badge
@@ -14,13 +20,14 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 // título del detalle
 .detail-title {
   font-size: 16px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
 
@@ -32,18 +39,18 @@
   font-weight: 600;
 
   &.pendiente {
-    background-color: #FFF8E1;
+    background-color: rgba(249, 168, 37, 0.15);
     color: #F9A825;
   }
 
   &.progreso {
-    background-color: #E3F2FD;
+    background-color: rgba(30, 136, 229, 0.12);
     color: #1E88E5;
   }
 
   &.finalizado {
-    background-color: #E0EBEA;
-    color: #29AEA0;
+    background-color: rgba(var(--primary-rgb), 0.15);
+    color: var(--primary);
   }
 }
 
@@ -74,20 +81,19 @@
   font-size: 16px;
   width: 16px;
   height: 16px;
-  color: #67777E;
+  color: var(--text-muted);
 }
 
 // label de la línea
 .detail-label {
-  color: #67777E;
+  color: var(--text-secondary);
   font-weight: 400;
 }
 
 // valor de la línea
 .detail-value {
-  color: #131C20;
+  color: var(--text);
 
-  // valor en negrita
   &.bold {
     font-weight: 600;
   }
@@ -95,7 +101,7 @@
 
 // placeholder del mapa
 .map-placeholder {
-  background-color: #F9FBFB;
+  background-color: var(--bg-soft);
   border-radius: 12px;
   height: 120px;
   display: flex;
@@ -103,18 +109,18 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1.5px dashed #DCE5E4;
+  border: 1.5px dashed var(--border);
 
   .map-icon {
     font-size: 28px;
     width: 28px;
     height: 28px;
-    color: #67777E;
+    color: var(--text-muted);
   }
 
   .map-label {
     font-size: 14px;
-    color: #67777E;
+    color: var(--text-muted);
   }
 }
 
@@ -129,7 +135,7 @@
 .actions-title {
   font-size: 14px;
   font-weight: 600;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
 
@@ -140,13 +146,13 @@
   flex-wrap: wrap;
 }
 
-// botón iniciar — teal
+// botón iniciar 
 .btn-iniciar {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 10px 20px;
-  background-color: #29AEA0;
+  background-color: var(--primary);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -155,6 +161,7 @@
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: background-color 0.2s ease;
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
 
   mat-icon {
     font-size: 18px;
@@ -163,18 +170,18 @@
   }
 
   &:hover {
-    background-color: #229990;
+    background-color: var(--primary-hover);
   }
 }
 
-// botón reportar — outline teal
+// botón reportar
 .btn-reportar {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 10px 20px;
-  background-color: #E0EBEA;
-  color: #29AEA0;
+  background-color: var(--primary-soft);
+  color: var(--primary);
   border: none;
   border-radius: 10px;
   font-size: 14px;
@@ -190,19 +197,19 @@
   }
 
   &:hover {
-    background-color: #29AEA0;
+    background-color: var(--primary);
     color: #ffffff;
   }
 }
 
-// botón finalizar — gris
+// botón finalizar — neutro
 .btn-finalizar {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 10px 20px;
-  background-color: #EDF2F2;
-  color: #67777E;
+  background-color: var(--item-bg);
+  color: var(--text-secondary);
   border: none;
   border-radius: 10px;
   font-size: 14px;
@@ -218,7 +225,8 @@
   }
 
   &:hover {
-    background-color: #DCE5E4;
+    background-color: var(--item-hover);
+    color: var(--text);
   }
 }
 
@@ -235,9 +243,9 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background-color: #ffffff;
-  color: #131C20;
-  border: 1.5px solid #DCE5E4;
+  background-color: var(--card);
+  color: var(--text);
+  border: 1.5px solid var(--border);
   border-radius: 10px;
   font-size: 14px;
   font-weight: 500;
@@ -250,15 +258,47 @@
     font-size: 18px;
     width: 18px;
     height: 18px;
-    color: #67777E;
+    color: var(--text-muted);
   }
 
   &:hover {
-    border-color: #29AEA0;
-    color: #29AEA0;
+    border-color: var(--primary);
+    color: var(--primary);
 
     mat-icon {
-      color: #29AEA0;
+      color: var(--primary);
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-card {
+    padding: 20px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn-iniciar,
+  .btn-reportar,
+  .btn-finalizar,
+  .btn-contactar {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-card {
+    padding: 16px;
+  }
+
+  .detail-title {
+    font-size: 14px;
   }
 }

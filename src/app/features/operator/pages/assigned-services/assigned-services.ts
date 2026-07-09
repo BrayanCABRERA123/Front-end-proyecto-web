@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// importamos el sidebar 
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
-// importamos los componentes hijos
 import { ServiceTableComponent } from './components/service-table/service-table';
 import { ServiceDetailComponent } from './components/service-detail/service-detail';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-assigned-services',
@@ -17,19 +16,20 @@ import { MatIconModule } from '@angular/material/icon';
     SidebarComponent,
     ServiceTableComponent,
     ServiceDetailComponent,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './assigned-services.html',
   styleUrl: './assigned-services.scss'
 })
 export class AssignedServicesComponent {
 
-  // estadísticas superiores
+  // estadísticas — label usa clave de traducción
   stats = [
-    { valor: 5, label: 'Servicios Totales', color: 'total' },
-    { valor: 2, label: 'Pendientes',        color: 'pendiente' },
-    { valor: 2, label: 'En Progreso',       color: 'progreso' },
-    { valor: 1, label: 'Finalizados Hoy',   color: 'finalizado' }
+    { valor: 5, label: 'ASSIGNED_SERVICES.STATS.TOTAL',          color: 'total' },
+    { valor: 2, label: 'ASSIGNED_SERVICES.STATS.PENDING',        color: 'pendiente' },
+    { valor: 2, label: 'ASSIGNED_SERVICES.STATS.IN_PROGRESS',    color: 'progreso' },
+    { valor: 1, label: 'ASSIGNED_SERVICES.STATS.COMPLETED_TODAY', color: 'finalizado' }
   ];
 
   // filtros de búsqueda
@@ -37,16 +37,14 @@ export class AssignedServicesComponent {
   filtroTipoServicio: string = '';
   filtroVehiculo: string = '';
 
-  // opciones de los selects
   tiposServicio = [
-    { value: '', label: 'Todas' },
-    { value: 'basico', label: 'Lavado básico' },
-    { value: 'premium', label: 'Lavado premium' },
-    { value: 'completo', label: 'Lavado completo' },
-    { value: 'desinfeccion', label: 'Lavado + desinfección' }
+    { value: '',             label: 'ASSIGNED_SERVICES.FILTERS.ALL' },
+    { value: 'basico',       label: 'SERVICE.BASIC' },
+    { value: 'premium',      label: 'SERVICE.PREMIUM' },
+    { value: 'completo',     label: 'SERVICE.FULL' },
+    { value: 'desinfeccion', label: 'SERVICE.BASIC' }
   ];
 
-  // lista de servicios asignados
   servicios = [
     {
       id: 'SV-2031',

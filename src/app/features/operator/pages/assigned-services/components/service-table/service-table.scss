@@ -1,9 +1,15 @@
 // tarjeta contenedora de la tabla
 .table-card {
-  background-color: #ffffff;
+  background-color: var(--card);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
+}
+
+:host-context(body.green-dark) .table-card,
+:host-context(body.pink-dark) .table-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 // tabla principal
@@ -15,8 +21,8 @@
 
 // encabezados
 thead tr {
-  background-color: #F9FBFB;
-  border-bottom: 1.5px solid #EDF2F2;
+  background-color: var(--bg-soft);
+  border-bottom: 1.5px solid var(--border);
 }
 
 th {
@@ -24,27 +30,24 @@ th {
   text-align: left;
   font-size: 12px;
   font-weight: 600;
-  color: #67777E;
+  color: var(--text-secondary);
   letter-spacing: 0.5px;
 }
 
 // filas del cuerpo
 .table-row {
-  border-bottom: 1px solid #F0F4F4;
+  border-bottom: 1px solid var(--border);
   cursor: pointer;
   transition: background-color 0.2s ease;
 
-  // hover sobre la fila
   &:hover {
-    background-color: #F9FBFB;
+    background-color: var(--item-hover);
   }
 
-  // fila seleccionada
   &.selected {
-    background-color: #E0EBEA;
+    background-color: var(--primary-soft);
   }
 
-  // última fila sin borde
   &:last-child {
     border-bottom: none;
   }
@@ -52,14 +55,14 @@ th {
 
 td {
   padding: 14px 16px;
-  color: #131C20;
+  color: var(--text);
   vertical-align: middle;
 }
 
 // columna ID en negrita
 .td-id {
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
 }
 
 // columna ubicación con texto cortado
@@ -68,7 +71,7 @@ td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #67777E;
+  color: var(--text-secondary);
 }
 
 // badge de estado
@@ -79,21 +82,36 @@ td {
   font-weight: 600;
   white-space: nowrap;
 
-  // pendiente — amarillo
   &.pendiente {
-    background-color: #FFF8E1;
+    background-color: rgba(249, 168, 37, 0.15);
     color: #F9A825;
   }
 
-  // en progreso — azul
   &.progreso {
-    background-color: #E3F2FD;
+    background-color: rgba(30, 136, 229, 0.12);
     color: #1E88E5;
   }
 
-  // finalizado — teal
   &.finalizado {
-    background-color: #E0EBEA;
-    color: #29AEA0;
+    background-color: rgba(var(--primary-rgb), 0.15);
+    color: var(--primary);
+  }
+}
+
+
+@media (max-width: 900px) {
+  .table-card {
+    overflow-x: auto;
+  }
+
+  .service-table {
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 480px) {
+  th, td {
+    padding: 10px 12px;
+    font-size: 12px;
   }
 }

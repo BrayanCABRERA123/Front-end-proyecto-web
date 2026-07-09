@@ -1,11 +1,9 @@
-// contenedor principal con sidebar y contenido en fila
 .page-container {
   display: flex;
   min-height: 100vh;
-  background-color: #F9FBFB;
+  background-color: var(--bg);
 }
 
-// área de contenido derecho
 .main-content {
   flex: 1;
   padding: 40px 48px;
@@ -13,44 +11,42 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  min-width: 0;
 }
 
-// fila superior con saludo y botón
 .top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-// texto de bienvenida
 .welcome-text {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-// título principal
 .page-title {
   font-size: 26px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
 
-// subtítulo
 .page-subtitle {
   font-size: 14px;
-  color: #67777E;
+  color: var(--text-secondary);
   margin: 0;
 }
 
-// botón ver servicios asignados
 .btn-ver-servicios {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  background-color: #29AEA0;
+  background-color: var(--primary);
   color: #ffffff;
   border: none;
   border-radius: 20px;
@@ -59,6 +55,8 @@
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: background-color 0.2s ease;
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
+  white-space: nowrap;
 
   mat-icon {
     font-size: 18px;
@@ -67,167 +65,221 @@
   }
 
   &:hover {
-    background-color: #229990;
+    background-color: var(--primary-hover);
   }
 }
 
-// grid de 4 stats cards
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
 }
 
-// fila de progreso con 3 cards
 .progress-row {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 16px;
 }
 
-// card de progreso del día
 .progress-card {
-  background-color: #ffffff;
+  background-color: var(--card);
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
 }
 
-// fila superior del card de progreso
+:host-context(body.green-dark) .progress-card,
+:host-context(body.pink-dark) .progress-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
 .progress-header {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-// ícono del card de progreso
 .progress-icon {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background-color: #E0EBEA;
+  background-color: var(--primary-soft);
   display: flex;
   align-items: center;
   justify-content: center;
 
   mat-icon {
-    color: #29AEA0;
+    color: var(--primary);
     font-size: 20px;
   }
 }
 
-// texto "Servicios completados hoy"
 .progress-label {
   font-size: 14px;
-  color: #67777E;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
-// números de progreso "1 / 5"
 .progress-numbers {
   font-size: 28px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
 
-// barra de progreso contenedor
 .progress-bar {
   width: 100%;
   height: 8px;
-  background-color: #DCE5E4;
+  background-color: var(--border);
   border-radius: 4px;
   overflow: hidden;
 }
 
-// relleno de la barra de progreso
 .progress-fill {
   height: 100%;
-  background-color: #29AEA0;
+  background-color: var(--primary);
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 
-// cards de contadores (en progreso, pendientes)
 .counter-card {
-  background-color: #ffffff;
+  background-color: var(--card);
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
 }
 
-// ícono del contador
+:host-context(body.green-dark) .counter-card,
+:host-context(body.pink-dark) .counter-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
 .counter-icon {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background-color: #E0EBEA;
+  background-color: var(--primary-soft);
   display: flex;
   align-items: center;
   justify-content: center;
 
   mat-icon {
-    color: #29AEA0;
+    color: var(--primary);
     font-size: 20px;
   }
 }
 
-// número del contador
 .counter-value {
   font-size: 28px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
 
-// label del contador
 .counter-label {
   font-size: 14px;
-  color: #67777E;
+  color: var(--text-secondary);
   margin: 0;
 }
 
-// sección de reservas pendientes
 .reservas-section {
-  background-color: #ffffff;
+  background-color: var(--card);
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
 }
 
-// header de la sección
+:host-context(body.green-dark) .reservas-section,
+:host-context(body.pink-dark) .reservas-section {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
 .section-header {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-// ícono de la sección
 .section-icon {
-  color: #29AEA0;
+  color: var(--primary);
   font-size: 20px;
 }
 
-// título de la sección
 .section-title {
   font-size: 16px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
 
-// lista de reservas
 .reservas-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .progress-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .progress-card {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 24px 16px;
+    padding-top: 70px;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .top-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-ver-servicios {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .progress-row {
+    grid-template-columns: 1fr;
+  }
+
+  .progress-card {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 16px 12px;
+    padding-top: 70px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }

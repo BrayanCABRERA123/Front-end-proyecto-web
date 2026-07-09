@@ -34,7 +34,8 @@
     "HISTORY": "Historique",
     "CONFIG": "Paramètres",
     "LOGOUT": "Se déconnecter",
-    "ASSIGNED_SERVICES": "services assignés"
+    "ASSIGNED_SERVICES": "services assignés",
+    "RATINGS": "Évaluations"
   },
     
   "HISTORY": {
@@ -388,5 +389,79 @@
 
     "BENEFIT3_TITLE": "Informations sécurisées",
     "BENEFIT3_DESC": "Vos données et réservations sont protégées à tout moment."
+  },
+
+  "ASSIGNED_SERVICES": {
+  "TITLE": "Services Assignés",
+  "SUBTITLE": "Ici vous pouvez voir tous les services qui vous ont été assignés. Gardez les informations de progression à jour.",
+
+  "STATS": {
+    "TOTAL": "Services Totaux",
+    "PENDING": "En attente",
+    "IN_PROGRESS": "En cours",
+    "COMPLETED_TODAY": "Terminés aujourd'hui"
+  },
+
+  "FILTERS": {
+    "TITLE": "Filtres de recherche",
+    "BY_DATE": "Filtrer par date",
+    "BY_TYPE": "Filtrer par type de service",
+    "BY_SERVICE": "Rechercher par service",
+    "SEARCH_PLACEHOLDER": "Rechercher...",
+    "ALL": "Tous",
+    "FILTER_BTN": "Filtrer"
+  },
+
+  "TABLE": {
+    "ID": "ID",
+    "SERVICE_TYPE": "TYPE DE SERVICE",
+    "LOCATION": "EMPLACEMENT",
+    "DATE_TIME": "DATE ET HEURE",
+    "VEHICLE": "VÉHICULE",
+    "CLIENT": "CLIENT",
+    "STATUS": "STATUT"
+  },
+
+  "DETAIL": {
+    "TITLE": "Informations du service",
+    "CLIENT": "Client :",
+    "ADDRESS": "Adresse :",
+    "SERVICE_TYPE": "Type de service :",
+    "SCHEDULED_TIME": "Heure prévue :",
+    "PAYMENT_METHOD": "Mode de paiement :",
+    "MAP_LABEL": "Localisation sur la carte",
+    "PROGRESS_TITLE": "Statut et progression",
+    "START": "Démarrer le service",
+    "REPORT": "Signaler la progression",
+    "FINISH": "Terminer le service",
+    "EXTRA_TITLE": "Options supplémentaires",
+    "CONTACT": "Contacter le client"
   }
+},
+
+"OPERATOR_HOME": {
+  "TITLE": "Bonjour, {{name}}! 👋 Bienvenue!",
+  "SUBTITLE": "Vous avez {{count}} services en attente pour aujourd'hui",
+  "BTN_SERVICES": "Voir les services assignés",
+  "PROGRESS_LABEL": "Services complétés aujourd'hui",
+  "IN_PROGRESS": "En cours",
+  "PENDING": "En attente",
+  "RESERVATIONS_TITLE": "Réservations en attente",
+  "BTN_START": "Démarrer",
+  "STATS": {
+    "ASSIGNED": "Réservations assignées",
+    "VEHICLES": "Véhicules",
+    "NOTIFICATIONS": "Notifications",
+    "RATING": "Note"
+  }
+},
+
+"NOTIFICATIONS-OPER": {
+  "OPERATOR": {
+    "TITLE": "Notifications",
+    "READ": "Lu",
+    "UNREAD": "Non lu",
+    "BTN_DETAIL": "Voir le détail"
+  }
+}
 }

@@ -1,67 +1,61 @@
-// card de cada reserva
 .service-card {
-  background-color: #ffffff;
+  background-color: var(--card);
   border-radius: 12px;
   padding: 20px;
-  border: 1.5px solid #F0F4F4;
+  border: 1.5px solid var(--border);
   transition: border-color 0.2s ease;
 
   &:hover {
-    border-color: #29AEA0;
+    border-color: var(--primary);
   }
 }
 
-// fila principal
 .card-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
-// columna de información
 .service-info {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
-// título del servicio
 .service-title {
   font-size: 15px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
 
-// fecha del servicio
 .service-date {
   font-size: 13px;
-  color: #67777E;
+  color: var(--text-secondary);
   margin: 0;
 }
 
-// dirección y cliente
 .service-detail {
   font-size: 13px;
-  color: #67777E;
+  color: var(--text-secondary);
   margin: 0;
 }
 
-// separador entre dirección y cliente
 .detail-separator {
-  color: #DCE5E4;
+  color: var(--text-muted);
 }
 
-// columna de acciones
 .card-actions {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
-// badge de estado
 .estado-badge {
   display: flex;
   align-items: center;
@@ -71,19 +65,16 @@
   font-size: 13px;
   font-weight: 600;
 
-  // estado confirmado — teal suave
   &.confirmado {
-    background-color: #E0EBEA;
-    color: #29AEA0;
+    background-color: rgba(var(--primary-rgb), 0.15);
+    color: var(--primary);
   }
 
-  // estado pendiente — amarillo suave
   &.pendiente {
-    background-color: #FFF8E1;
+    background-color: rgba(249, 168, 37, 0.15);
     color: #F9A825;
   }
 
-  // ícono dentro del badge
   .badge-icon {
     font-size: 16px;
     width: 16px;
@@ -91,10 +82,9 @@
   }
 }
 
-// botón iniciar
 .btn-iniciar {
   padding: 8px 20px;
-  background-color: #29AEA0;
+  background-color: var(--primary);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -103,13 +93,13 @@
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: background-color 0.2s ease;
+  box-shadow: 0 4px 10px rgba(var(--primary-rgb), .20);
 
   &:hover {
-    background-color: #229990;
+    background-color: var(--primary-hover);
   }
 }
 
-// botón ver detalles
 .btn-ver {
   width: 36px;
   height: 36px;
@@ -117,21 +107,53 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: 1.5px solid #DCE5E4;
+  border: 1.5px solid var(--border);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
 
   mat-icon {
     font-size: 18px;
-    color: #67777E;
+    color: var(--text-muted);
   }
 
   &:hover {
-    border-color: #29AEA0;
+    border-color: var(--primary);
 
     mat-icon {
-      color: #29AEA0;
+      color: var(--primary);
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .card-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-card {
+    padding: 16px;
+  }
+
+  .card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-iniciar {
+    width: 100%;
+    text-align: center;
+  }
+
+  .estado-badge {
+    justify-content: center;
   }
 }

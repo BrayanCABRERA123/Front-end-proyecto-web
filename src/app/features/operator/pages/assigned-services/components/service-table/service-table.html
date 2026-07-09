@@ -1,47 +1,30 @@
-<!-- Tarjeta contenedora de la tabla -->
 <div class="table-card">
   <table class="service-table">
 
-    <!-- Encabezados de la tabla -->
     <thead>
       <tr>
-        <th>ID</th>
-        <th>TIPO DE SERVICIO</th>
-        <th>UBICACIÓN</th>
-        <th>FECHA Y HORA</th>
-        <th>VEHÍCULO</th>
-        <th>CLIENTE</th>
-        <th>ESTADO</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.ID' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.SERVICE_TYPE' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.LOCATION' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.DATE_TIME' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.VEHICLE' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.CLIENT' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.STATUS' | translate }}</th>
       </tr>
     </thead>
 
-    <!-- Filas de la tabla -->
     <tbody>
       @for (servicio of servicios; track servicio.id) {
         <tr
           class="table-row"
           [class.selected]="servicioSeleccionado?.id === servicio.id"
           (click)="onSelectService(servicio)">
-
-          <!-- ID -->
           <td class="td-id">{{ servicio.id }}</td>
-
-          <!-- Tipo de servicio -->
           <td>{{ servicio.tipoServicio }}</td>
-
-          <!-- Ubicación -->
           <td class="td-ubicacion">{{ servicio.ubicacion }}</td>
-
-          <!-- Fecha y hora -->
           <td>{{ servicio.fechaHora }}</td>
-
-          <!-- Vehículo -->
           <td>{{ servicio.vehiculo }}</td>
-
-          <!-- Client -->
           <td>{{ servicio.client }}</td>
-
-          <!-- Estado con badge -->
           <td>
             <span
               class="estado-badge"
@@ -51,7 +34,6 @@
               {{ servicio.estado }}
             </span>
           </td>
-
         </tr>
       }
     </tbody>

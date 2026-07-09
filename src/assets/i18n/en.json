@@ -33,7 +33,8 @@
     "HISTORY": "History",
     "CONFIG": "Settings",
     "LOGOUT": "Log Out",
-    "ASSIGNED_SERVICES": "assigned services"
+    "ASSIGNED_SERVICES": "assigned services",
+    "RATINGS": "Ratings"
   },
 
   "HISTORY": {
@@ -139,6 +140,7 @@
   "TIME_1D": "1 day ago",
   "TIME_2D": "2 days ago",
   "TIME_3D": "3 days ago"
+  
 },
 
 "PAYMENTS": {
@@ -388,6 +390,80 @@
 
     "BENEFIT3_TITLE": "Secure Information",
     "BENEFIT3_DESC": "Your data and reservations are protected at all times."
+  },
+
+  "ASSIGNED_SERVICES": {
+  "TITLE": "Assigned Services",
+  "SUBTITLE": "Here you can see all the services assigned to you. Keep the progress information updated.",
+
+  "STATS": {
+    "TOTAL": "Total Services",
+    "PENDING": "Pending",
+    "IN_PROGRESS": "In Progress",
+    "COMPLETED_TODAY": "Completed Today"
+  },
+
+  "FILTERS": {
+    "TITLE": "Search filters",
+    "BY_DATE": "Filter by date",
+    "BY_TYPE": "Filter by service type",
+    "BY_SERVICE": "Search by service",
+    "SEARCH_PLACEHOLDER": "Search...",
+    "ALL": "All",
+    "FILTER_BTN": "Filter"
+  },
+
+  "TABLE": {
+    "ID": "ID",
+    "SERVICE_TYPE": "SERVICE TYPE",
+    "LOCATION": "LOCATION",
+    "DATE_TIME": "DATE & TIME",
+    "VEHICLE": "VEHICLE",
+    "CLIENT": "CLIENT",
+    "STATUS": "STATUS"
+  },
+
+  "DETAIL": {
+    "TITLE": "Service information",
+    "CLIENT": "Client:",
+    "ADDRESS": "Address:",
+    "SERVICE_TYPE": "Service type:",
+    "SCHEDULED_TIME": "Scheduled time:",
+    "PAYMENT_METHOD": "Payment method:",
+    "MAP_LABEL": "Location on map",
+    "PROGRESS_TITLE": "Status and progress",
+    "START": "Start Service",
+    "REPORT": "Report progress",
+    "FINISH": "Finish Service",
+    "EXTRA_TITLE": "Additional options",
+    "CONTACT": "Contact client"
   }
+},
+
+"OPERATOR_HOME": {
+  "TITLE": "Hello, {{name}}! 👋 Welcome!",
+  "SUBTITLE": "You have {{count}} pending services for today",
+  "BTN_SERVICES": "View assigned services",
+  "PROGRESS_LABEL": "Services completed today",
+  "IN_PROGRESS": "In Progress",
+  "PENDING": "Pending",
+  "RESERVATIONS_TITLE": "Pending Reservations",
+  "BTN_START": "Start",
+  "STATS": {
+    "ASSIGNED": "Assigned Bookings",
+    "VEHICLES": "Vehicles",
+    "NOTIFICATIONS": "Notifications",
+    "RATING": "Rating"
+  }
+},
+
+"NOTIFICATIONS-OPER": {
+  "OPERATOR": {
+    "TITLE": "Notifications",
+    "READ": "Read",
+    "UNREAD": "Unread",
+    "BTN_DETAIL": "View detail"
+  }
+}
 }
 

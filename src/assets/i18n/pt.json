@@ -34,7 +34,8 @@
     "HISTORY": "Histórico",
     "CONFIG": "Configurações",
     "LOGOUT": "Sair",
-    "ASSIGNED_SERVICES": "serviços atribuídos"
+    "ASSIGNED_SERVICES": "serviços atribuídos",
+    "RATINGS": "Avaliações"
   },
 
   "HISTORY": {
@@ -386,5 +387,79 @@
 
     "BENEFIT3_TITLE": "Informações seguras",
     "BENEFIT3_DESC": "Seus dados e reservas estão protegidos o tempo todo."
+  },
+
+  "ASSIGNED_SERVICES": {
+  "TITLE": "Serviços Atribuídos",
+  "SUBTITLE": "Aqui você pode ver todos os serviços que foram atribuídos a você. Mantenha as informações de progresso atualizadas.",
+
+  "STATS": {
+    "TOTAL": "Total de Serviços",
+    "PENDING": "Pendentes",
+    "IN_PROGRESS": "Em Andamento",
+    "COMPLETED_TODAY": "Concluídos Hoje"
+  },
+
+  "FILTERS": {
+    "TITLE": "Filtros de pesquisa",
+    "BY_DATE": "Filtrar por data",
+    "BY_TYPE": "Filtrar por tipo de serviço",
+    "BY_SERVICE": "Pesquisar por serviço",
+    "SEARCH_PLACEHOLDER": "Pesquisar...",
+    "ALL": "Todos",
+    "FILTER_BTN": "Filtrar"
+  },
+
+  "TABLE": {
+    "ID": "ID",
+    "SERVICE_TYPE": "TIPO DE SERVIÇO",
+    "LOCATION": "LOCALIZAÇÃO",
+    "DATE_TIME": "DATA E HORA",
+    "VEHICLE": "VEÍCULO",
+    "CLIENT": "CLIENTE",
+    "STATUS": "STATUS"
+  },
+
+  "DETAIL": {
+    "TITLE": "Informações do serviço",
+    "CLIENT": "Cliente:",
+    "ADDRESS": "Endereço:",
+    "SERVICE_TYPE": "Tipo de serviço:",
+    "SCHEDULED_TIME": "Horário agendado:",
+    "PAYMENT_METHOD": "Método de pagamento:",
+    "MAP_LABEL": "Localização no mapa",
+    "PROGRESS_TITLE": "Status e progresso",
+    "START": "Iniciar Serviço",
+    "REPORT": "Reportar progresso",
+    "FINISH": "Finalizar Serviço",
+    "EXTRA_TITLE": "Opções adicionais",
+    "CONTACT": "Contatar o cliente"
   }
+},
+
+"OPERATOR_HOME": {
+  "TITLE": "Olá, {{name}}! 👋 Bem-vindo!",
+  "SUBTITLE": "Você tem {{count}} serviços pendentes para hoje",
+  "BTN_SERVICES": "Ver serviços atribuídos",
+  "PROGRESS_LABEL": "Serviços concluídos hoje",
+  "IN_PROGRESS": "Em andamento",
+  "PENDING": "Pendentes",
+  "RESERVATIONS_TITLE": "Reservas pendentes",
+  "BTN_START": "Iniciar",
+  "STATS": {
+    "ASSIGNED": "Reservas atribuídas",
+    "VEHICLES": "Veículos",
+    "NOTIFICATIONS": "Notificações",
+    "RATING": "Avaliação"
+  }
+},
+
+"NOTIFICATIONS-OPER": {
+  "OPERATOR": {
+    "TITLE": "Notificações",
+    "READ": "Lido",
+    "UNREAD": "Não lido",
+    "BTN_DETAIL": "Ver detalhe"
+  }
+}
 }
