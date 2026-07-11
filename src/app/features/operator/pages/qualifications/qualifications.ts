@@ -7,6 +7,8 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { QualificationStatsComponent } from './components/qualification-stats/qualification-stats';
 import { QualificationCardComponent } from './components/qualification-card/qualification-card';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-qualifications',
@@ -17,7 +19,8 @@ import { MatIconModule } from '@angular/material/icon';
     SidebarComponent,
     QualificationStatsComponent,
     QualificationCardComponent,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './qualifications.html',
   styleUrl: './qualifications.scss'
@@ -31,20 +34,20 @@ export class QualificationsComponent {
 
   // opciones de los selects
   tiposServicio = [
-    { value: '', label: 'Todas' },
-    { value: 'basico',   label: 'Lavado Básico' },
-    { value: 'premium',  label: 'Lavado Premium' },
-    { value: 'completo', label: 'Lavado Completo' }
-  ];
+  { value: '', label: 'QUALIFICATIONS.TYPE_ALL' },
+  { value: 'basico',   label: 'QUALIFICATIONS.TYPE_BASIC' },
+  { value: 'premium',  label: 'QUALIFICATIONS.TYPE_PREMIUM' },
+  { value: 'completo', label: 'QUALIFICATIONS.TYPE_FULL' }
+];
 
-  estrellas = [
-    { value: '', label: 'Todos' },
-    { value: '5', label: '5 estrellas' },
-    { value: '4', label: '4 estrellas' },
-    { value: '3', label: '3 estrellas' },
-    { value: '2', label: '2 estrellas' },
-    { value: '1', label: '1 estrella' }
-  ];
+estrellas = [
+  { value: '', label: 'QUALIFICATIONS.STARS_ALL' },
+  { value: '5', label: 'QUALIFICATIONS.STARS_5' },
+  { value: '4', label: 'QUALIFICATIONS.STARS_4' },
+  { value: '3', label: 'QUALIFICATIONS.STARS_3' },
+  { value: '2', label: 'QUALIFICATIONS.STARS_2' },
+  { value: '1', label: 'QUALIFICATIONS.STARS_1' }
+];
 
   // estadísticas generales
   calificacionPromedio: number = 4.3;

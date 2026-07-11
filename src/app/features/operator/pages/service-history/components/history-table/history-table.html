@@ -1,41 +1,32 @@
-<!-- Tarjeta contenedora de la tabla -->
 <div class="table-card">
   <table class="history-table">
 
-    <!-- Encabezados -->
     <thead>
       <tr>
-        <th>ID</th>
-        <th>FECHA COMPLETADA</th>
-        <th>SERVICIO</th>
-        <th>VEHÍCULO</th>
-        <th>DURACIÓN</th>
-        <th>ESTADO FINAL</th>
+        <th>{{ 'HISTORY_TABLE.ID' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.DATE_COMPLETED' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.SERVICE' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.VEHICLE' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.DURATION' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.STATUS' | translate }}</th>
       </tr>
     </thead>
 
-    <!-- Filas -->
     <tbody>
       @for (servicio of servicios; track servicio.id) {
         <tr class="table-row">
 
-          <!-- ID -->
-          <td class="td-id">{{ servicio.id }}</td>
+          <td class="td-id" [attr.data-label]="'HISTORY_TABLE.ID' | translate">{{ servicio.id }}</td>
 
-          <!-- Fecha completada -->
-          <td>{{ servicio.fechaCompletada }}</td>
+          <td [attr.data-label]="'HISTORY_TABLE.DATE_COMPLETED' | translate">{{ servicio.fechaCompletada }}</td>
 
-          <!-- Tipo de servicio -->
-          <td>{{ servicio.servicio }}</td>
+          <td [attr.data-label]="'HISTORY_TABLE.SERVICE' | translate">{{ servicio.servicio }}</td>
 
-          <!-- Vehículo -->
-          <td>{{ servicio.vehiculo }}</td>
+          <td [attr.data-label]="'HISTORY_TABLE.VEHICLE' | translate">{{ servicio.vehiculo }}</td>
 
-          <!-- Duración -->
-          <td>{{ servicio.duracion }}</td>
+          <td [attr.data-label]="'HISTORY_TABLE.DURATION' | translate">{{ servicio.duracion }}</td>
 
-          <!-- Estado final con badge -->
-          <td>
+          <td [attr.data-label]="'HISTORY_TABLE.STATUS' | translate">
             <span
               class="estado-badge"
               [class.finalizado]="servicio.estadoColor === 'finalizado'"
@@ -48,11 +39,10 @@
         </tr>
       }
 
-      <!-- Mensaje cuando no hay resultados -->
       @if (servicios.length === 0) {
         <tr>
           <td colspan="6" class="empty-row">
-            No se encontraron servicios
+            {{ 'HISTORY_TABLE.EMPTY' | translate }}
           </td>
         </tr>
       }
