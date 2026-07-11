@@ -2,9 +2,9 @@
 .page-container {
   display: flex;
   min-height: 100vh;
-  background-color: #F9FBFB;
+  background-color: var(--bg-soft);
 }
-
+ 
 // área de contenido derecho
 .main-content {
   flex: 1;
@@ -13,182 +13,232 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+ 
+  @media (max-width: 1024px) {
+    padding: 28px 24px;
+  }
+ 
+  @media (max-width: 640px) {
+    padding: 20px 16px;
+    gap: 18px;
+  }
 }
-
+ 
 // header con título y subtítulo
 .page-header {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-
+ 
 // título principal
 .page-title {
   font-size: 26px;
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
+ 
+  @media (max-width: 640px) {
+    font-size: 21px;
+  }
 }
-
+ 
 // subtítulo
 .page-subtitle {
   font-size: 14px;
-  color: #67777E;
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.5;
+ 
+  @media (max-width: 640px) {
+    font-size: 13px;
+  }
 }
-
+ 
 // card de filtros
 .filters-card {
-  background-color: #ffffff;
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   gap: 16px;
+ 
+  @media (max-width: 640px) {
+    padding: 16px;
+    border-radius: 12px;
+  }
 }
-
+ 
 // título de filtros
 .filters-title {
   font-size: 15px;
   font-weight: 600;
-  color: #131C20;
+  color: var(--text);
   margin: 0;
 }
-
+ 
 // fila de filtros
 .filters-row {
   display: flex;
   align-items: flex-end;
   gap: 16px;
   flex-wrap: wrap;
+ 
+  @media (max-width: 768px) {
+    align-items: stretch;
+  }
 }
-
+ 
 // grupo de cada filtro
 .filter-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
+ 
+  @media (max-width: 768px) {
+    flex: 1 1 100%;
+  }
 }
-
+ 
 // label del filtro
 .filter-label {
   font-size: 12px;
   font-weight: 500;
-  color: #67777E;
+  color: var(--text-secondary);
 }
-
+ 
 // contenedor input fecha
 .date-input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
-
+ 
   .date-icon {
     position: absolute;
     right: 10px;
     font-size: 16px;
-    color: #67777E;
+    color: var(--text-secondary);
     pointer-events: none;
   }
 }
-
+ 
 // input de fecha
 .filter-input {
   padding: 10px 36px 10px 12px;
-  border: 1.5px solid #DCE5E4;
+  border: 1.5px solid var(--border);
   border-radius: 10px;
   font-size: 14px;
-  color: #131C20;
-  background-color: #ffffff;
+  color: var(--text);
+  background-color: var(--card);
   outline: none;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: border-color 0.2s ease;
   width: 160px;
-
+ 
   &:focus {
-    border-color: #29AEA0;
+    border-color: var(--primary);
+  }
+ 
+  @media (max-width: 768px) {
+    width: 100%;
   }
 }
-
+ 
 // contenedor select
 .select-wrapper {
   position: relative;
   display: flex;
   align-items: center;
-
+ 
   .select-icon {
     position: absolute;
     right: 10px;
     font-size: 18px;
-    color: #67777E;
+    color: var(--text-secondary);
     pointer-events: none;
   }
+ 
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }
-
+ 
 // select de filtro
 .filter-select {
   padding: 10px 36px 10px 12px;
-  border: 1.5px solid #DCE5E4;
+  border: 1.5px solid var(--border);
   border-radius: 10px;
   font-size: 14px;
-  color: #131C20;
-  background-color: #ffffff;
+  color: var(--text);
+  background-color: var(--card);
   outline: none;
   appearance: none;
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: border-color 0.2s ease;
   width: 160px;
-
+ 
   &:focus {
-    border-color: #29AEA0;
+    border-color: var(--primary);
+  }
+ 
+  @media (max-width: 768px) {
+    width: 100%;
   }
 }
-
+ 
 // fila de botones
 .filter-actions {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-left: auto;
+ 
+  @media (max-width: 768px) {
+    flex: 1 1 100%;
+    margin-left: 0;
+  }
 }
-
+ 
 // botón reset
 .btn-reset {
   width: 40px;
   height: 40px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
-  border: 1.5px solid #DCE5E4;
+  background-color: var(--card);
+  border: 1.5px solid var(--border);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
-
+ 
   mat-icon {
     font-size: 20px;
-    color: #67777E;
+    color: var(--text-secondary);
   }
-
+ 
   &:hover {
-    border-color: #29AEA0;
-
+    border-color: var(--primary);
+ 
     mat-icon {
-      color: #29AEA0;
+      color: var(--primary);
     }
   }
 }
-
+ 
 // botón filtrar
 .btn-filter {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   padding: 10px 20px;
-  background-color: #29AEA0;
+  background-color: var(--primary);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -197,25 +247,30 @@
   cursor: pointer;
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: background-color 0.2s ease;
-
+  flex: 1;
+ 
   mat-icon {
     font-size: 18px;
     width: 18px;
     height: 18px;
   }
-
+ 
   &:hover {
-    background-color: #229990;
+    background-color: var(--primary-hover);
+  }
+ 
+  @media (max-width: 768px) {
+    flex: 1 1 100%;
   }
 }
-
+ 
 // lista de calificaciones
 .qualifications-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-
+ 
 // estado vacío
 .empty-state {
   display: flex;
@@ -223,18 +278,35 @@
   align-items: center;
   gap: 12px;
   padding: 48px;
-  color: #67777E;
-  background-color: #ffffff;
+  color: var(--text-secondary);
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 16px;
-
+ 
   mat-icon {
     font-size: 48px;
     width: 48px;
     height: 48px;
+    color: var(--text-muted);
   }
-
+ 
   p {
     font-size: 16px;
     margin: 0;
   }
+ 
+  @media (max-width: 640px) {
+    padding: 32px 16px;
+ 
+    mat-icon {
+      font-size: 36px;
+      width: 36px;
+      height: 36px;
+    }
+ 
+    p {
+      font-size: 14px;
+    }
+  }
 }
+ 

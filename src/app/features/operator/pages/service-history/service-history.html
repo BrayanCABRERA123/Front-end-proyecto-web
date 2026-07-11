@@ -1,36 +1,27 @@
-<!-- Contenedor principal con sidebar y contenido -->
 <div class="page-container">
-
-  <!-- Sidebar izquierdo del operator -->
   <app-sidebar rol="OPERARIO"></app-sidebar>
 
-  <!-- Contenido principal derecho -->
   <div class="main-content">
 
-    <!-- Header con título y subtítulo -->
     <div class="page-header">
-      <h1 class="page-title">Historial de Servicios</h1>
+      <h1 class="page-title">{{ 'SERVICE_HISTORY.TITLE' | translate }}</h1>
       <p class="page-subtitle">
-        Consulta todos los servicios que has realizado, organizados
-        por fecha, tipo de servicio y estado final.
+        {{ 'SERVICE_HISTORY.SUBTITLE' | translate }}
       </p>
     </div>
 
-    <!-- Stats del mes -->
     <app-history-stats
       [serviciosRealizados]="serviciosRealizados"
       [serviciosCancelados]="serviciosCancelados">
     </app-history-stats>
 
-    <!-- Card de filtros -->
     <div class="filters-card">
-      <p class="filters-title">Filtros de búsqueda</p>
+      <p class="filters-title">{{ 'SERVICE_HISTORY.FILTERS_TITLE' | translate }}</p>
 
       <div class="filters-row">
 
-        <!-- Filtrar por fecha -->
         <div class="filter-group">
-          <label class="filter-label">Filtrar por fecha</label>
+          <label class="filter-label">{{ 'SERVICE_HISTORY.FILTER_DATE' | translate }}</label>
           <div class="date-input-wrapper">
             <input
               type="date"
@@ -39,51 +30,46 @@
           </div>
         </div>
 
-        <!-- Filtrar por tipo de servicio -->
         <div class="filter-group">
-          <label class="filter-label">Filtrar por tipo de servicio</label>
+          <label class="filter-label">{{ 'SERVICE_HISTORY.FILTER_TYPE' | translate }}</label>
           <div class="select-wrapper">
             <select class="filter-select" [(ngModel)]="filtroTipoServicio">
               @for (tipo of tiposServicio; track tipo.value) {
-                <option [value]="tipo.value">{{ tipo.label }}</option>
+                <option [value]="tipo.value">{{ tipo.label | translate }}</option>
               }
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
           </div>
         </div>
 
-        <!-- Filtrar por estado -->
         <div class="filter-group">
           <label class="filter-label">&nbsp;</label>
           <div class="select-wrapper">
             <select class="filter-select" [(ngModel)]="filtroEstado">
               @for (estado of estados; track estado.value) {
-                <option [value]="estado.value">{{ estado.label }}</option>
+                <option [value]="estado.value">{{ estado.label | translate }}</option>
               }
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
           </div>
         </div>
 
-        <!-- Botones de acción -->
         <div class="filter-actions">
           <button class="btn-reset">
             <mat-icon>refresh</mat-icon>
           </button>
           <button class="btn-filter">
             <mat-icon>search</mat-icon>
-            Filtrar
+            {{ 'SERVICE_HISTORY.BTN_FILTER' | translate }}
           </button>
         </div>
 
       </div>
     </div>
 
-    <!-- Tabla de historial -->
     <app-history-table
       [servicios]="serviciosFiltrados">
     </app-history-table>
 
   </div>
-
 </div>

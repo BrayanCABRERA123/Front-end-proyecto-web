@@ -1,14 +1,11 @@
-<!-- Fila de 3 cards de estadísticas -->
 <div class="stats-row">
 
-  <!-- Card calificación promedio -->
   <div class="stat-card">
     <div class="stat-header">
       <mat-icon class="stat-icon">star_outline</mat-icon>
-      <span class="stat-label">Calificación promedio</span>
+      <span class="stat-label">{{ 'QUALIFICATION_STATS.AVG_RATING' | translate }}</span>
     </div>
     <p class="stat-value">{{ calificacionPromedio }}</p>
-    <!-- Estrellas -->
     <div class="stars-row">
       @for (estrella of estrellas; track $index) {
         <mat-icon class="star" [class.filled]="estrella === 1">
@@ -18,14 +15,12 @@
     </div>
   </div>
 
-  <!-- Card nivel de satisfacción -->
   <div class="stat-card">
     <div class="stat-header">
       <mat-icon class="stat-icon">trending_up</mat-icon>
-      <span class="stat-label">Nivel de satisfacción</span>
+      <span class="stat-label">{{ 'QUALIFICATION_STATS.SATISFACTION_LEVEL' | translate }}</span>
     </div>
     <p class="stat-value">{{ nivelSatisfaccion }}</p>
-    <!-- Barra de progreso -->
     <div class="progress-bar">
       <div
         class="progress-fill"
@@ -34,14 +29,13 @@
     </div>
   </div>
 
-  <!-- Card total de calificaciones -->
   <div class="stat-card">
     <div class="stat-header">
       <mat-icon class="stat-icon">chat_bubble_outline</mat-icon>
-      <span class="stat-label">Total de calificaciones recibidas</span>
+      <span class="stat-label">{{ 'QUALIFICATION_STATS.TOTAL' | translate }}</span>
     </div>
     <p class="stat-value">{{ totalCalificaciones }}</p>
-    <p class="stat-sublabel">En los últimos 12 meses</p>
+    <p class="stat-sublabel">{{ 'QUALIFICATION_STATS.LAST_12_MONTHS' | translate }}</p>
   </div>
 
 </div>

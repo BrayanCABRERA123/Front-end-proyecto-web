@@ -70,6 +70,13 @@ body {
 
 --panel-overlay: rgba(255,255,255, .50);
 --panel-image: url('/images/panelLight.png');
+
+--success: #29AEA0;
+--success-soft: #E0EBEA;
+--error: #E53935;
+--error-soft: #FFEBEE;
+--neutral-badge: #67777E;
+--neutral-badge-soft: #EDF2F2;
 }
 
 /* VERDE OSCURO */
@@ -110,6 +117,13 @@ body.green-dark {
 
 --panel-overlay: rgba(10,15,18, .52);
 --panel-image: url('/images/panelDark.png');
+
+--success: #2ec4b6;
+--success-soft: rgba(46, 196, 182, 0.18);
+--error: #ff6b6b;
+--error-soft: rgba(255, 107, 107, 0.15);
+--neutral-badge: #c2c2c2;
+--neutral-badge-soft: rgba(255, 255, 255, 0.08);
 }
 
 /*  ROSADO CLARO */
@@ -150,6 +164,13 @@ body.pink {
 
 --panel-overlay: rgba(255,255,255, .50);
 --panel-image: url('/images/panelLight.png');
+
+--success: #29AEA0;
+--success-soft: #E0EBEA;
+--error: #E53935;
+--error-soft: #FFEBEE;
+--neutral-badge: #67777E;
+--neutral-badge-soft: #EDF2F2;
 }
 
 /*ROSADO OSCURO*/
@@ -190,6 +211,13 @@ body.pink-dark {
 
 --panel-overlay: rgba(15,10,14, .52);
 --panel-image: url('/images/panelDark.png');
+
+--success: #2ec4b6;
+--success-soft: rgba(46, 196, 182, 0.18);
+--error: #ff6b6b;
+--error-soft: rgba(255, 107, 107, 0.15);
+--neutral-badge: #c2c2c2;
+--neutral-badge-soft: rgba(255, 255, 255, 0.08);
 }
 
 /* transiciones */

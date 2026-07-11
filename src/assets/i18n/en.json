@@ -464,6 +464,71 @@
     "UNREAD": "Unread",
     "BTN_DETAIL": "View detail"
   }
+},
+
+"SERVICE_HISTORY": {
+  "TITLE": "Service History",
+  "SUBTITLE": "Check all the services you have completed, organized by date, service type and final status.",
+  "FILTERS_TITLE": "Search filters",
+  "FILTER_DATE": "Filter by date",
+  "FILTER_TYPE": "Filter by service type",
+  "BTN_FILTER": "Filter",
+  "TYPE_ALL": "All",
+  "TYPE_BASIC": "Basic",
+  "TYPE_PREMIUM": "Premium",
+  "TYPE_FULL": "Complete",
+  "STATUS_ALL": "All",
+  "STATUS_FINISHED": "Completed",
+  "STATUS_CANCELED": "Canceled",
+  "STATUS_REASSIGNED": "Reassigned"
+},
+
+"HISTORY_STATS": {
+  "DONE": "Services completed this month",
+  "CANCELED": "Canceled / reassigned services"
+},
+
+"HISTORY_TABLE": {
+  "ID": "ID",
+  "DATE_COMPLETED": "DATE COMPLETED",
+  "SERVICE": "SERVICE",
+  "VEHICLE": "VEHICLE",
+  "DURATION": "DURATION",
+  "STATUS": "FINAL STATUS",
+  "EMPTY": "No services found"
+},
+
+"QUALIFICATIONS": {
+  "TITLE": "Ratings received",
+  "SUBTITLE": "Check the ratings your clients have left about your work.",
+  "FILTERS_TITLE": "Search filters",
+  "FILTER_DATE": "Filter by date",
+  "FILTER_TYPE": "Filter by service type",
+  "BTN_FILTER": "Filter",
+  "TYPE_ALL": "All",
+  "TYPE_BASIC": "Basic Wash",
+  "TYPE_PREMIUM": "Premium Wash",
+  "TYPE_FULL": "Complete Wash",
+  "STARS_ALL": "All",
+  "STARS_5": "5 stars",
+  "STARS_4": "4 stars",
+  "STARS_3": "3 stars",
+  "STARS_2": "2 stars",
+  "STARS_1": "1 star",
+  "EMPTY": "No ratings found"
+},
+
+"QUALIFICATION_CARD": {
+  "DURATION": "Duration",
+  "LOCATION": "Location",
+  "ID": "ID"
+},
+
+"QUALIFICATION_STATS": {
+  "AVG_RATING": "Average rating",
+  "SATISFACTION_LEVEL": "Satisfaction level",
+  "TOTAL": "Total ratings received",
+  "LAST_12_MONTHS": "In the last 12 months"
 }
 }
 

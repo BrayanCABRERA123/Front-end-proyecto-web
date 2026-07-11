@@ -1,12 +1,9 @@
-<!-- Card de cada calificación -->
 <div class="qualification-card">
 
-  <!-- Fila superior: client + fecha -->
   <div class="card-header">
     <div class="client-info">
       <p class="client-name">{{ calificacion.client }}</p>
       <p class="service-type">{{ calificacion.tipoServicio }}</p>
-      <!-- Estrellas -->
       <div class="stars-row">
         @for (estrella of estrellas; track $index) {
           <mat-icon class="star" [class.filled]="estrella === 1">
@@ -16,7 +13,6 @@
       </div>
     </div>
 
-    <!-- Fecha y botón ver -->
     <div class="card-actions">
       <span class="card-date">{{ calificacion.fecha }}</span>
       <button class="btn-ver">
@@ -25,21 +21,19 @@
     </div>
   </div>
 
-  <!-- Comentario del client -->
   <p class="card-comment">{{ calificacion.comentario }}</p>
 
-  <!-- Detalles del servicio -->
   <div class="card-details">
     <span class="detail-item">
-      Duración: {{ calificacion.duracion }}
+      {{ 'QUALIFICATION_CARD.DURATION' | translate }}: {{ calificacion.duracion }}
     </span>
     <span class="detail-separator">·</span>
     <span class="detail-item">
-      Ubicación: {{ calificacion.ubicacion }}
+      {{ 'QUALIFICATION_CARD.LOCATION' | translate }}: {{ calificacion.ubicacion }}
     </span>
     <span class="detail-separator">·</span>
     <span class="detail-item">
-      ID: {{ calificacion.idServicio }}
+      {{ 'QUALIFICATION_CARD.ID' | translate }}: {{ calificacion.idServicio }}
     </span>
   </div>
 

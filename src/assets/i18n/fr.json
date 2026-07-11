@@ -463,5 +463,70 @@
     "UNREAD": "Non lu",
     "BTN_DETAIL": "Voir le détail"
   }
+},
+
+"SERVICE_HISTORY": {
+  "TITLE": "Historique des services",
+  "SUBTITLE": "Consultez tous les services que vous avez réalisés, organisés par date, type de service et statut final.",
+  "FILTERS_TITLE": "Filtres de recherche",
+  "FILTER_DATE": "Filtrer par date",
+  "FILTER_TYPE": "Filtrer par type de service",
+  "BTN_FILTER": "Filtrer",
+  "TYPE_ALL": "Tous",
+  "TYPE_BASIC": "Basique",
+  "TYPE_PREMIUM": "Premium",
+  "TYPE_FULL": "Complet",
+  "STATUS_ALL": "Tous",
+  "STATUS_FINISHED": "Terminé",
+  "STATUS_CANCELED": "Annulé",
+  "STATUS_REASSIGNED": "Réaffecté"
+},
+
+"HISTORY_STATS": {
+  "DONE": "Services réalisés ce mois-ci",
+  "CANCELED": "Services annulés / réaffectés"
+},
+
+"HISTORY_TABLE": {
+  "ID": "ID",
+  "DATE_COMPLETED": "DATE DE FIN",
+  "SERVICE": "SERVICE",
+  "VEHICLE": "VÉHICULE",
+  "DURATION": "DURÉE",
+  "STATUS": "STATUT FINAL",
+  "EMPTY": "Aucun service trouvé"
+},
+
+"QUALIFICATIONS": {
+  "TITLE": "Évaluations reçues",
+  "SUBTITLE": "Consultez les évaluations laissées par vos clients sur votre travail.",
+  "FILTERS_TITLE": "Filtres de recherche",
+  "FILTER_DATE": "Filtrer par date",
+  "FILTER_TYPE": "Filtrer par type de service",
+  "BTN_FILTER": "Filtrer",
+  "TYPE_ALL": "Tous",
+  "TYPE_BASIC": "Lavage Basique",
+  "TYPE_PREMIUM": "Lavage Premium",
+  "TYPE_FULL": "Lavage Complet",
+  "STARS_ALL": "Tous",
+  "STARS_5": "5 étoiles",
+  "STARS_4": "4 étoiles",
+  "STARS_3": "3 étoiles",
+  "STARS_2": "2 étoiles",
+  "STARS_1": "1 étoile",
+  "EMPTY": "Aucune évaluation trouvée"
+},
+
+"QUALIFICATION_CARD": {
+  "DURATION": "Durée",
+  "LOCATION": "Emplacement",
+  "ID": "ID"
+},
+
+"QUALIFICATION_STATS": {
+  "AVG_RATING": "Note moyenne",
+  "SATISFACTION_LEVEL": "Niveau de satisfaction",
+  "TOTAL": "Total des évaluations reçues",
+  "LAST_12_MONTHS": "Au cours des 12 derniers mois"
 }
 }

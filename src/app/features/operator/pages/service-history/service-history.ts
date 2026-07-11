@@ -7,6 +7,7 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { HistoryStatsComponent } from './components/history-stats/history-stats';
 import { HistoryTableComponent } from './components/history-table/history-table';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-service-history',
@@ -17,7 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
     SidebarComponent,
     HistoryStatsComponent,
     HistoryTableComponent,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './service-history.html',
   styleUrl: './service-history.scss'
@@ -30,19 +32,19 @@ export class ServiceHistoryComponent {
   filtroEstado: string = '';
 
   // opciones de los selects
-  tiposServicio = [
-    { value: '', label: 'Todas' },
-    { value: 'basico', label: 'Básico' },
-    { value: 'premium', label: 'Premium' },
-    { value: 'completo', label: 'Completo' }
-  ];
+ tiposServicio = [
+  { value: '', label: 'SERVICE_HISTORY.TYPE_ALL' },
+  { value: 'básico', label: 'SERVICE_HISTORY.TYPE_BASIC' },
+  { value: 'premium', label: 'SERVICE_HISTORY.TYPE_PREMIUM' },
+  { value: 'completo', label: 'SERVICE_HISTORY.TYPE_FULL' }
+];
 
-  estados = [
-    { value: '', label: 'Todos' },
-    { value: 'finalizado', label: 'Finalizado' },
-    { value: 'cancelado', label: 'Cancelado' },
-    { value: 'reasignado', label: 'Reasignado' }
-  ];
+estados = [
+  { value: '', label: 'SERVICE_HISTORY.STATUS_ALL' },
+  { value: 'finalizado', label: 'SERVICE_HISTORY.STATUS_FINISHED' },
+  { value: 'cancelado', label: 'SERVICE_HISTORY.STATUS_CANCELED' },
+  { value: 'reasignado', label: 'SERVICE_HISTORY.STATUS_REASSIGNED' }
+];
 
   // estadísticas del mes
   serviciosRealizados: number = 5;

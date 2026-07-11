@@ -1,90 +1,157 @@
-// tarjeta contenedora
+// tarjeta que envuelve la tabla
 .table-card {
-  background-color: #ffffff;
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+ 
+  @media (max-width: 640px) {
+    border-radius: 12px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+  }
 }
-
-// tabla principal
+ 
 .history-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
+ 
+  @media (min-width: 641px) and (max-width: 1024px) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
-
-// encabezados
+ 
 thead tr {
-  background-color: #F9FBFB;
-  border-bottom: 1.5px solid #EDF2F2;
+  background-color: var(--bg-soft);
+  border-bottom: 1.5px solid var(--border);
 }
-
+ 
 th {
   padding: 14px 16px;
   text-align: left;
   font-size: 12px;
   font-weight: 600;
-  color: #67777E;
+  color: var(--text-secondary);
   letter-spacing: 0.5px;
 }
-
-// filas del cuerpo
+ 
 .table-row {
-  border-bottom: 1px solid #F0F4F4;
+  border-bottom: 1px solid var(--border);
   transition: background-color 0.2s ease;
-
+ 
   &:hover {
-    background-color: #F9FBFB;
+    background-color: var(--item-bg);
   }
-
+ 
   &:last-child {
     border-bottom: none;
   }
 }
-
+ 
 td {
   padding: 14px 16px;
-  color: #131C20;
+  color: var(--text);
   vertical-align: middle;
 }
-
-// columna ID en negrita
+ 
 .td-id {
   font-weight: 700;
-  color: #131C20;
+  color: var(--text);
 }
-
-// badge de estado final
+ 
 .estado-badge {
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
-
-  // finalizado — teal
+ 
   &.finalizado {
-    background-color: #E0EBEA;
-    color: #29AEA0;
+    background-color: var(--success-soft);
+    color: var(--success);
   }
-
-  // cancelado — rojo
+ 
   &.cancelado {
-    background-color: #FFEBEE;
-    color: #E53935;
+    background-color: var(--error-soft);
+    color: var(--error);
   }
-
-  // reasignado — gris
+ 
   &.reasignado {
-    background-color: #EDF2F2;
-    color: #67777E;
+    background-color: var(--neutral-badge-soft);
+    color: var(--neutral-badge);
   }
 }
-
-// fila vacía cuando no hay resultados
+ 
 .empty-row {
   text-align: center;
   padding: 48px;
-  color: #67777E;
+  color: var(--text-secondary);
   font-size: 14px;
 }
+ 
+// en celular la tabla se convierte en tarjetas
+@media (max-width: 640px) {
+  .history-table {
+    display: block;
+ 
+    thead {
+      display: none;
+    }
+ 
+    tbody {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+ 
+  .table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+ 
+    &:hover {
+      background-color: var(--card);
+    }
+  }
+ 
+  td {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 13px;
+ 
+    &::before {
+      content: attr(data-label);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+    }
+  }
+ 
+  .td-id {
+    grid-column: 1 / -1;
+  }
+ 
+  td:has(.estado-badge) {
+    grid-column: 1 / -1;
+  }
+ 
+  .empty-row {
+    padding: 32px 16px;
+  }
+}
+ 

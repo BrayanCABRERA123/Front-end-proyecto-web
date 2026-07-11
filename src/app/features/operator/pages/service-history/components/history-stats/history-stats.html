@@ -1,16 +1,11 @@
-<!-- Fila de 2 cards de estadísticas -->
 <div class="stats-row">
-
-  <!-- Card servicios realizados -->
   <div class="stat-card">
-    <p class="stat-label">Servicios realizados este mes</p>
+    <p class="stat-label">{{ 'HISTORY_STATS.DONE' | translate }}</p>
     <p class="stat-value">{{ serviciosRealizados }}</p>
   </div>
 
-  <!-- Card servicios cancelados -->
   <div class="stat-card">
-    <p class="stat-label">Servicios cancelados / reasignados</p>
+    <p class="stat-label">{{ 'HISTORY_STATS.CANCELED' | translate }}</p>
     <p class="stat-value">{{ serviciosCancelados }}</p>
   </div>
-
 </div>
