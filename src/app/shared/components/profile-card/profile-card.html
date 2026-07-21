@@ -1,6 +1,5 @@
 <div class="profile-wrapper">
 
-  <!-- IZQUIERDA -->
   <div class="profile-left">
 
     <h1 class="page-title">
@@ -8,24 +7,19 @@
     </h1>
 
     <div class="card profile-card">
-            <!-- avatar -->
-            <div class="avatar">
-              {{ usuario.iniciales }}
-            </div>
 
+      <div class="avatar">
+        {{ usuario.iniciales }}
+      </div>
 
-     
-      <!-- nombre -->
       <h2 class="user-name">
         {{ usuario.nombre }}
       </h2>
 
-      <!-- fecha -->
       <p class="subtitle">
         {{ 'PROFILE.MEMBER_SINCE' | translate:{date: usuario.miembroDesde} }}
       </p>
 
-      <!-- estado editar / guardado -->
       <div
         class="edit-status"
         [class.editing]="editando"
@@ -45,207 +39,226 @@
 
       </div>
 
-      <!-- nombre -->
-      <div class="form-group">
+      <form [formGroup]="form">
 
-        <label>
-          {{ 'PROFILE.NAME' | translate }}
-        </label>
+        <!-- nombre -->
+        <div class="form-group">
 
-        <div class="input-icon">
+          <label>
+            {{ 'PROFILE.NAME' | translate }}
+          </label>
 
-          <mat-icon>person</mat-icon>
+          <div class="input-icon" [class.input-error]="form.get('nombre')?.invalid && form.get('nombre')?.touched">
+            <mat-icon>person</mat-icon>
+            <input type="text" formControlName="nombre"/>
+          </div>
 
-          <input
-            type="text"
-            [value]="usuario.nombre"
-            [readonly]="!editando"/>
-
-        </div>
-
-      </div>
-
-      <!-- correo -->
-      <div class="form-group">
-
-        <label>
-          {{ 'PROFILE.EMAIL' | translate }}
-        </label>
-
-        <div class="input-icon">
-
-          <mat-icon>email</mat-icon>
-
-          <input
-            type="text"
-            [value]="usuario.email"
-            [readonly]="!editando"/>
+          @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
+            <p class="error-msg">
+              @if (form.get('nombre')?.hasError('required')) {
+                {{ 'PROFILE.VALIDATION.NAME_REQUIRED' | translate }}
+              } @else if (form.get('nombre')?.hasError('minlength')) {
+                {{ 'PROFILE.VALIDATION.NAME_MIN' | translate }}
+              } @else if (form.get('nombre')?.hasError('pattern')) {
+                {{ 'PROFILE.VALIDATION.NAME_INVALID' | translate }}
+              }
+            </p>
+          }
 
         </div>
 
-      </div>
+        <!-- correo -->
+        <div class="form-group">
 
-      <!-- telefono -->
-      <div class="form-group">
+          <label>
+            {{ 'PROFILE.EMAIL' | translate }}
+          </label>
 
-        <label>
-          {{ 'PROFILE.PHONE' | translate }}
-        </label>
+          <div class="input-icon" [class.input-error]="form.get('email')?.invalid && form.get('email')?.touched">
+            <mat-icon>email</mat-icon>
+            <input type="email" formControlName="email"/>
+          </div>
 
-        <div class="input-icon">
-
-          <mat-icon>phone</mat-icon>
-
-          <input
-            type="text"
-            [value]="usuario.telefono"
-            [readonly]="!editando"/>
-
-        </div>
-
-      </div>
-
-      <!-- direccion -->
-      <div class="form-group">
-
-        <label>
-          {{ 'PROFILE.ADDRESS' | translate }}
-        </label>
-
-        <div class="input-icon">
-
-          <mat-icon>home</mat-icon>
-
-          <input
-            type="text"
-            [value]="usuario.direccion"
-            [readonly]="!editando"/>
+          @if (form.get('email')?.invalid && form.get('email')?.touched) {
+            <p class="error-msg">
+              @if (form.get('email')?.hasError('required')) {
+                {{ 'PROFILE.VALIDATION.EMAIL_REQUIRED' | translate }}
+              } @else if (form.get('email')?.hasError('pattern')) {
+                {{ 'PROFILE.VALIDATION.EMAIL_INVALID' | translate }}
+              }
+            </p>
+          }
 
         </div>
 
-      </div>
+        <!-- telefono -->
+        <div class="form-group">
 
-      <!-- boton -->
-      <div class="edit-container">
+          <label>
+            {{ 'PROFILE.PHONE' | translate }}
+          </label>
 
-        <button
-          class="btn-edit"
-          [class.saved-mode]="!editando"
-          (click)="toggleEditar()">
+          <div class="phone-row" [class.input-error]="form.get('telefonoNumero')?.invalid && form.get('telefonoNumero')?.touched">
 
-          <mat-icon>
-            {{ editando ? 'save' : 'edit' }}
-          </mat-icon>
+            <div class="phone-select-wrapper">
 
-          <span>
-            {{
-              editando
-                ? ('PROFILE.SAVE' | translate)
-                : ('PROFILE.EDIT' | translate)
-            }}
-          </span>
+              <button
+                type="button"
+                class="phone-select-trigger"
+                [disabled]="!editando"
+                (click)="toggleTelefonoDropdown()">
 
-        </button>
+                <span class="fi fi-{{ paisSeleccionado.flagCode }} fis"></span>
+                <span class="phone-indicativo">{{ paisSeleccionado.indicativo }}</span>
+                <mat-icon class="chevron">expand_more</mat-icon>
 
-      </div>
+              </button>
+
+              @if (telefonoDropdownOpen) {
+                <div class="phone-dropdown">
+                  @for (pais of paises; track pais.code) {
+                    <div
+                      class="phone-option"
+                      [class.active]="pais.code === form.get('telefonoPais')?.value"
+                      (click)="seleccionarPais(pais.code)">
+                      <span class="fi fi-{{ pais.flagCode }} fis"></span>
+                      <span>{{ pais.indicativo }}</span>
+                    </div>
+                  }
+                </div>
+              }
+
+            </div>
+
+            <div class="input-icon phone-input">
+              <mat-icon>phone</mat-icon>
+              <input
+                type="text"
+                formControlName="telefonoNumero"
+                [maxlength]="paisSeleccionado.digitos"
+                inputmode="numeric"/>
+            </div>
+
+          </div>
+
+          @if (form.get('telefonoNumero')?.invalid && form.get('telefonoNumero')?.touched) {
+            <p class="error-msg">
+              @if (form.get('telefonoNumero')?.hasError('required')) {
+                {{ 'PROFILE.VALIDATION.PHONE_REQUIRED' | translate }}
+              } @else if (form.get('telefonoNumero')?.hasError('telefonoInvalido')) {
+                {{ 'PROFILE.VALIDATION.PHONE_INVALID' | translate }}
+              }
+            </p>
+          }
+
+        </div>
+
+        <!-- direccion -->
+        <div class="form-group">
+
+          <label>
+            {{ 'PROFILE.ADDRESS' | translate }}
+          </label>
+
+          <div class="input-icon" [class.input-error]="form.get('direccion')?.invalid && form.get('direccion')?.touched">
+            <mat-icon>home</mat-icon>
+            <input type="text" formControlName="direccion"/>
+          </div>
+
+          @if (form.get('direccion')?.invalid && form.get('direccion')?.touched) {
+            <p class="error-msg">
+              @if (form.get('direccion')?.hasError('required')) {
+                {{ 'PROFILE.VALIDATION.ADDRESS_REQUIRED' | translate }}
+              } @else if (form.get('direccion')?.hasError('minlength')) {
+                {{ 'PROFILE.VALIDATION.ADDRESS_MIN' | translate }}
+              }
+            </p>
+          }
+
+        </div>
+
+        <div class="edit-container">
+
+          <button
+            type="button"
+            class="btn-edit"
+            [class.saved-mode]="!editando"
+            [disabled]="editando && form.invalid"
+            (click)="toggleEditar()">
+
+            <mat-icon>
+              {{ editando ? 'save' : 'edit' }}
+            </mat-icon>
+
+            <span>
+              {{
+                editando
+                  ? ('PROFILE.SAVE' | translate)
+                  : ('PROFILE.EDIT' | translate)
+              }}
+            </span>
+
+          </button>
+
+        </div>
+
+      </form>
 
     </div>
 
   </div>
 
-  <!-- DERECHA -->
+  <!-- DERECHA (sin cambios) -->
   <div class="profile-right right-cards">
 
-    <!-- contraseña -->
     <div class="card modern-card">
 
       <div class="card-header">
-
         <div class="icon-box">
           <mat-icon>password</mat-icon>
         </div>
-
-        <h3>
-          {{ 'PROFILE.PASSWORD' | translate }}
-        </h3>
-
+        <h3>{{ 'PROFILE.PASSWORD' | translate }}</h3>
       </div>
 
       <div class="divider"></div>
 
       <div class="card-content">
-
         <div class="left">
-
           <div class="mini-icon">
             <mat-icon>vpn_key</mat-icon>
           </div>
-
           <div>
-
-            <p class="title">
-              {{ 'PROFILE.CHANGE_PASSWORD' | translate }}
-            </p>
-
-            <p class="subtitle">
-              {{ 'PROFILE.PASSWORD_DESC' | translate }}
-            </p>
-
+            <p class="title">{{ 'PROFILE.CHANGE_PASSWORD' | translate }}</p>
+            <p class="subtitle">{{ 'PROFILE.PASSWORD_DESC' | translate }}</p>
           </div>
-
         </div>
-
-        <button class="btn-primary">
-          {{ 'PROFILE.CHANGE' | translate }}
-        </button>
-
+        <button class="btn-primary">{{ 'PROFILE.CHANGE' | translate }}</button>
       </div>
 
     </div>
 
-    <!-- cuenta -->
     <div class="card modern-card danger">
 
       <div class="card-header">
-
         <div class="icon-box">
           <mat-icon>person</mat-icon>
         </div>
-
-        <h3>
-          {{ 'PROFILE.ACCOUNT' | translate }}
-        </h3>
-
+        <h3>{{ 'PROFILE.ACCOUNT' | translate }}</h3>
       </div>
 
       <div class="divider"></div>
 
       <div class="card-content">
-
         <div class="left">
-
           <div class="mini-icon red">
             <mat-icon>delete</mat-icon>
           </div>
-
           <div>
-
-            <p class="title">
-              {{ 'PROFILE.DELETE' | translate }}
-            </p>
-
-            <p class="subtitle">
-              {{ 'PROFILE.DELETE_DESC' | translate }}
-            </p>
-
+            <p class="title">{{ 'PROFILE.DELETE' | translate }}</p>
+            <p class="subtitle">{{ 'PROFILE.DELETE_DESC' | translate }}</p>
           </div>
-
         </div>
-
-        <button class="btn-danger">
-          {{ 'PROFILE.DELETE' | translate }}
-        </button>
-
+        <button class="btn-danger">{{ 'PROFILE.DELETE' | translate }}</button>
       </div>
 
     </div>

@@ -197,7 +197,19 @@
   "DELETE_DESC": "Excluir permanentemente sua conta e todos os seus dados",
 
   "SAVED_MODE": "Modo visualização",
-  "EDIT_MODE": "Modo edição"
+  "EDIT_MODE": "Modo edição",
+
+  "VALIDATION": {
+  "NAME_REQUIRED": "O nome é obrigatório",
+  "NAME_MIN": "O nome deve ter pelo menos 3 caracteres",
+  "NAME_INVALID": "O nome só pode conter letras",
+  "EMAIL_REQUIRED": "O e-mail é obrigatório",
+  "EMAIL_INVALID": "Digite um e-mail válido",
+  "PHONE_REQUIRED": "O telefone é obrigatório",
+  "PHONE_INVALID": "O número não é válido para o país selecionado",
+  "ADDRESS_REQUIRED": "O endereço é obrigatório",
+  "ADDRESS_MIN": "O endereço deve ter pelo menos 5 caracteres"
+}
 },
 
 "RATINGS": {

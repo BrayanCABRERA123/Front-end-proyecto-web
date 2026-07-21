@@ -49,6 +49,7 @@
 
 .profile-card {
   text-align: center;
+  position: relative;
 }
 
 .avatar {
@@ -75,7 +76,7 @@
 
 .subtitle {
   margin-top: 4px;
-  color: #8d8d8d;
+  color: var(--text-secondary);
   font-size: 13px;
 }
 
@@ -110,9 +111,14 @@
   }
 }
 
+form {
+  text-align: left;
+}
+
 .form-group {
   text-align: left;
   margin-bottom: 14px;
+  position: relative;
 
   label {
     display: block;
@@ -130,7 +136,7 @@
     width: 100%;
     height: 48px;
     border-radius: 14px;
-    border: 1px solid rgba(0, 0, 0, 0.10);
+    border: 1px solid var(--border);
     background: rgba(120, 120, 120, 0.06);
     color: var(--text);
     padding: 0 18px 0 48px;
@@ -139,12 +145,13 @@
     outline: none;
     box-sizing: border-box;
     transition: 0.25s ease;
+    font-family: inherit;
 
     &::placeholder {
-      color: #999;
+      color: var(--text-muted);
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       border-color: rgba(var(--primary-rgb), 0.20);
     }
 
@@ -154,16 +161,21 @@
       box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.12);
     }
 
-    &:not([readonly]) {
+    // modo edición activo
+    &:not(:disabled) {
       background: rgba(var(--primary-rgb), 0.10);
       border: 1px solid rgba(var(--primary-rgb), 0.35);
       box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.08);
     }
 
-    &[readonly] {
+    // modo solo lectura
+    &:disabled {
       background: transparent;
       border: 1px solid rgba(var(--primary-rgb), 0.18);
       box-shadow: inset 0 0 0 1px rgba(var(--primary-rgb), 0.04);
+      color: var(--text);
+      opacity: 1;
+      cursor: default;
     }
   }
 
@@ -177,6 +189,173 @@
     height: 18px;
     color: var(--primary);
   }
+
+  // campo con error de validación
+  &.input-error input {
+    border-color: var(--error);
+    background: var(--error-soft);
+    box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.10);
+
+    &:focus {
+      border-color: var(--error);
+      box-shadow: 0 0 0 4px rgba(229, 57, 53, 0.14);
+    }
+  }
+
+  &.input-error mat-icon {
+    color: var(--error);
+  }
+}
+
+.error-msg {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--error);
+}
+
+// fila del teléfono: selector de país + input de número
+.phone-row {
+  display: flex;
+  gap: 10px;
+
+  &.input-error {
+    .phone-select-trigger,
+    .input-icon input {
+      border-color: var(--error);
+      background: var(--error-soft);
+    }
+
+    .input-icon mat-icon {
+      color: var(--error);
+    }
+  }
+}
+
+.phone-select-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  width: 118px;
+}
+
+.phone-select-trigger {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(120, 120, 120, 0.06);
+  color: var(--text);
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: 0.25s ease;
+  box-sizing: border-box;
+
+  .fi {
+    width: 20px;
+    height: 14px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+    flex-shrink: 0;
+  }
+
+  .phone-indicativo {
+    flex: 1;
+    text-align: left;
+  }
+
+  .chevron {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: rgba(var(--primary-rgb), 0.20);
+  }
+
+  &:focus-visible {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.12);
+  }
+
+  // modo edición activo
+  &:not(:disabled) {
+    background: rgba(var(--primary-rgb), 0.10);
+    border: 1px solid rgba(var(--primary-rgb), 0.35);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.08);
+  }
+
+  // modo solo lectura
+  &:disabled {
+    background: transparent;
+    border: 1px solid rgba(var(--primary-rgb), 0.18);
+    color: var(--text);
+    opacity: 1;
+    cursor: default;
+
+    .chevron {
+      display: none;
+    }
+  }
+}
+
+.phone-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 150px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  padding: 6px;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.phone-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  transition: background-color 0.15s ease;
+
+  .fi {
+    width: 20px;
+    height: 14px;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: var(--item-bg);
+  }
+
+  &.active {
+    background: rgba(var(--primary-rgb), 0.14);
+    color: var(--primary);
+  }
+}
+
+.phone-input {
+  flex: 1;
+  min-width: 0;
 }
 
 .edit-container {
@@ -200,6 +379,7 @@
   background: var(--primary);
   color: #fff;
   box-shadow: 0 8px 16px rgba(var(--primary-rgb), 0.25);
+  font-family: inherit;
 
   mat-icon {
     font-size: 18px;
@@ -207,9 +387,15 @@
     height: 18px;
   }
 
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
     filter: brightness(1.05);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
   }
 
   &.saved-mode {
@@ -222,7 +408,7 @@
       color: var(--primary);
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: rgba(var(--primary-rgb), 0.06);
       transform: translateY(-1px);
       filter: none;
@@ -260,7 +446,7 @@
 
 .divider {
   height: 1px;
-  background: rgba(0, 0, 0, 0.08);
+  background: var(--border);
   margin: 14px 0;
 }
 
@@ -293,10 +479,10 @@
   }
 
   &.red {
-    background: rgba(244, 67, 54, 0.12);
+    background: var(--error-soft);
 
     mat-icon {
-      color: #ef5350;
+      color: var(--error);
     }
   }
 }
@@ -311,7 +497,7 @@
 .card-content .subtitle {
   margin: 3px 0 0;
   font-size: 12px;
-  color: #8f8f8f;
+  color: var(--text-secondary);
 }
 
 .btn-primary,
@@ -325,11 +511,12 @@
   font-weight: 700;
   transition: 0.25s ease;
   white-space: nowrap;
+  font-family: inherit;
 }
 
 .btn-primary {
   background: var(--primary);
-  color: white;
+  color: #fff;
 
   &:hover {
     transform: translateY(-2px);
@@ -338,8 +525,8 @@
 }
 
 .btn-danger {
-  background: #ef5350;
-  color: white;
+  background: var(--error);
+  color: #fff;
 
   &:hover {
     transform: translateY(-2px);
@@ -394,5 +581,18 @@
 
   .input-icon input {
     height: 48px;
+  }
+
+  .phone-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .phone-select-wrapper {
+    width: 100%;
+  }
+
+  .phone-dropdown {
+    width: 100%;
   }
 }

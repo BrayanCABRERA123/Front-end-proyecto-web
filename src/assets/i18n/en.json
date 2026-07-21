@@ -198,7 +198,19 @@
   "DELETE_DESC": "Permanently delete your account and all your data",
 
   "SAVED_MODE": "View mode",
-  "EDIT_MODE": "Edit mode"
+  "EDIT_MODE": "Edit mode",
+
+  "VALIDATION": {
+  "NAME_REQUIRED": "Name is required",
+  "NAME_MIN": "Name must be at least 3 characters",
+  "NAME_INVALID": "Name can only contain letters",
+  "EMAIL_REQUIRED": "Email is required",
+  "EMAIL_INVALID": "Please enter a valid email address",
+  "PHONE_REQUIRED": "Phone number is required",
+  "PHONE_INVALID": "The number is not valid for the selected country",
+  "ADDRESS_REQUIRED": "Address is required",
+  "ADDRESS_MIN": "Address must be at least 5 characters"
+}
 },
 
 "RATINGS": {
