@@ -120,27 +120,35 @@
     "MOTO": "Motorcycle"
   },
 
-  "NOTIFICATIONS": {
+"NOTIFICATIONS": {
   "TITLE": "Notifications",
-  "NEW": "{{count}} new",
-
-  "RESERVATION_CONFIRMED": "Reservation Confirmed",
-  "RESERVATION_DESC": "Your premium wash is scheduled for Feb 25 at 10:00 AM",
-
+  "CLIENT_SUBTITLE": "Here you can view notifications related to your bookings, promotions and system updates.",
+  "OPERATOR_SUBTITLE": "Here you can view important notifications related to your assigned services, status updates and system communications.",
+  "NEW_SERVICE": "New service assigned",
+  "NEW_SERVICE_DESC": "SV-2034 has been assigned to you at 3:00 PM.",
+  "STATUS_UPDATE": "Status update",
+  "STATUS_UPDATE_DESC": "The client confirmed the address for service SV-1783.",
+  "CANCELLATION": "Cancellation",
+  "CANCELLATION_DESC": "The client cancelled service SV-1690.",
+  "CLIENT_MESSAGE": "Client message",
+  "CLIENT_MESSAGE_DESC": "\"I'll be 5 minutes late, please wait for me.\"",
+  "SYSTEM": "System",
+  "SYSTEM_DESC": "Your profile has been successfully updated.",
+  "RESERVATION_CONFIRMED": "Reservation confirmed",
+  "RESERVATION_DESC": "Your premium wash is scheduled for February 25 at 10:00 AM.",
   "REMINDER": "Reminder",
-  "REMINDER_DESC": "Your wash is scheduled for tomorrow. All set?",
-
-  "PROMO": "Special Promotion!",
+  "REMINDER_DESC": "Your wash is scheduled for tomorrow. Everything is ready!",
+  "PROMO": "Special promotion!",
   "PROMO_DESC": "Get 20% off your next full wash. Use code: AQUA20",
-
-  "UPDATE": "Service Update",
-  "UPDATE_DESC": "We have expanded our coverage to new areas of the city",
-
+  "UPDATE": "Service update",
+  "UPDATE_DESC": "We have expanded our coverage to new areas of the city.",
   "TIME_2H": "2 hours ago",
   "TIME_1D": "1 day ago",
   "TIME_2D": "2 days ago",
-  "TIME_3D": "3 days ago"
-  
+  "TIME_3D": "3 days ago",
+  "READ": "Read",
+  "UNREAD": "Unread",
+  "BTN_DETAIL": "View detail"
 },
 
 "PAYMENTS": {
@@ -457,14 +465,6 @@
   }
 },
 
-"NOTIFICATIONS-OPER": {
-  "OPERATOR": {
-    "TITLE": "Notifications",
-    "READ": "Read",
-    "UNREAD": "Unread",
-    "BTN_DETAIL": "View detail"
-  }
-},
 
 "SERVICE_HISTORY": {
   "TITLE": "Service History",

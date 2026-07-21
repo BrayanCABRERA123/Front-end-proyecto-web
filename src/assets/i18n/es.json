@@ -118,26 +118,35 @@
     "MOTO": "Moto"
   },
 
-  "NOTIFICATIONS": {
+"NOTIFICATIONS": {
   "TITLE": "Notificaciones",
-  "NEW": "{{count}} nuevas",
-
-  "RESERVATION_CONFIRMED": "Reserva Confirmada",
-  "RESERVATION_DESC": "Tu lavado Premium está programado para el 25 Feb a las 10:00 AM",
-
+  "CLIENT_SUBTITLE": "Aquí puedes consultar las notificaciones relacionadas con tus reservas, promociones y novedades del sistema.",
+  "OPERATOR_SUBTITLE": "Aquí puedes ver las notificaciones importantes relacionadas con tus servicios asignados, cambios de estado y comunicaciones del sistema.",
+  "NEW_SERVICE": "Nuevo servicio asignado",
+  "NEW_SERVICE_DESC": "SV-2034 te ha sido asignado para las 3:00 p.m.",
+  "STATUS_UPDATE": "Actualización de estado",
+  "STATUS_UPDATE_DESC": "El cliente confirmó la dirección para el servicio SV-1783.",
+  "CANCELLATION": "Cancelación",
+  "CANCELLATION_DESC": "El cliente canceló el servicio SV-1690.",
+  "CLIENT_MESSAGE": "Mensaje del cliente",
+  "CLIENT_MESSAGE_DESC": "\"Voy a estar 5 minutos tarde, por favor espérame.\"",
+  "SYSTEM": "Sistema",
+  "SYSTEM_DESC": "Tu perfil ha sido actualizado correctamente.",
+  "RESERVATION_CONFIRMED": "Reserva confirmada",
+  "RESERVATION_DESC": "Tu lavado premium quedó programado para el 25 de febrero a las 10:00 a.m.",
   "REMINDER": "Recordatorio",
-  "REMINDER_DESC": "Tu lavado está programado para mañana. ¿Todo listo?",
-
-  "PROMO": "¡Promoción Especial!",
-  "PROMO_DESC": "Obtén 20% de descuento en tu próximo lavado completo. Usa código: AQUA20",
-
-  "UPDATE": "Actualización de Servicio",
-  "UPDATE_DESC": "Hemos ampliado nuestra cobertura a nuevas zonas de la ciudad",
-
+  "REMINDER_DESC": "Tu lavado está programado para mañana. ¡Todo listo!",
+  "PROMO": "¡Promoción especial!",
+  "PROMO_DESC": "Obtén un 20% de descuento en tu próximo lavado completo. Usa el código: AQUA20",
+  "UPDATE": "Actualización del servicio",
+  "UPDATE_DESC": "Hemos ampliado nuestra cobertura a nuevas zonas de la ciudad.",
   "TIME_2H": "Hace 2 horas",
   "TIME_1D": "Hace 1 día",
   "TIME_2D": "Hace 2 días",
-  "TIME_3D": "Hace 3 días"
+  "TIME_3D": "Hace 3 días",
+  "READ": "Leído",
+  "UNREAD": "No leído",
+  "BTN_DETAIL": "Ver detalle"
 },
 
 "PAYMENTS": {
@@ -453,14 +462,6 @@
   }
 },
 
-"NOTIFICATIONS-OPER": {
-  "OPERATOR": {
-    "TITLE": "Notificaciones",
-    "READ": "Leído",
-    "UNREAD": "No leído",
-    "BTN_DETAIL": "Ver detalle"
-  }
-},
 
 "SERVICE_HISTORY": {
   "TITLE": "Historial de Servicios",

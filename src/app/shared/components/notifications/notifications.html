@@ -1,0 +1,110 @@
+<div class="content">
+
+    <!-- HEADER -->
+<div class="header">
+
+    <h1>{{ 'NOTIFICATIONS.TITLE' | translate }}</h1>
+
+    <p>
+        {{
+        rol === 'CLIENTE'
+        ? ('NOTIFICATIONS.CLIENT_SUBTITLE' | translate)
+        : ('NOTIFICATIONS.OPERATOR_SUBTITLE' | translate)
+        }}
+    </p>
+
+</div>
+
+    <!-- FILTROS -->
+    <div class="filters-card">
+        <p class="filters-title">
+            {{ 'ASSIGNED_SERVICES.FILTERS.TITLE' | translate }}
+        </p>
+
+        <div class="filters-row">
+
+            <div class="filter-group">
+                <label class="filter-label">
+                    {{ 'ASSIGNED_SERVICES.FILTERS.BY_DATE' | translate }}
+                </label>
+
+                <div class="date-input-wrapper">
+                    <input type="date" class="filter-input" [(ngModel)]="filtroFecha">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">
+                    {{ 'ASSIGNED_SERVICES.FILTERS.BY_SERVICE' | translate }}
+                </label>
+
+                <div class="select-wrapper">
+                    <input type="text" class="filter-select"
+                        [placeholder]="'ASSIGNED_SERVICES.FILTERS.SEARCH_PLACEHOLDER' | translate"
+                        [(ngModel)]="filtroVehiculo">
+
+                    <mat-icon class="select-icon">search</mat-icon>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+
+                <button class="btn-reset">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+
+                <button class="btn-filter">
+                    <mat-icon>search</mat-icon>
+                    {{ 'ASSIGNED_SERVICES.FILTERS.FILTER_BTN' | translate }}
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- LISTA -->
+    <div class="list">
+
+        <div class="item" *ngFor="let n of notifications">
+
+            <div class="left">
+
+                <mat-icon>{{ n.icon }}</mat-icon>
+
+                <div>
+
+                    <!-- AQUÍ ESTÁ LA CORRECCIÓN -->
+                    <p class="title">{{ n.title | translate }}</p>
+
+                    <p class="desc">{{ n.desc | translate }}</p>
+
+                    <span class="badge" [ngClass]="{ read: n.read }">
+                        {{
+                        n.read
+                        ? ('NOTIFICATIONS.READ' | translate)
+                        : ('NOTIFICATIONS.UNREAD' | translate)
+                        }}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- DERECHA -->
+            <div class="right">
+                <span class="date">{{ n.date | translate }}</span>
+            
+                <button class="btn-detail">
+                    <mat-icon>visibility</mat-icon>
+                    {{ 'NOTIFICATIONS.BTN_DETAIL' | translate }}
+                </button>
+            
+                <mat-icon class="delete">delete</mat-icon>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

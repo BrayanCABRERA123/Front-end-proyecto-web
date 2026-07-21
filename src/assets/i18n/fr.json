@@ -119,26 +119,35 @@
     "MOTO": "Moto"
   },
 
-  "NOTIFICATIONS": {
+"NOTIFICATIONS": {
   "TITLE": "Notifications",
-  "NEW": "{{count}} nouvelles",
-
+  "CLIENT_SUBTITLE": "Vous pouvez consulter ici les notifications concernant vos réservations, promotions et nouveautés du système.",
+  "OPERATOR_SUBTITLE": "Vous pouvez consulter ici les notifications importantes concernant vos services attribués, les changements de statut et les communications du système.",
+  "NEW_SERVICE": "Nouveau service attribué",
+  "NEW_SERVICE_DESC": "Le service SV-2034 vous a été attribué à 15h00.",
+  "STATUS_UPDATE": "Mise à jour du statut",
+  "STATUS_UPDATE_DESC": "Le client a confirmé l'adresse du service SV-1783.",
+  "CANCELLATION": "Annulation",
+  "CANCELLATION_DESC": "Le client a annulé le service SV-1690.",
+  "CLIENT_MESSAGE": "Message du client",
+  "CLIENT_MESSAGE_DESC": "\"Je serai en retard de 5 minutes, merci de m'attendre.\"",
+  "SYSTEM": "Système",
+  "SYSTEM_DESC": "Votre profil a été mis à jour avec succès.",
   "RESERVATION_CONFIRMED": "Réservation confirmée",
-  "RESERVATION_DESC": "Votre lavage premium est prévu le 25 février à 10h00",
-
+  "RESERVATION_DESC": "Votre lavage premium est prévu le 25 février à 10h00.",
   "REMINDER": "Rappel",
-  "REMINDER_DESC": "Votre lavage est prévu pour demain. Tout est prêt ?",
-
+  "REMINDER_DESC": "Votre lavage est prévu pour demain. Tout est prêt !",
   "PROMO": "Promotion spéciale !",
-  "PROMO_DESC": "Obtenez 20% de réduction sur votre prochain lavage complet. Code: AQUA20",
-
+  "PROMO_DESC": "Bénéficiez de 20 % de réduction sur votre prochain lavage complet. Utilisez le code : AQUA20",
   "UPDATE": "Mise à jour du service",
-  "UPDATE_DESC": "Nous avons étendu notre couverture à de nouvelles zones de la ville",
-
+  "UPDATE_DESC": "Nous avons étendu notre couverture à de nouveaux quartiers de la ville.",
   "TIME_2H": "Il y a 2 heures",
   "TIME_1D": "Il y a 1 jour",
   "TIME_2D": "Il y a 2 jours",
-  "TIME_3D": "Il y a 3 jours"
+  "TIME_3D": "Il y a 3 jours",
+  "READ": "Lu",
+  "UNREAD": "Non lu",
+  "BTN_DETAIL": "Voir les détails"
 },
 
 "PAYMENTS": {
@@ -456,14 +465,6 @@
   }
 },
 
-"NOTIFICATIONS-OPER": {
-  "OPERATOR": {
-    "TITLE": "Notifications",
-    "READ": "Lu",
-    "UNREAD": "Non lu",
-    "BTN_DETAIL": "Voir le détail"
-  }
-},
 
 "SERVICE_HISTORY": {
   "TITLE": "Historique des services",

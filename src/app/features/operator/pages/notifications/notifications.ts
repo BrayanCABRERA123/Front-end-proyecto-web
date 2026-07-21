@@ -4,67 +4,60 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { NotificationsComponent } from '../../../../shared/components/notifications/notifications';
 
 @Component({
-  selector: 'app-notifications',
+  selector: 'app-operator-notifications',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, MatIconModule, FormsModule, TranslateModule],
+  imports: [
+    CommonModule,
+    SidebarComponent,
+    MatIconModule,
+    FormsModule,
+    TranslateModule,
+    NotificationsComponent
+  ],
   templateUrl: './notifications.html',
   styleUrls: ['./notifications.scss']
 })
-export class notificationsComponent {
-
-  filtroFecha: string = '';
-  filtroTipoServicio: string = '';
-  filtroVehiculo: string = '';
-
-  tiposServicio = [
-    { value: '', label: 'ASSIGNED_SERVICES.FILTERS.ALL' },
-    { value: 'premium', label: 'SERVICE.PREMIUM' },
-    { value: 'basico', label: 'SERVICE.BASIC' }
-  ];
+export class OperatorNotificationsComponent {
 
   notifications = [
     {
       icon: 'event',
-      title: 'Nuevo servicio asignado',
-      desc: 'SV-2034 te ha sido asignado para las 3:00 p.m.',
+      title: 'NOTIFICATIONS.NEW_SERVICE',
+      desc: 'NOTIFICATIONS.NEW_SERVICE_DESC',
       date: '12/03/2025 - 09:14',
       read: false
     },
     {
       icon: 'notifications',
-      title: 'Actualización de estado',
-      desc: 'El client confirmó la dirección para el servicio SV-1783.',
+      title: 'NOTIFICATIONS.STATUS_UPDATE',
+      desc: 'NOTIFICATIONS.STATUS_UPDATE_DESC',
       date: '11/03/2025 - 14:30',
       read: true
     },
     {
       icon: 'warning',
-      title: 'Cancelación',
-      desc: 'El client ha cancelado el servicio SV-1690.',
+      title: 'NOTIFICATIONS.CANCELLATION',
+      desc: 'NOTIFICATIONS.CANCELLATION_DESC',
       date: '10/03/2025 - 10:00',
       read: false
     },
     {
       icon: 'chat',
-      title: 'Mensaje del client',
-      desc: '"Voy a estar 5 minutos tarde, por favor esperarme."',
+      title: 'NOTIFICATIONS.CLIENT_MESSAGE',
+      desc: 'NOTIFICATIONS.CLIENT_MESSAGE_DESC',
       date: '04/03/2025 - 16:45',
       read: true
     },
     {
       icon: 'desktop_windows',
-      title: 'Sistema',
-      desc: 'Tu perfil ha sido actualizado correctamente.',
+      title: 'NOTIFICATIONS.SYSTEM',
+      desc: 'NOTIFICATIONS.SYSTEM_DESC',
       date: '08/03/2025 - 08:00',
       read: true
     }
   ];
 
-  resetFiltros() {
-    this.filtroFecha = '';
-    this.filtroTipoServicio = '';
-    this.filtroVehiculo = '';
-  }
 }

@@ -5,7 +5,7 @@ import { TasksComponent } from './pages/tasks/tasks';
 import { HomeComponent } from './pages/home/home';
 import { ProfileComponent } from './pages/profile/profile';
 import { AssignedServicesComponent } from './pages/assigned-services/assigned-services';
-import { notificationsComponent } from '../operator/pages/notifications/notifications';
+import { OperatorNotificationsComponent } from '../operator/pages/notifications/notifications';
 import { ServiceHistoryComponent } from './pages/service-history/service-history';
 import { QualificationsComponent } from './pages/qualifications/qualifications';
 import { ConfigurationOperatorComponent } from './pages/configuration-operator/configuration-operator';
@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'tasks', component: TasksComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'assigned-services', component: AssignedServicesComponent },
-  { path: 'notifications', component: notificationsComponent },
+  { path: 'notifications', component: OperatorNotificationsComponent },
   { path: 'service-history', component: ServiceHistoryComponent },
   { path: 'qualifications', component: QualificationsComponent },
   { path: 'settings', component: ConfigurationOperatorComponent }

@@ -5,7 +5,7 @@ import { HomeComponent } from './pages/home/home';
 import { ProfileComponent } from './pages/profile/profile';
 import { RatingModalComponent } from '../../shared/dialogs/rating-modal/rating-modal';
 import { ReserveComponent } from './pages/reserve/reserve';
-import { notificationsComponent } from './pages/notifications/notifications';
+import { ClientNotificationsComponent } from './pages/notifications/notifications';
 import { HistoryComponent } from './pages/history/history';
 import { ConfigurationComponent } from './pages/configuration/configuration';
 
@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'ratings', component: RatingModalComponent},
   { path: 'reserve', component: ReserveComponent },
-  { path: 'notifications', component: notificationsComponent},
+  { path: 'notifications', component: ClientNotificationsComponent},
   { path: 'history', component: HistoryComponent },
   { path: 'configuration', component: ConfigurationComponent}
 
