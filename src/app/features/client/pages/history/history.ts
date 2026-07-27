@@ -44,10 +44,10 @@ export class HistoryComponent {
   servicios = [
   {
     id: 1,
-    titulo: 'PREMIUM_CAR',
+    titulo: 'PREMIUM',
     fecha: '28/03/2026',
     direccion: 'Calle Falsa 123, Springfield',
-    tipoServicio: 'FULL_WASH',
+    tipoServicio: 'FULL',
     serviciosExtra: ['WAX', 'VACUUM'],
     asignacionTipo: 'MANUAL',
     operador: 'Juan',
@@ -57,10 +57,10 @@ export class HistoryComponent {
   },
   {
     id: 2,
-    titulo: 'BASIC_MOTO',
+    titulo: 'BASIC',
     fecha: '16/12/2025',
     direccion: 'Calle 42 #13-33',
-    tipoServicio: 'FULL_WASH',
+    tipoServicio: 'FULL',
     serviciosExtra: ['WAX'],
     asignacionTipo: 'AUTO',
     operador: '',
