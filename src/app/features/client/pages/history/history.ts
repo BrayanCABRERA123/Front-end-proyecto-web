@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { HistoryCardComponent } from './components/history-card/history-card';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HistoryViewModel } from './history.viewmodel';
 
 @Component({
   selector: 'app-history',
@@ -17,12 +18,20 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     MatIconModule,
     TranslateModule
   ],
+  providers: [HistoryViewModel],
   templateUrl: './history.html',
   styleUrl: './history.scss'
 })
-export class HistoryComponent {
+export class HistoryComponent implements OnInit {
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    public vm: HistoryViewModel
+  ) {}
+
+  ngOnInit(): void {
+    this.vm.cargar();
+  }
 
   // filtro activo
   filtroActivo: string = 'todos';
@@ -40,44 +49,14 @@ export class HistoryComponent {
     this.mostrarModalCalificacion = true;
   }
 
-  // SERVICIOS 
-  servicios = [
-  {
-    id: 1,
-    titulo: 'PREMIUM_CAR',
-    fecha: '28/03/2026',
-    direccion: 'Calle Falsa 123, Springfield',
-    tipoServicio: 'FULL_WASH',
-    serviciosExtra: ['WAX', 'VACUUM'],
-    asignacionTipo: 'MANUAL',
-    operador: 'Juan',
-    estado: 'COMPLETED',
-    precio: 35,
-    pagado: true
-  },
-  {
-    id: 2,
-    titulo: 'BASIC_MOTO',
-    fecha: '16/12/2025',
-    direccion: 'Calle 42 #13-33',
-    tipoServicio: 'FULL_WASH',
-    serviciosExtra: ['WAX'],
-    asignacionTipo: 'AUTO',
-    operador: '',
-    estado: 'PENDING',
-    precio: 35,
-    pagado: false
-  }
-];
-
   // TRADUCIR EXTRAS
   getExtrasTraducidos(extras: string[]): string[] {
     return extras.map(e => this.translate.instant('EXTRA.' + e));
   }
 
-  // FILTRO COMPLETO
+  // FILTRO COMPLETO — combina los datos del viewmodel con el estado de filtros de la vista
   get serviciosFiltrados() {
-    return this.servicios.filter(servicio => {
+    return this.vm.servicios().filter(servicio => {
 
       // filtro por estado
       if (this.filtroActivo === 'pagados' && !servicio.pagado) return false;

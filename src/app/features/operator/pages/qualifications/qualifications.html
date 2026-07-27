@@ -12,10 +12,10 @@
     </div>
 
     <app-qualification-stats
-      [calificacionPromedio]="calificacionPromedio"
-      [nivelSatisfaccion]="nivelSatisfaccion"
-      [porcentajeSatisfaccion]="porcentajeSatisfaccion"
-      [totalCalificaciones]="totalCalificaciones">
+      [calificacionPromedio]="vm.calificacionPromedio()"
+      [nivelSatisfaccion]="vm.nivelSatisfaccion()"
+      [porcentajeSatisfaccion]="vm.porcentajeSatisfaccion()"
+      [totalCalificaciones]="vm.totalCalificaciones()">
     </app-qualification-stats>
 
     <div class="filters-card">

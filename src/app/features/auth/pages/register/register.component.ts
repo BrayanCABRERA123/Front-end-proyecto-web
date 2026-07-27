@@ -21,6 +21,7 @@ import { Router, RouterModule } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
+import { Auth } from '../../../../core/services/auth';
 
 @Component({
   selector: 'app-register',
@@ -50,7 +51,8 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: Auth
   ) {
 
     this.registerForm = this.fb.group({
@@ -203,14 +205,22 @@ export class RegisterComponent {
 
     this.cargando = true;
 
-    setTimeout(() => {
-
-      this.cargando = false;
-
-      // redirigir al login después del registro
-      this.router.navigate(['/auth/login']);
-
-    }, 1500);
+    this.authService.registrar({
+      nombre: this.registerForm.value.nombre,
+      correo: this.registerForm.value.correo,
+      telefono: this.registerForm.value.telefono,
+      contrasena: this.registerForm.value.contrasena
+    }).subscribe({
+      next: () => {
+        this.cargando = false;
+        // redirigir al login después del registro
+        this.router.navigate(['/auth/login']);
+      },
+      error: () => {
+        this.cargando = false;
+        this.loginError = true;
+      }
+    });
 
   }
 

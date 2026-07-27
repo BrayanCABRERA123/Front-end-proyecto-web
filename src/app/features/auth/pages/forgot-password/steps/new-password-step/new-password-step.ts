@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
 })
 export class NewPasswordStepComponent {
 
-  @Output() passwordUpdated = new EventEmitter<void>();
+  @Output() passwordUpdated = new EventEmitter<string>();
 
   newPassword: string = '';
   confirmPassword: string = '';
@@ -41,7 +41,7 @@ export class NewPasswordStepComponent {
 
   onSubmit(): void {
     if (this.isPasswordValid && this.passwordsMatch) {
-      this.passwordUpdated.emit();
+      this.passwordUpdated.emit(this.newPassword);
     }
   }
 }

@@ -10,7 +10,7 @@
     </div>
 
     <div class="stats-badges">
-      @for (stat of stats; track stat.label) {
+      @for (stat of vm.stats(); track stat.label) {
         <div class="stat-badge" [class]="stat.color">
           <span class="stat-value">{{ stat.valor }}</span>
           <span class="stat-label">{{ stat.label | translate }}</span>
@@ -70,11 +70,11 @@
 
     <app-service-table
       [servicios]="serviciosFiltrados"
-      [servicioSeleccionado]="servicioSeleccionado"
+      [servicioSeleccionado]="vm.servicioSeleccionado()"
       (serviceSelected)="onServiceSelected($event)">
     </app-service-table>
 
-    @if (servicioSeleccionado) {
+    @if (vm.servicioSeleccionado(); as servicioSeleccionado) {
       <app-service-detail [servicio]="servicioSeleccionado">
       </app-service-detail>
     }

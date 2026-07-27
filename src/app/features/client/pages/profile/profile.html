@@ -2,5 +2,7 @@
 <div class="profile-container">
   <app-sidebar rol="CLIENTE"></app-sidebar>
   <!-- componente compartido de perfil -->
-  <app-profile-card [usuario]="usuario"></app-profile-card>
+  @if (vm.usuario(); as usuario) {
+    <app-profile-card [usuario]="usuario"></app-profile-card>
+  }
 </div>

@@ -11,8 +11,8 @@
     </div>
 
     <app-history-stats
-      [serviciosRealizados]="serviciosRealizados"
-      [serviciosCancelados]="serviciosCancelados">
+      [serviciosRealizados]="vm.serviciosRealizados()"
+      [serviciosCancelados]="vm.serviciosCancelados()">
     </app-history-stats>
 
     <div class="filters-card">

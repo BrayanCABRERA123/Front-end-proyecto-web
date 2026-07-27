@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
 export class VerificationStepComponent {
 
   @Input() email: string = '';
-  @Output() codeVerified = new EventEmitter<void>();
+  @Output() codeVerified = new EventEmitter<string>();
 
   codeDigits: string[] = ['', '', '', '', '', ''];
 
@@ -58,7 +58,7 @@ export class VerificationStepComponent {
   onVerify(): void {
     const fullCode = this.codeDigits.join('');
     if (fullCode.length === 6) {
-      this.codeVerified.emit();
+      this.codeVerified.emit(fullCode);
     }
   }
 

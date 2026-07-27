@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { Auth } from '../../../../core/services/auth';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: Auth
   ) {
 
     this.loginForm = this.fb.group({
@@ -91,36 +93,18 @@ export class LoginComponent {
 
     if (this.loginForm.invalid) return;
 
-    const correo =
-      this.loginForm.value.correo;
+    const correo = this.loginForm.value.correo;
+    const contrasena = this.loginForm.value.contrasena;
 
-    const contrasena =
-      this.loginForm.value.contrasena;
-
-
-    // simulación backend temporal
-    const usuarioDemo = {
-
-      correo: 'admin@gmail.com',
-      contrasena: 'Admin123!'
-
-    };
-
-
-    if (
-      correo === usuarioDemo.correo &&
-      contrasena === usuarioDemo.contrasena
-    ) {
-
-      this.loginError = false;
-
-      this.router.navigate(['/client']);
-
-    } else {
-
-      this.loginError = true;
-
-    }
+    this.authService.login({ correo, contrasena }).subscribe({
+      next: () => {
+        this.loginError = false;
+        this.router.navigate(['/client']);
+      },
+      error: () => {
+        this.loginError = true;
+      }
+    });
 
   }
 

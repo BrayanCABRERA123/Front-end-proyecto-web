@@ -7,10 +7,10 @@
     <div class="top-row">
       <div class="welcome-text">
         <h1 class="page-title">
-          {{ 'OPERATOR_HOME.TITLE' | translate: { name: nombreOperator } }}
+          {{ 'OPERATOR_HOME.TITLE' | translate: { name: vm.nombreOperator() } }}
         </h1>
         <p class="page-subtitle">
-          {{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: pendientes } }}
+          {{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: vm.progreso().pendientes } }}
         </p>
       </div>
       <button class="btn-ver-servicios">
@@ -20,7 +20,7 @@
     </div>
 
     <div class="stats-grid">
-      @for (stat of stats; track stat.label) {
+      @for (stat of vm.stats(); track stat.label) {
         <app-stats-card [stat]="stat"></app-stats-card>
       }
     </div>
@@ -37,12 +37,12 @@
           </span>
         </div>
         <p class="progress-numbers">
-          {{ serviciosCompletados }} / {{ totalServicios }}
+          {{ vm.progreso().completados }} / {{ vm.progreso().total }}
         </p>
         <div class="progress-bar">
           <div
             class="progress-fill"
-            [style.width.%]="porcentajeProgreso">
+            [style.width.%]="vm.porcentajeProgreso()">
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
         <div class="counter-icon">
           <mat-icon>history</mat-icon>
         </div>
-        <p class="counter-value">{{ enProgreso }}</p>
+        <p class="counter-value">{{ vm.progreso().enProgreso }}</p>
         <p class="counter-label">{{ 'OPERATOR_HOME.IN_PROGRESS' | translate }}</p>
       </div>
 
@@ -59,7 +59,7 @@
         <div class="counter-icon">
           <mat-icon>calendar_month</mat-icon>
         </div>
-        <p class="counter-value">{{ pendientes }}</p>
+        <p class="counter-value">{{ vm.progreso().pendientes }}</p>
         <p class="counter-label">{{ 'OPERATOR_HOME.PENDING' | translate }}</p>
       </div>
 
@@ -74,7 +74,7 @@
       </div>
 
       <div class="reservas-list">
-        @for (reserva of reservasPendientes; track reserva.id) {
+        @for (reserva of vm.reservasPendientes(); track reserva.id) {
           <app-pending-service-card
             [reserva]="reserva">
           </app-pending-service-card>
