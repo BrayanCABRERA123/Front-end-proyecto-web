@@ -1,0 +1,41 @@
+<div class="dialog-container">
+
+  <div class="detail-header">
+
+    <mat-icon class="icon-bubble" [ngClass]="claseTipo(notification.type)">
+      {{ notification.icon }}
+    </mat-icon>
+
+    <div>
+      <span class="type-badge" [ngClass]="claseTipo(notification.type)">
+        {{ labelTipo(notification.type) | translate }}
+      </span>
+
+      <h2 class="dialog-title">{{ notification.title | translate }}</h2>
+    </div>
+
+  </div>
+
+  <p class="dialog-text">{{ notification.desc | translate }}</p>
+
+  <div class="detail-footer">
+
+    <div class="info-item">
+      <mat-icon>event</mat-icon>
+      <span>{{ notification.date | date: 'dd/MM/yyyy' }} - {{ notification.time }}</span>
+    </div>
+
+    <div class="info-item">
+      <mat-icon>{{ notification.read ? 'mark_email_read' : 'mark_email_unread' }}</mat-icon>
+      <span>{{ (notification.read ? 'NOTIFICATIONS.READ' : 'NOTIFICATIONS.UNREAD') | translate }}</span>
+    </div>
+
+  </div>
+
+  <div class="dialog-actions">
+    <button class="btn-confirm" (click)="cerrar()">
+      {{ 'COMMON.CLOSE' | translate }}
+    </button>
+  </div>
+
+</div>
