@@ -1,110 +1,171 @@
 <div class="content">
 
-    <!-- HEADER -->
-<div class="header">
+  <!-- HEADER -->
+  <div class="header">
 
-    <h1>{{ 'NOTIFICATIONS.TITLE' | translate }}</h1>
+    <div class="header-top">
+      <div class="header-title">
+        <h1>{{ 'NOTIFICATIONS.CENTER_TITLE' | translate }}</h1>
+
+        @if (totalNoLeidas > 0) {
+          <span class="unread-pill">
+            {{ totalNoLeidas }} {{ 'NOTIFICATIONS.UNREAD_PLURAL' | translate }}
+          </span>
+        }
+      </div>
+
+      <button class="btn-mark-all" (click)="marcarTodoComoLeido()">
+        <mat-icon>done_all</mat-icon>
+        {{ 'NOTIFICATIONS.MARK_ALL_READ' | translate }}
+      </button>
+    </div>
 
     <p>
-        {{
+      {{
         rol === 'CLIENTE'
         ? ('NOTIFICATIONS.CLIENT_SUBTITLE' | translate)
         : ('NOTIFICATIONS.OPERATOR_SUBTITLE' | translate)
-        }}
+      }}
     </p>
 
-</div>
+  </div>
 
-    <!-- FILTROS -->
-    <div class="filters-card">
-        <p class="filters-title">
-            {{ 'ASSIGNED_SERVICES.FILTERS.TITLE' | translate }}
-        </p>
+  <!-- PESTAÑAS DE CATEGORÍA -->
+  <div class="tabs">
+    @for (tab of tabs; track tab.key) {
+      <button
+        type="button"
+        class="tab"
+        [class.active]="tabActiva === tab.key"
+        (click)="cambiarTab(tab.key)">
 
-        <div class="filters-row">
+        <mat-icon>{{ tab.icon }}</mat-icon>
+        {{ tab.label | translate }}
 
-            <div class="filter-group">
-                <label class="filter-label">
-                    {{ 'ASSIGNED_SERVICES.FILTERS.BY_DATE' | translate }}
-                </label>
+        @if (contarNoLeidas(tab.key) > 0) {
+          <span class="tab-count">{{ contarNoLeidas(tab.key) }}</span>
+        }
+      </button>
+    }
+  </div>
 
-                <div class="date-input-wrapper">
-                    <input type="date" class="filter-input" [(ngModel)]="filtroFecha">
-                </div>
-            </div>
+  <!-- FILTROS -->
+  <div class="filters-card">
+    <p class="filters-title">
+      {{ 'ASSIGNED_SERVICES.FILTERS.TITLE' | translate }}
+    </p>
 
-            <div class="filter-group">
-                <label class="filter-label">
-                    {{ 'ASSIGNED_SERVICES.FILTERS.BY_SERVICE' | translate }}
-                </label>
+    <div class="filters-row">
 
-                <div class="select-wrapper">
-                    <input type="text" class="filter-select"
-                        [placeholder]="'ASSIGNED_SERVICES.FILTERS.SEARCH_PLACEHOLDER' | translate"
-                        [(ngModel)]="filtroVehiculo">
+      <div class="filter-group">
+        <label class="filter-label">
+          {{ 'NOTIFICATIONS.FILTERS.READ_STATE' | translate }}
+        </label>
 
-                    <mat-icon class="select-icon">search</mat-icon>
-                </div>
-            </div>
-
-            <div class="filter-actions">
-
-                <button class="btn-reset">
-                    <mat-icon>refresh</mat-icon>
-                </button>
-
-                <button class="btn-filter">
-                    <mat-icon>search</mat-icon>
-                    {{ 'ASSIGNED_SERVICES.FILTERS.FILTER_BTN' | translate }}
-                </button>
-
-            </div>
-
+        <div class="select-wrapper">
+          <select class="filter-select" [(ngModel)]="estadoInput">
+            <option value="todas">{{ 'ASSIGNED_SERVICES.FILTERS.ALL' | translate }}</option>
+            <option value="leidas">{{ 'NOTIFICATIONS.READ' | translate }}</option>
+            <option value="no-leidas">{{ 'NOTIFICATIONS.UNREAD' | translate }}</option>
+          </select>
         </div>
-    </div>
+      </div>
 
-    <!-- LISTA -->
-    <div class="list">
+      <div class="filter-group">
+        <label class="filter-label">
+          {{ 'ASSIGNED_SERVICES.FILTERS.BY_DATE' | translate }}
+        </label>
 
-        <div class="item" *ngFor="let n of notifications">
-
-            <div class="left">
-
-                <mat-icon>{{ n.icon }}</mat-icon>
-
-                <div>
-
-                    <!-- AQUÍ ESTÁ LA CORRECCIÓN -->
-                    <p class="title">{{ n.title | translate }}</p>
-
-                    <p class="desc">{{ n.desc | translate }}</p>
-
-                    <span class="badge" [ngClass]="{ read: n.read }">
-                        {{
-                        n.read
-                        ? ('NOTIFICATIONS.READ' | translate)
-                        : ('NOTIFICATIONS.UNREAD' | translate)
-                        }}
-                    </span>
-
-                </div>
-
-            </div>
-
-            <!-- DERECHA -->
-            <div class="right">
-                <span class="date">{{ n.date | translate }}</span>
-            
-                <button class="btn-detail">
-                    <mat-icon>visibility</mat-icon>
-                    {{ 'NOTIFICATIONS.BTN_DETAIL' | translate }}
-                </button>
-            
-                <mat-icon class="delete">delete</mat-icon>
-            </div>
-
+        <div class="date-range">
+          <input type="date" class="filter-input" [(ngModel)]="fechaDesdeInput">
+          <span class="date-sep">-</span>
+          <input type="date" class="filter-input" [(ngModel)]="fechaHastaInput">
         </div>
+      </div>
+
+      <div class="filter-actions">
+
+        <button class="btn-reset" (click)="resetFiltros()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+
+        <button class="btn-filter" (click)="aplicarFiltros()">
+          <mat-icon>search</mat-icon>
+          {{ 'ASSIGNED_SERVICES.FILTERS.FILTER_BTN' | translate }}
+        </button>
+
+      </div>
 
     </div>
+  </div>
+
+  <!-- LISTA -->
+  <div class="list">
+
+    @for (n of notificacionesFiltradas; track n.id) {
+
+      <div class="item" [class.unread]="!n.read">
+
+        <div class="left">
+
+          <mat-icon class="icon-bubble" [ngClass]="claseTipo(n.type)">{{ n.icon }}</mat-icon>
+
+          <div class="texts">
+
+            <div class="title-row">
+              @if (!n.read) {
+                <span class="dot"></span>
+              }
+
+              <p class="title">{{ n.title | translate }}</p>
+
+              <span class="type-badge" [ngClass]="claseTipo(n.type)">
+                {{ labelTipo(n.type) | translate }}
+              </span>
+            </div>
+
+            <p class="desc">{{ n.desc | translate }}</p>
+
+          </div>
+
+        </div>
+
+        <div class="right">
+
+          <span class="date">{{ n.date | date: 'dd/MM/yyyy' }} - {{ n.time }}</span>
+
+          @if (n.read) {
+            <button class="btn-toggle" (click)="marcarNoLeido(n)">
+              <mat-icon>mail</mat-icon>
+              {{ 'NOTIFICATIONS.MARK_UNREAD' | translate }}
+            </button>
+          } @else {
+            <button class="btn-toggle unread-action" (click)="marcarLeido(n)">
+              <mat-icon>done_all</mat-icon>
+              {{ 'NOTIFICATIONS.MARK_READ' | translate }}
+            </button>
+          }
+
+          <button class="btn-detail" (click)="verDetalle(n)">
+            <mat-icon>visibility</mat-icon>
+            {{ 'NOTIFICATIONS.BTN_DETAIL' | translate }}
+          </button>
+
+          <mat-icon class="delete" (click)="pedirEliminar(n)">delete</mat-icon>
+
+        </div>
+
+      </div>
+
+    } @empty {
+
+      <div class="empty-state">
+        <mat-icon>mark_email_read</mat-icon>
+        <p>{{ 'NOTIFICATIONS.EMPTY' | translate }}</p>
+      </div>
+
+    }
+
+  </div>
 
 </div>
