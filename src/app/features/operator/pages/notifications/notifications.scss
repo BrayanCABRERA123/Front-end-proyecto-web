@@ -5,7 +5,17 @@
   background: var(--bg);
 }
 
+app-sidebar {
+  flex-shrink: 0;
+}
+
 app-notifications {
   flex: 1;
   display: block;
+}
+
+@media (max-width: 768px) {
+  .notifications-container {
+    flex-direction: column;
+  }
 }
