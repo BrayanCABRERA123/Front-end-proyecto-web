@@ -8,6 +8,7 @@ import { ReserveComponent } from './pages/reserve/reserve';
 import { ClientNotificationsComponent } from './pages/notifications/notifications';
 import { HistoryComponent } from './pages/history/history';
 import { ConfigurationComponent } from './pages/configuration/configuration';
+import { PaymentComponent } from './pages/payment/payment';
 
 
 
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'reserve', component: ReserveComponent },
   { path: 'notifications', component: ClientNotificationsComponent},
   { path: 'history', component: HistoryComponent },
-  { path: 'configuration', component: ConfigurationComponent}
+  { path: 'configuration', component: ConfigurationComponent },
+  { path: 'payment', component: PaymentComponent },
 
 ];
 

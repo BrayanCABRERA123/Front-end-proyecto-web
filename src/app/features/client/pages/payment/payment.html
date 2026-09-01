@@ -1,0 +1,143 @@
+<div class="home-layout">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="CLIENTE"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <main class="home-content">
+
+    <div class="payment-header">
+      <h1>{{ 'PAYMENT.TITLE' | translate }}</h1>
+      <p>{{ 'PAYMENT.SUBTITLE' | translate }}</p>
+    </div>
+
+    <div class="payment-layout">
+
+      <!-- Columna izquierda -->
+      <div class="payment-main">
+
+        <!-- Método de pago -->
+        <div class="card">
+          <div class="card-title">
+            <mat-icon>lock</mat-icon>
+            <h2>{{ 'PAYMENT.METHOD.TITLE' | translate }}</h2>
+          </div>
+
+          <div class="method-grid">
+            <button
+              class="method-option"
+              *ngFor="let metodo of metodosPago"
+              [class.selected]="metodoSeleccionado === metodo.id"
+              (click)="seleccionarMetodo(metodo.id)">
+              <mat-icon>{{ metodo.icono }}</mat-icon>
+              <span class="method-label">{{ metodo.label | translate }}</span>
+              <span class="method-desc">{{ metodo.desc | translate }}</span>
+            </button>
+          </div>
+
+          <!-- Formulario de tarjeta -->
+          <form class="card-form" *ngIf="metodoSeleccionado === 'CARD'">
+            <div class="form-field">
+              <label>{{ 'PAYMENT.FORM.CARD_NAME' | translate }}</label>
+              <input type="text" [(ngModel)]="tarjeta.nombre" name="nombre"
+                     placeholder="{{ 'PAYMENT.FORM.CARD_NAME_PLACEHOLDER' | translate }}" />
+            </div>
+
+            <div class="form-field">
+              <label>{{ 'PAYMENT.FORM.CARD_NUMBER' | translate }}</label>
+              <input type="text" [(ngModel)]="tarjeta.numero" name="numero"
+                     placeholder="4821 0000 0000 0000" />
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label>{{ 'PAYMENT.FORM.EXPIRY' | translate }}</label>
+                <input type="text" [(ngModel)]="tarjeta.vencimiento" name="vencimiento" placeholder="MM/AA" />
+              </div>
+              <div class="form-field">
+                <label>{{ 'PAYMENT.FORM.CVV' | translate }}</label>
+                <input type="text" [(ngModel)]="tarjeta.cvv" name="cvv" placeholder="123" />
+              </div>
+            </div>
+
+            <div class="secure-note">
+              <mat-icon>verified_user</mat-icon>
+              <span>{{ 'PAYMENT.FORM.SECURE_NOTE' | translate }}</span>
+            </div>
+          </form>
+        </div>
+
+        <!-- Historial de pagos -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <mat-icon>receipt_long</mat-icon>
+              <h2>{{ 'PAYMENT.HISTORY.TITLE' | translate }}</h2>
+            </div>
+            <span class="badge-total">
+              {{ 'PAYMENT.HISTORY.TOTAL_PAID' | translate }} ${{ totalPagado | number }}
+            </span>
+          </div>
+
+          <div class="payment-item" *ngFor="let pago of historialPagos">
+            <div>
+              <p class="payment-nombre">
+                {{ pago.codigo }} · {{ ('SERVICE.' + pago.tipo) | translate }} — {{ ('VEHICLE.' + pago.vehiculo) | translate }}
+              </p>
+              <p class="payment-fecha">
+                <mat-icon>schedule</mat-icon> {{ pago.fecha }} · {{ pago.metodo }}
+              </p>
+            </div>
+
+            <div class="payment-right">
+              <span class="payment-monto">${{ pago.monto | number }}</span>
+              <span class="badge" [class]="'badge-' + pago.estado.toLowerCase()">
+                {{ ('STATUS.' + pago.estado) | translate }}
+              </span>
+              <button class="btn-icon" (click)="descargarComprobante(pago.codigo)">
+                <mat-icon>download</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Columna derecha: resumen -->
+      <div class="card summary-card">
+        <h2>{{ 'PAYMENT.SUMMARY.TITLE' | translate }}</h2>
+
+        <div class="summary-row">
+          <span>{{ 'PAYMENT.SUMMARY.SERVICE' | translate }}</span>
+          <strong>{{ ('SERVICE.' + resumenServicio.servicio) | translate }}</strong>
+        </div>
+        <div class="summary-row">
+          <span>{{ 'PAYMENT.SUMMARY.VEHICLE' | translate }}</span>
+          <strong>{{ ('VEHICLE.' + resumenServicio.vehiculo) | translate }} — {{ resumenServicio.placa }}</strong>
+        </div>
+        <div class="summary-row">
+          <span>{{ 'PAYMENT.SUMMARY.BASE' | translate }}</span>
+          <strong>${{ resumenServicio.base | number }}</strong>
+        </div>
+        <div class="summary-row">
+          <span>{{ 'PAYMENT.SUMMARY.DELIVERY' | translate }}</span>
+          <strong>${{ resumenServicio.domicilio | number }}</strong>
+        </div>
+
+        <div class="summary-total">
+          <span>{{ 'PAYMENT.SUMMARY.TOTAL' | translate }}</span>
+          <strong>${{ totalAPagar | number }}</strong>
+        </div>
+
+        <button class="btn-primary" (click)="pagar()">
+          {{ 'PAYMENT.SUMMARY.PAY_BUTTON' | translate }} ${{ totalAPagar | number }}
+        </button>
+
+        <p class="summary-cancel-note">{{ 'PAYMENT.SUMMARY.CANCEL_NOTE' | translate }}</p>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

@@ -21,6 +21,7 @@
     "OPEN": "Abrir"
   },
   "SIDEBAR": {
+    "PAYMENT": "Pagar serviço",
     "DASHBOARD": "Painel",
     "TITLE": "Lavagem de Veículos",
     "PROFILE": "Perfil",
@@ -80,7 +81,9 @@
     "PENDING": "Pendente",
     "CONFIRMED": "Confirmado",
     "CANCELED": "Cancelado",
-    "ON_THE_WAY": "A caminho"
+    "ON_THE_WAY": "A caminho",
+    "PAID": "Pago",
+    "REFUNDED": "Reembolsado"
   },
   "ASSIGNMENT": {
     "MANUAL": "Manual",
@@ -492,5 +495,40 @@
     "SATISFACTION_LEVEL": "Nível de satisfação",
     "TOTAL": "Total de avaliações recebidas",
     "LAST_12_MONTHS": "Nos últimos 12 meses"
+  },
+  "PAYMENT": {
+    "TITLE": "Gateway de Pagamento",
+    "SUBTITLE": "Pague seu serviço com segurança e consulte seu histórico.",
+    "METHOD": {
+      "TITLE": "Método de pagamento",
+      "CARD": "Cartão",
+      "CARD_DESC": "Débito / Crédito",
+      "PAYPAL": "PayPal",
+      "PAYPAL_DESC": "Conta vinculada",
+      "TRANSFER": "Transferência",
+      "TRANSFER_DESC": "PSE / Bancos"
+    },
+    "FORM": {
+      "CARD_NAME": "Nome no cartão",
+      "CARD_NAME_PLACEHOLDER": "Juan Díaz",
+      "CARD_NUMBER": "Número do cartão",
+      "EXPIRY": "Vencimento",
+      "CVV": "CVV",
+      "SECURE_NOTE": "Transação criptografada. Não armazenamos os dados do seu cartão."
+    },
+    "SUMMARY": {
+      "TITLE": "Resumo do serviço",
+      "SERVICE": "Serviço",
+      "VEHICLE": "Veículo",
+      "BASE": "Base",
+      "DELIVERY": "Entrega",
+      "TOTAL": "Total a pagar",
+      "PAY_BUTTON": "Pagar",
+      "CANCEL_NOTE": "Você pode cancelar sem custo até 2 horas antes."
+    },
+    "HISTORY": {
+      "TITLE": "Histórico de pagamentos",
+      "TOTAL_PAID": "Total pago"
+    }
   }
 }

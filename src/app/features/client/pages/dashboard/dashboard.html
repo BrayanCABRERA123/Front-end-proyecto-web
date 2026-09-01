@@ -14,12 +14,10 @@
         <p>{{ 'DASHBOARD.SUBTITLE' | translate }}</p>
       </div>
 
-      
+
 
       <!-- Notificaciones -->
-      <div class="icon_notifications"
-        *ngFor="let item of notificaciones"
-        (click)="irA(item.camp)"
+      <div class="icon_notifications" *ngFor="let item of notificaciones" (click)="irA(item.camp)"
         [class.clickable]="item.camp !== null">
         <mat-icon class="icon-notifications">{{ item.camp }}</mat-icon>
       </div>
@@ -61,7 +59,8 @@
 
             <div class="next-service-meta">
               <span><mat-icon>location_on</mat-icon> {{ proximoServicio.direccion }}</span>
-              <span><mat-icon>call</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ proximoServicio.operario }}</span>
+              <span><mat-icon>call</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{
+                proximoServicio.operario }}</span>
             </div>
           </div>
 
@@ -104,7 +103,8 @@
             <p class="vehicle-nombre">{{ ('VEHICLE.' + vehiculo.tipo) | translate }}</p>
             <p class="vehicle-placa">{{ 'DASHBOARD.VEHICLES.PLATE' | translate }} {{ vehiculo.placa }}</p>
           </div>
-          <span class="vehicle-fecha">{{ 'DASHBOARD.VEHICLES.LAST_WASH' | translate }} {{ vehiculo.ultimoLavado }}</span>
+          <span class="vehicle-fecha">{{ 'DASHBOARD.VEHICLES.LAST_WASH' | translate }} {{ vehiculo.ultimoLavado
+            }}</span>
         </div>
       </div>
 
@@ -123,7 +123,8 @@
 
         <div class="loyalty-progress">
           <div class="progress-row">
-            <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ fidelidad.actual }} de {{ fidelidad.meta }} lavados)</span>
+            <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ fidelidad.actual }} de {{ fidelidad.meta
+              }} lavados)</span>
             <span>{{ fidelidad.porcentaje }}%</span>
           </div>
           <div class="progress-bar">
@@ -143,7 +144,7 @@
         </div>
 
         <div class="history-actions">
-          <button class="btn-outline" (click)="irA('history')">
+          <button class="btn-outline" (click)="irA('payment')">
             <mat-icon>credit_card</mat-icon>
             {{ 'DASHBOARD.SERVICES_HISTORY.PAY_SERVICE' | translate }}
           </button>
@@ -157,7 +158,8 @@
       <div class="history-item" *ngFor="let servicio of historialServicios">
         <div>
           <p class="history-nombre">
-            {{ servicio.codigo }} · {{ ('SERVICE.' + servicio.tipo) | translate }} — {{ ('VEHICLE.' + servicio.vehiculo) | translate }}
+            {{ servicio.codigo }} · {{ ('SERVICE.' + servicio.tipo) | translate }} — {{ ('VEHICLE.' + servicio.vehiculo)
+            | translate }}
           </p>
           <p class="history-fecha">
             {{ servicio.fecha }} · {{ 'DASHBOARD.SERVICES_HISTORY.OPERATOR' | translate }}: {{ servicio.operario }}

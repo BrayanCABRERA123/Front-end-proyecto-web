@@ -31,6 +31,7 @@ export class SidebarComponent implements OnInit {
     { icono: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', ruta: '/client' },
     { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/client/profile' },
     { icono: 'local_car_wash', label: 'SIDEBAR.RESERVE', ruta: '/client/reserve' },
+    { icono: 'credit_card', label: 'SIDEBAR.PAYMENT', ruta: '/client/payment' },
     { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/client/notifications' },
     { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/client/history' },
     { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/client/configuration' }

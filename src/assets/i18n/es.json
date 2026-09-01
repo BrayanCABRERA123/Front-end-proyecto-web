@@ -21,6 +21,7 @@
     "OPEN": "Abrir"
   },
   "SIDEBAR": {
+    "PAYMENT": "Pagar servicio",
     "DASHBOARD": "Dashboard",
     "TITLE": "Lavado Vehicular",
     "PROFILE": "Perfil",
@@ -80,7 +81,9 @@
     "PENDING": "Pendiente",
     "CONFIRMED": "Confirmado",
     "CANCELED": "Cancelado",
-    "ON_THE_WAY": "En camino"
+    "ON_THE_WAY": "En camino",
+    "PAID": "Pagado",
+    "REFUNDED": "Reembolsado"
   },
   "ASSIGNMENT": {
     "MANUAL": "Manual",
@@ -492,5 +495,40 @@
     "SATISFACTION_LEVEL": "Nivel de satisfacción",
     "TOTAL": "Total de calificaciones recibidas",
     "LAST_12_MONTHS": "En los últimos 12 meses"
+  },
+  "PAYMENT": {
+    "TITLE": "Pasarela de Pagos",
+    "SUBTITLE": "Paga tu servicio de forma segura y consulta tu historial.",
+    "METHOD": {
+      "TITLE": "Método de pago",
+      "CARD": "Tarjeta",
+      "CARD_DESC": "Débito / Crédito",
+      "PAYPAL": "PayPal",
+      "PAYPAL_DESC": "Cuenta vinculada",
+      "TRANSFER": "Transferencia",
+      "TRANSFER_DESC": "PSE / Bancos"
+    },
+    "FORM": {
+      "CARD_NAME": "Nombre en la tarjeta",
+      "CARD_NAME_PLACEHOLDER": "Juan Díaz",
+      "CARD_NUMBER": "Número de tarjeta",
+      "EXPIRY": "Vencimiento",
+      "CVV": "CVV",
+      "SECURE_NOTE": "Transacción cifrada. No almacenamos los datos de tu tarjeta."
+    },
+    "SUMMARY": {
+      "TITLE": "Resumen del servicio",
+      "SERVICE": "Servicio",
+      "VEHICLE": "Vehículo",
+      "BASE": "Base",
+      "DELIVERY": "Domicilio",
+      "TOTAL": "Total a pagar",
+      "PAY_BUTTON": "Pagar",
+      "CANCEL_NOTE": "Puedes cancelar sin costo hasta 2 horas antes."
+    },
+    "HISTORY": {
+      "TITLE": "Historial de pagos",
+      "TOTAL_PAID": "Total pagado"
+    }
   }
 }

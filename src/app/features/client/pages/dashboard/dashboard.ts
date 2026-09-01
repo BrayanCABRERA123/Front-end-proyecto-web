@@ -51,7 +51,7 @@ export class DashboardComponent {
   // accesos rápidos
   accesosRapidos = [
     { icono: 'calendar_today', label: 'QUICK_ACCESS.BOOK_WASH', ruta: 'reserve' },
-    { icono: 'credit_card', label: 'QUICK_ACCESS.PAY_SERVICE', ruta: 'history' },
+    { icono: 'credit_card', label: 'QUICK_ACCESS.PAY_SERVICE', ruta: 'payment' },
     { icono: 'directions_car', label: 'QUICK_ACCESS.MY_VEHICLES', ruta: 'vehicles' },
     { icono: 'notifications', label: 'QUICK_ACCESS.NOTIFICATIONS', ruta: 'notifications' }
   ];

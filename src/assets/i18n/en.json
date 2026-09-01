@@ -21,6 +21,7 @@
     "OPEN": "Open"
   },
   "SIDEBAR": {
+    "PAYMENT": "Pay service",
     "DASHBOARD": "Dashboard",
     "TITLE": "Car Wash",
     "PROFILE": "Profile",
@@ -80,7 +81,9 @@
     "PENDING": "Pending",
     "CONFIRMED": "Confirmed",
     "CANCELED": "Canceled",
-    "ON_THE_WAY": "On the way"
+    "ON_THE_WAY": "On the way",
+    "PAID": "Paid",
+    "REFUNDED": "Refunded"
   },
   "ASSIGNMENT": {
     "MANUAL": "Manual",
@@ -492,5 +495,40 @@
     "SATISFACTION_LEVEL": "Satisfaction level",
     "TOTAL": "Total ratings received",
     "LAST_12_MONTHS": "In the last 12 months"
+  },
+  "PAYMENT": {
+    "TITLE": "Payment Gateway",
+    "SUBTITLE": "Pay for your service securely and check your history.",
+    "METHOD": {
+      "TITLE": "Payment method",
+      "CARD": "Card",
+      "CARD_DESC": "Debit / Credit",
+      "PAYPAL": "PayPal",
+      "PAYPAL_DESC": "Linked account",
+      "TRANSFER": "Transfer",
+      "TRANSFER_DESC": "PSE / Banks"
+    },
+    "FORM": {
+      "CARD_NAME": "Name on card",
+      "CARD_NAME_PLACEHOLDER": "Juan Díaz",
+      "CARD_NUMBER": "Card number",
+      "EXPIRY": "Expiry",
+      "CVV": "CVV",
+      "SECURE_NOTE": "Encrypted transaction. We do not store your card data."
+    },
+    "SUMMARY": {
+      "TITLE": "Service summary",
+      "SERVICE": "Service",
+      "VEHICLE": "Vehicle",
+      "BASE": "Base",
+      "DELIVERY": "Delivery",
+      "TOTAL": "Total to pay",
+      "PAY_BUTTON": "Pay",
+      "CANCEL_NOTE": "You can cancel at no cost up to 2 hours before."
+    },
+    "HISTORY": {
+      "TITLE": "Payment history",
+      "TOTAL_PAID": "Total paid"
+    }
   }
 }
