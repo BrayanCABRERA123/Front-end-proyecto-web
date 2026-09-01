@@ -8,24 +8,20 @@
     "EMAIL_DESC": "Un día antes de tu lavado programado",
     "PROMO": "Promociones y Ofertas",
     "PROMO_DESC": "Recibe descuentos exclusivos",
-
     "APPEARANCE": "Apariencia",
     "THEME": "Elegir tema",
     "THEME_DESC": "Cambiar interfaz (Personaliza los colores de la aplicación)",
-
     "LANGUAGE": "Idiomas",
     "LANGUAGE_DESC": "Cambiar idioma",
-
     "LOCATION": "Ubicación",
     "LOCATION_SHARE": "Compartir Ubicación",
     "LOCATION_DESC": "Permitir que accedan a tu ubicación actual",
-
     "HELP": "Ayuda",
     "HELP_CENTER": "Centro de ayuda",
     "OPEN": "Abrir"
   },
-
   "SIDEBAR": {
+    "DASHBOARD": "Dashboard",
     "TITLE": "Lavado Vehicular",
     "PROFILE": "Perfil",
     "RESERVE": "Reservar lavado",
@@ -36,7 +32,6 @@
     "ASSIGNED_SERVICES": "servicios asignados",
     "RATINGS": "Calificaciones"
   },
-
   "HISTORY": {
     "FILTERS": "Filtros",
     "ALL": "Todos",
@@ -48,9 +43,7 @@
     "SEARCH_LABEL": "Buscar por dirección, servicio u operario",
     "SEARCH_PLACEHOLDER": "Escribe para buscar...",
     "EMPTY": "No se encontraron servicios"
-
   },
-
   "HISTORY_CARD": {
     "ADDRESS": "Dirección",
     "TYPE": "Tipo de servicio",
@@ -64,7 +57,6 @@
   "COMMON": {
     "CLOSE": "Cerrar"
   },
-
   "SERVICE": {
     "BASIC": "Básico",
     "FULL": "Completo",
@@ -79,36 +71,68 @@
     "FULL_TIME": "1 hora",
     "PREMIUM_TIME": "1 hora 30 minutos"
   },
-
   "EXTRA": {
     "WAX": "Cera",
     "VACUUM": "Aspirado"
   },
-
   "STATUS": {
-  "COMPLETED": "Finalizado",
-  "PENDING": "Pendiente",
-  "CONFIRMED": "Confirmado"
-},
-
+    "COMPLETED": "Finalizado",
+    "PENDING": "Pendiente",
+    "CONFIRMED": "Confirmado",
+    "CANCELED": "Cancelado",
+    "ON_THE_WAY": "En camino"
+  },
   "ASSIGNMENT": {
-  "MANUAL": "Manual",
-  "AUTO": "Automática",
-  "AUTO_DESC": "El sistema asignará automáticamente un operario disponible."
-},
-
-  "HOME": {
+    "MANUAL": "Manual",
+    "AUTO": "Automática",
+    "AUTO_DESC": "El sistema asignará automáticamente un operario disponible."
+  },
+  "DASHBOARD": {
     "HELLO": "¡Hola, {{name}}!",
     "WELCOME": "Bienvenido de vuelta a Lavado Vehicular",
     "NEXT_RESERVATIONS": "Próximas Reservas",
-
     "RESUMEN": {
       "ACTIVE": "Reservas activas",
       "VEHICLES": "Vehículos",
       "NOTIFICATIONS": "Notificaciones"
+    },
+    "SUBTITLE": "Este es tu módulo de información como cliente de AquaWash",
+    "CLIENT_VIEW": "Vista de Cliente",
+    "STATS": {
+      "ACTIVE_RESERVATIONS": "Mis reservas activas",
+      "MY_VEHICLES": "Mis vehículos",
+      "WASHES_DONE": "Lavados realizados",
+      "MY_RATING": "Mi calificación dada"
+    },
+    "NEXT_SERVICE": {
+      "TITLE": "Tu próximo servicio",
+      "VIEW_DETAIL": "Ver detalle",
+      "OPERATOR_ASSIGNED": "Operario asignado",
+      "PROGRESS": "Avance del servicio"
+    },
+    "QUICK_ACCESS": {
+      "TITLE": "Accesos rápidos",
+      "BOOK_WASH": "Reservar lavado",
+      "PAY_SERVICE": "Pagar servicio",
+      "MY_VEHICLES": "Mis vehículos",
+      "NOTIFICATIONS": "Notificaciones"
+    },
+    "VEHICLES": {
+      "TITLE": "Mis vehículos registrados",
+      "LAST_WASH": "Últ. lavado",
+      "PLATE": "Placa"
+    },
+    "BENEFITS": {
+      "TITLE": "Tus beneficios y promociones",
+      "LOYALTY_PROGRESS": "Progreso de fidelidad"
+    },
+    "SERVICES_HISTORY": {
+      "TITLE": "Mi historial de servicios",
+      "PAY_SERVICE": "Pagar servicio",
+      "VIEW_ALL": "Ver todo",
+      "OPERATOR": "Operario"
     }
   },
-
   "VEHICLE": {
     "CAR": "Automóvil",
     "TRUCK": "Camioneta",
@@ -117,133 +141,115 @@
     "PICKUP": "Pickup",
     "MOTO": "Moto"
   },
-
-"NOTIFICATIONS": {
-  "TITLE": "Notificaciones",
-  "CLIENT_SUBTITLE": "Aquí puedes consultar las notificaciones relacionadas con tus reservas, promociones y novedades del sistema.",
-  "OPERATOR_SUBTITLE": "Aquí puedes ver las notificaciones importantes relacionadas con tus servicios asignados, cambios de estado y comunicaciones del sistema.",
-  "NEW_SERVICE": "Nuevo servicio asignado",
-  "NEW_SERVICE_DESC": "SV-2034 te ha sido asignado para las 3:00 p.m.",
-  "STATUS_UPDATE": "Actualización de estado",
-  "STATUS_UPDATE_DESC": "El cliente confirmó la dirección para el servicio SV-1783.",
-  "CANCELLATION": "Cancelación",
-  "CANCELLATION_DESC": "El cliente canceló el servicio SV-1690.",
-  "CLIENT_MESSAGE": "Mensaje del cliente",
-  "CLIENT_MESSAGE_DESC": "\"Voy a estar 5 minutos tarde, por favor espérame.\"",
-  "SYSTEM": "Sistema",
-  "SYSTEM_DESC": "Tu perfil ha sido actualizado correctamente.",
-  "RESERVATION_CONFIRMED": "Reserva confirmada",
-  "RESERVATION_DESC": "Tu lavado premium quedó programado para el 25 de febrero a las 10:00 a.m.",
-  "REMINDER": "Recordatorio",
-  "REMINDER_DESC": "Tu lavado está programado para mañana. ¡Todo listo!",
-  "PROMO": "¡Promoción especial!",
-  "PROMO_DESC": "Obtén un 20% de descuento en tu próximo lavado completo. Usa el código: AQUA20",
-  "UPDATE": "Actualización del servicio",
-  "UPDATE_DESC": "Hemos ampliado nuestra cobertura a nuevas zonas de la ciudad.",
-  "TIME_2H": "Hace 2 horas",
-  "TIME_1D": "Hace 1 día",
-  "TIME_2D": "Hace 2 días",
-  "TIME_3D": "Hace 3 días",
-  "READ": "Leído",
-  "UNREAD": "No leído",
-  "BTN_DETAIL": "Ver detalle"
-},
-
-"PAYMENTS": {
-  "TITLE": "Pagos",
-  "SUBTITLE": "Estos son los tipos de pago que puedes utilizar",
-
-  "PSE": {
-    "TITLE": "PSE",
-    "DESC": "Paga en línea a través de tu banco"
+  "NOTIFICATIONS": {
+    "TITLE": "Notificaciones",
+    "CLIENT_SUBTITLE": "Aquí puedes consultar las notificaciones relacionadas con tus reservas, promociones y novedades del sistema.",
+    "OPERATOR_SUBTITLE": "Aquí puedes ver las notificaciones importantes relacionadas con tus servicios asignados, cambios de estado y comunicaciones del sistema.",
+    "NEW_SERVICE": "Nuevo servicio asignado",
+    "NEW_SERVICE_DESC": "SV-2034 te ha sido asignado para las 3:00 p.m.",
+    "STATUS_UPDATE": "Actualización de estado",
+    "STATUS_UPDATE_DESC": "El cliente confirmó la dirección para el servicio SV-1783.",
+    "CANCELLATION": "Cancelación",
+    "CANCELLATION_DESC": "El cliente canceló el servicio SV-1690.",
+    "CLIENT_MESSAGE": "Mensaje del cliente",
+    "CLIENT_MESSAGE_DESC": "\"Voy a estar 5 minutos tarde, por favor espérame.\"",
+    "SYSTEM": "Sistema",
+    "SYSTEM_DESC": "Tu perfil ha sido actualizado correctamente.",
+    "RESERVATION_CONFIRMED": "Reserva confirmada",
+    "RESERVATION_DESC": "Tu lavado premium quedó programado para el 25 de febrero a las 10:00 a.m.",
+    "REMINDER": "Recordatorio",
+    "REMINDER_DESC": "Tu lavado está programado para mañana. ¡Todo listo!",
+    "PROMO": "¡Promoción especial!",
+    "PROMO_DESC": "Obtén un 20% de descuento en tu próximo lavado completo. Usa el código: AQUA20",
+    "UPDATE": "Actualización del servicio",
+    "UPDATE_DESC": "Hemos ampliado nuestra cobertura a nuevas zonas de la ciudad.",
+    "TIME_2H": "Hace 2 horas",
+    "TIME_1D": "Hace 1 día",
+    "TIME_2D": "Hace 2 días",
+    "TIME_3D": "Hace 3 días",
+    "READ": "Leído",
+    "UNREAD": "No leído",
+    "BTN_DETAIL": "Ver detalle"
   },
-
-  "CARD": {
-    "TITLE": "Tarjeta bancaria",
-    "DESC": "Paga con tarjeta de crédito o débito"
+  "PAYMENTS": {
+    "TITLE": "Pagos",
+    "SUBTITLE": "Estos son los tipos de pago que puedes utilizar",
+    "PSE": {
+      "TITLE": "PSE",
+      "DESC": "Paga en línea a través de tu banco"
+    },
+    "CARD": {
+      "TITLE": "Tarjeta bancaria",
+      "DESC": "Paga con tarjeta de crédito o débito"
+    },
+    "NEQUI": {
+      "TITLE": "Nequi",
+      "DESC": "Paga con tu cuenta Nequi"
+    },
+    "CASH": {
+      "TITLE": "Pago en efectivo",
+      "DESC": "El pago se realiza directamente al operario durante el servicio"
+    }
   },
-
-  "NEQUI": {
-    "TITLE": "Nequi",
-    "DESC": "Paga con tu cuenta Nequi"
+  "PROFILE": {
+    "TITLE": "Mi Perfil",
+    "MEMBER_SINCE": "Cliente desde {{date}}",
+    "NAME": "Nombre",
+    "EMAIL": "Correo electrónico",
+    "PHONE": "Teléfono",
+    "ADDRESS": "Dirección",
+    "EDIT": "Editar perfil",
+    "SAVE": "Guardar",
+    "PASSWORD": "Contraseña",
+    "CHANGE_PASSWORD": "Cambiar contraseña",
+    "PASSWORD_DESC": "Se recomienda una contraseña segura",
+    "CHANGE": "Cambiar",
+    "ACCOUNT": "Cuenta",
+    "DELETE": "Eliminar cuenta",
+    "DELETE_DESC": "Eliminar permanentemente tu cuenta y todos tus datos",
+    "SAVED_MODE": "Modo visualización",
+    "EDIT_MODE": "Modo edición",
+    "VALIDATION": {
+      "NAME_REQUIRED": "El nombre es obligatorio",
+      "NAME_MIN": "El nombre debe tener al menos 3 caracteres",
+      "NAME_INVALID": "El nombre solo puede contener letras",
+      "EMAIL_REQUIRED": "El correo es obligatorio",
+      "EMAIL_INVALID": "Ingresa un correo electrónico válido",
+      "PHONE_REQUIRED": "El teléfono es obligatorio",
+      "PHONE_INVALID": "El número no es válido para el país seleccionado",
+      "ADDRESS_REQUIRED": "La dirección es obligatoria",
+      "ADDRESS_MIN": "La dirección debe tener al menos 5 caracteres"
+    }
   },
-
-  "CASH": {
-    "TITLE": "Pago en efectivo",
-    "DESC": "El pago se realiza directamente al operario durante el servicio"
-  }
-},
-
-"PROFILE": {
-  "TITLE": "Mi Perfil",
-  "MEMBER_SINCE": "Cliente desde {{date}}",
-
-  "NAME": "Nombre",
-  "EMAIL": "Correo electrónico",
-  "PHONE": "Teléfono",
-  "ADDRESS": "Dirección",
-
-  "EDIT": "Editar perfil",
-  "SAVE": "Guardar",
-
-  "PASSWORD": "Contraseña",
-  "CHANGE_PASSWORD": "Cambiar contraseña",
-  "PASSWORD_DESC": "Se recomienda una contraseña segura",
-  "CHANGE": "Cambiar",
-
-  "ACCOUNT": "Cuenta",
-  "DELETE": "Eliminar cuenta",
-  "DELETE_DESC": "Eliminar permanentemente tu cuenta y todos tus datos",
-
-  "SAVED_MODE": "Modo visualización",
-  "EDIT_MODE": "Modo edición",
-
-  "VALIDATION": {
-  "NAME_REQUIRED": "El nombre es obligatorio",
-  "NAME_MIN": "El nombre debe tener al menos 3 caracteres",
-  "NAME_INVALID": "El nombre solo puede contener letras",
-  "EMAIL_REQUIRED": "El correo es obligatorio",
-  "EMAIL_INVALID": "Ingresa un correo electrónico válido",
-  "PHONE_REQUIRED": "El teléfono es obligatorio",
-  "PHONE_INVALID": "El número no es válido para el país seleccionado",
-  "ADDRESS_REQUIRED": "La dirección es obligatoria",
-  "ADDRESS_MIN": "La dirección debe tener al menos 5 caracteres"
-}
-},
-
-"RATINGS": {
-  "TITLE": "Calificar servicio",
-  "SUBTITLE": "Tu opinión nos ayuda a mejorar",
-  "QUESTION": "¿Cómo fue tu experiencia?",
-  "COMMENT": "Comentarios (opcional)",
-  "PLACEHOLDER": "Cuéntanos más sobre tu experiencia...",
-  "SUBMIT": "Enviar calificación"
-},
-
-"RESERVE": {
-  "TITLE": "Reservar lavado",
-  "SUBTITLE": "Programa tu próximo lavado en pocos pasos",
-  "DATE": "Fecha",
-  "TIME": "Hora",
-  "SELECT_TIME": "Selecciona una hora",
-  "ADDRESS": "Dirección",
-  "ADDRESS_PLACEHOLDER": "Calle, número, ciudad...",
-  "VEHICLE": "Tipo de vehículo",
-  "SERVICE": "Tipo de servicio",
-  "ASSIGNMENT": "Asignación de operario",
-  "SELECT": "Seleccionar",
-  "SUBMIT": "Reservar ahora"
-},
-
+  "RATINGS": {
+    "TITLE": "Calificar servicio",
+    "SUBTITLE": "Tu opinión nos ayuda a mejorar",
+    "QUESTION": "¿Cómo fue tu experiencia?",
+    "COMMENT": "Comentarios (opcional)",
+    "PLACEHOLDER": "Cuéntanos más sobre tu experiencia...",
+    "SUBMIT": "Enviar calificación"
+  },
+  "RESERVE": {
+    "TITLE": "Reservar lavado",
+    "SUBTITLE": "Programa tu próximo lavado en pocos pasos",
+    "DATE": "Fecha",
+    "TIME": "Hora",
+    "SELECT_TIME": "Selecciona una hora",
+    "ADDRESS": "Dirección",
+    "ADDRESS_PLACEHOLDER": "Calle, número, ciudad...",
+    "VEHICLE": "Tipo de vehículo",
+    "SERVICE": "Tipo de servicio",
+    "ASSIGNMENT": "Asignación de operario",
+    "SELECT": "Seleccionar",
+    "SUBMIT": "Reservar ahora"
+  },
   "APP": {
     "TITLE": "Lavado Vehicular"
   },
-
   "NAV": {
     "LOGIN": "Iniciar sesión",
     "REGISTER": "Registrarse"
   },
-
   "HERO": {
     "BADGE": "Servicio móvil de lavado #1",
     "TITLE_1": "Tu auto impecable,",
@@ -252,11 +258,9 @@
     "START": "Comenzar ahora",
     "ALREADY_ACCOUNT": "Ya tengo cuenta"
   },
-
   "FEATURES": {
     "TITLE": "¿Por qué elegirnos?",
     "SUBTITLE": "Brindamos el mejor servicio de lavado móvil con calidad profesional.",
-
     "ITEMS": {
       "ECO": {
         "TITLE": "Lavado ecológico",
@@ -272,272 +276,221 @@
       }
     }
   },
-
   "LOGOUT": {
-  "TITLE": "Cerrar sesión",
-  "MESSAGE": "¿Estás seguro de cerrar sesión?",
-  "CONFIRM": "Sí, cerrar",
-  "CANCEL": "Cancelar"
-},
-
-"LOGIN": {
-  "TITLE": "Iniciar Sesión",
-  "SUBTITLE": "Ingresa a tu cuenta para reservar",
-
-  "EMAIL": "Correo Electrónico",
-  "EMAIL_PLACEHOLDER": "usuario@gmail.com",
-
-  "PASSWORD": "Contraseña",
-  "PASSWORD_PLACEHOLDER": "********",
-
-  "EMAIL_REQUIRED": "El correo es obligatorio",
-  "EMAIL_INVALID": "Debe ingresar un correo válido @gmail.com",
-
-  "PASSWORD_REQUIRED": "La contraseña es obligatoria",
-
-  "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
-
-  "BUTTON": "Iniciar Sesión",
-
-  "NO_ACCOUNT": "¿No tienes cuenta?",
-  "REGISTER": "Regístrate",
-
-  "INVALID_CREDENTIALS": "Correo o contraseña incorrectos"
-},
-
-"REGISTER": {
-  "TITLE": "Crear Cuenta",
-  "SUBTITLE": "Regístrate para empezar a reservar",
-
-  "FULL_NAME": "Nombre Completo",
-  "FULL_NAME_PLACEHOLDER": "Juan Pérez",
-
-  "EMAIL": "Correo Electrónico",
-  "EMAIL_PLACEHOLDER": "usuario@gmail.com",
-
-  "PHONE": "Teléfono",
-  "PHONE_PLACEHOLDER": "3001234567",
-
-  "PASSWORD": "Contraseña",
-  "PASSWORD_PLACEHOLDER": "Mínimo 8 caracteres",
-
-  "CONFIRM_PASSWORD": "Confirmar Contraseña",
-  "CONFIRM_PASSWORD_PLACEHOLDER": "Repite tu contraseña",
-
-  "NAME_REQUIRED": "El nombre es obligatorio",
-  "NAME_MIN": "Debe tener mínimo 3 caracteres",
-
-  "EMAIL_REQUIRED": "El correo es obligatorio",
-  "EMAIL_INVALID": "Solo se permiten correos @gmail.com",
-
-  "PHONE_REQUIRED": "El teléfono es obligatorio",
-  "PHONE_INVALID": "Debe comenzar con 3 (número celular colombiano)",
-  "PHONE_MIN": "El número debe tener 10 dígitos",
-
-  "PASSWORD_REQUIRED": "La contraseña es obligatoria",
-
-  "CONFIRM_REQUIRED": "Debes confirmar la contraseña",
-  "PASSWORDS_NOT_MATCH": "Las contraseñas no coinciden",
-
-  "REQUIREMENTS": {
-    "MIN": "Mínimo 8 caracteres",
-    "UPPERCASE": "Al menos una mayúscula",
-    "NUMBER": "Al menos un número",
-    "SPECIAL": "Al menos un carácter especial"
+    "TITLE": "Cerrar sesión",
+    "MESSAGE": "¿Estás seguro de cerrar sesión?",
+    "CONFIRM": "Sí, cerrar",
+    "CANCEL": "Cancelar"
   },
-
-  "BUTTON": "Registrarse",
-  "BUTTON_LOADING": "Registrando...",
-
-  "ALREADY_ACCOUNT": "¿Ya tienes cuenta?",
-  "LOGIN": "Inicia sesión",
-
-  "INVALID_CREDENTIALS": "Correo o contraseña incorrectos"
-},
-
-"FORGOT": {
-  "BACK_LOGIN": "Volver a Iniciar Sesión",
-
-  "EMAIL": {
-    "TITLE": "Recuperar Contraseña",
-    "DESCRIPTION": "Ingresa tu correo para recibir un código de verificación",
-    "LABEL": "Correo Electrónico",
-    "PLACEHOLDER": "usuario@gmail.com",
-    "INVALID": "Debe ingresar un correo válido @gmail.com",
-    "BUTTON": "Enviar Código"
+  "LOGIN": {
+    "TITLE": "Iniciar Sesión",
+    "SUBTITLE": "Ingresa a tu cuenta para reservar",
+    "EMAIL": "Correo Electrónico",
+    "EMAIL_PLACEHOLDER": "usuario@gmail.com",
+    "PASSWORD": "Contraseña",
+    "PASSWORD_PLACEHOLDER": "********",
+    "EMAIL_REQUIRED": "El correo es obligatorio",
+    "EMAIL_INVALID": "Debe ingresar un correo válido @gmail.com",
+    "PASSWORD_REQUIRED": "La contraseña es obligatoria",
+    "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
+    "BUTTON": "Iniciar Sesión",
+    "NO_ACCOUNT": "¿No tienes cuenta?",
+    "REGISTER": "Regístrate",
+    "INVALID_CREDENTIALS": "Correo o contraseña incorrectos"
   },
-
-  "VERIFICATION": {
-    "TITLE": "Verificación",
-    "DESCRIPTION": "Ingresa el código de 6 dígitos enviado a",
-    "RESEND": "¿No recibiste el código? Reenviar",
-    "BUTTON": "Verificar Código"
-  },
-
-  "NEW_PASSWORD": {
-    "TITLE": "Nueva Contraseña",
-    "DESCRIPTION": "Crea tu nueva contraseña segura",
-
-    "LABEL": "Nueva Contraseña",
-    "PLACEHOLDER": "••••••••",
-
-    "CONFIRM": "Confirmar Contraseña",
-    "CONFIRM_PLACEHOLDER": "••••••••",
-
-    "BUTTON": "Actualizar Contraseña",
-
+  "REGISTER": {
+    "TITLE": "Crear Cuenta",
+    "SUBTITLE": "Regístrate para empezar a reservar",
+    "FULL_NAME": "Nombre Completo",
+    "FULL_NAME_PLACEHOLDER": "Juan Pérez",
+    "EMAIL": "Correo Electrónico",
+    "EMAIL_PLACEHOLDER": "usuario@gmail.com",
+    "PHONE": "Teléfono",
+    "PHONE_PLACEHOLDER": "3001234567",
+    "PASSWORD": "Contraseña",
+    "PASSWORD_PLACEHOLDER": "Mínimo 8 caracteres",
+    "CONFIRM_PASSWORD": "Confirmar Contraseña",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Repite tu contraseña",
+    "NAME_REQUIRED": "El nombre es obligatorio",
+    "NAME_MIN": "Debe tener mínimo 3 caracteres",
+    "EMAIL_REQUIRED": "El correo es obligatorio",
+    "EMAIL_INVALID": "Solo se permiten correos @gmail.com",
+    "PHONE_REQUIRED": "El teléfono es obligatorio",
+    "PHONE_INVALID": "Debe comenzar con 3 (número celular colombiano)",
+    "PHONE_MIN": "El número debe tener 10 dígitos",
+    "PASSWORD_REQUIRED": "La contraseña es obligatoria",
+    "CONFIRM_REQUIRED": "Debes confirmar la contraseña",
+    "PASSWORDS_NOT_MATCH": "Las contraseñas no coinciden",
     "REQUIREMENTS": {
       "MIN": "Mínimo 8 caracteres",
       "UPPERCASE": "Al menos una mayúscula",
       "NUMBER": "Al menos un número",
       "SPECIAL": "Al menos un carácter especial"
+    },
+    "BUTTON": "Registrarse",
+    "BUTTON_LOADING": "Registrando...",
+    "ALREADY_ACCOUNT": "¿Ya tienes cuenta?",
+    "LOGIN": "Inicia sesión",
+    "INVALID_CREDENTIALS": "Correo o contraseña incorrectos"
+  },
+  "FORGOT": {
+    "BACK_LOGIN": "Volver a Iniciar Sesión",
+    "EMAIL": {
+      "TITLE": "Recuperar Contraseña",
+      "DESCRIPTION": "Ingresa tu correo para recibir un código de verificación",
+      "LABEL": "Correo Electrónico",
+      "PLACEHOLDER": "usuario@gmail.com",
+      "INVALID": "Debe ingresar un correo válido @gmail.com",
+      "BUTTON": "Enviar Código"
+    },
+    "VERIFICATION": {
+      "TITLE": "Verificación",
+      "DESCRIPTION": "Ingresa el código de 6 dígitos enviado a",
+      "RESEND": "¿No recibiste el código? Reenviar",
+      "BUTTON": "Verificar Código"
+    },
+    "NEW_PASSWORD": {
+      "TITLE": "Nueva Contraseña",
+      "DESCRIPTION": "Crea tu nueva contraseña segura",
+      "LABEL": "Nueva Contraseña",
+      "PLACEHOLDER": "••••••••",
+      "CONFIRM": "Confirmar Contraseña",
+      "CONFIRM_PLACEHOLDER": "••••••••",
+      "BUTTON": "Actualizar Contraseña",
+      "REQUIREMENTS": {
+        "MIN": "Mínimo 8 caracteres",
+        "UPPERCASE": "Al menos una mayúscula",
+        "NUMBER": "Al menos un número",
+        "SPECIAL": "Al menos un carácter especial"
+      }
     }
-  }
-},
-
+  },
   "AUTH_PANEL": {
     "TITLE": "Tu vehículo merece el mejor cuidado",
     "SUBTITLE": "Administra tus servicios de lavado, agenda citas y mantén el control total de tu vehículo desde una sola plataforma.",
-
     "BENEFIT1_TITLE": "Servicio Premium",
     "BENEFIT1_DESC": "Lavados de alta calidad para mantener tu vehículo impecable.",
-
     "BENEFIT2_TITLE": "Reservas rápidas",
     "BENEFIT2_DESC": "Agenda tus citas en segundos desde cualquier dispositivo.",
-
     "BENEFIT3_TITLE": "Información segura",
     "BENEFIT3_DESC": "Tus datos y reservas están protegidos en todo momento."
   },
-
   "ASSIGNED_SERVICES": {
-  "TITLE": "Servicios Asignados",
-  "SUBTITLE": "Aquí puedes ver todos los servicios que te han sido asignados. Mantén actualizada la información del progreso.",
-
-  "STATS": {
-    "TOTAL": "Servicios Totales",
-    "PENDING": "Pendientes",
+    "TITLE": "Servicios Asignados",
+    "SUBTITLE": "Aquí puedes ver todos los servicios que te han sido asignados. Mantén actualizada la información del progreso.",
+    "STATS": {
+      "TOTAL": "Servicios Totales",
+      "PENDING": "Pendientes",
+      "IN_PROGRESS": "En Progreso",
+      "COMPLETED_TODAY": "Finalizados Hoy"
+    },
+    "FILTERS": {
+      "TITLE": "Filtros de búsqueda",
+      "BY_DATE": "Filtrar por fecha",
+      "BY_TYPE": "Filtrar por tipo de servicio",
+      "BY_SERVICE": "Buscar por servicio",
+      "SEARCH_PLACEHOLDER": "Buscar...",
+      "ALL": "Todas",
+      "FILTER_BTN": "Filtrar"
+    },
+    "TABLE": {
+      "ID": "ID",
+      "SERVICE_TYPE": "TIPO DE SERVICIO",
+      "LOCATION": "UBICACIÓN",
+      "DATE_TIME": "FECHA Y HORA",
+      "VEHICLE": "VEHÍCULO",
+      "CLIENT": "CLIENTE",
+      "STATUS": "ESTADO"
+    },
+    "DETAIL": {
+      "TITLE": "Información del servicio",
+      "CLIENT": "Client:",
+      "ADDRESS": "Dirección:",
+      "SERVICE_TYPE": "Tipo de servicio:",
+      "SCHEDULED_TIME": "Hora programada:",
+      "PAYMENT_METHOD": "Método de pago:",
+      "MAP_LABEL": "Ubicación en mapa",
+      "PROGRESS_TITLE": "Estado y progreso",
+      "START": "Iniciar Servicio",
+      "REPORT": "Reportar progreso",
+      "FINISH": "Finalizar Servicio",
+      "EXTRA_TITLE": "Opciones adicionales",
+      "CONTACT": "Contactar al client"
+    }
+  },
+  "OPERATOR_HOME": {
+    "TITLE": "¡Hola, {{name}}! 👋 ¡Bienvenido!",
+    "SUBTITLE": "Tienes {{count}} servicios pendientes para hoy",
+    "BTN_SERVICES": "Ver servicios asignados",
+    "PROGRESS_LABEL": "Servicios completados hoy",
     "IN_PROGRESS": "En Progreso",
-    "COMPLETED_TODAY": "Finalizados Hoy"
+    "PENDING": "Pendientes",
+    "RESERVATIONS_TITLE": "Reservas Pendientes",
+    "BTN_START": "Iniciar",
+    "STATS": {
+      "ASSIGNED": "Reservas Asignadas",
+      "VEHICLES": "Vehículos",
+      "NOTIFICATIONS": "Notificaciones",
+      "RATING": "Calificación"
+    }
   },
-
-  "FILTERS": {
-    "TITLE": "Filtros de búsqueda",
-    "BY_DATE": "Filtrar por fecha",
-    "BY_TYPE": "Filtrar por tipo de servicio",
-    "BY_SERVICE": "Buscar por servicio",
-    "SEARCH_PLACEHOLDER": "Buscar...",
-    "ALL": "Todas",
-    "FILTER_BTN": "Filtrar"
+  "SERVICE_HISTORY": {
+    "TITLE": "Historial de Servicios",
+    "SUBTITLE": "Consulta todos los servicios que has realizado, organizados por fecha, tipo de servicio y estado final.",
+    "FILTERS_TITLE": "Filtros de búsqueda",
+    "FILTER_DATE": "Filtrar por fecha",
+    "FILTER_TYPE": "Filtrar por tipo de servicio",
+    "BTN_FILTER": "Filtrar",
+    "TYPE_ALL": "Todas",
+    "TYPE_BASIC": "Básico",
+    "TYPE_PREMIUM": "Premium",
+    "TYPE_FULL": "Completo",
+    "STATUS_ALL": "Todos",
+    "STATUS_FINISHED": "Finalizado",
+    "STATUS_CANCELED": "Cancelado",
+    "STATUS_REASSIGNED": "Reasignado"
   },
-
-  "TABLE": {
+  "HISTORY_STATS": {
+    "DONE": "Servicios realizados este mes",
+    "CANCELED": "Servicios cancelados / reasignados"
+  },
+  "HISTORY_TABLE": {
     "ID": "ID",
-    "SERVICE_TYPE": "TIPO DE SERVICIO",
-    "LOCATION": "UBICACIÓN",
-    "DATE_TIME": "FECHA Y HORA",
+    "DATE_COMPLETED": "FECHA COMPLETADA",
+    "SERVICE": "SERVICIO",
     "VEHICLE": "VEHÍCULO",
-    "CLIENT": "CLIENTE",
-    "STATUS": "ESTADO"
+    "DURATION": "DURACIÓN",
+    "STATUS": "ESTADO FINAL",
+    "EMPTY": "No se encontraron servicios"
   },
-
-  "DETAIL": {
-    "TITLE": "Información del servicio",
-    "CLIENT": "Client:",
-    "ADDRESS": "Dirección:",
-    "SERVICE_TYPE": "Tipo de servicio:",
-    "SCHEDULED_TIME": "Hora programada:",
-    "PAYMENT_METHOD": "Método de pago:",
-    "MAP_LABEL": "Ubicación en mapa",
-    "PROGRESS_TITLE": "Estado y progreso",
-    "START": "Iniciar Servicio",
-    "REPORT": "Reportar progreso",
-    "FINISH": "Finalizar Servicio",
-    "EXTRA_TITLE": "Opciones adicionales",
-    "CONTACT": "Contactar al client"
+  "QUALIFICATIONS": {
+    "TITLE": "Calificaciones recibidas",
+    "SUBTITLE": "Consulta las valoraciones que han dejado los clientes sobre tu trabajo.",
+    "FILTERS_TITLE": "Filtros de búsqueda",
+    "FILTER_DATE": "Filtrar por fecha",
+    "FILTER_TYPE": "Filtrar por tipo de servicio",
+    "BTN_FILTER": "Filtrar",
+    "TYPE_ALL": "Todas",
+    "TYPE_BASIC": "Lavado Básico",
+    "TYPE_PREMIUM": "Lavado Premium",
+    "TYPE_FULL": "Lavado Completo",
+    "STARS_ALL": "Todos",
+    "STARS_5": "5 estrellas",
+    "STARS_4": "4 estrellas",
+    "STARS_3": "3 estrellas",
+    "STARS_2": "2 estrellas",
+    "STARS_1": "1 estrella",
+    "EMPTY": "No se encontraron calificaciones"
+  },
+  "QUALIFICATION_CARD": {
+    "DURATION": "Duración",
+    "LOCATION": "Ubicación",
+    "ID": "ID"
+  },
+  "QUALIFICATION_STATS": {
+    "AVG_RATING": "Calificación promedio",
+    "SATISFACTION_LEVEL": "Nivel de satisfacción",
+    "TOTAL": "Total de calificaciones recibidas",
+    "LAST_12_MONTHS": "En los últimos 12 meses"
   }
-},
-
-"OPERATOR_HOME": {
-  "TITLE": "¡Hola, {{name}}! 👋 ¡Bienvenido!",
-  "SUBTITLE": "Tienes {{count}} servicios pendientes para hoy",
-  "BTN_SERVICES": "Ver servicios asignados",
-  "PROGRESS_LABEL": "Servicios completados hoy",
-  "IN_PROGRESS": "En Progreso",
-  "PENDING": "Pendientes",
-  "RESERVATIONS_TITLE": "Reservas Pendientes",
-  "BTN_START": "Iniciar",
-  "STATS": {
-    "ASSIGNED": "Reservas Asignadas",
-    "VEHICLES": "Vehículos",
-    "NOTIFICATIONS": "Notificaciones",
-    "RATING": "Calificación"
-  }
-},
-
-
-"SERVICE_HISTORY": {
-  "TITLE": "Historial de Servicios",
-  "SUBTITLE": "Consulta todos los servicios que has realizado, organizados por fecha, tipo de servicio y estado final.",
-  "FILTERS_TITLE": "Filtros de búsqueda",
-  "FILTER_DATE": "Filtrar por fecha",
-  "FILTER_TYPE": "Filtrar por tipo de servicio",
-  "BTN_FILTER": "Filtrar",
-  "TYPE_ALL": "Todas",
-  "TYPE_BASIC": "Básico",
-  "TYPE_PREMIUM": "Premium",
-  "TYPE_FULL": "Completo",
-  "STATUS_ALL": "Todos",
-  "STATUS_FINISHED": "Finalizado",
-  "STATUS_CANCELED": "Cancelado",
-  "STATUS_REASSIGNED": "Reasignado"
-},
-
-"HISTORY_STATS": {
-  "DONE": "Servicios realizados este mes",
-  "CANCELED": "Servicios cancelados / reasignados"
-},
-
-"HISTORY_TABLE": {
-  "ID": "ID",
-  "DATE_COMPLETED": "FECHA COMPLETADA",
-  "SERVICE": "SERVICIO",
-  "VEHICLE": "VEHÍCULO",
-  "DURATION": "DURACIÓN",
-  "STATUS": "ESTADO FINAL",
-  "EMPTY": "No se encontraron servicios"
-},
-
-"QUALIFICATIONS": {
-  "TITLE": "Calificaciones recibidas",
-  "SUBTITLE": "Consulta las valoraciones que han dejado los clientes sobre tu trabajo.",
-  "FILTERS_TITLE": "Filtros de búsqueda",
-  "FILTER_DATE": "Filtrar por fecha",
-  "FILTER_TYPE": "Filtrar por tipo de servicio",
-  "BTN_FILTER": "Filtrar",
-  "TYPE_ALL": "Todas",
-  "TYPE_BASIC": "Lavado Básico",
-  "TYPE_PREMIUM": "Lavado Premium",
-  "TYPE_FULL": "Lavado Completo",
-  "STARS_ALL": "Todos",
-  "STARS_5": "5 estrellas",
-  "STARS_4": "4 estrellas",
-  "STARS_3": "3 estrellas",
-  "STARS_2": "2 estrellas",
-  "STARS_1": "1 estrella",
-  "EMPTY": "No se encontraron calificaciones"
-},
-
-"QUALIFICATION_CARD": {
-  "DURATION": "Duración",
-  "LOCATION": "Ubicación",
-  "ID": "ID"
-},
-
-"QUALIFICATION_STATS": {
-  "AVG_RATING": "Calificación promedio",
-  "SATISFACTION_LEVEL": "Nivel de satisfacción",
-  "TOTAL": "Total de calificaciones recibidas",
-  "LAST_12_MONTHS": "En los últimos 12 meses"
-}
-
 }

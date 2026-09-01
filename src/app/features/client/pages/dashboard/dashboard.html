@@ -1,0 +1,179 @@
+<div class="home-layout">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="CLIENTE"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <main class="home-content">
+
+    <!-- Saludo -->
+    <div class="dashboard-header">
+
+      <div>
+        <h1>{{ 'DASHBOARD.HELLO' | translate:{ name: usuario.nombre } }}</h1>
+        <p>{{ 'DASHBOARD.SUBTITLE' | translate }}</p>
+      </div>
+
+      
+
+      <!-- Notificaciones -->
+      <div class="icon_notifications"
+        *ngFor="let item of notificaciones"
+        (click)="irA(item.camp)"
+        [class.clickable]="item.camp !== null">
+        <mat-icon class="icon-notifications">{{ item.camp }}</mat-icon>
+      </div>
+
+    </div>
+
+    <!-- Estadísticas rápidas -->
+    <div class="stats-grid">
+      <div class="stat-card" *ngFor="let stat of estadisticas">
+        <div class="stat-icon">
+          <mat-icon>{{ stat.icono }}</mat-icon>
+        </div>
+        <span class="stat-valor">{{ stat.valor }}</span>
+        <span class="stat-label">{{ ('DASHBOARD.' + stat.label) | translate }}</span>
+      </div>
+    </div>
+
+    <!-- Próximo servicio + accesos rápidos -->
+    <div class="dashboard-row">
+
+      <div class="card next-service-card">
+        <div class="card-header">
+          <div class="card-title">
+            <mat-icon>schedule</mat-icon>
+            <h2>{{ 'DASHBOARD.NEXT_SERVICE.TITLE' | translate }}</h2>
+          </div>
+          <span class="badge" [class]="'badge-' + proximoServicio.estado.toLowerCase()">
+            {{ ('STATUS.' + proximoServicio.estado) | translate }}
+          </span>
+        </div>
+
+        <div class="next-service-body">
+          <div class="next-service-info">
+            <p class="next-service-nombre">
+              {{ proximoServicio.codigo }} · {{ ('SERVICE.' + proximoServicio.tipo) | translate }} —
+              {{ ('VEHICLE.' + proximoServicio.vehiculo) | translate }} · {{ proximoServicio.placa }}
+            </p>
+            <p class="next-service-fecha">{{ proximoServicio.fecha }}</p>
+
+            <div class="next-service-meta">
+              <span><mat-icon>location_on</mat-icon> {{ proximoServicio.direccion }}</span>
+              <span><mat-icon>call</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ proximoServicio.operario }}</span>
+            </div>
+          </div>
+
+          <button class="btn-outline">{{ 'DASHBOARD.NEXT_SERVICE.VIEW_DETAIL' | translate }}</button>
+        </div>
+
+        <div class="progress-row">
+          <span>{{ 'DASHBOARD.NEXT_SERVICE.PROGRESS' | translate }}</span>
+          <span>{{ proximoServicio.avance }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="proximoServicio.avance"></div>
+        </div>
+      </div>
+
+      <div class="card quick-access-card">
+        <h2>{{ 'DASHBOARD.QUICK_ACCESS.TITLE' | translate }}</h2>
+
+        <div class="quick-access-grid">
+          <button class="quick-access-item" *ngFor="let acceso of accesosRapidos" (click)="irA(acceso.ruta)">
+            <mat-icon>{{ acceso.icono }}</mat-icon>
+            <span>{{ ('DASHBOARD.' + acceso.label) | translate }}</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Vehículos + beneficios -->
+    <div class="dashboard-row">
+
+      <div class="card vehicles-card">
+        <div class="card-title">
+          <mat-icon>directions_car</mat-icon>
+          <h2>{{ 'DASHBOARD.VEHICLES.TITLE' | translate }}</h2>
+        </div>
+
+        <div class="vehicle-item" *ngFor="let vehiculo of vehiculos">
+          <div>
+            <p class="vehicle-nombre">{{ ('VEHICLE.' + vehiculo.tipo) | translate }}</p>
+            <p class="vehicle-placa">{{ 'DASHBOARD.VEHICLES.PLATE' | translate }} {{ vehiculo.placa }}</p>
+          </div>
+          <span class="vehicle-fecha">{{ 'DASHBOARD.VEHICLES.LAST_WASH' | translate }} {{ vehiculo.ultimoLavado }}</span>
+        </div>
+      </div>
+
+      <div class="card benefits-card">
+        <div class="card-title">
+          <mat-icon>card_giftcard</mat-icon>
+          <h2>{{ 'DASHBOARD.BENEFITS.TITLE' | translate }}</h2>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-item" *ngFor="let beneficio of beneficios">
+            <p class="benefit-titulo">{{ beneficio.titulo }}</p>
+            <p class="benefit-desc">{{ beneficio.descripcion }}</p>
+          </div>
+        </div>
+
+        <div class="loyalty-progress">
+          <div class="progress-row">
+            <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ fidelidad.actual }} de {{ fidelidad.meta }} lavados)</span>
+            <span>{{ fidelidad.porcentaje }}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="fidelidad.porcentaje"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Historial de servicios -->
+    <div class="card history-card">
+      <div class="card-header">
+        <div class="card-title">
+          <mat-icon>history</mat-icon>
+          <h2>{{ 'DASHBOARD.SERVICES_HISTORY.TITLE' | translate }}</h2>
+        </div>
+
+        <div class="history-actions">
+          <button class="btn-outline" (click)="irA('history')">
+            <mat-icon>credit_card</mat-icon>
+            {{ 'DASHBOARD.SERVICES_HISTORY.PAY_SERVICE' | translate }}
+          </button>
+          <a class="link-ver-todo" (click)="irA('history')">
+            {{ 'DASHBOARD.SERVICES_HISTORY.VIEW_ALL' | translate }}
+            <mat-icon>arrow_forward</mat-icon>
+          </a>
+        </div>
+      </div>
+
+      <div class="history-item" *ngFor="let servicio of historialServicios">
+        <div>
+          <p class="history-nombre">
+            {{ servicio.codigo }} · {{ ('SERVICE.' + servicio.tipo) | translate }} — {{ ('VEHICLE.' + servicio.vehiculo) | translate }}
+          </p>
+          <p class="history-fecha">
+            {{ servicio.fecha }} · {{ 'DASHBOARD.SERVICES_HISTORY.OPERATOR' | translate }}: {{ servicio.operario }}
+          </p>
+        </div>
+
+        <div class="history-right">
+          <span class="history-precio">{{ servicio.precio === 0 ? '$0' : ('$' + (servicio.precio | number)) }}</span>
+          <span class="badge" [class]="'badge-' + servicio.estado.toLowerCase()">
+            {{ ('STATUS.' + servicio.estado) | translate }}
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

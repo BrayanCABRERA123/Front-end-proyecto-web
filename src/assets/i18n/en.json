@@ -8,24 +8,20 @@
     "EMAIL_DESC": "One day before your scheduled wash",
     "PROMO": "Promotions and Offers",
     "PROMO_DESC": "Receive exclusive discounts",
-
     "APPEARANCE": "Appearance",
     "THEME": "Choose theme",
     "THEME_DESC": "Customize the app colors",
-
     "LANGUAGE": "Languages",
     "LANGUAGE_DESC": "Change language",
-
     "LOCATION": "Location",
     "LOCATION_SHARE": "Share Location",
     "LOCATION_DESC": "Allow access to your current location",
-
     "HELP": "Help",
     "HELP_CENTER": "Help Center",
     "OPEN": "Open"
   },
-  
   "SIDEBAR": {
+    "DASHBOARD": "Dashboard",
     "TITLE": "Car Wash",
     "PROFILE": "Profile",
     "RESERVE": "Book Wash",
@@ -36,7 +32,6 @@
     "ASSIGNED_SERVICES": "assigned services",
     "RATINGS": "Ratings"
   },
-
   "HISTORY": {
     "FILTERS": "Filters",
     "ALL": "All",
@@ -49,7 +44,6 @@
     "SEARCH_PLACEHOLDER": "Type to search...",
     "EMPTY": "No services found"
   },
-
   "HISTORY_CARD": {
     "ADDRESS": "Address",
     "TYPE": "Service type",
@@ -63,7 +57,6 @@
   "COMMON": {
     "CLOSE": "Close"
   },
-
   "SERVICE": {
     "BASIC": "Basic",
     "FULL": "Complete",
@@ -78,174 +71,185 @@
     "FULL_TIME": "1 hour",
     "PREMIUM_TIME": "1 hour 30 minutes"
   },
-
   "EXTRA": {
     "WAX": "Wax",
     "VACUUM": "Vacuum"
   },
-
   "STATUS": {
     "COMPLETED": "Completed",
     "PENDING": "Pending",
-
-    
-    "CONFIRMED": "Confirmed"
+    "CONFIRMED": "Confirmed",
+    "CANCELED": "Canceled",
+    "ON_THE_WAY": "On the way"
   },
-
   "ASSIGNMENT": {
-  "MANUAL": "Manual",
-  "AUTO": "Automatic",
-  "AUTO_DESC": "The system will automatically assign an available operator."
-},
-
-  "HOME": {
+    "MANUAL": "Manual",
+    "AUTO": "Automatic",
+    "AUTO_DESC": "The system will automatically assign an available operator."
+  },
+  "DASHBOARD": {
     "HELLO": "Hello, {{name}}!",
     "WELCOME": "Welcome back to Car Wash",
     "NEXT_RESERVATIONS": "Upcoming Reservations",
-
     "RESUMEN": {
       "ACTIVE": "Active bookings",
       "VEHICLES": "Vehicles",
       "NOTIFICATIONS": "Notifications"
+    },
+    "SUBTITLE": "This is your client information module for AquaWash",
+    "CLIENT_VIEW": "Client View",
+    "STATS": {
+      "ACTIVE_RESERVATIONS": "My active bookings",
+      "MY_VEHICLES": "My vehicles",
+      "WASHES_DONE": "Washes completed",
+      "MY_RATING": "My given rating"
+    },
+    "NEXT_SERVICE": {
+      "TITLE": "Your next service",
+      "VIEW_DETAIL": "View detail",
+      "OPERATOR_ASSIGNED": "Assigned operator",
+      "PROGRESS": "Service progress"
+    },
+    "QUICK_ACCESS": {
+      "TITLE": "Quick access",
+      "BOOK_WASH": "Book wash",
+      "PAY_SERVICE": "Pay service",
+      "MY_VEHICLES": "My vehicles",
+      "NOTIFICATIONS": "Notifications"
+    },
+    "VEHICLES": {
+      "TITLE": "My registered vehicles",
+      "LAST_WASH": "Last wash",
+      "PLATE": "Plate"
+    },
+    "BENEFITS": {
+      "TITLE": "Your benefits and promotions",
+      "LOYALTY_PROGRESS": "Loyalty progress"
+    },
+    "SERVICES_HISTORY": {
+      "TITLE": "My service history",
+      "PAY_SERVICE": "Pay service",
+      "VIEW_ALL": "View all",
+      "OPERATOR": "Operator"
     }
   },
-
   "VEHICLE": {
     "CAR": "Car",
     "TRUCK": "Truck",
-
     "SEDAN": "Sedan",
     "SUV": "SUV",
     "PICKUP": "Pickup",
     "MOTO": "Motorcycle"
   },
-
-"NOTIFICATIONS": {
-  "TITLE": "Notifications",
-  "CLIENT_SUBTITLE": "Here you can view notifications related to your bookings, promotions and system updates.",
-  "OPERATOR_SUBTITLE": "Here you can view important notifications related to your assigned services, status updates and system communications.",
-  "NEW_SERVICE": "New service assigned",
-  "NEW_SERVICE_DESC": "SV-2034 has been assigned to you at 3:00 PM.",
-  "STATUS_UPDATE": "Status update",
-  "STATUS_UPDATE_DESC": "The client confirmed the address for service SV-1783.",
-  "CANCELLATION": "Cancellation",
-  "CANCELLATION_DESC": "The client cancelled service SV-1690.",
-  "CLIENT_MESSAGE": "Client message",
-  "CLIENT_MESSAGE_DESC": "\"I'll be 5 minutes late, please wait for me.\"",
-  "SYSTEM": "System",
-  "SYSTEM_DESC": "Your profile has been successfully updated.",
-  "RESERVATION_CONFIRMED": "Reservation confirmed",
-  "RESERVATION_DESC": "Your premium wash is scheduled for February 25 at 10:00 AM.",
-  "REMINDER": "Reminder",
-  "REMINDER_DESC": "Your wash is scheduled for tomorrow. Everything is ready!",
-  "PROMO": "Special promotion!",
-  "PROMO_DESC": "Get 20% off your next full wash. Use code: AQUA20",
-  "UPDATE": "Service update",
-  "UPDATE_DESC": "We have expanded our coverage to new areas of the city.",
-  "TIME_2H": "2 hours ago",
-  "TIME_1D": "1 day ago",
-  "TIME_2D": "2 days ago",
-  "TIME_3D": "3 days ago",
-  "READ": "Read",
-  "UNREAD": "Unread",
-  "BTN_DETAIL": "View detail"
-},
-
-"PAYMENTS": {
-  "TITLE": "Payments",
-  "SUBTITLE": "These are the payment methods you can use",
-
-  "PSE": {
-    "TITLE": "PSE",
-    "DESC": "Pay online through your bank"
+  "NOTIFICATIONS": {
+    "TITLE": "Notifications",
+    "CLIENT_SUBTITLE": "Here you can view notifications related to your bookings, promotions and system updates.",
+    "OPERATOR_SUBTITLE": "Here you can view important notifications related to your assigned services, status updates and system communications.",
+    "NEW_SERVICE": "New service assigned",
+    "NEW_SERVICE_DESC": "SV-2034 has been assigned to you at 3:00 PM.",
+    "STATUS_UPDATE": "Status update",
+    "STATUS_UPDATE_DESC": "The client confirmed the address for service SV-1783.",
+    "CANCELLATION": "Cancellation",
+    "CANCELLATION_DESC": "The client cancelled service SV-1690.",
+    "CLIENT_MESSAGE": "Client message",
+    "CLIENT_MESSAGE_DESC": "\"I'll be 5 minutes late, please wait for me.\"",
+    "SYSTEM": "System",
+    "SYSTEM_DESC": "Your profile has been successfully updated.",
+    "RESERVATION_CONFIRMED": "Reservation confirmed",
+    "RESERVATION_DESC": "Your premium wash is scheduled for February 25 at 10:00 AM.",
+    "REMINDER": "Reminder",
+    "REMINDER_DESC": "Your wash is scheduled for tomorrow. Everything is ready!",
+    "PROMO": "Special promotion!",
+    "PROMO_DESC": "Get 20% off your next full wash. Use code: AQUA20",
+    "UPDATE": "Service update",
+    "UPDATE_DESC": "We have expanded our coverage to new areas of the city.",
+    "TIME_2H": "2 hours ago",
+    "TIME_1D": "1 day ago",
+    "TIME_2D": "2 days ago",
+    "TIME_3D": "3 days ago",
+    "READ": "Read",
+    "UNREAD": "Unread",
+    "BTN_DETAIL": "View detail"
   },
-
-  "CARD": {
-    "TITLE": "Bank Card",
-    "DESC": "Pay with credit or debit card"
+  "PAYMENTS": {
+    "TITLE": "Payments",
+    "SUBTITLE": "These are the payment methods you can use",
+    "PSE": {
+      "TITLE": "PSE",
+      "DESC": "Pay online through your bank"
+    },
+    "CARD": {
+      "TITLE": "Bank Card",
+      "DESC": "Pay with credit or debit card"
+    },
+    "NEQUI": {
+      "TITLE": "Nequi",
+      "DESC": "Pay with your Nequi account"
+    },
+    "CASH": {
+      "TITLE": "Cash Payment",
+      "DESC": "Payment is made directly to the operator during the service"
+    }
   },
-
-  "NEQUI": {
-    "TITLE": "Nequi",
-    "DESC": "Pay with your Nequi account"
+  "PROFILE": {
+    "TITLE": "My Profile",
+    "MEMBER_SINCE": "Member since {{date}}",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "PHONE": "Phone",
+    "ADDRESS": "Address",
+    "EDIT": "Edit profile",
+    "SAVE": "Save",
+    "PASSWORD": "Password",
+    "CHANGE_PASSWORD": "Change password",
+    "PASSWORD_DESC": "A strong password is recommended",
+    "CHANGE": "Change",
+    "ACCOUNT": "Account",
+    "DELETE": "Delete account",
+    "DELETE_DESC": "Permanently delete your account and all your data",
+    "SAVED_MODE": "View mode",
+    "EDIT_MODE": "Edit mode",
+    "VALIDATION": {
+      "NAME_REQUIRED": "Name is required",
+      "NAME_MIN": "Name must be at least 3 characters",
+      "NAME_INVALID": "Name can only contain letters",
+      "EMAIL_REQUIRED": "Email is required",
+      "EMAIL_INVALID": "Please enter a valid email address",
+      "PHONE_REQUIRED": "Phone number is required",
+      "PHONE_INVALID": "The number is not valid for the selected country",
+      "ADDRESS_REQUIRED": "Address is required",
+      "ADDRESS_MIN": "Address must be at least 5 characters"
+    }
   },
-
-  "CASH": {
-    "TITLE": "Cash Payment",
-    "DESC": "Payment is made directly to the operator during the service"
-  }
-},
-
-"PROFILE": {
-  "TITLE": "My Profile",
-  "MEMBER_SINCE": "Member since {{date}}",
-
-  "NAME": "Name",
-  "EMAIL": "Email",
-  "PHONE": "Phone",
-  "ADDRESS": "Address",
-
-  "EDIT": "Edit profile",
-  "SAVE": "Save",
-
-  "PASSWORD": "Password",
-  "CHANGE_PASSWORD": "Change password",
-  "PASSWORD_DESC": "A strong password is recommended",
-  "CHANGE": "Change",
-
-  "ACCOUNT": "Account",
-  "DELETE": "Delete account",
-  "DELETE_DESC": "Permanently delete your account and all your data",
-
-  "SAVED_MODE": "View mode",
-  "EDIT_MODE": "Edit mode",
-
-  "VALIDATION": {
-  "NAME_REQUIRED": "Name is required",
-  "NAME_MIN": "Name must be at least 3 characters",
-  "NAME_INVALID": "Name can only contain letters",
-  "EMAIL_REQUIRED": "Email is required",
-  "EMAIL_INVALID": "Please enter a valid email address",
-  "PHONE_REQUIRED": "Phone number is required",
-  "PHONE_INVALID": "The number is not valid for the selected country",
-  "ADDRESS_REQUIRED": "Address is required",
-  "ADDRESS_MIN": "Address must be at least 5 characters"
-}
-},
-
-"RATINGS": {
-  "TITLE": "Rate service",
-  "SUBTITLE": "Your feedback helps us improve",
-  "QUESTION": "How was your experience?",
-  "COMMENT": "Comments (optional)",
-  "PLACEHOLDER": "Tell us more about your experience...",
-  "SUBMIT": "Submit rating"
-},
-
-"RESERVE": {
-  "TITLE": "Book wash",
-  "SUBTITLE": "Schedule your next wash in a few steps",
-  "DATE": "Date",
-  "TIME": "Time",
-  "SELECT_TIME": "Select a time",
-  "ADDRESS": "Address",
-  "ADDRESS_PLACEHOLDER": "Street, number, city...",
-  "VEHICLE": "Vehicle type",
-  "SERVICE": "Service type",
-  "ASSIGNMENT": "Operator assignment",
-  "SELECT": "Select",
-  "SUBMIT": "Book now"
-},
-
+  "RATINGS": {
+    "TITLE": "Rate service",
+    "SUBTITLE": "Your feedback helps us improve",
+    "QUESTION": "How was your experience?",
+    "COMMENT": "Comments (optional)",
+    "PLACEHOLDER": "Tell us more about your experience...",
+    "SUBMIT": "Submit rating"
+  },
+  "RESERVE": {
+    "TITLE": "Book wash",
+    "SUBTITLE": "Schedule your next wash in a few steps",
+    "DATE": "Date",
+    "TIME": "Time",
+    "SELECT_TIME": "Select a time",
+    "ADDRESS": "Address",
+    "ADDRESS_PLACEHOLDER": "Street, number, city...",
+    "VEHICLE": "Vehicle type",
+    "SERVICE": "Service type",
+    "ASSIGNMENT": "Operator assignment",
+    "SELECT": "Select",
+    "SUBMIT": "Book now"
+  },
   "APP": {
     "TITLE": "Car Wash Service"
   },
-
   "NAV": {
     "LOGIN": "Login",
     "REGISTER": "Register"
   },
-
   "HERO": {
     "BADGE": "Mobile car wash service #1",
     "TITLE_1": "Your car spotless,",
@@ -254,11 +258,9 @@
     "START": "Get started",
     "ALREADY_ACCOUNT": "I already have an account"
   },
-
   "FEATURES": {
     "TITLE": "Why choose us?",
     "SUBTITLE": "We provide the best mobile car wash service with professional quality.",
-
     "ITEMS": {
       "ECO": {
         "TITLE": "Eco-friendly wash",
@@ -274,273 +276,221 @@
       }
     }
   },
-
   "LOGOUT": {
-  "TITLE": "Log out",
-  "MESSAGE": "Are you sure you want to log out?",
-  "CONFIRM": "Yes, log out",
-  "CANCEL": "Cancel"
-},
-
-"LOGIN": {
-  "TITLE": "Login",
-  "SUBTITLE": "Access your account to book a service",
-
-  "EMAIL": "Email Address",
-  "EMAIL_PLACEHOLDER": "user@gmail.com",
-
-  "PASSWORD": "Password",
-  "PASSWORD_PLACEHOLDER": "********",
-
-  "EMAIL_REQUIRED": "Email is required",
-  "EMAIL_INVALID": "Please enter a valid @gmail.com email",
-
-  "PASSWORD_REQUIRED": "Password is required",
-
-  "FORGOT_PASSWORD": "Forgot your password?",
-
-  "BUTTON": "Login",
-
-  "NO_ACCOUNT": "Don't have an account?",
-  "REGISTER": "Sign up",
-
-  "INVALID_CREDENTIALS": "Incorrect email or password"
-},
-
-"REGISTER": {
-  "TITLE": "Create Account",
-  "SUBTITLE": "Sign up to start booking",
-
-  "FULL_NAME": "Full Name",
-  "FULL_NAME_PLACEHOLDER": "John Doe",
-
-  "EMAIL": "Email Address",
-  "EMAIL_PLACEHOLDER": "user@gmail.com",
-
-  "PHONE": "Phone Number",
-  "PHONE_PLACEHOLDER": "3001234567",
-
-  "PASSWORD": "Password",
-  "PASSWORD_PLACEHOLDER": "Minimum 8 characters",
-
-  "CONFIRM_PASSWORD": "Confirm Password",
-  "CONFIRM_PASSWORD_PLACEHOLDER": "Repeat your password",
-
-  "NAME_REQUIRED": "Name is required",
-  "NAME_MIN": "Must contain at least 3 characters",
-
-  "EMAIL_REQUIRED": "Email is required",
-  "EMAIL_INVALID": "Only @gmail.com emails are allowed",
-
-  "PHONE_REQUIRED": "Phone number is required",
-  "PHONE_INVALID": "Must start with 3 (Colombian mobile number)",
-  "PHONE_MIN": "The number must contain 10 digits",
-
-  "PASSWORD_REQUIRED": "Password is required",
-
-  "CONFIRM_REQUIRED": "You must confirm the password",
-  "PASSWORDS_NOT_MATCH": "Passwords do not match",
-
-  "REQUIREMENTS": {
-    "MIN": "Minimum 8 characters",
-    "UPPERCASE": "At least one uppercase letter",
-    "NUMBER": "At least one number",
-    "SPECIAL": "At least one special character"
+    "TITLE": "Log out",
+    "MESSAGE": "Are you sure you want to log out?",
+    "CONFIRM": "Yes, log out",
+    "CANCEL": "Cancel"
   },
-
-  "BUTTON": "Register",
-  "BUTTON_LOADING": "Registering...",
-
-  "ALREADY_ACCOUNT": "Already have an account?",
-  "LOGIN": "Log in",
-
-  "INVALID_CREDENTIALS": "Incorrect email or password"
-},
-
-"FORGOT": {
-  "BACK_LOGIN": "Back to Login",
-
-  "EMAIL": {
-    "TITLE": "Recover Password",
-    "DESCRIPTION": "Enter your email to receive a verification code",
-    "LABEL": "Email Address",
-    "PLACEHOLDER": "user@gmail.com",
-    "INVALID": "Please enter a valid @gmail.com email",
-    "BUTTON": "Send Code"
+  "LOGIN": {
+    "TITLE": "Login",
+    "SUBTITLE": "Access your account to book a service",
+    "EMAIL": "Email Address",
+    "EMAIL_PLACEHOLDER": "user@gmail.com",
+    "PASSWORD": "Password",
+    "PASSWORD_PLACEHOLDER": "********",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Please enter a valid @gmail.com email",
+    "PASSWORD_REQUIRED": "Password is required",
+    "FORGOT_PASSWORD": "Forgot your password?",
+    "BUTTON": "Login",
+    "NO_ACCOUNT": "Don't have an account?",
+    "REGISTER": "Sign up",
+    "INVALID_CREDENTIALS": "Incorrect email or password"
   },
-
-  "VERIFICATION": {
-    "TITLE": "Verification",
-    "DESCRIPTION": "Enter the 6-digit code sent to",
-    "RESEND": "Didn't receive the code? Resend",
-    "BUTTON": "Verify Code"
-  },
-
-  "NEW_PASSWORD": {
-    "TITLE": "New Password",
-    "DESCRIPTION": "Create your new secure password",
-
-    "LABEL": "New Password",
-    "PLACEHOLDER": "••••••••",
-
-    "CONFIRM": "Confirm Password",
-    "CONFIRM_PLACEHOLDER": "••••••••",
-
-    "BUTTON": "Update Password",
-
+  "REGISTER": {
+    "TITLE": "Create Account",
+    "SUBTITLE": "Sign up to start booking",
+    "FULL_NAME": "Full Name",
+    "FULL_NAME_PLACEHOLDER": "John Doe",
+    "EMAIL": "Email Address",
+    "EMAIL_PLACEHOLDER": "user@gmail.com",
+    "PHONE": "Phone Number",
+    "PHONE_PLACEHOLDER": "3001234567",
+    "PASSWORD": "Password",
+    "PASSWORD_PLACEHOLDER": "Minimum 8 characters",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "CONFIRM_PASSWORD_PLACEHOLDER": "Repeat your password",
+    "NAME_REQUIRED": "Name is required",
+    "NAME_MIN": "Must contain at least 3 characters",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Only @gmail.com emails are allowed",
+    "PHONE_REQUIRED": "Phone number is required",
+    "PHONE_INVALID": "Must start with 3 (Colombian mobile number)",
+    "PHONE_MIN": "The number must contain 10 digits",
+    "PASSWORD_REQUIRED": "Password is required",
+    "CONFIRM_REQUIRED": "You must confirm the password",
+    "PASSWORDS_NOT_MATCH": "Passwords do not match",
     "REQUIREMENTS": {
       "MIN": "Minimum 8 characters",
       "UPPERCASE": "At least one uppercase letter",
       "NUMBER": "At least one number",
       "SPECIAL": "At least one special character"
+    },
+    "BUTTON": "Register",
+    "BUTTON_LOADING": "Registering...",
+    "ALREADY_ACCOUNT": "Already have an account?",
+    "LOGIN": "Log in",
+    "INVALID_CREDENTIALS": "Incorrect email or password"
+  },
+  "FORGOT": {
+    "BACK_LOGIN": "Back to Login",
+    "EMAIL": {
+      "TITLE": "Recover Password",
+      "DESCRIPTION": "Enter your email to receive a verification code",
+      "LABEL": "Email Address",
+      "PLACEHOLDER": "user@gmail.com",
+      "INVALID": "Please enter a valid @gmail.com email",
+      "BUTTON": "Send Code"
+    },
+    "VERIFICATION": {
+      "TITLE": "Verification",
+      "DESCRIPTION": "Enter the 6-digit code sent to",
+      "RESEND": "Didn't receive the code? Resend",
+      "BUTTON": "Verify Code"
+    },
+    "NEW_PASSWORD": {
+      "TITLE": "New Password",
+      "DESCRIPTION": "Create your new secure password",
+      "LABEL": "New Password",
+      "PLACEHOLDER": "••••••••",
+      "CONFIRM": "Confirm Password",
+      "CONFIRM_PLACEHOLDER": "••••••••",
+      "BUTTON": "Update Password",
+      "REQUIREMENTS": {
+        "MIN": "Minimum 8 characters",
+        "UPPERCASE": "At least one uppercase letter",
+        "NUMBER": "At least one number",
+        "SPECIAL": "At least one special character"
+      }
     }
-  }
-},
-
-
+  },
   "AUTH_PANEL": {
     "TITLE": "Your vehicle deserves the best care",
     "SUBTITLE": "Manage your car wash services, schedule appointments, and keep full control of your vehicle from a single platform.",
-
     "BENEFIT1_TITLE": "Premium Service",
     "BENEFIT1_DESC": "High-quality washes to keep your vehicle spotless.",
-
     "BENEFIT2_TITLE": "Quick Bookings",
     "BENEFIT2_DESC": "Schedule your appointments in seconds from any device.",
-
     "BENEFIT3_TITLE": "Secure Information",
     "BENEFIT3_DESC": "Your data and reservations are protected at all times."
   },
-
   "ASSIGNED_SERVICES": {
-  "TITLE": "Assigned Services",
-  "SUBTITLE": "Here you can see all the services assigned to you. Keep the progress information updated.",
-
-  "STATS": {
-    "TOTAL": "Total Services",
-    "PENDING": "Pending",
+    "TITLE": "Assigned Services",
+    "SUBTITLE": "Here you can see all the services assigned to you. Keep the progress information updated.",
+    "STATS": {
+      "TOTAL": "Total Services",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED_TODAY": "Completed Today"
+    },
+    "FILTERS": {
+      "TITLE": "Search filters",
+      "BY_DATE": "Filter by date",
+      "BY_TYPE": "Filter by service type",
+      "BY_SERVICE": "Search by service",
+      "SEARCH_PLACEHOLDER": "Search...",
+      "ALL": "All",
+      "FILTER_BTN": "Filter"
+    },
+    "TABLE": {
+      "ID": "ID",
+      "SERVICE_TYPE": "SERVICE TYPE",
+      "LOCATION": "LOCATION",
+      "DATE_TIME": "DATE & TIME",
+      "VEHICLE": "VEHICLE",
+      "CLIENT": "CLIENT",
+      "STATUS": "STATUS"
+    },
+    "DETAIL": {
+      "TITLE": "Service information",
+      "CLIENT": "Client:",
+      "ADDRESS": "Address:",
+      "SERVICE_TYPE": "Service type:",
+      "SCHEDULED_TIME": "Scheduled time:",
+      "PAYMENT_METHOD": "Payment method:",
+      "MAP_LABEL": "Location on map",
+      "PROGRESS_TITLE": "Status and progress",
+      "START": "Start Service",
+      "REPORT": "Report progress",
+      "FINISH": "Finish Service",
+      "EXTRA_TITLE": "Additional options",
+      "CONTACT": "Contact client"
+    }
+  },
+  "OPERATOR_HOME": {
+    "TITLE": "Hello, {{name}}! 👋 Welcome!",
+    "SUBTITLE": "You have {{count}} pending services for today",
+    "BTN_SERVICES": "View assigned services",
+    "PROGRESS_LABEL": "Services completed today",
     "IN_PROGRESS": "In Progress",
-    "COMPLETED_TODAY": "Completed Today"
+    "PENDING": "Pending",
+    "RESERVATIONS_TITLE": "Pending Reservations",
+    "BTN_START": "Start",
+    "STATS": {
+      "ASSIGNED": "Assigned Bookings",
+      "VEHICLES": "Vehicles",
+      "NOTIFICATIONS": "Notifications",
+      "RATING": "Rating"
+    }
   },
-
-  "FILTERS": {
-    "TITLE": "Search filters",
-    "BY_DATE": "Filter by date",
-    "BY_TYPE": "Filter by service type",
-    "BY_SERVICE": "Search by service",
-    "SEARCH_PLACEHOLDER": "Search...",
-    "ALL": "All",
-    "FILTER_BTN": "Filter"
+  "SERVICE_HISTORY": {
+    "TITLE": "Service History",
+    "SUBTITLE": "Check all the services you have completed, organized by date, service type and final status.",
+    "FILTERS_TITLE": "Search filters",
+    "FILTER_DATE": "Filter by date",
+    "FILTER_TYPE": "Filter by service type",
+    "BTN_FILTER": "Filter",
+    "TYPE_ALL": "All",
+    "TYPE_BASIC": "Basic",
+    "TYPE_PREMIUM": "Premium",
+    "TYPE_FULL": "Complete",
+    "STATUS_ALL": "All",
+    "STATUS_FINISHED": "Completed",
+    "STATUS_CANCELED": "Canceled",
+    "STATUS_REASSIGNED": "Reassigned"
   },
-
-  "TABLE": {
+  "HISTORY_STATS": {
+    "DONE": "Services completed this month",
+    "CANCELED": "Canceled / reassigned services"
+  },
+  "HISTORY_TABLE": {
     "ID": "ID",
-    "SERVICE_TYPE": "SERVICE TYPE",
-    "LOCATION": "LOCATION",
-    "DATE_TIME": "DATE & TIME",
+    "DATE_COMPLETED": "DATE COMPLETED",
+    "SERVICE": "SERVICE",
     "VEHICLE": "VEHICLE",
-    "CLIENT": "CLIENT",
-    "STATUS": "STATUS"
+    "DURATION": "DURATION",
+    "STATUS": "FINAL STATUS",
+    "EMPTY": "No services found"
   },
-
-  "DETAIL": {
-    "TITLE": "Service information",
-    "CLIENT": "Client:",
-    "ADDRESS": "Address:",
-    "SERVICE_TYPE": "Service type:",
-    "SCHEDULED_TIME": "Scheduled time:",
-    "PAYMENT_METHOD": "Payment method:",
-    "MAP_LABEL": "Location on map",
-    "PROGRESS_TITLE": "Status and progress",
-    "START": "Start Service",
-    "REPORT": "Report progress",
-    "FINISH": "Finish Service",
-    "EXTRA_TITLE": "Additional options",
-    "CONTACT": "Contact client"
+  "QUALIFICATIONS": {
+    "TITLE": "Ratings received",
+    "SUBTITLE": "Check the ratings your clients have left about your work.",
+    "FILTERS_TITLE": "Search filters",
+    "FILTER_DATE": "Filter by date",
+    "FILTER_TYPE": "Filter by service type",
+    "BTN_FILTER": "Filter",
+    "TYPE_ALL": "All",
+    "TYPE_BASIC": "Basic Wash",
+    "TYPE_PREMIUM": "Premium Wash",
+    "TYPE_FULL": "Complete Wash",
+    "STARS_ALL": "All",
+    "STARS_5": "5 stars",
+    "STARS_4": "4 stars",
+    "STARS_3": "3 stars",
+    "STARS_2": "2 stars",
+    "STARS_1": "1 star",
+    "EMPTY": "No ratings found"
+  },
+  "QUALIFICATION_CARD": {
+    "DURATION": "Duration",
+    "LOCATION": "Location",
+    "ID": "ID"
+  },
+  "QUALIFICATION_STATS": {
+    "AVG_RATING": "Average rating",
+    "SATISFACTION_LEVEL": "Satisfaction level",
+    "TOTAL": "Total ratings received",
+    "LAST_12_MONTHS": "In the last 12 months"
   }
-},
-
-"OPERATOR_HOME": {
-  "TITLE": "Hello, {{name}}! 👋 Welcome!",
-  "SUBTITLE": "You have {{count}} pending services for today",
-  "BTN_SERVICES": "View assigned services",
-  "PROGRESS_LABEL": "Services completed today",
-  "IN_PROGRESS": "In Progress",
-  "PENDING": "Pending",
-  "RESERVATIONS_TITLE": "Pending Reservations",
-  "BTN_START": "Start",
-  "STATS": {
-    "ASSIGNED": "Assigned Bookings",
-    "VEHICLES": "Vehicles",
-    "NOTIFICATIONS": "Notifications",
-    "RATING": "Rating"
-  }
-},
-
-
-"SERVICE_HISTORY": {
-  "TITLE": "Service History",
-  "SUBTITLE": "Check all the services you have completed, organized by date, service type and final status.",
-  "FILTERS_TITLE": "Search filters",
-  "FILTER_DATE": "Filter by date",
-  "FILTER_TYPE": "Filter by service type",
-  "BTN_FILTER": "Filter",
-  "TYPE_ALL": "All",
-  "TYPE_BASIC": "Basic",
-  "TYPE_PREMIUM": "Premium",
-  "TYPE_FULL": "Complete",
-  "STATUS_ALL": "All",
-  "STATUS_FINISHED": "Completed",
-  "STATUS_CANCELED": "Canceled",
-  "STATUS_REASSIGNED": "Reassigned"
-},
-
-"HISTORY_STATS": {
-  "DONE": "Services completed this month",
-  "CANCELED": "Canceled / reassigned services"
-},
-
-"HISTORY_TABLE": {
-  "ID": "ID",
-  "DATE_COMPLETED": "DATE COMPLETED",
-  "SERVICE": "SERVICE",
-  "VEHICLE": "VEHICLE",
-  "DURATION": "DURATION",
-  "STATUS": "FINAL STATUS",
-  "EMPTY": "No services found"
-},
-
-"QUALIFICATIONS": {
-  "TITLE": "Ratings received",
-  "SUBTITLE": "Check the ratings your clients have left about your work.",
-  "FILTERS_TITLE": "Search filters",
-  "FILTER_DATE": "Filter by date",
-  "FILTER_TYPE": "Filter by service type",
-  "BTN_FILTER": "Filter",
-  "TYPE_ALL": "All",
-  "TYPE_BASIC": "Basic Wash",
-  "TYPE_PREMIUM": "Premium Wash",
-  "TYPE_FULL": "Complete Wash",
-  "STARS_ALL": "All",
-  "STARS_5": "5 stars",
-  "STARS_4": "4 stars",
-  "STARS_3": "3 stars",
-  "STARS_2": "2 stars",
-  "STARS_1": "1 star",
-  "EMPTY": "No ratings found"
-},
-
-"QUALIFICATION_CARD": {
-  "DURATION": "Duration",
-  "LOCATION": "Location",
-  "ID": "ID"
-},
-
-"QUALIFICATION_STATS": {
-  "AVG_RATING": "Average rating",
-  "SATISFACTION_LEVEL": "Satisfaction level",
-  "TOTAL": "Total ratings received",
-  "LAST_12_MONTHS": "In the last 12 months"
 }
-}
-

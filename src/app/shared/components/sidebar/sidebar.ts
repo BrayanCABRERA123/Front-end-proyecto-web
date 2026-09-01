@@ -28,6 +28,7 @@ export class SidebarComponent implements OnInit {
 
   /*Menu opciones Client */
   clientMenu = [
+    { icono: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', ruta: '/client' },
     { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/client/profile' },
     { icono: 'local_car_wash', label: 'SIDEBAR.RESERVE', ruta: '/client/reserve' },
     { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/client/notifications' },
