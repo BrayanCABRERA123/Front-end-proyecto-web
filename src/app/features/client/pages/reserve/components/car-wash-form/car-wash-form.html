@@ -105,91 +105,11 @@
 
   </div>
 
-  <!-- Asignación de Operator -->
-  <div class="form-group">
-    <label class="form-label">
-      {{ 'RESERVE.ASSIGNMENT' | translate }}
-    </label>
-
-    <!-- Automática -->
-    <div class="radio-option" (click)="asignacion = 'AUTO'">
-      <div class="radio-circle" [class.selected]="asignacion === 'AUTO'">
-        @if (asignacion === 'AUTO') {
-          <div class="radio-dot"></div>
-        }
-      </div>
-      <div class="radio-content">
-        <span class="radio-label">
-          {{ 'ASSIGNMENT.AUTO' | translate }}
-        </span>
-        <span class="radio-description">
-          {{ 'ASSIGNMENT.AUTO_DESC' | translate }}
-        </span>
-      </div>
-    </div>
-
-    <!-- Manual -->
-    <div class="radio-option" (click)="asignacion = 'MANUAL'">
-      <div class="radio-circle" [class.selected]="asignacion === 'MANUAL'">
-        @if (asignacion === 'MANUAL') {
-          <div class="radio-dot"></div>
-        }
-      </div>
-      <span class="radio-label">
-        {{ 'ASSIGNMENT.MANUAL' | translate }}
-      </span>
-    </div>
-
-    <!-- Select operador -->
-    @if (asignacion === 'MANUAL') {
-      <div class="select-wrapper operator-select">
-        <select class="form-select" [(ngModel)]="operatorSeleccionado">
-          <option value="" disabled>
-            {{ 'RESERVE.SELECT' | translate }}
-          </option>
-          @for (operator of operators; track operator.value) {
-            <option [value]="operator.value">
-              {{ operator.label }}
-            </option>
-          }
-        </select>
-        <mat-icon class="select-icon">expand_more</mat-icon>
-      </div>
-    }
-  </div>
     <!-- MODAL DE SERVICIO -->
     
     <app-service-modal *ngIf="mostrarModal" [servicio]="tipoServicio" (cerrar)="mostrarModal = false">
     
     </app-service-modal>
-
-  <!-- Métodos de Pago -->
-  <div class="form-group">
-    <div class="payment-options">
-      @for (metodo of metodosPago; track metodo.value) {
-        <div
-          class="payment-option"
-          [class.selected]="metodoPago === metodo.value"
-          (click)="metodoPago = metodo.value">
-
-          <div class="radio-circle" [class.selected]="metodoPago === metodo.value">
-            @if (metodoPago === metodo.value) {
-              <div class="radio-dot"></div>
-            }
-          </div>
-
-          <div class="payment-icon">
-            <mat-icon>{{ metodo.icono }}</mat-icon>
-          </div>
-
-          <span class="payment-label">
-            {{ ('PAYMENTS.' + metodo.value + '.TITLE') | translate }}
-          </span>
-
-        </div>
-      }
-    </div>
-  </div>
 
   <!-- Botón -->
   <button class="btn-primary" (click)="onSubmit()">

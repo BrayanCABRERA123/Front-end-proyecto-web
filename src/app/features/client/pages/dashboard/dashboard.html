@@ -15,9 +15,10 @@
       </div>
 
 
-
       <!-- Notificaciones -->
-      <div class="icon_notifications" *ngFor="let item of notificaciones" (click)="irA(item.camp)"
+      <div class="icon_notifications"
+        *ngFor="let item of notificaciones"
+        (click)="irA(item.camp)"
         [class.clickable]="item.camp !== null">
         <mat-icon class="icon-notifications">{{ item.camp }}</mat-icon>
       </div>
@@ -59,8 +60,7 @@
 
             <div class="next-service-meta">
               <span><mat-icon>location_on</mat-icon> {{ proximoServicio.direccion }}</span>
-              <span><mat-icon>call</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{
-                proximoServicio.operario }}</span>
+              <span><mat-icon>call</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ proximoServicio.operario }}</span>
             </div>
           </div>
 
@@ -89,91 +89,29 @@
 
     </div>
 
-    <!-- Vehículos + beneficios -->
-    <div class="dashboard-row">
+    <!-- Beneficios y promociones -->
+    <div class="card benefits-card">
+      <div class="card-title">
+        <mat-icon>card_giftcard</mat-icon>
+        <h2>{{ 'DASHBOARD.BENEFITS.TITLE' | translate }}</h2>
+      </div>
 
-      <div class="card vehicles-card">
-        <div class="card-title">
-          <mat-icon>directions_car</mat-icon>
-          <h2>{{ 'DASHBOARD.VEHICLES.TITLE' | translate }}</h2>
-        </div>
-
-        <div class="vehicle-item" *ngFor="let vehiculo of vehiculos">
-          <div>
-            <p class="vehicle-nombre">{{ ('VEHICLE.' + vehiculo.tipo) | translate }}</p>
-            <p class="vehicle-placa">{{ 'DASHBOARD.VEHICLES.PLATE' | translate }} {{ vehiculo.placa }}</p>
-          </div>
-          <span class="vehicle-fecha">{{ 'DASHBOARD.VEHICLES.LAST_WASH' | translate }} {{ vehiculo.ultimoLavado
-            }}</span>
+      <div class="benefits-grid">
+        <div class="benefit-item" *ngFor="let beneficio of beneficios">
+          <p class="benefit-titulo">{{ beneficio.titulo }}</p>
+          <p class="benefit-desc">{{ beneficio.descripcion }}</p>
         </div>
       </div>
 
-      <div class="card benefits-card">
-        <div class="card-title">
-          <mat-icon>card_giftcard</mat-icon>
-          <h2>{{ 'DASHBOARD.BENEFITS.TITLE' | translate }}</h2>
+      <div class="loyalty-progress">
+        <div class="progress-row">
+          <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ fidelidad.actual }} de {{ fidelidad.meta }} lavados)</span>
+          <span>{{ fidelidad.porcentaje }}%</span>
         </div>
-
-        <div class="benefits-grid">
-          <div class="benefit-item" *ngFor="let beneficio of beneficios">
-            <p class="benefit-titulo">{{ beneficio.titulo }}</p>
-            <p class="benefit-desc">{{ beneficio.descripcion }}</p>
-          </div>
-        </div>
-
-        <div class="loyalty-progress">
-          <div class="progress-row">
-            <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ fidelidad.actual }} de {{ fidelidad.meta
-              }} lavados)</span>
-            <span>{{ fidelidad.porcentaje }}%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" [style.width.%]="fidelidad.porcentaje"></div>
-          </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="fidelidad.porcentaje"></div>
         </div>
       </div>
-
-    </div>
-
-    <!-- Historial de servicios -->
-    <div class="card history-card">
-      <div class="card-header">
-        <div class="card-title">
-          <mat-icon>history</mat-icon>
-          <h2>{{ 'DASHBOARD.SERVICES_HISTORY.TITLE' | translate }}</h2>
-        </div>
-
-        <div class="history-actions">
-          <button class="btn-outline" (click)="irA('payment')">
-            <mat-icon>credit_card</mat-icon>
-            {{ 'DASHBOARD.SERVICES_HISTORY.PAY_SERVICE' | translate }}
-          </button>
-          <a class="link-ver-todo" (click)="irA('history')">
-            {{ 'DASHBOARD.SERVICES_HISTORY.VIEW_ALL' | translate }}
-            <mat-icon>arrow_forward</mat-icon>
-          </a>
-        </div>
-      </div>
-
-      <div class="history-item" *ngFor="let servicio of historialServicios">
-        <div>
-          <p class="history-nombre">
-            {{ servicio.codigo }} · {{ ('SERVICE.' + servicio.tipo) | translate }} — {{ ('VEHICLE.' + servicio.vehiculo)
-            | translate }}
-          </p>
-          <p class="history-fecha">
-            {{ servicio.fecha }} · {{ 'DASHBOARD.SERVICES_HISTORY.OPERATOR' | translate }}: {{ servicio.operario }}
-          </p>
-        </div>
-
-        <div class="history-right">
-          <span class="history-precio">{{ servicio.precio === 0 ? '$0' : ('$' + (servicio.precio | number)) }}</span>
-          <span class="badge" [class]="'badge-' + servicio.estado.toLowerCase()">
-            {{ ('STATUS.' + servicio.estado) | translate }}
-          </span>
-        </div>
-      </div>
-
     </div>
 
   </main>
