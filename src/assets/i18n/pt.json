@@ -233,23 +233,47 @@
     "DELETE_MESSAGE": "Esta ação não pode ser desfeita."
   },
   "PAYMENTS": {
-    "TITLE": "Pagamentos",
-    "SUBTITLE": "Estes são os métodos de pagamento disponíveis",
-    "PSE": {
-      "TITLE": "PSE",
-      "DESC": "Pague online através do seu banco"
+    "TITLE": "Gestão de Pagamentos",
+    "SUBTITLE": "Gerencie e verifique os pagamentos recebidos",
+    "LIST_TITLE": "Lista de pagamentos",
+    "STATS": {
+      "TOTAL_COLLECTED": "Total arrecadado",
+      "VERIFIED": "Pagamentos verificados",
+      "PENDING": "Pendentes"
     },
-    "CARD": {
-      "TITLE": "Cartão bancário",
-      "DESC": "Pague com cartão de crédito ou débito"
+    "FILTERS": {
+      "FROM": "De",
+      "TO": "Até",
+      "APPLY": "Aplicar",
+      "MANUAL_REGISTER": "Registro manual"
     },
-    "NEQUI": {
-      "TITLE": "Nequi",
-      "DESC": "Pague com sua conta Nequi"
+    "TABLE": {
+      "PAYMENT_ID": "ID do pagamento",
+      "SERVICE": "Serviço",
+      "AMOUNT": "Valor",
+      "METHOD": "Método de pagamento",
+      "DATE": "Data",
+      "CLIENT": "Cliente",
+      "ACTIONS": "Ações"
     },
-    "CASH": {
-      "TITLE": "Pagamento em dinheiro",
-      "DESC": "O pagamento é feito diretamente ao operador"
+    "STATUS": {
+      "VERIFY": "Verificar",
+      "VERIFIED": "Verificado"
+    },
+    "METHODS": {
+      "CREDIT_CARD": "Cartão de Crédito",
+      "BANK_TRANSFER": "Transferência Bancária",
+      "PAYPAL": "PayPal",
+      "CASH": "Dinheiro"
+    },
+    "MODAL": {
+      "TITLE": "Registrar pagamento manual",
+      "CLIENT": "Cliente",
+      "SERVICE": "Serviço",
+      "AMOUNT": "Valor",
+      "METHOD": "Método",
+      "CANCEL": "Cancelar",
+      "SUBMIT": "Registrar pagamento"
     }
   },
   "PROFILE": {

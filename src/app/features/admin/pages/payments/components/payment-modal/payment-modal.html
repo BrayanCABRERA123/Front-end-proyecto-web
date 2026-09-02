@@ -1,0 +1,75 @@
+<div class="modal-overlay" *ngIf="abierto" (click)="onOverlayClick($event)">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal-header">
+      <h2 id="modal-titulo">{{ 'PAYMENTS.MODAL.TITLE' | translate }}</h2>
+      <button type="button" class="btn-close" (click)="onCancelar()" aria-label="Cerrar">
+        <span>&times;</span>
+      </button>
+    </div>
+
+    <form #pagoForm="ngForm" (ngSubmit)="onSubmit(pagoForm)" novalidate>
+      <div class="form-group">
+        <label for="cliente">{{ 'PAYMENTS.MODAL.CLIENT' | translate }}</label>
+        <input
+          id="cliente"
+          name="cliente"
+          type="text"
+          [(ngModel)]="form.cliente"
+          #cliente="ngModel"
+          required
+          placeholder="Nombre del cliente"
+          [class.invalid]="cliente.invalid && cliente.touched"
+          autofocus
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="servicio">{{ 'PAYMENTS.MODAL.SERVICE' | translate }}</label>
+        <input
+          id="servicio"
+          name="servicio"
+          type="text"
+          [(ngModel)]="form.servicio"
+          #servicio="ngModel"
+          required
+          placeholder="Lavado básico"
+          [class.invalid]="servicio.invalid && servicio.touched"
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="monto">{{ 'PAYMENTS.MODAL.AMOUNT' | translate }}</label>
+          <input
+            id="monto"
+            name="monto"
+            type="number"
+            min="0.01"
+            step="0.01"
+            [(ngModel)]="form.monto"
+            #monto="ngModel"
+            required
+            placeholder="0.00"
+            [class.invalid]="(monto.invalid || form.monto <= 0) && monto.touched"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="metodoPago">{{ 'PAYMENTS.MODAL.METHOD' | translate }}</label>
+          <select id="metodoPago" name="metodoPago" [(ngModel)]="form.metodoPago">
+            <option *ngFor="let m of metodos" [value]="m.value">{{ m.label }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" (click)="onCancelar()">
+          {{ 'PAYMENTS.MODAL.CANCEL' | translate }}
+        </button>
+        <button type="submit" class="btn-primary">
+          {{ 'PAYMENTS.MODAL.SUBMIT' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

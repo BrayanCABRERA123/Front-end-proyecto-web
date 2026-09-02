@@ -1,0 +1,124 @@
+<div class="home-layout">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <main class="home-content">
+
+    <div class="payments-header">
+      <div class="header-icon"><mat-icon>check_circle</mat-icon></div>
+      <div>
+        <h1>{{ 'PAYMENTS.TITLE' | translate }}</h1>
+        <p>{{ 'PAYMENTS.SUBTITLE' | translate }}</p>
+      </div>
+    </div>
+
+    <!-- Tarjetas de estadísticas -->
+    <div class="stats-grid">
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'PAYMENTS.STATS.TOTAL_COLLECTED' | translate }}</p>
+          <p class="stat-valor">${{ totalRecaudado | number }}</p>
+        </div>
+        <div class="stat-icon stat-icon-primary"><mat-icon>attach_money</mat-icon></div>
+      </div>
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'PAYMENTS.STATS.VERIFIED' | translate }}</p>
+          <p class="stat-valor">{{ pagosVerificados }}</p>
+        </div>
+        <div class="stat-icon stat-icon-primary"><mat-icon>check_circle</mat-icon></div>
+      </div>
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'PAYMENTS.STATS.PENDING' | translate }}</p>
+          <p class="stat-valor">{{ pagosPendientes }}</p>
+        </div>
+        <div class="stat-icon stat-icon-warning"><mat-icon>credit_card</mat-icon></div>
+      </div>
+
+    </div>
+
+    <!-- Filtros por rango de fechas -->
+    <div class="card filters-card">
+
+      <div class="form-group">
+        <label><mat-icon>calendar_today</mat-icon> {{ 'PAYMENTS.FILTERS.FROM' | translate }}</label>
+        <input type="date" class="form-input" [(ngModel)]="filtroDesde" />
+      </div>
+
+      <div class="form-group">
+        <label><mat-icon>calendar_today</mat-icon> {{ 'PAYMENTS.FILTERS.TO' | translate }}</label>
+        <input type="date" class="form-input" [(ngModel)]="filtroHasta" />
+      </div>
+
+      <button class="btn-outline" (click)="aplicarFiltros()">{{ 'PAYMENTS.FILTERS.APPLY' | translate }}</button>
+
+      <button class="btn-primary btn-manual" (click)="registroManual()">
+        <mat-icon>add</mat-icon>
+        {{ 'PAYMENTS.FILTERS.MANUAL_REGISTER' | translate }}
+      </button>
+
+    </div>
+
+    <!-- Lista de pagos -->
+    <div class="card table-card">
+      <h2>{{ 'PAYMENTS.LIST_TITLE' | translate }}</h2>
+
+      <div class="table-wrapper">
+        <table class="payments-table">
+          <thead>
+            <tr>
+              <th>{{ 'PAYMENTS.TABLE.PAYMENT_ID' | translate }}</th>
+              <th>{{ 'PAYMENTS.TABLE.SERVICE' | translate }}</th>
+              <th>{{ 'PAYMENTS.TABLE.AMOUNT' | translate }}</th>
+              <th>{{ 'PAYMENTS.TABLE.METHOD' | translate }}</th>
+              <th>{{ 'PAYMENTS.TABLE.DATE' | translate }}</th>
+              <th>{{ 'PAYMENTS.TABLE.CLIENT' | translate }}</th>
+              <th>{{ 'PAYMENTS.TABLE.ACTIONS' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pago of pagos">
+              <td>{{ pago.id }}</td>
+              <td>{{ pago.servicio }}</td>
+              <td class="monto">${{ pago.monto }}</td>
+              <td>
+                <span class="metodo-badge" [ngClass]="claseMetodo(pago.metodoPago)">
+                  <mat-icon>{{ iconoMetodo(pago.metodoPago) }}</mat-icon>
+                  {{ ('PAYMENTS.METHODS.' + pago.metodoPago) | translate }}
+                </span>
+              </td>
+              <td>{{ pago.fecha }}</td>
+              <td>{{ pago.cliente }}</td>
+              <td>
+                <button *ngIf="!pago.verificado" class="btn-verify" (click)="verificarPago(pago)">
+                  <mat-icon>check</mat-icon>
+                  {{ 'PAYMENTS.STATUS.VERIFY' | translate }}
+                </button>
+                <span *ngIf="pago.verificado" class="badge-verified">
+                  <mat-icon>check</mat-icon>
+                  {{ 'PAYMENTS.STATUS.VERIFIED' | translate }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Modal de registro manual de pago -->
+    <app-payment-modal
+      [abierto]="modalAbierto"
+      (cerrar)="cerrarModal()"
+      (registrarPago)="onRegistrarPago($event)">
+    </app-payment-modal>
+
+  </main>
+
+</div>

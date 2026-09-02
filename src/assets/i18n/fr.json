@@ -233,23 +233,47 @@
     "DELETE_MESSAGE": "Cette action est irréversible."
   },
   "PAYMENTS": {
-    "TITLE": "Paiements",
-    "SUBTITLE": "Voici les méthodes de paiement disponibles",
-    "PSE": {
-      "TITLE": "PSE",
-      "DESC": "Payez en ligne via votre banque"
+    "TITLE": "Gestion des Paiements",
+    "SUBTITLE": "Gérez et vérifiez les paiements reçus",
+    "LIST_TITLE": "Liste des paiements",
+    "STATS": {
+      "TOTAL_COLLECTED": "Total collecté",
+      "VERIFIED": "Paiements vérifiés",
+      "PENDING": "En attente"
     },
-    "CARD": {
-      "TITLE": "Carte bancaire",
-      "DESC": "Payez avec une carte de crédit ou débit"
+    "FILTERS": {
+      "FROM": "Du",
+      "TO": "Au",
+      "APPLY": "Appliquer",
+      "MANUAL_REGISTER": "Saisie manuelle"
     },
-    "NEQUI": {
-      "TITLE": "Nequi",
-      "DESC": "Payez avec votre compte Nequi"
+    "TABLE": {
+      "PAYMENT_ID": "ID de paiement",
+      "SERVICE": "Service",
+      "AMOUNT": "Montant",
+      "METHOD": "Méthode de paiement",
+      "DATE": "Date",
+      "CLIENT": "Client",
+      "ACTIONS": "Actions"
     },
-    "CASH": {
-      "TITLE": "Paiement en espèces",
-      "DESC": "Le paiement est effectué directement à l'opérateur"
+    "STATUS": {
+      "VERIFY": "Vérifier",
+      "VERIFIED": "Vérifié"
+    },
+    "METHODS": {
+      "CREDIT_CARD": "Carte de Crédit",
+      "BANK_TRANSFER": "Virement Bancaire",
+      "PAYPAL": "PayPal",
+      "CASH": "Espèces"
+    },
+    "MODAL": {
+      "TITLE": "Enregistrer un paiement manuel",
+      "CLIENT": "Client",
+      "SERVICE": "Service",
+      "AMOUNT": "Montant",
+      "METHOD": "Méthode",
+      "CANCEL": "Annuler",
+      "SUBMIT": "Enregistrer le paiement"
     }
   },
   "PROFILE": {

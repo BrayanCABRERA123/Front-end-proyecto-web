@@ -233,23 +233,47 @@
     "DELETE_MESSAGE": "This action cannot be undone."
   },
   "PAYMENTS": {
-    "TITLE": "Payments",
-    "SUBTITLE": "These are the payment methods you can use",
-    "PSE": {
-      "TITLE": "PSE",
-      "DESC": "Pay online through your bank"
+    "TITLE": "Payment Management",
+    "SUBTITLE": "Manage and verify received payments",
+    "LIST_TITLE": "Payments list",
+    "STATS": {
+      "TOTAL_COLLECTED": "Total collected",
+      "VERIFIED": "Verified payments",
+      "PENDING": "Pending"
     },
-    "CARD": {
-      "TITLE": "Bank Card",
-      "DESC": "Pay with credit or debit card"
+    "FILTERS": {
+      "FROM": "From",
+      "TO": "To",
+      "APPLY": "Apply",
+      "MANUAL_REGISTER": "Manual entry"
     },
-    "NEQUI": {
-      "TITLE": "Nequi",
-      "DESC": "Pay with your Nequi account"
+    "TABLE": {
+      "PAYMENT_ID": "Payment ID",
+      "SERVICE": "Service",
+      "AMOUNT": "Amount",
+      "METHOD": "Payment method",
+      "DATE": "Date",
+      "CLIENT": "Client",
+      "ACTIONS": "Actions"
     },
-    "CASH": {
-      "TITLE": "Cash Payment",
-      "DESC": "Payment is made directly to the operator during the service"
+    "STATUS": {
+      "VERIFY": "Verify",
+      "VERIFIED": "Verified"
+    },
+    "METHODS": {
+      "CREDIT_CARD": "Credit Card",
+      "BANK_TRANSFER": "Bank Transfer",
+      "PAYPAL": "PayPal",
+      "CASH": "Cash"
+    },
+    "MODAL": {
+      "TITLE": "Register manual payment",
+      "CLIENT": "Client",
+      "SERVICE": "Service",
+      "AMOUNT": "Amount",
+      "METHOD": "Method",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Register payment"
     }
   },
   "PROFILE": {
