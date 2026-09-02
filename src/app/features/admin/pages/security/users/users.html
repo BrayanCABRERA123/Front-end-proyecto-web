@@ -1,0 +1,88 @@
+<div class="users-header">
+  <div class="header-left">
+    <div class="header-icon"><mat-icon>verified_user</mat-icon></div>
+    <div>
+      <h1>{{ 'USERS.TITLE' | translate }}</h1>
+      <p>{{ 'USERS.SUBTITLE' | translate }}</p>
+    </div>
+  </div>
+  <button class="btn-primary" (click)="abrirModal()">
+    <mat-icon>person_add</mat-icon>
+    {{ 'USERS.CREATE_BUTTON' | translate }}
+  </button>
+</div>
+
+<div class="tabs-bar">
+  <button type="button" class="tab-item" [class.tab-active-success]="tabActiva === 'HABILITADOS'" (click)="cambiarTab('HABILITADOS')">
+    {{ 'USERS.TABS.ENABLED' | translate }}
+    <span class="tab-count">{{ totalHabilitados }}</span>
+  </button>
+  <button type="button" class="tab-item" [class.tab-active-warning]="tabActiva === 'REGISTRADOS'" (click)="cambiarTab('REGISTRADOS')">
+    {{ 'USERS.TABS.REGISTERED' | translate }}
+    <span class="tab-count">{{ totalRegistrados }}</span>
+  </button>
+  <button type="button" class="tab-item" [class.tab-active-danger]="tabActiva === 'INHABILITADOS'" (click)="cambiarTab('INHABILITADOS')">
+    {{ 'USERS.TABS.DISABLED' | translate }}
+    <span class="tab-count">{{ totalInhabilitados }}</span>
+  </button>
+</div>
+
+<div class="toolbar">
+  <button class="btn-outline" (click)="abrirFiltros()">
+    <mat-icon>filter_list</mat-icon>
+    {{ 'USERS.FILTER' | translate }}
+  </button>
+  <div class="search-box">
+    <mat-icon>search</mat-icon>
+    <input type="text" [(ngModel)]="busqueda" [placeholder]="'USERS.SEARCH_PLACEHOLDER' | translate" />
+  </div>
+</div>
+
+<div class="card table-card">
+  <div class="table-wrapper">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>{{ 'USERS.TABLE.NAME' | translate }}</th>
+          <th>{{ 'USERS.TABLE.EMAIL' | translate }}</th>
+          <th>{{ 'USERS.TABLE.TYPE' | translate }}</th>
+          <th>{{ 'USERS.TABLE.DATE' | translate }}</th>
+          <th>{{ 'USERS.TABLE.INVITED' | translate }}</th>
+          <th>{{ 'USERS.TABLE.STATUS' | translate }}</th>
+          <th>{{ 'USERS.TABLE.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuariosFiltrados">
+          <td>{{ usuario.nombre }}</td>
+          <td class="text-muted">{{ usuario.correo }}</td>
+          <td>{{ ('USERS.TYPES.' + usuario.tipoUsuario) | translate }}</td>
+          <td>{{ usuario.fecha }}</td>
+          <td>{{ (usuario.invitado ? 'USERS.YES' : 'USERS.NO') | translate }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="'status-' + usuario.estado.toLowerCase()">
+              {{ ('USERS.STATUS.' + usuario.estado) | translate }}
+            </span>
+          </td>
+          <td class="acciones">
+            <button class="btn-icon" (click)="editarUsuario(usuario)" [attr.aria-label]="'USERS.EDIT' | translate">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="btn-icon btn-icon-danger" (click)="eliminarUsuario(usuario)" [attr.aria-label]="'USERS.DELETE' | translate">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="usuariosFiltrados.length === 0">
+          <td colspan="7" class="empty-row">{{ 'USERS.EMPTY' | translate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-user-modal
+  [abierto]="modalAbierto"
+  (cerrar)="cerrarModal()"
+  (crearUsuario)="onCrearUsuario($event)">
+</app-user-modal>

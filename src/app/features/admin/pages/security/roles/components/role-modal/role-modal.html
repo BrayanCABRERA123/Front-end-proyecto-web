@@ -1,0 +1,64 @@
+<div class="modal-overlay" *ngIf="abierto" (click)="onOverlayClick($event)">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-titulo-rol">
+    <div class="modal-header">
+      <h2 id="modal-titulo-rol">{{ 'ROLES.MODAL.TITLE' | translate }}</h2>
+      <button type="button" class="btn-close" (click)="onCancelar()" aria-label="Cerrar">
+        <span>&times;</span>
+      </button>
+    </div>
+
+    <form #rolForm="ngForm" (ngSubmit)="onSubmit(rolForm)" novalidate>
+      <div class="form-group">
+        <label for="nombreRol">{{ 'ROLES.MODAL.NAME' | translate }}</label>
+        <input
+          id="nombreRol"
+          name="nombreRol"
+          type="text"
+          [(ngModel)]="nombre"
+          #nombreRol="ngModel"
+          required
+          placeholder="Nombre del rol"
+          [class.invalid]="nombreRol.invalid && nombreRol.touched"
+          autofocus
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="descripcionRol">{{ 'ROLES.MODAL.DESCRIPTION' | translate }}</label>
+        <input
+          id="descripcionRol"
+          name="descripcionRol"
+          type="text"
+          [(ngModel)]="descripcion"
+          #descripcionRol="ngModel"
+          required
+          placeholder="Descripción del rol"
+          [class.invalid]="descripcionRol.invalid && descripcionRol.touched"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'ROLES.MODAL.PERMISSIONS' | translate }}</label>
+        <div class="permisos-grid">
+          <label class="checkbox-row" *ngFor="let permiso of permisosDisponibles">
+            <input
+              type="checkbox"
+              [checked]="permisosSeleccionados.includes(permiso.value)"
+              (change)="togglePermiso(permiso.value)"
+            />
+            {{ permiso.label }}
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" (click)="onCancelar()">
+          {{ 'ROLES.MODAL.CANCEL' | translate }}
+        </button>
+        <button type="submit" class="btn-primary">
+          {{ 'ROLES.MODAL.SUBMIT' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

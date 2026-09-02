@@ -1,0 +1,81 @@
+<div class="roles-header">
+  <div class="header-left">
+    <div class="header-icon"><mat-icon>shield</mat-icon></div>
+    <div>
+      <h1>{{ 'ROLES.TITLE' | translate }}</h1>
+      <p>{{ 'ROLES.SUBTITLE' | translate }}</p>
+    </div>
+  </div>
+  <button class="btn-primary" (click)="abrirModal()">
+    <mat-icon>add</mat-icon>
+    {{ 'ROLES.CREATE_BUTTON' | translate }}
+  </button>
+</div>
+
+<div class="toolbar">
+  <div class="search-box">
+    <mat-icon>search</mat-icon>
+    <input type="text" [(ngModel)]="busqueda" [placeholder]="'ROLES.SEARCH_PLACEHOLDER' | translate" />
+  </div>
+  <button class="btn-outline" (click)="abrirFiltros()">
+    <mat-icon>filter_list</mat-icon>
+    {{ 'ROLES.FILTER' | translate }}
+  </button>
+</div>
+
+<div class="card table-card">
+  <div class="table-wrapper">
+    <table class="roles-table">
+      <thead>
+        <tr>
+          <th>{{ 'ROLES.TABLE.ROLE' | translate }}</th>
+          <th>{{ 'ROLES.TABLE.DESCRIPTION' | translate }}</th>
+          <th>{{ 'ROLES.TABLE.USERS' | translate }}</th>
+          <th>{{ 'ROLES.TABLE.PERMISSIONS' | translate }}</th>
+          <th>{{ 'ROLES.TABLE.STATUS' | translate }}</th>
+          <th>{{ 'ROLES.TABLE.DATE' | translate }}</th>
+          <th>{{ 'ROLES.TABLE.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rol of rolesFiltrados">
+          <td class="rol-nombre">
+            <mat-icon>shield</mat-icon>
+            {{ rol.nombre }}
+          </td>
+          <td class="text-muted">{{ rol.descripcion }}</td>
+          <td>
+            <span class="pill pill-neutral">
+              <mat-icon>group</mat-icon>
+              {{ rol.usuariosCount }}
+            </span>
+          </td>
+          <td><span class="pill pill-purple">{{ rol.permisosCount }}</span></td>
+          <td>
+            <span class="status-badge" [ngClass]="'status-' + rol.estado.toLowerCase()">
+              {{ ('ROLES.STATUS.' + rol.estado) | translate }}
+            </span>
+          </td>
+          <td>{{ rol.fecha }}</td>
+          <td class="acciones">
+            <button class="btn-icon" (click)="editarRol(rol)" [attr.aria-label]="'ROLES.EDIT' | translate">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="btn-icon btn-icon-danger" (click)="eliminarRol(rol)" [attr.aria-label]="'ROLES.DELETE' | translate">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="rolesFiltrados.length === 0">
+          <td colspan="7" class="empty-row">{{ 'ROLES.EMPTY' | translate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-role-modal
+  [abierto]="modalAbierto"
+  (cerrar)="cerrarModal()"
+  (crearRol)="onCrearRol($event)">
+</app-role-modal>

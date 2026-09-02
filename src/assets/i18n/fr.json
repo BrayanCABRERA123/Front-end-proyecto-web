@@ -715,5 +715,81 @@
       "EXPORT_EXCEL": "Exporter Excel",
       "EXPORT_PDF": "Exporter PDF"
     }
+  },
+  "USERS": {
+    "TITLE": "Gestion des utilisateurs",
+    "SUBTITLE": "Optimisez l'efficacité et la sécurité de vos utilisateurs.",
+    "CREATE_BUTTON": "Créer un utilisateur",
+    "FILTER": "Filtrer",
+    "SEARCH_PLACEHOLDER": "Rechercher",
+    "YES": "Oui",
+    "NO": "Non",
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer",
+    "EMPTY": "Aucun utilisateur à afficher",
+    "TABS": {
+      "ENABLED": "Activés",
+      "REGISTERED": "Enregistrés",
+      "DISABLED": "Désactivés"
+    },
+    "TABLE": {
+      "NAME": "Noms",
+      "EMAIL": "E-mail",
+      "TYPE": "Type d'utilisateur",
+      "DATE": "Date",
+      "INVITED": "Invité",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions"
+    },
+    "TYPES": {
+      "ADMIN": "Administrateur",
+      "OPERATOR": "Opérateur",
+      "SUPERVISOR": "Superviseur"
+    },
+    "STATUS": {
+      "ACTIVE": "Actif",
+      "PENDING": "En attente",
+      "DISABLED": "Désactivé"
+    },
+    "MODAL": {
+      "TITLE": "Créer un utilisateur",
+      "NAME": "Nom complet",
+      "EMAIL": "E-mail",
+      "TYPE": "Type d'utilisateur",
+      "INVITE": "Inviter par e-mail",
+      "CANCEL": "Annuler",
+      "SUBMIT": "Créer l'utilisateur"
+    }
+  },
+  "ROLES": {
+    "TITLE": "Gestion des rôles",
+    "SUBTITLE": "Gérez les rôles et permissions du système",
+    "CREATE_BUTTON": "Créer un rôle",
+    "FILTER": "Filtrer",
+    "SEARCH_PLACEHOLDER": "Rechercher des rôles...",
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer",
+    "EMPTY": "Aucun rôle à afficher",
+    "TABLE": {
+      "ROLE": "Rôle",
+      "DESCRIPTION": "Description",
+      "USERS": "Utilisateurs",
+      "PERMISSIONS": "Permissions",
+      "STATUS": "Statut",
+      "DATE": "Date",
+      "ACTIONS": "Actions"
+    },
+    "STATUS": {
+      "ACTIVE": "Actif",
+      "INACTIVE": "Inactif"
+    },
+    "MODAL": {
+      "TITLE": "Créer un rôle",
+      "NAME": "Nom du rôle",
+      "DESCRIPTION": "Description",
+      "PERMISSIONS": "Permissions",
+      "CANCEL": "Annuler",
+      "SUBMIT": "Créer le rôle"
+    }
   }
 }

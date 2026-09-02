@@ -715,5 +715,81 @@
       "EXPORT_EXCEL": "Exportar Excel",
       "EXPORT_PDF": "Exportar PDF"
     }
+  },
+  "USERS": {
+    "TITLE": "Gestão de usuários",
+    "SUBTITLE": "Otimize a eficiência e a segurança dos seus usuários.",
+    "CREATE_BUTTON": "Criar usuário",
+    "FILTER": "Filtrar",
+    "SEARCH_PLACEHOLDER": "Buscar",
+    "YES": "Sim",
+    "NO": "Não",
+    "EDIT": "Editar",
+    "DELETE": "Excluir",
+    "EMPTY": "Nenhum usuário para exibir",
+    "TABS": {
+      "ENABLED": "Habilitados",
+      "REGISTERED": "Registrados",
+      "DISABLED": "Desabilitados"
+    },
+    "TABLE": {
+      "NAME": "Nomes",
+      "EMAIL": "E-mail",
+      "TYPE": "Tipo de usuário",
+      "DATE": "Data",
+      "INVITED": "Convidado",
+      "STATUS": "Status",
+      "ACTIONS": "Ações"
+    },
+    "TYPES": {
+      "ADMIN": "Administrador",
+      "OPERATOR": "Operador",
+      "SUPERVISOR": "Supervisor"
+    },
+    "STATUS": {
+      "ACTIVE": "Ativo",
+      "PENDING": "Pendente",
+      "DISABLED": "Desabilitado"
+    },
+    "MODAL": {
+      "TITLE": "Criar usuário",
+      "NAME": "Nome completo",
+      "EMAIL": "E-mail",
+      "TYPE": "Tipo de usuário",
+      "INVITE": "Convidar por e-mail",
+      "CANCEL": "Cancelar",
+      "SUBMIT": "Criar usuário"
+    }
+  },
+  "ROLES": {
+    "TITLE": "Gestão de Papéis",
+    "SUBTITLE": "Administre os papéis e permissões do sistema",
+    "CREATE_BUTTON": "Criar papel",
+    "FILTER": "Filtrar",
+    "SEARCH_PLACEHOLDER": "Buscar papéis...",
+    "EDIT": "Editar",
+    "DELETE": "Excluir",
+    "EMPTY": "Nenhum papel para exibir",
+    "TABLE": {
+      "ROLE": "Papel",
+      "DESCRIPTION": "Descrição",
+      "USERS": "Usuários",
+      "PERMISSIONS": "Permissões",
+      "STATUS": "Status",
+      "DATE": "Data",
+      "ACTIONS": "Ações"
+    },
+    "STATUS": {
+      "ACTIVE": "Ativo",
+      "INACTIVE": "Inativo"
+    },
+    "MODAL": {
+      "TITLE": "Criar papel",
+      "NAME": "Nome do papel",
+      "DESCRIPTION": "Descrição",
+      "PERMISSIONS": "Permissões",
+      "CANCEL": "Cancelar",
+      "SUBMIT": "Criar papel"
+    }
   }
 }

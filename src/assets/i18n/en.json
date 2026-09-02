@@ -715,5 +715,81 @@
       "EXPORT_EXCEL": "Export Excel",
       "EXPORT_PDF": "Export PDF"
     }
+  },
+  "USERS": {
+    "TITLE": "User Management",
+    "SUBTITLE": "Optimize the efficiency and security of your users.",
+    "CREATE_BUTTON": "Create user",
+    "FILTER": "Filter",
+    "SEARCH_PLACEHOLDER": "Search",
+    "YES": "Yes",
+    "NO": "No",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "EMPTY": "No users to display",
+    "TABS": {
+      "ENABLED": "Enabled",
+      "REGISTERED": "Registered",
+      "DISABLED": "Disabled"
+    },
+    "TABLE": {
+      "NAME": "Names",
+      "EMAIL": "Email",
+      "TYPE": "User type",
+      "DATE": "Date",
+      "INVITED": "Invited",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    },
+    "TYPES": {
+      "ADMIN": "Administrator",
+      "OPERATOR": "Operator",
+      "SUPERVISOR": "Supervisor"
+    },
+    "STATUS": {
+      "ACTIVE": "Active",
+      "PENDING": "Pending",
+      "DISABLED": "Disabled"
+    },
+    "MODAL": {
+      "TITLE": "Create user",
+      "NAME": "Full name",
+      "EMAIL": "Email",
+      "TYPE": "User type",
+      "INVITE": "Invite by email",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Create user"
+    }
+  },
+  "ROLES": {
+    "TITLE": "Role Management",
+    "SUBTITLE": "Manage system roles and permissions",
+    "CREATE_BUTTON": "Create role",
+    "FILTER": "Filter",
+    "SEARCH_PLACEHOLDER": "Search roles...",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "EMPTY": "No roles to display",
+    "TABLE": {
+      "ROLE": "Role",
+      "DESCRIPTION": "Description",
+      "USERS": "Users",
+      "PERMISSIONS": "Permissions",
+      "STATUS": "Status",
+      "DATE": "Date",
+      "ACTIONS": "Actions"
+    },
+    "STATUS": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "MODAL": {
+      "TITLE": "Create role",
+      "NAME": "Role name",
+      "DESCRIPTION": "Description",
+      "PERMISSIONS": "Permissions",
+      "CANCEL": "Cancel",
+      "SUBMIT": "Create role"
+    }
   }
 }

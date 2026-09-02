@@ -1,0 +1,35 @@
+<div class="home-layout">
+
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <main class="home-content">
+
+    <div class="security-tabs">
+      <button
+        type="button"
+        class="security-tab-item"
+        [class.security-tab-active]="tabActiva === 'USERS'"
+        (click)="cambiarTab('USERS')">
+        <mat-icon>verified_user</mat-icon>
+        Usuarios
+      </button>
+      <button
+        type="button"
+        class="security-tab-item"
+        [class.security-tab-active]="tabActiva === 'ROLES'"
+        (click)="cambiarTab('ROLES')">
+        <mat-icon>shield</mat-icon>
+        Roles
+      </button>
+    </div>
+
+    @if (tabActiva === 'USERS') {
+      <app-users></app-users>
+    }
+    @if (tabActiva === 'ROLES') {
+      <app-roles></app-roles>
+    }
+
+  </main>
+
+</div>

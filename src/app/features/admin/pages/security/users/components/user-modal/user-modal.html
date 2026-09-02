@@ -1,0 +1,63 @@
+<div class="modal-overlay" *ngIf="abierto" (click)="onOverlayClick($event)">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-titulo-usuario">
+    <div class="modal-header">
+      <h2 id="modal-titulo-usuario">{{ 'USERS.MODAL.TITLE' | translate }}</h2>
+      <button type="button" class="btn-close" (click)="onCancelar()" aria-label="Cerrar">
+        <span>&times;</span>
+      </button>
+    </div>
+
+    <form #usuarioForm="ngForm" (ngSubmit)="onSubmit(usuarioForm)" novalidate>
+      <div class="form-group">
+        <label for="nombre">{{ 'USERS.MODAL.NAME' | translate }}</label>
+        <input
+          id="nombre"
+          name="nombre"
+          type="text"
+          [(ngModel)]="form.nombre"
+          #nombre="ngModel"
+          required
+          placeholder="Nombre completo"
+          [class.invalid]="nombre.invalid && nombre.touched"
+          autofocus
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="correo">{{ 'USERS.MODAL.EMAIL' | translate }}</label>
+        <input
+          id="correo"
+          name="correo"
+          type="email"
+          [(ngModel)]="form.correo"
+          #correo="ngModel"
+          required
+          email
+          placeholder="correo@ejemplo.com"
+          [class.invalid]="correo.invalid && correo.touched"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="tipoUsuario">{{ 'USERS.MODAL.TYPE' | translate }}</label>
+        <select id="tipoUsuario" name="tipoUsuario" [(ngModel)]="form.tipoUsuario">
+          <option *ngFor="let tipo of tipos" [value]="tipo.value">{{ tipo.label }}</option>
+        </select>
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" name="invitar" [(ngModel)]="form.invitar" />
+        {{ 'USERS.MODAL.INVITE' | translate }}
+      </label>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" (click)="onCancelar()">
+          {{ 'USERS.MODAL.CANCEL' | translate }}
+        </button>
+        <button type="submit" class="btn-primary">
+          {{ 'USERS.MODAL.SUBMIT' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
