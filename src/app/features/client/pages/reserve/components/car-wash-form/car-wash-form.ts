@@ -1,120 +1,107 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ServiceModal } from '../../../../../../shared/components/service-modal/service-modal'; // importamos el componente
-// iconos de Material que usa tu compañero
+import { RouterModule } from '@angular/router';
+// iconos de Material
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-car-wash-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule, ServiceModal],
+  imports: [CommonModule, FormsModule, RouterModule, MatIconModule, TranslateModule],
   templateUrl: './car-wash-form.html',
   styleUrl: './car-wash-form.scss'
 })
 export class CarWashFormComponent implements OnInit {
 
-  // datos del formulario
+  // vehículos registrados del cliente (mismo mock que en Mis Vehículos)
+  vehiculos = [
+    { id: 1, tipo: 'SEDAN', marca: 'Mazda', modelo: '3 Sedán', placa: 'ABC-123' },
+    { id: 2, tipo: 'MOTO', marca: 'Yamaha', modelo: 'FZ 2.0', placa: 'XYZ-98D' },
+    { id: 3, tipo: 'TRUCK', marca: 'Toyota', modelo: 'Prado', placa: 'JKL-457' }
+  ];
+
+  // catálogo de servicios disponibles
+  servicios = ['BASIC', 'PREMIUM', 'FULL'];
+  servicioMasPopular = 'PREMIUM';
+
+  // selección del usuario
+  vehiculoSeleccionado: number | null = null;
+  servicioSeleccionado: string = '';
   fecha: string = '';
   hora: string = '';
+  direccion: string = '';
+
+  // rango de fechas permitido
   minDate: string = '';
   maxDate: string = '';
   horasDisponibles: string[] = [];
-  direccion: string = '';
-  tipoVehiculo: string = '';
-  tipoServicio: string = '';
-  mostrarModal: boolean = false;
 
-  // asignación de operator — 'automatica' o 'manual'
-  asignacion: string = 'AUTO';
-  operatorSeleccionado: string = '';
-
-  // método de pago seleccionado
-  metodoPago: string = '';
-
-  // opciones del select de vehículos
-  vehiculos = [
-    { value: 'SEDAN' },
-    { value: 'SUV' },
-    { value: 'PICKUP' },
-    { value: 'MOTO' }
-  ];
-
-  // opciones del select de servicios
-  servicios = [
-    { value: 'BASIC' },
-    { value: 'FULL' },
-    { value: 'PREMIUM' }
-  ];
-
-  // opciones del select de operators
-  operators = [
-    { value: 'op1', label: 'Carlos López' },
-    { value: 'op2', label: 'María García' },
-    { value: 'op3', label: 'Pedro Martínez' }
-  ];
-
-  // métodos de pago
-  metodosPago = [
-    { value: 'PSE', icono: 'account_balance' },
-    { value: 'CARD', icono: 'credit_card' },
-    { value: 'NEQUI', icono: 'smartphone' },
-    { value: 'CASH', icono: 'payments' }
-  ];
-
-  // se ejecuta cuando hace clic en "Reservar Ahora"
-  onSubmit(): void {
-    console.log('Reserva enviada');
-  }
-
-  abrirModalServicio(): void {
-
-    if (this.tipoServicio) {
-
-      this.mostrarModal = true;
-
-    }
-
-  }
+  constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
-
     const hoy = new Date();
-
-    // fecha mínima = hoy
     this.minDate = hoy.toISOString().split('T')[0];
 
-    // fecha máxima = hoy + 30 días
     const max = new Date();
     max.setDate(hoy.getDate() + 60);
-
     this.maxDate = max.toISOString().split('T')[0];
 
     this.generarHoras();
-
   }
-  generarHoras(): void {
 
+  generarHoras(): void {
     this.horasDisponibles = [];
 
-    // mañana → 08:00 a 12:00
     for (let h = 8; h <= 12; h++) {
-
-      this.horasDisponibles.push(
-        h.toString().padStart(2, '0') + ':00'
-      );
-
+      this.horasDisponibles.push(h.toString().padStart(2, '0') + ':00');
     }
-
-    // tarde → 13:00 a 18:00
     for (let h = 13; h <= 18; h++) {
-
-      this.horasDisponibles.push(
-        h.toString().padStart(2, '0') + ':00'
-      );
-
+      this.horasDisponibles.push(h.toString().padStart(2, '0') + ':00');
     }
-
   }
+
+  seleccionarVehiculo(id: number) {
+    this.vehiculoSeleccionado = id;
+  }
+
+  seleccionarServicio(servicio: string) {
+    this.servicioSeleccionado = servicio;
+  }
+
+  get vehiculo() {
+    return this.vehiculos.find(v => v.id === this.vehiculoSeleccionado) ?? null;
+  }
+
+  // extrae el valor numérico del precio del servicio (ej. "$35.000" -> 35000)
+  get totalServicio(): number {
+    if (!this.servicioSeleccionado) return 0;
+
+    const clave = `SERVICE.${this.servicioSeleccionado}_PRICE`;
+    const texto: string = this.translate.instant(clave);
+    const numero = texto.replace(/[^0-9]/g, '');
+
+    return numero ? parseInt(numero, 10) : 0;
+  }
+
+  get formularioValido(): boolean {
+    return !!this.vehiculoSeleccionado && !!this.servicioSeleccionado && !!this.fecha && !!this.hora && !!this.direccion;
+  }
+
+  // se ejecuta al hacer clic en "Reservar Ahora"
+  onSubmit(): void {
+    if (!this.formularioValido) return;
+
+    // TODO: integrar con el backend de reservas
+    console.log('Reserva enviada', {
+      vehiculo: this.vehiculo,
+      servicio: this.servicioSeleccionado,
+      fecha: this.fecha,
+      hora: this.hora,
+      direccion: this.direccion,
+      total: this.totalServicio
+    });
+  }
+
 }

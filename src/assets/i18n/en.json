@@ -69,11 +69,26 @@
     "FULL_DESC": "Exterior and interior wash",
     "PREMIUM_DESC": "Complete wash with waxing",
     "BASIC_PRICE": "$20",
-    "FULL_PRICE": "$35",
-    "PREMIUM_PRICE": "$50",
-    "BASIC_TIME": "30 minutes",
-    "FULL_TIME": "1 hour",
-    "PREMIUM_TIME": "1 hour 30 minutes"
+    "FULL_PRICE": "$50,000",
+    "PREMIUM_PRICE": "$35,000",
+    "BASIC_TIME": "45 minutes",
+    "FULL_TIME": "120 minutes",
+    "PREMIUM_TIME": "75 minutes",
+    "BASIC_ITEMS": [
+      "Full exterior wash",
+      "Basic vacuum",
+      "Window cleaning"
+    ],
+    "FULL_ITEMS": [
+      "Everything in Premium",
+      "Hand waxing",
+      "Interior detailing"
+    ],
+    "PREMIUM_ITEMS": [
+      "Everything in Basic",
+      "Engine wash",
+      "Protective liquid wax"
+    ]
   },
   "EXTRA": {
     "WAX": "Wax",
@@ -288,7 +303,34 @@
     "SERVICE": "Service type",
     "ASSIGNMENT": "Operator assignment",
     "SELECT": "Select",
-    "SUBMIT": "Book now"
+    "SUBMIT": "Book now",
+    "STEP1": {
+      "TITLE": "Choose your vehicle",
+      "SUBTITLE": "Select one of your registered vehicles",
+      "NO_VEHICLE": "Vehicle not listed? Register it first in",
+      "NO_VEHICLE_LINK": "My Vehicles"
+    },
+    "STEP2": {
+      "TITLE": "Service type",
+      "SUBTITLE": "Choose the cleaning level you prefer",
+      "POPULAR": "Most popular"
+    },
+    "STEP3": {
+      "TITLE": "Date and location",
+      "SUBTITLE": "Tell us when and where to wash your vehicle"
+    },
+    "SUMMARY": {
+      "TITLE": "Your booking summary",
+      "VEHICLE": "Vehicle",
+      "PLATE": "Plate",
+      "SERVICE": "Service",
+      "DURATION": "Estimated duration",
+      "DATE": "Date",
+      "TIME": "Time",
+      "TOTAL": "Total",
+      "SUBMIT": "Book Now",
+      "NOTE": "We'll notify you when the washer is on the way. You can pay online or in cash."
+    }
   },
   "APP": {
     "TITLE": "Car Wash Service"
