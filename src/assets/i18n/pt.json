@@ -31,7 +31,8 @@
     "CONFIG": "Configurações",
     "LOGOUT": "Sair",
     "ASSIGNED_SERVICES": "serviços atribuídos",
-    "RATINGS": "Avaliações"
+    "RATINGS": "Avaliações",
+    "VEHICLES": "Meus veículos"
   },
   "HISTORY": {
     "FILTERS": "Filtros",
@@ -529,6 +530,34 @@
     "HISTORY": {
       "TITLE": "Histórico de pagamentos",
       "TOTAL_PAID": "Total pago"
+    }
+  },
+  "VEHICLES": {
+    "TITLE": "Meus Veículos",
+    "SUBTITLE": "Consulte seus veículos registrados e sua última lavagem",
+    "REGISTER_BUTTON": "Registrar veículo",
+    "STATS": {
+      "TOTAL": "Veículos registrados",
+      "WASHES": "Lavagens acumuladas",
+      "LAST_WASH": "Última lavagem realizada"
+    },
+    "CARD": {
+      "PLATE": "Placa",
+      "LAST_WASH": "Última lavagem",
+      "SERVICE": "Serviço",
+      "TOTAL_WASHES": "Total de lavagens"
+    },
+    "MODAL": {
+      "TITLE": "Registrar novo veículo",
+      "SUBTITLE": "Adicione os dados do seu veículo para reservar lavagens mais rápido.",
+      "TYPE": "Tipo de veículo",
+      "TYPE_PLACEHOLDER": "Selecione o tipo",
+      "BRAND": "Marca",
+      "MODEL": "Modelo",
+      "PLATE": "Placa",
+      "COLOR": "Cor",
+      "CANCEL": "Cancelar",
+      "SAVE": "Salvar veículo"
     }
   }
 }

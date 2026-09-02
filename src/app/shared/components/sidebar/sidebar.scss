@@ -3,7 +3,7 @@
 /* contenedor principal del sidebar */
 .sidebar {
   width: 270px;
-  min-height: 95%;
+  height: 100vh;
   background-color: var(--sidebar);
   display: flex;
   flex-direction: column;

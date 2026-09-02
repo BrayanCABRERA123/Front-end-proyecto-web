@@ -31,7 +31,8 @@
     "CONFIG": "Settings",
     "LOGOUT": "Log Out",
     "ASSIGNED_SERVICES": "assigned services",
-    "RATINGS": "Ratings"
+    "RATINGS": "Ratings",
+    "VEHICLES": "My vehicles"
   },
   "HISTORY": {
     "FILTERS": "Filters",
@@ -529,6 +530,34 @@
     "HISTORY": {
       "TITLE": "Payment history",
       "TOTAL_PAID": "Total paid"
+    }
+  },
+  "VEHICLES": {
+    "TITLE": "My Vehicles",
+    "SUBTITLE": "Check your registered vehicles and their last wash",
+    "REGISTER_BUTTON": "Register vehicle",
+    "STATS": {
+      "TOTAL": "Registered vehicles",
+      "WASHES": "Accumulated washes",
+      "LAST_WASH": "Last wash performed"
+    },
+    "CARD": {
+      "PLATE": "Plate",
+      "LAST_WASH": "Last wash",
+      "SERVICE": "Service",
+      "TOTAL_WASHES": "Total washes"
+    },
+    "MODAL": {
+      "TITLE": "Register new vehicle",
+      "SUBTITLE": "Add your vehicle details to book washes faster.",
+      "TYPE": "Vehicle type",
+      "TYPE_PLACEHOLDER": "Select the type",
+      "BRAND": "Brand",
+      "MODEL": "Model",
+      "PLATE": "Plate",
+      "COLOR": "Color",
+      "CANCEL": "Cancel",
+      "SAVE": "Save vehicle"
     }
   }
 }

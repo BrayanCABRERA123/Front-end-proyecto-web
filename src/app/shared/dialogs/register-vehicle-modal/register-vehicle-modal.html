@@ -1,0 +1,52 @@
+<div class="modal-box">
+
+  <button class="btn-close-icon" (click)="cancelar()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <h2>{{ 'VEHICLES.MODAL.TITLE' | translate }}</h2>
+  <p class="subtitle">{{ 'VEHICLES.MODAL.SUBTITLE' | translate }}</p>
+
+  <div class="form-group">
+    <label class="form-label">{{ 'VEHICLES.MODAL.TYPE' | translate }} *</label>
+    <div class="select-wrapper">
+      <select class="form-select" [(ngModel)]="tipo">
+        <option value="" disabled selected>{{ 'VEHICLES.MODAL.TYPE_PLACEHOLDER' | translate }}</option>
+        <option *ngFor="let t of tiposVehiculo" [value]="t">{{ ('VEHICLE.' + t) | translate }}</option>
+      </select>
+      <mat-icon class="select-icon">expand_more</mat-icon>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label class="form-label">{{ 'VEHICLES.MODAL.BRAND' | translate }} *</label>
+      <input type="text" class="form-input" [(ngModel)]="marca" placeholder="Mazda" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">{{ 'VEHICLES.MODAL.MODEL' | translate }}</label>
+      <input type="text" class="form-input" [(ngModel)]="modelo" placeholder="3 Sedán" />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label class="form-label">{{ 'VEHICLES.MODAL.PLATE' | translate }} *</label>
+      <input type="text" class="form-input" [(ngModel)]="placa" placeholder="ABC-123" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">{{ 'VEHICLES.MODAL.COLOR' | translate }}</label>
+      <input type="text" class="form-input" [(ngModel)]="color" placeholder="Gris" />
+    </div>
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn-cancel" (click)="cancelar()">{{ 'VEHICLES.MODAL.CANCEL' | translate }}</button>
+    <button class="btn-confirm" [disabled]="!formularioValido" (click)="guardar()">
+      {{ 'VEHICLES.MODAL.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>

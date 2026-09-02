@@ -31,7 +31,8 @@
     "CONFIG": "Configuración",
     "LOGOUT": "Cerrar Sesión",
     "ASSIGNED_SERVICES": "servicios asignados",
-    "RATINGS": "Calificaciones"
+    "RATINGS": "Calificaciones",
+    "VEHICLES": "Mis vehículos"
   },
   "HISTORY": {
     "FILTERS": "Filtros",
@@ -529,6 +530,34 @@
     "HISTORY": {
       "TITLE": "Historial de pagos",
       "TOTAL_PAID": "Total pagado"
+    }
+  },
+  "VEHICLES": {
+    "TITLE": "Mis Vehículos",
+    "SUBTITLE": "Consulta tus vehículos registrados y su último lavado",
+    "REGISTER_BUTTON": "Registrar vehículo",
+    "STATS": {
+      "TOTAL": "Vehículos registrados",
+      "WASHES": "Lavados acumulados",
+      "LAST_WASH": "Último lavado realizado"
+    },
+    "CARD": {
+      "PLATE": "Placa",
+      "LAST_WASH": "Último lavado",
+      "SERVICE": "Servicio",
+      "TOTAL_WASHES": "Total de lavados"
+    },
+    "MODAL": {
+      "TITLE": "Registrar nuevo vehículo",
+      "SUBTITLE": "Agrega los datos de tu vehículo para reservar lavados más rápido.",
+      "TYPE": "Tipo de vehículo",
+      "TYPE_PLACEHOLDER": "Selecciona el tipo",
+      "BRAND": "Marca",
+      "MODEL": "Modelo",
+      "PLATE": "Placa",
+      "COLOR": "Color",
+      "CANCEL": "Cancelar",
+      "SAVE": "Guardar vehículo"
     }
   }
 }

@@ -9,6 +9,7 @@ import { ClientNotificationsComponent } from './pages/notifications/notification
 import { HistoryComponent } from './pages/history/history';
 import { ConfigurationComponent } from './pages/configuration/configuration';
 import { PaymentComponent } from './pages/payment/payment';
+import { VehiclesComponent } from './pages/vehicles/vehicles';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'history', component: HistoryComponent },
   { path: 'configuration', component: ConfigurationComponent },
   { path: 'payment', component: PaymentComponent },
+  { path: 'vehicles', component: VehiclesComponent },
 
 ];
 

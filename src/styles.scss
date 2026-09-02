@@ -248,3 +248,16 @@ html {
   background-color: var(--primary);
   border-radius: 10px;
 }
+/* Reset del contenedor por defecto de Angular Material para diálogos con diseño propio (.modal-box) */
+.custom-dialog .mdc-dialog__surface {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+  border-radius: 16px;
+}
+
+.custom-dialog .mat-mdc-dialog-container,
+.custom-dialog .mat-mdc-dialog-surface {
+  overflow: visible;
+}
