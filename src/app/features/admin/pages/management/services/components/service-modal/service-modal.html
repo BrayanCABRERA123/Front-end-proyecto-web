@@ -1,0 +1,76 @@
+@if (abierto) {
+  <div class="modal-overlay" (click)="cerrarModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+
+      <button type="button" class="modal-close" (click)="cerrarModal()" aria-label="Cerrar">
+        &times;
+      </button>
+
+      <div class="modal-title">
+        <mat-icon>add</mat-icon>
+        <h2>{{ 'SERVICES.MODAL.TITLE' | translate }}</h2>
+      </div>
+
+      <form #serviceForm="ngForm" (ngSubmit)="onSubmit(serviceForm)">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>{{ 'SERVICES.MODAL.NAME_LABEL' | translate }}</label>
+            <input type="text" name="nombre" [(ngModel)]="nombre" required
+                   [placeholder]="'SERVICES.MODAL.NAME_PLACEHOLDER' | translate" />
+          </div>
+
+          <div class="form-group">
+            <label>{{ 'SERVICES.MODAL.PRICE_LABEL' | translate }}</label>
+            <div class="input-with-prefix">
+              <span class="prefix">$</span>
+              <input type="number" name="precio" [(ngModel)]="precio" required min="0" placeholder="0.00" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>{{ 'SERVICES.MODAL.DESCRIPTION_LABEL' | translate }}</label>
+          <textarea name="descripcion" [(ngModel)]="descripcion" rows="3"
+                    [placeholder]="'SERVICES.MODAL.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>{{ 'SERVICES.MODAL.DURATION_LABEL' | translate }}</label>
+            <div class="input-with-icon">
+              <mat-icon>schedule</mat-icon>
+              <input type="number" name="duracion" [(ngModel)]="duracion" required min="1" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>{{ 'SERVICES.MODAL.CATEGORY_LABEL' | translate }}</label>
+            <select name="categoria" [(ngModel)]="categoria">
+              <option value="LAVADO">{{ 'SERVICES.CATEGORIES.LAVADO' | translate }}</option>
+              <option value="BRILLADO">{{ 'SERVICES.CATEGORIES.BRILLADO' | translate }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="toggle-row">
+          <div>
+            <p class="toggle-title">{{ 'SERVICES.MODAL.ACTIVE_LABEL' | translate }}</p>
+            <p class="toggle-hint">{{ 'SERVICES.MODAL.ACTIVE_HINT' | translate }}</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" name="activo" [(ngModel)]="activo" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <mat-icon>add</mat-icon>
+          {{ 'SERVICES.MODAL.SUBMIT' | translate }}
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+}

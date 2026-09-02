@@ -32,7 +32,8 @@
     "LOGOUT": "Log Out",
     "ASSIGNED_SERVICES": "assigned services",
     "RATINGS": "Ratings",
-    "VEHICLES": "My vehicles"
+    "VEHICLES": "My vehicles",
+    "MANAGEMENT": "Management Panel"
   },
   "HISTORY": {
     "FILTERS": "Filters",
@@ -790,6 +791,93 @@
       "PERMISSIONS": "Permissions",
       "CANCEL": "Cancel",
       "SUBMIT": "Create role"
+    }
+  },
+  "MANAGEMENT": {
+    "TABS": {
+      "USERS": "Users",
+      "ROLES": "Roles",
+      "SERVICES": "Services",
+      "PROMOTIONS": "Promotions",
+      "OPERATIONAL": "Operational"
+    }
+  },
+  "SERVICES": {
+    "TITLE": "Service Management",
+    "SUBTITLE": "Manage your business services here",
+    "EXISTING_TITLE": "Existing Services",
+    "COUNT": "services",
+    "TABLE": {
+      "NAME": "Name",
+      "PRICE": "Price",
+      "DURATION": "Duration",
+      "CATEGORY": "Category",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    },
+    "CATEGORIES": {
+      "LAVADO": "Wash",
+      "BRILLADO": "Shine"
+    },
+    "STATUS": {
+      "ACTIVO": "Active",
+      "INACTIVO": "Inactive"
+    },
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "EMPTY": "No services found",
+    "MODAL": {
+      "TITLE": "Add Service",
+      "NAME_LABEL": "Name",
+      "NAME_PLACEHOLDER": "E.g. Express wash",
+      "PRICE_LABEL": "Price",
+      "DESCRIPTION_LABEL": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Describe the service...",
+      "DURATION_LABEL": "Estimated duration (min)",
+      "CATEGORY_LABEL": "Category",
+      "ACTIVE_LABEL": "Active / Inactive",
+      "ACTIVE_HINT": "Visible to clients in the app",
+      "SUBMIT": "Add service"
+    }
+  },
+  "PROMOTIONS": {
+    "TITLE": "Promotions",
+    "DISCOUNT_LABEL": "Discount %",
+    "DURATION_LABEL": "Offer duration",
+    "SERVICE_LABEL": "Applied service",
+    "SERVICE_PLACEHOLDER": "Select a service",
+    "SUBMIT": "Create promotion",
+    "ACTIVE_LABEL": "ACTIVE PROMOTION",
+    "VALID_UNTIL": "Valid until"
+  },
+  "OPERATIONAL": {
+    "TITLE": "Operational Module",
+    "SUBTITLE": "Operator availability, service progress and real-time rating.",
+    "STATS": {
+      "AVAILABLE": "Available operators",
+      "ASSIGNED_TODAY": "Services assigned today",
+      "COMPLETED": "Completed services",
+      "AVG_RATING": "Average rating"
+    },
+    "SEARCH_PLACEHOLDER": "Search operator or zone",
+    "FILTER_ALL": "All availabilities",
+    "ASSIGNED": "Assigned",
+    "COMPLETED": "Completed",
+    "RATING": "Rating",
+    "DAY_PROGRESS": "Day progress",
+    "WORKLOAD": "Workload (8h shift)",
+    "FREE_SINCE": "Free since",
+    "NOW": "Now",
+    "VIEW_AGENDA": "View agenda",
+    "ASSIGN_SERVICE": "Assign service",
+    "EMPTY": "No operators found",
+    "STATUS": {
+      "OCUPADO": "Busy",
+      "DISPONIBLE": "Available",
+      "EN_RUTA": "On route",
+      "BUSY": "Busy",
+      "AVAILABLE": "Available",
+      "ON_ROUTE": "On route"
     }
   }
 }

@@ -17,10 +17,6 @@
     <mat-icon>search</mat-icon>
     <input type="text" [(ngModel)]="busqueda" [placeholder]="'ROLES.SEARCH_PLACEHOLDER' | translate" />
   </div>
-  <button class="btn-outline" (click)="abrirFiltros()">
-    <mat-icon>filter_list</mat-icon>
-    {{ 'ROLES.FILTER' | translate }}
-  </button>
 </div>
 
 <div class="card table-card">
@@ -52,7 +48,7 @@
           </td>
           <td><span class="pill pill-purple">{{ rol.permisosCount }}</span></td>
           <td>
-            <span class="status-badge" [ngClass]="'status-' + rol.estado.toLowerCase()">
+            <span class="status-badge status-toggle" [ngClass]="'status-' + rol.estado.toLowerCase()" (click)="toggleEstadoRol(rol)">
               {{ ('ROLES.STATUS.' + rol.estado) | translate }}
             </span>
           </td>

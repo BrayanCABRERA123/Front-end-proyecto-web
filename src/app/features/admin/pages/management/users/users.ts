@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // importamos el sidebar del layout
-import { SidebarComponent } from '../../../../../shared/components/sidebar/sidebar';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserModalComponent, NuevoUsuario, TipoUsuario } from './components/user-modal/user-modal';
@@ -28,7 +27,7 @@ interface Usuario {
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent, MatIconModule, TranslateModule, UserModalComponent],
+  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule, UserModalComponent],
   templateUrl: './users.html',
   styleUrl: './users.scss'
 })
@@ -132,6 +131,11 @@ export class UsersComponent {
   }
 
   // abre el panel de filtros avanzados
+  // alterna el estado de un usuario entre activo e inhabilitado
+  toggleEstadoUsuario(usuario: Usuario): void {
+    usuario.estado = usuario.estado === 'DISABLED' ? 'ACTIVE' : 'DISABLED';
+  }
+
   abrirFiltros(): void {
     // TODO: implementar filtros avanzados (tipo de usuario, fecha, invitado)
     console.log('Abrir filtros de usuarios');

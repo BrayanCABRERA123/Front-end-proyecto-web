@@ -32,7 +32,8 @@
     "LOGOUT": "Cerrar Sesión",
     "ASSIGNED_SERVICES": "servicios asignados",
     "RATINGS": "Calificaciones",
-    "VEHICLES": "Mis vehículos"
+    "VEHICLES": "Mis vehículos",
+    "MANAGEMENT": "Panel de gestión"
   },
   "HISTORY": {
     "FILTERS": "Filtros",
@@ -790,6 +791,93 @@
       "PERMISSIONS": "Permisos",
       "CANCEL": "Cancelar",
       "SUBMIT": "Crear rol"
+    }
+  },
+  "MANAGEMENT": {
+    "TABS": {
+      "USERS": "Usuarios",
+      "ROLES": "Roles",
+      "SERVICES": "Servicios",
+      "PROMOTIONS": "Promociones",
+      "OPERATIONAL": "Operativo"
+    }
+  },
+  "SERVICES": {
+    "TITLE": "Gestión de Servicios",
+    "SUBTITLE": "Aquí administras los servicios del negocio",
+    "EXISTING_TITLE": "Servicios Existentes",
+    "COUNT": "servicios",
+    "TABLE": {
+      "NAME": "Nombre",
+      "PRICE": "Precio",
+      "DURATION": "Duración",
+      "CATEGORY": "Categoría",
+      "STATUS": "Estado",
+      "ACTIONS": "Acciones"
+    },
+    "CATEGORIES": {
+      "LAVADO": "Lavado",
+      "BRILLADO": "Brillado"
+    },
+    "STATUS": {
+      "ACTIVO": "Activo",
+      "INACTIVO": "Inactivo"
+    },
+    "EDIT": "Editar",
+    "DELETE": "Eliminar",
+    "EMPTY": "No se encontraron servicios",
+    "MODAL": {
+      "TITLE": "Agregar Servicio",
+      "NAME_LABEL": "Nombre",
+      "NAME_PLACEHOLDER": "Ej. Lavado express",
+      "PRICE_LABEL": "Precio",
+      "DESCRIPTION_LABEL": "Descripción",
+      "DESCRIPTION_PLACEHOLDER": "Describe el servicio...",
+      "DURATION_LABEL": "Duración estimada (min)",
+      "CATEGORY_LABEL": "Categoría",
+      "ACTIVE_LABEL": "Activo / Inactivo",
+      "ACTIVE_HINT": "Visible para los clientes en la app",
+      "SUBMIT": "Agregar servicio"
+    }
+  },
+  "PROMOTIONS": {
+    "TITLE": "Promociones",
+    "DISCOUNT_LABEL": "Descuento %",
+    "DURATION_LABEL": "Duración de la oferta",
+    "SERVICE_LABEL": "Servicio aplicado",
+    "SERVICE_PLACEHOLDER": "Selecciona un servicio",
+    "SUBMIT": "Crear promoción",
+    "ACTIVE_LABEL": "PROMOCIÓN ACTIVA",
+    "VALID_UNTIL": "Vigente hasta el"
+  },
+  "OPERATIONAL": {
+    "TITLE": "Módulo Operacional",
+    "SUBTITLE": "Disponibilidad de operarios, avance de sus servicios y calificación en tiempo real.",
+    "STATS": {
+      "AVAILABLE": "Operarios disponibles",
+      "ASSIGNED_TODAY": "Servicios asignados hoy",
+      "COMPLETED": "Servicios completados",
+      "AVG_RATING": "Calificación promedio"
+    },
+    "SEARCH_PLACEHOLDER": "Buscar operario o zona",
+    "FILTER_ALL": "Todas las disponibilidades",
+    "ASSIGNED": "Asignados",
+    "COMPLETED": "Completados",
+    "RATING": "Calificación",
+    "DAY_PROGRESS": "Avance del día",
+    "WORKLOAD": "Carga horaria (jornada 8h)",
+    "FREE_SINCE": "Libre desde",
+    "NOW": "Ahora",
+    "VIEW_AGENDA": "Ver agenda",
+    "ASSIGN_SERVICE": "Asignar servicio",
+    "EMPTY": "No se encontraron operarios",
+    "STATUS": {
+      "OCUPADO": "Ocupado",
+      "DISPONIBLE": "Disponible",
+      "EN_RUTA": "En ruta",
+      "BUSY": "Ocupado",
+      "AVAILABLE": "Disponible",
+      "ON_ROUTE": "En ruta"
     }
   }
 }

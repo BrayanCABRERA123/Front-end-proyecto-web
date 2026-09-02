@@ -32,7 +32,8 @@
     "LOGOUT": "Se déconnecter",
     "ASSIGNED_SERVICES": "services assignés",
     "RATINGS": "Évaluations",
-    "VEHICLES": "Mes véhicules"
+    "VEHICLES": "Mes véhicules",
+    "MANAGEMENT": "Panneau de gestion"
   },
   "HISTORY": {
     "FILTERS": "Filtres",
@@ -790,6 +791,93 @@
       "PERMISSIONS": "Permissions",
       "CANCEL": "Annuler",
       "SUBMIT": "Créer le rôle"
+    }
+  },
+  "MANAGEMENT": {
+    "TABS": {
+      "USERS": "Utilisateurs",
+      "ROLES": "Rôles",
+      "SERVICES": "Services",
+      "PROMOTIONS": "Promotions",
+      "OPERATIONAL": "Opérationnel"
+    }
+  },
+  "SERVICES": {
+    "TITLE": "Gestion des services",
+    "SUBTITLE": "Gérez ici les services de l'entreprise",
+    "EXISTING_TITLE": "Services existants",
+    "COUNT": "services",
+    "TABLE": {
+      "NAME": "Nom",
+      "PRICE": "Prix",
+      "DURATION": "Durée",
+      "CATEGORY": "Catégorie",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions"
+    },
+    "CATEGORIES": {
+      "LAVADO": "Lavage",
+      "BRILLADO": "Brillance"
+    },
+    "STATUS": {
+      "ACTIVO": "Actif",
+      "INACTIVO": "Inactif"
+    },
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer",
+    "EMPTY": "Aucun service trouvé",
+    "MODAL": {
+      "TITLE": "Ajouter un service",
+      "NAME_LABEL": "Nom",
+      "NAME_PLACEHOLDER": "Ex. Lavage express",
+      "PRICE_LABEL": "Prix",
+      "DESCRIPTION_LABEL": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Décrivez le service...",
+      "DURATION_LABEL": "Durée estimée (min)",
+      "CATEGORY_LABEL": "Catégorie",
+      "ACTIVE_LABEL": "Actif / Inactif",
+      "ACTIVE_HINT": "Visible pour les clients dans l'application",
+      "SUBMIT": "Ajouter le service"
+    }
+  },
+  "PROMOTIONS": {
+    "TITLE": "Promotions",
+    "DISCOUNT_LABEL": "Remise %",
+    "DURATION_LABEL": "Durée de l'offre",
+    "SERVICE_LABEL": "Service appliqué",
+    "SERVICE_PLACEHOLDER": "Sélectionnez un service",
+    "SUBMIT": "Créer la promotion",
+    "ACTIVE_LABEL": "PROMOTION ACTIVE",
+    "VALID_UNTIL": "Valable jusqu'au"
+  },
+  "OPERATIONAL": {
+    "TITLE": "Module opérationnel",
+    "SUBTITLE": "Disponibilité des opérateurs, avancement des services et notation en temps réel.",
+    "STATS": {
+      "AVAILABLE": "Opérateurs disponibles",
+      "ASSIGNED_TODAY": "Services assignés aujourd'hui",
+      "COMPLETED": "Services terminés",
+      "AVG_RATING": "Note moyenne"
+    },
+    "SEARCH_PLACEHOLDER": "Rechercher un opérateur ou une zone",
+    "FILTER_ALL": "Toutes les disponibilités",
+    "ASSIGNED": "Assignés",
+    "COMPLETED": "Terminés",
+    "RATING": "Note",
+    "DAY_PROGRESS": "Avancement du jour",
+    "WORKLOAD": "Charge horaire (journée 8h)",
+    "FREE_SINCE": "Libre depuis",
+    "NOW": "Maintenant",
+    "VIEW_AGENDA": "Voir l'agenda",
+    "ASSIGN_SERVICE": "Assigner un service",
+    "EMPTY": "Aucun opérateur trouvé",
+    "STATUS": {
+      "OCUPADO": "Occupé",
+      "DISPONIBLE": "Disponible",
+      "EN_RUTA": "En route",
+      "BUSY": "Occupé",
+      "AVAILABLE": "Disponible",
+      "ON_ROUTE": "En route"
     }
   }
 }

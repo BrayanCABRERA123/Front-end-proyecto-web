@@ -32,7 +32,8 @@
     "LOGOUT": "Sair",
     "ASSIGNED_SERVICES": "serviços atribuídos",
     "RATINGS": "Avaliações",
-    "VEHICLES": "Meus veículos"
+    "VEHICLES": "Meus veículos",
+    "MANAGEMENT": "Painel de gestão"
   },
   "HISTORY": {
     "FILTERS": "Filtros",
@@ -790,6 +791,93 @@
       "PERMISSIONS": "Permissões",
       "CANCEL": "Cancelar",
       "SUBMIT": "Criar papel"
+    }
+  },
+  "MANAGEMENT": {
+    "TABS": {
+      "USERS": "Usuários",
+      "ROLES": "Funções",
+      "SERVICES": "Serviços",
+      "PROMOTIONS": "Promoções",
+      "OPERATIONAL": "Operacional"
+    }
+  },
+  "SERVICES": {
+    "TITLE": "Gestão de Serviços",
+    "SUBTITLE": "Administre os serviços do negócio aqui",
+    "EXISTING_TITLE": "Serviços Existentes",
+    "COUNT": "serviços",
+    "TABLE": {
+      "NAME": "Nome",
+      "PRICE": "Preço",
+      "DURATION": "Duração",
+      "CATEGORY": "Categoria",
+      "STATUS": "Status",
+      "ACTIONS": "Ações"
+    },
+    "CATEGORIES": {
+      "LAVADO": "Lavagem",
+      "BRILLADO": "Brilho"
+    },
+    "STATUS": {
+      "ACTIVO": "Ativo",
+      "INACTIVO": "Inativo"
+    },
+    "EDIT": "Editar",
+    "DELETE": "Excluir",
+    "EMPTY": "Nenhum serviço encontrado",
+    "MODAL": {
+      "TITLE": "Adicionar Serviço",
+      "NAME_LABEL": "Nome",
+      "NAME_PLACEHOLDER": "Ex. Lavagem expressa",
+      "PRICE_LABEL": "Preço",
+      "DESCRIPTION_LABEL": "Descrição",
+      "DESCRIPTION_PLACEHOLDER": "Descreva o serviço...",
+      "DURATION_LABEL": "Duração estimada (min)",
+      "CATEGORY_LABEL": "Categoria",
+      "ACTIVE_LABEL": "Ativo / Inativo",
+      "ACTIVE_HINT": "Visível para os clientes no app",
+      "SUBMIT": "Adicionar serviço"
+    }
+  },
+  "PROMOTIONS": {
+    "TITLE": "Promoções",
+    "DISCOUNT_LABEL": "Desconto %",
+    "DURATION_LABEL": "Duração da oferta",
+    "SERVICE_LABEL": "Serviço aplicado",
+    "SERVICE_PLACEHOLDER": "Selecione um serviço",
+    "SUBMIT": "Criar promoção",
+    "ACTIVE_LABEL": "PROMOÇÃO ATIVA",
+    "VALID_UNTIL": "Válido até"
+  },
+  "OPERATIONAL": {
+    "TITLE": "Módulo Operacional",
+    "SUBTITLE": "Disponibilidade dos operadores, andamento dos serviços e avaliação em tempo real.",
+    "STATS": {
+      "AVAILABLE": "Operadores disponíveis",
+      "ASSIGNED_TODAY": "Serviços atribuídos hoje",
+      "COMPLETED": "Serviços concluídos",
+      "AVG_RATING": "Avaliação média"
+    },
+    "SEARCH_PLACEHOLDER": "Buscar operador ou zona",
+    "FILTER_ALL": "Todas as disponibilidades",
+    "ASSIGNED": "Atribuídos",
+    "COMPLETED": "Concluídos",
+    "RATING": "Avaliação",
+    "DAY_PROGRESS": "Andamento do dia",
+    "WORKLOAD": "Carga horária (turno 8h)",
+    "FREE_SINCE": "Livre desde",
+    "NOW": "Agora",
+    "VIEW_AGENDA": "Ver agenda",
+    "ASSIGN_SERVICE": "Atribuir serviço",
+    "EMPTY": "Nenhum operador encontrado",
+    "STATUS": {
+      "OCUPADO": "Ocupado",
+      "DISPONIBLE": "Disponível",
+      "EN_RUTA": "Em rota",
+      "BUSY": "Ocupado",
+      "AVAILABLE": "Disponível",
+      "ON_ROUTE": "Em rota"
     }
   }
 }

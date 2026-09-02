@@ -28,10 +28,6 @@
 </div>
 
 <div class="toolbar">
-  <button class="btn-outline" (click)="abrirFiltros()">
-    <mat-icon>filter_list</mat-icon>
-    {{ 'USERS.FILTER' | translate }}
-  </button>
   <div class="search-box">
     <mat-icon>search</mat-icon>
     <input type="text" [(ngModel)]="busqueda" [placeholder]="'USERS.SEARCH_PLACEHOLDER' | translate" />
@@ -60,7 +56,7 @@
           <td>{{ usuario.fecha }}</td>
           <td>{{ (usuario.invitado ? 'USERS.YES' : 'USERS.NO') | translate }}</td>
           <td>
-            <span class="status-badge" [ngClass]="'status-' + usuario.estado.toLowerCase()">
+            <span class="status-badge status-toggle" [ngClass]="'status-' + usuario.estado.toLowerCase()" (click)="toggleEstadoUsuario(usuario)">
               {{ ('USERS.STATUS.' + usuario.estado) | translate }}
             </span>
           </td>

@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // importamos el sidebar del layout
-import { SidebarComponent } from '../../../../../shared/components/sidebar/sidebar';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { RoleModalComponent, NuevoRol } from './components/role-modal/role-modal';
@@ -25,7 +24,7 @@ interface Rol {
 @Component({
   selector: 'app-roles',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent, MatIconModule, TranslateModule, RoleModalComponent],
+  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule, RoleModalComponent],
   templateUrl: './roles.html',
   styleUrl: './roles.scss'
 })
@@ -98,6 +97,11 @@ export class RolesComponent {
   }
 
   // abre el panel de filtros avanzados
+  // alterna el estado de un rol entre activo e inactivo
+  toggleEstadoRol(rol: Rol): void {
+    rol.estado = rol.estado === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+  }
+
   abrirFiltros(): void {
     // TODO: implementar filtros avanzados de roles
     console.log('Abrir filtros de roles');
