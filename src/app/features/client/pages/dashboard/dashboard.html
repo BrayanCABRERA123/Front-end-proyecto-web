@@ -1,0 +1,119 @@
+<div class="home-layout">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="CLIENTE"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <main class="home-content">
+
+    <!-- Saludo -->
+    <div class="dashboard-header">
+
+      <div>
+        <h1>{{ 'DASHBOARD.HELLO' | translate:{ name: usuario.nombre } }}</h1>
+        <p>{{ 'DASHBOARD.SUBTITLE' | translate }}</p>
+      </div>
+
+
+      <!-- Notificaciones -->
+      <div class="icon_notifications"
+        *ngFor="let item of notificaciones"
+        (click)="irA(item.camp)"
+        [class.clickable]="item.camp !== null">
+        <mat-icon class="icon-notifications">{{ item.camp }}</mat-icon>
+      </div>
+
+    </div>
+
+    <!-- Estadísticas rápidas -->
+    <div class="stats-grid">
+      <div class="stat-card" *ngFor="let stat of estadisticas">
+        <div class="stat-icon">
+          <mat-icon>{{ stat.icono }}</mat-icon>
+        </div>
+        <span class="stat-valor">{{ stat.valor }}</span>
+        <span class="stat-label">{{ ('DASHBOARD.' + stat.label) | translate }}</span>
+      </div>
+    </div>
+
+    <!-- Próximo servicio + accesos rápidos -->
+    <div class="dashboard-row">
+
+      <div class="card next-service-card">
+        <div class="card-header">
+          <div class="card-title">
+            <mat-icon>schedule</mat-icon>
+            <h2>{{ 'DASHBOARD.NEXT_SERVICE.TITLE' | translate }}</h2>
+          </div>
+          <span class="badge" [class]="'badge-' + proximoServicio.estado.toLowerCase()">
+            {{ ('STATUS.' + proximoServicio.estado) | translate }}
+          </span>
+        </div>
+
+        <div class="next-service-body">
+          <div class="next-service-info">
+            <p class="next-service-nombre">
+              {{ proximoServicio.codigo }} · {{ ('SERVICE.' + proximoServicio.tipo) | translate }} —
+              {{ ('VEHICLE.' + proximoServicio.vehiculo) | translate }} · {{ proximoServicio.placa }}
+            </p>
+            <p class="next-service-fecha">{{ proximoServicio.fecha }}</p>
+
+            <div class="next-service-meta">
+              <span><mat-icon>location_on</mat-icon> {{ proximoServicio.direccion }}</span>
+              <span><mat-icon>call</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ proximoServicio.operario }}</span>
+            </div>
+          </div>
+
+          <button class="btn-outline">{{ 'DASHBOARD.NEXT_SERVICE.VIEW_DETAIL' | translate }}</button>
+        </div>
+
+        <div class="progress-row">
+          <span>{{ 'DASHBOARD.NEXT_SERVICE.PROGRESS' | translate }}</span>
+          <span>{{ proximoServicio.avance }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="proximoServicio.avance"></div>
+        </div>
+      </div>
+
+      <div class="card quick-access-card">
+        <h2>{{ 'DASHBOARD.QUICK_ACCESS.TITLE' | translate }}</h2>
+
+        <div class="quick-access-grid">
+          <button class="quick-access-item" *ngFor="let acceso of accesosRapidos" (click)="irA(acceso.ruta)">
+            <mat-icon>{{ acceso.icono }}</mat-icon>
+            <span>{{ ('DASHBOARD.' + acceso.label) | translate }}</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Beneficios y promociones -->
+    <div class="card benefits-card">
+      <div class="card-title">
+        <mat-icon>card_giftcard</mat-icon>
+        <h2>{{ 'DASHBOARD.BENEFITS.TITLE' | translate }}</h2>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-item" *ngFor="let beneficio of beneficios">
+          <p class="benefit-titulo">{{ beneficio.titulo }}</p>
+          <p class="benefit-desc">{{ beneficio.descripcion }}</p>
+        </div>
+      </div>
+
+      <div class="loyalty-progress">
+        <div class="progress-row">
+          <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ fidelidad.actual }} de {{ fidelidad.meta }} lavados)</span>
+          <span>{{ fidelidad.porcentaje }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="fidelidad.porcentaje"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</div>

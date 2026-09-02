@@ -1,0 +1,85 @@
+<div class="home-layout">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="CLIENTE"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <main class="home-content">
+
+    <div class="vehicles-header">
+      <div>
+        <h1>{{ 'VEHICLES.TITLE' | translate }}</h1>
+        <p>{{ 'VEHICLES.SUBTITLE' | translate }}</p>
+      </div>
+
+      <button class="btn-primary" (click)="abrirModalRegistro()">
+        <mat-icon>add</mat-icon>
+        {{ 'VEHICLES.REGISTER_BUTTON' | translate }}
+      </button>
+    </div>
+
+    <!-- Estadísticas rápidas -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><mat-icon>directions_car</mat-icon></div>
+        <span class="stat-valor">{{ totalVehiculos }}</span>
+        <span class="stat-label">{{ 'VEHICLES.STATS.TOTAL' | translate }}</span>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><mat-icon>water_drop</mat-icon></div>
+        <span class="stat-valor">{{ totalLavados }}</span>
+        <span class="stat-label">{{ 'VEHICLES.STATS.WASHES' | translate }}</span>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><mat-icon>schedule</mat-icon></div>
+        <span class="stat-valor stat-valor-fecha">{{ ultimoLavadoGeneral }}</span>
+        <span class="stat-label">{{ 'VEHICLES.STATS.LAST_WASH' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- Grid de vehículos -->
+    <div class="vehicles-grid">
+      <div class="vehicle-card" *ngFor="let vehiculo of vehiculos">
+
+        <div class="vehicle-card-header">
+          <div class="vehicle-icon">
+            <mat-icon>{{ iconoDe(vehiculo.tipo) }}</mat-icon>
+          </div>
+
+          <div class="vehicle-titulo">
+            <p class="vehicle-nombre">{{ vehiculo.marca }} {{ vehiculo.modelo }}</p>
+            <p class="vehicle-subtitulo">{{ ('VEHICLE.' + vehiculo.tipo) | translate }} · {{ vehiculo.color }}</p>
+          </div>
+
+          <button class="btn-icon" (click)="eliminarVehiculo(vehiculo.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        <div class="vehicle-detalle">
+          <div class="vehicle-detalle-row">
+            <span>{{ 'VEHICLES.CARD.PLATE' | translate }}</span>
+            <strong>{{ vehiculo.placa }}</strong>
+          </div>
+          <div class="vehicle-detalle-row">
+            <span>{{ 'VEHICLES.CARD.LAST_WASH' | translate }}</span>
+            <strong>{{ vehiculo.ultimoLavado }}</strong>
+          </div>
+          <div class="vehicle-detalle-row">
+            <span>{{ 'VEHICLES.CARD.SERVICE' | translate }}</span>
+            <strong>{{ vehiculo.servicio === '-' ? '-' : (('SERVICE.' + vehiculo.servicio) | translate) }}</strong>
+          </div>
+          <div class="vehicle-detalle-row">
+            <span>{{ 'VEHICLES.CARD.TOTAL_WASHES' | translate }}</span>
+            <strong>{{ vehiculo.totalLavados }}</strong>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+</div>

@@ -1,0 +1,175 @@
+@use '../../../../styles/mixins' as *;
+
+.modal-box {
+  width: 90%;
+  max-width: 520px;
+  background: var(--card);
+  color: var(--text);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.btn-close-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+    color: var(--primary);
+  }
+}
+
+h2 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.subtitle {
+  color: #8a9aa3;
+  font-size: 14px;
+  margin: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.form-input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text);
+  background-color: var(--card);
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15);
+  }
+
+  &::placeholder {
+    color: #8a9aa3;
+  }
+}
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .select-icon {
+    position: absolute;
+    right: 12px;
+    font-size: 20px;
+    color: #8a9aa3;
+    pointer-events: none;
+  }
+}
+
+.form-select {
+  width: 100%;
+  padding: 11px 40px 11px 12px;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text);
+  background-color: var(--card);
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.15);
+  }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-cancel {
+  padding: 11px 20px;
+  border-radius: 10px;
+  border: 1.5px solid #DCE5E4;
+  background: var(--card);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: rgba(var(--primary-rgb), 0.06);
+  }
+}
+
+.btn-confirm {
+  padding: 11px 20px;
+  border-radius: 10px;
+  border: none;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@include mobile {
+  .modal-box {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

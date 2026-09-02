@@ -34,7 +34,7 @@ body {
   --primary-hover: #229990; 
 
   /* SIDEBAR */
-  --sidebar: #26403D;
+  --sidebar: #104039;
 
   /* BACKGROUNDS */
   --bg: #f5f6f8;
@@ -87,7 +87,7 @@ body.green-dark {
   --primary-rgb: 46, 196, 182;
   --primary-hover: #1fa89c;
 
-  --sidebar: #1a2e2b;
+  --sidebar: #142927;
 
   --bg: #1a1a1a;
   --bg-soft: #131C20;
@@ -247,4 +247,17 @@ html {
 ::-webkit-scrollbar-thumb {
   background-color: var(--primary);
   border-radius: 10px;
+}
+/* Reset del contenedor por defecto de Angular Material para diálogos con diseño propio (.modal-box) */
+.custom-dialog .mdc-dialog__surface {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+  border-radius: 16px;
+}
+
+.custom-dialog .mat-mdc-dialog-container,
+.custom-dialog .mat-mdc-dialog-surface {
+  overflow: visible;
 }
