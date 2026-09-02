@@ -7,7 +7,7 @@ import {
   AppNotification,
   claseTipoNotificacion,
   labelTipoNotificacion
-} from '../../models/notification.model';
+} from '../notification-models/notification.model';
 
 @Component({
   selector: 'app-notification-detail-modal',

@@ -9,9 +9,9 @@ import {
   NotificationType,
   claseTipoNotificacion,
   labelTipoNotificacion
-} from '../../models/notification.model';
-import { NotificationDetailModal } from './notification-detail-modal';
-import { ConfirmModal, ConfirmModalData } from '../confirm-modal/confirm-modal';
+} from '../../dialogs/notification-models/notification.model';
+import { NotificationDetailModal } from '../../dialogs/notification-detail-modal/notification-detail-modal';
+import { ConfirmModal, ConfirmModalData } from '../../dialogs/confirm-modal/confirm-modal';
 
 export type { AppNotification, NotificationType };
 
