@@ -1,57 +1,37 @@
 <div class="profile-wrapper">
 
-  <div class="profile-left">
+  <h1 class="page-title">
+    {{ 'PROFILE.TITLE' | translate }}
+  </h1>
 
-    <h1 class="page-title">
-      {{ 'PROFILE.TITLE' | translate }}
-    </h1>
+  <!-- Resumen del usuario -->
+  <div class="card summary-card">
+    <div class="avatar">{{ usuario.iniciales }}</div>
 
-    <div class="card profile-card">
+    <div class="summary-info">
+      <h2 class="user-name">{{ usuario.nombre }}</h2>
+      <p class="subtitle">{{ 'PROFILE.MEMBER_SINCE' | translate:{date: usuario.miembroDesde} }}</p>
+    </div>
 
-      <div class="avatar">
-        {{ usuario.iniciales }}
-      </div>
+    <div class="edit-status" [class.editing]="editando" [class.saved]="!editando">
+      <mat-icon>{{ editando ? 'edit' : 'check_circle' }}</mat-icon>
+      <span>
+        {{ editando ? ('PROFILE.EDIT_MODE' | translate) : ('PROFILE.SAVED_MODE' | translate) }}
+      </span>
+    </div>
+  </div>
 
-      <h2 class="user-name">
-        {{ usuario.nombre }}
-      </h2>
+  <!-- Campos editables -->
+  <form [formGroup]="form">
 
-      <p class="subtitle">
-        {{ 'PROFILE.MEMBER_SINCE' | translate:{date: usuario.miembroDesde} }}
-      </p>
+    <div class="fields-grid">
 
-      <div
-        class="edit-status"
-        [class.editing]="editando"
-        [class.saved]="!editando">
-
-        <mat-icon>
-          {{ editando ? 'edit' : 'check_circle' }}
-        </mat-icon>
-
-        <span>
-          {{
-            editando
-              ? ('PROFILE.EDIT_MODE' | translate)
-              : ('PROFILE.SAVED_MODE' | translate)
-          }}
-        </span>
-
-      </div>
-
-      <form [formGroup]="form">
-
-        <!-- nombre -->
-        <div class="form-group">
-
-          <label>
-            {{ 'PROFILE.NAME' | translate }}
-          </label>
-
-          <div class="input-icon" [class.input-error]="form.get('nombre')?.invalid && form.get('nombre')?.touched">
-            <mat-icon>person</mat-icon>
-            <input type="text" formControlName="nombre"/>
-          </div>
+      <!-- nombre -->
+      <div class="field-card" [class.field-error]="form.get('nombre')?.invalid && form.get('nombre')?.touched">
+        <div class="field-icon"><mat-icon>person</mat-icon></div>
+        <div class="field-body">
+          <label>{{ 'PROFILE.NAME' | translate }}</label>
+          <input type="text" formControlName="nombre"/>
 
           @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
             <p class="error-msg">
@@ -64,20 +44,15 @@
               }
             </p>
           }
-
         </div>
+      </div>
 
-        <!-- correo -->
-        <div class="form-group">
-
-          <label>
-            {{ 'PROFILE.EMAIL' | translate }}
-          </label>
-
-          <div class="input-icon" [class.input-error]="form.get('email')?.invalid && form.get('email')?.touched">
-            <mat-icon>email</mat-icon>
-            <input type="email" formControlName="email"/>
-          </div>
+      <!-- correo -->
+      <div class="field-card" [class.field-error]="form.get('email')?.invalid && form.get('email')?.touched">
+        <div class="field-icon"><mat-icon>email</mat-icon></div>
+        <div class="field-body">
+          <label>{{ 'PROFILE.EMAIL' | translate }}</label>
+          <input type="email" formControlName="email"/>
 
           @if (form.get('email')?.invalid && form.get('email')?.touched) {
             <p class="error-msg">
@@ -88,20 +63,18 @@
               }
             </p>
           }
-
         </div>
+      </div>
 
-        <!-- telefono -->
-        <div class="form-group">
+      <!-- telefono -->
+      <div class="field-card" [class.field-error]="form.get('telefonoNumero')?.invalid && form.get('telefonoNumero')?.touched">
+        <div class="field-icon"><mat-icon>phone</mat-icon></div>
+        <div class="field-body">
+          <label>{{ 'PROFILE.PHONE' | translate }}</label>
 
-          <label>
-            {{ 'PROFILE.PHONE' | translate }}
-          </label>
-
-          <div class="phone-row" [class.input-error]="form.get('telefonoNumero')?.invalid && form.get('telefonoNumero')?.touched">
+          <div class="phone-row">
 
             <div class="phone-select-wrapper">
-
               <button
                 type="button"
                 class="phone-select-trigger"
@@ -111,7 +84,6 @@
                 <span class="fi fi-{{ paisSeleccionado.flagCode }} fis"></span>
                 <span class="phone-indicativo">{{ paisSeleccionado.indicativo }}</span>
                 <mat-icon class="chevron">expand_more</mat-icon>
-
               </button>
 
               @if (telefonoDropdownOpen) {
@@ -127,18 +99,14 @@
                   }
                 </div>
               }
-
             </div>
 
-            <div class="input-icon phone-input">
-              <mat-icon>phone</mat-icon>
-              <input
-                type="text"
-                formControlName="telefonoNumero"
-                [maxlength]="paisSeleccionado.digitos"
-                inputmode="numeric"/>
-            </div>
-
+            <input
+              type="text"
+              class="phone-input"
+              formControlName="telefonoNumero"
+              [maxlength]="paisSeleccionado.digitos"
+              inputmode="numeric"/>
           </div>
 
           @if (form.get('telefonoNumero')?.invalid && form.get('telefonoNumero')?.touched) {
@@ -150,20 +118,15 @@
               }
             </p>
           }
-
         </div>
+      </div>
 
-        <!-- direccion -->
-        <div class="form-group">
-
-          <label>
-            {{ 'PROFILE.ADDRESS' | translate }}
-          </label>
-
-          <div class="input-icon" [class.input-error]="form.get('direccion')?.invalid && form.get('direccion')?.touched">
-            <mat-icon>home</mat-icon>
-            <input type="text" formControlName="direccion"/>
-          </div>
+      <!-- direccion -->
+      <div class="field-card" [class.field-error]="form.get('direccion')?.invalid && form.get('direccion')?.touched">
+        <div class="field-icon"><mat-icon>home</mat-icon></div>
+        <div class="field-body">
+          <label>{{ 'PROFILE.ADDRESS' | translate }}</label>
+          <input type="text" formControlName="direccion"/>
 
           @if (form.get('direccion')?.invalid && form.get('direccion')?.touched) {
             <p class="error-msg">
@@ -174,49 +137,32 @@
               }
             </p>
           }
-
         </div>
-
-        <div class="edit-container">
-
-          <button
-            type="button"
-            class="btn-edit"
-            [class.saved-mode]="!editando"
-            [disabled]="editando && form.invalid"
-            (click)="toggleEditar()">
-
-            <mat-icon>
-              {{ editando ? 'save' : 'edit' }}
-            </mat-icon>
-
-            <span>
-              {{
-                editando
-                  ? ('PROFILE.SAVE' | translate)
-                  : ('PROFILE.EDIT' | translate)
-              }}
-            </span>
-
-          </button>
-
-        </div>
-
-      </form>
+      </div>
 
     </div>
 
-  </div>
+    <div class="edit-container">
+      <button
+        type="button"
+        class="btn-edit"
+        [class.saved-mode]="!editando"
+        [disabled]="editando && form.invalid"
+        (click)="toggleEditar()">
 
-  <!-- DERECHA (sin cambios) -->
-  <div class="profile-right right-cards">
+        <mat-icon>{{ editando ? 'save' : 'edit' }}</mat-icon>
+        <span>{{ editando ? ('PROFILE.SAVE' | translate) : ('PROFILE.EDIT' | translate) }}</span>
+      </button>
+    </div>
+
+  </form>
+
+  <!-- Acciones de cuenta -->
+  <div class="fields-grid actions-grid">
 
     <div class="card modern-card">
-
       <div class="card-header">
-        <div class="icon-box">
-          <mat-icon>password</mat-icon>
-        </div>
+        <div class="icon-box"><mat-icon>password</mat-icon></div>
         <h3>{{ 'PROFILE.PASSWORD' | translate }}</h3>
       </div>
 
@@ -224,9 +170,7 @@
 
       <div class="card-content">
         <div class="left">
-          <div class="mini-icon">
-            <mat-icon>vpn_key</mat-icon>
-          </div>
+          <div class="mini-icon"><mat-icon>vpn_key</mat-icon></div>
           <div>
             <p class="title">{{ 'PROFILE.CHANGE_PASSWORD' | translate }}</p>
             <p class="subtitle">{{ 'PROFILE.PASSWORD_DESC' | translate }}</p>
@@ -234,15 +178,11 @@
         </div>
         <button class="btn-primary">{{ 'PROFILE.CHANGE' | translate }}</button>
       </div>
-
     </div>
 
     <div class="card modern-card danger">
-
       <div class="card-header">
-        <div class="icon-box">
-          <mat-icon>person</mat-icon>
-        </div>
+        <div class="icon-box"><mat-icon>person</mat-icon></div>
         <h3>{{ 'PROFILE.ACCOUNT' | translate }}</h3>
       </div>
 
@@ -250,9 +190,7 @@
 
       <div class="card-content">
         <div class="left">
-          <div class="mini-icon red">
-            <mat-icon>delete</mat-icon>
-          </div>
+          <div class="mini-icon red"><mat-icon>delete</mat-icon></div>
           <div>
             <p class="title">{{ 'PROFILE.DELETE' | translate }}</p>
             <p class="subtitle">{{ 'PROFILE.DELETE_DESC' | translate }}</p>
@@ -260,7 +198,6 @@
         </div>
         <button class="btn-danger">{{ 'PROFILE.DELETE' | translate }}</button>
       </div>
-
     </div>
 
   </div>
