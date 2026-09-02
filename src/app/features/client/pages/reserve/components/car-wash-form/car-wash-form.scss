@@ -1,34 +1,272 @@
+@use '../../../../../../../styles/variables' as *;
 @use '../../../../../../../styles/mixins' as *;
 
-// tarjeta blanca contenedora
-.form-card {
-  background-color: var(--card);
-  border-radius: 16px;
-  padding: 32px;
-  
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  margin: 0 0 32px 0;
+.reserve-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+  }
 }
 
-// fila con 2 elementos lado a lado
+.reserve-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.step-card {
+  background-color: var(--card);
+  border-radius: $border-radius;
+  padding: 28px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.step-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0;
+
+    mat-icon {
+      color: var(--primary);
+      font-size: 1.1rem;
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+  }
+
+  p {
+    color: #8a9aa3;
+    font-size: 0.85rem;
+    margin: 4px 0 0;
+  }
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+// --- Paso 1: vehículos ---
+
+.vehicle-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.vehicle-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 12px;
+  background: var(--card);
+  cursor: pointer;
+  text-align: left;
+  transition: 0.2s;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+
+  &.selected {
+    border-color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.06);
+  }
+}
+
+.vehicle-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: $color-icon-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon {
+    color: var(--text-secondary, $color-gray);
+  }
+}
+
+.vehicle-nombre {
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.vehicle-detalle {
+  color: #8a9aa3;
+  font-size: 0.8rem;
+  margin: 2px 0 0;
+}
+
+.no-vehicle-note {
+  font-size: 0.85rem;
+  color: #8a9aa3;
+  margin: 0;
+
+  a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// --- Paso 2: servicios ---
+
+.service-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 18px;
+  border: 1.5px solid #DCE5E4;
+  border-radius: 12px;
+  background: var(--card);
+  cursor: pointer;
+  text-align: left;
+  transition: 0.2s;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+
+  &.selected {
+    border-color: var(--primary);
+    background: rgba(var(--primary-rgb), 0.06);
+  }
+}
+
+.badge-popular {
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.service-nombre {
+  font-weight: 700;
+  color: var(--text);
+  margin: 6px 0 0;
+}
+
+.service-precio {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+}
+
+.service-tiempo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #8a9aa3;
+  font-size: 0.8rem;
+  margin: 0 0 8px;
+
+  mat-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.service-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-secondary, $color-gray);
+
+    mat-icon {
+      color: var(--primary);
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+// --- Paso 3: fecha/hora/dirección (reutiliza tu patrón de inputs) ---
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  margin-bottom: 16px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
 }
 
-// grupo de label + input
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 100%;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
-// label del campo
 .form-label {
   font-size: 14px;
   font-weight: 500;
@@ -45,7 +283,6 @@
   }
 }
 
-// contenedor input con ícono
 .input-wrapper {
   position: relative;
   display: flex;
@@ -60,10 +297,9 @@
   }
 }
 
-// estilo base del input
 .form-input {
   width: 100%;
-  padding: 11px 12px 11px 40px;
+  padding: 11px 12px;
   border: 1.5px solid #DCE5E4;
   border-radius: 10px;
   font-size: 14px;
@@ -71,8 +307,12 @@
   background-color: var(--card);
   outline: none;
   box-sizing: border-box;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: all 0.2s ease;
+
+  &.has-icon {
+    padding-left: 40px;
+  }
 
   &:focus {
     border-color: var(--primary);
@@ -84,12 +324,6 @@
   }
 }
 
-// input de hora sin ícono izquierdo
-.time-input {
-  padding-left: 12px;
-}
-
-// contenedor select con ícono
 .select-wrapper {
   position: relative;
   display: flex;
@@ -104,7 +338,6 @@
   }
 }
 
-// estilo del select
 .form-select {
   width: 100%;
   padding: 11px 40px 11px 12px;
@@ -116,7 +349,7 @@
   outline: none;
   appearance: none;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: all 0.2s ease;
 
   &:focus {
@@ -125,121 +358,80 @@
   }
 }
 
-// select de operario con margen superior
-.operator-select {
-  margin-top: 8px;
-}
+// --- Resumen lateral ---
 
-// opción de radio personalizada
-.radio-option {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  cursor: pointer;
-  padding: 4px 0;
-}
+.summary-card {
+  background: var(--card);
+  border-top: 4px solid var(--primary);
+  border-radius: $border-radius;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 24px;
 
-// círculo del radio button
-.radio-circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid #DCE5E4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 2px;
-  transition: all 0.2s ease;
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.05rem;
+    color: var(--text);
+    margin: 0 0 16px;
 
-  &.selected {
-    border-color: var(--primary);
+    mat-icon {
+      color: var(--primary);
+    }
   }
 }
 
-// punto interior del radio seleccionado
-.radio-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--primary);
-}
-
-// contenido del radio con descripción
-.radio-content {
+.summary-row {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-// texto del radio
-.radio-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-}
-
-// descripción pequeña del radio
-.radio-description {
-  font-size: 12px;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 0.9rem;
   color: #8a9aa3;
-}
 
-// contenedor de opciones de pago
-.payment-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-// cada opción de pago
-.payment-option {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border: 1.5px solid #DCE5E4;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: rgba(var(--primary-rgb), 0.08);
-  }
-
-  &.selected {
-    border-color: var(--primary);
-    background: rgba(var(--primary-rgb), 0.12);
+  strong {
+    color: var(--text);
+    text-align: right;
   }
 }
 
-// ícono del método de pago
-.payment-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background-color: rgba(var(--primary-rgb), 0.15);
+.summary-total {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  margin-top: 8px;
+  border-top: 1px solid #DCE5E4;
 
-  mat-icon {
+  span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #8a9aa3;
+
+    mat-icon {
+      color: var(--primary);
+      font-size: 1.1rem;
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+  }
+
+  strong {
+    font-size: 1.4rem;
     color: var(--primary);
-    font-size: 20px;
   }
 }
 
-// nombre del método de pago
-.payment-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-}
-
-// botón principal
 .btn-primary {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   padding: 14px;
+  margin-top: 16px;
   background-color: var(--primary);
   color: #ffffff;
   border: none;
@@ -247,57 +439,22 @@
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: 0.2s;
-  margin-top: 8px;
 
-  &:hover {
-    filter: brightness(1.1);
+  &:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
-// ================================
-// RESPONSIVE
-// ================================
-
-// tablet
-@include tablet {
-  .form-card {
-    margin: 0 auto;
-    max-width: 100%;
-    padding: 24px;
-  }
-}
-
-// mobile
-@include mobile {
-  .form-card {
-    margin: 0;
-    padding: 16px;
-    border-radius: 12px;
-  }
-
-  // fecha y hora en columna en mobile
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  // tipo vehículo y servicio en columna en mobile
-  .form-row:nth-child(3) {
-    grid-template-columns: 1fr;
-  }
-
-  .form-input,
-  .form-select {
-    font-size: 16px;
-  }
-
-  .payment-option {
-    padding: 12px;
-  }
-
-  .btn-primary {
-    padding: 16px;
-    font-size: 16px;
-  }
+.summary-note {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #8a9aa3;
+  margin: 12px 0 0;
 }

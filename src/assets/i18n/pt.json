@@ -67,11 +67,26 @@
     "FULL_DESC": "Lavagem externa e interna",
     "PREMIUM_DESC": "Lavagem completa com enceramento",
     "BASIC_PRICE": "R$20",
-    "FULL_PRICE": "R$35",
-    "PREMIUM_PRICE": "R$50",
-    "BASIC_TIME": "30 minutos",
-    "FULL_TIME": "1 hora",
-    "PREMIUM_TIME": "1 hora e 30 minutos"
+    "FULL_PRICE": "R$50.000",
+    "PREMIUM_PRICE": "R$35.000",
+    "BASIC_TIME": "45 minutos",
+    "FULL_TIME": "120 minutos",
+    "PREMIUM_TIME": "75 minutos",
+    "BASIC_ITEMS": [
+      "Lavagem externa completa",
+      "Aspiração básica",
+      "Limpeza de vidros"
+    ],
+    "FULL_ITEMS": [
+      "Tudo do Premium",
+      "Encerado à mão",
+      "Detalhamento interno"
+    ],
+    "PREMIUM_ITEMS": [
+      "Tudo do Básico",
+      "Lavagem do motor",
+      "Cera líquida protetora"
+    ]
   },
   "EXTRA": {
     "WAX": "Cera",
@@ -245,7 +260,34 @@
     "SERVICE": "Tipo de serviço",
     "ASSIGNMENT": "Atribuição do operador",
     "SELECT": "Selecionar",
-    "SUBMIT": "Reservar agora"
+    "SUBMIT": "Reservar agora",
+    "STEP1": {
+      "TITLE": "Escolha seu veículo",
+      "SUBTITLE": "Selecione um dos seus veículos registrados",
+      "NO_VEHICLE": "Seu veículo não está listado? Registre-o primeiro em",
+      "NO_VEHICLE_LINK": "Meus Veículos"
+    },
+    "STEP2": {
+      "TITLE": "Tipo de serviço",
+      "SUBTITLE": "Escolha o nível de limpeza que prefere",
+      "POPULAR": "Mais popular"
+    },
+    "STEP3": {
+      "TITLE": "Data e localização",
+      "SUBTITLE": "Diga-nos quando e onde lavar seu veículo"
+    },
+    "SUMMARY": {
+      "TITLE": "Resumo da sua reserva",
+      "VEHICLE": "Veículo",
+      "PLATE": "Placa",
+      "SERVICE": "Serviço",
+      "DURATION": "Duração estimada",
+      "DATE": "Data",
+      "TIME": "Hora",
+      "TOTAL": "Total",
+      "SUBMIT": "Reservar Agora",
+      "NOTE": "Avisaremos quando o lavador estiver a caminho. Você pode pagar online ou em dinheiro."
+    }
   },
   "APP": {
     "TITLE": "Lavagem de Veículos"

@@ -67,11 +67,26 @@
     "FULL_DESC": "Lavage extérieur et intérieur",
     "PREMIUM_DESC": "Lavage complet avec cirage",
     "BASIC_PRICE": "20€",
-    "FULL_PRICE": "35€",
-    "PREMIUM_PRICE": "50€",
-    "BASIC_TIME": "30 minutes",
-    "FULL_TIME": "1 heure",
-    "PREMIUM_TIME": "1 heure 30 minutes"
+    "FULL_PRICE": "50 000 $",
+    "PREMIUM_PRICE": "35 000 $",
+    "BASIC_TIME": "45 minutes",
+    "FULL_TIME": "120 minutes",
+    "PREMIUM_TIME": "75 minutes",
+    "BASIC_ITEMS": [
+      "Lavage extérieur complet",
+      "Aspiration de base",
+      "Nettoyage des vitres"
+    ],
+    "FULL_ITEMS": [
+      "Tout le Premium",
+      "Cirage à la main",
+      "Détail intérieur"
+    ],
+    "PREMIUM_ITEMS": [
+      "Tout le Basique",
+      "Lavage moteur",
+      "Cire liquide protectrice"
+    ]
   },
   "EXTRA": {
     "WAX": "Cire",
@@ -245,7 +260,34 @@
     "SERVICE": "Type de service",
     "ASSIGNMENT": "Affectation de l’opérateur",
     "SELECT": "Sélectionner",
-    "SUBMIT": "Réserver"
+    "SUBMIT": "Réserver",
+    "STEP1": {
+      "TITLE": "Choisissez votre véhicule",
+      "SUBTITLE": "Sélectionnez un de vos véhicules enregistrés",
+      "NO_VEHICLE": "Votre véhicule n'est pas listé ? Enregistrez-le d'abord dans",
+      "NO_VEHICLE_LINK": "Mes Véhicules"
+    },
+    "STEP2": {
+      "TITLE": "Type de service",
+      "SUBTITLE": "Choisissez le niveau de nettoyage souhaité",
+      "POPULAR": "Le plus populaire"
+    },
+    "STEP3": {
+      "TITLE": "Date et lieu",
+      "SUBTITLE": "Dites-nous quand et où laver votre véhicule"
+    },
+    "SUMMARY": {
+      "TITLE": "Résumé de votre réservation",
+      "VEHICLE": "Véhicule",
+      "PLATE": "Plaque",
+      "SERVICE": "Service",
+      "DURATION": "Durée estimée",
+      "DATE": "Date",
+      "TIME": "Heure",
+      "TOTAL": "Total",
+      "SUBMIT": "Réserver maintenant",
+      "NOTE": "Nous vous préviendrons quand le laveur sera en route. Vous pouvez payer en ligne ou en espèces."
+    }
   },
   "APP": {
     "TITLE": "Lavage de Véhicules"
