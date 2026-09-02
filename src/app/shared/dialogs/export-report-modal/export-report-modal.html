@@ -1,0 +1,45 @@
+<div class="modal-box">
+
+  <button class="btn-close-icon" (click)="cerrar()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <h2>{{ 'REPORTS.MODAL.TITLE' | translate }}</h2>
+  <p class="subtitle">{{ 'REPORTS.MODAL.SUBTITLE' | translate }}</p>
+
+  <!-- vista previa del reporte -->
+  <div class="preview-grid">
+    <div class="preview-item">
+      <span>{{ 'REPORTS.SUMMARY.DAY' | translate }}</span>
+      <strong>{{ data.reporteDia.servicios }} {{ 'REPORTS.MODAL.SERVICES_LABEL' | translate }} · ${{ data.reporteDia.ingresos | number }}</strong>
+    </div>
+    <div class="preview-item">
+      <span>{{ 'REPORTS.SUMMARY.WEEK' | translate }}</span>
+      <strong>{{ data.reporteSemana.servicios }} {{ 'REPORTS.MODAL.SERVICES_LABEL' | translate }} · ${{ data.reporteSemana.ingresos | number }}</strong>
+    </div>
+    <div class="preview-item">
+      <span>{{ 'REPORTS.SUMMARY.MONTH' | translate }}</span>
+      <strong>{{ data.reporteMes.servicios }} {{ 'REPORTS.MODAL.SERVICES_LABEL' | translate }} · ${{ data.reporteMes.ingresos | number }}</strong>
+    </div>
+  </div>
+
+  <div class="preview-top">
+    <p class="preview-top-title">{{ 'REPORTS.TOP_SERVICES.TITLE' | translate }}</p>
+    <div class="preview-top-item" *ngFor="let s of data.serviciosMasVendidos">
+      <span>{{ s.nombre }}</span>
+      <strong>{{ s.ventas }} {{ 'REPORTS.TOP_SERVICES.SALES' | translate }}</strong>
+    </div>
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn-secondary" (click)="exportarExcel()">
+      <mat-icon>grid_on</mat-icon>
+      {{ 'REPORTS.MODAL.EXPORT_EXCEL' | translate }}
+    </button>
+    <button class="btn-confirm" (click)="exportarPDF()">
+      <mat-icon>picture_as_pdf</mat-icon>
+      {{ 'REPORTS.MODAL.EXPORT_PDF' | translate }}
+    </button>
+  </div>
+
+</div>

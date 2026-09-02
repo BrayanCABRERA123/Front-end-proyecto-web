@@ -1,0 +1,101 @@
+<div class="home-layout">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <main class="home-content">
+
+    <div class="reports-header">
+      <div class="reports-header-title">
+        <div class="header-icon"><mat-icon>bar_chart</mat-icon></div>
+        <div>
+          <h1>{{ 'REPORTS.TITLE' | translate }}</h1>
+          <p>{{ 'REPORTS.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <button class="btn-export" (click)="abrirModalExportar()">
+        <mat-icon>description</mat-icon>
+        {{ 'REPORTS.EXPORT_BUTTON' | translate }}
+      </button>
+    </div>
+
+    <!-- Ingresos del año + Servicios más vendidos (arriba) -->
+    <div class="reports-top-row">
+
+      <div class="card revenue-card">
+        <div class="revenue-icon"><mat-icon>attach_money</mat-icon></div>
+        <div>
+          <p class="revenue-label">{{ 'REPORTS.YEAR_REVENUE' | translate }}</p>
+          <p class="revenue-valor">${{ ingresosAnio | number }}.00</p>
+        </div>
+      </div>
+
+      <div class="card ranking-card" #rankingCard>
+        <div class="card-title">
+          <mat-icon>emoji_events</mat-icon>
+          <h2>{{ 'REPORTS.TOP_SERVICES.TITLE' | translate }}</h2>
+        </div>
+
+        <div class="ranking-item" *ngFor="let servicio of serviciosMasVendidos; let i = index">
+          <div class="ranking-header">
+            <span class="ranking-position">{{ i + 1 }}</span>
+            <span class="ranking-nombre">{{ servicio.nombre }}</span>
+            <span class="ranking-ventas">{{ servicio.ventas }} {{ 'REPORTS.TOP_SERVICES.SALES' | translate }}</span>
+          </div>
+          <div class="ranking-bar">
+            <div class="ranking-fill" [attr.data-target]="servicio.porcentaje" [style.background]="servicio.color"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Gráfica -->
+    <div class="card chart-card">
+      <div class="card-title">
+        <mat-icon>trending_up</mat-icon>
+        <h2>{{ 'REPORTS.CHART.TITLE' | translate }}</h2>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas #barCanvas></canvas>
+      </div>
+    </div>
+
+    <!-- Tarjetas de resumen -->
+    <div class="summary-grid">
+
+      <div class="card summary-mini-card">
+        <div class="summary-mini-header">
+          <h3>{{ 'REPORTS.SUMMARY.DAY' | translate }}</h3>
+          <div class="summary-icon"><mat-icon>calendar_today</mat-icon></div>
+        </div>
+        <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ reporteDia.servicios }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">${{ reporteDia.ingresos | number }}</strong></p>
+      </div>
+
+      <div class="card summary-mini-card">
+        <div class="summary-mini-header">
+          <h3>{{ 'REPORTS.SUMMARY.WEEK' | translate }}</h3>
+          <div class="summary-icon"><mat-icon>calendar_today</mat-icon></div>
+        </div>
+        <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ reporteSemana.servicios }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">${{ reporteSemana.ingresos | number }}</strong></p>
+      </div>
+
+      <div class="card summary-mini-card">
+        <div class="summary-mini-header">
+          <h3>{{ 'REPORTS.SUMMARY.MONTH' | translate }}</h3>
+          <div class="summary-icon"><mat-icon>calendar_today</mat-icon></div>
+        </div>
+        <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ reporteMes.servicios }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">${{ reporteMes.ingresos | number }}</strong></p>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

@@ -37,7 +37,6 @@ export class DashboardComponent {
 
   // próximo servicio programado
   proximoServicio = {
-    codigo: 'SV-1055',
     tipo: 'PREMIUM',
     vehiculo: 'CAR',
     placa: 'ABC-123',
@@ -51,7 +50,7 @@ export class DashboardComponent {
   // accesos rápidos
   accesosRapidos = [
     { icono: 'calendar_today', label: 'QUICK_ACCESS.BOOK_WASH', ruta: 'reserve' },
-    { icono: 'credit_card', label: 'QUICK_ACCESS.PAY_SERVICE', ruta: 'payment' },
+    { icono: 'credit_card', label: 'QUICK_ACCESS.PAY_SERVICE', ruta: 'history' },
     { icono: 'directions_car', label: 'QUICK_ACCESS.MY_VEHICLES', ruta: 'vehicles' },
     { icono: 'notifications', label: 'QUICK_ACCESS.NOTIFICATIONS', ruta: 'notifications' }
   ];
