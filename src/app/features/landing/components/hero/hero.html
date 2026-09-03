@@ -1,0 +1,29 @@
+<section id="inicio" class="hero-section">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <mat-icon>settings</mat-icon>
+      {{ 'HERO.BADGE' | translate }}
+    </div>
+
+    <h1 class="hero-title">
+      {{ 'HERO.TITLE_1' | translate }}<br>
+      {{ 'HERO.TITLE_2' | translate }}
+    </h1>
+
+    <p class="hero-description">
+      {{ 'HERO.DESCRIPTION' | translate }}
+    </p>
+
+    <div class="hero-buttons">
+      <a routerLink="/auth/register" class="btn-primary">
+        {{ 'HERO.START' | translate }}
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+      <a routerLink="/auth" class="btn-secondary">
+        {{ 'HERO.ALREADY_ACCOUNT' | translate }}
+      </a>
+    </div>
+  </div>
+</section>

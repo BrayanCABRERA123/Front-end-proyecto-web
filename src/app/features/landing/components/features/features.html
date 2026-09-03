@@ -1,0 +1,54 @@
+<section id="nosotros" class="features-section">
+
+  <!-- bloque "quiénes somos": texto + ilustración decorativa + cifras -->
+  <div class="about-block">
+
+    <div class="about-text">
+      <span class="about-eyebrow">{{ 'ABOUT.EYEBROW' | translate }}</span>
+      <h2 class="about-title">{{ 'ABOUT.TITLE' | translate }}</h2>
+      <p class="about-description">{{ 'ABOUT.DESCRIPTION' | translate }}</p>
+
+      <div class="about-stats">
+        @for (stat of stats; track stat.labelKey) {
+          <div class="stat-item">
+            <mat-icon>{{ stat.icon }}</mat-icon>
+            <div class="stat-info">
+              <span class="stat-value">{{ stat.value }}</span>
+              <span class="stat-label">{{ stat.labelKey | translate }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- ilustración decorativa con burbujas flotantes -->
+    <div class="about-visual">
+      <div class="visual-blob"></div>
+      <div class="visual-bubble bubble-1"><mat-icon>water_drop</mat-icon></div>
+      <div class="visual-bubble bubble-2"><mat-icon>local_car_wash</mat-icon></div>
+      <div class="visual-bubble bubble-3"><mat-icon>eco</mat-icon></div>
+      <div class="visual-bubble bubble-4"><mat-icon>verified</mat-icon></div>
+      <div class="visual-center">
+        <mat-icon>directions_car</mat-icon>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- bloque "¿por qué elegirnos?" -->
+  <span class="features-eyebrow">{{ 'APP.TITLE' | translate }}</span>
+  <h2 class="features-title">{{ 'FEATURES.TITLE' | translate }}</h2>
+  <p class="features-subtitle">{{ 'FEATURES.SUBTITLE' | translate }}</p>
+
+  <div class="features-grid">
+    @for (feature of features; track feature.titulo) {
+      <div class="feature-card">
+        <div class="feature-icon">
+          <mat-icon>{{ feature.icono }}</mat-icon>
+        </div>
+        <p class="feature-titulo">{{ feature.titulo | translate }}</p>
+        <p class="feature-descripcion">{{ feature.descripcion | translate }}</p>
+      </div>
+    }
+  </div>
+</section>

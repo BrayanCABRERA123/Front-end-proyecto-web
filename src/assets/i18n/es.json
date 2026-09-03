@@ -360,7 +360,10 @@
   },
   "NAV": {
     "LOGIN": "Iniciar sesión",
-    "REGISTER": "Registrarse"
+    "REGISTER": "Registrarse",
+    "HOME": "Inicio",
+    "ABOUT": "Nosotros",
+    "SERVICES": "Servicios"
   },
   "HERO": {
     "BADGE": "Servicio móvil de lavado #1",
@@ -715,5 +718,46 @@
       "EXPORT_EXCEL": "Exportar Excel",
       "EXPORT_PDF": "Exportar PDF"
     }
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Servicio profesional de lavado móvil que lleva la mejor limpieza directamente a tu vehículo.",
+    "COMPANY": {
+      "TITLE": "Compañía",
+      "ABOUT": "Sobre nosotros",
+      "CONTACT": "Contacto",
+      "CAREERS": "Trabaja con nosotros"
+    },
+    "SERVICES_TITLE": "Servicios",
+    "SUPPORT": {
+      "TITLE": "Soporte",
+      "FAQ": "Preguntas frecuentes"
+    },
+    "LEGAL": {
+      "TITLE": "Legal",
+      "TERMS": "Términos de servicio",
+      "PRIVACY": "Política de privacidad"
+    },
+    "COPYRIGHT": "© {{year}} AquaWash. Todos los derechos reservados."
+  },
+  "ABOUT": {
+    "EYEBROW": "Quiénes somos",
+    "TITLE": "Cuidamos tu vehículo como si fuera nuestro",
+    "DESCRIPTION": "Somos un equipo de lavadores profesionales certificados, comprometidos con la excelencia y el cuidado del medio ambiente. Llevamos el servicio hasta la puerta de tu casa u oficina, sin filas ni esperas.",
+    "STATS": {
+      "VEHICLES": "Vehículos lavados",
+      "CLIENTS": "Clientes satisfechos",
+      "CITIES": "Ciudades",
+      "YEARS": "Años de experiencia"
+    }
+  },
+  "CONTACT": {
+    "EYEBROW": "Contacto",
+    "TITLE": "¿Hablamos?",
+    "SUBTITLE": "Escríbenos y te respondemos en menos de 24 horas",
+    "EMAIL_LABEL": "Correo",
+    "PHONE_LABEL": "Teléfono",
+    "COVERAGE_LABEL": "Cobertura",
+    "COVERAGE_VALUE": "Principales ciudades de Colombia",
+    "CTA": "Agenda tu primer lavado"
   }
 }

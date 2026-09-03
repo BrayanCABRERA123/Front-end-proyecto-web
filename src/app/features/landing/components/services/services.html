@@ -1,0 +1,42 @@
+<section id="servicios" class="services-section">
+  <span class="services-eyebrow">{{ 'NAV.SERVICES' | translate }}</span>
+  <h2 class="services-title">{{ 'RESERVE.STEP2.TITLE' | translate }}</h2>
+  <p class="services-subtitle">{{ 'RESERVE.STEP2.SUBTITLE' | translate }}</p>
+
+  <div class="services-grid">
+    @for (plan of plans; track plan.anchorId) {
+      <div [id]="plan.anchorId" class="service-card" [class.popular]="plan.popular">
+
+        @if (plan.popular) {
+          <span class="popular-badge">{{ 'RESERVE.STEP2.POPULAR' | translate }}</span>
+        }
+
+        <div class="service-icon">
+          <mat-icon>{{ plan.icon }}</mat-icon>
+        </div>
+
+        <h3 class="service-name">{{ plan.nameKey | translate }}</h3>
+        <p class="service-desc">{{ plan.descKey | translate }}</p>
+
+        <div class="service-price">
+          {{ plan.priceKey | translate }}
+          <span class="service-time">· {{ plan.timeKey | translate }}</span>
+        </div>
+
+        <ul class="service-items">
+          @for (item of (plan.itemsKey | translate); track item) {
+            <li>
+              <mat-icon>check_circle</mat-icon>
+              {{ item }}
+            </li>
+          }
+        </ul>
+
+        <a routerLink="/auth/register" class="service-cta">
+          {{ 'HERO.START' | translate }}
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
+      </div>
+    }
+  </div>
+</section>

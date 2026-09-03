@@ -360,7 +360,10 @@
   },
   "NAV": {
     "LOGIN": "Login",
-    "REGISTER": "Register"
+    "REGISTER": "Register",
+    "HOME": "Home",
+    "ABOUT": "About",
+    "SERVICES": "Services"
   },
   "HERO": {
     "BADGE": "Mobile car wash service #1",
@@ -715,5 +718,46 @@
       "EXPORT_EXCEL": "Export Excel",
       "EXPORT_PDF": "Export PDF"
     }
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Professional mobile car wash service bringing the best clean straight to your vehicle.",
+    "COMPANY": {
+      "TITLE": "Company",
+      "ABOUT": "About us",
+      "CONTACT": "Contact",
+      "CAREERS": "Careers"
+    },
+    "SERVICES_TITLE": "Services",
+    "SUPPORT": {
+      "TITLE": "Support",
+      "FAQ": "FAQ"
+    },
+    "LEGAL": {
+      "TITLE": "Legal",
+      "TERMS": "Terms of Service",
+      "PRIVACY": "Privacy Policy"
+    },
+    "COPYRIGHT": "© {{year}} AquaWash. All rights reserved."
+  },
+  "ABOUT": {
+    "EYEBROW": "Who we are",
+    "TITLE": "We take care of your vehicle as if it were our own",
+    "DESCRIPTION": "We are a team of certified professional washers, committed to excellence and environmental care. We bring the service to your doorstep or office, no lines or waiting.",
+    "STATS": {
+      "VEHICLES": "Vehicles washed",
+      "CLIENTS": "Happy clients",
+      "CITIES": "Cities",
+      "YEARS": "Years of experience"
+    }
+  },
+  "CONTACT": {
+    "EYEBROW": "Contact",
+    "TITLE": "Let's talk",
+    "SUBTITLE": "Write to us and we'll get back to you within 24 hours",
+    "EMAIL_LABEL": "Email",
+    "PHONE_LABEL": "Phone",
+    "COVERAGE_LABEL": "Coverage",
+    "COVERAGE_VALUE": "Major cities across Colombia",
+    "CTA": "Book your first wash"
   }
 }

@@ -360,7 +360,10 @@
   },
   "NAV": {
     "LOGIN": "Connexion",
-    "REGISTER": "S'inscrire"
+    "REGISTER": "S'inscrire",
+    "HOME": "Accueil",
+    "ABOUT": "À propos",
+    "SERVICES": "Services"
   },
   "HERO": {
     "BADGE": "Service de lavage mobile #1",
@@ -715,5 +718,46 @@
       "EXPORT_EXCEL": "Exporter Excel",
       "EXPORT_PDF": "Exporter PDF"
     }
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Service professionnel de lavage automobile mobile, apportant le meilleur nettoyage directement à votre véhicule.",
+    "COMPANY": {
+      "TITLE": "Entreprise",
+      "ABOUT": "À propos de nous",
+      "CONTACT": "Contact",
+      "CAREERS": "Carrières"
+    },
+    "SERVICES_TITLE": "Services",
+    "SUPPORT": {
+      "TITLE": "Assistance",
+      "FAQ": "Foire aux questions"
+    },
+    "LEGAL": {
+      "TITLE": "Mentions légales",
+      "TERMS": "Conditions d'utilisation",
+      "PRIVACY": "Politique de confidentialité"
+    },
+    "COPYRIGHT": "© {{year}} AquaWash. Tous droits réservés."
+  },
+  "ABOUT": {
+    "EYEBROW": "Qui sommes-nous",
+    "TITLE": "Nous prenons soin de votre véhicule comme si c'était le nôtre",
+    "DESCRIPTION": "Nous sommes une équipe de laveurs professionnels certifiés, engagés pour l'excellence et le respect de l'environnement. Nous apportons le service jusqu'à votre porte, sans files d'attente.",
+    "STATS": {
+      "VEHICLES": "Véhicules lavés",
+      "CLIENTS": "Clients satisfaits",
+      "CITIES": "Villes",
+      "YEARS": "Années d'expérience"
+    }
+  },
+  "CONTACT": {
+    "EYEBROW": "Contact",
+    "TITLE": "Parlons-en",
+    "SUBTITLE": "Écrivez-nous et nous vous répondrons sous 24 heures",
+    "EMAIL_LABEL": "E-mail",
+    "PHONE_LABEL": "Téléphone",
+    "COVERAGE_LABEL": "Couverture",
+    "COVERAGE_VALUE": "Principales villes de Colombie",
+    "CTA": "Réservez votre premier lavage"
   }
 }

@@ -1,0 +1,45 @@
+<nav class="navbar">
+  <div class="navbar-logo">
+    <svg class="logo-img" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9.33333 21.7333C12.2667 21.7333 14.6667 19.2933 14.6667 16.3333C14.6667 14.7867 13.9067 13.32 12.3867 12.08C10.8667 10.84 9.72 8.99998 9.33333 7.06665C8.94667 8.99998 7.81333 10.8533 6.28 12.08C4.74667 13.3067 4 14.8 4 16.3333C4 19.2933 6.4 21.7333 9.33333 21.7333Z" stroke="var(--primary)" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16.7467 8.79994C17.6637 7.33478 18.3137 5.71867 18.6667 4.02661C19.3333 7.35994 21.3333 10.5599 24 12.6933C26.6667 14.8266 28 17.3599 28 20.0266C28.0076 21.8697 27.4678 23.6735 26.4491 25.2094C25.4303 26.7453 23.9784 27.9441 22.2775 28.6539C20.5766 29.3637 18.7032 29.5525 16.8949 29.1963C15.0866 28.8401 13.4247 27.9551 12.12 26.6533" stroke="var(--primary)" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="logo-text">{{ 'APP.TITLE' | translate }}</span>
+  </div>
+
+  <!-- enlaces de navegación de una sola página -->
+  <div class="navbar-links">
+    <a href="#inicio" class="nav-link">{{ 'NAV.HOME' | translate }}</a>
+    <a href="#nosotros" class="nav-link">{{ 'NAV.ABOUT' | translate }}</a>
+    <a href="#servicios" class="nav-link">{{ 'NAV.SERVICES' | translate }}</a>
+  </div>
+
+  <div class="navbar-actions">
+    <div class="language-dropdown">
+      <button class="lang-btn" (click)="toggleLanguageMenu($event)">
+        <span class="fi fi-{{ getFlagCode(currentLanguage) }}"></span>
+        {{ currentLanguage.toUpperCase() }}
+      </button>
+
+      @if (isLanguageMenuOpen) {
+        <div class="lang-menu" (click)="$event.stopPropagation()">
+          @for (lang of languages; track lang.code) {
+            <div class="lang-option" (click)="changeLanguage(lang.code); closeLanguageMenu()">
+              <div class="lang-top">
+                <div class="lang-left">
+                  <span class="fi fi-{{ getFlagCode(lang.code) }}"></span>
+                  <strong>{{ lang.label }}</strong>
+                </div>
+                <mat-icon class="lang-check" [class.selected]="currentLanguage === lang.code">check_circle</mat-icon>
+              </div>
+              <span class="lang-sub">{{ 'CONFIG.LANGUAGE_DESC' | translate }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <a routerLink="/auth" class="btn-login">{{ 'NAV.LOGIN' | translate }}</a>
+    <a routerLink="/auth/register" class="btn-register">{{ 'NAV.REGISTER' | translate }}</a>
+  </div>
+</nav>

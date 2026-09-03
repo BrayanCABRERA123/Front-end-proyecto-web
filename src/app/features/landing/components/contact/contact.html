@@ -1,0 +1,24 @@
+<section id="contacto" class="contact-section">
+  <span class="contact-eyebrow">{{ 'CONTACT.EYEBROW' | translate }}</span>
+  <h2 class="contact-title">{{ 'CONTACT.TITLE' | translate }}</h2>
+  <p class="contact-subtitle">{{ 'CONTACT.SUBTITLE' | translate }}</p>
+
+  <div class="contact-grid">
+    @for (card of contactCards; track card.labelKey) {
+      <div class="contact-card">
+        <div class="contact-icon">
+          <mat-icon>{{ card.icon }}</mat-icon>
+        </div>
+        <span class="contact-label">{{ card.labelKey | translate }}</span>
+        <span class="contact-value">
+          {{ card.valueKey ? (card.valueKey | translate) : card.value }}
+        </span>
+      </div>
+    }
+  </div>
+
+  <a routerLink="/auth/register" class="contact-cta">
+    {{ 'CONTACT.CTA' | translate }}
+    <mat-icon>arrow_forward</mat-icon>
+  </a>
+</section>

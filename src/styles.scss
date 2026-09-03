@@ -269,3 +269,9 @@ html {
 .custom-dialog .mat-mdc-dialog-surface {
   overflow: visible;
 }
+
+
+// scroll suave para los enlaces de anclas del landing (navbar y footer)
+html {
+  scroll-behavior: smooth;
+}
