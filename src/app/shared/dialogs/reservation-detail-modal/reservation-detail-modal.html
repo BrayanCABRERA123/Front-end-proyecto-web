@@ -1,0 +1,75 @@
+<div class="dialog-container">
+
+  <button class="btn-x" (click)="cerrar()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="detail-header">
+    <span class="type-badge" [ngClass]="claseEstado(reserva.estado)">
+      <mat-icon>{{ iconoEstado(reserva.estado) }}</mat-icon>
+      {{ labelEstado(reserva.estado) | translate }}
+    </span>
+    <span class="codigo">{{ reserva.codigo }}</span>
+  </div>
+
+  <h2 class="dialog-title">
+    {{ ('SERVICE.' + reserva.servicio) | translate }} — {{ reserva.cliente }}
+  </h2>
+
+  <div class="detail-grid">
+
+    <div class="detail-item">
+      <mat-icon>event</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SCHEDULE.DETAIL.DATE' | translate }}</span>
+        <span class="detail-valor">{{ reserva.fecha | date: 'dd/MM/yyyy' }} · {{ reserva.hora }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>schedule</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SCHEDULE.DETAIL.DURATION' | translate }}</span>
+        <span class="detail-valor">{{ reserva.duracionMin }} min</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>{{ iconoVehiculo(reserva.vehiculo) }}</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SCHEDULE.DETAIL.VEHICLE' | translate }}</span>
+        <span class="detail-valor">{{ ('VEHICLE.' + reserva.vehiculo) | translate }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>location_on</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SCHEDULE.DETAIL.ADDRESS' | translate }}</span>
+        <span class="detail-valor">{{ reserva.direccion }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dialog-actions">
+
+    @if (reserva.estado === 'pendiente') {
+      <button class="btn-confirm" (click)="iniciar()">
+        <mat-icon>play_arrow</mat-icon>
+        {{ 'SCHEDULE.START' | translate }}
+      </button>
+    } @else if (reserva.estado === 'en_progreso') {
+      <button class="btn-confirm" (click)="finalizar()">
+        <mat-icon>check</mat-icon>
+        {{ 'SCHEDULE.FINISH' | translate }}
+      </button>
+    }
+
+    <button class="btn-cerrar" (click)="cerrar()">
+      {{ 'COMMON.CLOSE' | translate }}
+    </button>
+
+  </div>
+
+</div>

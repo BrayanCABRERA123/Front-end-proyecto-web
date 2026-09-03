@@ -1,0 +1,161 @@
+<div class="page-container">
+
+  <app-sidebar rol="OPERARIO"></app-sidebar>
+
+  <div class="main-content">
+
+    <!-- HEADER -->
+    <div class="page-header">
+      <div class="header-icon">
+        <mat-icon>calendar_month</mat-icon>
+      </div>
+      <div>
+        <h1 class="page-title">{{ 'SCHEDULE.TITLE' | translate }}</h1>
+        <p class="page-subtitle">{{ 'SCHEDULE.SUBTITLE' | translate }}</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="stat-label">{{ 'SCHEDULE.STATS.TOTAL' | translate }}</span>
+        <span class="stat-valor">{{ totalDelDia }}</span>
+      </div>
+      <div class="stat-card stat-pendiente">
+        <span class="stat-label">{{ 'SCHEDULE.STATS.PENDING' | translate }}</span>
+        <span class="stat-valor">{{ pendientesDelDia }}</span>
+      </div>
+      <div class="stat-card stat-progreso">
+        <span class="stat-label">{{ 'SCHEDULE.STATS.IN_PROGRESS' | translate }}</span>
+        <span class="stat-valor">{{ enProgresoDelDia }}</span>
+      </div>
+      <div class="stat-card stat-finalizado">
+        <span class="stat-label">{{ 'SCHEDULE.STATS.DONE' | translate }}</span>
+        <span class="stat-valor">{{ finalizadosDelDia }}</span>
+      </div>
+    </div>
+
+    <div class="agenda-layout">
+
+      <app-mini-calendar
+        [serviciosPorFecha]="serviciosPorFecha"
+        [fechaSeleccionada]="fechaSeleccionada"
+        (fechaSeleccionadaChange)="onFechaSeleccionada($event)">
+      </app-mini-calendar>
+
+      <div class="agenda-derecha">
+
+        <div class="tabs">
+          <button class="tab" [class.active]="tabActiva === 'dia'" (click)="cambiarTab('dia')">
+            {{ 'SCHEDULE.TABS.DAY' | translate }}
+          </button>
+          <button class="tab" [class.active]="tabActiva === 'semana'" (click)="cambiarTab('semana')">
+            {{ 'SCHEDULE.TABS.WEEK' | translate }}
+          </button>
+          <button class="tab" [class.active]="tabActiva === 'realizados'" (click)="cambiarTab('realizados')">
+            {{ 'SCHEDULE.TABS.DONE' | translate }}
+          </button>
+        </div>
+
+        @if (tabActiva === 'dia' && proximoServicio) {
+          <div class="proximo-card">
+            <div class="proximo-info">
+              <mat-icon>schedule</mat-icon>
+              <div>
+                <p class="proximo-label">
+                  {{ 'SCHEDULE.NEXT.LABEL' | translate }} ·
+                  {{ 'SCHEDULE.NEXT.IN_MINUTES' | translate: { min: minutosParaElProximo } }}
+                </p>
+                <p class="proximo-titulo">
+                  {{ ('SERVICE.' + proximoServicio.servicio) | translate }} — {{ proximoServicio.cliente }}
+                </p>
+              </div>
+            </div>
+
+            @if (proximoServicio.estado === 'pendiente') {
+              <button class="btn-proximo" (click)="iniciarServicio(proximoServicio)">
+                {{ 'SCHEDULE.START' | translate }}
+              </button>
+            } @else {
+              <button class="btn-proximo" (click)="pedirFinalizar(proximoServicio)">
+                {{ 'SCHEDULE.FINISH' | translate }}
+              </button>
+            }
+          </div>
+        }
+
+        <div class="lista-card">
+
+          <h2 class="lista-titulo">
+            @if (tabActiva === 'dia') {
+              {{ 'SCHEDULE.RESERVATIONS_OF' | translate }} {{ fechaLegible }}
+            } @else if (tabActiva === 'semana') {
+              {{ 'SCHEDULE.TABS.WEEK' | translate }}
+            } @else {
+              {{ 'SCHEDULE.TABS.DONE' | translate }}
+            }
+          </h2>
+
+          <div class="lista">
+            @for (r of listaVisible; track r.id) {
+              <div class="reserva-item">
+
+                <div class="reserva-hora">
+                  <mat-icon>schedule</mat-icon>
+                  {{ r.hora }}
+                </div>
+
+                <div class="reserva-info">
+                  <p class="reserva-titulo">
+                    {{ ('SERVICE.' + r.servicio) | translate }} — {{ r.cliente }}
+                  </p>
+                  <p class="reserva-detalle">
+                    <mat-icon>{{ r.vehiculo === 'MOTO' ? 'two_wheeler' : (r.vehiculo === 'TRUCK' || r.vehiculo === 'PICKUP' ? 'local_shipping' : 'directions_car') }}</mat-icon>
+                    {{ ('VEHICLE.' + r.vehiculo) | translate }}
+                    <mat-icon>location_on</mat-icon>
+                    {{ r.direccion }}
+                    <span class="reserva-duracion">{{ r.duracionMin }} min</span>
+                    <span class="reserva-codigo">{{ r.codigo }}</span>
+                  </p>
+                </div>
+
+                <span class="estado-badge" [ngClass]="claseEstado(r.estado)">
+                  <mat-icon>{{ iconoEstado(r.estado) }}</mat-icon>
+                  {{ labelEstado(r.estado) | translate }}
+                </span>
+
+                <div class="reserva-acciones">
+                  @if (r.estado === 'pendiente') {
+                    <button class="btn-accion" (click)="iniciarServicio(r)">
+                      <mat-icon>play_arrow</mat-icon>
+                      {{ 'SCHEDULE.START' | translate }}
+                    </button>
+                  } @else if (r.estado === 'en_progreso') {
+                    <button class="btn-accion" (click)="pedirFinalizar(r)">
+                      <mat-icon>check</mat-icon>
+                      {{ 'SCHEDULE.FINISH' | translate }}
+                    </button>
+                  }
+
+                  <button class="btn-detalle" (click)="verDetalle(r)">
+                    {{ 'SCHEDULE.VIEW_DETAIL' | translate }}
+                  </button>
+                </div>
+
+              </div>
+            } @empty {
+              <div class="lista-vacia">
+                <mat-icon>event_busy</mat-icon>
+                <p>{{ 'SCHEDULE.EMPTY' | translate }}</p>
+              </div>
+            }
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

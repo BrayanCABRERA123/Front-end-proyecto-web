@@ -9,6 +9,7 @@ import { OperatorNotificationsComponent } from '../operator/pages/notifications/
 import { ServiceHistoryComponent } from './pages/service-history/service-history';
 import { QualificationsComponent } from './pages/qualifications/qualifications';
 import { ConfigurationOperatorComponent } from './pages/configuration-operator/configuration-operator';
+import { ScheduleComponent } from './pages/schedule/schedule';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'tasks', component: TasksComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'assigned-services', component: AssignedServicesComponent },
+  { path: 'schedule', component: ScheduleComponent },
   { path: 'notifications', component: OperatorNotificationsComponent },
   { path: 'service-history', component: ServiceHistoryComponent },
   { path: 'qualifications', component: QualificationsComponent },
