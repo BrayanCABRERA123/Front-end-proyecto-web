@@ -1,0 +1,53 @@
+<div class="calendar-card">
+
+  <div class="calendar-header">
+    <button class="btn-nav" (click)="mesAnterior()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <h2 class="mes-titulo">{{ tituloMes }}</h2>
+
+    <button class="btn-nav" (click)="mesSiguiente()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <div class="dias-semana">
+    @for (dia of diasSemanaCortos; track dia) {
+      <span>{{ dia }}</span>
+    }
+  </div>
+
+  <div class="semanas">
+    @for (semana of semanas; track $index) {
+      <div class="semana">
+        @for (dia of semana; track dia.fecha) {
+          <button
+            class="dia-celda"
+            [class.fuera-de-mes]="!dia.delMesActual"
+            [class.seleccionado]="dia.fecha === fechaSeleccionada"
+            [class.es-hoy]="dia.esHoy && dia.fecha !== fechaSeleccionada"
+            [disabled]="!dia.delMesActual"
+            (click)="seleccionarDia(dia)">
+
+            <span class="dia-numero">{{ dia.numero }}</span>
+
+            @if (dia.cantidadServicios > 0) {
+              <span class="dia-puntos">
+                @for (p of puntos(dia.cantidadServicios); track $index) {
+                  <span class="punto"></span>
+                }
+              </span>
+            }
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="calendar-footer">
+    <span>{{ 'SCHEDULE.CALENDAR.SERVICES_OF_DAY' | translate }}</span>
+    <strong>{{ serviciosPorFecha[fechaSeleccionada] ?? 0 }}</strong>
+  </div>
+
+</div>

@@ -32,7 +32,8 @@
     "LOGOUT": "Log Out",
     "ASSIGNED_SERVICES": "assigned services",
     "RATINGS": "Ratings",
-    "VEHICLES": "My vehicles"
+    "VEHICLES": "My vehicles",
+    "SCHEDULE": "My Schedule"
   },
   "HISTORY": {
     "FILTERS": "Filters",
@@ -759,5 +760,29 @@
     "COVERAGE_LABEL": "Coverage",
     "COVERAGE_VALUE": "Major cities across Colombia",
     "CTA": "Book your first wash"
-  }
+  },
+
+  "CALENDAR": {
+  "MONTHS": ["January","February","March","April","May","June","July","August","September","October","November","December"],
+  "DAYS_SHORT": ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
+},
+"SCHEDULE": {
+  "TITLE": "My Schedule",
+  "SUBTITLE": "Interactive calendar with your bookings for the day, the week, and your completed service history.",
+  "OF": "of",
+  "RESERVATIONS_OF": "Bookings for",
+  "EMPTY": "There are no bookings to show here.",
+  "TABS": { "DAY": "Day", "WEEK": "Week", "DONE": "Completed" },
+  "STATUS": { "FINALIZADO": "Completed", "EN_PROGRESO": "In progress", "PENDIENTE": "Pending" },
+  "CALENDAR": { "SERVICES_OF_DAY": "Services on selected day" },
+  "STATS": { "TOTAL": "Total", "PENDING": "Pending", "IN_PROGRESS": "In progress", "DONE": "Completed" },
+  "NEXT": { "LABEL": "Next service", "IN_MINUTES": "in {{min}} min" },
+  "START": "Start",
+  "FINISH": "Finish",
+  "VIEW_DETAIL": "View detail",
+  "FINISH_TITLE": "Finish this service?",
+  "FINISH_MESSAGE": "It will be marked as completed and moved to your history.",
+  "FINISH_CONFIRM": "Finish",
+  "DETAIL": { "DATE": "Date and time", "DURATION": "Duration", "VEHICLE": "Vehicle", "ADDRESS": "Address" }
+}
 }

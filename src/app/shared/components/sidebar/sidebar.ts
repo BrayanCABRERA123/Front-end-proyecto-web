@@ -40,6 +40,7 @@ export class SidebarComponent implements OnInit {
   /*Menu opciones Operator */
   operatorMenu = [
   { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/operator/profile' },
+  { icono: 'calendar_month', label: 'SIDEBAR.SCHEDULE', ruta: '/operator/schedule' },
   { icono: 'assignment', label: 'SIDEBAR.ASSIGNED_SERVICES', ruta: '/operator/assigned-services' },
   { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/operator/notifications' },
   { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/operator/service-history' },

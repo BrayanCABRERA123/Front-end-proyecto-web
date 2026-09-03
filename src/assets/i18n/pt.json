@@ -32,7 +32,8 @@
     "LOGOUT": "Sair",
     "ASSIGNED_SERVICES": "serviços atribuídos",
     "RATINGS": "Avaliações",
-    "VEHICLES": "Meus veículos"
+    "VEHICLES": "Meus veículos",
+    "SCHEDULE": "Minha Agenda"
   },
   "HISTORY": {
     "FILTERS": "Filtros",
@@ -759,5 +760,29 @@
     "COVERAGE_LABEL": "Cobertura",
     "COVERAGE_VALUE": "Principais cidades da Colômbia",
     "CTA": "Agende sua primeira lavagem"
-  }
+  },
+
+  "CALENDAR": {
+  "MONTHS": ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
+  "DAYS_SHORT": ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"]
+},
+"SCHEDULE": {
+  "TITLE": "Minha Agenda",
+  "SUBTITLE": "Calendário interativo com suas reservas do dia, da semana e seu histórico de serviços realizados.",
+  "OF": "de",
+  "RESERVATIONS_OF": "Reservas de",
+  "EMPTY": "Não há reservas para mostrar aqui.",
+  "TABS": { "DAY": "Dia", "WEEK": "Semana", "DONE": "Concluídos" },
+  "STATUS": { "FINALIZADO": "Concluído", "EN_PROGRESO": "Em andamento", "PENDIENTE": "Pendente" },
+  "CALENDAR": { "SERVICES_OF_DAY": "Serviços do dia selecionado" },
+  "STATS": { "TOTAL": "Total", "PENDING": "Pendentes", "IN_PROGRESS": "Em andamento", "DONE": "Concluídos" },
+  "NEXT": { "LABEL": "Próximo serviço", "IN_MINUTES": "em {{min}} min" },
+  "START": "Iniciar",
+  "FINISH": "Concluir",
+  "VIEW_DETAIL": "Ver detalhes",
+  "FINISH_TITLE": "Concluir este serviço?",
+  "FINISH_MESSAGE": "Será marcado como concluído e passará para o seu histórico.",
+  "FINISH_CONFIRM": "Concluir",
+  "DETAIL": { "DATE": "Data e hora", "DURATION": "Duração", "VEHICLE": "Veículo", "ADDRESS": "Endereço" }
+}
 }
