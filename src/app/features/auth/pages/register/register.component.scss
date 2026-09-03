@@ -52,12 +52,12 @@
 }
 
 app-auth-side-panel {
-  width: 52%;
+  width: 45%;
   display: block;
 }
 
 .register-form-section {
-  width: 48%;
+  width: 55%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,7 +76,7 @@ app-auth-side-panel {
 
 .register-card {
   width: 100%;
-  max-width: 460px;
+  max-width: 500px;
   height: 100%;
   background: var(--auth-card);
   border-radius: 26px;
@@ -118,26 +118,6 @@ app-auth-side-panel {
 
 .register-scroll::-webkit-scrollbar-track {
   background: transparent;
-}
-
-/* LOGO */
-.brand {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.logo-img {
-  flex-shrink: 0;
-}
-
-.brand h1 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
 }
 
 /* HEADER */

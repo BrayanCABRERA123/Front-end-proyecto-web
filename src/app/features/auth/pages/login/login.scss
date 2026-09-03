@@ -51,13 +51,14 @@ body.pink-dark .auth-shell {
     0 0 0 1px rgba(255, 255, 255, .06) inset;
 }
 
+/* panel más angosto, card más ancha: la card ahora es protagonista */
 app-auth-side-panel {
-  width: 52%;
+  width: 45%;
   display: block;
 }
 
 .login-form-section {
-  width: 48%;
+  width: 55%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,7 +77,7 @@ body.pink-dark .login-form-section {
 
 .login-card {
   width: 100%;
-  max-width: 430px;
+  max-width: 480px;
   background: var(--auth-card);
   border-radius: 26px;
   padding: 38px;
@@ -91,21 +92,6 @@ body.pink-dark .login-card {
   box-shadow:
     0 8px 30px rgba(0, 0, 0, .30),
     0 0 0 1px rgba(255, 255, 255, .04) inset;
-}
-
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.logo h2 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
 }
 
 h3 {

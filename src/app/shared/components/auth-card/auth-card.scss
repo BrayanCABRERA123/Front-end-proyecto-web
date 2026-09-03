@@ -1,6 +1,6 @@
 .card-wrapper {
   width: 100%;
-  max-width: 430px;
+  max-width: 480px;
   margin: auto;
   padding: 38px;
   box-sizing: border-box;
@@ -23,29 +23,6 @@
   box-shadow:
     0 8px 30px rgba(0, 0, 0, .30),
     0 0 0 1px rgba(255, 255, 255, .04) inset;
-}
-
-.card-header {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 18px;
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.app-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-:host-context(body.green-dark) .app-title,
-:host-context(body.pink-dark) .app-title {
-  color: #ffffff;
 }
 
 @keyframes fadeUp {

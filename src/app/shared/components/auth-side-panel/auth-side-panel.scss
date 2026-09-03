@@ -15,36 +15,37 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  /* overlay un poco más fuerte para que la foto no le robe protagonismo a la card */
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.15) 0%,
-    rgba(0, 0, 0, 0.55) 100%
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0.62) 100%
   );
 }
 
 :host-context(body:not(.green-dark):not(.pink-dark)) .side-panel::before {
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.88);
 }
 
 :host-context(body.green-dark) .side-panel::before {
   background: linear-gradient(
     180deg,
-    rgba(4, 20, 22, 0.35) 0%,
-    rgba(4, 20, 22, 0.88) 100%
+    rgba(4, 20, 22, 0.42) 0%,
+    rgba(4, 20, 22, 0.92) 100%
   );
 }
 
 :host-context(body.pink-dark) .side-panel::before {
   background: linear-gradient(
     180deg,
-    rgba(18, 4, 14, 0.35) 0%,
-    rgba(18, 4, 14, 0.88) 100%
+    rgba(18, 4, 14, 0.42) 0%,
+    rgba(18, 4, 14, 0.92) 100%
   );
 }
 
 .panel-content {
   width: 100%;
-  max-width: 430px;
+  max-width: 380px;
   position: relative;
   z-index: 2;
 }
@@ -54,19 +55,20 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-top: -62px;
+  margin-top: -78px;
 }
 
 .brand-logo {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 64px;
+  height: 64px;
+  margin-top: -95px;
+  border-radius: 16px;
   background: var(--primary);
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 6px 20px rgba(var(--primary-rgb), .40);
+  box-shadow: 0 8px 24px rgba(var(--primary-rgb), .40);
 }
 
 .brand-logo svg path {
@@ -75,7 +77,8 @@
 
 .brand-text h3 {
   margin: 0;
-  font-size: 18px;
+  margin-top: -50px;
+  font-size: 19px;
   font-weight: 800;
   letter-spacing: 0.5px;
   color: var(--text);
@@ -97,10 +100,10 @@
 /* ── HERO TEXT ── */
 .hero-text h1 {
   margin: 0;
-  font-size: 56px;
+  font-size: 46px;
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -2px;
+  line-height: 1.08;
+  letter-spacing: -1.5px;
   color: var(--text);
 }
 
@@ -110,11 +113,11 @@
 }
 
 .hero-text p {
-  margin-top: 18px;
-  margin-bottom: 28px;
-  line-height: 1.75;
-  max-width: 370px;
-  font-size: 18px;
+  margin-top: 16px;
+  margin-bottom: 26px;
+  line-height: 1.7;
+  max-width: 330px;
+  font-size: 16px;
   color: var(--text);
 }
 
@@ -134,7 +137,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 15px 20px;
+  padding: 14px 18px;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.65);
@@ -154,13 +157,13 @@
 
 .benefit-card .material-icons {
   color: var(--primary);
-  font-size: 20px;
+  font-size: 19px;
   flex-shrink: 0;
 }
 
 .benefit-card span:last-child {
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14.5px;
   color: var(--text);
 }
 
