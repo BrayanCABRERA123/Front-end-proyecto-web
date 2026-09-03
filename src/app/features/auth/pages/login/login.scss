@@ -6,16 +6,16 @@
   overflow: hidden;
   padding: 16px;
   box-sizing: border-box;
-  background:
+    background:
   radial-gradient(
     circle at top left,
-    rgba(48, 207, 191, .55),
-    rgba(48, 207, 191, .18) 35%,
+    rgba(var(--primary-rgb), .55),
+    rgba(var(--primary-rgb), .18) 35%,
     transparent 65%
   ),
   radial-gradient(
     circle at bottom right,
-    rgba(48, 207, 191, .55),
+    rgba(var(--primary-rgb), .55),
     transparent 60%
   ),
   var(--bg);

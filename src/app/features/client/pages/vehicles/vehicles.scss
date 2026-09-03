@@ -4,7 +4,7 @@
   display: flex;
   align-items: flex-start;
   min-height: 100vh;
-  background-color: var(--bg, #f5f7f9);
+  background-color: var(--bg);
 }
 
 .home-content {
@@ -29,7 +29,7 @@
   }
 
   p {
-    color: #8a9aa3;
+    color: var(--text-secondary);
     margin: 4px 0 0;
   }
 }
@@ -50,19 +50,20 @@
   transition: 0.2s;
 
   &:hover {
-    filter: brightness(1.08);
+    background-color: var(--primary-hover);
   }
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
 
 .stat-card {
   background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 20px;
   display: flex;
@@ -75,7 +76,7 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(var(--primary-rgb), 0.12);
+  background: var(--primary-soft);
   color: var(--primary);
   display: flex;
   align-items: center;
@@ -93,18 +94,19 @@
 }
 
 .stat-label {
-  color: #8a9aa3;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .vehicles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 16px;
 }
 
 .vehicle-card {
   background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
@@ -141,7 +143,7 @@
 }
 
 .vehicle-subtitulo {
-  color: #8a9aa3;
+  color: var(--text-muted);
   font-size: 0.85rem;
   margin: 2px 0 0;
 }
@@ -149,13 +151,13 @@
 .btn-icon {
   border: none;
   background: transparent;
-  color: #8a9aa3;
+  color: var(--text-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
 
   &:hover {
-    color: #e05353;
+    color: var(--error);
   }
 }
 
@@ -171,7 +173,7 @@
   font-size: 0.9rem;
 
   span {
-    color: #8a9aa3;
+    color: var(--text-muted);
   }
 
   strong {
@@ -179,9 +181,14 @@
   }
 }
 
-// ================================
+:host-context(body.green-dark) .stat-card,
+:host-context(body.pink-dark) .stat-card,
+:host-context(body.green-dark) .vehicle-card,
+:host-context(body.pink-dark) .vehicle-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}
+
 // RESPONSIVE
-// ================================
 
 @include tablet {
   .home-content {
@@ -190,8 +197,13 @@
 }
 
 @include mobile {
+  .home-layout {
+    flex-direction: column;
+  }
+
   .home-content {
     padding: 16px;
+    padding-top: 70px;
   }
 
   .vehicles-header {

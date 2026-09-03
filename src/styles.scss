@@ -75,6 +75,8 @@ body {
 --success-soft: #E0EBEA;
 --error: #E53935;
 --error-soft: #FFEBEE;
+--warning: #F59E0B;
+--warning-soft: #FEF3C7;
 --neutral-badge: #67777E;
 --neutral-badge-soft: #EDF2F2;
 }
@@ -122,6 +124,8 @@ body.green-dark {
 --success-soft: rgba(46, 196, 182, 0.18);
 --error: #ff6b6b;
 --error-soft: rgba(255, 107, 107, 0.15);
+--warning: #FBBF24;
+--warning-soft: rgba(251, 191, 36, 0.18);
 --neutral-badge: #c2c2c2;
 --neutral-badge-soft: rgba(255, 255, 255, 0.08);
 }
@@ -169,6 +173,8 @@ body.pink {
 --success-soft: #E0EBEA;
 --error: #E53935;
 --error-soft: #FFEBEE;
+--warning: #F59E0B;
+--warning-soft: #FEF3C7;
 --neutral-badge: #67777E;
 --neutral-badge-soft: #EDF2F2;
 }
@@ -216,6 +222,8 @@ body.pink-dark {
 --success-soft: rgba(46, 196, 182, 0.18);
 --error: #ff6b6b;
 --error-soft: rgba(255, 107, 107, 0.15);
+--warning: #FBBF24;
+--warning-soft: rgba(251, 191, 36, 0.18);
 --neutral-badge: #c2c2c2;
 --neutral-badge-soft: rgba(255, 255, 255, 0.08);
 }

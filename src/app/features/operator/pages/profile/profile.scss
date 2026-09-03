@@ -1,13 +1,11 @@
 .profile-container {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   background: var(--bg);
 
   app-profile-card {
     flex: 1;
     min-width: 0;
     display: flex;
-    overflow-y: auto;
   }
 }
