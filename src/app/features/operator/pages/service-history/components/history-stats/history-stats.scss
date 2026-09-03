@@ -1,47 +1,69 @@
-// fila de cards
 .stats-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
 }
 
-// cada card de estadística
 .stat-card {
-  background-color: var(--card);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  gap: 6px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
 
-  @media (max-width: 640px) {
-    padding: 18px;
-    border-radius: 12px;
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+
+  mat-icon {
+    font-size: 22px;
   }
 }
 
-// label descriptivo
+.icon-success {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.icon-neutral {
+  background: var(--neutral-badge-soft);
+  color: var(--neutral-badge);
+}
+
+.icon-rating {
+  background: rgba(245, 165, 36, 0.15);
+  color: #f5a524;
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
 .stat-label {
   font-size: 13px;
   color: var(--text-secondary);
   margin: 0;
 }
 
-// número grande
-.stat-value {
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--text);
-  margin: 0;
+:host-context(body.green-dark) .stat-card,
+:host-context(body.pink-dark) .stat-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}
 
-  @media (max-width: 640px) {
-    font-size: 30px;
+@media (max-width: 768px) {
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

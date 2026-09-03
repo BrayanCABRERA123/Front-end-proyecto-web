@@ -4,71 +4,87 @@
   <div class="main-content">
 
     <div class="page-header">
-      <h1 class="page-title">{{ 'SERVICE_HISTORY.TITLE' | translate }}</h1>
-      <p class="page-subtitle">
-        {{ 'SERVICE_HISTORY.SUBTITLE' | translate }}
-      </p>
-    </div>
-
-    <app-history-stats
-      [serviciosRealizados]="serviciosRealizados"
-      [serviciosCancelados]="serviciosCancelados">
-    </app-history-stats>
-
-    <div class="filters-card">
-      <p class="filters-title">{{ 'SERVICE_HISTORY.FILTERS_TITLE' | translate }}</p>
-
-      <div class="filters-row">
-
-        <div class="filter-group">
-          <label class="filter-label">{{ 'SERVICE_HISTORY.FILTER_DATE' | translate }}</label>
-          <div class="date-input-wrapper">
-            <input
-              type="date"
-              class="filter-input"
-              [(ngModel)]="filtroFecha"/>
-          </div>
-        </div>
-
-        <div class="filter-group">
-          <label class="filter-label">{{ 'SERVICE_HISTORY.FILTER_TYPE' | translate }}</label>
-          <div class="select-wrapper">
-            <select class="filter-select" [(ngModel)]="filtroTipoServicio">
-              @for (tipo of tiposServicio; track tipo.value) {
-                <option [value]="tipo.value">{{ tipo.label | translate }}</option>
-              }
-            </select>
-            <mat-icon class="select-icon">expand_more</mat-icon>
-          </div>
-        </div>
-
-        <div class="filter-group">
-          <label class="filter-label">&nbsp;</label>
-          <div class="select-wrapper">
-            <select class="filter-select" [(ngModel)]="filtroEstado">
-              @for (estado of estados; track estado.value) {
-                <option [value]="estado.value">{{ estado.label | translate }}</option>
-              }
-            </select>
-            <mat-icon class="select-icon">expand_more</mat-icon>
-          </div>
-        </div>
-
-        <div class="filter-actions">
-          <button class="btn-reset">
-            <mat-icon>refresh</mat-icon>
-          </button>
-          <button class="btn-filter">
-            <mat-icon>search</mat-icon>
-            {{ 'SERVICE_HISTORY.BTN_FILTER' | translate }}
-          </button>
-        </div>
-
+      <div>
+        <h1 class="page-title">{{ 'SERVICE_HISTORY.TITLE' | translate }}</h1>
+        <p class="page-subtitle">{{ 'SERVICE_HISTORY.SUBTITLE' | translate }}</p>
       </div>
     </div>
 
+    <app-history-stats
+      [finalizados]="finalizados"
+      [canceladosReasignados]="canceladosReasignados"
+      [totalGenerado]="totalGenerado"
+      [calificacionPromedio]="calificacionPromedio">
+    </app-history-stats>
+
+    <div class="progress-card">
+      <div class="progress-header">
+        <span>{{ 'SERVICE_HISTORY.COMPLETION_RATE' | translate }}</span>
+        <strong>{{ tasaCompletados }}%</strong>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="porcentajeAnimado"></div>
+      </div>
+    </div>
+
+    <div class="filters-card">
+
+      <div class="filters-row">
+
+        <div class="filter-group search-group">
+          <div class="search-wrapper">
+            <mat-icon>search</mat-icon>
+            <input
+              type="text"
+              class="search-input"
+              [(ngModel)]="busqueda"
+              [placeholder]="'SERVICE_HISTORY.SEARCH_PLACEHOLDER' | translate" />
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <input type="date" class="filter-input" [(ngModel)]="filtroFecha" />
+        </div>
+
+        <div class="filter-group">
+          <div class="select-wrapper">
+            <select class="filter-select" [(ngModel)]="filtroServicio">
+              <option value="">{{ 'SERVICE_HISTORY.ALL_SERVICES' | translate }}</option>
+              @for (tipo of tiposServicio; track tipo) {
+                <option [value]="tipo">{{ ('SERVICE.' + tipo) | translate }}</option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+        </div>
+
+        <button class="btn-reset" (click)="limpiarFiltros()">
+          <mat-icon>refresh</mat-icon>
+          {{ 'SERVICE_HISTORY.CLEAR' | translate }}
+        </button>
+
+      </div>
+
+      <div class="tabs">
+        <button class="tab" [class.active]="tabActiva === 'todos'" (click)="cambiarTab('todos')">
+          {{ 'SERVICE_HISTORY.TABS.ALL' | translate }} ({{ contarTab('todos') }})
+        </button>
+        <button class="tab" [class.active]="tabActiva === 'finalizado'" (click)="cambiarTab('finalizado')">
+          {{ 'SERVICE_HISTORY.TABS.DONE' | translate }} ({{ contarTab('finalizado') }})
+        </button>
+        <button class="tab" [class.active]="tabActiva === 'cancelado'" (click)="cambiarTab('cancelado')">
+          {{ 'SERVICE_HISTORY.TABS.CANCELED' | translate }} ({{ contarTab('cancelado') }})
+        </button>
+        <button class="tab" [class.active]="tabActiva === 'reasignado'" (click)="cambiarTab('reasignado')">
+          {{ 'SERVICE_HISTORY.TABS.REASSIGNED' | translate }} ({{ contarTab('reasignado') }})
+        </button>
+      </div>
+
+    </div>
+
     <app-history-table
-      [servicios]="serviciosFiltrados">
+      [servicios]="serviciosFiltrados"
+      (verDetalle)="verDetalle($event)">
     </app-history-table>
 
   </div>

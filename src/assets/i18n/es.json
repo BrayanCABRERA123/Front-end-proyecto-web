@@ -551,24 +551,18 @@
     }
   },
   "SERVICE_HISTORY": {
-    "TITLE": "Historial de Servicios",
-    "SUBTITLE": "Consulta todos los servicios que has realizado, organizados por fecha, tipo de servicio y estado final.",
-    "FILTERS_TITLE": "Filtros de búsqueda",
-    "FILTER_DATE": "Filtrar por fecha",
-    "FILTER_TYPE": "Filtrar por tipo de servicio",
-    "BTN_FILTER": "Filtrar",
-    "TYPE_ALL": "Todas",
-    "TYPE_BASIC": "Básico",
-    "TYPE_PREMIUM": "Premium",
-    "TYPE_FULL": "Completo",
-    "STATUS_ALL": "Todos",
-    "STATUS_FINISHED": "Finalizado",
-    "STATUS_CANCELED": "Cancelado",
-    "STATUS_REASSIGNED": "Reasignado"
+  "COMPLETION_RATE": "Tasa de servicios completados",
+  "SEARCH_PLACEHOLDER": "Buscar por código, placa, cliente o vehículo...",
+  "ALL_SERVICES": "Todos los servicios",
+  "CLEAR": "Limpiar",
+  "TABS": { "ALL": "Todos", "DONE": "Finalizados", "CANCELED": "Cancelados", "REASSIGNED": "Reasignados" },
+  "STATUS": { "FINALIZADO": "Finalizado", "CANCELADO": "Cancelado", "REASIGNADO": "Reasignado" },
+  "DETAIL": { "DATE": "Fecha y hora", "VEHICLE": "Vehículo", "ADDRESS": "Dirección", "PAYMENT": "Pago", "RATING": "Calificación", "REASON": "Motivo" },
+  "TITLE": "Historial de Servicios",
+  "SUBTITLE": "Consulta todos tus servicios: fecha, vehículo, pago, estado final y calificación.",
+  "METHODS": { "CARD": "Tarjeta", "PSE": "PSE", "NEQUI": "Nequi", "CASH": "Efectivo" }
   },
-  "HISTORY_STATS": {
-    "DONE": "Servicios realizados este mes",
-    "CANCELED": "Servicios cancelados / reasignados"
+  "HISTORY_STATS": { "DONE": "Servicios finalizados", "CANCELED": "Cancelados / reasignados", "TOTAL": "Total generado", "RATING": "Calificación promedio" 
   },
   "HISTORY_TABLE": {
     "ID": "ID",
@@ -577,7 +571,8 @@
     "VEHICLE": "VEHÍCULO",
     "DURATION": "DURACIÓN",
     "STATUS": "ESTADO FINAL",
-    "EMPTY": "No se encontraron servicios"
+    "EMPTY": "No se encontraron servicios",
+    "PAYMENT": "Pago", "AMOUNT": "Monto", "RATING": "Calificación", "DETAIL": "Detalle"
   },
   "QUALIFICATIONS": {
     "TITLE": "Calificaciones recibidas",

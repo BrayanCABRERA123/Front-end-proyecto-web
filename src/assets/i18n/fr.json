@@ -551,24 +551,18 @@
     }
   },
   "SERVICE_HISTORY": {
-    "TITLE": "Historique des services",
-    "SUBTITLE": "Consultez tous les services que vous avez réalisés, organisés par date, type de service et statut final.",
-    "FILTERS_TITLE": "Filtres de recherche",
-    "FILTER_DATE": "Filtrer par date",
-    "FILTER_TYPE": "Filtrer par type de service",
-    "BTN_FILTER": "Filtrer",
-    "TYPE_ALL": "Tous",
-    "TYPE_BASIC": "Basique",
-    "TYPE_PREMIUM": "Premium",
-    "TYPE_FULL": "Complet",
-    "STATUS_ALL": "Tous",
-    "STATUS_FINISHED": "Terminé",
-    "STATUS_CANCELED": "Annulé",
-    "STATUS_REASSIGNED": "Réaffecté"
+  "COMPLETION_RATE": "Taux de services terminés",
+  "SEARCH_PLACEHOLDER": "Rechercher par code, plaque, client ou véhicule...",
+  "ALL_SERVICES": "Tous les services",
+  "CLEAR": "Effacer",
+  "TABS": { "ALL": "Tous", "DONE": "Terminés", "CANCELED": "Annulés", "REASSIGNED": "Réattribués" },
+  "STATUS": { "FINALIZADO": "Terminé", "CANCELADO": "Annulé", "REASIGNADO": "Réattribué" },
+  "DETAIL": { "DATE": "Date et heure", "VEHICLE": "Véhicule", "ADDRESS": "Adresse", "PAYMENT": "Paiement", "RATING": "Note", "REASON": "Motif" },
+  "TITLE": "Historique des services",
+  "SUBTITLE": "Consultez tous vos services : date, véhicule, paiement, statut final et note.",
+  "METHODS": { "CARD": "Carte", "PSE": "PSE", "NEQUI": "Nequi", "CASH": "Espèces" }
   },
-  "HISTORY_STATS": {
-    "DONE": "Services réalisés ce mois-ci",
-    "CANCELED": "Services annulés / réaffectés"
+  "HISTORY_STATS": { "DONE": "Services terminés", "CANCELED": "Annulés / réattribués", "TOTAL": "Total généré", "RATING": "Note moyenne" 
   },
   "HISTORY_TABLE": {
     "ID": "ID",
@@ -577,7 +571,8 @@
     "VEHICLE": "VÉHICULE",
     "DURATION": "DURÉE",
     "STATUS": "STATUT FINAL",
-    "EMPTY": "Aucun service trouvé"
+    "EMPTY": "Aucun service trouvé",
+    "PAYMENT": "Paiement", "AMOUNT": "Montant", "RATING": "Note", "DETAIL": "Détail"
   },
   "QUALIFICATIONS": {
     "TITLE": "Évaluations reçues",

@@ -1,157 +1,165 @@
-// tarjeta que envuelve la tabla
 .table-card {
-  background-color: var(--card);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
- 
-  @media (max-width: 640px) {
-    border-radius: 12px;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    overflow: visible;
-  }
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
 }
- 
+
 .history-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
- 
-  @media (min-width: 641px) and (max-width: 1024px) {
-    display: block;
-    overflow-x: auto;
+
+  th {
+    text-align: left;
+    padding: 16px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
     white-space: nowrap;
   }
-}
- 
-thead tr {
-  background-color: var(--bg-soft);
-  border-bottom: 1.5px solid var(--border);
-}
- 
-th {
-  padding: 14px 16px;
-  text-align: left;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  letter-spacing: 0.5px;
-}
- 
-.table-row {
-  border-bottom: 1px solid var(--border);
-  transition: background-color 0.2s ease;
- 
-  &:hover {
-    background-color: var(--item-bg);
+
+  td {
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
   }
- 
-  &:last-child {
+
+  .table-row:last-child td {
     border-bottom: none;
   }
+
+  .table-row:hover {
+    background: var(--item-bg);
+  }
 }
- 
-td {
-  padding: 14px 16px;
-  color: var(--text);
-  vertical-align: middle;
-}
- 
-.td-id {
-  font-weight: 700;
-  color: var(--text);
-}
- 
-.estado-badge {
-  padding: 4px 12px;
-  border-radius: 20px;
+
+.badge-servicio {
+  background: var(--primary-soft);
+  color: var(--primary);
   font-size: 12px;
   font-weight: 600;
-  white-space: nowrap;
- 
-  &.finalizado {
-    background-color: var(--success-soft);
-    color: var(--success);
-  }
- 
-  &.cancelado {
-    background-color: var(--error-soft);
-    color: var(--error);
-  }
- 
-  &.reasignado {
-    background-color: var(--neutral-badge-soft);
-    color: var(--neutral-badge);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.celda-vehiculo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .placa {
+    font-size: 11px;
+    color: var(--text-muted);
   }
 }
- 
+
+.estrellas {
+  display: flex;
+  gap: 1px;
+
+  mat-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+    color: #f5a524;
+  }
+}
+
+.sin-calificar {
+  color: var(--text-muted);
+}
+
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.estado-finalizado {
+  background: var(--success);
+  color: #ffffff;
+}
+
+.estado-cancelado {
+  background: var(--error-soft);
+  color: var(--error);
+}
+
+.estado-reasignado {
+  background: var(--neutral-badge-soft);
+  color: var(--neutral-badge);
+}
+
+.btn-ver {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+}
+
 .empty-row {
   text-align: center;
-  padding: 48px;
-  color: var(--text-secondary);
-  font-size: 14px;
+  padding: 50px 20px;
+  color: var(--text-muted);
 }
- 
-// en celular la tabla se convierte en tarjetas
-@media (max-width: 640px) {
-  .history-table {
+
+@media (max-width: 900px) {
+  .history-table thead {
+    display: none;
+  }
+
+  .history-table, .history-table tbody, .history-table tr, .history-table td {
     display: block;
- 
-    thead {
-      display: none;
-    }
- 
-    tbody {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    width: 100%;
   }
- 
-  .table-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 16px;
-    background-color: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
- 
-    &:hover {
-      background-color: var(--card);
-    }
+
+  .history-table .table-row {
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
   }
- 
-  td {
-    padding: 0;
+
+  .history-table td {
+    border-bottom: none;
+    padding: 6px 4px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 2px;
-    font-size: 13px;
- 
-    &::before {
-      content: attr(data-label);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      color: var(--text-secondary);
-    }
+    white-space: normal;
   }
- 
-  .td-id {
-    grid-column: 1 / -1;
-  }
- 
-  td:has(.estado-badge) {
-    grid-column: 1 / -1;
-  }
- 
-  .empty-row {
-    padding: 32px 16px;
+
+  .history-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-transform: uppercase;
   }
 }
- 

@@ -1,0 +1,86 @@
+<div class="dialog-container">
+
+  <button class="btn-x" (click)="cerrar()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="detail-header">
+    <span class="type-badge" [ngClass]="claseEstado(servicio.estado)">
+      <mat-icon>{{ iconoEstado(servicio.estado) }}</mat-icon>
+      {{ labelEstado(servicio.estado) | translate }}
+    </span>
+    <span class="codigo">{{ servicio.codigo }}</span>
+  </div>
+
+  <h2 class="dialog-title">
+    {{ ('SERVICE.' + servicio.servicio) | translate }} — {{ servicio.cliente }}
+  </h2>
+
+  <div class="detail-grid">
+
+    <div class="detail-item">
+      <mat-icon>event</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.DATE' | translate }}</span>
+        <span class="detail-valor">{{ servicio.fecha | date: 'dd/MM/yyyy' }} · {{ servicio.hora }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>directions_car</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.VEHICLE' | translate }}</span>
+        <span class="detail-valor">{{ ('VEHICLE.' + servicio.vehiculo) | translate }} · {{ servicio.placa }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>location_on</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.ADDRESS' | translate }}</span>
+        <span class="detail-valor">{{ servicio.direccion }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>payments</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.PAYMENT' | translate }}</span>
+        <span class="detail-valor">{{ ('SERVICE_HISTORY.METHODS.' + servicio.metodoPago) | translate }} · ${{ servicio.monto | number }}</span>
+      </div>
+    </div>
+
+    @if (servicio.calificacion !== null) {
+      <div class="detail-item">
+        <mat-icon>star</mat-icon>
+        <div class="detail-full">
+          <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.RATING' | translate }}</span>
+          <span class="estrellas">
+            @for (e of estrellas; track e) {
+              <mat-icon [class.activa]="e <= servicio.calificacion!">star</mat-icon>
+            }
+          </span>
+          @if (servicio.comentario) {
+            <p class="comentario">"{{ servicio.comentario }}"</p>
+          }
+        </div>
+      </div>
+    }
+
+    @if (servicio.motivo) {
+      <div class="detail-item">
+        <mat-icon>info</mat-icon>
+        <div>
+          <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.REASON' | translate }}</span>
+          <span class="detail-valor">{{ servicio.motivo }}</span>
+        </div>
+      </div>
+    }
+
+  </div>
+
+  <button class="btn-cerrar" (click)="cerrar()">
+    {{ 'COMMON.CLOSE' | translate }}
+  </button>
+
+</div>

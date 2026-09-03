@@ -551,24 +551,18 @@
     }
   },
   "SERVICE_HISTORY": {
-    "TITLE": "Histórico de Serviços",
-    "SUBTITLE": "Consulte todos os serviços que você realizou, organizados por data, tipo de serviço e status final.",
-    "FILTERS_TITLE": "Filtros de busca",
-    "FILTER_DATE": "Filtrar por data",
-    "FILTER_TYPE": "Filtrar por tipo de serviço",
-    "BTN_FILTER": "Filtrar",
-    "TYPE_ALL": "Todos",
-    "TYPE_BASIC": "Básico",
-    "TYPE_PREMIUM": "Premium",
-    "TYPE_FULL": "Completo",
-    "STATUS_ALL": "Todos",
-    "STATUS_FINISHED": "Finalizado",
-    "STATUS_CANCELED": "Cancelado",
-    "STATUS_REASSIGNED": "Reatribuído"
+  "COMPLETION_RATE": "Taxa de serviços concluídos",
+  "SEARCH_PLACEHOLDER": "Buscar por código, placa, cliente ou veículo...",
+  "ALL_SERVICES": "Todos os serviços",
+  "CLEAR": "Limpar",
+  "TABS": { "ALL": "Todos", "DONE": "Concluídos", "CANCELED": "Cancelados", "REASSIGNED": "Reatribuídos" },
+  "STATUS": { "FINALIZADO": "Concluído", "CANCELADO": "Cancelado", "REASIGNADO": "Reatribuído" },
+  "DETAIL": { "DATE": "Data e hora", "VEHICLE": "Veículo", "ADDRESS": "Endereço", "PAYMENT": "Pagamento", "RATING": "Avaliação", "REASON": "Motivo" },
+  "TITLE": "Histórico de Serviços",
+  "SUBTITLE": "Consulte todos os seus serviços: data, veículo, pagamento, status final e avaliação.",
+  "METHODS": { "CARD": "Cartão", "PSE": "PSE", "NEQUI": "Nequi", "CASH": "Dinheiro" }
   },
-  "HISTORY_STATS": {
-    "DONE": "Serviços realizados este mês",
-    "CANCELED": "Serviços cancelados / reatribuídos"
+  "HISTORY_STATS": { "DONE": "Serviços concluídos", "CANCELED": "Cancelados / reatribuídos", "TOTAL": "Total gerado", "RATING": "Avaliação média" 
   },
   "HISTORY_TABLE": {
     "ID": "ID",
@@ -577,7 +571,8 @@
     "VEHICLE": "VEÍCULO",
     "DURATION": "DURAÇÃO",
     "STATUS": "STATUS FINAL",
-    "EMPTY": "Nenhum serviço encontrado"
+    "EMPTY": "Nenhum serviço encontrado",
+    "PAYMENT": "Pagamento", "AMOUNT": "Valor", "RATING": "Avaliação", "DETAIL": "Detalhe"
   },
   "QUALIFICATIONS": {
     "TITLE": "Avaliações recebidas",

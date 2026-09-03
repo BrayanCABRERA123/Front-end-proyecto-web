@@ -3,37 +3,67 @@
 
     <thead>
       <tr>
-        <th>{{ 'HISTORY_TABLE.ID' | translate }}</th>
         <th>{{ 'HISTORY_TABLE.DATE_COMPLETED' | translate }}</th>
         <th>{{ 'HISTORY_TABLE.SERVICE' | translate }}</th>
         <th>{{ 'HISTORY_TABLE.VEHICLE' | translate }}</th>
-        <th>{{ 'HISTORY_TABLE.DURATION' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.PAYMENT' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.AMOUNT' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.RATING' | translate }}</th>
         <th>{{ 'HISTORY_TABLE.STATUS' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.DETAIL' | translate }}</th>
       </tr>
     </thead>
 
     <tbody>
-      @for (servicio of servicios; track servicio.id) {
+      @for (s of servicios; track s.id) {
         <tr class="table-row">
 
-          <td class="td-id" [attr.data-label]="'HISTORY_TABLE.ID' | translate">{{ servicio.id }}</td>
+          <td [attr.data-label]="'HISTORY_TABLE.DATE_COMPLETED' | translate">
+            {{ s.fecha | date: 'dd/MM/yyyy' }} - {{ s.hora }}
+          </td>
 
-          <td [attr.data-label]="'HISTORY_TABLE.DATE_COMPLETED' | translate">{{ servicio.fechaCompletada }}</td>
+          <td [attr.data-label]="'HISTORY_TABLE.SERVICE' | translate">
+            <span class="badge-servicio">{{ ('SERVICE.' + s.servicio) | translate }}</span>
+          </td>
 
-          <td [attr.data-label]="'HISTORY_TABLE.SERVICE' | translate">{{ servicio.servicio }}</td>
+          <td [attr.data-label]="'HISTORY_TABLE.VEHICLE' | translate">
+            <div class="celda-vehiculo">
+              <span>{{ ('VEHICLE.' + s.vehiculo) | translate }}</span>
+              <span class="placa">{{ s.placa }}</span>
+            </div>
+          </td>
 
-          <td [attr.data-label]="'HISTORY_TABLE.VEHICLE' | translate">{{ servicio.vehiculo }}</td>
+          <td [attr.data-label]="'HISTORY_TABLE.PAYMENT' | translate">
+            {{ ('SERVICE_HISTORY.METHODS.' + s.metodoPago) | translate }}
+          </td>
 
-          <td [attr.data-label]="'HISTORY_TABLE.DURATION' | translate">{{ servicio.duracion }}</td>
+          <td [attr.data-label]="'HISTORY_TABLE.AMOUNT' | translate">
+            <strong>${{ s.monto | number }}</strong>
+          </td>
+
+          <td [attr.data-label]="'HISTORY_TABLE.RATING' | translate">
+            @if (s.calificacion !== null) {
+              <span class="estrellas">
+                @for (e of estrellasLlenas(s.calificacion); track $index) {
+                  <mat-icon class="activa">star</mat-icon>
+                }
+              </span>
+            } @else {
+              <span class="sin-calificar">—</span>
+            }
+          </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.STATUS' | translate">
-            <span
-              class="estado-badge"
-              [class.finalizado]="servicio.estadoColor === 'finalizado'"
-              [class.cancelado]="servicio.estadoColor === 'cancelado'"
-              [class.reasignado]="servicio.estadoColor === 'reasignado'">
-              {{ servicio.estado }}
+            <span class="estado-badge" [ngClass]="claseEstado(s.estado)">
+              <mat-icon>{{ iconoEstado(s.estado) }}</mat-icon>
+              {{ labelEstado(s.estado) | translate }}
             </span>
+          </td>
+
+          <td>
+            <button class="btn-ver" (click)="verDetalle.emit(s)">
+              <mat-icon>visibility</mat-icon>
+            </button>
           </td>
 
         </tr>
@@ -41,7 +71,7 @@
 
       @if (servicios.length === 0) {
         <tr>
-          <td colspan="6" class="empty-row">
+          <td colspan="8" class="empty-row">
             {{ 'HISTORY_TABLE.EMPTY' | translate }}
           </td>
         </tr>

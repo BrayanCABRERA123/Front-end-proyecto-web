@@ -1,0 +1,165 @@
+.dialog-container {
+  position: relative;
+  background: var(--card);
+  color: var(--text);
+  padding: 24px;
+  border-radius: 16px;
+  width: 440px;
+  max-width: 90vw;
+}
+
+.btn-x {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-muted);
+
+  &:hover {
+    color: var(--text);
+  }
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-right: 24px;
+}
+
+.codigo {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.dialog-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 20px;
+  padding-right: 24px;
+}
+
+.detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--item-bg);
+
+  mat-icon {
+    color: var(--primary);
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+}
+
+.detail-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.detail-valor {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.detail-full {
+  width: 100%;
+}
+
+.estrellas {
+  display: flex;
+  gap: 2px;
+
+  mat-icon {
+    margin-top: 0;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: var(--border);
+
+    &.activa {
+      color: #f5a524;
+    }
+  }
+}
+
+.comentario {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 6px 0 0;
+}
+
+.btn-cerrar {
+  width: 100%;
+  background: var(--item-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+}
+
+.type-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  width: fit-content;
+
+  mat-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+    margin-top: 0;
+  }
+}
+
+.estado-finalizado {
+  background: var(--success);
+  color: #ffffff;
+
+  mat-icon { color: #ffffff; }
+}
+
+.estado-cancelado {
+  background: var(--error-soft);
+  color: var(--error);
+}
+
+.estado-reasignado {
+  background: var(--neutral-badge-soft);
+  color: var(--neutral-badge);
+}

@@ -551,24 +551,18 @@
     }
   },
   "SERVICE_HISTORY": {
-    "TITLE": "Service History",
-    "SUBTITLE": "Check all the services you have completed, organized by date, service type and final status.",
-    "FILTERS_TITLE": "Search filters",
-    "FILTER_DATE": "Filter by date",
-    "FILTER_TYPE": "Filter by service type",
-    "BTN_FILTER": "Filter",
-    "TYPE_ALL": "All",
-    "TYPE_BASIC": "Basic",
-    "TYPE_PREMIUM": "Premium",
-    "TYPE_FULL": "Complete",
-    "STATUS_ALL": "All",
-    "STATUS_FINISHED": "Completed",
-    "STATUS_CANCELED": "Canceled",
-    "STATUS_REASSIGNED": "Reassigned"
+  "COMPLETION_RATE": "Completion rate",
+  "SEARCH_PLACEHOLDER": "Search by code, plate, client or vehicle...",
+  "ALL_SERVICES": "All services",
+  "CLEAR": "Clear",
+  "TABS": { "ALL": "All", "DONE": "Completed", "CANCELED": "Canceled", "REASSIGNED": "Reassigned" },
+  "STATUS": { "FINALIZADO": "Completed", "CANCELADO": "Canceled", "REASIGNADO": "Reassigned" },
+  "DETAIL": { "DATE": "Date and time", "VEHICLE": "Vehicle", "ADDRESS": "Address", "PAYMENT": "Payment", "RATING": "Rating", "REASON": "Reason" },
+  "TITLE": "Service History",
+  "SUBTITLE": "Check all your services: date, vehicle, payment, final status and rating.",
+  "METHODS": { "CARD": "Card", "PSE": "PSE", "NEQUI": "Nequi", "CASH": "Cash" }
   },
-  "HISTORY_STATS": {
-    "DONE": "Services completed this month",
-    "CANCELED": "Canceled / reassigned services"
+  "HISTORY_STATS": { "DONE": "Completed services", "CANCELED": "Canceled / reassigned", "TOTAL": "Total generated", "RATING": "Average rating" 
   },
   "HISTORY_TABLE": {
     "ID": "ID",
@@ -577,7 +571,8 @@
     "VEHICLE": "VEHICLE",
     "DURATION": "DURATION",
     "STATUS": "FINAL STATUS",
-    "EMPTY": "No services found"
+    "EMPTY": "No services found",
+    "PAYMENT": "Payment", "AMOUNT": "Amount", "RATING": "Rating", "DETAIL": "Detail"
   },
   "QUALIFICATIONS": {
     "TITLE": "Ratings received",

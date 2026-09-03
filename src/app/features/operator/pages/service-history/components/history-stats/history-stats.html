@@ -1,11 +1,35 @@
 <div class="stats-row">
+
   <div class="stat-card">
+    <div class="stat-icon icon-success">
+      <mat-icon>water_drop</mat-icon>
+    </div>
+    <p class="stat-value">{{ finalizados }}</p>
     <p class="stat-label">{{ 'HISTORY_STATS.DONE' | translate }}</p>
-    <p class="stat-value">{{ serviciosRealizados }}</p>
   </div>
 
   <div class="stat-card">
+    <div class="stat-icon icon-neutral">
+      <mat-icon>cancel</mat-icon>
+    </div>
+    <p class="stat-value">{{ canceladosReasignados }}</p>
     <p class="stat-label">{{ 'HISTORY_STATS.CANCELED' | translate }}</p>
-    <p class="stat-value">{{ serviciosCancelados }}</p>
   </div>
+
+  <div class="stat-card">
+    <div class="stat-icon icon-success">
+      <mat-icon>payments</mat-icon>
+    </div>
+    <p class="stat-value">${{ totalGenerado | number }}</p>
+    <p class="stat-label">{{ 'HISTORY_STATS.TOTAL' | translate }}</p>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon icon-rating">
+      <mat-icon>star</mat-icon>
+    </div>
+    <p class="stat-value">{{ calificacionPromedio }}</p>
+    <p class="stat-label">{{ 'HISTORY_STATS.RATING' | translate }}</p>
+  </div>
+
 </div>
