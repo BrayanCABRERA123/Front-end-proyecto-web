@@ -1,8 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
+interface Stat {
+  icono: string;
+  valor: number | string;
+  label: string;
+  notificacion: number;
+  ruta: string;
+}
 
 @Component({
   selector: 'app-stats-card',
@@ -12,7 +19,6 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './stats-card.scss'
 })
 export class StatsCardComponent {
-
-  // recibe los datos de la stat desde el padre
-  @Input() stat: any;
+  @Input() stat!: Stat;
+  @Output() abrir = new EventEmitter<string>();
 }

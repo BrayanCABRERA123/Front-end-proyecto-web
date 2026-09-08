@@ -535,21 +535,24 @@
     }
   },
   "OPERATOR_HOME": {
-    "TITLE": "Olá, {{name}}! 👋 Bem-vindo!",
-    "SUBTITLE": "Você tem {{count}} serviços pendentes para hoje",
-    "BTN_SERVICES": "Ver serviços atribuídos",
-    "PROGRESS_LABEL": "Serviços concluídos hoje",
-    "IN_PROGRESS": "Em andamento",
-    "PENDING": "Pendentes",
-    "RESERVATIONS_TITLE": "Reservas pendentes",
-    "BTN_START": "Iniciar",
-    "STATS": {
-      "ASSIGNED": "Reservas atribuídas",
-      "VEHICLES": "Veículos",
-      "NOTIFICATIONS": "Notificações",
-      "RATING": "Avaliação"
-    }
+  "TITLE": "Olá, {{name}}!  Bem-vindo!",
+  "SUBTITLE": "Você tem {{count}} serviços pendentes para hoje",
+  "BTN_SERVICES": "Ver serviços atribuídos",
+  "PROGRESS_LABEL": "Serviços concluídos hoje",
+  "IN_PROGRESS": "Em andamento",
+  "PENDING": "Pendentes",
+  "RESERVATIONS_TITLE": "Serviços de hoje",
+  "BTN_START": "Iniciar",
+  "STATS": {
+    "ASSIGNED": "Reservas atribuídas",
+    "VEHICLES": "Veículos",
+    "NOTIFICATIONS": "Notificações",
+    "RATING": "Avaliação",
+    "IN_PROGRESS": "Em andamento"
   },
+  "EMPTY": "Você não tem serviços agendados no momento."
+  },
+
   "SERVICE_HISTORY": {
   "COMPLETION_RATE": "Taxa de serviços concluídos",
   "SEARCH_PLACEHOLDER": "Buscar por código, placa, cliente ou veículo...",

@@ -1,4 +1,4 @@
-<div class="stats-card">
+<button class="stats-card" (click)="abrir.emit(stat.ruta)">
 
   <div class="icon-wrapper">
     <div class="stat-icon">
@@ -14,4 +14,4 @@
 
   <p class="stat-label">{{ stat.label | translate }}</p>
 
-</div>
+</button>

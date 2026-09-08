@@ -1,7 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import {
+  Reserva,
+  claseEstadoReserva,
+  iconoEstadoReserva,
+  labelEstadoReserva
+} from '../../../../../../shared/dialogs/reservation-models/reservation.model';
 
 @Component({
   selector: 'app-pending-service-card',
@@ -11,7 +17,12 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './pending-service-card.scss'
 })
 export class PendingServiceCardComponent {
+  @Input() reserva!: Reserva;
 
-  // recibe los datos de la reserva desde el padre
-  @Input() reserva: any;
+  @Output() iniciar = new EventEmitter<Reserva>();
+  @Output() verDetalle = new EventEmitter<Reserva>();
+
+  claseEstado = claseEstadoReserva;
+  iconoEstado = iconoEstadoReserva;
+  labelEstado = labelEstadoReserva;
 }

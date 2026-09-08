@@ -13,7 +13,7 @@
           {{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: pendientes } }}
         </p>
       </div>
-      <button class="btn-ver-servicios">
+      <button class="btn-ver-servicios" (click)="irAAgenda()">
         <mat-icon>visibility</mat-icon>
         {{ 'OPERATOR_HOME.BTN_SERVICES' | translate }}
       </button>
@@ -21,7 +21,7 @@
 
     <div class="stats-grid">
       @for (stat of stats; track stat.label) {
-        <app-stats-card [stat]="stat"></app-stats-card>
+        <app-stats-card [stat]="stat" (abrir)="irA($event)"></app-stats-card>
       }
     </div>
 
@@ -37,7 +37,7 @@
           </span>
         </div>
         <p class="progress-numbers">
-          {{ serviciosCompletados }} / {{ totalServicios }}
+          {{ finalizadosHoy }} / {{ totalHoy }}
         </p>
         <div class="progress-bar">
           <div
@@ -49,7 +49,7 @@
 
       <div class="counter-card">
         <div class="counter-icon">
-          <mat-icon>history</mat-icon>
+          <mat-icon>sync</mat-icon>
         </div>
         <p class="counter-value">{{ enProgreso }}</p>
         <p class="counter-label">{{ 'OPERATOR_HOME.IN_PROGRESS' | translate }}</p>
@@ -74,10 +74,14 @@
       </div>
 
       <div class="reservas-list">
-        @for (reserva of reservasPendientes; track reserva.id) {
+        @for (reserva of reservasHoy; track reserva.id) {
           <app-pending-service-card
-            [reserva]="reserva">
+            [reserva]="reserva"
+            (iniciar)="iniciarServicio($event)"
+            (verDetalle)="verDetalle($event)">
           </app-pending-service-card>
+        } @empty {
+          <p class="empty-text">{{ 'OPERATOR_HOME.EMPTY' | translate }}</p>
         }
       </div>
     </div>

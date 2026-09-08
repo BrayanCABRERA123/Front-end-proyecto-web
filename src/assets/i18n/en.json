@@ -535,20 +535,22 @@
     }
   },
   "OPERATOR_HOME": {
-    "TITLE": "Hello, {{name}}! 👋 Welcome!",
-    "SUBTITLE": "You have {{count}} pending services for today",
-    "BTN_SERVICES": "View assigned services",
-    "PROGRESS_LABEL": "Services completed today",
-    "IN_PROGRESS": "In Progress",
-    "PENDING": "Pending",
-    "RESERVATIONS_TITLE": "Pending Reservations",
-    "BTN_START": "Start",
-    "STATS": {
-      "ASSIGNED": "Assigned Bookings",
-      "VEHICLES": "Vehicles",
-      "NOTIFICATIONS": "Notifications",
-      "RATING": "Rating"
-    }
+  "TITLE": "Hello, {{name}}!  Welcome!",
+  "SUBTITLE": "You have {{count}} pending services for today",
+  "BTN_SERVICES": "View assigned services",
+  "PROGRESS_LABEL": "Services completed today",
+  "IN_PROGRESS": "In Progress",
+  "PENDING": "Pending",
+  "RESERVATIONS_TITLE": "Today's services",
+  "BTN_START": "Start",
+  "STATS": {
+    "ASSIGNED": "Assigned Bookings",
+    "VEHICLES": "Vehicles",
+    "NOTIFICATIONS": "Notifications",
+    "RATING": "Rating",
+    "IN_PROGRESS": "In progress"
+  },
+  "EMPTY": "You have no scheduled services right now."
   },
   "SERVICE_HISTORY": {
   "COMPLETION_RATE": "Completion rate",

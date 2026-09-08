@@ -65,14 +65,19 @@
   font-size: 13px;
   font-weight: 600;
 
-  &.confirmado {
-    background-color: rgba(var(--primary-rgb), 0.15);
+  &.estado-finalizado {
+    background-color: var(--success);
+    color: #ffffff;
+  }
+
+  &.estado-progreso {
+    background-color: var(--primary-soft);
     color: var(--primary);
   }
 
-  &.pendiente {
-    background-color: rgba(249, 168, 37, 0.15);
-    color: #F9A825;
+  &.estado-pendiente {
+    background-color: var(--neutral-badge-soft);
+    color: var(--neutral-badge);
   }
 
   .badge-icon {

@@ -38,7 +38,8 @@ export class SidebarComponent implements OnInit {
     { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/client/configuration' }
   ];
   /*Menu opciones Operator */
-  operatorMenu = [
+    operatorMenu = [
+  { icono: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', ruta: '/operator' },
   { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/operator/profile' },
   { icono: 'calendar_month', label: 'SIDEBAR.SCHEDULE', ruta: '/operator/schedule' },
   { icono: 'assignment', label: 'SIDEBAR.ASSIGNED_SERVICES', ruta: '/operator/assigned-services' },
@@ -47,6 +48,7 @@ export class SidebarComponent implements OnInit {
   { icono: 'star_outline', label: 'SIDEBAR.RATINGS', ruta: '/operator/qualifications' },
   { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/operator/settings' }
 ];
+
 /*Menu opciones administrador */
   adminMenu = [
     { icono: 'build', label: 'SIDEBAR.SERVICES', ruta: '/admin/services' },
