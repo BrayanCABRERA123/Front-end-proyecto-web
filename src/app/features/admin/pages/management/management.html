@@ -1,0 +1,38 @@
+<div class="home-layout">
+
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <main class="home-content">
+
+    <div class="management-tabs">
+      <button type="button" class="tab-item" [class.tab-active]="tabActiva === 'USERS'" (click)="cambiarTab('USERS')">
+        <mat-icon>verified_user</mat-icon>
+        {{ 'MANAGEMENT.TABS.USERS' | translate }}
+      </button>
+      <button type="button" class="tab-item" [class.tab-active]="tabActiva === 'ROLES'" (click)="cambiarTab('ROLES')">
+        <mat-icon>shield</mat-icon>
+        {{ 'MANAGEMENT.TABS.ROLES' | translate }}
+      </button>
+      <button type="button" class="tab-item" [class.tab-active]="tabActiva === 'SERVICES'" (click)="cambiarTab('SERVICES')">
+        <mat-icon>build</mat-icon>
+        {{ 'MANAGEMENT.TABS.SERVICES' | translate }}
+      </button>
+      <button type="button" class="tab-item" [class.tab-active]="tabActiva === 'PROMOTIONS'" (click)="cambiarTab('PROMOTIONS')">
+        <mat-icon>sell</mat-icon>
+        {{ 'MANAGEMENT.TABS.PROMOTIONS' | translate }}
+      </button>
+      <button type="button" class="tab-item" [class.tab-active]="tabActiva === 'OPERATIONAL'" (click)="cambiarTab('OPERATIONAL')">
+        <mat-icon>monitor_heart</mat-icon>
+        {{ 'MANAGEMENT.TABS.OPERATIONAL' | translate }}
+      </button>
+    </div>
+
+    @if (tabActiva === 'USERS') { <app-users></app-users> }
+    @if (tabActiva === 'ROLES') { <app-roles></app-roles> }
+    @if (tabActiva === 'SERVICES') { <app-services></app-services> }
+    @if (tabActiva === 'PROMOTIONS') { <app-promotions></app-promotions> }
+    @if (tabActiva === 'OPERATIONAL') { <app-operational></app-operational> }
+
+  </main>
+
+</div>

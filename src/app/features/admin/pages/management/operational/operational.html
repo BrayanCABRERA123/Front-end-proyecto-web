@@ -1,0 +1,127 @@
+<div class="operational-header">
+  <div class="header-icon"><mat-icon>monitor_heart</mat-icon></div>
+  <div>
+    <h1>{{ 'OPERATIONAL.TITLE' | translate }}</h1>
+    <p>{{ 'OPERATIONAL.SUBTITLE' | translate }}</p>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div>
+      <p class="stat-label">{{ 'OPERATIONAL.STATS.AVAILABLE' | translate }}</p>
+      <p class="stat-value">{{ totalDisponibles }}</p>
+    </div>
+    <div class="stat-icon"><mat-icon>person</mat-icon></div>
+  </div>
+
+  <div class="stat-card">
+    <div>
+      <p class="stat-label">{{ 'OPERATIONAL.STATS.ASSIGNED_TODAY' | translate }}</p>
+      <p class="stat-value">{{ totalAsignadosHoy }}</p>
+    </div>
+    <div class="stat-icon"><mat-icon>groups</mat-icon></div>
+  </div>
+
+  <div class="stat-card">
+    <div>
+      <p class="stat-label">{{ 'OPERATIONAL.STATS.COMPLETED' | translate }}</p>
+      <p class="stat-value">{{ totalCompletados }}</p>
+    </div>
+    <div class="stat-icon"><mat-icon>check_circle</mat-icon></div>
+  </div>
+
+  <div class="stat-card">
+    <div>
+      <p class="stat-label">{{ 'OPERATIONAL.STATS.AVG_RATING' | translate }}</p>
+      <p class="stat-value">{{ calificacionPromedio }}</p>
+    </div>
+    <div class="stat-icon"><mat-icon>star_outline</mat-icon></div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="search-box">
+    <mat-icon>search</mat-icon>
+    <input type="text" [(ngModel)]="busqueda" [placeholder]="'OPERATIONAL.SEARCH_PLACEHOLDER' | translate" />
+  </div>
+
+  <select class="filter-select" [(ngModel)]="filtro">
+    <option value="TODAS">{{ 'OPERATIONAL.FILTER_ALL' | translate }}</option>
+    <option value="DISPONIBLE">{{ 'OPERATIONAL.STATUS.AVAILABLE' | translate }}</option>
+    <option value="OCUPADO">{{ 'OPERATIONAL.STATUS.BUSY' | translate }}</option>
+    <option value="EN_RUTA">{{ 'OPERATIONAL.STATUS.ON_ROUTE' | translate }}</option>
+  </select>
+</div>
+
+<div class="operators-grid">
+  <div class="operator-card" *ngFor="let operario of operariosFiltrados">
+
+    <div class="operator-top">
+      <div class="operator-identity">
+        <div class="avatar">{{ operario.iniciales }}</div>
+        <div>
+          <p class="operator-name">{{ operario.nombre }}</p>
+          <p class="operator-zone"><mat-icon>place</mat-icon>{{ operario.zona }} · {{ operario.codigo }}</p>
+        </div>
+      </div>
+      <span class="status-pill" [ngClass]="'status-' + operario.estado.toLowerCase()">
+        {{ ('OPERATIONAL.STATUS.' + operario.estado) | translate }}
+      </span>
+    </div>
+
+    <div class="operator-stats">
+      <div class="mini-stat">
+        <p class="mini-label">{{ 'OPERATIONAL.ASSIGNED' | translate }}</p>
+        <p class="mini-value">{{ operario.asignados }}</p>
+      </div>
+      <div class="mini-stat">
+        <p class="mini-label">{{ 'OPERATIONAL.COMPLETED' | translate }}</p>
+        <p class="mini-value">{{ operario.completados }}</p>
+      </div>
+      <div class="mini-stat">
+        <p class="mini-label">{{ 'OPERATIONAL.RATING' | translate }}</p>
+        <p class="mini-value"><mat-icon>star</mat-icon>{{ operario.calificacion }}</p>
+      </div>
+    </div>
+
+    <div class="progress-block">
+      <div class="progress-label">
+        <span>{{ 'OPERATIONAL.DAY_PROGRESS' | translate }}</span>
+        <span>{{ operario.avanceDia }}%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="barrasListas ? operario.avanceDia : 0"></div>
+      </div>
+    </div>
+
+    <div class="progress-block">
+      <div class="progress-label">
+        <span>{{ 'OPERATIONAL.WORKLOAD' | translate }}</span>
+        <span>{{ operario.cargaHoraria }}%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill progress-fill-solid" [style.width.%]="barrasListas ? operario.cargaHoraria : 0"></div>
+      </div>
+    </div>
+
+    <div class="operator-footer">
+      <p class="free-since">
+        <mat-icon>schedule</mat-icon>
+        {{ 'OPERATIONAL.FREE_SINCE' | translate }}: {{ operario.libreDesde === 'AHORA' ? ('OPERATIONAL.NOW' | translate) : operario.libreDesde }}
+      </p>
+      <div class="footer-actions">
+        <button class="btn-outline" (click)="verAgenda(operario)">
+          <mat-icon>update</mat-icon>
+          {{ 'OPERATIONAL.VIEW_AGENDA' | translate }}
+        </button>
+        <button class="btn-assign" [class.btn-assign-disabled]="operario.estado === 'OCUPADO'" (click)="asignarServicio(operario)">
+          {{ 'OPERATIONAL.ASSIGN_SERVICE' | translate }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="empty-state" *ngIf="operariosFiltrados.length === 0">{{ 'OPERATIONAL.EMPTY' | translate }}</p>
+</div>

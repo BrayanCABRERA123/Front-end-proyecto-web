@@ -1,0 +1,70 @@
+<div class="services-header">
+  <div class="header-left">
+    <div class="header-icon"><mat-icon>build</mat-icon></div>
+    <div>
+      <h1>{{ 'SERVICES.TITLE' | translate }}</h1>
+      <p>{{ 'SERVICES.SUBTITLE' | translate }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="card table-card">
+  <div class="table-card-header">
+    <div class="title-with-icon">
+      <mat-icon>auto_awesome</mat-icon>
+      <h2>{{ 'SERVICES.EXISTING_TITLE' | translate }}</h2>
+    </div>
+    <div class="header-right">
+      <span class="pill pill-neutral">{{ servicios.length }} {{ 'SERVICES.COUNT' | translate }}</span>
+      <button class="btn-primary" (click)="abrirModal()">
+        <mat-icon>add</mat-icon>
+        {{ 'SERVICES.MODAL.TITLE' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="services-table">
+      <thead>
+        <tr>
+          <th>{{ 'SERVICES.TABLE.NAME' | translate }}</th>
+          <th>{{ 'SERVICES.TABLE.PRICE' | translate }}</th>
+          <th>{{ 'SERVICES.TABLE.DURATION' | translate }}</th>
+          <th>{{ 'SERVICES.TABLE.CATEGORY' | translate }}</th>
+          <th>{{ 'SERVICES.TABLE.STATUS' | translate }}</th>
+          <th>{{ 'SERVICES.TABLE.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let servicio of servicios">
+          <td>{{ servicio.nombre }}</td>
+          <td class="precio">${{ servicio.precio }}</td>
+          <td class="text-muted">{{ servicio.duracion }} min</td>
+          <td><span class="pill pill-neutral">{{ ('SERVICES.CATEGORIES.' + servicio.categoria) | translate }}</span></td>
+          <td>
+            <span class="status-badge status-toggle" [ngClass]="'status-' + servicio.estado.toLowerCase()" (click)="toggleEstadoServicio(servicio)">
+              {{ ('SERVICES.STATUS.' + servicio.estado) | translate }}
+            </span>
+          </td>
+          <td class="acciones">
+            <button class="btn-icon" (click)="editarServicio(servicio)" [attr.aria-label]="'SERVICES.EDIT' | translate">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button class="btn-icon btn-icon-danger" (click)="eliminarServicio(servicio)" [attr.aria-label]="'SERVICES.DELETE' | translate">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="servicios.length === 0">
+          <td colspan="6" class="empty-row">{{ 'SERVICES.EMPTY' | translate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-service-modal
+  [abierto]="modalAbierto"
+  (cerrar)="cerrarModal()"
+  (agregarServicio)="onAgregarServicio($event)">
+</app-service-modal>

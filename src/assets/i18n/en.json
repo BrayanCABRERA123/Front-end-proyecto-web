@@ -32,8 +32,7 @@
     "LOGOUT": "Log Out",
     "ASSIGNED_SERVICES": "assigned services",
     "RATINGS": "Ratings",
-    "VEHICLES": "My vehicles",
-    "SCHEDULE": "My Schedule"
+    "VEHICLES": "My vehicles"
   },
   "HISTORY": {
     "FILTERS": "Filters",
@@ -716,70 +715,5 @@
       "EXPORT_EXCEL": "Export Excel",
       "EXPORT_PDF": "Export PDF"
     }
-  },
-  "FOOTER": {
-    "DESCRIPTION": "Professional mobile car wash service bringing the best clean straight to your vehicle.",
-    "COMPANY": {
-      "TITLE": "Company",
-      "ABOUT": "About us",
-      "CONTACT": "Contact",
-      "CAREERS": "Careers"
-    },
-    "SERVICES_TITLE": "Services",
-    "SUPPORT": {
-      "TITLE": "Support",
-      "FAQ": "FAQ"
-    },
-    "LEGAL": {
-      "TITLE": "Legal",
-      "TERMS": "Terms of Service",
-      "PRIVACY": "Privacy Policy"
-    },
-    "COPYRIGHT": "© {{year}} AquaWash. All rights reserved."
-  },
-  "ABOUT": {
-    "EYEBROW": "Who we are",
-    "TITLE": "We take care of your vehicle as if it were our own",
-    "DESCRIPTION": "We are a team of certified professional washers, committed to excellence and environmental care. We bring the service to your doorstep or office, no lines or waiting.",
-    "STATS": {
-      "VEHICLES": "Vehicles washed",
-      "CLIENTS": "Happy clients",
-      "CITIES": "Cities",
-      "YEARS": "Years of experience"
-    }
-  },
-  "CONTACT": {
-    "EYEBROW": "Contact",
-    "TITLE": "Let's talk",
-    "SUBTITLE": "Write to us and we'll get back to you within 24 hours",
-    "EMAIL_LABEL": "Email",
-    "PHONE_LABEL": "Phone",
-    "COVERAGE_LABEL": "Coverage",
-    "COVERAGE_VALUE": "Major cities across Colombia",
-    "CTA": "Book your first wash"
-  },
-
-  "CALENDAR": {
-  "MONTHS": ["January","February","March","April","May","June","July","August","September","October","November","December"],
-  "DAYS_SHORT": ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
-},
-"SCHEDULE": {
-  "TITLE": "My Schedule",
-  "SUBTITLE": "Interactive calendar with your bookings for the day, the week, and your completed service history.",
-  "OF": "of",
-  "RESERVATIONS_OF": "Bookings for",
-  "EMPTY": "There are no bookings to show here.",
-  "TABS": { "DAY": "Day", "WEEK": "Week", "DONE": "Completed" },
-  "STATUS": { "FINALIZADO": "Completed", "EN_PROGRESO": "In progress", "PENDIENTE": "Pending" },
-  "CALENDAR": { "SERVICES_OF_DAY": "Services on selected day" },
-  "STATS": { "TOTAL": "Total", "PENDING": "Pending", "IN_PROGRESS": "In progress", "DONE": "Completed" },
-  "NEXT": { "LABEL": "Next service", "IN_MINUTES": "in {{min}} min" },
-  "START": "Start",
-  "FINISH": "Finish",
-  "VIEW_DETAIL": "View detail",
-  "FINISH_TITLE": "Finish this service?",
-  "FINISH_MESSAGE": "It will be marked as completed and moved to your history.",
-  "FINISH_CONFIRM": "Finish",
-  "DETAIL": { "DATE": "Date and time", "DURATION": "Duration", "VEHICLE": "Vehicle", "ADDRESS": "Address" }
-}
+  }
 }

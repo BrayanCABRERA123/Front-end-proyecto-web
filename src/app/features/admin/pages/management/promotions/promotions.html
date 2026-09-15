@@ -1,0 +1,44 @@
+<div class="card promo-card">
+  <div class="promo-title">
+    <mat-icon>sell</mat-icon>
+    <h2>{{ 'PROMOTIONS.TITLE' | translate }}</h2>
+  </div>
+
+  <form #promoForm="ngForm" (ngSubmit)="crearPromocion(promoForm)">
+
+    <div class="form-group">
+      <label>{{ 'PROMOTIONS.DISCOUNT_LABEL' | translate }}</label>
+      <div class="input-with-prefix">
+        <span class="prefix">%</span>
+        <input type="number" name="descuento" [(ngModel)]="descuento" required min="1" max="100" placeholder="10" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>{{ 'PROMOTIONS.DURATION_LABEL' | translate }}</label>
+      <input type="date" name="fechaLimite" [(ngModel)]="fechaLimite" required />
+    </div>
+
+    <div class="form-group">
+      <label>{{ 'PROMOTIONS.SERVICE_LABEL' | translate }}</label>
+      <select name="servicioSeleccionado" [(ngModel)]="servicioSeleccionado" required>
+        <option value="" disabled selected>{{ 'PROMOTIONS.SERVICE_PLACEHOLDER' | translate }}</option>
+        <option *ngFor="let servicio of serviciosDisponibles" [value]="servicio">{{ servicio }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-submit">
+      <mat-icon>auto_awesome</mat-icon>
+      {{ 'PROMOTIONS.SUBMIT' | translate }}
+    </button>
+
+  </form>
+
+  @if (promocionActiva) {
+    <div class="promo-active">
+      <p class="promo-active-label">{{ 'PROMOTIONS.ACTIVE_LABEL' | translate }}</p>
+      <p class="promo-active-title">{{ promocionActiva.descuento }}% – {{ promocionActiva.servicio }}</p>
+      <p class="promo-active-date">{{ 'PROMOTIONS.VALID_UNTIL' | translate }} {{ promocionActiva.fechaLimite | date: 'dd/MM/yyyy' }}</p>
+    </div>
+  }
+</div>
