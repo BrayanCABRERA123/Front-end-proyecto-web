@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { ReservationDetailModal } from '../../../../shared/dialogs/reservation-detail-modal/reservation-detail-modal';
 import { Reserva } from '../../../../shared/dialogs/reservation-models/reservation.model';
+import { Api } from '../../../../core/services/api';
 
 interface Stat {
   icono: string;
@@ -33,23 +34,28 @@ interface Stat {
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   nombreOperator = 'Camilo';
 
   notificacionesSinLeer = 2;
   calificacionPromedio = 4.3;
 
-  reservasHoy: Reserva[] = [
-    { id: 1, codigo: 'SV-2101', fecha: '2026-09-03', hora: '14:00', servicio: 'PREMIUM', cliente: 'Juan Felipe González', vehiculo: 'CAR', direccion: 'Calle Sur 123, Los Rosales', duracionMin: 50, estado: 'en_progreso' },
-    { id: 2, codigo: 'SV-2102', fecha: '2026-09-03', hora: '16:30', servicio: 'BASIC', cliente: 'Esneider Sánchez', vehiculo: 'TRUCK', direccion: 'Calle Norte 7-06, Miraflores', duracionMin: 30, estado: 'pendiente' }
-  ];
+  reservasHoy: Reserva[] = [];
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private api: Api
   ) {}
+
+  ngOnInit(): void {
+    this.api.getReservationsByOperator(1).subscribe(reservas => {
+      this.reservasHoy = reservas;
+      this.cdr.detectChanges();
+    });
+  }
 
   get totalHoy(): number {
     return this.reservasHoy.length;
