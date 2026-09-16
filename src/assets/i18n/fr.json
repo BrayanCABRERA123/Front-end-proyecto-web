@@ -32,7 +32,8 @@
     "LOGOUT": "Se déconnecter",
     "ASSIGNED_SERVICES": "services assignés",
     "RATINGS": "Évaluations",
-    "VEHICLES": "Mes véhicules"
+    "VEHICLES": "Mes véhicules",
+    "SCHEDULE": "Mon Agenda"
   },
   "HISTORY": {
     "FILTERS": "Filtres",
@@ -715,5 +716,70 @@
       "EXPORT_EXCEL": "Exporter Excel",
       "EXPORT_PDF": "Exporter PDF"
     }
-  }
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Service professionnel de lavage automobile mobile, apportant le meilleur nettoyage directement à votre véhicule.",
+    "COMPANY": {
+      "TITLE": "Entreprise",
+      "ABOUT": "À propos de nous",
+      "CONTACT": "Contact",
+      "CAREERS": "Carrières"
+    },
+    "SERVICES_TITLE": "Services",
+    "SUPPORT": {
+      "TITLE": "Assistance",
+      "FAQ": "Foire aux questions"
+    },
+    "LEGAL": {
+      "TITLE": "Mentions légales",
+      "TERMS": "Conditions d'utilisation",
+      "PRIVACY": "Politique de confidentialité"
+    },
+    "COPYRIGHT": "© {{year}} AquaWash. Tous droits réservés."
+  },
+  "ABOUT": {
+    "EYEBROW": "Qui sommes-nous",
+    "TITLE": "Nous prenons soin de votre véhicule comme si c'était le nôtre",
+    "DESCRIPTION": "Nous sommes une équipe de laveurs professionnels certifiés, engagés pour l'excellence et le respect de l'environnement. Nous apportons le service jusqu'à votre porte, sans files d'attente.",
+    "STATS": {
+      "VEHICLES": "Véhicules lavés",
+      "CLIENTS": "Clients satisfaits",
+      "CITIES": "Villes",
+      "YEARS": "Années d'expérience"
+    }
+  },
+  "CONTACT": {
+    "EYEBROW": "Contact",
+    "TITLE": "Parlons-en",
+    "SUBTITLE": "Écrivez-nous et nous vous répondrons sous 24 heures",
+    "EMAIL_LABEL": "E-mail",
+    "PHONE_LABEL": "Téléphone",
+    "COVERAGE_LABEL": "Couverture",
+    "COVERAGE_VALUE": "Principales villes de Colombie",
+    "CTA": "Réservez votre premier lavage"
+  },
+
+  "CALENDAR": {
+  "MONTHS": ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"],
+  "DAYS_SHORT": ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"]
+},
+"SCHEDULE": {
+  "TITLE": "Mon Agenda",
+  "SUBTITLE": "Calendrier interactif avec vos réservations du jour, de la semaine et votre historique de services réalisés.",
+  "OF": "du",
+  "RESERVATIONS_OF": "Réservations du",
+  "EMPTY": "Aucune réservation à afficher ici.",
+  "TABS": { "DAY": "Jour", "WEEK": "Semaine", "DONE": "Terminés" },
+  "STATUS": { "FINALIZADO": "Terminé", "EN_PROGRESO": "En cours", "PENDIENTE": "En attente" },
+  "CALENDAR": { "SERVICES_OF_DAY": "Services du jour sélectionné" },
+  "STATS": { "TOTAL": "Total", "PENDING": "En attente", "IN_PROGRESS": "En cours", "DONE": "Terminés" },
+  "NEXT": { "LABEL": "Prochain service", "IN_MINUTES": "dans {{min}} min" },
+  "START": "Démarrer",
+  "FINISH": "Terminer",
+  "VIEW_DETAIL": "Voir les détails",
+  "FINISH_TITLE": "Terminer ce service ?",
+  "FINISH_MESSAGE": "Il sera marqué comme terminé et déplacé vers votre historique.",
+  "FINISH_CONFIRM": "Terminer",
+  "DETAIL": { "DATE": "Date et heure", "DURATION": "Durée", "VEHICLE": "Véhicule", "ADDRESS": "Adresse" }
+}
 }
