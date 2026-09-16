@@ -1,41 +1,286 @@
 {
   "users": [
-    { "id": 1, "nombre": "Camilo", "correo": "camilo.operario@lavadovehicular.com", "contrasena": "Operario123", "iniciales": "C", "rol": "OPERARIO" },
-    { "id": 2, "nombre": "Juan Díaz", "correo": "juan@email.com", "contrasena": "Cliente123", "iniciales": "JD", "rol": "CLIENTE" },
-    { "id": 3, "nombre": "Laura Gómez", "correo": "laura.admin@lavadovehicular.com", "contrasena": "Admin123", "iniciales": "LG", "rol": "ADMIN" },
-    { "id": 4, "nombre": "Demo Cliente", "correo": "demo.cliente@gmail.com", "contrasena": "Demo123", "iniciales": "DC", "rol": "CLIENTE" }
+    {
+      "id": 1,
+      "nombre": "Camilo",
+      "correo": "camilo.operario@lavadovehicular.com",
+      "contrasena": "Operario123",
+      "iniciales": "C",
+      "rol": "OPERARIO"
+    },
+    {
+      "id": 2,
+      "nombre": "Juan Díaz",
+      "correo": "juan@email.com",
+      "contrasena": "Cliente123",
+      "iniciales": "JD",
+      "rol": "CLIENTE"
+    },
+    {
+      "id": 3,
+      "nombre": "Laura Gómez",
+      "correo": "laura.admin@lavadovehicular.com",
+      "contrasena": "Admin123",
+      "iniciales": "LG",
+      "rol": "ADMIN"
+    },
+    {
+      "id": 4,
+      "nombre": "Demo Cliente",
+      "correo": "demo.cliente@gmail.com",
+      "contrasena": "Demo123",
+      "iniciales": "DC",
+      "rol": "CLIENTE"
+    },
+    {
+      "nombre": "Test Usuario",
+      "correo": "test.registro@gmail.com",
+      "contrasena": "Test1234",
+      "iniciales": "TU",
+      "rol": "CLIENTE",
+      "id": 5
+    },
+    {
+      "nombre": "Brayan Estiven Patiño Cabrera",
+      "correo": "bspc1507@gmail.com",
+      "contrasena": "B1079177274s*",
+      "iniciales": "BE",
+      "rol": "CLIENTE",
+      "id": 6
+    },
+    {
+      "nombre": "Prueba Timeout",
+      "correo": "pruebatimeout@correo.com",
+      "contrasena": "abc123",
+      "iniciales": "PT",
+      "rol": "CLIENTE",
+      "id": 7
+    },
+    {
+      "nombre": "Juan cami",
+      "correo": "cami@gmail.com",
+      "contrasena": "B1079177274s*",
+      "iniciales": "JC",
+      "rol": "CLIENTE",
+      "id": 8
+    }
   ],
   "vehicles": [
-    { "id": 1, "userId": 2, "tipo": "SEDAN", "marca": "Mazda", "modelo": "3 Sedán", "placa": "ABC-123", "color": "Gris", "ultimoLavado": "10 Ago 2026", "servicio": "PREMIUM", "totalLavados": 8 },
-    { "id": 2, "userId": 2, "tipo": "MOTO", "marca": "Yamaha", "modelo": "FZ 2.0", "placa": "XYZ-98D", "color": "Azul", "ultimoLavado": "02 Ago 2026", "servicio": "BASIC", "totalLavados": 4 },
-    { "id": 3, "userId": 2, "tipo": "TRUCK", "marca": "Toyota", "modelo": "Prado", "placa": "JKL-457", "color": "Blanco", "ultimoLavado": "24 Jul 2026", "servicio": "FULL", "totalLavados": 2 }
+    {
+      "id": 1,
+      "userId": 2,
+      "tipo": "SEDAN",
+      "marca": "Mazda",
+      "modelo": "3 Sedán",
+      "placa": "ABC-123",
+      "color": "Gris",
+      "ultimoLavado": "10 Ago 2026",
+      "servicio": "PREMIUM",
+      "totalLavados": 8
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "tipo": "MOTO",
+      "marca": "Yamaha",
+      "modelo": "FZ 2.0",
+      "placa": "XYZ-98D",
+      "color": "Azul",
+      "ultimoLavado": "02 Ago 2026",
+      "servicio": "BASIC",
+      "totalLavados": 4
+    },
+    {
+      "id": 3,
+      "userId": 2,
+      "tipo": "TRUCK",
+      "marca": "Toyota",
+      "modelo": "Prado",
+      "placa": "JKL-457",
+      "color": "Blanco",
+      "ultimoLavado": "24 Jul 2026",
+      "servicio": "FULL",
+      "totalLavados": 2
+    },
+    {
+      "tipo": "CAR",
+      "marca": "Mazda",
+      "modelo": "3 sedan",
+      "placa": "abc-123",
+      "color": "rojo",
+      "userId": 6,
+      "ultimoLavado": "-",
+      "servicio": "-",
+      "totalLavados": 0,
+      "id": 4
+    },
+    {
+      "tipo": "CAR",
+      "marca": "Test",
+      "modelo": "X",
+      "placa": "ZZZ-999",
+      "color": "Rojo",
+      "userId": 2,
+      "ultimoLavado": "-",
+      "servicio": "-",
+      "totalLavados": 0,
+      "id": 5
+    }
   ],
   "services": [
-    { "id": 1, "code": "BASIC", "name": "Lavado Básico", "category": "LAVADO" },
-    { "id": 2, "code": "PREMIUM", "name": "Lavado Premium", "category": "LAVADO" },
-    { "id": 3, "code": "FULL", "name": "Lavado Full", "category": "DETALLADO" }
+    {
+      "id": 1,
+      "code": "BASIC",
+      "name": "Lavado Básico",
+      "category": "LAVADO"
+    },
+    {
+      "id": 2,
+      "code": "PREMIUM",
+      "name": "Lavado Premium",
+      "category": "LAVADO"
+    },
+    {
+      "id": 3,
+      "code": "FULL",
+      "name": "Lavado Full",
+      "category": "DETALLADO"
+    }
   ],
   "servicePrices": [
-    { "id": 1, "serviceId": 1, "vehicleType": "MOTO", "price": 18000, "durationMin": 20 },
-    { "id": 2, "serviceId": 1, "vehicleType": "CAR", "price": 25000, "durationMin": 30 },
-    { "id": 3, "serviceId": 2, "vehicleType": "CAR", "price": 45000, "durationMin": 50 },
-    { "id": 4, "serviceId": 2, "vehicleType": "TRUCK", "price": 55000, "durationMin": 60 },
-    { "id": 5, "serviceId": 3, "vehicleType": "TRUCK", "price": 0, "durationMin": 70 }
+    {
+      "id": 1,
+      "serviceId": 1,
+      "vehicleType": "MOTO",
+      "price": 18000,
+      "durationMin": 20
+    },
+    {
+      "id": 2,
+      "serviceId": 1,
+      "vehicleType": "CAR",
+      "price": 25000,
+      "durationMin": 30
+    },
+    {
+      "id": 3,
+      "serviceId": 2,
+      "vehicleType": "CAR",
+      "price": 45000,
+      "durationMin": 50
+    },
+    {
+      "id": 4,
+      "serviceId": 2,
+      "vehicleType": "TRUCK",
+      "price": 55000,
+      "durationMin": 60
+    },
+    {
+      "id": 5,
+      "serviceId": 3,
+      "vehicleType": "TRUCK",
+      "price": 0,
+      "durationMin": 70
+    }
   ],
   "reservations": [
-    { "id": 1, "codigo": "SV-2101", "operatorId": 1, "customerId": 2, "fecha": "2026-09-16", "hora": "14:00", "servicio": "PREMIUM", "cliente": "Juan Felipe González", "vehiculo": "CAR", "direccion": "Calle Sur 123, Los Rosales", "duracionMin": 50, "estado": "en_progreso" },
-    { "id": 2, "codigo": "SV-2102", "operatorId": 1, "customerId": 2, "fecha": "2026-09-16", "hora": "16:30", "servicio": "BASIC", "cliente": "Esneider Sánchez", "vehiculo": "TRUCK", "direccion": "Calle Norte 7-06, Miraflores", "duracionMin": 30, "estado": "pendiente" }
+    {
+      "id": 1,
+      "codigo": "SV-2101",
+      "operatorId": 1,
+      "customerId": 2,
+      "fecha": "2026-09-16",
+      "hora": "14:00",
+      "servicio": "PREMIUM",
+      "cliente": "Juan Felipe González",
+      "vehiculo": "CAR",
+      "direccion": "Calle Sur 123, Los Rosales",
+      "duracionMin": 50,
+      "estado": "en_progreso"
+    },
+    {
+      "id": 2,
+      "codigo": "SV-2102",
+      "operatorId": 1,
+      "customerId": 2,
+      "fecha": "2026-09-16",
+      "hora": "16:30",
+      "servicio": "BASIC",
+      "cliente": "Esneider Sánchez",
+      "vehiculo": "TRUCK",
+      "direccion": "Calle Norte 7-06, Miraflores",
+      "duracionMin": 30,
+      "estado": "pendiente"
+    },
+    {
+      "codigo": "SV-TEST1",
+      "customerId": 2,
+      "cliente": "Juan D�az",
+      "vehiculo": "SEDAN",
+      "servicio": "PREMIUM",
+      "fecha": "2026-09-20",
+      "hora": "10:00",
+      "direccion": "Calle Falsa 123",
+      "duracionMin": 30,
+      "estado": "pendiente",
+      "id": 3
+    }
   ],
   "payments": [
-    { "id": 1, "reservationId": 1, "method": "NEQUI", "status": "APPROVED", "amount": 45000, "processedAt": "2026-09-16T14:10:00Z" }
+    {
+      "id": 1,
+      "reservationId": 1,
+      "method": "NEQUI",
+      "status": "APPROVED",
+      "amount": 45000,
+      "processedAt": "2026-09-16T14:10:00Z"
+    }
   ],
   "notifications": [
-    { "id": 1, "userId": 1, "type": "SERVICE_ASSIGNED", "title": "Nuevo servicio asignado", "message": "Se te asignó el servicio SV-2102", "read": false, "createdAt": "2026-09-16T08:00:00Z" },
-    { "id": 2, "userId": 1, "type": "PAYMENT_APPROVED", "title": "Pago aprobado", "message": "El pago del servicio SV-2101 fue aprobado", "read": false, "createdAt": "2026-09-16T09:30:00Z" }
+    {
+      "id": 1,
+      "userId": 1,
+      "type": "SERVICE_ASSIGNED",
+      "title": "Nuevo servicio asignado",
+      "message": "Se te asignó el servicio SV-2102",
+      "read": false,
+      "createdAt": "2026-09-16T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "type": "PAYMENT_APPROVED",
+      "title": "Pago aprobado",
+      "message": "El pago del servicio SV-2101 fue aprobado",
+      "read": false,
+      "createdAt": "2026-09-16T09:30:00Z"
+    }
   ],
   "qualifications": [
-    { "id": 1, "reservationId": 1, "operatorId": 1, "rating": 5, "comment": "Excelente servicio", "visible": true },
-    { "id": 2, "reservationId": 2, "operatorId": 1, "rating": 4, "comment": "Muy puntual", "visible": true },
-    { "id": 3, "reservationId": 1, "operatorId": 1, "rating": 4, "comment": "Buen trabajo", "visible": true }
+    {
+      "id": 1,
+      "reservationId": 1,
+      "operatorId": 1,
+      "rating": 5,
+      "comment": "Excelente servicio",
+      "visible": true
+    },
+    {
+      "id": 2,
+      "reservationId": 2,
+      "operatorId": 1,
+      "rating": 4,
+      "comment": "Muy puntual",
+      "visible": true
+    },
+    {
+      "id": 3,
+      "reservationId": 1,
+      "operatorId": 1,
+      "rating": 4,
+      "comment": "Buen trabajo",
+      "visible": true
+    }
   ]
 }
