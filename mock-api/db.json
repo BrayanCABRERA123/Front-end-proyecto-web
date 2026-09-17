@@ -79,6 +79,14 @@
       "iniciales": "C",
       "rol": "CLIENTE",
       "id": 10
+    },
+    {
+      "nombre": "jose",
+      "correo": "admiiiin@gmail.com",
+      "contrasena": "Admin1234!",
+      "iniciales": "J",
+      "rol": "CLIENTE",
+      "id": 11
     }
   ],
   "vehicles": [
