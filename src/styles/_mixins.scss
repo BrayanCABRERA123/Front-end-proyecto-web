@@ -13,3 +13,54 @@
     @content;
   }
 }
+
+
+@mixin heading-1 {
+  font-family: $font-family-base;
+  font-size: $fs-h1;
+  font-weight: $fw-bold;
+  line-height: $lh-heading;
+}
+
+@mixin heading-2 {
+  font-family: $font-family-base;
+  font-size: $fs-h2;
+  font-weight: $fw-bold;
+  line-height: $lh-heading;
+}
+
+@mixin heading-3 {
+  font-family: $font-family-base;
+  font-size: $fs-h3;
+  font-weight: $fw-semibold;
+  line-height: $lh-heading;
+}
+
+@mixin subtitle {
+  font-family: $font-family-base;
+  font-size: $fs-subtitle;
+  font-weight: $fw-medium;
+  line-height: $lh-body;
+  color: $color-text-secondary; // usa tu variable de color secundario si ya la tienes
+}
+
+@mixin body-text {
+  font-family: $font-family-base;
+  font-size: $fs-body;
+  font-weight: $fw-regular;
+  line-height: $lh-body;
+}
+
+@mixin body-text-bold {
+  font-family: $font-family-base;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
+  line-height: $lh-body;
+}
+
+@mixin caption-text {
+  font-family: $font-family-base;
+  font-size: $fs-caption;
+  font-weight: $fw-regular;
+  line-height: $lh-body;
+}
