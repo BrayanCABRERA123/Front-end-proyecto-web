@@ -122,7 +122,7 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['correo'].errors?.['pattern'] &&
+                  f['correo'].errors?.['email'] &&
                   f['correo'].touched
                 "
               >
@@ -377,6 +377,13 @@
               </span>
 
             </div>
+
+            <span
+              class="error-msg"
+              *ngIf="loginError"
+            >
+              Este correo ya está registrado.
+            </span>
 
             <button
               type="submit"

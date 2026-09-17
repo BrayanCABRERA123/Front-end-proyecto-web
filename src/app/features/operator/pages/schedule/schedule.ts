@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import {
   labelEstadoReserva
 } from '../../../../shared/dialogs/reservation-models/reservation.model';
 import { MiniCalendarComponent } from './mini-calendar/mini-calendar';
+import { Api } from '../../../../core/services/api';
 
 type Tab = 'dia' | 'semana' | 'realizados';
 
@@ -24,36 +25,29 @@ type Tab = 'dia' | 'semana' | 'realizados';
   templateUrl: './schedule.html',
   styleUrl: './schedule.scss'
 })
-export class ScheduleComponent {
+export class ScheduleComponent implements OnInit {
 
   tabActiva: Tab = 'dia';
 
   fechaSeleccionada = this.hoyComoTexto();
 
-  reservas: Reserva[] = [
-    { id: 1, codigo: 'SV-2098', fecha: '2026-08-31', hora: '09:00', servicio: 'BASIC', cliente: 'Mario Casas', vehiculo: 'CAR', direccion: 'Chapinero', duracionMin: 30, estado: 'finalizado' },
-    { id: 2, codigo: 'SV-2099', fecha: '2026-08-31', hora: '15:00', servicio: 'FULL', cliente: 'Diana Ríos', vehiculo: 'SUV', direccion: 'Suba', duracionMin: 60, estado: 'finalizado' },
+  reservas: Reserva[] = [];
 
-    { id: 3, codigo: 'SV-2100', fecha: '2026-09-01', hora: '11:00', servicio: 'PREMIUM', cliente: 'Felipe Cruz', vehiculo: 'CAR', direccion: 'Usaquén', duracionMin: 50, estado: 'finalizado' },
-
-    { id: 4, codigo: 'SV-2101', fecha: '2026-09-02', hora: '08:00', servicio: 'PREMIUM', cliente: 'Carlos Méndez', vehiculo: 'CAR', direccion: 'Chapinero', duracionMin: 50, estado: 'finalizado' },
-    { id: 5, codigo: 'SV-2102', fecha: '2026-09-02', hora: '10:00', servicio: 'BASIC', cliente: 'Ana Ruiz', vehiculo: 'MOTO', direccion: 'Usaquén', duracionMin: 25, estado: 'en_progreso' },
-    { id: 6, codigo: 'SV-2103', fecha: '2026-09-02', hora: '13:30', servicio: 'FULL', cliente: 'Pedro López', vehiculo: 'PICKUP', direccion: 'Suba', duracionMin: 70, estado: 'pendiente' },
-    { id: 7, codigo: 'SV-2104', fecha: '2026-09-02', hora: '16:00', servicio: 'PREMIUM', cliente: 'Sofía Herrera', vehiculo: 'CAR', direccion: 'Teusaquillo', duracionMin: 55, estado: 'pendiente' },
-
-    { id: 8, codigo: 'SV-2105', fecha: '2026-09-03', hora: '09:30', servicio: 'BASIC', cliente: 'Julián Ortiz', vehiculo: 'MOTO', direccion: 'Engativá', duracionMin: 25, estado: 'pendiente' },
-    { id: 9, codigo: 'SV-2106', fecha: '2026-09-03', hora: '14:00', servicio: 'PREMIUM', cliente: 'Laura Peña', vehiculo: 'CAR', direccion: 'Kennedy', duracionMin: 50, estado: 'pendiente' },
-
-    { id: 10, codigo: 'SV-2107', fecha: '2026-09-04', hora: '10:00', servicio: 'FULL', cliente: 'Ricardo Nova', vehiculo: 'TRUCK', direccion: 'Fontibón', duracionMin: 70, estado: 'pendiente' },
-
-    { id: 11, codigo: 'SV-2108', fecha: '2026-09-06', hora: '08:30', servicio: 'BASIC', cliente: 'Camila Torres', vehiculo: 'CAR', direccion: 'Chapinero', duracionMin: 30, estado: 'pendiente' }
-  ];
+  private readonly operatorId = 1;
 
   constructor(
     private translate: TranslateService,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private api: Api
   ) {}
+
+  ngOnInit(): void {
+    this.api.getReservationsByOperator(this.operatorId).subscribe(reservas => {
+      this.reservas = reservas;
+      this.cdr.detectChanges();
+    });
+  }
 
   get serviciosPorFecha(): Record<string, number> {
     const mapa: Record<string, number> = {};

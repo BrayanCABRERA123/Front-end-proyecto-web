@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmLogoutDialogComponent } from '../../../shared/dialogs/confirm-logout/confirm-logout';
+import { Auth } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-sidebar',
@@ -67,6 +68,16 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // si hay un usuario logueado (via Auth), mostrar sus datos reales en vez del demo
+    const usuarioActual = this.auth.getCurrentUser();
+    if (usuarioActual) {
+      this.usuario = {
+        nombre: usuarioActual.nombre,
+        correo: usuarioActual.correo,
+        iniciales: usuarioActual.iniciales
+      };
+    }
+
     switch (this.rol) {
 
       case 'CLIENTE':
@@ -89,7 +100,7 @@ export class SidebarComponent implements OnInit {
 
   }
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(private router: Router, private dialog: MatDialog, private auth: Auth) {}
 
   // abre o cierra el sidebar en mobile
   toggleSidebar(): void {
@@ -109,8 +120,7 @@ export class SidebarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirmado => {
 
       if (confirmado) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('usuario');
+        this.auth.logout();
 
       this.router.navigateByUrl('/');
       }

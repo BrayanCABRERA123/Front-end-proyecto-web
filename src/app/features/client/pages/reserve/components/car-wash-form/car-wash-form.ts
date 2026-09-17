@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 // iconos de Material
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Api } from '../../../../../../core/services/api';
+import { Auth } from '../../../../../../core/services/auth';
 
 @Component({
   selector: 'app-car-wash-form',
@@ -15,12 +17,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class CarWashFormComponent implements OnInit {
 
-  // vehículos registrados del cliente (mismo mock que en Mis Vehículos)
-  vehiculos = [
-    { id: 1, tipo: 'SEDAN', marca: 'Mazda', modelo: '3 Sedán', placa: 'ABC-123' },
-    { id: 2, tipo: 'MOTO', marca: 'Yamaha', modelo: 'FZ 2.0', placa: 'XYZ-98D' },
-    { id: 3, tipo: 'TRUCK', marca: 'Toyota', modelo: 'Prado', placa: 'JKL-457' }
-  ];
+  // vehículos registrados del cliente logueado (viene de la API mock)
+  vehiculos: any[] = [];
+
+  enviando = false;
+  reservaExitosa = false;
+  reservaError = false;
 
   // catálogo de servicios disponibles
   servicios = ['BASIC', 'PREMIUM', 'FULL'];
@@ -38,7 +40,18 @@ export class CarWashFormComponent implements OnInit {
   maxDate: string = '';
   horasDisponibles: string[] = [];
 
-  constructor(private translate: TranslateService) {}
+  // id del cliente logueado; 2 (Juan Díaz) es el demo por defecto si nadie inició sesión
+  private get userId(): number {
+    return this.auth.getCurrentUser()?.id ?? 2;
+  }
+
+  constructor(
+    private translate: TranslateService,
+    private api: Api,
+    private auth: Auth,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     const hoy = new Date();
@@ -49,6 +62,11 @@ export class CarWashFormComponent implements OnInit {
     this.maxDate = max.toISOString().split('T')[0];
 
     this.generarHoras();
+
+    this.api.getVehiclesByUser(this.userId).subscribe(vehiculos => {
+      this.vehiculos = vehiculos;
+      this.cdr.detectChanges();
+    });
   }
 
   generarHoras(): void {
@@ -91,16 +109,36 @@ export class CarWashFormComponent implements OnInit {
 
   // se ejecuta al hacer clic en "Reservar Ahora"
   onSubmit(): void {
-    if (!this.formularioValido) return;
+    if (!this.formularioValido || this.enviando) return;
 
-    // TODO: integrar con el backend de reservas
-    console.log('Reserva enviada', {
-      vehiculo: this.vehiculo,
+    this.enviando = true;
+    this.reservaExitosa = false;
+    this.reservaError = false;
+
+    const usuarioActual = this.auth.getCurrentUser();
+
+    this.api.createReservation({
+      codigo: `SV-${Date.now()}`,
+      customerId: this.userId,
+      cliente: usuarioActual?.nombre ?? 'Juan Díaz',
+      vehiculo: this.vehiculo?.tipo ?? '',
       servicio: this.servicioSeleccionado,
       fecha: this.fecha,
       hora: this.hora,
       direccion: this.direccion,
-      total: this.totalServicio
+      duracionMin: 30,
+      estado: 'pendiente'
+    }).subscribe({
+      next: () => {
+        this.enviando = false;
+        this.reservaExitosa = true;
+        this.router.navigate(['/client/history']);
+      },
+      error: () => {
+        this.enviando = false;
+        this.reservaError = true;
+        this.cdr.detectChanges();
+      }
     });
   }
 

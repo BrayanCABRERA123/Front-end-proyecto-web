@@ -38,7 +38,7 @@
 
                     <span
                         class="error-msg"
-                        *ngIf="f['correo'].errors?.['pattern'] && f['correo'].touched">
+                        *ngIf="f['correo'].errors?.['email'] && f['correo'].touched">
 
                         {{ 'LOGIN.EMAIL_INVALID' | translate }}
 
@@ -64,6 +64,14 @@
                     <a class="forgot" routerLink="/auth/forgot-password">
                         {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
                     </a>
+
+                    <span
+                        class="error-msg"
+                        *ngIf="loginError">
+
+                        Correo o contraseña incorrectos.
+
+                    </span>
 
                     <button
                         type="submit"

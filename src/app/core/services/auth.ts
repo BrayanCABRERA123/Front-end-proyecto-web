@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, switchMap, tap, throwError } from 'rxjs';
 
 export interface AuthUser {
   id: number;
@@ -29,6 +29,34 @@ export class Auth {
       tap(res => {
         localStorage.setItem(this.tokenKey, res.accessToken);
         localStorage.setItem(this.userKey, JSON.stringify(res.user));
+      })
+    );
+  }
+
+  // MOCK register: checks for a duplicate email against json-server, then creates the user.
+  // The real backend will hash the password and validate server-side — this is demo-only.
+  register(nombre: string, correo: string, contrasena: string): Observable<AuthUser> {
+    return this.http.get<AuthUser[]>(`${this.baseUrl}/users`, { params: { correo } }).pipe(
+      switchMap(existentes => {
+        if (existentes.length > 0) {
+          return throwError(() => new Error('EMAIL_TAKEN'));
+        }
+
+        const iniciales = nombre
+          .trim()
+          .split(/\s+/)
+          .map(parte => parte[0])
+          .join('')
+          .slice(0, 2)
+          .toUpperCase();
+
+        return this.http.post<AuthUser>(`${this.baseUrl}/users`, {
+          nombre,
+          correo,
+          contrasena,
+          iniciales,
+          rol: 'CLIENTE'
+        });
       })
     );
   }

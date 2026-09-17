@@ -155,9 +155,18 @@
       <strong>{{ totalServicio ? ('$' + (totalServicio | number)) : '$—' }}</strong>
     </div>
 
-    <button class="btn-primary" [disabled]="!formularioValido" (click)="onSubmit()">
-      {{ 'RESERVE.SUMMARY.SUBMIT' | translate }} <mat-icon>arrow_forward</mat-icon>
+    <button class="btn-primary" [disabled]="!formularioValido || enviando" (click)="onSubmit()">
+      <ng-container *ngIf="!enviando">
+        {{ 'RESERVE.SUMMARY.SUBMIT' | translate }} <mat-icon>arrow_forward</mat-icon>
+      </ng-container>
+      <ng-container *ngIf="enviando">
+        Reservando...
+      </ng-container>
     </button>
+
+    <p class="summary-note" *ngIf="reservaError" style="color: var(--error); font-weight: 600;">
+      No se pudo crear la reserva. Intenta de nuevo.
+    </p>
 
     <p class="summary-note">{{ 'RESERVE.SUMMARY.NOTE' | translate }}</p>
   </aside>

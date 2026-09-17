@@ -26,4 +26,36 @@ export class Api {
   deleteVehicle(id: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/vehicles/${id}`);
   }
+
+  createReservation(reserva: Partial<Reserva> & { customerId: number }): Observable<Reserva> {
+    return this.http.post<Reserva>(`${this.baseUrl}/reservations`, reserva);
+  }
+
+  getNotifications(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/notifications?userId=${userId}`);
+  }
+
+  getClientPayments(customerId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/clientPayments?customerId=${customerId}`);
+  }
+
+  getClientHistory(customerId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/clientServiceHistory?customerId=${customerId}`);
+  }
+
+  getOperatorQualifications(operatorId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/operatorQualifications?operatorId=${operatorId}`);
+  }
+
+  getAssignedServices(operatorId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/assignedServices?operatorId=${operatorId}`);
+  }
+
+  getOperatorServiceHistory(operatorId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/operatorServiceHistory?operatorId=${operatorId}`);
+  }
+
+  getReservationsByCustomer(customerId: number): Observable<Reserva[]> {
+    return this.http.get<Reserva[]>(`${this.baseUrl}/reservations?customerId=${customerId}`);
+  }
 }

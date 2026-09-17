@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 // sirve para usar cosas basicas de HTML
 import { CommonModule } from '@angular/common';
@@ -20,6 +20,8 @@ import {
 import { Router, RouterModule } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
+
+import { Auth } from '../../../../core/services/auth';
 
 
 @Component({
@@ -50,7 +52,9 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private auth: Auth,
+    private cdr: ChangeDetectorRef
   ) {
 
     this.registerForm = this.fb.group({
@@ -67,7 +71,7 @@ export class RegisterComponent {
         '',
         [
           Validators.required,
-          Validators.pattern('^[a-zA-Z0-9._%+-]+@gmail\\.com$')
+          Validators.email
         ]
       ],
 
@@ -202,15 +206,30 @@ export class RegisterComponent {
     if (this.registerForm.invalid) return;
 
     this.cargando = true;
+    this.loginError = false;
 
-    setTimeout(() => {
+    const { nombre, correo, contrasena } = this.registerForm.value;
 
-      this.cargando = false;
+    this.auth.register(nombre, correo, contrasena).subscribe({
 
-      // redirigir al login después del registro
-      this.router.navigate(['/auth/login']);
+      next: () => {
 
-    }, 1500);
+        this.cargando = false;
+
+        // redirigir al login después del registro
+        this.router.navigate(['/auth']);
+
+      },
+
+      error: () => {
+
+        this.cargando = false;
+        this.loginError = true;
+        this.cdr.detectChanges();
+
+      }
+
+    });
 
   }
 

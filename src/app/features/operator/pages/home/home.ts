@@ -38,10 +38,12 @@ export class HomeComponent implements OnInit {
 
   nombreOperator = 'Camilo';
 
-  notificacionesSinLeer = 2;
-  calificacionPromedio = 4.3;
+  notificacionesSinLeer = 0;
+  calificacionPromedio = 0;
 
   reservasHoy: Reserva[] = [];
+
+  private readonly operatorId = 1;
 
   constructor(
     private router: Router,
@@ -51,8 +53,22 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.api.getReservationsByOperator(1).subscribe(reservas => {
-      this.reservasHoy = reservas;
+    const hoy = new Date().toISOString().split('T')[0];
+
+    this.api.getReservationsByOperator(this.operatorId).subscribe(reservas => {
+      this.reservasHoy = reservas.filter(r => r.fecha === hoy);
+      this.cdr.detectChanges();
+    });
+
+    this.api.getNotifications(this.operatorId).subscribe(notificaciones => {
+      this.notificacionesSinLeer = notificaciones.filter(n => !n.read).length;
+      this.cdr.detectChanges();
+    });
+
+    this.api.getOperatorQualifications(this.operatorId).subscribe(calificaciones => {
+      if (calificaciones.length === 0) return;
+      const suma = calificaciones.reduce((sum: number, c: any) => sum + c.estrellas, 0);
+      this.calificacionPromedio = Math.round((suma / calificaciones.length) * 10) / 10;
       this.cdr.detectChanges();
     });
   }

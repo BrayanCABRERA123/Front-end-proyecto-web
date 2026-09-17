@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
 // importamos el sidebar
@@ -8,6 +8,8 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { Api } from '../../../../core/services/api';
+import { Auth } from '../../../../core/services/auth';
 
 @Component({
   selector: 'app-payment',
@@ -16,7 +18,21 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './payment.html',
   styleUrls: ['./payment.scss']
 })
-export class PaymentComponent {
+export class PaymentComponent implements OnInit {
+
+  // id del cliente logueado; 2 (Juan Díaz) es el demo por defecto si nadie inició sesión
+  private get userId(): number {
+    return this.auth.getCurrentUser()?.id ?? 2;
+  }
+
+  constructor(private api: Api, private auth: Auth, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.api.getClientPayments(this.userId).subscribe(historialPagos => {
+      this.historialPagos = historialPagos;
+      this.cdr.detectChanges();
+    });
+  }
 
   // métodos de pago disponibles
   metodosPago = [
@@ -49,14 +65,8 @@ export class PaymentComponent {
     return this.resumenServicio.base + this.resumenServicio.domicilio;
   }
 
-  // historial de pagos del cliente
-  historialPagos = [
-    { codigo: 'PG-5012', tipo: 'PREMIUM', vehiculo: 'CAR', fecha: '12 Ago 2026', metodo: 'Tarjeta ••4821', monto: 45000, estado: 'PAID' },
-    { codigo: 'PG-5008', tipo: 'BASIC', vehiculo: 'MOTO', fecha: '05 Ago 2026', metodo: 'PayPal', monto: 18000, estado: 'PAID' },
-    { codigo: 'PG-4990', tipo: 'FULL', vehiculo: 'TRUCK', fecha: '28 Jul 2026', metodo: 'Transferencia', monto: 72000, estado: 'PENDING' },
-    { codigo: 'PG-4975', tipo: 'PREMIUM', vehiculo: 'CAR', fecha: '19 Jul 2026', metodo: 'Tarjeta ••4821', monto: 45000, estado: 'REFUNDED' },
-    { codigo: 'PG-4960', tipo: 'BASIC', vehiculo: 'CAR', fecha: '08 Jul 2026', metodo: 'Tarjeta ••4821', monto: 22000, estado: 'PAID' }
-  ];
+  // historial de pagos del cliente (viene de la API mock)
+  historialPagos: any[] = [];
 
   get totalPagado(): number {
     return this.historialPagos

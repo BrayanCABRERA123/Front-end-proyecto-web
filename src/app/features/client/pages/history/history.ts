@@ -1,10 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { HistoryCardComponent } from './components/history-card/history-card';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Api } from '../../../../core/services/api';
+import { Auth } from '../../../../core/services/auth';
+import { Reserva } from '../../../../shared/dialogs/reservation-models/reservation.model';
+
+// mapea el estado de una reserva al vocabulario de STATUS.* que usa la tarjeta de historial
+const ESTADO_A_STATUS: Record<string, string> = {
+  pendiente: 'PENDING',
+  en_progreso: 'ON_THE_WAY',
+  finalizado: 'COMPLETED'
+};
 
 @Component({
   selector: 'app-history',
@@ -20,9 +31,46 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './history.html',
   styleUrl: './history.scss'
 })
-export class HistoryComponent {
+export class HistoryComponent implements OnInit {
 
-  constructor(private translate: TranslateService) {}
+  // id del cliente logueado; 2 (Juan Díaz) es el demo por defecto si nadie inició sesión
+  private get userId(): number {
+    return this.auth.getCurrentUser()?.id ?? 2;
+  }
+
+  constructor(private translate: TranslateService, private api: Api, private auth: Auth, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    forkJoin({
+      historial: this.api.getClientHistory(this.userId),
+      reservas: this.api.getReservationsByCustomer(this.userId)
+    }).subscribe(({ historial, reservas }) => {
+      const reservasComoHistorial = reservas.map(r => this.reservaAHistorial(r));
+      this.servicios = [...reservasComoHistorial, ...historial];
+      this.cdr.detectChanges();
+    });
+  }
+
+  // convierte una reserva (agendada desde "Reservar lavado") al formato que espera la tarjeta de historial
+  private reservaAHistorial(r: Reserva) {
+    const clave = `SERVICE.${r.servicio}_PRICE`;
+    const texto: string = this.translate.instant(clave);
+    const precio = parseInt(texto.replace(/[^0-9]/g, ''), 10) || 0;
+
+    return {
+      id: `reserva-${r.id}`,
+      titulo: r.servicio,
+      fecha: r.fecha,
+      direccion: r.direccion,
+      tipoServicio: r.servicio,
+      serviciosExtra: [] as string[],
+      asignacionTipo: 'AUTO',
+      operador: '',
+      estado: ESTADO_A_STATUS[r.estado] ?? 'PENDING',
+      precio,
+      pagado: false
+    };
+  }
 
   // filtro activo
   filtroActivo: string = 'todos';
@@ -40,35 +88,8 @@ export class HistoryComponent {
     this.mostrarModalCalificacion = true;
   }
 
-  // SERVICIOS 
-  servicios = [
-  {
-    id: 1,
-    titulo: 'PREMIUM',
-    fecha: '28/03/2026',
-    direccion: 'Calle Falsa 123, Springfield',
-    tipoServicio: 'FULL',
-    serviciosExtra: ['WAX', 'VACUUM'],
-    asignacionTipo: 'MANUAL',
-    operador: 'Juan',
-    estado: 'COMPLETED',
-    precio: 35,
-    pagado: true
-  },
-  {
-    id: 2,
-    titulo: 'BASIC',
-    fecha: '16/12/2025',
-    direccion: 'Calle 42 #13-33',
-    tipoServicio: 'FULL',
-    serviciosExtra: ['WAX'],
-    asignacionTipo: 'AUTO',
-    operador: '',
-    estado: 'PENDING',
-    precio: 35,
-    pagado: false
-  }
-];
+  // SERVICIOS (viene de la API mock)
+  servicios: any[] = [];
 
   // TRADUCIR EXTRAS
   getExtrasTraducidos(extras: string[]): string[] {

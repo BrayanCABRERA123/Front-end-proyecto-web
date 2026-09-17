@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BackButtonComponent } from '../../../../shared/components/back-button/back-button';
 import { AuthSidePanelComponent } from '../../../../shared/components/auth-side-panel/auth-side-panel';
@@ -40,7 +40,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private auth: Auth
+    private auth: Auth,
+    private cdr: ChangeDetectorRef
   ) {
 
     this.loginForm = this.fb.group({
@@ -49,7 +50,7 @@ export class LoginComponent {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[^\s@]+@gmail\.com$/)
+          Validators.email
         ]
       ],
 
@@ -107,6 +108,7 @@ export class LoginComponent {
       },
       error: () => {
         this.loginError = true;
+        this.cdr.detectChanges();
       }
     });
   }

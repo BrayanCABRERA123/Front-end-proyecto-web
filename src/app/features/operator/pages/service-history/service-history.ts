@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
@@ -9,6 +9,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceHistoryDetailModal } from '../../../../shared/dialogs/service-history-detail-modal/service-history-detail-modal';
 import { ServicioHistorial } from '../../../../shared/dialogs/history-models/service-history.model';
+import { Api } from '../../../../core/services/api';
 
 type Tab = 'todos' | 'finalizado' | 'cancelado' | 'reasignado';
 
@@ -38,21 +39,21 @@ export class ServiceHistoryComponent implements OnInit {
 
   porcentajeAnimado = 0;
 
-  servicios: ServicioHistorial[] = [
-    { id: 1, codigo: 'SV-1840', fecha: '2026-02-20', hora: '09:00', servicio: 'PREMIUM', vehiculo: 'CAR', placa: 'ABC-123', cliente: 'Laura Gómez', direccion: 'Cra. 45 #23-10, Chapinero', metodoPago: 'CARD', monto: 45000, calificacion: 5, comentario: 'Excelente servicio, muy puntual.', estado: 'finalizado', motivo: null },
-    { id: 2, codigo: 'SV-1841', fecha: '2026-02-18', hora: '14:30', servicio: 'BASIC', vehiculo: 'MOTO', placa: 'XYZ-98D', cliente: 'Miguel Rojas', direccion: 'Cl. 80 #12-05, Usaquén', metodoPago: 'PSE', monto: 18000, calificacion: 4, comentario: null, estado: 'finalizado', motivo: null },
-    { id: 3, codigo: 'SV-1842', fecha: '2026-02-15', hora: '10:30', servicio: 'FULL', vehiculo: 'TRUCK', placa: 'JKL-457', cliente: 'Andrea Salas', direccion: 'Av. Suba #100-20', metodoPago: 'CASH', monto: 38000, calificacion: 5, comentario: 'Todo perfecto.', estado: 'finalizado', motivo: null },
-    { id: 4, codigo: 'SV-1843', fecha: '2026-02-14', hora: '11:15', servicio: 'PREMIUM', vehiculo: 'CAR', placa: 'MNO-741', cliente: 'Juan Díaz', direccion: 'Cra. 7 #45-12, Kennedy', metodoPago: 'CARD', monto: 45000, calificacion: null, comentario: null, estado: 'cancelado', motivo: 'El cliente canceló por lluvia.' },
-    { id: 5, codigo: 'SV-1844', fecha: '2026-02-10', hora: '12:00', servicio: 'BASIC', vehiculo: 'TRUCK', placa: 'PQR-369', cliente: 'Camila Torres', direccion: 'Cl. 26 #68-30, Fontibón', metodoPago: 'NEQUI', monto: 22000, calificacion: null, comentario: null, estado: 'reasignado', motivo: 'Reasignado a otro operario por sobrecupo.' },
-    { id: 6, codigo: 'SV-1845', fecha: '2026-02-08', hora: '08:45', servicio: 'FULL', vehiculo: 'CAR', placa: 'STU-852', cliente: 'Ricardo Nova', direccion: 'Cra. 15 #85-40, Teusaquillo', metodoPago: 'CARD', monto: 38000, calificacion: 5, comentario: 'Volveré a pedir el servicio.', estado: 'finalizado', motivo: null },
-    { id: 7, codigo: 'SV-1846', fecha: '2026-02-05', hora: '16:00', servicio: 'PREMIUM', vehiculo: 'MOTO', placa: 'VWX-159', cliente: 'Sofía Herrera', direccion: 'Cl. 63 #24-18, Engativá', metodoPago: 'PSE', monto: 45000, calificacion: null, comentario: null, estado: 'cancelado', motivo: 'No se encontraba en la dirección registrada.' },
-    { id: 8, codigo: 'SV-1847', fecha: '2026-02-02', hora: '10:00', servicio: 'BASIC', vehiculo: 'CAR', placa: 'YZA-753', cliente: 'Pedro López', direccion: 'Av. Boyacá #34-56, Suba', metodoPago: 'CASH', monto: 18000, calificacion: 4, comentario: null, estado: 'finalizado', motivo: null }
-  ];
+  servicios: ServicioHistorial[] = [];
 
-  constructor(private translate: TranslateService, private dialog: MatDialog) {}
+  private readonly operatorId = 1;
+
+  constructor(private translate: TranslateService, private dialog: MatDialog, private api: Api, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    setTimeout(() => this.porcentajeAnimado = this.tasaCompletados, 150);
+    this.api.getOperatorServiceHistory(this.operatorId).subscribe(servicios => {
+      this.servicios = servicios;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.porcentajeAnimado = this.tasaCompletados;
+        this.cdr.detectChanges();
+      }, 150);
+    });
   }
 
   get finalizados(): number {
