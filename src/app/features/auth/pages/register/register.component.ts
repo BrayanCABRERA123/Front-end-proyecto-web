@@ -21,6 +21,10 @@ import { Router, RouterModule } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
+// modal reutilizable para mostrar Términos y Condiciones / Política de Datos
+import { MatDialog } from '@angular/material/dialog';
+import { LegalDocumentModal, LegalDocumentType } from '../../../../shared/dialogs/legal-document-modal/legal-document-modal';
+
 
 @Component({
   selector: 'app-register',
@@ -50,7 +54,8 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
 
     this.registerForm = this.fb.group({
@@ -96,10 +101,39 @@ export class RegisterComponent {
         [
           Validators.required
         ]
-      ]
+      ],
+
+      // el usuario debe aceptar explícitamente ambos documentos legales
+      // (Ley 1581 de 2012 - Habeas Data: autorización previa, expresa e informada)
+      aceptaTerminos: [false, Validators.requiredTrue],
+      aceptaPoliticaDatos: [false, Validators.requiredTrue]
 
     });
 
+  }
+
+
+  // abre el modal con el documento legal solicitado.
+  // si el usuario da "Aceptar" dentro del modal, marcamos la casilla
+  // correspondiente automáticamente (evita que tenga que aceptar dos veces).
+  verDocumentoLegal(tipo: LegalDocumentType, event?: Event) {
+
+    event?.preventDefault();
+
+    const dialogRef = this.dialog.open(LegalDocumentModal, {
+      panelClass: 'custom-dialog',
+      data: { type: tipo, mode: 'accept' }
+    });
+
+    dialogRef.afterClosed().subscribe((aceptado: boolean) => {
+
+      if (!aceptado) return;
+
+      const control = tipo === 'terms' ? 'aceptaTerminos' : 'aceptaPoliticaDatos';
+
+      this.registerForm.get(control)?.setValue(true);
+      this.registerForm.get(control)?.markAsTouched();
+    });
   }
 
 

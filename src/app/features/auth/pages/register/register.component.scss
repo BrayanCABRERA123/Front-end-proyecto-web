@@ -224,6 +224,41 @@ label {
   color: var(--text);
 }
 
+/* ACEPTACIÓN LEGAL */
+.legal-consent {
+  margin-bottom: 18px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+
+  input[type="checkbox"] {
+    margin-top: 2px;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    accent-color: var(--primary);
+    cursor: pointer;
+  }
+
+  a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--primary-hover);
+    }
+  }
+}
+
 /* ERRORES */
 .error-msg {
   display: block;

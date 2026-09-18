@@ -378,6 +378,42 @@
 
             </div>
 
+            <!-- ACEPTACIÓN LEGAL (Ley 1581 de 2012 - Habeas Data) -->
+            <div class="form-group legal-consent">
+
+              <label class="checkbox-row">
+                <input type="checkbox" formControlName="aceptaTerminos">
+                <span>
+                  {{ 'REGISTER.ACCEPT_TERMS' | translate }}
+                  <a href="#" (click)="verDocumentoLegal('terms', $event)">
+                    {{ 'REGISTER.TERMS_LINK' | translate }}
+                  </a>
+                </span>
+              </label>
+
+              <label class="checkbox-row">
+                <input type="checkbox" formControlName="aceptaPoliticaDatos">
+                <span>
+                  {{ 'REGISTER.ACCEPT_TERMS' | translate }}
+                  {{ 'REGISTER.AND' | translate }}
+                  <a href="#" (click)="verDocumentoLegal('privacy', $event)">
+                    {{ 'REGISTER.PRIVACY_LINK' | translate }}
+                  </a>
+                </span>
+              </label>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  (f['aceptaTerminos'].invalid && f['aceptaTerminos'].touched) ||
+                  (f['aceptaPoliticaDatos'].invalid && f['aceptaPoliticaDatos'].touched)
+                "
+              >
+                {{ 'REGISTER.TERMS_REQUIRED' | translate }}
+              </span>
+
+            </div>
+
             <button
               type="submit"
               class="btn-register"
