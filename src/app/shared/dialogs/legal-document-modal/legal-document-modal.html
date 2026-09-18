@@ -1,0 +1,58 @@
+<div class="legal-dialog">
+
+  <div class="legal-header">
+    <div class="legal-header-icon">
+      <mat-icon>{{ tipo === 'terms' ? 'gavel' : 'shield' }}</mat-icon>
+    </div>
+
+    <div class="legal-header-text">
+      <h2>{{ titulo }}</h2>
+      <span class="legal-updated">
+        {{ ultimaActualizacionLabel }}: {{ ultimaActualizacionFecha }}
+      </span>
+    </div>
+
+    <button class="legal-close-x" type="button" (click)="cerrar(false)" aria-label="close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="legal-scroll-hint">
+    <mat-icon>swipe_vertical</mat-icon>
+    <span>{{ 'LEGAL.SCROLL_HINT' | translate }}</span>
+  </div>
+
+  <div class="legal-body">
+
+    <section class="legal-section" *ngFor="let s of secciones">
+      <h3>{{ s.HEADING }}</h3>
+      <p>{{ s.BODY }}</p>
+    </section>
+
+    <div class="legal-demo-notice">
+      <mat-icon>info</mat-icon>
+      <p>{{ 'LEGAL.DEMO_NOTICE' | translate }}</p>
+    </div>
+
+  </div>
+
+  <div class="legal-actions">
+
+    <ng-container *ngIf="modo === 'accept'; else soloVer">
+      <button class="btn-cancel" type="button" (click)="cerrar(false)">
+        {{ 'LEGAL.CANCEL' | translate }}
+      </button>
+      <button class="btn-accept" type="button" (click)="cerrar(true)">
+        {{ 'LEGAL.ACCEPT' | translate }}
+      </button>
+    </ng-container>
+
+    <ng-template #soloVer>
+      <button class="btn-accept full" type="button" (click)="cerrar(false)">
+        {{ 'LEGAL.CLOSE' | translate }}
+      </button>
+    </ng-template>
+
+  </div>
+
+</div>
