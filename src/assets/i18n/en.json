@@ -18,7 +18,10 @@
     "LOCATION_DESC": "Allow access to your current location",
     "HELP": "Help",
     "HELP_CENTER": "Help Center",
-    "OPEN": "Open"
+    "OPEN": "Open",
+    "LEGAL_SECTION": "Legal and privacy",
+    "VIEW_TERMS": "View Terms and Conditions",
+    "VIEW_PRIVACY": "View Data Policy"
   },
   "SIDEBAR": {
     "PAYMENT": "Pay service",
@@ -447,7 +450,12 @@
     "BUTTON_LOADING": "Registering...",
     "ALREADY_ACCOUNT": "Already have an account?",
     "LOGIN": "Log in",
-    "INVALID_CREDENTIALS": "Incorrect email or password"
+    "INVALID_CREDENTIALS": "Incorrect email or password",
+    "ACCEPT_TERMS": "I have read and accept the",
+    "TERMS_LINK": "Terms and Conditions",
+    "AND": "and the",
+    "PRIVACY_LINK": "Personal Data Processing Policy",
+    "TERMS_REQUIRED": "You must accept the Terms and the Data Policy to continue"
   },
   "FORGOT": {
     "BACK_LOGIN": "Back to Login",
@@ -535,36 +543,61 @@
     }
   },
   "OPERATOR_HOME": {
-  "TITLE": "Hello, {{name}}!  Welcome!",
-  "SUBTITLE": "You have {{count}} pending services for today",
-  "BTN_SERVICES": "View assigned services",
-  "PROGRESS_LABEL": "Services completed today",
-  "IN_PROGRESS": "In Progress",
-  "PENDING": "Pending",
-  "RESERVATIONS_TITLE": "Today's services",
-  "BTN_START": "Start",
-  "STATS": {
-    "ASSIGNED": "Assigned Bookings",
-    "VEHICLES": "Vehicles",
-    "NOTIFICATIONS": "Notifications",
-    "RATING": "Rating",
-    "IN_PROGRESS": "In progress"
-  },
-  "EMPTY": "You have no scheduled services right now."
+    "TITLE": "Hello, {{name}}!  Welcome!",
+    "SUBTITLE": "You have {{count}} pending services for today",
+    "BTN_SERVICES": "View assigned services",
+    "PROGRESS_LABEL": "Services completed today",
+    "IN_PROGRESS": "In Progress",
+    "PENDING": "Pending",
+    "RESERVATIONS_TITLE": "Today's services",
+    "BTN_START": "Start",
+    "STATS": {
+      "ASSIGNED": "Assigned Bookings",
+      "VEHICLES": "Vehicles",
+      "NOTIFICATIONS": "Notifications",
+      "RATING": "Rating",
+      "IN_PROGRESS": "In progress"
+    },
+    "EMPTY": "You have no scheduled services right now."
   },
   "SERVICE_HISTORY": {
-  "COMPLETION_RATE": "Completion rate",
-  "SEARCH_PLACEHOLDER": "Search by code, plate, client or vehicle...",
-  "ALL_SERVICES": "All services",
-  "CLEAR": "Clear",
-  "TABS": { "ALL": "All", "DONE": "Completed", "CANCELED": "Canceled", "REASSIGNED": "Reassigned" },
-  "STATUS": { "FINALIZADO": "Completed", "CANCELADO": "Canceled", "REASIGNADO": "Reassigned" },
-  "DETAIL": { "DATE": "Date and time", "VEHICLE": "Vehicle", "ADDRESS": "Address", "PAYMENT": "Payment", "RATING": "Rating", "REASON": "Reason" },
-  "TITLE": "Service History",
-  "SUBTITLE": "Check all your services: date, vehicle, payment, final status and rating.",
-  "METHODS": { "CARD": "Card", "PSE": "PSE", "NEQUI": "Nequi", "CASH": "Cash" }
+    "COMPLETION_RATE": "Completion rate",
+    "SEARCH_PLACEHOLDER": "Search by code, plate, client or vehicle...",
+    "ALL_SERVICES": "All services",
+    "CLEAR": "Clear",
+    "TABS": {
+      "ALL": "All",
+      "DONE": "Completed",
+      "CANCELED": "Canceled",
+      "REASSIGNED": "Reassigned"
+    },
+    "STATUS": {
+      "FINALIZADO": "Completed",
+      "CANCELADO": "Canceled",
+      "REASIGNADO": "Reassigned"
+    },
+    "DETAIL": {
+      "DATE": "Date and time",
+      "VEHICLE": "Vehicle",
+      "ADDRESS": "Address",
+      "PAYMENT": "Payment",
+      "RATING": "Rating",
+      "REASON": "Reason"
+    },
+    "TITLE": "Service History",
+    "SUBTITLE": "Check all your services: date, vehicle, payment, final status and rating.",
+    "METHODS": {
+      "CARD": "Card",
+      "PSE": "PSE",
+      "NEQUI": "Nequi",
+      "CASH": "Cash"
+    }
   },
-  "HISTORY_STATS": { "DONE": "Completed services", "CANCELED": "Canceled / reassigned", "TOTAL": "Total generated", "RATING": "Average rating" 
+  "HISTORY_STATS": {
+    "DONE": "Completed services",
+    "CANCELED": "Canceled / reassigned",
+    "TOTAL": "Total generated",
+    "RATING": "Average rating"
   },
   "HISTORY_TABLE": {
     "ID": "ID",
@@ -574,7 +607,10 @@
     "DURATION": "DURATION",
     "STATUS": "FINAL STATUS",
     "EMPTY": "No services found",
-    "PAYMENT": "Payment", "AMOUNT": "Amount", "RATING": "Rating", "DETAIL": "Detail"
+    "PAYMENT": "Payment",
+    "AMOUNT": "Amount",
+    "RATING": "Rating",
+    "DETAIL": "Detail"
   },
   "QUALIFICATIONS": {
     "TITLE": "Ratings received",
@@ -758,28 +794,211 @@
     "COVERAGE_VALUE": "Major cities across Colombia",
     "CTA": "Book your first wash"
   },
-
   "CALENDAR": {
-  "MONTHS": ["January","February","March","April","May","June","July","August","September","October","November","December"],
-  "DAYS_SHORT": ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
-},
-"SCHEDULE": {
-  "TITLE": "My Schedule",
-  "SUBTITLE": "Interactive calendar with your bookings for the day, the week, and your completed service history.",
-  "OF": "of",
-  "RESERVATIONS_OF": "Bookings for",
-  "EMPTY": "There are no bookings to show here.",
-  "TABS": { "DAY": "Day", "WEEK": "Week", "DONE": "Completed" },
-  "STATUS": { "FINALIZADO": "Completed", "EN_PROGRESO": "In progress", "PENDIENTE": "Pending" },
-  "CALENDAR": { "SERVICES_OF_DAY": "Services on selected day" },
-  "STATS": { "TOTAL": "Total", "PENDING": "Pending", "IN_PROGRESS": "In progress", "DONE": "Completed" },
-  "NEXT": { "LABEL": "Next service", "IN_MINUTES": "in {{min}} min" },
-  "START": "Start",
-  "FINISH": "Finish",
-  "VIEW_DETAIL": "View detail",
-  "FINISH_TITLE": "Finish this service?",
-  "FINISH_MESSAGE": "It will be marked as completed and moved to your history.",
-  "FINISH_CONFIRM": "Finish",
-  "DETAIL": { "DATE": "Date and time", "DURATION": "Duration", "VEHICLE": "Vehicle", "ADDRESS": "Address" }
-}
+    "MONTHS": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "DAYS_SHORT": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
+    ]
+  },
+  "SCHEDULE": {
+    "TITLE": "My Schedule",
+    "SUBTITLE": "Interactive calendar with your bookings for the day, the week, and your completed service history.",
+    "OF": "of",
+    "RESERVATIONS_OF": "Bookings for",
+    "EMPTY": "There are no bookings to show here.",
+    "TABS": {
+      "DAY": "Day",
+      "WEEK": "Week",
+      "DONE": "Completed"
+    },
+    "STATUS": {
+      "FINALIZADO": "Completed",
+      "EN_PROGRESO": "In progress",
+      "PENDIENTE": "Pending"
+    },
+    "CALENDAR": {
+      "SERVICES_OF_DAY": "Services on selected day"
+    },
+    "STATS": {
+      "TOTAL": "Total",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In progress",
+      "DONE": "Completed"
+    },
+    "NEXT": {
+      "LABEL": "Next service",
+      "IN_MINUTES": "in {{min}} min"
+    },
+    "START": "Start",
+    "FINISH": "Finish",
+    "VIEW_DETAIL": "View detail",
+    "FINISH_TITLE": "Finish this service?",
+    "FINISH_MESSAGE": "It will be marked as completed and moved to your history.",
+    "FINISH_CONFIRM": "Finish",
+    "DETAIL": {
+      "DATE": "Date and time",
+      "DURATION": "Duration",
+      "VEHICLE": "Vehicle",
+      "ADDRESS": "Address"
+    }
+  },
+  "LEGAL": {
+    "LAST_UPDATED_LABEL": "Last updated",
+    "CLOSE": "Close",
+    "ACCEPT": "Accept and continue",
+    "CANCEL": "Cancel",
+    "SCROLL_HINT": "Scroll to read the full document",
+    "DEMO_NOTICE": "Sample document prepared for a training project. Before real commercial use, it must be reviewed by a lawyer and updated with the company's real information.",
+    "LAST_UPDATED_DATE": "September 17, 2026",
+    "COMPANY_NAME": "Express Car Wash S.A.S.",
+    "TERMS": {
+      "TITLE": "Terms and Conditions",
+      "SECTIONS": [
+        {
+          "HEADING": "1. Acceptance of these Terms",
+          "BODY": "By creating an account or using the Express Car Wash S.A.S. platform ('the Platform'), the User confirms they have read, understood and accepted these Terms and Conditions and the Privacy Policy. If you do not agree, do not register or use the service."
+        },
+        {
+          "HEADING": "2. Who we are and what we offer",
+          "BODY": "Express Car Wash S.A.S. operates a web and mobile platform that lets Customers book vehicle-wash time slots at its physical location, track the service, and pay through a QR-verified bank transfer."
+        },
+        {
+          "HEADING": "3. Definitions",
+          "BODY": "User: any person registered on the Platform. Customer: a User who books and pays for wash services. Operator: a User who performs the wash. Administrator: a User who manages operators, schedules, promotions and payments. Booking: a scheduled wash for a specific date, time and bay."
+        },
+        {
+          "HEADING": "4. Registration and user account",
+          "BODY": "Registration is limited to people 18 years of age or older. The User agrees to provide accurate, complete and up-to-date information and is solely responsible for their password and for activity carried out under their account. The Platform may suspend accounts found to contain false information or to have been used improperly."
+        },
+        {
+          "HEADING": "5. Permitted use of the platform",
+          "BODY": "The User agrees to use the Platform only for its intended purpose, not to attempt to compromise its security, not to impersonate another person, and not to use it for fraudulent purposes or in violation of Colombian law."
+        },
+        {
+          "HEADING": "6. Bookings, cancellations and service delivery",
+          "BODY": "The Customer selects the date, time and wash type based on the availability shown by the system. A booking can be changed or cancelled at no cost before the service starts; once the operator marks it as 'in progress', cancellation is no longer possible. The service is only provided at the physical location indicated in the booking."
+        },
+        {
+          "HEADING": "7. Payments and receipts",
+          "BODY": "Payment is made by scanning the shop's QR code for the chosen method (cash, Nequi, Daviplata or bank transfer) and uploading the corresponding receipt, which an Administrator verifies before confirming it. The Platform never asks for or stores debit or credit card data. A receipt whose transaction reference has already been used on another approved payment will be rejected."
+        },
+        {
+          "HEADING": "8. Ratings and comments",
+          "BODY": "Once a service is completed, the Customer may rate it and leave a comment. Published content must be respectful and truthful; the Platform may remove comments that break this rule or that contain third parties' personal data, insults or unlawful content."
+        },
+        {
+          "HEADING": "9. Promotions and loyalty points",
+          "BODY": "Promotions, discounts and the loyalty points program are defined and may be changed by the Administrator at any time, respecting benefits already earned for services completed before the change."
+        },
+        {
+          "HEADING": "10. Intellectual property",
+          "BODY": "The name, logo, interface design and original content of the Platform belong to Express Car Wash S.A.S. or its licensors and are protected under Colombian copyright and industrial property law. Unauthorized use is prohibited."
+        },
+        {
+          "HEADING": "11. Limitation of liability",
+          "BODY": "The Platform is a booking and payment-verification channel; the wash itself is performed physically at the shop. Express Car Wash is not liable for damages arising from acts of God, force majeure, misuse of the Platform by the User, or false information supplied by the User."
+        },
+        {
+          "HEADING": "12. Suspension and termination",
+          "BODY": "The User may request account deletion at any time from the Settings section or by emailing our contact address. The Platform may suspend or cancel accounts that breach these Terms, with prior notice whenever reasonably possible."
+        },
+        {
+          "HEADING": "13. Changes to these Terms",
+          "BODY": "These Terms may be updated to reflect legal, technical or operational changes. Material changes will be announced within the Platform and, where applicable, will require renewed acceptance."
+        },
+        {
+          "HEADING": "14. Governing law and jurisdiction",
+          "BODY": "These Terms are governed by the laws of the Republic of Colombia. Any dispute will be submitted to the competent courts of Neiva, Huila, without prejudice to the consumer-protection remedies under Law 1480 of 2011 before the Superintendencia de Industria y Comercio."
+        },
+        {
+          "HEADING": "15. Contact",
+          "BODY": "For questions about these Terms, write to datos@expresscarwash.co or call +57 300 123 4567."
+        }
+      ]
+    },
+    "PRIVACY": {
+      "TITLE": "Personal Data Processing Policy",
+      "SECTIONS": [
+        {
+          "HEADING": "1. Data controller",
+          "BODY": "Express Car Wash S.A.S., with registered address at Cra. 5 # 12-34, Neiva, Huila, Colombia and contact email datos@expresscarwash.co, is the Data Controller for the personal data collected through this Platform."
+        },
+        {
+          "HEADING": "2. Legal framework",
+          "BODY": "This policy is governed by Article 15 of the Colombian Constitution, Statutory Law 1581 of 2012, Regulatory Decree 1377 of 2013, and any rule amending or replacing them regarding personal data protection (Habeas Data)."
+        },
+        {
+          "HEADING": "3. Key definitions",
+          "BODY": "Personal data: any information linked to an identified or identifiable natural person. Data subject: the natural person whose data is processed. Processing: any operation performed on personal data (collection, storage, use, circulation or deletion). Authorization: the data subject's prior, express and informed consent."
+        },
+        {
+          "HEADING": "4. Data we collect",
+          "BODY": "Full name, email, phone number, address, password (always stored encrypted, never in plain text), vehicle data (plate, type, brand), booking and service history, ratings and comments, payment receipts, and language/theme preferences. We never collect debit or credit card data under any circumstance."
+        },
+        {
+          "HEADING": "5. Purposes of processing",
+          "BODY": "Data is used to: create and manage the User's account; manage bookings, operator assignments and service execution; verify QR-based payments; send notifications about booking and payment status; administer the promotions and loyalty program; generate aggregated operational reports; and comply with legal obligations or requests from competent authorities."
+        },
+        {
+          "HEADING": "6. Sensitive data and minors",
+          "BODY": "The Platform does not request or process sensitive data (health, sexual orientation, biometric data, religious or political beliefs, among others) and is not directed at people under 18. Any account found to belong to a minor will be deleted."
+        },
+        {
+          "HEADING": "7. How authorization is granted",
+          "BODY": "By checking the corresponding box during registration, the data subject grants prior, express and informed authorization for the processing of their personal data under this policy. This authorization can be revoked at any time, without affecting the lawfulness of processing carried out before the revocation."
+        },
+        {
+          "HEADING": "8. Your rights (Habeas Data)",
+          "BODY": "As a data subject, you have the right to: know, update and correct your data; request proof of the authorization granted; be informed about how your data has been used; file complaints with the Superintendencia de Industria y Comercio for breaches of Law 1581 of 2012; revoke your authorization and/or request deletion of your data when no legal or contractual duty prevents it; and access your personal data free of charge."
+        },
+        {
+          "HEADING": "9. How to exercise your rights",
+          "BODY": "You can exercise your rights by writing to datos@expresscarwash.co, stating your name, the right you wish to exercise and a clear description of your request. Inquiries are resolved within a maximum of ten (10) business days and complaints within a maximum of fifteen (15) business days, extendable under Decree 1377 of 2013."
+        },
+        {
+          "HEADING": "10. Data transfer and transmission",
+          "BODY": "Personal data processed on this Platform is never sold, rented or shared with third parties for commercial or advertising purposes. There are no international data transfers under this project; any future technology provider processing data on our behalf will act as a Data Processor under contract."
+        },
+        {
+          "HEADING": "11. Information security",
+          "BODY": "We apply reasonable technical, human and administrative measures to protect personal data against loss, unauthorized access, misuse or alteration, including password encryption, role-based access control, and limiting payment-data handling to what is strictly necessary to verify each transaction."
+        },
+        {
+          "HEADING": "12. Data retention",
+          "BODY": "Personal data is kept while the account remains active and, after deletion, for as long as needed to meet legal, accounting or defense-related obligations, after which it is securely deleted or anonymized."
+        },
+        {
+          "HEADING": "13. Supervisory authority",
+          "BODY": "The Superintendencia de Industria y Comercio (SIC) oversees compliance with personal data protection rules in Colombia. You may file complaints or inquiries at www.sic.gov.co."
+        },
+        {
+          "HEADING": "14. Changes to this policy",
+          "BODY": "This policy may be updated to reflect legal, technological or operational changes. Material changes will be announced within the Platform before they take effect."
+        },
+        {
+          "HEADING": "15. Contact",
+          "BODY": "For any question about how we handle your data, write to datos@expresscarwash.co or call +57 300 123 4567."
+        }
+      ]
+    }
+  }
 }
