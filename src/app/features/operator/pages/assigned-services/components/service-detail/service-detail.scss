@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/mixins' as *;
+
 // card principal del detalle
 .detail-card {
   background-color: var(--card);
@@ -25,30 +27,30 @@
 
 // título del detalle
 .detail-title {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: $fs-subtitle;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
 
 // badge de estado
-.estado-badge {
+.status-badge {
   padding: 4px 14px;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
 
-  &.pendiente {
+  &.pending {
     background-color: rgba(249, 168, 37, 0.15);
     color: #F9A825;
   }
 
-  &.progreso {
+  &.progress {
     background-color: rgba(30, 136, 229, 0.12);
     color: #1E88E5;
   }
 
-  &.finalizado {
+  &.completed {
     background-color: rgba(var(--primary-rgb), 0.15);
     color: var(--primary);
   }
@@ -73,7 +75,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 14px;
+  font-size: $fs-body;
 }
 
 // ícono pequeño de la línea
@@ -87,7 +89,7 @@
 // label de la línea
 .detail-label {
   color: var(--text-secondary);
-  font-weight: 400;
+  font-weight: $fw-regular;
 }
 
 // valor de la línea
@@ -95,7 +97,7 @@
   color: var(--text);
 
   &.bold {
-    font-weight: 600;
+    font-weight: $fw-semibold;
   }
 }
 
@@ -119,7 +121,7 @@
   }
 
   .map-label {
-    font-size: 14px;
+    font-size: $fs-body;
     color: var(--text-muted);
   }
 }
@@ -133,8 +135,7 @@
 
 // título de sección
 .actions-title {
-  font-size: 14px;
-  font-weight: 600;
+  @include body-text-bold;
   color: var(--text);
   margin: 0;
 }
@@ -147,7 +148,7 @@
 }
 
 // botón iniciar 
-.btn-iniciar {
+.btn-start {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -156,10 +157,9 @@
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  @include body-text-bold;
+  line-height: normal;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
   transition: background-color 0.2s ease;
   box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
 
@@ -175,7 +175,7 @@
 }
 
 // botón reportar
-.btn-reportar {
+.btn-report {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -184,10 +184,9 @@
   color: var(--primary);
   border: none;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  @include body-text-bold;
+  line-height: normal;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.2s ease;
 
   mat-icon {
@@ -203,7 +202,7 @@
 }
 
 // botón finalizar — neutro
-.btn-finalizar {
+.btn-finish {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -212,10 +211,9 @@
   color: var(--text-secondary);
   border: none;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  @include body-text-bold;
+  line-height: normal;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
   transition: all 0.2s ease;
 
   mat-icon {
@@ -238,7 +236,7 @@
 }
 
 // botón contactar cliente
-.btn-contactar {
+.btn-contact {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -247,10 +245,10 @@
   color: var(--text);
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: $fs-body;
+  font-weight: $fw-medium;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: all 0.2s ease;
   width: fit-content;
 
@@ -284,10 +282,10 @@
     flex-direction: column;
   }
 
-  .btn-iniciar,
-  .btn-reportar,
-  .btn-finalizar,
-  .btn-contactar {
+  .btn-start,
+  .btn-report,
+  .btn-finish,
+  .btn-contact {
     width: 100%;
     justify-content: center;
   }
@@ -299,6 +297,6 @@
   }
 
   .detail-title {
-    font-size: 14px;
+    font-size: $fs-body;
   }
 }

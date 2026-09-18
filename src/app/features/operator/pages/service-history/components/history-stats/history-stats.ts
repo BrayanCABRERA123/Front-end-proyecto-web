@@ -11,8 +11,8 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './history-stats.scss'
 })
 export class HistoryStatsComponent {
-  @Input() finalizados = 0;
-  @Input() canceladosReasignados = 0;
-  @Input() totalGenerado = 0;
-  @Input() calificacionPromedio = 0;
+  @Input() completed = 0;
+  @Input() canceledOrReassigned = 0;
+  @Input() totalGenerated = 0;
+  @Input() averageRating = 0;
 }

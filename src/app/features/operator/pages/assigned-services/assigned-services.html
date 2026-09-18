@@ -12,7 +12,7 @@
     <div class="stats-badges">
       @for (stat of stats; track stat.label) {
         <div class="stat-badge" [class]="stat.color">
-          <span class="stat-value">{{ stat.valor }}</span>
+          <span class="stat-value">{{ stat.value }}</span>
           <span class="stat-label">{{ stat.label | translate }}</span>
         </div>
       }
@@ -26,16 +26,16 @@
         <div class="filter-group">
           <label class="filter-label">{{ 'ASSIGNED_SERVICES.FILTERS.BY_DATE' | translate }}</label>
           <div class="date-input-wrapper">
-            <input type="date" class="filter-input" [(ngModel)]="filtroFecha" />
+            <input type="date" class="filter-input" [(ngModel)]="dateFilter" />
           </div>
         </div>
 
         <div class="filter-group">
           <label class="filter-label">{{ 'ASSIGNED_SERVICES.FILTERS.BY_TYPE' | translate }}</label>
           <div class="select-wrapper">
-            <select class="filter-select" [(ngModel)]="filtroTipoServicio">
-              @for (tipo of tiposServicio; track tipo.value) {
-                <option [value]="tipo.value">{{ tipo.label | translate}}</option>
+            <select class="filter-select" [(ngModel)]="serviceTypeFilter">
+              @for (type of serviceTypes; track type.value) {
+                <option [value]="type.value">{{ type.label | translate}}</option>
               }
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
@@ -50,7 +50,7 @@
               type="text"
               class="filter-select"
               [placeholder]="'ASSIGNED_SERVICES.FILTERS.SEARCH_PLACEHOLDER' | translate"
-              [(ngModel)]="filtroVehiculo" />
+              [(ngModel)]="vehicleFilter" />
             <mat-icon class="select-icon">search</mat-icon>
           </div>
         </div>
@@ -69,13 +69,13 @@
     </div>
 
     <app-service-table
-      [servicios]="serviciosFiltrados"
-      [servicioSeleccionado]="servicioSeleccionado"
+      [services]="filteredServices"
+      [selectedService]="selectedService"
       (serviceSelected)="onServiceSelected($event)">
     </app-service-table>
 
-    @if (servicioSeleccionado) {
-      <app-service-detail [servicio]="servicioSeleccionado">
+    @if (selectedService) {
+      <app-service-detail [service]="selectedService">
       </app-service-detail>
     }
 

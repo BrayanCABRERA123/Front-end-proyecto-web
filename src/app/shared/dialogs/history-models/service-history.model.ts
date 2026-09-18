@@ -1,35 +1,35 @@
-export type EstadoHistorial = 'finalizado' | 'cancelado' | 'reasignado';
+export type HistoryStatus = 'finalizado' | 'cancelado' | 'reasignado';
 
-export interface ServicioHistorial {
+export interface ServiceHistoryItem {
   id: number;
-  codigo: string;
-  fecha: string;
-  hora: string;
-  servicio: string;
-  vehiculo: string;
-  placa: string;
-  cliente: string;
-  direccion: string;
-  metodoPago: string;
-  monto: number;
-  calificacion: number | null;
-  comentario: string | null;
-  estado: EstadoHistorial;
-  motivo: string | null;
+  code: string;
+  date: string;
+  time: string;
+  service: string;
+  vehicle: string;
+  plate: string;
+  client: string;
+  address: string;
+  paymentMethod: string;
+  amount: number;
+  rating: number | null;
+  comment: string | null;
+  status: HistoryStatus;
+  reason: string | null;
 }
 
-export function claseEstadoHistorial(estado: EstadoHistorial): string {
-  if (estado === 'finalizado') return 'estado-finalizado';
-  if (estado === 'cancelado') return 'estado-cancelado';
-  return 'estado-reasignado';
+export function historyStatusClass(status: HistoryStatus): string {
+  if (status === 'finalizado') return 'badge-completed';
+  if (status === 'cancelado') return 'badge-canceled';
+  return 'badge-reassigned';
 }
 
-export function iconoEstadoHistorial(estado: EstadoHistorial): string {
-  if (estado === 'finalizado') return 'check_circle';
-  if (estado === 'cancelado') return 'cancel';
+export function historyStatusIcon(status: HistoryStatus): string {
+  if (status === 'finalizado') return 'check_circle';
+  if (status === 'cancelado') return 'cancel';
   return 'sync_alt';
 }
 
-export function labelEstadoHistorial(estado: EstadoHistorial): string {
-  return 'SERVICE_HISTORY.STATUS.' + estado.toUpperCase();
+export function historyStatusLabel(status: HistoryStatus): string {
+  return 'SERVICE_HISTORY.STATUS.' + status.toUpperCase();
 }

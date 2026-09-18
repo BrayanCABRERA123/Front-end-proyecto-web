@@ -26,18 +26,18 @@ export class AssignedServicesComponent {
 
   // estadísticas — label usa clave de traducción
   stats = [
-    { valor: 5, label: 'ASSIGNED_SERVICES.STATS.TOTAL',          color: 'total' },
-    { valor: 2, label: 'ASSIGNED_SERVICES.STATS.PENDING',        color: 'pendiente' },
-    { valor: 2, label: 'ASSIGNED_SERVICES.STATS.IN_PROGRESS',    color: 'progreso' },
-    { valor: 1, label: 'ASSIGNED_SERVICES.STATS.COMPLETED_TODAY', color: 'finalizado' }
+    { value: 5, label: 'ASSIGNED_SERVICES.STATS.TOTAL',          color: 'total' },
+    { value: 2, label: 'ASSIGNED_SERVICES.STATS.PENDING',        color: 'pending' },
+    { value: 2, label: 'ASSIGNED_SERVICES.STATS.IN_PROGRESS',    color: 'progress' },
+    { value: 1, label: 'ASSIGNED_SERVICES.STATS.COMPLETED_TODAY', color: 'completed' }
   ];
 
   // filtros de búsqueda
-  filtroFecha: string = '';
-  filtroTipoServicio: string = '';
-  filtroVehiculo: string = '';
+  dateFilter: string = '';
+  serviceTypeFilter: string = '';
+  vehicleFilter: string = '';
 
-  tiposServicio = [
+  serviceTypes = [
     { value: '',             label: 'ASSIGNED_SERVICES.FILTERS.ALL' },
     { value: 'basico',       label: 'SERVICE.BASIC' },
     { value: 'premium',      label: 'SERVICE.PREMIUM' },
@@ -45,81 +45,81 @@ export class AssignedServicesComponent {
     { value: 'desinfeccion', label: 'SERVICE.BASIC' }
   ];
 
-  servicios = [
+  services = [
     {
       id: 'SV-2031',
-      tipoServicio: 'Lavado básico',
-      ubicacion: 'Calle Falsa 123, Spring...',
-      ubicacionCompleta: 'Calle Falsa 123, Springfield',
-      fechaHora: '15/07/2026 - 10:00 AM',
-      vehiculo: 'Mazda 3 - ABC123',
+      serviceType: 'Lavado básico',
+      location: 'Calle Falsa 123, Spring...',
+      fullAddress: 'Calle Falsa 123, Springfield',
+      dateTime: '15/07/2026 - 10:00 AM',
+      vehicle: 'Mazda 3 - ABC123',
       client: 'Juan Pérez',
-      estado: 'Pendiente',
-      estadoColor: 'pendiente',
-      metodoPago: 'Efectivo'
+      status: 'Pendiente',
+      statusColor: 'pending',
+      paymentMethod: 'Efectivo'
     },
     {
       id: 'SV-2032',
-      tipoServicio: 'Lavado premium',
-      ubicacion: 'Av. Siempre Viva 742, Sp...',
-      ubicacionCompleta: 'Av. Siempre Viva 742, Springfield',
-      fechaHora: '15/07/2026 - 11:30 AM',
-      vehiculo: 'Toyota Corolla - DEF456',
+      serviceType: 'Lavado premium',
+      location: 'Av. Siempre Viva 742, Sp...',
+      fullAddress: 'Av. Siempre Viva 742, Springfield',
+      dateTime: '15/07/2026 - 11:30 AM',
+      vehicle: 'Toyota Corolla - DEF456',
       client: 'María García',
-      estado: 'En progreso',
-      estadoColor: 'progreso',
-      metodoPago: 'Tarjeta'
+      status: 'En progreso',
+      statusColor: 'progress',
+      paymentMethod: 'Tarjeta'
     },
     {
       id: 'SV-2033',
-      tipoServicio: 'Lavado + desinfección',
-      ubicacion: 'Calle del Sol 10, Ciudad...',
-      ubicacionCompleta: 'Calle del Sol 10, Ciudad',
-      fechaHora: '14/07/2026 - 03:00 PM',
-      vehiculo: 'Ford F-150 - GHI789',
+      serviceType: 'Lavado + desinfección',
+      location: 'Calle del Sol 10, Ciudad...',
+      fullAddress: 'Calle del Sol 10, Ciudad',
+      dateTime: '14/07/2026 - 03:00 PM',
+      vehicle: 'Ford F-150 - GHI789',
       client: 'Empresa XYZ',
-      estado: 'Finalizado',
-      estadoColor: 'finalizado',
-      metodoPago: 'PSE'
+      status: 'Finalizado',
+      statusColor: 'completed',
+      paymentMethod: 'PSE'
     },
     {
       id: 'SV-2034',
-      tipoServicio: 'Lavado completo',
-      ubicacion: 'Blvd. Norte 456, Centro...',
-      ubicacionCompleta: 'Blvd. Norte 456, Centro',
-      fechaHora: '16/07/2026 - 09:00 AM',
-      vehiculo: 'Honda Civic - JKL012',
+      serviceType: 'Lavado completo',
+      location: 'Blvd. Norte 456, Centro...',
+      fullAddress: 'Blvd. Norte 456, Centro',
+      dateTime: '16/07/2026 - 09:00 AM',
+      vehicle: 'Honda Civic - JKL012',
       client: 'Ana López',
-      estado: 'Pendiente',
-      estadoColor: 'pendiente',
-      metodoPago: 'Nequi'
+      status: 'Pendiente',
+      statusColor: 'pending',
+      paymentMethod: 'Nequi'
     },
     {
       id: 'SV-2035',
-      tipoServicio: 'Lavado premium',
-      ubicacion: 'Av. Libertad 89, Col. Ref...',
-      ubicacionCompleta: 'Av. Libertad 89, Col. Reforma',
-      fechaHora: '16/07/2026 - 02:00 PM',
-      vehiculo: 'Nissan Sentra - MNO345',
+      serviceType: 'Lavado premium',
+      location: 'Av. Libertad 89, Col. Ref...',
+      fullAddress: 'Av. Libertad 89, Col. Reforma',
+      dateTime: '16/07/2026 - 02:00 PM',
+      vehicle: 'Nissan Sentra - MNO345',
       client: 'Carlos Ruiz',
-      estado: 'En progreso',
-      estadoColor: 'progreso',
-      metodoPago: 'Efectivo'
+      status: 'En progreso',
+      statusColor: 'progress',
+      paymentMethod: 'Efectivo'
     }
   ];
 
   // servicio seleccionado para ver el detalle
-  servicioSeleccionado: any = this.servicios[0];
+  selectedService: any = this.services[0];
 
   // se ejecuta cuando el usuario selecciona un servicio en la tabla
-  onServiceSelected(servicio: any): void {
-    this.servicioSeleccionado = servicio;
+  onServiceSelected(service: any): void {
+    this.selectedService = service;
   }
 
   // filtra los servicios según los filtros activos
-  get serviciosFiltrados() {
-    return this.servicios.filter(s => {
-      if (this.filtroTipoServicio && s.tipoServicio !== this.filtroTipoServicio) return false;
+  get filteredServices() {
+    return this.services.filter(s => {
+      if (this.serviceTypeFilter && s.serviceType !== this.serviceTypeFilter) return false;
       return true;
     });
   }

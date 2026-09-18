@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/mixins' as *;
+
 // tarjeta contenedora de la tabla
 .table-card {
   background-color: var(--card);
@@ -28,8 +30,8 @@ thead tr {
 th {
   padding: 14px 16px;
   text-align: left;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
   color: var(--text-secondary);
   letter-spacing: 0.5px;
 }
@@ -61,12 +63,12 @@ td {
 
 // columna ID en negrita
 .td-id {
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
 }
 
 // columna ubicación con texto cortado
-.td-ubicacion {
+.td-location {
   max-width: 150px;
   white-space: nowrap;
   overflow: hidden;
@@ -75,24 +77,24 @@ td {
 }
 
 // badge de estado
-.estado-badge {
+.status-badge {
   padding: 4px 12px;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
   white-space: nowrap;
 
-  &.pendiente {
+  &.pending {
     background-color: rgba(249, 168, 37, 0.15);
     color: #F9A825;
   }
 
-  &.progreso {
+  &.progress {
     background-color: rgba(30, 136, 229, 0.12);
     color: #1E88E5;
   }
 
-  &.finalizado {
+  &.completed {
     background-color: rgba(var(--primary-rgb), 0.15);
     color: var(--primary);
   }
@@ -112,6 +114,6 @@ td {
 @media (max-width: 480px) {
   th, td {
     padding: 10px 12px;
-    font-size: 12px;
+    font-size: $fs-caption;
   }
 }

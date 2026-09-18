@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/mixins' as *;
+
 // card contenedora
 .qualification-card {
   background-color: var(--card);
@@ -42,7 +44,7 @@
 // nombre del cliente
 .client-name {
   font-size: 15px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
@@ -93,7 +95,7 @@
 }
  
 // botón ver detalles
-.btn-ver {
+.btn-view {
   width: 32px;
   height: 32px;
   flex-shrink: 0;
@@ -107,7 +109,7 @@
   transition: all 0.2s ease;
  
   mat-icon {
-    font-size: 16px;
+    font-size: $fs-subtitle;
     color: var(--text-secondary);
   }
  
@@ -122,10 +124,9 @@
  
 // comentario del cliente
 .card-comment {
-  font-size: 14px;
+  @include body-text;
   color: var(--text);
   margin: 0;
-  line-height: 1.5;
   font-style: italic;
 }
  
@@ -139,14 +140,14 @@
  
 // cada detalle
 .detail-item {
-  font-size: 12px;
+  @include caption-text;
   color: var(--text-secondary);
 }
  
 // separador entre detalles
 .detail-separator {
+  @include caption-text;
   color: var(--border);
-  font-size: 12px;
  
   @media (max-width: 480px) {
     display: none;

@@ -4,11 +4,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 interface Stat {
-  icono: string;
-  valor: number | string;
+  icon: string;
+  value: number | string;
   label: string;
-  notificacion: number;
-  ruta: string;
+  notification: number;
+  route: string;
 }
 
 @Component({
@@ -20,5 +20,5 @@ interface Stat {
 })
 export class StatsCardComponent {
   @Input() stat!: Stat;
-  @Output() abrir = new EventEmitter<string>();
+  @Output() open = new EventEmitter<string>();
 }

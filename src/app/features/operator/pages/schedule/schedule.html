@@ -18,132 +18,132 @@
     <div class="stats-row">
       <div class="stat-card">
         <span class="stat-label">{{ 'SCHEDULE.STATS.TOTAL' | translate }}</span>
-        <span class="stat-valor">{{ totalDelDia }}</span>
+        <span class="stat-value">{{ totalForDay }}</span>
       </div>
-      <div class="stat-card stat-pendiente">
+      <div class="stat-card stat-pending">
         <span class="stat-label">{{ 'SCHEDULE.STATS.PENDING' | translate }}</span>
-        <span class="stat-valor">{{ pendientesDelDia }}</span>
+        <span class="stat-value">{{ pendingForDay }}</span>
       </div>
-      <div class="stat-card stat-progreso">
+      <div class="stat-card stat-progress">
         <span class="stat-label">{{ 'SCHEDULE.STATS.IN_PROGRESS' | translate }}</span>
-        <span class="stat-valor">{{ enProgresoDelDia }}</span>
+        <span class="stat-value">{{ inProgressForDay }}</span>
       </div>
-      <div class="stat-card stat-finalizado">
+      <div class="stat-card stat-completed">
         <span class="stat-label">{{ 'SCHEDULE.STATS.DONE' | translate }}</span>
-        <span class="stat-valor">{{ finalizadosDelDia }}</span>
+        <span class="stat-value">{{ completedForDay }}</span>
       </div>
     </div>
 
-    <div class="agenda-layout">
+    <div class="schedule-layout">
 
       <app-mini-calendar
-        [serviciosPorFecha]="serviciosPorFecha"
-        [fechaSeleccionada]="fechaSeleccionada"
-        (fechaSeleccionadaChange)="onFechaSeleccionada($event)">
+        [servicesByDate]="servicesByDate"
+        [selectedDate]="selectedDate"
+        (selectedDateChange)="onDateSelected($event)">
       </app-mini-calendar>
 
-      <div class="agenda-derecha">
+      <div class="schedule-right">
 
         <div class="tabs">
-          <button class="tab" [class.active]="tabActiva === 'dia'" (click)="cambiarTab('dia')">
+          <button class="tab" [class.active]="activeTab === 'day'" (click)="changeTab('day')">
             {{ 'SCHEDULE.TABS.DAY' | translate }}
           </button>
-          <button class="tab" [class.active]="tabActiva === 'semana'" (click)="cambiarTab('semana')">
+          <button class="tab" [class.active]="activeTab === 'week'" (click)="changeTab('week')">
             {{ 'SCHEDULE.TABS.WEEK' | translate }}
           </button>
-          <button class="tab" [class.active]="tabActiva === 'realizados'" (click)="cambiarTab('realizados')">
+          <button class="tab" [class.active]="activeTab === 'completed'" (click)="changeTab('completed')">
             {{ 'SCHEDULE.TABS.DONE' | translate }}
           </button>
         </div>
 
-        @if (tabActiva === 'dia' && proximoServicio) {
-          <div class="proximo-card">
-            <div class="proximo-info">
+        @if (activeTab === 'day' && nextService) {
+          <div class="next-card">
+            <div class="next-info">
               <mat-icon>schedule</mat-icon>
               <div>
-                <p class="proximo-label">
+                <p class="next-label">
                   {{ 'SCHEDULE.NEXT.LABEL' | translate }} ·
-                  {{ 'SCHEDULE.NEXT.IN_MINUTES' | translate: { min: minutosParaElProximo } }}
+                  {{ 'SCHEDULE.NEXT.IN_MINUTES' | translate: { min: minutesToNext } }}
                 </p>
-                <p class="proximo-titulo">
-                  {{ ('SERVICE.' + proximoServicio.servicio) | translate }} — {{ proximoServicio.cliente }}
+                <p class="next-title">
+                  {{ ('SERVICE.' + nextService.service) | translate }} — {{ nextService.client }}
                 </p>
               </div>
             </div>
 
-            @if (proximoServicio.estado === 'pendiente') {
-              <button class="btn-proximo" (click)="iniciarServicio(proximoServicio)">
+            @if (nextService.status === 'pendiente') {
+              <button class="btn-next" (click)="startService(nextService)">
                 {{ 'SCHEDULE.START' | translate }}
               </button>
             } @else {
-              <button class="btn-proximo" (click)="pedirFinalizar(proximoServicio)">
+              <button class="btn-next" (click)="requestFinish(nextService)">
                 {{ 'SCHEDULE.FINISH' | translate }}
               </button>
             }
           </div>
         }
 
-        <div class="lista-card">
+        <div class="list-card">
 
-          <h2 class="lista-titulo">
-            @if (tabActiva === 'dia') {
-              {{ 'SCHEDULE.RESERVATIONS_OF' | translate }} {{ fechaLegible }}
-            } @else if (tabActiva === 'semana') {
+          <h2 class="list-title">
+            @if (activeTab === 'day') {
+              {{ 'SCHEDULE.RESERVATIONS_OF' | translate }} {{ readableDate }}
+            } @else if (activeTab === 'week') {
               {{ 'SCHEDULE.TABS.WEEK' | translate }}
             } @else {
               {{ 'SCHEDULE.TABS.DONE' | translate }}
             }
           </h2>
 
-          <div class="lista">
-            @for (r of listaVisible; track r.id) {
-              <div class="reserva-item">
+          <div class="list">
+            @for (r of visibleList; track r.id) {
+              <div class="reservation-item">
 
-                <div class="reserva-hora">
+                <div class="reservation-time">
                   <mat-icon>schedule</mat-icon>
-                  {{ r.hora }}
+                  {{ r.time }}
                 </div>
 
-                <div class="reserva-info">
-                  <p class="reserva-titulo">
-                    {{ ('SERVICE.' + r.servicio) | translate }} — {{ r.cliente }}
+                <div class="reservation-info">
+                  <p class="reservation-title">
+                    {{ ('SERVICE.' + r.service) | translate }} — {{ r.client }}
                   </p>
-                  <p class="reserva-detalle">
-                    <mat-icon>{{ r.vehiculo === 'MOTO' ? 'two_wheeler' : (r.vehiculo === 'TRUCK' || r.vehiculo === 'PICKUP' ? 'local_shipping' : 'directions_car') }}</mat-icon>
-                    {{ ('VEHICLE.' + r.vehiculo) | translate }}
+                  <p class="reservation-detail">
+                    <mat-icon>{{ r.vehicle === 'MOTO' ? 'two_wheeler' : (r.vehicle === 'TRUCK' || r.vehicle === 'PICKUP' ? 'local_shipping' : 'directions_car') }}</mat-icon>
+                    {{ ('VEHICLE.' + r.vehicle) | translate }}
                     <mat-icon>location_on</mat-icon>
-                    {{ r.direccion }}
-                    <span class="reserva-duracion">{{ r.duracionMin }} min</span>
-                    <span class="reserva-codigo">{{ r.codigo }}</span>
+                    {{ r.address }}
+                    <span class="reservation-duration">{{ r.durationMin }} min</span>
+                    <span class="reservation-code">{{ r.code }}</span>
                   </p>
                 </div>
 
-                <span class="estado-badge" [ngClass]="claseEstado(r.estado)">
-                  <mat-icon>{{ iconoEstado(r.estado) }}</mat-icon>
-                  {{ labelEstado(r.estado) | translate }}
+                <span class="status-badge" [ngClass]="statusClass(r.status)">
+                  <mat-icon>{{ statusIcon(r.status) }}</mat-icon>
+                  {{ statusLabel(r.status) | translate }}
                 </span>
 
-                <div class="reserva-acciones">
-                  @if (r.estado === 'pendiente') {
-                    <button class="btn-accion" (click)="iniciarServicio(r)">
+                <div class="reservation-actions">
+                  @if (r.status === 'pendiente') {
+                    <button class="btn-action" (click)="startService(r)">
                       <mat-icon>play_arrow</mat-icon>
                       {{ 'SCHEDULE.START' | translate }}
                     </button>
-                  } @else if (r.estado === 'en_progreso') {
-                    <button class="btn-accion" (click)="pedirFinalizar(r)">
+                  } @else if (r.status === 'en_progreso') {
+                    <button class="btn-action" (click)="requestFinish(r)">
                       <mat-icon>check</mat-icon>
                       {{ 'SCHEDULE.FINISH' | translate }}
                     </button>
                   }
 
-                  <button class="btn-detalle" (click)="verDetalle(r)">
+                  <button class="btn-view-detail" (click)="viewDetail(r)">
                     {{ 'SCHEDULE.VIEW_DETAIL' | translate }}
                   </button>
                 </div>
 
               </div>
             } @empty {
-              <div class="lista-vacia">
+              <div class="empty-list">
                 <mat-icon>event_busy</mat-icon>
                 <p>{{ 'SCHEDULE.EMPTY' | translate }}</p>
               </div>

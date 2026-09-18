@@ -4,11 +4,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
-  Reserva,
-  claseEstadoReserva,
-  iconoEstadoReserva,
-  labelEstadoReserva,
-  iconoVehiculoReserva
+  Reservation,
+  reservationStatusClass,
+  reservationStatusIcon,
+  reservationStatusLabel,
+  reservationVehicleIcon
 } from '../reservation-models/reservation.model';
 
 @Component({
@@ -20,25 +20,25 @@ import {
 })
 export class ReservationDetailModal {
 
-  claseEstado = claseEstadoReserva;
-  iconoEstado = iconoEstadoReserva;
-  labelEstado = labelEstadoReserva;
-  iconoVehiculo = iconoVehiculoReserva;
+  statusClass = reservationStatusClass;
+  statusIcon = reservationStatusIcon;
+  statusLabel = reservationStatusLabel;
+  vehicleIcon = reservationVehicleIcon;
 
   constructor(
     private dialogRef: MatDialogRef<ReservationDetailModal>,
-    @Inject(MAT_DIALOG_DATA) public reserva: Reserva
+    @Inject(MAT_DIALOG_DATA) public reservation: Reservation
   ) {}
 
-  cerrar() {
+  close() {
     this.dialogRef.close();
   }
 
-  iniciar() {
-    this.dialogRef.close('iniciar');
+  start() {
+    this.dialogRef.close('start');
   }
 
-  finalizar() {
-    this.dialogRef.close('finalizar');
+  finish() {
+    this.dialogRef.close('finish');
   }
 }

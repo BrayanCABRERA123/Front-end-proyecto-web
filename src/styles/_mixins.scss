@@ -1,4 +1,6 @@
+@forward 'variables';
 @use 'breakpoints' as *;
+@use 'variables' as *;
 
 // uso: @include mobile { ... }
 @mixin mobile {

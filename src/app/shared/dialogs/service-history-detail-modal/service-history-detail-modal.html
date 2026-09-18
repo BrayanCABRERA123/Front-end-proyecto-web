@@ -1,19 +1,19 @@
 <div class="dialog-container">
 
-  <button class="btn-x" (click)="cerrar()">
+  <button class="btn-x" (click)="close()">
     <mat-icon>close</mat-icon>
   </button>
 
   <div class="detail-header">
-    <span class="type-badge" [ngClass]="claseEstado(servicio.estado)">
-      <mat-icon>{{ iconoEstado(servicio.estado) }}</mat-icon>
-      {{ labelEstado(servicio.estado) | translate }}
+    <span class="type-badge" [ngClass]="statusClass(service.status)">
+      <mat-icon>{{ statusIcon(service.status) }}</mat-icon>
+      {{ statusLabel(service.status) | translate }}
     </span>
-    <span class="codigo">{{ servicio.codigo }}</span>
+    <span class="code">{{ service.code }}</span>
   </div>
 
   <h2 class="dialog-title">
-    {{ ('SERVICE.' + servicio.servicio) | translate }} — {{ servicio.cliente }}
+    {{ ('SERVICE.' + service.service) | translate }} — {{ service.client }}
   </h2>
 
   <div class="detail-grid">
@@ -22,7 +22,7 @@
       <mat-icon>event</mat-icon>
       <div>
         <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.DATE' | translate }}</span>
-        <span class="detail-valor">{{ servicio.fecha | date: 'dd/MM/yyyy' }} · {{ servicio.hora }}</span>
+        <span class="detail-value">{{ service.date | date: 'dd/MM/yyyy' }} · {{ service.time }}</span>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
       <mat-icon>directions_car</mat-icon>
       <div>
         <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.VEHICLE' | translate }}</span>
-        <span class="detail-valor">{{ ('VEHICLE.' + servicio.vehiculo) | translate }} · {{ servicio.placa }}</span>
+        <span class="detail-value">{{ ('VEHICLE.' + service.vehicle) | translate }} · {{ service.plate }}</span>
       </div>
     </div>
 
@@ -38,7 +38,7 @@
       <mat-icon>location_on</mat-icon>
       <div>
         <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.ADDRESS' | translate }}</span>
-        <span class="detail-valor">{{ servicio.direccion }}</span>
+        <span class="detail-value">{{ service.address }}</span>
       </div>
     </div>
 
@@ -46,40 +46,40 @@
       <mat-icon>payments</mat-icon>
       <div>
         <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.PAYMENT' | translate }}</span>
-        <span class="detail-valor">{{ ('SERVICE_HISTORY.METHODS.' + servicio.metodoPago) | translate }} · ${{ servicio.monto | number }}</span>
+        <span class="detail-value">{{ ('SERVICE_HISTORY.METHODS.' + service.paymentMethod) | translate }} · ${{ service.amount | number }}</span>
       </div>
     </div>
 
-    @if (servicio.calificacion !== null) {
+    @if (service.rating !== null) {
       <div class="detail-item">
         <mat-icon>star</mat-icon>
         <div class="detail-full">
           <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.RATING' | translate }}</span>
-          <span class="estrellas">
-            @for (e of estrellas; track e) {
-              <mat-icon [class.activa]="e <= servicio.calificacion!">star</mat-icon>
+          <span class="stars">
+            @for (s of stars; track s) {
+              <mat-icon [class.active]="s <= service.rating!">star</mat-icon>
             }
           </span>
-          @if (servicio.comentario) {
-            <p class="comentario">"{{ servicio.comentario }}"</p>
+          @if (service.comment) {
+            <p class="comment">"{{ service.comment }}"</p>
           }
         </div>
       </div>
     }
 
-    @if (servicio.motivo) {
+    @if (service.reason) {
       <div class="detail-item">
         <mat-icon>info</mat-icon>
         <div>
           <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.REASON' | translate }}</span>
-          <span class="detail-valor">{{ servicio.motivo }}</span>
+          <span class="detail-value">{{ service.reason }}</span>
         </div>
       </div>
     }
 
   </div>
 
-  <button class="btn-cerrar" (click)="cerrar()">
+  <button class="btn-close" (click)="close()">
     {{ 'COMMON.CLOSE' | translate }}
   </button>
 

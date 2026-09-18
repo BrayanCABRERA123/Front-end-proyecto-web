@@ -1,3 +1,5 @@
+@use '../../../../../../styles/mixins' as *;
+
 .calendar-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -17,9 +19,9 @@
   justify-content: space-between;
 }
 
-.mes-titulo {
+.month-title {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
@@ -43,32 +45,32 @@
   }
 }
 
-.dias-semana {
+.weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
 
   span {
-    font-size: 12px;
-    font-weight: 600;
+    font-size: $fs-caption;
+    font-weight: $fw-semibold;
     color: var(--text-muted);
     text-transform: capitalize;
   }
 }
 
-.semanas {
+.weeks {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.semana {
+.week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
 }
 
-.dia-celda {
+.day-cell {
   aspect-ratio: 1;
   border: none;
   background: transparent;
@@ -81,49 +83,49 @@
   cursor: pointer;
   transition: 0.15s;
 
-  .dia-numero {
+  .day-number {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: $fw-semibold;
     color: var(--text);
   }
 
-  &:hover:not(.fuera-de-mes) {
+  &:hover:not(.outside-month) {
     background: var(--item-bg);
   }
 
-  &.fuera-de-mes {
+  &.outside-month {
     cursor: default;
 
-    .dia-numero {
+    .day-number {
       color: var(--text-muted);
       opacity: 0.4;
     }
   }
 
-  &.es-hoy {
+  &.is-today {
     border: 1.5px solid var(--primary);
   }
 
-  &.seleccionado {
+  &.selected {
     background: var(--primary);
 
-    .dia-numero {
+    .day-number {
       color: #ffffff;
     }
 
-    .punto {
+    .dot {
       background: #ffffff;
     }
   }
 }
 
-.dia-puntos {
+.day-dots {
   display: flex;
   gap: 2px;
   height: 4px;
 }
 
-.punto {
+.dot {
   width: 4px;
   height: 4px;
   border-radius: 50%;
@@ -144,6 +146,6 @@
 
   strong {
     color: var(--text);
-    font-size: 16px;
+    font-size: $fs-subtitle;
   }
 }

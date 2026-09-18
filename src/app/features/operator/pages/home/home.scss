@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 .page-container {
   display: flex;
   min-height: 100vh;
@@ -29,14 +31,13 @@
 }
 
 .page-title {
-  font-size: 26px;
-  font-weight: 700;
+  @include heading-2;
   color: var(--text);
   margin: 0;
 }
 
 .page-subtitle {
-  font-size: 14px;
+  @include body-text;
   color: var(--text-secondary);
   margin: 0;
 }
@@ -50,10 +51,10 @@
   color: #ffffff;
   border: none;
   border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: $fs-body;
+  font-weight: $fw-medium;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: background-color 0.2s ease;
   box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
   white-space: nowrap;
@@ -114,19 +115,19 @@
 
   mat-icon {
     color: var(--primary);
-    font-size: 20px;
+    font-size: $fs-h3;
   }
 }
 
 .progress-label {
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: $fw-medium;
 }
 
 .progress-numbers {
   font-size: 28px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
@@ -173,19 +174,19 @@
 
   mat-icon {
     color: var(--primary);
-    font-size: 20px;
+    font-size: $fs-h3;
   }
 }
 
 .counter-value {
   font-size: 28px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
 
 .counter-label {
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text-secondary);
   margin: 0;
 }
@@ -214,12 +215,12 @@
 
 .section-icon {
   color: var(--primary);
-  font-size: 20px;
+  font-size: $fs-h3;
 }
 
 .section-title {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: $fs-subtitle;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
@@ -288,6 +289,6 @@
   text-align: center;
   padding: 30px 20px;
   color: var(--text-muted);
-  font-size: 14px;
+  font-size: $fs-body;
   margin: 0;
 }

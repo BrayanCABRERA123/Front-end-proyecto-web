@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/mixins' as *;
+
 // fila de 3 cards
 .stats-row {
   display: grid;
@@ -50,24 +52,24 @@
 .stat-label {
   font-size: 13px;
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: $fw-medium;
 }
  
 // valor numérico o texto grande
 .stat-value {
   font-size: 28px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
  
   @media (max-width: 640px) {
-    font-size: 24px;
+    font-size: $fs-h2;
   }
 }
  
 // texto pequeño debajo del valor
 .stat-sublabel {
-  font-size: 12px;
+  @include caption-text;
   color: var(--text-secondary);
   margin: 0;
 }

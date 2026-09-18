@@ -4,30 +4,30 @@
 
     <div class="service-info">
       <p class="service-title">
-        {{ ('SERVICE.' + reserva.servicio) | translate }} — {{ ('VEHICLE.' + reserva.vehiculo) | translate }}
+        {{ ('SERVICE.' + reservation.service) | translate }} — {{ ('VEHICLE.' + reservation.vehicle) | translate }}
       </p>
-      <p class="service-date">{{ reserva.fecha | date: 'dd/MM/yyyy' }} · {{ reserva.hora }}</p>
+      <p class="service-date">{{ reservation.date | date: 'dd/MM/yyyy' }} · {{ reservation.time }}</p>
       <p class="service-detail">
-        {{ reserva.direccion }}
+        {{ reservation.address }}
         <span class="detail-separator"> — </span>
-        {{ reserva.cliente }}
+        {{ reservation.client }}
       </p>
     </div>
 
     <div class="card-actions">
 
-      <span class="estado-badge" [ngClass]="claseEstado(reserva.estado)">
-        <mat-icon class="badge-icon">{{ iconoEstado(reserva.estado) }}</mat-icon>
-        {{ labelEstado(reserva.estado) | translate }}
+      <span class="status-badge" [ngClass]="statusClass(reservation.status)">
+        <mat-icon class="badge-icon">{{ statusIcon(reservation.status) }}</mat-icon>
+        {{ statusLabel(reservation.status) | translate }}
       </span>
 
-      @if (reserva.estado === 'pendiente') {
-        <button class="btn-iniciar" (click)="iniciar.emit(reserva)">
+      @if (reservation.status === 'pendiente') {
+        <button class="btn-start" (click)="start.emit(reservation)">
           {{ 'OPERATOR_HOME.BTN_START' | translate }}
         </button>
       }
 
-      <button class="btn-ver" (click)="verDetalle.emit(reserva)">
+      <button class="btn-view" (click)="viewDetail.emit(reservation)">
         <mat-icon>visibility</mat-icon>
       </button>
 

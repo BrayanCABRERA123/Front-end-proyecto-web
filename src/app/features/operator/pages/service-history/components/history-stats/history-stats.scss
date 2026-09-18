@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/mixins' as *;
+
 .stats-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -46,7 +48,7 @@
 
 .stat-value {
   font-size: 26px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }

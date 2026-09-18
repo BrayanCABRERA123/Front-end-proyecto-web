@@ -12,10 +12,10 @@
     </div>
 
     <app-qualification-stats
-      [calificacionPromedio]="calificacionPromedio"
-      [nivelSatisfaccion]="nivelSatisfaccion"
-      [porcentajeSatisfaccion]="porcentajeSatisfaccion"
-      [totalCalificaciones]="totalCalificaciones">
+      [averageRating]="averageRating"
+      [satisfactionLevel]="satisfactionLevel"
+      [satisfactionPercentage]="satisfactionPercentage"
+      [totalRatings]="totalRatings">
     </app-qualification-stats>
 
     <div class="filters-card">
@@ -29,16 +29,16 @@
             <input
               type="date"
               class="filter-input"
-              [(ngModel)]="filtroFecha"/>
+              [(ngModel)]="dateFilter"/>
           </div>
         </div>
 
         <div class="filter-group">
           <label class="filter-label">{{ 'QUALIFICATIONS.FILTER_TYPE' | translate }}</label>
           <div class="select-wrapper">
-            <select class="filter-select" [(ngModel)]="filtroTipoServicio">
-              @for (tipo of tiposServicio; track tipo.value) {
-                <option [value]="tipo.value">{{ tipo.label | translate }}</option>
+            <select class="filter-select" [(ngModel)]="serviceTypeFilter">
+              @for (type of serviceTypes; track type.value) {
+                <option [value]="type.value">{{ type.label | translate }}</option>
               }
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
@@ -48,9 +48,9 @@
         <div class="filter-group">
           <label class="filter-label">&nbsp;</label>
           <div class="select-wrapper">
-            <select class="filter-select" [(ngModel)]="filtroEstrellas">
-              @for (estrella of estrellas; track estrella.value) {
-                <option [value]="estrella.value">{{ estrella.label | translate }}</option>
+            <select class="filter-select" [(ngModel)]="starsFilter">
+              @for (star of starOptions; track star.value) {
+                <option [value]="star.value">{{ star.label | translate }}</option>
               }
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
@@ -71,14 +71,14 @@
     </div>
 
     <div class="qualifications-list">
-      @for (calificacion of calificacionesFiltradas; track calificacion.id) {
+      @for (rating of filteredRatings; track rating.id) {
         <app-qualification-card
-          [calificacion]="calificacion"
-          [estrellas]="getEstrellas(calificacion.estrellas)">
+          [rating]="rating"
+          [stars]="getStars(rating.rating)">
         </app-qualification-card>
       }
 
-      @if (calificacionesFiltradas.length === 0) {
+      @if (filteredRatings.length === 0) {
         <div class="empty-state">
           <mat-icon>star_border</mat-icon>
           <p>{{ 'QUALIFICATIONS.EMPTY' | translate }}</p>

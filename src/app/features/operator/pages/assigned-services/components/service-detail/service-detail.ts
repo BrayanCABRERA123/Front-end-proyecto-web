@@ -13,5 +13,5 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ServiceDetailComponent {
 
   // recibe el servicio seleccionado del padre
-  @Input() servicio: any;
+  @Input() service: any;
 }

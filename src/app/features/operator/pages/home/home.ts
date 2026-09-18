@@ -9,14 +9,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { ReservationDetailModal } from '../../../../shared/dialogs/reservation-detail-modal/reservation-detail-modal';
-import { Reserva } from '../../../../shared/dialogs/reservation-models/reservation.model';
+import { Reservation } from '../../../../shared/dialogs/reservation-models/reservation.model';
 
 interface Stat {
-  icono: string;
-  valor: number | string;
+  icon: string;
+  value: number | string;
   label: string;
-  notificacion: number;
-  ruta: string;
+  notification: number;
+  route: string;
 }
 
 @Component({
@@ -35,14 +35,14 @@ interface Stat {
 })
 export class HomeComponent {
 
-  nombreOperator = 'Camilo';
+  operatorName = 'Camilo';
 
-  notificacionesSinLeer = 2;
-  calificacionPromedio = 4.3;
+  unreadNotifications = 2;
+  averageRating = 4.3;
 
-  reservasHoy: Reserva[] = [
-    { id: 1, codigo: 'SV-2101', fecha: '2026-09-03', hora: '14:00', servicio: 'PREMIUM', cliente: 'Juan Felipe González', vehiculo: 'CAR', direccion: 'Calle Sur 123, Los Rosales', duracionMin: 50, estado: 'en_progreso' },
-    { id: 2, codigo: 'SV-2102', fecha: '2026-09-03', hora: '16:30', servicio: 'BASIC', cliente: 'Esneider Sánchez', vehiculo: 'TRUCK', direccion: 'Calle Norte 7-06, Miraflores', duracionMin: 30, estado: 'pendiente' }
+  todayReservations: Reservation[] = [
+    { id: 1, code: 'SV-2101', date: '2026-09-03', time: '14:00', service: 'PREMIUM', client: 'Juan Felipe González', vehicle: 'CAR', address: 'Calle Sur 123, Los Rosales', durationMin: 50, status: 'en_progreso' },
+    { id: 2, code: 'SV-2102', date: '2026-09-03', time: '16:30', service: 'BASIC', client: 'Esneider Sánchez', vehicle: 'TRUCK', address: 'Calle Norte 7-06, Miraflores', durationMin: 30, status: 'pendiente' }
   ];
 
   constructor(
@@ -51,50 +51,50 @@ export class HomeComponent {
     private cdr: ChangeDetectorRef
   ) {}
 
-  get totalHoy(): number {
-    return this.reservasHoy.length;
+  get totalToday(): number {
+    return this.todayReservations.length;
   }
 
-  get enProgreso(): number {
-    return this.reservasHoy.filter(r => r.estado === 'en_progreso').length;
+  get inProgress(): number {
+    return this.todayReservations.filter(r => r.status === 'en_progreso').length;
   }
 
-  get pendientes(): number {
-    return this.reservasHoy.filter(r => r.estado === 'pendiente').length;
+  get pending(): number {
+    return this.todayReservations.filter(r => r.status === 'pendiente').length;
   }
 
-  get finalizadosHoy(): number {
-    return this.reservasHoy.filter(r => r.estado === 'finalizado').length;
+  get completedToday(): number {
+    return this.todayReservations.filter(r => r.status === 'finalizado').length;
   }
 
-  get porcentajeProgreso(): number {
-    if (this.totalHoy === 0) return 0;
-    return (this.finalizadosHoy / this.totalHoy) * 100;
+  get progressPercentage(): number {
+    if (this.totalToday === 0) return 0;
+    return (this.completedToday / this.totalToday) * 100;
   }
 
   get stats(): Stat[] {
     return [
-      { icono: 'calendar_today', valor: this.totalHoy, label: 'OPERATOR_HOME.STATS.ASSIGNED', notificacion: 0, ruta: '/operator/schedule' },
-      { icono: 'sync', valor: this.enProgreso, label: 'OPERATOR_HOME.STATS.IN_PROGRESS', notificacion: 0, ruta: '/operator/schedule' },
-      { icono: 'notifications', valor: this.notificacionesSinLeer, label: 'OPERATOR_HOME.STATS.NOTIFICATIONS', notificacion: this.notificacionesSinLeer, ruta: '/operator/notifications' },
-      { icono: 'star_outline', valor: this.calificacionPromedio, label: 'OPERATOR_HOME.STATS.RATING', notificacion: 0, ruta: '/operator/qualifications' }
+      { icon: 'calendar_today', value: this.totalToday, label: 'OPERATOR_HOME.STATS.ASSIGNED', notification: 0, route: '/operator/schedule' },
+      { icon: 'sync', value: this.inProgress, label: 'OPERATOR_HOME.STATS.IN_PROGRESS', notification: 0, route: '/operator/schedule' },
+      { icon: 'notifications', value: this.unreadNotifications, label: 'OPERATOR_HOME.STATS.NOTIFICATIONS', notification: this.unreadNotifications, route: '/operator/notifications' },
+      { icon: 'star_outline', value: this.averageRating, label: 'OPERATOR_HOME.STATS.RATING', notification: 0, route: '/operator/qualifications' }
     ];
   }
 
-  irA(ruta: string) {
-    this.router.navigateByUrl(ruta);
+  goTo(route: string) {
+    this.router.navigateByUrl(route);
   }
 
-  irAAgenda() {
+  goToSchedule() {
     this.router.navigateByUrl('/operator/schedule');
   }
 
-  iniciarServicio(r: Reserva) {
-    if (r.estado !== 'pendiente') return;
-    r.estado = 'en_progreso';
+  startService(r: Reservation) {
+    if (r.status !== 'pendiente') return;
+    r.status = 'en_progreso';
   }
 
-  pedirFinalizar(r: Reserva) {
+  requestFinish(r: Reservation) {
     const data: ConfirmModalData = {
       titulo: 'SCHEDULE.FINISH_TITLE',
       mensaje: 'SCHEDULE.FINISH_MESSAGE',
@@ -108,25 +108,25 @@ export class HomeComponent {
       data
     });
 
-    dialogRef.afterClosed().subscribe(confirmado => {
-      if (!confirmado) return;
-      r.estado = 'finalizado';
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
+      r.status = 'finalizado';
       this.cdr.detectChanges();
     });
   }
 
-  verDetalle(r: Reserva) {
+  viewDetail(r: Reservation) {
     const dialogRef = this.dialog.open(ReservationDetailModal, {
       panelClass: 'custom-dialog',
       data: r
     });
 
-    dialogRef.afterClosed().subscribe(accion => {
-      if (accion === 'iniciar') {
-        this.iniciarServicio(r);
+    dialogRef.afterClosed().subscribe(action => {
+      if (action === 'start') {
+        this.startService(r);
         this.cdr.detectChanges();
-      } else if (accion === 'finalizar') {
-        this.pedirFinalizar(r);
+      } else if (action === 'finish') {
+        this.requestFinish(r);
       }
     });
   }

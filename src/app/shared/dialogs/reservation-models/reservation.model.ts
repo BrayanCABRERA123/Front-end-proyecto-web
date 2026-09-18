@@ -1,36 +1,36 @@
-export type EstadoReserva = 'finalizado' | 'en_progreso' | 'pendiente';
+export type ReservationStatus = 'finalizado' | 'en_progreso' | 'pendiente';
 
-export interface Reserva {
+export interface Reservation {
   id: number;
-  codigo: string;
-  fecha: string;   
-  hora: string;
-  servicio: string;   
-  cliente: string;
-  vehiculo: string;   
-  direccion: string;
-  duracionMin: number;
-  estado: EstadoReserva;
+  code: string;
+  date: string;
+  time: string;
+  service: string;
+  client: string;
+  vehicle: string;
+  address: string;
+  durationMin: number;
+  status: ReservationStatus;
 }
 
-export function claseEstadoReserva(estado: EstadoReserva): string {
-  if (estado === 'finalizado') return 'estado-finalizado';
-  if (estado === 'en_progreso') return 'estado-progreso';
-  return 'estado-pendiente';
+export function reservationStatusClass(status: ReservationStatus): string {
+  if (status === 'finalizado') return 'badge-completed';
+  if (status === 'en_progreso') return 'badge-in-progress';
+  return 'badge-pending';
 }
 
-export function iconoEstadoReserva(estado: EstadoReserva): string {
-  if (estado === 'finalizado') return 'check_circle';
-  if (estado === 'en_progreso') return 'play_circle';
+export function reservationStatusIcon(status: ReservationStatus): string {
+  if (status === 'finalizado') return 'check_circle';
+  if (status === 'en_progreso') return 'play_circle';
   return 'schedule';
 }
 
-export function labelEstadoReserva(estado: EstadoReserva): string {
-  return 'SCHEDULE.STATUS.' + estado.toUpperCase();
+export function reservationStatusLabel(status: ReservationStatus): string {
+  return 'SCHEDULE.STATUS.' + status.toUpperCase();
 }
 
-export function iconoVehiculoReserva(vehiculo: string): string {
-  if (vehiculo === 'MOTO') return 'two_wheeler';
-  if (vehiculo === 'TRUCK' || vehiculo === 'PICKUP') return 'local_shipping';
+export function reservationVehicleIcon(vehicle: string): string {
+  if (vehicle === 'MOTO') return 'two_wheeler';
+  if (vehicle === 'TRUCK' || vehicle === 'PICKUP') return 'local_shipping';
   return 'directions_car';
 }

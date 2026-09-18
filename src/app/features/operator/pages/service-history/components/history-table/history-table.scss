@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/mixins' as *;
+
 .table-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -13,8 +15,8 @@
   th {
     text-align: left;
     padding: 16px 20px;
-    font-size: 12px;
-    font-weight: 700;
+    font-size: $fs-caption;
+    font-weight: $fw-bold;
     color: var(--text-secondary);
     text-transform: uppercase;
     border-bottom: 1px solid var(--border);
@@ -38,27 +40,27 @@
   }
 }
 
-.badge-servicio {
+.service-badge {
   background: var(--primary-soft);
   color: var(--primary);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
   padding: 4px 10px;
   border-radius: 999px;
 }
 
-.celda-vehiculo {
+.vehicle-cell {
   display: flex;
   flex-direction: column;
   gap: 2px;
 
-  .placa {
+  .plate {
     font-size: 11px;
     color: var(--text-muted);
   }
 }
 
-.estrellas {
+.stars {
   display: flex;
   gap: 1px;
 
@@ -70,18 +72,18 @@
   }
 }
 
-.sin-calificar {
+.not-rated {
   color: var(--text-muted);
 }
 
-.estado-badge {
+.status-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 5px 12px;
   border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
 
   mat-icon {
     font-size: 14px;
@@ -90,22 +92,23 @@
   }
 }
 
-.estado-finalizado {
+// las .badge-* vienen de historyStatusClass (shared/dialogs/history-models), no se traducen aquí
+.badge-completed {
   background: var(--success);
   color: #ffffff;
 }
 
-.estado-cancelado {
+.badge-canceled {
   background: var(--error-soft);
   color: var(--error);
 }
 
-.estado-reasignado {
+.badge-reassigned {
   background: var(--neutral-badge-soft);
   color: var(--neutral-badge);
 }
 
-.btn-ver {
+.btn-view {
   width: 34px;
   height: 34px;
   border-radius: 10px;
@@ -157,7 +160,7 @@
 
   .history-table td::before {
     content: attr(data-label);
-    font-weight: 700;
+    font-weight: $fw-bold;
     color: var(--text-secondary);
     font-size: 11px;
     text-transform: uppercase;

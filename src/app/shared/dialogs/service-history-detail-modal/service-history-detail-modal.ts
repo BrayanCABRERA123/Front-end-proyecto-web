@@ -4,10 +4,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
-  ServicioHistorial,
-  claseEstadoHistorial,
-  iconoEstadoHistorial,
-  labelEstadoHistorial
+  ServiceHistoryItem,
+  historyStatusClass,
+  historyStatusIcon,
+  historyStatusLabel
 } from '../history-models/service-history.model';
 
 @Component({
@@ -19,18 +19,18 @@ import {
 })
 export class ServiceHistoryDetailModal {
 
-  claseEstado = claseEstadoHistorial;
-  iconoEstado = iconoEstadoHistorial;
-  labelEstado = labelEstadoHistorial;
+  statusClass = historyStatusClass;
+  statusIcon = historyStatusIcon;
+  statusLabel = historyStatusLabel;
 
-  estrellas = [1, 2, 3, 4, 5];
+  stars = [1, 2, 3, 4, 5];
 
   constructor(
     private dialogRef: MatDialogRef<ServiceHistoryDetailModal>,
-    @Inject(MAT_DIALOG_DATA) public servicio: ServicioHistorial
+    @Inject(MAT_DIALOG_DATA) public service: ServiceHistoryItem
   ) {}
 
-  cerrar() {
+  close() {
     this.dialogRef.close();
   }
 }

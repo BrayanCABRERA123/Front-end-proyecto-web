@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 .page-container {
   display: flex;
   min-height: 100vh;
@@ -32,32 +34,31 @@
   flex-shrink: 0;
 
   mat-icon {
-    font-size: 24px;
+    font-size: $fs-h2;
   }
 }
 
 .page-title {
-  font-size: 24px;
-  font-weight: 700;
+  @include heading-2;
   color: var(--text);
   margin: 0;
 }
 
 .page-subtitle {
-  font-size: 14px;
+  @include body-text;
   color: var(--text-secondary);
   margin: 2px 0 0;
 }
 
 // ---------- LAYOUT ----------
-.agenda-layout {
+.schedule-layout {
   display: grid;
   grid-template-columns: 340px 1fr;
   gap: 24px;
   align-items: start;
 }
 
-.agenda-derecha {
+.schedule-right {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -80,8 +81,8 @@
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   border-radius: 10px;
   cursor: pointer;
   transition: 0.2s;
@@ -98,7 +99,7 @@
 }
 
 // ---------- TARJETA DE LA LISTA ----------
-.lista-card {
+.list-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -106,21 +107,21 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
-.lista-titulo {
+.list-title {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0 0 18px;
 }
 
-.lista {
+.list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 // ---------- CADA RESERVA ----------
-.reserva-item {
+.reservation-item {
   display: flex;
   align-items: center;
   gap: 18px;
@@ -135,11 +136,11 @@
   }
 }
 
-.reserva-hora {
+.reservation-time {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   font-size: 15px;
   flex-shrink: 0;
@@ -150,25 +151,25 @@
   }
 }
 
-.reserva-info {
+.reservation-info {
   flex: 1;
   min-width: 200px;
 }
 
-.reserva-titulo {
-  font-weight: 600;
+.reservation-title {
+  font-weight: $fw-semibold;
   color: var(--text);
   margin: 0;
-  font-size: 14px;
+  font-size: $fs-body;
 }
 
-.reserva-detalle {
+.reservation-detail {
   display: flex;
   align-items: center;
   gap: 4px;
   flex-wrap: wrap;
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: $fs-caption;
   margin: 6px 0 0;
 
   mat-icon {
@@ -178,22 +179,22 @@
   }
 }
 
-.reserva-duracion,
-.reserva-codigo {
+.reservation-duration,
+.reservation-code {
   margin-left: 8px;
   padding-left: 8px;
   border-left: 1px solid var(--border);
 }
 
 // ---------- BADGE DE ESTADO ----------
-.estado-badge {
+.status-badge {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
   border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
   white-space: nowrap;
   flex-shrink: 0;
 
@@ -204,25 +205,26 @@
   }
 }
 
-.estado-finalizado {
+// las .badge-* vienen de reservationStatusClass (shared/dialogs/reservation-models), no se traducen aquí
+.badge-completed {
   background: var(--success);
   color: #ffffff;
 }
 
-.estado-progreso {
+.badge-in-progress {
   background: var(--primary-soft);
   color: var(--primary);
   border: 1px solid rgba(var(--primary-rgb), .3);
 }
 
-.estado-pendiente {
+.badge-pending {
   background: var(--neutral-badge-soft);
   color: var(--neutral-badge);
   border: 1px solid var(--border);
 }
 
 // ---------- ESTADO VACÍO ----------
-.lista-vacia {
+.empty-list {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -239,7 +241,7 @@
 
   p {
     margin: 0;
-    font-size: 14px;
+    font-size: $fs-body;
   }
 }
 
@@ -260,36 +262,36 @@
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: $fs-caption;
   color: var(--text-secondary);
 }
 
-.stat-valor {
+.stat-value {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
 }
 
-.stat-pendiente {
+.stat-pending {
   background: var(--neutral-badge-soft);
 
-  .stat-label, .stat-valor { color: var(--neutral-badge); }
+  .stat-label, .stat-value { color: var(--neutral-badge); }
 }
 
-.stat-progreso {
+.stat-progress {
   background: var(--primary-soft);
 
-  .stat-label, .stat-valor { color: var(--primary); }
+  .stat-label, .stat-value { color: var(--primary); }
 }
 
-.stat-finalizado {
+.stat-completed {
   background: var(--success-soft);
 
-  .stat-label, .stat-valor { color: var(--success); }
+  .stat-label, .stat-value { color: var(--success); }
 }
 
 // ---------- PROXIMO SERVICIO ----------
-.proximo-card {
+.next-card {
   background: var(--primary-soft);
   border: 1px solid rgba(var(--primary-rgb), .3);
   border-radius: 16px;
@@ -301,7 +303,7 @@
   flex-wrap: wrap;
 }
 
-.proximo-info {
+.next-info {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -314,28 +316,28 @@
   }
 }
 
-.proximo-label {
-  font-size: 12px;
-  font-weight: 600;
+.next-label {
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
   color: var(--primary);
   margin: 0;
 }
 
-.proximo-titulo {
+.next-title {
   font-size: 15px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 2px 0 0;
 }
 
-.btn-proximo {
+.btn-next {
   background: var(--primary);
   color: #ffffff;
   border: none;
   padding: 10px 20px;
   border-radius: 10px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   cursor: pointer;
   white-space: nowrap;
   transition: 0.2s;
@@ -346,14 +348,14 @@
 }
 
 // ---------- ACCIONES POR RESERVA ----------
-.reserva-acciones {
+.reservation-actions {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
 }
 
-.btn-accion {
+.btn-action {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -362,8 +364,8 @@
   border: none;
   padding: 7px 14px;
   border-radius: 10px;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
   cursor: pointer;
   white-space: nowrap;
   transition: 0.2s;
@@ -379,14 +381,14 @@
   }
 }
 
-.btn-detalle {
+.btn-view-detail {
   background: var(--card);
   color: var(--text-secondary);
   border: 1px solid var(--border);
   padding: 7px 14px;
   border-radius: 10px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
   cursor: pointer;
   white-space: nowrap;
   transition: 0.2s;
@@ -397,8 +399,8 @@
   }
 }
 
-:host-context(body.green-dark) .lista-card,
-:host-context(body.pink-dark) .lista-card {
+:host-context(body.green-dark) .list-card,
+:host-context(body.pink-dark) .list-card {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
 }
 
@@ -410,7 +412,7 @@
 }
 
 @media (max-width: 900px) {
-  .agenda-layout {
+  .schedule-layout {
     grid-template-columns: 1fr;
   }
 }
@@ -422,19 +424,19 @@
   }
 
   .page-title {
-    font-size: 20px;
+    font-size: $fs-h3;
   }
 
   .stats-row {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .proximo-card {
+  .next-card {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .btn-proximo {
+  .btn-next {
     text-align: center;
   }
 
@@ -447,19 +449,19 @@
     }
   }
 
-  .reserva-item {
+  .reservation-item {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .estado-badge {
+  .status-badge {
     align-self: flex-start;
   }
 
-  .reserva-acciones {
+  .reservation-actions {
     width: 100%;
 
-    .btn-accion, .btn-detalle {
+    .btn-action, .btn-view-detail {
       flex: 1;
       justify-content: center;
     }
@@ -472,7 +474,7 @@
     padding-top: 66px;
   }
 
-  .lista-card {
+  .list-card {
     padding: 16px;
   }
 
@@ -481,7 +483,7 @@
     height: 40px;
 
     mat-icon {
-      font-size: 20px;
+      font-size: $fs-h3;
     }
   }
 }

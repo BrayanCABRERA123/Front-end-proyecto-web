@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 .page-container {
   display: flex;
   min-height: 100vh;
@@ -14,14 +16,13 @@
 }
 
 .page-title {
-  font-size: 24px;
-  font-weight: 700;
+  @include heading-2;
   color: var(--text);
   margin: 0;
 }
 
 .page-subtitle {
-  font-size: 14px;
+  @include body-text;
   color: var(--text-secondary);
   margin: 4px 0 0;
 }
@@ -39,7 +40,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-  font-size: 14px;
+  font-size: $fs-body;
 
   span {
     color: var(--text-secondary);
@@ -47,7 +48,7 @@
 
   strong {
     color: var(--primary);
-    font-size: 16px;
+    font-size: $fs-subtitle;
   }
 }
 
@@ -99,7 +100,7 @@
 
   mat-icon {
     color: var(--text-muted);
-    font-size: 20px;
+    font-size: $fs-h3;
   }
 }
 
@@ -108,7 +109,7 @@
   outline: none;
   background: transparent;
   padding: 10px 0;
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text);
   width: 100%;
 
@@ -121,7 +122,7 @@
   padding: 10px 12px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text);
   background: var(--card);
   outline: none;
@@ -141,7 +142,7 @@
   padding: 10px 36px 10px 12px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text);
   background: var(--card);
   outline: none;
@@ -170,11 +171,17 @@
   border-radius: 10px;
   background: var(--card);
   color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   cursor: pointer;
   white-space: nowrap;
   transition: 0.2s;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
 
   &:hover {
     border-color: var(--primary);
@@ -199,7 +206,7 @@
   background: transparent;
   color: var(--text-secondary);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   border-radius: 9px;
   cursor: pointer;
   transition: 0.2s;
@@ -229,7 +236,7 @@
   }
 
   .page-title {
-    font-size: 20px;
+    font-size: $fs-h3;
   }
 
   .filters-row {

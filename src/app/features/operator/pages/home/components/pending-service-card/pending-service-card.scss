@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/mixins' as *;
+
 .service-card {
   background-color: var(--card);
   border-radius: 12px;
@@ -27,7 +29,7 @@
 
 .service-title {
   font-size: 15px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
@@ -56,26 +58,27 @@
   flex-wrap: wrap;
 }
 
-.estado-badge {
+.status-badge {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
 
-  &.estado-finalizado {
+  // las .badge-* vienen de reservationStatusClass (shared/dialogs/reservation-models), no se traducen aquí
+  &.badge-completed {
     background-color: var(--success);
     color: #ffffff;
   }
 
-  &.estado-progreso {
+  &.badge-in-progress {
     background-color: var(--primary-soft);
     color: var(--primary);
   }
 
-  &.estado-pendiente {
+  &.badge-pending {
     background-color: var(--neutral-badge-soft);
     color: var(--neutral-badge);
   }
@@ -87,16 +90,15 @@
   }
 }
 
-.btn-iniciar {
+.btn-start {
   padding: 8px 20px;
   background-color: var(--primary);
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  @include body-text-bold;
+  line-height: normal;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
   transition: background-color 0.2s ease;
   box-shadow: 0 4px 10px rgba(var(--primary-rgb), .20);
 
@@ -105,7 +107,7 @@
   }
 }
 
-.btn-ver {
+.btn-view {
   width: 36px;
   height: 36px;
   display: flex;
@@ -153,12 +155,12 @@
     align-items: stretch;
   }
 
-  .btn-iniciar {
+  .btn-start {
     width: 100%;
     text-align: center;
   }
 
-  .estado-badge {
+  .status-badge {
     justify-content: center;
   }
 }

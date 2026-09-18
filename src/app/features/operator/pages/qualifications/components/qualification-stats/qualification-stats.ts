@@ -14,15 +14,15 @@ import { TranslateModule } from '@ngx-translate/core';
 export class QualificationStatsComponent {
 
   // recibe los datos del padre
-  @Input() calificacionPromedio: number = 0;
-  @Input() nivelSatisfaccion: string = '';
-  @Input() porcentajeSatisfaccion: number = 0;
-  @Input() totalCalificaciones: number = 0;
+  @Input() averageRating: number = 0;
+  @Input() satisfactionLevel: string = '';
+  @Input() satisfactionPercentage: number = 0;
+  @Input() totalRatings: number = 0;
 
   // genera arreglo de estrellas para mostrar
-  get estrellas(): number[] {
+  get stars(): number[] {
     return Array(5).fill(0).map((_, i) =>
-      i < Math.floor(this.calificacionPromedio) ? 1 : 0
+      i < Math.floor(this.averageRating) ? 1 : 0
     );
   }
 }

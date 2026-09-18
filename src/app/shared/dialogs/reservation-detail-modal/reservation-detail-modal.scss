@@ -30,7 +30,7 @@
   padding-right: 24px;
 }
 
-.codigo {
+.code {
   font-size: 12px;
   color: var(--text-muted);
   font-weight: 600;
@@ -76,7 +76,7 @@
   color: var(--text-secondary);
 }
 
-.detail-valor {
+.detail-value {
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
@@ -107,7 +107,7 @@
   }
 }
 
-.btn-cerrar {
+.btn-close {
   flex: 1;
   background: var(--item-bg);
   color: var(--text);
@@ -141,19 +141,20 @@
   }
 }
 
-.estado-finalizado {
+// las .badge-* vienen de reservationStatusClass (shared/dialogs/reservation-models)
+.badge-completed {
   background: var(--success);
   color: #ffffff;
 
   mat-icon { color: #ffffff; }
 }
 
-.estado-progreso {
+.badge-in-progress {
   background: var(--primary-soft);
   color: var(--primary);
 }
 
-.estado-pendiente {
+.badge-pending {
   background: var(--neutral-badge-soft);
   color: var(--neutral-badge);
 }

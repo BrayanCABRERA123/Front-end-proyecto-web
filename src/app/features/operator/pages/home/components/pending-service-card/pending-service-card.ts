@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import {
-  Reserva,
-  claseEstadoReserva,
-  iconoEstadoReserva,
-  labelEstadoReserva
+  Reservation,
+  reservationStatusClass,
+  reservationStatusIcon,
+  reservationStatusLabel
 } from '../../../../../../shared/dialogs/reservation-models/reservation.model';
 
 @Component({
@@ -17,12 +17,12 @@ import {
   styleUrl: './pending-service-card.scss'
 })
 export class PendingServiceCardComponent {
-  @Input() reserva!: Reserva;
+  @Input() reservation!: Reservation;
 
-  @Output() iniciar = new EventEmitter<Reserva>();
-  @Output() verDetalle = new EventEmitter<Reserva>();
+  @Output() start = new EventEmitter<Reservation>();
+  @Output() viewDetail = new EventEmitter<Reservation>();
 
-  claseEstado = claseEstadoReserva;
-  iconoEstado = iconoEstadoReserva;
-  labelEstado = labelEstadoReserva;
+  statusClass = reservationStatusClass;
+  statusIcon = reservationStatusIcon;
+  statusLabel = reservationStatusLabel;
 }

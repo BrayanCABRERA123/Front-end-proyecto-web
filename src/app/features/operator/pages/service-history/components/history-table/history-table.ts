@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import {
-  ServicioHistorial,
-  claseEstadoHistorial,
-  iconoEstadoHistorial,
-  labelEstadoHistorial
+  ServiceHistoryItem,
+  historyStatusClass,
+  historyStatusIcon,
+  historyStatusLabel
 } from '../../../../../../shared/dialogs/history-models/service-history.model';
 
 @Component({
@@ -17,14 +17,14 @@ import {
   styleUrl: './history-table.scss'
 })
 export class HistoryTableComponent {
-  @Input() servicios: ServicioHistorial[] = [];
-  @Output() verDetalle = new EventEmitter<ServicioHistorial>();
+  @Input() services: ServiceHistoryItem[] = [];
+  @Output() viewDetail = new EventEmitter<ServiceHistoryItem>();
 
-  claseEstado = claseEstadoHistorial;
-  iconoEstado = iconoEstadoHistorial;
-  labelEstado = labelEstadoHistorial;
+  statusClass = historyStatusClass;
+  statusIcon = historyStatusIcon;
+  statusLabel = historyStatusLabel;
 
-  estrellasLlenas(calificacion: number | null): number[] {
-    return Array(calificacion ?? 0).fill(0);
+  filledStars(rating: number | null): number[] {
+    return Array(rating ?? 0).fill(0);
   }
 }

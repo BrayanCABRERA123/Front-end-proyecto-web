@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 // contenedor principal con sidebar y contenido en fila
 .page-container {
   display: flex;
@@ -25,19 +27,17 @@
 
 // título principal
 .page-title {
-  font-size: 26px;
-  font-weight: 700;
+  @include heading-2;
   color: var(--text);
   margin: 0;
 }
 
 // subtítulo
 .page-subtitle {
-  font-size: 14px;
+  @include body-text;
   color: var(--text-secondary);
   margin: 0;
   max-width: 600px;
-  line-height: 1.5;
 }
 
 // fila de badges de estadísticas
@@ -54,24 +54,24 @@
   gap: 8px;
   padding: 10px 20px;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: $fs-body;
 
   &.total {
     background-color: var(--item-bg);
     color: var(--text);
   }
 
-  &.pendiente {
+  &.pending {
     background-color: rgba(249, 168, 37, 0.15);
     color: #F9A825;
   }
 
-  &.progreso {
+  &.progress {
     background-color: rgba(30, 136, 229, 0.12);
     color: #1E88E5;
   }
 
-  &.finalizado {
+  &.completed {
     background-color: rgba(var(--primary-rgb), 0.15);
     color: var(--primary);
   }
@@ -79,13 +79,13 @@
 
 // número del badge
 .stat-value {
-  font-weight: 700;
+  font-weight: $fw-bold;
   font-size: 15px;
 }
 
 // texto del badge
 .stat-label {
-  font-weight: 500;
+  font-weight: $fw-medium;
 }
 
 // card de filtros
@@ -108,7 +108,7 @@
 // título de filtros
 .filters-title {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   color: var(--text);
   margin: 0;
 }
@@ -130,8 +130,8 @@
 
 // label del filtro
 .filter-label {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: $fs-caption;
+  font-weight: $fw-medium;
   color: var(--text-secondary);
 }
 
@@ -144,7 +144,7 @@
   .date-icon {
     position: absolute;
     right: 10px;
-    font-size: 16px;
+    font-size: $fs-subtitle;
     color: var(--text-muted);
     pointer-events: none;
   }
@@ -155,11 +155,11 @@
   padding: 10px 36px 10px 12px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text);
   background-color: var(--card);
   outline: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: border-color 0.2s ease;
   width: 160px;
 
@@ -195,13 +195,13 @@
   padding: 10px 36px 10px 12px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text);
   background-color: var(--card);
   outline: none;
   appearance: none;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: border-color 0.2s ease;
   width: 160px;
 
@@ -239,7 +239,7 @@
   transition: all 0.2s ease;
 
   mat-icon {
-    font-size: 20px;
+    font-size: $fs-h3;
     color: var(--text-muted);
   }
 
@@ -262,10 +262,10 @@
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: background-color 0.2s ease;
   box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
 

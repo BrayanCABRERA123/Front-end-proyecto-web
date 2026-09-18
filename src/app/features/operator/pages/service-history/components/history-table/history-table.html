@@ -15,53 +15,53 @@
     </thead>
 
     <tbody>
-      @for (s of servicios; track s.id) {
+      @for (s of services; track s.id) {
         <tr class="table-row">
 
           <td [attr.data-label]="'HISTORY_TABLE.DATE_COMPLETED' | translate">
-            {{ s.fecha | date: 'dd/MM/yyyy' }} - {{ s.hora }}
+            {{ s.date | date: 'dd/MM/yyyy' }} - {{ s.time }}
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.SERVICE' | translate">
-            <span class="badge-servicio">{{ ('SERVICE.' + s.servicio) | translate }}</span>
+            <span class="service-badge">{{ ('SERVICE.' + s.service) | translate }}</span>
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.VEHICLE' | translate">
-            <div class="celda-vehiculo">
-              <span>{{ ('VEHICLE.' + s.vehiculo) | translate }}</span>
-              <span class="placa">{{ s.placa }}</span>
+            <div class="vehicle-cell">
+              <span>{{ ('VEHICLE.' + s.vehicle) | translate }}</span>
+              <span class="plate">{{ s.plate }}</span>
             </div>
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.PAYMENT' | translate">
-            {{ ('SERVICE_HISTORY.METHODS.' + s.metodoPago) | translate }}
+            {{ ('SERVICE_HISTORY.METHODS.' + s.paymentMethod) | translate }}
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.AMOUNT' | translate">
-            <strong>${{ s.monto | number }}</strong>
+            <strong>${{ s.amount | number }}</strong>
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.RATING' | translate">
-            @if (s.calificacion !== null) {
-              <span class="estrellas">
-                @for (e of estrellasLlenas(s.calificacion); track $index) {
-                  <mat-icon class="activa">star</mat-icon>
+            @if (s.rating !== null) {
+              <span class="stars">
+                @for (e of filledStars(s.rating); track $index) {
+                  <mat-icon class="active">star</mat-icon>
                 }
               </span>
             } @else {
-              <span class="sin-calificar">—</span>
+              <span class="not-rated">—</span>
             }
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.STATUS' | translate">
-            <span class="estado-badge" [ngClass]="claseEstado(s.estado)">
-              <mat-icon>{{ iconoEstado(s.estado) }}</mat-icon>
-              {{ labelEstado(s.estado) | translate }}
+            <span class="status-badge" [ngClass]="statusClass(s.status)">
+              <mat-icon>{{ statusIcon(s.status) }}</mat-icon>
+              {{ statusLabel(s.status) | translate }}
             </span>
           </td>
 
           <td>
-            <button class="btn-ver" (click)="verDetalle.emit(s)">
+            <button class="btn-view" (click)="viewDetail.emit(s)">
               <mat-icon>visibility</mat-icon>
             </button>
           </td>
@@ -69,7 +69,7 @@
         </tr>
       }
 
-      @if (servicios.length === 0) {
+      @if (services.length === 0) {
         <tr>
           <td colspan="8" class="empty-row">
             {{ 'HISTORY_TABLE.EMPTY' | translate }}

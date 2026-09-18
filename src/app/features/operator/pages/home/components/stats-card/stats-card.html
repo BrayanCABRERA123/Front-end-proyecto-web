@@ -1,16 +1,16 @@
-<button class="stats-card" (click)="abrir.emit(stat.ruta)">
+<button class="stats-card" (click)="open.emit(stat.route)">
 
   <div class="icon-wrapper">
     <div class="stat-icon">
-      <mat-icon>{{ stat.icono }}</mat-icon>
+      <mat-icon>{{ stat.icon }}</mat-icon>
     </div>
 
-    @if (stat.notificacion > 0) {
-      <span class="notification-badge">{{ stat.notificacion }}</span>
+    @if (stat.notification > 0) {
+      <span class="notification-badge">{{ stat.notification }}</span>
     }
   </div>
 
-  <p class="stat-value">{{ stat.valor }}</p>
+  <p class="stat-value">{{ stat.value }}</p>
 
   <p class="stat-label">{{ stat.label | translate }}</p>
 
