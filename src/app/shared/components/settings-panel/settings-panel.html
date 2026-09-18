@@ -254,6 +254,38 @@
 
         </div>
 
+        <div class="divider"></div>
+
+        <div class="help">
+
+          <div class="help-left">
+            <mat-icon>description</mat-icon>
+            <span>{{ 'CONFIG.VIEW_TERMS' | translate }}</span>
+          </div>
+
+          <button class="btn" (click)="verDocumentoLegal('terms')">
+            {{ 'CONFIG.OPEN' | translate }}
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="help">
+
+          <div class="help-left">
+            <mat-icon>privacy_tip</mat-icon>
+            <span>{{ 'CONFIG.VIEW_PRIVACY' | translate }}</span>
+          </div>
+
+          <button class="btn" (click)="verDocumentoLegal('privacy')">
+            {{ 'CONFIG.OPEN' | translate }}
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+
+        </div>
+
       </div>
 
     </div>

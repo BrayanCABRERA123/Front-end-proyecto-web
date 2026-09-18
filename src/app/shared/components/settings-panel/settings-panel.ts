@@ -4,8 +4,12 @@ import { FormsModule } from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialog } from '@angular/material/dialog';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
+// modal reutilizable para consultar Términos y Condiciones / Política de Datos
+import { LegalDocumentModal, LegalDocumentType } from '../../dialogs/legal-document-modal/legal-document-modal';
 
 @Component({
   selector: 'app-settings-panel',
@@ -32,9 +36,21 @@ export class SettingsPanelComponent implements OnInit {
   selectedTheme: string = 'green-light';
   selectedLanguage: string = 'es';
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+    private dialog: MatDialog
+  ) {
     this.translate.addLangs(['es', 'en', 'fr', 'pt']);
     this.translate.setDefaultLang('es');
+  }
+
+  // abre el documento legal solo para consulta (sin botones de aceptación,
+  // el usuario ya aceptó al registrarse)
+  verDocumentoLegal(tipo: LegalDocumentType): void {
+    this.dialog.open(LegalDocumentModal, {
+      panelClass: 'custom-dialog',
+      data: { type: tipo, mode: 'view' }
+    });
   }
 
   ngOnInit(): void {
