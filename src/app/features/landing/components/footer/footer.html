@@ -51,8 +51,8 @@
       <h4 class="footer-column-title">{{ 'FOOTER.SUPPORT.TITLE' | translate }}</h4>
       <a href="#" class="footer-link">{{ 'CONFIG.HELP_CENTER' | translate }}</a>
       <a href="#" class="footer-link">{{ 'FOOTER.SUPPORT.FAQ' | translate }}</a>
-      <a href="#" class="footer-link">{{ 'FOOTER.LEGAL.TERMS' | translate }}</a>
-      <a href="#" class="footer-link">{{ 'FOOTER.LEGAL.PRIVACY' | translate }}</a>
+      <a href="#" class="footer-link" (click)="verDocumentoLegal('terms', $event)">{{ 'FOOTER.LEGAL.TERMS' | translate }}</a>
+      <a href="#" class="footer-link" (click)="verDocumentoLegal('privacy', $event)">{{ 'FOOTER.LEGAL.PRIVACY' | translate }}</a>
     </div>
 
   </div>
