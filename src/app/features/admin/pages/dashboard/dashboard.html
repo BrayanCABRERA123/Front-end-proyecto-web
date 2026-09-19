@@ -1,183 +1,189 @@
 <div class="home-layout">
   <app-sidebar rol="ADMIN"></app-sidebar>
+
   <main class="home-content">
-<section class="dashboard">
-  <!-- Encabezado -->
-  <header class="dash-header">
-    <div class="dash-header__left">
-      <div class="icon-box icon-box--lg"><span class="material-icons">storefront</span></div>
-      <div>
-        <h1>¡Hola, {{ nombre }}!</h1>
-        <p class="muted">{{ fecha }} · <span class="accent">Panel de control general</span></p>
-      </div>
-    </div>
-    <button class="btn btn--primary">
-      <span class="material-icons">calendar_today</span> Ver reservas de hoy
-    </button>
-  </header>
+    <section class="dashboard">
 
-  <!-- Tarjetas de resumen -->
-  <div class="stats">
-    <article class="card stat">
-      <div class="stat__top">
-        <div class="icon-box"><span class="material-icons">event</span></div>
-        <span class="badge badge--green">↗ +{{ stats.variacion }} vs ayer</span>
-      </div>
-      <strong class="stat__value">{{ stats.reservasHoy }}</strong>
-      <span class="stat__label">RESERVAS DE HOY</span>
-    </article>
-
-    <article class="card stat">
-      <div class="stat__top">
-        <div class="icon-box"><span class="material-icons">autorenew</span></div>
-        <span class="badge badge--green">{{ stats.bahiasActivas }} Bahías activas</span>
-      </div>
-      <strong class="stat__value">{{ stats.serviciosEnProgreso }}</strong>
-      <span class="stat__label">SERVICIOS EN PROGRESO</span>
-    </article>
-
-    <article class="card stat">
-      <div class="stat__top">
-        <div class="icon-box icon-box--amber"><span class="material-icons">fact_check</span></div>
-        <span class="badge badge--amber">Pendientes de revisión</span>
-      </div>
-      <strong class="stat__value">{{ stats.pagosPorVerificar }}</strong>
-      <span class="stat__label">PAGOS POR VERIFICAR</span>
-    </article>
-
-    <article class="card stat">
-      <div class="stat__top">
-        <div class="icon-box"><span class="material-icons">payments</span></div>
-        <span class="badge badge--green">COP</span>
-      </div>
-      <strong class="stat__value">{{ cop(stats.ingresosDia) }}</strong>
-      <span class="stat__label">INGRESOS DEL DÍA</span>
-    </article>
-  </div>
-
-  <!-- Gráfico + operarios -->
-  <div class="row row--main">
-    <article class="card chart">
-      <div class="card__head">
-        <div>
-          <h2><span class="material-icons accent">bar_chart</span> Ingresos de los últimos 7 días</h2>
-          <p class="muted">Consolidado semanal de cobros realizados y verificados</p>
-        </div>
-        <div class="chart__total">
-          <span class="muted">TOTAL SEMANA</span>
-          <strong class="accent">{{ cop(totalSemana) }} COP</strong>
-        </div>
-      </div>
-
-      <div class="bars">
-        @for (d of ingresos; track d.dia) {
-          <div class="bar-col" [class.bar-col--hoy]="d.hoy">
-            <span class="bar-col__tag">{{ d.etiqueta }}</span>
-            <div class="bar" [style.height.%]="altura(d.valor)"></div>
-            <span class="bar-col__day">{{ d.dia }}</span>
+      <!-- encabezado -->
+      <header class="dash-header">
+        <div class="dash-header__left">
+          <div class="icon-box icon-box--lg"><mat-icon>storefront</mat-icon></div>
+          <div>
+            <h1>{{ 'ADMIN_DASHBOARD.GREETING' | translate:{ name: adminName } }}</h1>
+            <p class="muted">{{ today }} · <span class="accent">{{ 'ADMIN_DASHBOARD.SUBTITLE' | translate }}</span></p>
           </div>
-        }
-      </div>
-
-      <footer class="chart__footer">
-        <span class="muted"><i class="dot"></i> Día con mayor afluencia proyectada: Sábado</span>
-        <a class="link">Ver reporte detallado →</a>
-      </footer>
-    </article>
-
-    <article class="card operarios">
-      <div class="card__head">
-        <h2><span class="material-icons accent">groups</span> Estado de operarios</h2>
-        <span class="muted">{{ operarios.length }} en plantilla</span>
-      </div>
-
-      <div class="resumen-estado">
-        <span><i class="dot dot--green"></i> {{ contar('disponible') }} Disp.</span>
-        <span><i class="dot dot--green"></i> {{ contar('ocupado') }} Ocu.</span>
-        <span><i class="dot dot--red"></i> {{ contar('incapacidad') }} Aus.</span>
-      </div>
-
-      <ul class="lista">
-        @for (o of operarios; track o.nombre) {
-          <li class="operario">
-            <span class="avatar" [class.avatar--red]="o.estado === 'incapacidad'">{{ o.iniciales }}</span>
-            <div class="operario__info">
-              <strong>{{ o.nombre }}</strong>
-              <span class="muted">{{ o.rol }}</span>
-            </div>
-            <span [class]="'pill pill--' + o.estado">{{ o.texto }}</span>
-          </li>
-        }
-      </ul>
-
-      <a class="link link--center">Gestionar turnos y bahías →</a>
-    </article>
-  </div>
-
-  <!-- Pagos + reservas sin operario -->
-  <div class="row row--bottom">
-    <article class="card">
-      <div class="card__head">
-        <div>
-          <h2><span class="material-icons amber">payments</span> Pagos pendientes de revisión</h2>
-          <p class="muted">Comprobantes bancarios enviados para validación</p>
         </div>
-        <span class="badge badge--amber">{{ stats.pagosPorVerificar }} pendientes</span>
+        <button class="btn btn--primary">
+          <mat-icon>calendar_today</mat-icon>
+          {{ 'ADMIN_DASHBOARD.VIEW_TODAY_BOOKINGS' | translate }}
+        </button>
+      </header>
+
+      <!-- tarjetas resumen -->
+      <div class="stats">
+        <article class="card stat">
+          <div class="stat__top">
+            <div class="icon-box"><mat-icon>event</mat-icon></div>
+            <span class="badge badge--success">↗ +{{ stats.vsYesterday }} {{ 'ADMIN_DASHBOARD.STATS.VS_YESTERDAY' | translate }}</span>
+          </div>
+          <strong class="stat__value">{{ stats.bookingsToday }}</strong>
+          <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.BOOKINGS_TODAY' | translate }}</span>
+        </article>
+
+        <article class="card stat">
+          <div class="stat__top">
+            <div class="icon-box"><mat-icon>autorenew</mat-icon></div>
+            <span class="badge badge--success">{{ stats.activeBays }} {{ 'ADMIN_DASHBOARD.STATS.ACTIVE_BAYS' | translate }}</span>
+          </div>
+          <strong class="stat__value">{{ stats.servicesInProgress }}</strong>
+          <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.IN_PROGRESS' | translate }}</span>
+        </article>
+
+        <article class="card stat">
+          <div class="stat__top">
+            <div class="icon-box icon-box--warning"><mat-icon>fact_check</mat-icon></div>
+            <span class="badge badge--warning">{{ 'ADMIN_DASHBOARD.STATS.PENDING_REVIEW' | translate }}</span>
+          </div>
+          <strong class="stat__value">{{ stats.pendingPayments }}</strong>
+          <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.PENDING_PAYMENTS' | translate }}</span>
+        </article>
+
+        <article class="card stat">
+          <div class="stat__top">
+            <div class="icon-box"><mat-icon>payments</mat-icon></div>
+            <span class="badge badge--success">COP</span>
+          </div>
+          <strong class="stat__value">{{ cop(stats.revenueToday) }}</strong>
+          <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.REVENUE_TODAY' | translate }}</span>
+        </article>
       </div>
 
-      <ul class="lista">
-        @for (p of pagos; track p.ref) {
-          <li class="fila">
-            <div class="fila__info">
-              <div>
-                <strong>{{ p.cliente }}</strong>
-                <span [class]="'tag tag--' + p.bancoClase">{{ p.banco }}</span>
+      <!-- gráfico + operarios -->
+      <div class="row row--main">
+        <article class="card chart">
+          <div class="card__head">
+            <div>
+              <h2><mat-icon class="accent">bar_chart</mat-icon> {{ 'ADMIN_DASHBOARD.REVENUE_CHART.TITLE' | translate }}</h2>
+              <p class="muted">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.SUBTITLE' | translate }}</p>
+            </div>
+            <div class="chart__total">
+              <span class="muted">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.WEEK_TOTAL' | translate }}</span>
+              <strong class="accent">{{ cop(weekTotal) }} COP</strong>
+            </div>
+          </div>
+
+          <div class="bars">
+            @for (d of weeklyRevenue; track d.day) {
+              <div class="bar-col" [class.bar-col--today]="d.isToday">
+                <span class="bar-col__tag">{{ d.label }}</span>
+                <div class="bar" [style.height.%]="barHeight(d.amount)"></div>
+                <span class="bar-col__day">{{ d.day }}{{ d.isToday ? ' ' + ('ADMIN_DASHBOARD.TODAY_SUFFIX' | translate) : '' }}</span>
               </div>
-              <p class="muted">{{ p.servicio }}</p>
-              <p class="muted small">Ref: {{ p.ref }} <b class="accent">{{ cop(p.monto) }} COP</b></p>
-            </div>
-            <button class="btn btn--primary btn--sm">
-              <span class="material-icons">visibility</span> Revisar
-            </button>
-          </li>
-        }
-      </ul>
+            }
+          </div>
 
-      <a class="link link--center">Ver los {{ stats.pagosPorVerificar }} comprobantes pendientes →</a>
-    </article>
+          <footer class="chart__footer">
+            <span class="muted"><i class="dot"></i> {{ 'ADMIN_DASHBOARD.REVENUE_CHART.PEAK_DAY' | translate }}: Sábado</span>
+            <a class="link">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.VIEW_REPORT' | translate }} →</a>
+          </footer>
+        </article>
 
-    <article class="card">
-      <div class="card__head">
-        <div>
-          <h2><span class="material-icons accent">assignment_ind</span> Reservas sin operario</h2>
-          <p class="muted">Servicios confirmados en espera de asignación técnica</p>
-        </div>
-        <span class="badge badge--amber">{{ reservasSinOperario.length }} por asignar</span>
+        <article class="card operators">
+          <div class="card__head">
+            <h2><mat-icon class="accent">groups</mat-icon> {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.TITLE' | translate }}</h2>
+            <span class="muted">{{ operators.length }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.ON_STAFF' | translate }}</span>
+          </div>
+
+          <div class="status-summary">
+            <span><i class="dot dot--success"></i> {{ countByStatus('available') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.AVAILABLE_SHORT' | translate }}</span>
+            <span><i class="dot dot--success"></i> {{ countByStatus('busy') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.BUSY_SHORT' | translate }}</span>
+            <span><i class="dot dot--error"></i> {{ countByStatus('leave') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.ABSENT_SHORT' | translate }}</span>
+          </div>
+
+          <ul class="list">
+            @for (o of operators; track o.name) {
+              <li class="operator-row">
+                <span class="avatar" [class.avatar--error]="o.status === 'leave'">{{ o.initials }}</span>
+                <div class="operator-row__info">
+                  <strong>{{ o.name }}</strong>
+                  <span class="muted">{{ o.role }}</span>
+                </div>
+                <span [class]="'pill pill--' + o.status">
+                  {{ o.status === 'busy' ? o.bay : ('ADMIN_DASHBOARD.OPERATORS_STATUS.STATUS.' + o.status | translate) }}
+                </span>
+              </li>
+            }
+          </ul>
+
+          <a class="link link--center">{{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.MANAGE_SHIFTS' | translate }} →</a>
+        </article>
       </div>
 
-      <ul class="lista">
-        @for (r of reservasSinOperario; track r.hora) {
-          <li class="fila">
-            <div class="fila__info">
-              <p>
-                <span class="tag tag--hora">{{ r.hora }} · {{ r.bahia }}</span>
-                @if (r.proxima) { <span class="muted small">Cita próxima</span> }
-              </p>
-              <strong>{{ r.cliente }} — {{ r.vehiculo }}</strong>
-              <p class="muted small accent">
-                <span class="material-icons tiny">{{ r.icono }}</span> {{ r.servicio }}
-              </p>
+      <!-- pagos + reservas sin operario -->
+      <div class="row row--bottom">
+        <article class="card">
+          <div class="card__head">
+            <div>
+              <h2><mat-icon class="warning">payments</mat-icon> {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.TITLE' | translate }}</h2>
+              <p class="muted">{{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.SUBTITLE' | translate }}</p>
             </div>
-            <button class="btn btn--primary btn--sm">
-              <span class="material-icons">person_add</span> Asignar
-            </button>
-          </li>
-        }
-      </ul>
+            <span class="badge badge--warning">{{ stats.pendingPayments }} {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.PENDING' | translate }}</span>
+          </div>
 
-      <a class="link link--center">Ver agenda operativa completa →</a>
-    </article>
-  </div>
-</section>
+          <ul class="list">
+            @for (p of pendingPayments; track p.reference) {
+              <li class="row-item">
+                <div class="row-item__info">
+                  <div>
+                    <strong>{{ p.client }}</strong>
+                    <span [class]="'tag tag--' + p.bankClass">{{ p.bank }}</span>
+                  </div>
+                  <p class="muted">{{ p.service }}</p>
+                  <p class="muted small">Ref: {{ p.reference }} <b class="accent">{{ cop(p.amount) }} COP</b></p>
+                </div>
+                <button class="btn btn--primary btn--sm">
+                  <mat-icon>visibility</mat-icon> {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.REVIEW' | translate }}
+                </button>
+              </li>
+            }
+          </ul>
+
+          <a class="link link--center">{{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.VIEW_ALL' | translate:{ count: stats.pendingPayments } }} →</a>
+        </article>
+
+        <article class="card">
+          <div class="card__head">
+            <div>
+              <h2><mat-icon class="accent">assignment_ind</mat-icon> {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.TITLE' | translate }}</h2>
+              <p class="muted">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.SUBTITLE' | translate }}</p>
+            </div>
+            <span class="badge badge--warning">{{ unassignedBookings.length }} {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.TO_ASSIGN' | translate }}</span>
+          </div>
+
+          <ul class="list">
+            @for (r of unassignedBookings; track r.time) {
+              <li class="row-item">
+                <div class="row-item__info">
+                  <p>
+                    <span class="tag tag--time">{{ r.time }} · {{ r.bay }}</span>
+                    @if (r.isUpcoming) { <span class="muted small">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.UPCOMING' | translate }}</span> }
+                  </p>
+                  <strong>{{ r.client }} — {{ r.vehicle }}</strong>
+                  <p class="muted small accent">
+                    <mat-icon class="tiny">{{ r.icon }}</mat-icon> {{ r.service }}
+                  </p>
+                </div>
+                <button class="btn btn--primary btn--sm">
+                  <mat-icon>person_add</mat-icon> {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.ASSIGN' | translate }}
+                </button>
+              </li>
+            }
+          </ul>
+
+          <a class="link link--center">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.VIEW_ALL' | translate }} →</a>
+        </article>
+      </div>
+
+    </section>
   </main>
 </div>

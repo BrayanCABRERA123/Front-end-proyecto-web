@@ -1029,5 +1029,55 @@
       "TITLE": "Opérateurs",
       "SUBTITLE": "Gérez votre équipe technique, ses horaires et sa disponibilité en temps réel"
     }
+  },
+  "ADMIN_DASHBOARD": {
+    "GREETING": "Bonjour, {{name}} !",
+    "SUBTITLE": "Panneau de contrôle général",
+    "VIEW_TODAY_BOOKINGS": "Voir les réservations du jour",
+    "TODAY_SUFFIX": "(Aujourd'hui)",
+    "STATS": {
+      "BOOKINGS_TODAY": "Réservations du jour",
+      "VS_YESTERDAY": "vs hier",
+      "IN_PROGRESS": "Services en cours",
+      "ACTIVE_BAYS": "Baies actives",
+      "PENDING_PAYMENTS": "Paiements à vérifier",
+      "PENDING_REVIEW": "En attente de vérification",
+      "REVENUE_TODAY": "Revenus du jour"
+    },
+    "REVENUE_CHART": {
+      "TITLE": "Revenus des 7 derniers jours",
+      "SUBTITLE": "Résumé hebdomadaire des paiements effectués et vérifiés",
+      "WEEK_TOTAL": "Total de la semaine",
+      "PEAK_DAY": "Jour d'affluence projeté",
+      "VIEW_REPORT": "Voir le rapport détaillé"
+    },
+    "OPERATORS_STATUS": {
+      "TITLE": "État des opérateurs",
+      "ON_STAFF": "au total",
+      "AVAILABLE_SHORT": "Dispo.",
+      "BUSY_SHORT": "Occ.",
+      "ABSENT_SHORT": "Abs.",
+      "MANAGE_SHIFTS": "Gérer les horaires et les baies",
+      "STATUS": {
+        "busy": "Occupé",
+        "available": "Disponible",
+        "leave": "En congé"
+      }
+    },
+    "PENDING_PAYMENTS_CARD": {
+      "TITLE": "Paiements en attente de vérification",
+      "SUBTITLE": "Justificatifs bancaires soumis pour validation",
+      "PENDING": "en attente",
+      "REVIEW": "Vérifier",
+      "VIEW_ALL": "Voir les {{count}} justificatifs en attente"
+    },
+    "UNASSIGNED_BOOKINGS": {
+      "TITLE": "Réservations sans opérateur",
+      "SUBTITLE": "Services confirmés en attente d'un technicien",
+      "TO_ASSIGN": "à assigner",
+      "UPCOMING": "Prochain rendez-vous",
+      "ASSIGN": "Assigner",
+      "VIEW_ALL": "Voir le planning opérationnel complet"
+    }
   }
 }

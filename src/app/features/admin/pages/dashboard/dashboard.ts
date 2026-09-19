@@ -1,74 +1,113 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 
-interface DiaIngreso { dia: string; valor: number; etiqueta: string; hoy?: boolean; }
-interface Operario { iniciales: string; nombre: string; rol: string; estado: 'ocupado' | 'disponible' | 'incapacidad'; texto: string; }
-interface PagoPendiente { cliente: string; banco: string; bancoClase: string; servicio: string; ref: string; monto: number; }
-interface ReservaSinOperario { hora: string; bahia: string; cliente: string; vehiculo: string; servicio: string; proxima?: boolean; icono: string; }
+// un día de la gráfica de ingresos
+interface RevenueDay { day: string; amount: number; label: string; isToday?: boolean; }
+
+// tarjeta de operario en el resumen de estado
+interface OperatorStatus {
+  initials: string;
+  name: string;
+  role: string;
+  status: 'busy' | 'available' | 'leave';
+  bay: string;
+}
+
+// pago con comprobante pendiente por verificar
+interface PendingPayment {
+  client: string;
+  bank: string;
+  bankClass: string;
+  service: string;
+  reference: string;
+  amount: number;
+}
+
+// reserva confirmada que todavía no tiene operario asignado
+interface UnassignedBooking {
+  time: string;
+  bay: string;
+  client: string;
+  vehicle: string;
+  service: string;
+  isUpcoming?: boolean;
+  icon: string;
+}
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SidebarComponent],
+  imports: [CommonModule, MatIconModule, TranslateModule, SidebarComponent],
   templateUrl: './dashboard.html',
-  styleUrls: ['./dashboard.scss'],
+  styleUrl: './dashboard.scss',
 })
 export class DashboardComponent {
-  nombre = 'Laura';
-  fecha = new Date().toLocaleDateString('es-CO', {
+
+  adminName = 'Laura';
+
+  today = new Date().toLocaleDateString('es-CO', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
   });
 
   stats = {
-    reservasHoy: 18, variacion: 3, serviciosEnProgreso: 4, bahiasActivas: 4,
-    pagosPorVerificar: 5, ingresosDia: 680000,
+    bookingsToday: 18,
+    vsYesterday: 3,
+    servicesInProgress: 4,
+    activeBays: 4,
+    pendingPayments: 5,
+    revenueToday: 680000,
   };
 
-  ingresos: DiaIngreso[] = [
-    { dia: 'Lun', valor: 520000, etiqueta: '$520k' },
-    { dia: 'Mar', valor: 610000, etiqueta: '$610k' },
-    { dia: 'Mié', valor: 450000, etiqueta: '$450k' },
-    { dia: 'Jue (Hoy)', valor: 680000, etiqueta: '$680k', hoy: true },
-    { dia: 'Vie', valor: 790000, etiqueta: '$790k' },
-    { dia: 'Sáb', valor: 1100000, etiqueta: '$1.1M' },
-    { dia: 'Dom', valor: 670000, etiqueta: '$670k' },
+  weeklyRevenue: RevenueDay[] = [
+    { day: 'Lun', amount: 520000, label: '$520k' },
+    { day: 'Mar', amount: 610000, label: '$610k' },
+    { day: 'Mié', amount: 450000, label: '$450k' },
+    { day: 'Jue', amount: 680000, label: '$680k', isToday: true },
+    { day: 'Vie', amount: 790000, label: '$790k' },
+    { day: 'Sáb', amount: 1100000, label: '$1.1M' },
+    { day: 'Dom', amount: 670000, label: '$670k' },
   ];
 
-  operarios: Operario[] = [
-    { iniciales: 'JD', nombre: 'Juan Díaz', rol: 'Lavador Especialista', estado: 'ocupado', texto: 'Bahía 2' },
-    { iniciales: 'CR', nombre: 'Carlos Ruiz', rol: 'Técnico Detailing', estado: 'disponible', texto: 'Disponible' },
-    { iniciales: 'MG', nombre: 'Mateo Gómez', rol: 'Tapicería e Interiores', estado: 'incapacidad', texto: 'Incapacidad' },
+  operators: OperatorStatus[] = [
+    { initials: 'JD', name: 'Juan Díaz', role: 'Lavador Especialista', status: 'busy', bay: 'Bahía 2' },
+    { initials: 'CR', name: 'Carlos Ruiz', role: 'Técnico Detailing', status: 'available', bay: '' },
+    { initials: 'MG', name: 'Mateo Gómez', role: 'Tapicería e Interiores', status: 'leave', bay: '' },
   ];
 
-  pagos: PagoPendiente[] = [
-    { cliente: 'Andrés Morales', banco: 'Bancolombia', bancoClase: 'bancolombia', servicio: 'Lavado Detallado + Encerado', ref: '#BC-98402', monto: 85000 },
-    { cliente: 'Carolina Vega', banco: 'Nequi', bancoClase: 'nequi', servicio: 'Combo Completo SUV', ref: '#NQ-44129', monto: 120000 },
-    { cliente: 'Felipe Montoya', banco: 'Daviplata', bancoClase: 'daviplata', servicio: 'Lavado Básico Sedán', ref: '#DV-11208', monto: 45000 },
+  pendingPayments: PendingPayment[] = [
+    { client: 'Andrés Morales', bank: 'Bancolombia', bankClass: 'bancolombia', service: 'Lavado Detallado + Encerado', reference: '#BC-98402', amount: 85000 },
+    { client: 'Carolina Vega', bank: 'Nequi', bankClass: 'nequi', service: 'Combo Completo SUV', reference: '#NQ-44129', amount: 120000 },
+    { client: 'Felipe Montoya', bank: 'Daviplata', bankClass: 'daviplata', service: 'Lavado Básico Sedán', reference: '#DV-11208', amount: 45000 },
   ];
 
-  reservasSinOperario: ReservaSinOperario[] = [
-    { hora: '15:00', bahia: 'Bahía 3', cliente: 'Sofía Castro', vehiculo: 'Mazda CX-30', servicio: 'Premium Especial', proxima: true, icono: 'workspace_premium' },
-    { hora: '15:30', bahia: 'Bahía 1', cliente: 'Diego Herrera', vehiculo: 'Toyota Hilux', servicio: 'Desinfección + Tapicería', icono: 'sanitizer' },
-    { hora: '16:15', bahia: 'Bahía 2', cliente: 'Mariana Gómez', vehiculo: 'Renault Duster', servicio: 'Lavado General + Polichado', icono: 'auto_awesome' },
+  unassignedBookings: UnassignedBooking[] = [
+    { time: '15:00', bay: 'Bahía 3', client: 'Sofía Castro', vehicle: 'Mazda CX-30', service: 'Premium Especial', isUpcoming: true, icon: 'workspace_premium' },
+    { time: '15:30', bay: 'Bahía 1', client: 'Diego Herrera', vehicle: 'Toyota Hilux', service: 'Desinfección + Tapicería', icon: 'sanitizer' },
+    { time: '16:15', bay: 'Bahía 2', client: 'Mariana Gómez', vehicle: 'Renault Duster', service: 'Lavado General + Polichado', icon: 'auto_awesome' },
   ];
 
-  get totalSemana(): number {
-    return this.ingresos.reduce((suma, d) => suma + d.valor, 0);
+  get weekTotal(): number {
+    return this.weeklyRevenue.reduce((sum, d) => sum + d.amount, 0);
   }
 
-  get maxIngreso(): number {
-    return Math.max(...this.ingresos.map(d => d.valor));
+  get maxRevenue(): number {
+    return Math.max(...this.weeklyRevenue.map(d => d.amount));
   }
 
-  altura(valor: number): number {
-    return Math.round((valor / this.maxIngreso) * 100);
+  // altura de cada barra en % del máximo de la semana
+  barHeight(amount: number): number {
+    return Math.round((amount / this.maxRevenue) * 100);
   }
 
-  cop(valor: number): string {
-    return '$' + valor.toLocaleString('es-CO');
+  // formatea a pesos colombianos, ej: $680.000
+  cop(amount: number): string {
+    return '$' + amount.toLocaleString('es-CO');
   }
 
-  contar(estado: Operario['estado']): number {
-    return this.operarios.filter(o => o.estado === estado).length;
+  countByStatus(status: OperatorStatus['status']): number {
+    return this.operators.filter(o => o.status === status).length;
   }
 }

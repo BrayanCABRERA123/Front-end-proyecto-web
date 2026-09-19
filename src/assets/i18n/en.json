@@ -1029,5 +1029,55 @@
       "TITLE": "Operators",
       "SUBTITLE": "Manage your technical team, shifts and real-time availability"
     }
+  },
+  "ADMIN_DASHBOARD": {
+    "GREETING": "Hi, {{name}}!",
+    "SUBTITLE": "General control panel",
+    "VIEW_TODAY_BOOKINGS": "View today's bookings",
+    "TODAY_SUFFIX": "(Today)",
+    "STATS": {
+      "BOOKINGS_TODAY": "Bookings today",
+      "VS_YESTERDAY": "vs yesterday",
+      "IN_PROGRESS": "Services in progress",
+      "ACTIVE_BAYS": "Active bays",
+      "PENDING_PAYMENTS": "Payments to verify",
+      "PENDING_REVIEW": "Pending review",
+      "REVENUE_TODAY": "Today's revenue"
+    },
+    "REVENUE_CHART": {
+      "TITLE": "Revenue for the last 7 days",
+      "SUBTITLE": "Weekly summary of completed and verified payments",
+      "WEEK_TOTAL": "Week total",
+      "PEAK_DAY": "Projected busiest day",
+      "VIEW_REPORT": "View detailed report"
+    },
+    "OPERATORS_STATUS": {
+      "TITLE": "Operators status",
+      "ON_STAFF": "on staff",
+      "AVAILABLE_SHORT": "Avail.",
+      "BUSY_SHORT": "Busy",
+      "ABSENT_SHORT": "Out",
+      "MANAGE_SHIFTS": "Manage shifts and bays",
+      "STATUS": {
+        "busy": "Busy",
+        "available": "Available",
+        "leave": "On leave"
+      }
+    },
+    "PENDING_PAYMENTS_CARD": {
+      "TITLE": "Payments pending review",
+      "SUBTITLE": "Bank receipts submitted for validation",
+      "PENDING": "pending",
+      "REVIEW": "Review",
+      "VIEW_ALL": "View all {{count}} pending receipts"
+    },
+    "UNASSIGNED_BOOKINGS": {
+      "TITLE": "Bookings without an operator",
+      "SUBTITLE": "Confirmed services waiting for a technician",
+      "TO_ASSIGN": "to assign",
+      "UPCOMING": "Upcoming",
+      "ASSIGN": "Assign",
+      "VIEW_ALL": "View full operating schedule"
+    }
   }
 }

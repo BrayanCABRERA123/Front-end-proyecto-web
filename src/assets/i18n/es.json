@@ -1029,5 +1029,55 @@
       "TITLE": "Operarios",
       "SUBTITLE": "Gestiona el equipo técnico, sus turnos y su disponibilidad operativa en tiempo real"
     }
+  },
+  "ADMIN_DASHBOARD": {
+    "GREETING": "¡Hola, {{name}}!",
+    "SUBTITLE": "Panel de control general",
+    "VIEW_TODAY_BOOKINGS": "Ver reservas de hoy",
+    "TODAY_SUFFIX": "(Hoy)",
+    "STATS": {
+      "BOOKINGS_TODAY": "Reservas de hoy",
+      "VS_YESTERDAY": "vs ayer",
+      "IN_PROGRESS": "Servicios en progreso",
+      "ACTIVE_BAYS": "Bahías activas",
+      "PENDING_PAYMENTS": "Pagos por verificar",
+      "PENDING_REVIEW": "Pendientes de revisión",
+      "REVENUE_TODAY": "Ingresos del día"
+    },
+    "REVENUE_CHART": {
+      "TITLE": "Ingresos de los últimos 7 días",
+      "SUBTITLE": "Consolidado semanal de cobros realizados y verificados",
+      "WEEK_TOTAL": "Total semana",
+      "PEAK_DAY": "Día con mayor afluencia proyectada",
+      "VIEW_REPORT": "Ver reporte detallado"
+    },
+    "OPERATORS_STATUS": {
+      "TITLE": "Estado de operarios",
+      "ON_STAFF": "en plantilla",
+      "AVAILABLE_SHORT": "Disp.",
+      "BUSY_SHORT": "Ocup.",
+      "ABSENT_SHORT": "Aus.",
+      "MANAGE_SHIFTS": "Gestionar turnos y bahías",
+      "STATUS": {
+        "busy": "Ocupado",
+        "available": "Disponible",
+        "leave": "Incapacidad"
+      }
+    },
+    "PENDING_PAYMENTS_CARD": {
+      "TITLE": "Pagos pendientes de revisión",
+      "SUBTITLE": "Comprobantes bancarios enviados para validación",
+      "PENDING": "pendientes",
+      "REVIEW": "Revisar",
+      "VIEW_ALL": "Ver los {{count}} comprobantes pendientes"
+    },
+    "UNASSIGNED_BOOKINGS": {
+      "TITLE": "Reservas sin operario",
+      "SUBTITLE": "Servicios confirmados en espera de asignación técnica",
+      "TO_ASSIGN": "por asignar",
+      "UPCOMING": "Cita próxima",
+      "ASSIGN": "Asignar",
+      "VIEW_ALL": "Ver agenda operativa completa"
+    }
   }
 }

@@ -1029,5 +1029,55 @@
       "TITLE": "Operadores",
       "SUBTITLE": "Gerencie sua equipe técnica, turnos e disponibilidade em tempo real"
     }
+  },
+  "ADMIN_DASHBOARD": {
+    "GREETING": "Olá, {{name}}!",
+    "SUBTITLE": "Painel de controle geral",
+    "VIEW_TODAY_BOOKINGS": "Ver reservas de hoje",
+    "TODAY_SUFFIX": "(Hoje)",
+    "STATS": {
+      "BOOKINGS_TODAY": "Reservas de hoje",
+      "VS_YESTERDAY": "vs ontem",
+      "IN_PROGRESS": "Serviços em andamento",
+      "ACTIVE_BAYS": "Baias ativas",
+      "PENDING_PAYMENTS": "Pagamentos a verificar",
+      "PENDING_REVIEW": "Pendentes de revisão",
+      "REVENUE_TODAY": "Receita do dia"
+    },
+    "REVENUE_CHART": {
+      "TITLE": "Receita dos últimos 7 dias",
+      "SUBTITLE": "Resumo semanal de pagamentos realizados e verificados",
+      "WEEK_TOTAL": "Total da semana",
+      "PEAK_DAY": "Dia de maior movimento projetado",
+      "VIEW_REPORT": "Ver relatório detalhado"
+    },
+    "OPERATORS_STATUS": {
+      "TITLE": "Status dos operadores",
+      "ON_STAFF": "no quadro",
+      "AVAILABLE_SHORT": "Disp.",
+      "BUSY_SHORT": "Ocup.",
+      "ABSENT_SHORT": "Aus.",
+      "MANAGE_SHIFTS": "Gerenciar turnos e baias",
+      "STATUS": {
+        "busy": "Ocupado",
+        "available": "Disponível",
+        "leave": "Licença"
+      }
+    },
+    "PENDING_PAYMENTS_CARD": {
+      "TITLE": "Pagamentos pendentes de revisão",
+      "SUBTITLE": "Comprovantes bancários enviados para validação",
+      "PENDING": "pendentes",
+      "REVIEW": "Revisar",
+      "VIEW_ALL": "Ver os {{count}} comprovantes pendentes"
+    },
+    "UNASSIGNED_BOOKINGS": {
+      "TITLE": "Reservas sem operador",
+      "SUBTITLE": "Serviços confirmados aguardando atribuição técnica",
+      "TO_ASSIGN": "a atribuir",
+      "UPCOMING": "Próximo atendimento",
+      "ASSIGN": "Atribuir",
+      "VIEW_ALL": "Ver agenda operacional completa"
+    }
   }
 }
