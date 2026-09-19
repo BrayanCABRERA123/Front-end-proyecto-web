@@ -1,0 +1,155 @@
+@use '../../../../../styles/variables' as *;
+
+// colores de estado que no existen aún en _variables.scss
+$color-amber:      #F5A524;
+$color-amber-soft: #FFF3D6;
+$color-amber-text: #B7791F;
+$color-red:        #E5484D;
+$color-red-soft:   #FDE8E8;
+
+:host {
+  display: block;
+  font-family: $font-family;
+  color: $color-dark;
+  background: $color-bg;
+  min-height: 100%;
+}
+
+.dashboard { display: flex; flex-direction: column; gap: 20px; padding: $padding-page; }
+
+.muted { color: $color-gray; font-size: $fs-caption; margin: 0; }
+.small { font-size: $fs-caption; }
+.accent { color: $color-primary; }
+.amber { color: $color-amber; }
+.tiny { font-size: 14px; vertical-align: middle; }
+.link {
+  color: $color-primary-dark; font-size: $fs-caption; font-weight: $fw-semibold;
+  cursor: pointer; text-decoration: none;
+  &--center { display: block; text-align: center; margin-top: 12px; }
+}
+
+/* Encabezado */
+.dash-header {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  background: $color-white; border: 1px solid $color-border; border-radius: $border-radius; padding: 16px 20px;
+  &__left { display: flex; align-items: center; gap: 14px; }
+  h1 { margin: 0; font-size: $fs-h3; font-weight: $fw-bold; }
+}
+
+.icon-box {
+  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+  background: $color-icon-bg; color: $color-primary-dark;
+  &--lg { width: 52px; height: 52px; }
+  &--amber { background: $color-amber-soft; color: $color-amber; }
+}
+
+/* Botones */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; border: 0; cursor: pointer;
+  font-family: inherit; font-weight: $fw-semibold; font-size: $fs-body;
+  border-radius: $border-radius-sm; padding: 10px 16px;
+  .material-icons { font-size: 18px; }
+  &--primary { background: $color-primary; color: $color-white; &:hover { background: $color-primary-dark; } }
+  &--sm { padding: 8px 12px; font-size: $fs-caption; }
+}
+
+/* Tarjetas */
+.card {
+  background: $color-white; border-radius: $border-radius; padding: 20px; border: 1px solid $color-border;
+  &__head {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 16px;
+    h2 { margin: 0 0 2px; font-size: $fs-subtitle; font-weight: $fw-bold; display: flex; align-items: center; gap: 6px; }
+  }
+}
+
+.badge {
+  font-size: 11px; font-weight: $fw-semibold; padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+  &--green { background: $color-icon-bg; color: $color-primary-dark; }
+  &--amber { background: $color-amber-soft; color: $color-amber-text; }
+}
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+.stat {
+  display: flex; flex-direction: column; gap: 6px;
+  &__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  &__value { font-size: $fs-h1; line-height: 1; font-weight: $fw-bold; }
+  &__label { font-size: 11px; color: $color-gray; font-weight: $fw-semibold; letter-spacing: 0.04em; }
+}
+
+/* Filas principales */
+.row { display: grid; gap: 20px; }
+.row--main { grid-template-columns: 2fr 1fr; }
+.row--bottom { grid-template-columns: 1fr 1fr; }
+
+/* Gráfico */
+.chart__total { text-align: right; display: flex; flex-direction: column; strong { font-size: $fs-subtitle; } }
+.bars { display: flex; align-items: flex-end; gap: 14px; height: 220px; padding: 10px 4px 0; }
+.bar-col {
+  flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px;
+  &__tag { font-size: 11px; color: $color-gray; font-weight: $fw-semibold; }
+  &__day { font-size: $fs-caption; color: $color-gray; }
+  .bar { width: 100%; max-width: 56px; background: #B5EBE5; border-radius: 10px 10px 4px 4px; transition: height 0.4s ease; }
+  &--hoy {
+    .bar { background: $color-primary; }
+    .bar-col__tag { background: $color-icon-bg; color: $color-primary-dark; padding: 2px 6px; border-radius: 6px; }
+    .bar-col__day { color: $color-dark; font-weight: $fw-bold; }
+  }
+}
+.chart__footer {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+  border-top: 1px solid $color-border; margin-top: 16px; padding-top: 12px;
+}
+
+.dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: $color-primary; margin-right: 4px;
+  &--green { background: $color-primary; }
+  &--red { background: $color-red; }
+}
+
+/* Operarios */
+.resumen-estado {
+  display: flex; justify-content: space-around; background: $color-bg; border: 1px solid $color-border;
+  border-radius: 999px; padding: 8px; font-size: $fs-caption; font-weight: $fw-semibold; margin-bottom: 8px;
+}
+.lista { list-style: none; margin: 0; padding: 0; }
+.operario {
+  display: flex; align-items: center; gap: 12px; padding: 14px 0;
+  &__info { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+}
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
+  font-size: $fs-caption; font-weight: $fw-bold; background: $color-icon-bg; color: $color-primary-dark;
+  &--red { background: $color-red-soft; color: $color-red; }
+}
+.pill {
+  font-size: 11px; font-weight: $fw-semibold; padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+  &--ocupado, &--disponible { background: $color-icon-bg; color: $color-primary-dark; }
+  &--incapacidad { background: $color-red-soft; color: $color-red; }
+}
+
+/* Filas de pagos y reservas */
+.fila {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 14px 0; border-top: 1px solid $color-border;
+  &:first-child { border-top: 0; }
+  &__info { display: flex; flex-direction: column; gap: 4px; min-width: 0; p { margin: 0; } }
+}
+.tag {
+  font-size: 11px; font-weight: $fw-semibold; padding: 2px 8px; border-radius: 6px;
+  display: inline-block; margin-left: 6px;
+  &--bancolombia { background: #E6EFFF; color: #2B5FD9; }
+  &--nequi { background: #F3E6FF; color: #8A2BE2; }
+  &--daviplata { background: $color-red-soft; color: $color-red; }
+  &--hora { background: $color-icon-bg; color: $color-primary-dark; margin: 0 6px 0 0; }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .row--main, .row--bottom { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .dashboard { padding: 16px; }
+  .bars { gap: 6px; }
+  .bar-col__tag { font-size: 9px; }
+}

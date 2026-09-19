@@ -51,6 +51,7 @@ export class SidebarComponent implements OnInit {
 
 /*Menu opciones administrador */
   adminMenu = [
+    { icono: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', ruta: '/admin' },
     { icono: 'build', label: 'SIDEBAR.SERVICES', ruta: '/admin/services' },
     { icono: 'payments', label: 'SIDEBAR.PAYMENTS', ruta: '/admin/payments' },
     { icono: 'bar_chart', label: 'SIDEBAR.REPORTS', ruta: '/admin/reports' },

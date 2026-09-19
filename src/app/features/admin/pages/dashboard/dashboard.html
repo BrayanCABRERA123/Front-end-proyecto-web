@@ -1,1 +1,178 @@
-<p>dashboard works!</p>
+<section class="dashboard">
+  <!-- Encabezado -->
+  <header class="dash-header">
+    <div class="dash-header__left">
+      <div class="icon-box icon-box--lg"><span class="material-icons">storefront</span></div>
+      <div>
+        <h1>¡Hola, {{ nombre }}!</h1>
+        <p class="muted">{{ fecha }} · <span class="accent">Panel de control general</span></p>
+      </div>
+    </div>
+    <button class="btn btn--primary">
+      <span class="material-icons">calendar_today</span> Ver reservas de hoy
+    </button>
+  </header>
+
+  <!-- Tarjetas de resumen -->
+  <div class="stats">
+    <article class="card stat">
+      <div class="stat__top">
+        <div class="icon-box"><span class="material-icons">event</span></div>
+        <span class="badge badge--green">↗ +{{ stats.variacion }} vs ayer</span>
+      </div>
+      <strong class="stat__value">{{ stats.reservasHoy }}</strong>
+      <span class="stat__label">RESERVAS DE HOY</span>
+    </article>
+
+    <article class="card stat">
+      <div class="stat__top">
+        <div class="icon-box"><span class="material-icons">autorenew</span></div>
+        <span class="badge badge--green">{{ stats.bahiasActivas }} Bahías activas</span>
+      </div>
+      <strong class="stat__value">{{ stats.serviciosEnProgreso }}</strong>
+      <span class="stat__label">SERVICIOS EN PROGRESO</span>
+    </article>
+
+    <article class="card stat">
+      <div class="stat__top">
+        <div class="icon-box icon-box--amber"><span class="material-icons">fact_check</span></div>
+        <span class="badge badge--amber">Pendientes de revisión</span>
+      </div>
+      <strong class="stat__value">{{ stats.pagosPorVerificar }}</strong>
+      <span class="stat__label">PAGOS POR VERIFICAR</span>
+    </article>
+
+    <article class="card stat">
+      <div class="stat__top">
+        <div class="icon-box"><span class="material-icons">payments</span></div>
+        <span class="badge badge--green">COP</span>
+      </div>
+      <strong class="stat__value">{{ cop(stats.ingresosDia) }}</strong>
+      <span class="stat__label">INGRESOS DEL DÍA</span>
+    </article>
+  </div>
+
+  <!-- Gráfico + operarios -->
+  <div class="row row--main">
+    <article class="card chart">
+      <div class="card__head">
+        <div>
+          <h2><span class="material-icons accent">bar_chart</span> Ingresos de los últimos 7 días</h2>
+          <p class="muted">Consolidado semanal de cobros realizados y verificados</p>
+        </div>
+        <div class="chart__total">
+          <span class="muted">TOTAL SEMANA</span>
+          <strong class="accent">{{ cop(totalSemana) }} COP</strong>
+        </div>
+      </div>
+
+      <div class="bars">
+        @for (d of ingresos; track d.dia) {
+          <div class="bar-col" [class.bar-col--hoy]="d.hoy">
+            <span class="bar-col__tag">{{ d.etiqueta }}</span>
+            <div class="bar" [style.height.%]="altura(d.valor)"></div>
+            <span class="bar-col__day">{{ d.dia }}</span>
+          </div>
+        }
+      </div>
+
+      <footer class="chart__footer">
+        <span class="muted"><i class="dot"></i> Día con mayor afluencia proyectada: Sábado</span>
+        <a class="link">Ver reporte detallado →</a>
+      </footer>
+    </article>
+
+    <article class="card operarios">
+      <div class="card__head">
+        <h2><span class="material-icons accent">groups</span> Estado de operarios</h2>
+        <span class="muted">{{ operarios.length }} en plantilla</span>
+      </div>
+
+      <div class="resumen-estado">
+        <span><i class="dot dot--green"></i> {{ contar('disponible') }} Disp.</span>
+        <span><i class="dot dot--green"></i> {{ contar('ocupado') }} Ocu.</span>
+        <span><i class="dot dot--red"></i> {{ contar('incapacidad') }} Aus.</span>
+      </div>
+
+      <ul class="lista">
+        @for (o of operarios; track o.nombre) {
+          <li class="operario">
+            <span class="avatar" [class.avatar--red]="o.estado === 'incapacidad'">{{ o.iniciales }}</span>
+            <div class="operario__info">
+              <strong>{{ o.nombre }}</strong>
+              <span class="muted">{{ o.rol }}</span>
+            </div>
+            <span [class]="'pill pill--' + o.estado">{{ o.texto }}</span>
+          </li>
+        }
+      </ul>
+
+      <a class="link link--center">Gestionar turnos y bahías →</a>
+    </article>
+  </div>
+
+  <!-- Pagos + reservas sin operario -->
+  <div class="row row--bottom">
+    <article class="card">
+      <div class="card__head">
+        <div>
+          <h2><span class="material-icons amber">payments</span> Pagos pendientes de revisión</h2>
+          <p class="muted">Comprobantes bancarios enviados para validación</p>
+        </div>
+        <span class="badge badge--amber">{{ stats.pagosPorVerificar }} pendientes</span>
+      </div>
+
+      <ul class="lista">
+        @for (p of pagos; track p.ref) {
+          <li class="fila">
+            <div class="fila__info">
+              <div>
+                <strong>{{ p.cliente }}</strong>
+                <span [class]="'tag tag--' + p.bancoClase">{{ p.banco }}</span>
+              </div>
+              <p class="muted">{{ p.servicio }}</p>
+              <p class="muted small">Ref: {{ p.ref }} <b class="accent">{{ cop(p.monto) }} COP</b></p>
+            </div>
+            <button class="btn btn--primary btn--sm">
+              <span class="material-icons">visibility</span> Revisar
+            </button>
+          </li>
+        }
+      </ul>
+
+      <a class="link link--center">Ver los {{ stats.pagosPorVerificar }} comprobantes pendientes →</a>
+    </article>
+
+    <article class="card">
+      <div class="card__head">
+        <div>
+          <h2><span class="material-icons accent">assignment_ind</span> Reservas sin operario</h2>
+          <p class="muted">Servicios confirmados en espera de asignación técnica</p>
+        </div>
+        <span class="badge badge--amber">{{ reservasSinOperario.length }} por asignar</span>
+      </div>
+
+      <ul class="lista">
+        @for (r of reservasSinOperario; track r.hora) {
+          <li class="fila">
+            <div class="fila__info">
+              <p>
+                <span class="tag tag--hora">{{ r.hora }} · {{ r.bahia }}</span>
+                @if (r.proxima) { <span class="muted small">Cita próxima</span> }
+              </p>
+              <strong>{{ r.cliente }} — {{ r.vehiculo }}</strong>
+              <p class="muted small accent">
+                <span class="material-icons tiny">{{ r.icono }}</span> {{ r.servicio }}
+              </p>
+            </div>
+            <button class="btn btn--primary btn--sm">
+              <span class="material-icons">person_add</span> Asignar
+            </button>
+          </li>
+        }
+      </ul>
+
+      <a class="link link--center">Ver agenda operativa completa →</a>
+    </article>
+  </div>
+</section>
