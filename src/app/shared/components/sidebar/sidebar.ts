@@ -52,6 +52,7 @@ export class SidebarComponent implements OnInit {
 /* Admin role menu — matches the approved mockups (Sept 2026) */
   adminMenu = [
     { icono: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', ruta: '/admin' },
+    { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/admin/profile' },
     { icono: 'event_available', label: 'SIDEBAR.RESERVATIONS', ruta: '/admin/reservations' },
     { icono: 'payments', label: 'SIDEBAR.PAYMENTS', ruta: '/admin/payments' },
     { icono: 'admin_panel_settings', label: 'SIDEBAR.MANAGEMENT', ruta: '/admin/management' },
@@ -59,7 +60,6 @@ export class SidebarComponent implements OnInit {
     { icono: 'engineering', label: 'SIDEBAR.OPERATORS', ruta: '/admin/operators' },
     { icono: 'bar_chart', label: 'SIDEBAR.REPORTS', ruta: '/admin/reports' },
     { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/admin/notifications' },
-    { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/admin/profile' },
     { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/admin/settings' }
   ];
 
