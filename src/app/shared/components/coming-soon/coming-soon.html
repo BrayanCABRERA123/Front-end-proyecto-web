@@ -1,0 +1,18 @@
+<div class="page-header" *ngIf="pageTitle">
+  <mat-icon class="page-header-icon">{{ icon }}</mat-icon>
+  <div>
+    <h1>{{ pageTitle }}</h1>
+    <p *ngIf="pageSubtitle">{{ pageSubtitle }}</p>
+  </div>
+</div>
+
+<div class="coming-soon-card">
+
+  <div class="coming-soon-icon">
+    <mat-icon>{{ icon }}</mat-icon>
+  </div>
+
+  <h2>{{ 'COMING_SOON.TITLE' | translate }}</h2>
+  <p>{{ 'COMING_SOON.MESSAGE' | translate }}</p>
+
+</div>

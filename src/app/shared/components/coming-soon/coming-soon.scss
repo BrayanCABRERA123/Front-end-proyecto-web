@@ -1,0 +1,75 @@
+@use '../../../../styles/mixins' as *;
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+
+  h1 {
+    @include heading-2;
+    color: var(--text);
+    margin: 0;
+  }
+
+  p {
+    @include body-text;
+    color: var(--text-secondary);
+    margin: 2px 0 0;
+  }
+}
+
+.page-header-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.coming-soon-card {
+  background: var(--card);
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  padding: 64px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+
+  h2 {
+    @include heading-3;
+    color: var(--text);
+    margin: 0;
+  }
+
+  p {
+    @include body-text;
+    color: var(--text-secondary);
+    max-width: 420px;
+    margin: 0;
+  }
+}
+
+.coming-soon-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-soft);
+  color: var(--primary);
+  margin-bottom: 8px;
+
+  mat-icon {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+  }
+}
