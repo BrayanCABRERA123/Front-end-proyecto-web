@@ -153,3 +153,16 @@ $color-red-soft:   #FDE8E8;
   .bars { gap: 6px; }
   .bar-col__tag { font-size: 9px; }
 }
+
+/* Layout con sidebar */
+.home-layout {
+  display: flex;
+  min-height: 100vh;
+  background: $color-bg;
+}
+
+.home-content {
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+}
