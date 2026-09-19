@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 
 interface DiaIngreso { dia: string; valor: number; etiqueta: string; hoy?: boolean; }
 interface Operario { iniciales: string; nombre: string; rol: string; estado: 'ocupado' | 'disponible' | 'incapacidad'; texto: string; }
@@ -8,6 +9,7 @@ interface ReservaSinOperario { hora: string; bahia: string; cliente: string; veh
 @Component({
   selector: 'app-dashboard',
   standalone: true,
+  imports: [SidebarComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
 })
