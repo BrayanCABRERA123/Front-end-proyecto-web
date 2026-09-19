@@ -1,0 +1,88 @@
+<div class="assign-dialog">
+
+  <div class="assign-header">
+    <div class="assign-header__text">
+      <h2>{{ 'ASSIGN_OPERATOR_MODAL.TITLE' | translate:{ code: data.bookingCode } }}</h2>
+      <p>{{ 'ASSIGN_OPERATOR_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+    <button class="close-x" type="button" (click)="close()" aria-label="close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="assign-body">
+
+    <!-- resumen de la cita -->
+    <div class="appointment-card">
+      <div class="appointment-card__top">
+        <span class="eyebrow">{{ 'ASSIGN_OPERATOR_MODAL.APPOINTMENT_DETAILS' | translate }}</span>
+        <span class="plate-tag">{{ data.plate }}</span>
+      </div>
+
+      <strong class="appointment-card__title">{{ data.client }} — {{ data.vehicle }}</strong>
+      <p class="appointment-card__service">{{ 'ADMIN_RESERVATIONS.TABLE.SERVICE' | translate }}: {{ data.service }}</p>
+
+      <div class="appointment-card__bottom">
+        <span><mat-icon>schedule</mat-icon> {{ data.timeLabel }}</span>
+        <span class="bay-tag">{{ data.bay }}</span>
+      </div>
+    </div>
+
+    <p class="select-label">{{ 'ASSIGN_OPERATOR_MODAL.SELECT_OPERATOR' | translate }}</p>
+
+    <!-- lista de operarios -->
+    <div class="operator-list">
+      @for (op of data.operators; track op.id) {
+        <label
+          class="operator-option"
+          [class.operator-option--selected]="selectedOperatorId === op.id"
+          [class.operator-option--disabled]="!canPick(op)"
+          (click)="pickOperator(op)">
+
+          <input
+            type="radio"
+            name="operator"
+            [value]="op.id"
+            [checked]="selectedOperatorId === op.id"
+            [disabled]="!canPick(op)">
+
+          <span class="avatar">{{ op.initials }}</span>
+
+          <span class="operator-option__info">
+            <strong>{{ op.name }} <span class="rating">★ {{ op.rating }}</span></strong>
+            <span class="muted">{{ op.specialty }}</span>
+          </span>
+
+          <span
+            class="status-tag"
+            [class.status-tag--available]="op.availability === 'available'"
+            [class.status-tag--warning]="op.availability !== 'available'">
+            {{ op.availability === 'available' ? ('ASSIGN_OPERATOR_MODAL.AVAILABLE' | translate) : op.availabilityNote }}
+          </span>
+        </label>
+      }
+    </div>
+
+    <!-- observaciones -->
+    <div class="notes-field">
+      <label>{{ 'ASSIGN_OPERATOR_MODAL.NOTES_LABEL' | translate }}</label>
+      <textarea
+        rows="2"
+        [(ngModel)]="notes"
+        [placeholder]="'ASSIGN_OPERATOR_MODAL.NOTES_PLACEHOLDER' | translate">
+      </textarea>
+    </div>
+
+  </div>
+
+  <div class="assign-actions">
+    <button class="btn-cancel" type="button" (click)="close()">
+      {{ 'ASSIGN_OPERATOR_MODAL.CANCEL' | translate }}
+    </button>
+    <button class="btn-confirm" type="button" [disabled]="!selectedOperatorId" (click)="confirm()">
+      <mat-icon>check</mat-icon>
+      {{ 'ASSIGN_OPERATOR_MODAL.CONFIRM' | translate }}
+    </button>
+  </div>
+
+</div>

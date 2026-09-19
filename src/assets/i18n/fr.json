@@ -1079,5 +1079,56 @@
       "ASSIGN": "Assigner",
       "VIEW_ALL": "Voir le planning opérationnel complet"
     }
+  },
+  "ADMIN_RESERVATIONS": {
+    "EXPORT": "Exporter",
+    "NEW_BOOKING": "Nouvelle réservation",
+    "STATS": {
+      "TOTAL_TODAY": "Réservations du jour",
+      "CONFIRMED_PROGRESS": "Confirmées / en cours",
+      "UNASSIGNED": "En attente d'opérateur",
+      "ATTENTION_REQUIRED": "Attention requise",
+      "CANCELLED": "Annulées / reprogrammées"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Rechercher par client ou plaque...",
+      "TODAY": "Aujourd'hui",
+      "ALL_STATUSES": "Tous les statuts",
+      "ALL_OPERATORS": "Tous les opérateurs",
+      "CLEAR": "Effacer"
+    },
+    "TABLE": {
+      "CLIENT": "Client",
+      "VEHICLE_PLATE": "Véhicule et plaque",
+      "SERVICE": "Service",
+      "DATE_TIME": "Date / heure",
+      "ASSIGNED_OPERATOR": "Opérateur assigné",
+      "STATUS": "Statut",
+      "UNASSIGNED": "Non assignée",
+      "NOT_APPLICABLE": "N/A"
+    },
+    "STATUS": {
+      "confirmed": "Confirmée",
+      "in_progress": "En cours",
+      "completed": "Terminée",
+      "cancelled": "Annulée"
+    },
+    "PAGINATION": {
+      "SHOWING": "Affichage de {{from}} à {{to}} sur {{total}} réservations",
+      "PREVIOUS": "Précédent",
+      "NEXT": "Suivant"
+    },
+    "ASSIGN": "Assigner"
+  },
+  "ASSIGN_OPERATOR_MODAL": {
+    "TITLE": "Assigner un opérateur à la réservation {{code}}",
+    "SUBTITLE": "Assignez le technicien qui prendra en charge ce service",
+    "APPOINTMENT_DETAILS": "Détails du rendez-vous",
+    "SELECT_OPERATOR": "Sélectionnez un opérateur disponible pour ce créneau :",
+    "AVAILABLE": "Disponible",
+    "NOTES_LABEL": "Instructions ou remarques pour l'opérateur (facultatif) :",
+    "NOTES_PLACEHOLDER": "Ex. Vérifier une tache sur la sellerie arrière droite...",
+    "CANCEL": "Annuler",
+    "CONFIRM": "Confirmer l'assignation"
   }
 }

@@ -1079,5 +1079,56 @@
       "ASSIGN": "Atribuir",
       "VIEW_ALL": "Ver agenda operacional completa"
     }
+  },
+  "ADMIN_RESERVATIONS": {
+    "EXPORT": "Exportar",
+    "NEW_BOOKING": "Nova Reserva",
+    "STATS": {
+      "TOTAL_TODAY": "Total de reservas hoje",
+      "CONFIRMED_PROGRESS": "Confirmadas / em andamento",
+      "UNASSIGNED": "Aguardando operador",
+      "ATTENTION_REQUIRED": "Requer atenção",
+      "CANCELLED": "Canceladas / reagendadas"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Buscar por cliente ou placa...",
+      "TODAY": "Hoje",
+      "ALL_STATUSES": "Todos os status",
+      "ALL_OPERATORS": "Todos os operadores",
+      "CLEAR": "Limpar"
+    },
+    "TABLE": {
+      "CLIENT": "Cliente",
+      "VEHICLE_PLATE": "Veículo e placa",
+      "SERVICE": "Serviço",
+      "DATE_TIME": "Data / hora",
+      "ASSIGNED_OPERATOR": "Operador atribuído",
+      "STATUS": "Status",
+      "UNASSIGNED": "Não atribuída",
+      "NOT_APPLICABLE": "N/A"
+    },
+    "STATUS": {
+      "confirmed": "Confirmada",
+      "in_progress": "Em andamento",
+      "completed": "Concluída",
+      "cancelled": "Cancelada"
+    },
+    "PAGINATION": {
+      "SHOWING": "Mostrando {{from}} a {{to}} de {{total}} reservas",
+      "PREVIOUS": "Anterior",
+      "NEXT": "Próxima"
+    },
+    "ASSIGN": "Atribuir"
+  },
+  "ASSIGN_OPERATOR_MODAL": {
+    "TITLE": "Atribuir Operador à Reserva {{code}}",
+    "SUBTITLE": "Atribua o técnico que atenderá este serviço",
+    "APPOINTMENT_DETAILS": "Detalhes do agendamento",
+    "SELECT_OPERATOR": "Selecione um operador disponível para este horário:",
+    "AVAILABLE": "Disponível",
+    "NOTES_LABEL": "Instruções ou observações para o operador (opcional):",
+    "NOTES_PLACEHOLDER": "Ex. Verificar mancha na estofaria traseira direita...",
+    "CANCEL": "Cancelar",
+    "CONFIRM": "Confirmar Atribuição"
   }
 }

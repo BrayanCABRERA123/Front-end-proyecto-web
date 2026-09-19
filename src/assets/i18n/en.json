@@ -1079,5 +1079,56 @@
       "ASSIGN": "Assign",
       "VIEW_ALL": "View full operating schedule"
     }
+  },
+  "ADMIN_RESERVATIONS": {
+    "EXPORT": "Export",
+    "NEW_BOOKING": "New Booking",
+    "STATS": {
+      "TOTAL_TODAY": "Total bookings today",
+      "CONFIRMED_PROGRESS": "Confirmed / in progress",
+      "UNASSIGNED": "Awaiting operator",
+      "ATTENTION_REQUIRED": "Needs attention",
+      "CANCELLED": "Cancelled / rescheduled"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Search by client or plate...",
+      "TODAY": "Today",
+      "ALL_STATUSES": "All statuses",
+      "ALL_OPERATORS": "All operators",
+      "CLEAR": "Clear"
+    },
+    "TABLE": {
+      "CLIENT": "Client",
+      "VEHICLE_PLATE": "Vehicle & plate",
+      "SERVICE": "Service",
+      "DATE_TIME": "Date / time",
+      "ASSIGNED_OPERATOR": "Assigned operator",
+      "STATUS": "Status",
+      "UNASSIGNED": "Unassigned",
+      "NOT_APPLICABLE": "N/A"
+    },
+    "STATUS": {
+      "confirmed": "Confirmed",
+      "in_progress": "In progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "PAGINATION": {
+      "SHOWING": "Showing {{from}} to {{to}} of {{total}} bookings",
+      "PREVIOUS": "Previous",
+      "NEXT": "Next"
+    },
+    "ASSIGN": "Assign"
+  },
+  "ASSIGN_OPERATOR_MODAL": {
+    "TITLE": "Assign Operator to Booking {{code}}",
+    "SUBTITLE": "Assign the technician who will handle this service",
+    "APPOINTMENT_DETAILS": "Appointment details",
+    "SELECT_OPERATOR": "Select an available operator for this slot:",
+    "AVAILABLE": "Available",
+    "NOTES_LABEL": "Instructions or notes for the operator (optional):",
+    "NOTES_PLACEHOLDER": "E.g. Check stain on rear right upholstery...",
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm Assignment"
   }
 }

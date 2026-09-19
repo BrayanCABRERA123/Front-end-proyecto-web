@@ -1,13 +1,198 @@
 <div class="home-layout">
-
   <app-sidebar rol="ADMIN"></app-sidebar>
 
   <main class="home-content">
-    <app-coming-soon
-      icon="event_available"
-      [pageTitle]="'ADMIN_PAGES.RESERVATIONS.TITLE' | translate"
-      [pageSubtitle]="'ADMIN_PAGES.RESERVATIONS.SUBTITLE' | translate">
-    </app-coming-soon>
-  </main>
 
+    <!-- encabezado -->
+    <div class="page-header">
+      <div class="page-header__left">
+        <div class="header-icon"><mat-icon>event_available</mat-icon></div>
+        <div>
+          <h1>{{ 'ADMIN_PAGES.RESERVATIONS.TITLE' | translate }}</h1>
+          <p>{{ 'ADMIN_PAGES.RESERVATIONS.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="page-header__actions">
+        <button class="btn-outline">
+          <mat-icon>download</mat-icon>
+          {{ 'ADMIN_RESERVATIONS.EXPORT' | translate }}
+        </button>
+        <button class="btn-primary">
+          <mat-icon>add</mat-icon>
+          {{ 'ADMIN_RESERVATIONS.NEW_BOOKING' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- tarjetas de resumen -->
+    <div class="stats-grid">
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'ADMIN_RESERVATIONS.STATS.TOTAL_TODAY' | translate }}</p>
+          <p class="stat-value">{{ stats.total }}</p>
+        </div>
+        <div class="stat-icon"><mat-icon>assignment</mat-icon></div>
+      </div>
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'ADMIN_RESERVATIONS.STATS.CONFIRMED_PROGRESS' | translate }}</p>
+          <p class="stat-value">{{ stats.confirmedInProgress }}</p>
+        </div>
+        <div class="stat-icon"><mat-icon>autorenew</mat-icon></div>
+      </div>
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'ADMIN_RESERVATIONS.STATS.UNASSIGNED' | translate }}</p>
+          <p class="stat-value">{{ stats.unassigned }}</p>
+          <span class="badge badge--warning">{{ 'ADMIN_RESERVATIONS.STATS.ATTENTION_REQUIRED' | translate }}</span>
+        </div>
+        <div class="stat-icon stat-icon--warning"><mat-icon>warning</mat-icon></div>
+      </div>
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'ADMIN_RESERVATIONS.STATS.CANCELLED' | translate }}</p>
+          <p class="stat-value stat-value--muted">{{ stats.cancelled }}</p>
+        </div>
+        <div class="stat-icon stat-icon--neutral"><mat-icon>close</mat-icon></div>
+      </div>
+
+    </div>
+
+    <!-- filtros -->
+    <div class="card filters-card">
+
+      <div class="search-box">
+        <mat-icon>search</mat-icon>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="currentPage = 1"
+          [placeholder]="'ADMIN_RESERVATIONS.FILTERS.SEARCH_PLACEHOLDER' | translate">
+      </div>
+
+      <div class="date-box">
+        <mat-icon>calendar_today</mat-icon>
+        <input type="date" [(ngModel)]="selectedDate">
+        <span class="today-chip">{{ 'ADMIN_RESERVATIONS.FILTERS.TODAY' | translate }}</span>
+      </div>
+
+      <select [(ngModel)]="statusFilter" (ngModelChange)="currentPage = 1">
+        <option value="">{{ 'ADMIN_RESERVATIONS.FILTERS.ALL_STATUSES' | translate }}</option>
+        <option value="confirmed">{{ 'ADMIN_RESERVATIONS.STATUS.confirmed' | translate }}</option>
+        <option value="in_progress">{{ 'ADMIN_RESERVATIONS.STATUS.in_progress' | translate }}</option>
+        <option value="completed">{{ 'ADMIN_RESERVATIONS.STATUS.completed' | translate }}</option>
+        <option value="cancelled">{{ 'ADMIN_RESERVATIONS.STATUS.cancelled' | translate }}</option>
+      </select>
+
+      <select [(ngModel)]="operatorFilter" (ngModelChange)="currentPage = 1">
+        <option value="">{{ 'ADMIN_RESERVATIONS.FILTERS.ALL_OPERATORS' | translate }}</option>
+        @for (name of operatorNames; track name) {
+          <option [value]="name">{{ name }}</option>
+        }
+      </select>
+
+      <button class="btn-outline" (click)="clearFilters()">
+        {{ 'ADMIN_RESERVATIONS.FILTERS.CLEAR' | translate }}
+      </button>
+
+    </div>
+
+    <!-- tabla -->
+    <div class="card table-card">
+      <div class="table-wrapper">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>{{ 'ADMIN_RESERVATIONS.TABLE.CLIENT' | translate }}</th>
+              <th>{{ 'ADMIN_RESERVATIONS.TABLE.VEHICLE_PLATE' | translate }}</th>
+              <th>{{ 'ADMIN_RESERVATIONS.TABLE.SERVICE' | translate }}</th>
+              <th>{{ 'ADMIN_RESERVATIONS.TABLE.DATE_TIME' | translate }}</th>
+              <th>{{ 'ADMIN_RESERVATIONS.TABLE.ASSIGNED_OPERATOR' | translate }}</th>
+              <th>{{ 'ADMIN_RESERVATIONS.TABLE.STATUS' | translate }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (b of pagedBookings; track b.code) {
+              <tr>
+                <td>
+                  <strong>{{ b.client }}</strong>
+                  <span class="muted">{{ b.phone }}</span>
+                </td>
+                <td>
+                  <strong>{{ b.vehicle }}</strong>
+                  <span class="plate-chip">{{ b.plate }}</span>
+                </td>
+                <td>
+                  <span class="service-dot"></span>{{ b.service }}
+                </td>
+                <td>
+                  <strong>{{ b.date }} · {{ b.timeRange }}</strong>
+                  <span class="muted">{{ b.relativeTime }}</span>
+                </td>
+                <td>
+                  @if (b.operator) {
+                    <span class="operator-chip">
+                      <span class="avatar">{{ b.operator.initials }}</span>
+                      {{ b.operator.name }}
+                    </span>
+                  } @else {
+                    <span class="badge badge--warning">{{ 'ADMIN_RESERVATIONS.TABLE.UNASSIGNED' | translate }}</span>
+                  }
+                </td>
+                <td>
+                  <span [class]="'status-pill status-pill--' + b.status">
+                    {{ ('ADMIN_RESERVATIONS.STATUS.' + b.status) | translate }}
+                  </span>
+                </td>
+                <td class="actions-cell">
+                  @if (!b.operator && b.status !== 'cancelled' && b.status !== 'completed') {
+                    <button class="btn-assign" (click)="openAssignModal(b)">
+                      <mat-icon>person_add</mat-icon>
+                      {{ 'ADMIN_RESERVATIONS.ASSIGN' | translate }}
+                    </button>
+                  } @else {
+                    <button class="btn-icon"><mat-icon>visibility</mat-icon></button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- paginación -->
+      <div class="pagination">
+        <span class="muted">
+          {{ 'ADMIN_RESERVATIONS.PAGINATION.SHOWING' | translate:{ from: rangeFrom, to: rangeTo, total: filteredBookings.length } }}
+        </span>
+
+        <div class="pagination__controls">
+          <button [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+            {{ 'ADMIN_RESERVATIONS.PAGINATION.PREVIOUS' | translate }}
+          </button>
+
+          @for (page of pageNumbers; track page) {
+            <button
+              class="page-number"
+              [class.page-number--active]="currentPage === page"
+              (click)="goToPage(page)">
+              {{ page }}
+            </button>
+          }
+
+          <button [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+            {{ 'ADMIN_RESERVATIONS.PAGINATION.NEXT' | translate }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
 </div>

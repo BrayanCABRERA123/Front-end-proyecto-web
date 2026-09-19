@@ -1079,5 +1079,56 @@
       "ASSIGN": "Asignar",
       "VIEW_ALL": "Ver agenda operativa completa"
     }
+  },
+  "ADMIN_RESERVATIONS": {
+    "EXPORT": "Exportar",
+    "NEW_BOOKING": "Nueva Reserva",
+    "STATS": {
+      "TOTAL_TODAY": "Total reservas hoy",
+      "CONFIRMED_PROGRESS": "Confirmadas / en progreso",
+      "UNASSIGNED": "Por asignar operario",
+      "ATTENTION_REQUIRED": "Atención requerida",
+      "CANCELLED": "Canceladas / reprog."
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Buscar por cliente o placa...",
+      "TODAY": "Hoy",
+      "ALL_STATUSES": "Todos los estados",
+      "ALL_OPERATORS": "Todos los operarios",
+      "CLEAR": "Limpiar"
+    },
+    "TABLE": {
+      "CLIENT": "Cliente",
+      "VEHICLE_PLATE": "Vehículo y placa",
+      "SERVICE": "Servicio",
+      "DATE_TIME": "Fecha / hora",
+      "ASSIGNED_OPERATOR": "Operario asignado",
+      "STATUS": "Estado",
+      "UNASSIGNED": "Sin asignar",
+      "NOT_APPLICABLE": "N/A"
+    },
+    "STATUS": {
+      "confirmed": "Confirmada",
+      "in_progress": "En progreso",
+      "completed": "Completada",
+      "cancelled": "Cancelada"
+    },
+    "PAGINATION": {
+      "SHOWING": "Mostrando {{from}} a {{to}} de {{total}} reservas totales",
+      "PREVIOUS": "Anterior",
+      "NEXT": "Siguiente"
+    },
+    "ASSIGN": "Asignar"
+  },
+  "ASSIGN_OPERATOR_MODAL": {
+    "TITLE": "Asignar Operario a Reserva {{code}}",
+    "SUBTITLE": "Asigna el técnico que atenderá este servicio",
+    "APPOINTMENT_DETAILS": "Detalles de la cita",
+    "SELECT_OPERATOR": "Selecciona un operario disponible para este turno:",
+    "AVAILABLE": "Disponible",
+    "NOTES_LABEL": "Instrucciones u observaciones para el operario (opcional):",
+    "NOTES_PLACEHOLDER": "Ej. Revisar mancha en tapicería trasera derecha...",
+    "CANCEL": "Cancelar",
+    "CONFIRM": "Confirmar Asignación"
   }
 }
