@@ -36,7 +36,13 @@
     "ASSIGNED_SERVICES": "services assignés",
     "RATINGS": "Évaluations",
     "VEHICLES": "Mes véhicules",
-    "SCHEDULE": "Mon Agenda"
+    "SCHEDULE": "Mon Agenda",
+    "RESERVATIONS": "Réservations",
+    "MANAGEMENT": "Gestion",
+    "SCHEDULE_BAYS": "Horaires et baies",
+    "OPERATORS": "Opérateurs",
+    "PAYMENTS": "Paiements",
+    "REPORTS": "Rapports"
   },
   "HISTORY": {
     "FILTERS": "Filtres",
@@ -234,7 +240,8 @@
     "OPERATOR_MESSAGE_TITLE": "Message de l'opérateur",
     "OPERATOR_MESSAGE_DESC": "\"Je serai en retard de 5 minutes, merci de m'attendre.\"",
     "DELETE_TITLE": "Supprimer cette notification ?",
-    "DELETE_MESSAGE": "Cette action est irréversible."
+    "DELETE_MESSAGE": "Cette action est irréversible.",
+    "ADMIN_SUBTITLE": "Vous pouvez consulter ici les notifications administratives : paiements à vérifier, réservations sans opérateur, nouveautés de l'équipe et du système."
   },
   "PAYMENTS": {
     "TITLE": "Gestion des Paiements",
@@ -999,6 +1006,28 @@
           "BODY": "Pour toute question sur le traitement de vos données, écrivez à datos@expresscarwash.co ou appelez le +57 300 123 4567."
         }
       ]
+    }
+  },
+  "COMING_SOON": {
+    "TITLE": "Cette section est en construction",
+    "MESSAGE": "Cet écran est en cours de développement selon le design approuvé. Vous pourrez bientôt tout gérer depuis ici."
+  },
+  "ADMIN_PAGES": {
+    "RESERVATIONS": {
+      "TITLE": "Gestion des Réservations",
+      "SUBTITLE": "Suivez, assignez des opérateurs et gérez le flux de services en temps réel"
+    },
+    "MANAGEMENT": {
+      "TITLE": "Gestion",
+      "SUBTITLE": "Gérez les utilisateurs, rôles, services et promotions depuis un seul endroit"
+    },
+    "SCHEDULE_BAYS": {
+      "TITLE": "Horaires et baies",
+      "SUBTITLE": "Configurez les horaires d'ouverture, les jours fériés et la disponibilité des baies de service"
+    },
+    "OPERATORS": {
+      "TITLE": "Opérateurs",
+      "SUBTITLE": "Gérez votre équipe technique, ses horaires et sa disponibilité en temps réel"
     }
   }
 }

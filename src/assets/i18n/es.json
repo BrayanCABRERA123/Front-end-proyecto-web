@@ -36,7 +36,13 @@
     "ASSIGNED_SERVICES": "servicios asignados",
     "RATINGS": "Calificaciones",
     "VEHICLES": "Mis vehículos",
-    "SCHEDULE": "Mi Agenda"
+    "SCHEDULE": "Mi Agenda",
+    "RESERVATIONS": "Reservas",
+    "MANAGEMENT": "Gestión",
+    "SCHEDULE_BAYS": "Horarios y bahías",
+    "OPERATORS": "Operarios",
+    "PAYMENTS": "Pagos",
+    "REPORTS": "Reportes"
   },
   "HISTORY": {
     "FILTERS": "Filtros",
@@ -234,7 +240,8 @@
     "OPERATOR_MESSAGE_TITLE": "Mensaje del operario",
     "OPERATOR_MESSAGE_DESC": "\"Voy a estar 5 minutos tarde, por favor esperarme.\"",
     "DELETE_TITLE": "¿Eliminar esta notificación?",
-    "DELETE_MESSAGE": "Esta acción no se puede deshacer."
+    "DELETE_MESSAGE": "Esta acción no se puede deshacer.",
+    "ADMIN_SUBTITLE": "Aquí puedes ver las notificaciones administrativas: pagos por verificar, reservas sin operario, novedades del equipo y del sistema."
   },
   "PAYMENTS": {
     "TITLE": "Gestión de Pagos",
@@ -999,6 +1006,28 @@
           "BODY": "Para cualquier duda sobre el tratamiento de tus datos, escríbenos a datos@expresscarwash.co o al teléfono +57 300 123 4567."
         }
       ]
+    }
+  },
+  "COMING_SOON": {
+    "TITLE": "Estamos construyendo esta sección",
+    "MESSAGE": "Esta pantalla está en desarrollo siguiendo el diseño aprobado. Muy pronto vas a poder gestionar todo desde aquí."
+  },
+  "ADMIN_PAGES": {
+    "RESERVATIONS": {
+      "TITLE": "Gestión de Reservas",
+      "SUBTITLE": "Monitorea, asigna operarios y gestiona el flujo de servicios en tiempo real"
+    },
+    "MANAGEMENT": {
+      "TITLE": "Gestión",
+      "SUBTITLE": "Administra usuarios, roles, servicios y promociones desde un solo lugar"
+    },
+    "SCHEDULE_BAYS": {
+      "TITLE": "Horarios y bahías",
+      "SUBTITLE": "Configura los turnos de atención comercial, días no laborables y la disponibilidad de las bahías de servicio"
+    },
+    "OPERATORS": {
+      "TITLE": "Operarios",
+      "SUBTITLE": "Gestiona el equipo técnico, sus turnos y su disponibilidad operativa en tiempo real"
     }
   }
 }

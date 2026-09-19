@@ -36,7 +36,13 @@
     "ASSIGNED_SERVICES": "assigned services",
     "RATINGS": "Ratings",
     "VEHICLES": "My vehicles",
-    "SCHEDULE": "My Schedule"
+    "SCHEDULE": "My Schedule",
+    "RESERVATIONS": "Bookings",
+    "MANAGEMENT": "Management",
+    "SCHEDULE_BAYS": "Hours & Bays",
+    "OPERATORS": "Operators",
+    "PAYMENTS": "Payments",
+    "REPORTS": "Reports"
   },
   "HISTORY": {
     "FILTERS": "Filters",
@@ -234,7 +240,8 @@
     "OPERATOR_MESSAGE_TITLE": "Message from operator",
     "OPERATOR_MESSAGE_DESC": "\"I'll be 5 minutes late, please wait for me.\"",
     "DELETE_TITLE": "Delete this notification?",
-    "DELETE_MESSAGE": "This action cannot be undone."
+    "DELETE_MESSAGE": "This action cannot be undone.",
+    "ADMIN_SUBTITLE": "Here you can view administrative notifications: payments to verify, unassigned bookings, team updates and system alerts."
   },
   "PAYMENTS": {
     "TITLE": "Payment Management",
@@ -999,6 +1006,28 @@
           "BODY": "For any question about how we handle your data, write to datos@expresscarwash.co or call +57 300 123 4567."
         }
       ]
+    }
+  },
+  "COMING_SOON": {
+    "TITLE": "We're building this section",
+    "MESSAGE": "This screen is under development following the approved design. You'll soon be able to manage everything from here."
+  },
+  "ADMIN_PAGES": {
+    "RESERVATIONS": {
+      "TITLE": "Booking Management",
+      "SUBTITLE": "Monitor, assign operators and manage the service flow in real time"
+    },
+    "MANAGEMENT": {
+      "TITLE": "Management",
+      "SUBTITLE": "Manage users, roles, services and promotions from a single place"
+    },
+    "SCHEDULE_BAYS": {
+      "TITLE": "Hours & Bays",
+      "SUBTITLE": "Set business hours, non-working days and service bay availability"
+    },
+    "OPERATORS": {
+      "TITLE": "Operators",
+      "SUBTITLE": "Manage your technical team, shifts and real-time availability"
     }
   }
 }

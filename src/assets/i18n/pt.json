@@ -36,7 +36,13 @@
     "ASSIGNED_SERVICES": "serviços atribuídos",
     "RATINGS": "Avaliações",
     "VEHICLES": "Meus veículos",
-    "SCHEDULE": "Minha Agenda"
+    "SCHEDULE": "Minha Agenda",
+    "RESERVATIONS": "Reservas",
+    "MANAGEMENT": "Gestão",
+    "SCHEDULE_BAYS": "Horários e baias",
+    "OPERATORS": "Operadores",
+    "PAYMENTS": "Pagamentos",
+    "REPORTS": "Relatórios"
   },
   "HISTORY": {
     "FILTERS": "Filtros",
@@ -234,7 +240,8 @@
     "OPERATOR_MESSAGE_TITLE": "Mensagem do operador",
     "OPERATOR_MESSAGE_DESC": "\"Vou me atrasar 5 minutos, por favor, espere por mim.\"",
     "DELETE_TITLE": "Excluir esta notificação?",
-    "DELETE_MESSAGE": "Esta ação não pode ser desfeita."
+    "DELETE_MESSAGE": "Esta ação não pode ser desfeita.",
+    "ADMIN_SUBTITLE": "Aqui você pode visualizar as notificações administrativas: pagamentos a verificar, reservas sem operador, novidades da equipe e do sistema."
   },
   "PAYMENTS": {
     "TITLE": "Gestão de Pagamentos",
@@ -999,6 +1006,28 @@
           "BODY": "Para qualquer dúvida sobre o tratamento de seus dados, escreva para datos@expresscarwash.co ou ligue para +57 300 123 4567."
         }
       ]
+    }
+  },
+  "COMING_SOON": {
+    "TITLE": "Estamos construindo esta seção",
+    "MESSAGE": "Esta tela está em desenvolvimento seguindo o design aprovado. Em breve você poderá gerenciar tudo por aqui."
+  },
+  "ADMIN_PAGES": {
+    "RESERVATIONS": {
+      "TITLE": "Gestão de Reservas",
+      "SUBTITLE": "Monitore, atribua operadores e gerencie o fluxo de serviços em tempo real"
+    },
+    "MANAGEMENT": {
+      "TITLE": "Gestão",
+      "SUBTITLE": "Administre usuários, funções, serviços e promoções em um só lugar"
+    },
+    "SCHEDULE_BAYS": {
+      "TITLE": "Horários e baias",
+      "SUBTITLE": "Configure os horários de atendimento, feriados e a disponibilidade das baias de serviço"
+    },
+    "OPERATORS": {
+      "TITLE": "Operadores",
+      "SUBTITLE": "Gerencie sua equipe técnica, turnos e disponibilidade em tempo real"
     }
   }
 }

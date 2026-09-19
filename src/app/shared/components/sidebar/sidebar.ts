@@ -49,12 +49,17 @@ export class SidebarComponent implements OnInit {
   { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/operator/settings' }
 ];
 
-/*Menu opciones administrador */
+/* Admin role menu — matches the approved mockups (Sept 2026) */
   adminMenu = [
     { icono: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', ruta: '/admin' },
-    { icono: 'build', label: 'SIDEBAR.SERVICES', ruta: '/admin/services' },
+    { icono: 'event_available', label: 'SIDEBAR.RESERVATIONS', ruta: '/admin/reservations' },
     { icono: 'payments', label: 'SIDEBAR.PAYMENTS', ruta: '/admin/payments' },
+    { icono: 'admin_panel_settings', label: 'SIDEBAR.MANAGEMENT', ruta: '/admin/management' },
+    { icono: 'schedule', label: 'SIDEBAR.SCHEDULE_BAYS', ruta: '/admin/schedule' },
+    { icono: 'engineering', label: 'SIDEBAR.OPERATORS', ruta: '/admin/operators' },
     { icono: 'bar_chart', label: 'SIDEBAR.REPORTS', ruta: '/admin/reports' },
+    { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/admin/notifications' },
+    { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/admin/profile' },
     { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/admin/settings' }
   ];
 
