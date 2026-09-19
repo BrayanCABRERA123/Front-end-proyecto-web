@@ -31,7 +31,7 @@ type TabKey = 'todas' | 'recordatorio' | 'promocion' | 'confirmacion' | 'otras';
 })
 export class NotificationsComponent {
 
-  @Input() rol: 'CLIENTE' | 'OPERARIO' = 'CLIENTE';
+  @Input() rol: 'CLIENTE' | 'OPERARIO' | 'ADMIN' = 'CLIENTE';
   @Input() notifications: AppNotification[] = [];
 
   tabActiva: TabKey = 'todas';

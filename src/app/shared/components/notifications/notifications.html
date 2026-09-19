@@ -24,7 +24,9 @@
       {{
         rol === 'CLIENTE'
         ? ('NOTIFICATIONS.CLIENT_SUBTITLE' | translate)
-        : ('NOTIFICATIONS.OPERATOR_SUBTITLE' | translate)
+        : rol === 'ADMIN'
+          ? ('NOTIFICATIONS.ADMIN_SUBTITLE' | translate)
+          : ('NOTIFICATIONS.OPERATOR_SUBTITLE' | translate)
       }}
     </p>
 
