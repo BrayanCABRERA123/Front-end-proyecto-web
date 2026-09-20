@@ -2,17 +2,17 @@
 
   <div class="legal-header">
     <div class="legal-header-icon">
-      <mat-icon>{{ tipo === 'terms' ? 'gavel' : 'shield' }}</mat-icon>
+      <mat-icon>{{ type === 'terms' ? 'gavel' : 'shield' }}</mat-icon>
     </div>
 
     <div class="legal-header-text">
-      <h2>{{ titulo }}</h2>
+      <h2>{{ title }}</h2>
       <span class="legal-updated">
-        {{ ultimaActualizacionLabel }}: {{ ultimaActualizacionFecha }}
+        {{ lastUpdatedLabel }}: {{ lastUpdatedDate }}
       </span>
     </div>
 
-    <button class="legal-close-x" type="button" (click)="cerrar(false)" aria-label="close">
+    <button class="legal-close-x" type="button" (click)="close(false)" aria-label="close">
       <mat-icon>close</mat-icon>
     </button>
   </div>
@@ -24,7 +24,7 @@
 
   <div class="legal-body">
 
-    <section class="legal-section" *ngFor="let s of secciones">
+    <section class="legal-section" *ngFor="let s of sections">
       <h3>{{ s.HEADING }}</h3>
       <p>{{ s.BODY }}</p>
     </section>
@@ -38,17 +38,17 @@
 
   <div class="legal-actions">
 
-    <ng-container *ngIf="modo === 'accept'; else soloVer">
-      <button class="btn-cancel" type="button" (click)="cerrar(false)">
+    <ng-container *ngIf="mode === 'accept'; else viewOnly">
+      <button class="btn-cancel" type="button" (click)="close(false)">
         {{ 'LEGAL.CANCEL' | translate }}
       </button>
-      <button class="btn-accept" type="button" (click)="cerrar(true)">
+      <button class="btn-accept" type="button" (click)="close(true)">
         {{ 'LEGAL.ACCEPT' | translate }}
       </button>
     </ng-container>
 
-    <ng-template #soloVer>
-      <button class="btn-accept full" type="button" (click)="cerrar(false)">
+    <ng-template #viewOnly>
+      <button class="btn-accept full" type="button" (click)="close(false)">
         {{ 'LEGAL.CLOSE' | translate }}
       </button>
     </ng-template>

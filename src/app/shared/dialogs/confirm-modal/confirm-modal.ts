@@ -6,11 +6,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 export interface ConfirmModalData {
-  titulo: string;
-  mensaje: string;
-  textoConfirmar?: string;
-  textoCancelar?: string;
-  peligro?: boolean;
+  title: string;
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+  danger?: boolean;
 }
 
 @Component({
@@ -22,24 +22,24 @@ export interface ConfirmModalData {
 })
 export class ConfirmModal {
 
-  titulo: string;
-  mensaje: string;
-  textoConfirmar: string;
-  textoCancelar: string;
-  peligro: boolean;
+  title: string;
+  message: string;
+  confirmText: string;
+  cancelText: string;
+  danger: boolean;
 
   constructor(
     private dialogRef: MatDialogRef<ConfirmModal>,
     @Inject(MAT_DIALOG_DATA) private data: ConfirmModalData
   ) {
-    this.titulo = data.titulo;
-    this.mensaje = data.mensaje;
-    this.textoConfirmar = data.textoConfirmar ?? 'COMMON.DELETE';
-    this.textoCancelar = data.textoCancelar ?? 'COMMON.CANCEL';
-    this.peligro = data.peligro ?? true;
+    this.title = data.title;
+    this.message = data.message;
+    this.confirmText = data.confirmText ?? 'COMMON.DELETE';
+    this.cancelText = data.cancelText ?? 'COMMON.CANCEL';
+    this.danger = data.danger ?? true;
   }
 
-  cerrar(confirmado: boolean) {
-    this.dialogRef.close(confirmado);
+  close(confirmed: boolean) {
+    this.dialogRef.close(confirmed);
   }
 }

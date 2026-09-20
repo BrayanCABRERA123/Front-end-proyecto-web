@@ -33,14 +33,14 @@ interface LegalSection {
 })
 export class LegalDocumentModal implements OnInit, OnDestroy {
 
-  tipo: LegalDocumentType;
-  modo: LegalDocumentMode;
+  type: LegalDocumentType;
+  mode: LegalDocumentMode;
 
-  titulo = '';
-  secciones: LegalSection[] = [];
+  title = '';
+  sections: LegalSection[] = [];
 
-  ultimaActualizacionLabel = '';
-  ultimaActualizacionFecha = '';
+  lastUpdatedLabel = '';
+  lastUpdatedDate = '';
 
   private langSub?: Subscription;
 
@@ -49,16 +49,16 @@ export class LegalDocumentModal implements OnInit, OnDestroy {
     private translate: TranslateService,
     @Inject(MAT_DIALOG_DATA) private data: LegalDocumentModalData
   ) {
-    this.tipo = data.type;
-    this.modo = data.mode ?? 'view';
+    this.type = data.type;
+    this.mode = data.mode ?? 'view';
   }
 
   ngOnInit(): void {
-    this.cargarContenido();
+    this.loadContent();
 
     // si el usuario cambia de idioma con el modal abierto, refrescamos el texto
     this.langSub = this.translate.onLangChange.subscribe(() => {
-      this.cargarContenido();
+      this.loadContent();
     });
   }
 
@@ -66,17 +66,17 @@ export class LegalDocumentModal implements OnInit, OnDestroy {
     this.langSub?.unsubscribe();
   }
 
-  private cargarContenido(): void {
-    const raiz = this.tipo === 'terms' ? 'LEGAL.TERMS' : 'LEGAL.PRIVACY';
+  private loadContent(): void {
+    const root = this.type === 'terms' ? 'LEGAL.TERMS' : 'LEGAL.PRIVACY';
 
-    this.titulo = this.translate.instant(`${raiz}.TITLE`);
-    this.secciones = this.translate.instant(`${raiz}.SECTIONS`) ?? [];
+    this.title = this.translate.instant(`${root}.TITLE`);
+    this.sections = this.translate.instant(`${root}.SECTIONS`) ?? [];
 
-    this.ultimaActualizacionLabel = this.translate.instant('LEGAL.LAST_UPDATED_LABEL');
-    this.ultimaActualizacionFecha = this.translate.instant('LEGAL.LAST_UPDATED_DATE');
+    this.lastUpdatedLabel = this.translate.instant('LEGAL.LAST_UPDATED_LABEL');
+    this.lastUpdatedDate = this.translate.instant('LEGAL.LAST_UPDATED_DATE');
   }
 
-  cerrar(aceptado: boolean = false): void {
-    this.dialogRef.close(aceptado);
+  close(accepted: boolean = false): void {
+    this.dialogRef.close(accepted);
   }
 }

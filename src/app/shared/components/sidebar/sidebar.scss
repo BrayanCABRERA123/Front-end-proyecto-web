@@ -30,8 +30,8 @@
   gap: 12px;
   padding: 0 20px 18px;
   color: #ffffff;
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: $fw-semibold;
+  font-size: $fs-subtitle;
   flex-shrink: 0;
 
   .logo-img {
@@ -43,7 +43,7 @@
 
 
 /* USUARIO */
-.sidebar-usuario {
+.sidebar-user {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -64,22 +64,22 @@
     align-items: center;
     justify-content: center;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: $fw-semibold;
   }
 
-  .usuario-info {
+  .user-info {
     display: flex;
     flex-direction: column;
   }
 
-  .nombre {
+  .name {
     font-size: 13px;
-    font-weight: 500;
+    font-weight: $fw-medium;
     color: #ffffff;
     margin: 0;
   }
 
-  .correo {
+  .email {
     font-size: 11px;
     color: rgba(255,255,255,0.7);
     margin: 0;
@@ -118,22 +118,22 @@
   }
 
   /* ACTIVO */
-  &.activo {
+  &.active {
     background: rgba(var(--primary-rgb), 0.25);
     color: #ffffff;
-    font-weight: 500;
+    font-weight: $fw-medium;
     border-left: 4px solid var(--primary);
     padding-left: 10px;
   }
 
-  .menu-icono {
+  .menu-icon {
     font-size: 18px;
     width: 22px;
     text-align: center;
     color: rgba(255,255,255,0.8);
   }
 
-  &.activo .menu-icono {
+  &.active .menu-icon {
     color: var(--primary);
   }
 }
@@ -149,7 +149,7 @@
   background: var(--sidebar);
   border-top: 2px solid rgba(255,255,255,0.08);
 
-  .btn-cerrar {
+  .btn-logout {
     width: 100%;
     background: none;
     border: none;
@@ -210,11 +210,11 @@
   }
 
   .sidebar-logo {
-    font-size: 14px;
+    font-size: $fs-body;
   }
 
   .menu-item {
-    font-size: 12px;
+    font-size: $fs-caption;
     padding: 10px 12px;
   }
 }

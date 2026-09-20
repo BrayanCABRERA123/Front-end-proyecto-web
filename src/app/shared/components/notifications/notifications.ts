@@ -7,15 +7,15 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   AppNotification,
   NotificationType,
-  claseTipoNotificacion,
-  labelTipoNotificacion
+  notificationTypeClass,
+  notificationTypeLabel
 } from '../../dialogs/notification-models/notification.model';
 import { NotificationDetailModal } from '../../dialogs/notification-detail-modal/notification-detail-modal';
 import { ConfirmModal, ConfirmModalData } from '../../dialogs/confirm-modal/confirm-modal';
 
 export type { AppNotification, NotificationType };
 
-type TabKey = 'todas' | 'recordatorio' | 'promocion' | 'confirmacion' | 'otras';
+type TabKey = 'all' | 'recordatorio' | 'promocion' | 'confirmacion' | 'others';
 
 @Component({
   selector: 'app-notifications',
@@ -34,100 +34,100 @@ export class NotificationsComponent {
   @Input() rol: 'CLIENTE' | 'OPERARIO' | 'ADMIN' = 'CLIENTE';
   @Input() notifications: AppNotification[] = [];
 
-  tabActiva: TabKey = 'todas';
+  activeTab: TabKey = 'all';
 
   tabs: { key: TabKey; icon: string; label: string }[] = [
-    { key: 'todas',        icon: 'mail',          label: 'NOTIFICATIONS.TABS.ALL' },
-    { key: 'recordatorio', icon: 'schedule',       label: 'NOTIFICATIONS.TABS.REMINDERS' },
-    { key: 'promocion',    icon: 'sell',           label: 'NOTIFICATIONS.TABS.PROMOS' },
-    { key: 'confirmacion', icon: 'check_circle',   label: 'NOTIFICATIONS.TABS.CONFIRMATIONS' },
-    { key: 'otras',        icon: 'notifications',  label: 'NOTIFICATIONS.TABS.OTHERS' }
+    { key: 'all',           icon: 'mail',          label: 'NOTIFICATIONS.TABS.ALL' },
+    { key: 'recordatorio',  icon: 'schedule',       label: 'NOTIFICATIONS.TABS.REMINDERS' },
+    { key: 'promocion',     icon: 'sell',           label: 'NOTIFICATIONS.TABS.PROMOS' },
+    { key: 'confirmacion',  icon: 'check_circle',   label: 'NOTIFICATIONS.TABS.CONFIRMATIONS' },
+    { key: 'others',        icon: 'notifications',  label: 'NOTIFICATIONS.TABS.OTHERS' }
   ];
 
-  cambiarTab(tab: TabKey) {
-    this.tabActiva = tab;
+  changeTab(tab: TabKey) {
+    this.activeTab = tab;
   }
 
-  private tabDeTipo(tipo: NotificationType): TabKey {
-    if (tipo === 'recordatorio') return 'recordatorio';
-    if (tipo === 'promocion') return 'promocion';
-    if (tipo === 'confirmacion') return 'confirmacion';
-    return 'otras';
+  private tabForType(type: NotificationType): TabKey {
+    if (type === 'recordatorio') return 'recordatorio';
+    if (type === 'promocion') return 'promocion';
+    if (type === 'confirmacion') return 'confirmacion';
+    return 'others';
   }
 
-  estadoInput: 'todas' | 'leidas' | 'no-leidas' = 'todas';
-  fechaDesdeInput = '';
-  fechaHastaInput = '';
+  statusInput: 'all' | 'read' | 'unread' = 'all';
+  dateFromInput = '';
+  dateToInput = '';
 
-  private estadoAplicado: 'todas' | 'leidas' | 'no-leidas' = 'todas';
-  private fechaDesdeAplicada = '';
-  private fechaHastaAplicada = '';
+  private appliedStatus: 'all' | 'read' | 'unread' = 'all';
+  private appliedDateFrom = '';
+  private appliedDateTo = '';
 
-  aplicarFiltros() {
-    this.estadoAplicado = this.estadoInput;
-    this.fechaDesdeAplicada = this.fechaDesdeInput;
-    this.fechaHastaAplicada = this.fechaHastaInput;
+  applyFilters() {
+    this.appliedStatus = this.statusInput;
+    this.appliedDateFrom = this.dateFromInput;
+    this.appliedDateTo = this.dateToInput;
   }
 
-  resetFiltros() {
-    this.estadoInput = 'todas';
-    this.fechaDesdeInput = '';
-    this.fechaHastaInput = '';
-    this.aplicarFiltros();
+  resetFilters() {
+    this.statusInput = 'all';
+    this.dateFromInput = '';
+    this.dateToInput = '';
+    this.applyFilters();
   }
 
-  contarNoLeidas(tab: TabKey): number {
+  countUnread(tab: TabKey): number {
     return this.notifications.filter(n =>
-      !n.read && (tab === 'todas' || this.tabDeTipo(n.type) === tab)
+      !n.read && (tab === 'all' || this.tabForType(n.type) === tab)
     ).length;
   }
 
-  get totalNoLeidas(): number {
-    return this.contarNoLeidas('todas');
+  get totalUnread(): number {
+    return this.countUnread('all');
   }
 
-  get notificacionesFiltradas(): AppNotification[] {
+  get filteredNotifications(): AppNotification[] {
     return this.notifications.filter(n => {
 
-      if (this.tabActiva !== 'todas' && this.tabDeTipo(n.type) !== this.tabActiva) {
+      if (this.activeTab !== 'all' && this.tabForType(n.type) !== this.activeTab) {
         return false;
       }
 
-      if (this.estadoAplicado === 'leidas' && !n.read) return false;
-      if (this.estadoAplicado === 'no-leidas' && n.read) return false;
+      if (this.appliedStatus === 'read' && !n.read) return false;
+      if (this.appliedStatus === 'unread' && n.read) return false;
 
-      if (this.fechaDesdeAplicada && n.date < this.fechaDesdeAplicada) return false;
-      if (this.fechaHastaAplicada && n.date > this.fechaHastaAplicada) return false;
+      if (this.appliedDateFrom && n.date < this.appliedDateFrom) return false;
+      if (this.appliedDateTo && n.date > this.appliedDateTo) return false;
 
       return true;
     });
   }
 
-  marcarLeido(n: AppNotification) {
+  markAsRead(n: AppNotification) {
     n.read = true;
   }
 
-  marcarNoLeido(n: AppNotification) {
+  markAsUnread(n: AppNotification) {
     n.read = false;
   }
 
-  marcarTodoComoLeido() {
+  markAllAsRead() {
     this.notifications.forEach(n => n.read = true);
   }
 
   constructor(private dialog: MatDialog) {}
 
-  verDetalle(n: AppNotification) {
+  viewDetail(n: AppNotification) {
     this.dialog.open(NotificationDetailModal, {
       panelClass: 'custom-dialog',
       data: n
     });
   }
 
-  pedirEliminar(n: AppNotification) {
+  requestDelete(n: AppNotification) {
     const data: ConfirmModalData = {
-      titulo: 'NOTIFICATIONS.DELETE_TITLE',
-      mensaje: 'NOTIFICATIONS.DELETE_MESSAGE'
+      title: 'NOTIFICATIONS.DELETE_TITLE',
+      message: 'NOTIFICATIONS.DELETE_MESSAGE'
     };
 
     const dialogRef = this.dialog.open(ConfirmModal, {
@@ -135,13 +135,13 @@ export class NotificationsComponent {
       data
     });
 
-    dialogRef.afterClosed().subscribe(confirmado => {
-      if (confirmado) {
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
         this.notifications = this.notifications.filter(x => x.id !== n.id);
       }
     });
   }
 
-  claseTipo = claseTipoNotificacion;
-  labelTipo = labelTipoNotificacion;
+  typeClass = notificationTypeClass;
+  typeLabel = notificationTypeLabel;
 }

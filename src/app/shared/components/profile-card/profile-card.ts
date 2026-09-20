@@ -12,12 +12,12 @@ import {
   ValidatorFn
 } from '@angular/forms';
 
-interface PaisTelefono {
+interface PhoneCountry {
   code: string;
-  indicativo: string;
+  dialCode: string;
   flagCode: string;
   regex: RegExp;
-  digitos: number;
+  digits: number;
 }
 
 @Component({
@@ -29,34 +29,34 @@ interface PaisTelefono {
 })
 export class ProfileCardComponent implements OnInit, OnChanges {
 
-  @Input() usuario = {
-    nombre: '',
+  @Input() user = {
+    name: '',
     email: '',
-    telefono: '',
-    direccion: '',
-    iniciales: '',
-    miembroDesde: ''
+    phone: '',
+    address: '',
+    initials: '',
+    memberSince: ''
   };
 
-  editando: boolean = false;
+  editing: boolean = false;
 
-  paises: PaisTelefono[] = [
-    { code: 'CO', indicativo: '+57', flagCode: 'co', regex: /^3\d{9}$/,     digitos: 10 },
-    { code: 'US', indicativo: '+1',  flagCode: 'us', regex: /^[2-9]\d{9}$/, digitos: 10 },
-    { code: 'FR', indicativo: '+33', flagCode: 'fr', regex: /^[67]\d{8}$/,  digitos: 9  },
-    { code: 'BR', indicativo: '+55', flagCode: 'br', regex: /^9\d{9,10}$/, digitos: 11 }
+  countries: PhoneCountry[] = [
+    { code: 'CO', dialCode: '+57', flagCode: 'co', regex: /^3\d{9}$/,     digits: 10 },
+    { code: 'US', dialCode: '+1',  flagCode: 'us', regex: /^[2-9]\d{9}$/, digits: 10 },
+    { code: 'FR', dialCode: '+33', flagCode: 'fr', regex: /^[67]\d{8}$/,  digits: 9  },
+    { code: 'BR', dialCode: '+55', flagCode: 'br', regex: /^9\d{9,10}$/, digits: 11 }
   ];
 
   form!: FormGroup;
 
-  telefonoDropdownOpen: boolean = false;
+  phoneDropdownOpen: boolean = false;
 
   constructor(private fb: FormBuilder, private elRef: ElementRef) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      nombre: [
-        this.usuario.nombre,
+      name: [
+        this.user.name,
         [
           Validators.required,
           Validators.minLength(3),
@@ -65,98 +65,98 @@ export class ProfileCardComponent implements OnInit, OnChanges {
         ]
       ],
       email: [
-        this.usuario.email,
+        this.user.email,
         [
           Validators.required,
           Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
         ]
       ],
-      telefonoPais: [this.paises[0].code, Validators.required],
-      telefonoNumero: [
-        this.limpiarNumero(this.usuario.telefono),
+      phoneCountry: [this.countries[0].code, Validators.required],
+      phoneNumber: [
+        this.cleanNumber(this.user.phone),
         Validators.required
       ],
-      direccion: [
-        this.usuario.direccion,
+      address: [
+        this.user.address,
         [
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(100)
         ]
       ]
-    }, { validators: this.validadorTelefono() });
+    }, { validators: this.phoneValidator() });
 
     this.form.disable();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.form && changes['usuario'] && !changes['usuario'].firstChange) {
+    if (this.form && changes['user'] && !changes['user'].firstChange) {
       this.form.patchValue({
-        nombre: this.usuario.nombre,
-        email: this.usuario.email,
-        telefonoNumero: this.limpiarNumero(this.usuario.telefono),
-        direccion: this.usuario.direccion
+        name: this.user.name,
+        email: this.user.email,
+        phoneNumber: this.cleanNumber(this.user.phone),
+        address: this.user.address
       });
     }
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
-    if (this.telefonoDropdownOpen && !this.elRef.nativeElement.contains(event.target)) {
-      this.telefonoDropdownOpen = false;
+    if (this.phoneDropdownOpen && !this.elRef.nativeElement.contains(event.target)) {
+      this.phoneDropdownOpen = false;
     }
   }
 
-  toggleTelefonoDropdown(): void {
-    if (!this.editando) return;
-    this.telefonoDropdownOpen = !this.telefonoDropdownOpen;
+  togglePhoneDropdown(): void {
+    if (!this.editing) return;
+    this.phoneDropdownOpen = !this.phoneDropdownOpen;
   }
 
-  seleccionarPais(code: string): void {
-    this.form.get('telefonoPais')?.setValue(code);
-    this.form.get('telefonoPais')?.markAsTouched();
-    this.telefonoDropdownOpen = false;
+  selectCountry(code: string): void {
+    this.form.get('phoneCountry')?.setValue(code);
+    this.form.get('phoneCountry')?.markAsTouched();
+    this.phoneDropdownOpen = false;
   }
 
-  private limpiarNumero(telefono: string): string {
-    return telefono.replace(/\D/g, '').slice(-10);
+  private cleanNumber(phone: string): string {
+    return phone.replace(/\D/g, '').slice(-10);
   }
 
-  private validadorTelefono(): ValidatorFn {
+  private phoneValidator(): ValidatorFn {
     return (group: AbstractControl): ValidationErrors | null => {
-      const paisCode = group.get('telefonoPais')?.value;
-      const numeroControl = group.get('telefonoNumero');
-      const numero = numeroControl?.value ?? '';
+      const countryCode = group.get('phoneCountry')?.value;
+      const numberControl = group.get('phoneNumber');
+      const number = numberControl?.value ?? '';
 
-      const pais = this.paises.find(p => p.code === paisCode);
+      const country = this.countries.find(c => c.code === countryCode);
 
-      if (!pais || !numero) {
+      if (!country || !number) {
         return null;
       }
 
-      const valido = pais.regex.test(numero);
+      const isValid = country.regex.test(number);
 
-      if (!valido) {
-        numeroControl?.setErrors({ telefonoInvalido: true });
+      if (!isValid) {
+        numberControl?.setErrors({ invalidPhone: true });
       } else {
-        const erroresActuales = { ...numeroControl?.errors };
-        delete erroresActuales['telefonoInvalido'];
-        const quedanErrores = Object.keys(erroresActuales).length > 0;
-        numeroControl?.setErrors(quedanErrores ? erroresActuales : null);
+        const currentErrors = { ...numberControl?.errors };
+        delete currentErrors['invalidPhone'];
+        const hasRemainingErrors = Object.keys(currentErrors).length > 0;
+        numberControl?.setErrors(hasRemainingErrors ? currentErrors : null);
       }
 
       return null;
     };
   }
 
-  get paisSeleccionado(): PaisTelefono {
-    const code = this.form.get('telefonoPais')?.value;
-    return this.paises.find(p => p.code === code) ?? this.paises[0];
+  get selectedCountry(): PhoneCountry {
+    const code = this.form.get('phoneCountry')?.value;
+    return this.countries.find(c => c.code === code) ?? this.countries[0];
   }
 
-  toggleEditar(): void {
-    if (!this.editando) {
-      this.editando = true;
+  toggleEdit(): void {
+    if (!this.editing) {
+      this.editing = true;
       this.form.enable();
       return;
     }
@@ -168,8 +168,8 @@ export class ProfileCardComponent implements OnInit, OnChanges {
 
     console.log('Guardar cambios:', this.form.value);
 
-    this.editando = false;
+    this.editing = false;
     this.form.disable();
-    this.telefonoDropdownOpen = false;
+    this.phoneDropdownOpen = false;
   }
 }

@@ -20,53 +20,53 @@ export class SidebarComponent implements OnInit {
   isOpen: boolean = false;
   logoRoute = '/';
 
-  usuario = {
-    nombre: 'Juan Díaz',
-    correo: 'juan@email.com',
-    iniciales: 'JD'
+  user = {
+    name: 'Juan Díaz',
+    email: 'juan@email.com',
+    initials: 'JD'
   };
 
   /*Menu opciones Client */
   clientMenu = [
-    { icono: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', ruta: '/client' },
-    { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/client/profile' },
-    { icono: 'directions_car', label: 'SIDEBAR.VEHICLES', ruta: '/client/vehicles' },
-    { icono: 'local_car_wash', label: 'SIDEBAR.RESERVE', ruta: '/client/reserve' },
-    { icono: 'credit_card', label: 'SIDEBAR.PAYMENT', ruta: '/client/payment' },
-    { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/client/notifications' },
-    { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/client/history' },
-    { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/client/configuration' }
+    { icon: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', route: '/client' },
+    { icon: 'person', label: 'SIDEBAR.PROFILE', route: '/client/profile' },
+    { icon: 'directions_car', label: 'SIDEBAR.VEHICLES', route: '/client/vehicles' },
+    { icon: 'local_car_wash', label: 'SIDEBAR.RESERVE', route: '/client/reserve' },
+    { icon: 'credit_card', label: 'SIDEBAR.PAYMENT', route: '/client/payment' },
+    { icon: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', route: '/client/notifications' },
+    { icon: 'history', label: 'SIDEBAR.HISTORY', route: '/client/history' },
+    { icon: 'settings', label: 'SIDEBAR.CONFIG', route: '/client/configuration' }
   ];
   /*Menu opciones Operator */
     operatorMenu = [
-  { icono: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', ruta: '/operator' },
-  { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/operator/profile' },
-  { icono: 'calendar_month', label: 'SIDEBAR.SCHEDULE', ruta: '/operator/schedule' },
-  { icono: 'assignment', label: 'SIDEBAR.ASSIGNED_SERVICES', ruta: '/operator/assigned-services' },
-  { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/operator/notifications' },
-  { icono: 'history', label: 'SIDEBAR.HISTORY', ruta: '/operator/service-history' },
-  { icono: 'star_outline', label: 'SIDEBAR.RATINGS', ruta: '/operator/qualifications' },
-  { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/operator/settings' }
+  { icon: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', route: '/operator' },
+  { icon: 'person', label: 'SIDEBAR.PROFILE', route: '/operator/profile' },
+  { icon: 'calendar_month', label: 'SIDEBAR.SCHEDULE', route: '/operator/schedule' },
+  { icon: 'assignment', label: 'SIDEBAR.ASSIGNED_SERVICES', route: '/operator/assigned-services' },
+  { icon: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', route: '/operator/notifications' },
+  { icon: 'history', label: 'SIDEBAR.HISTORY', route: '/operator/service-history' },
+  { icon: 'star_outline', label: 'SIDEBAR.RATINGS', route: '/operator/qualifications' },
+  { icon: 'settings', label: 'SIDEBAR.CONFIG', route: '/operator/settings' }
 ];
 
 /* Admin role menu — matches the approved mockups (Sept 2026) */
   adminMenu = [
-    { icono: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', ruta: '/admin' },
-    { icono: 'person', label: 'SIDEBAR.PROFILE', ruta: '/admin/profile' },
-    { icono: 'event_available', label: 'SIDEBAR.RESERVATIONS', ruta: '/admin/reservations' },
-    { icono: 'payments', label: 'SIDEBAR.PAYMENTS', ruta: '/admin/payments' },
-    { icono: 'admin_panel_settings', label: 'SIDEBAR.MANAGEMENT', ruta: '/admin/management' },
-    { icono: 'schedule', label: 'SIDEBAR.SCHEDULE_BAYS', ruta: '/admin/schedule' },
-    { icono: 'engineering', label: 'SIDEBAR.OPERATORS', ruta: '/admin/operators' },
-    { icono: 'bar_chart', label: 'SIDEBAR.REPORTS', ruta: '/admin/reports' },
-    { icono: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', ruta: '/admin/notifications' },
-    { icono: 'settings', label: 'SIDEBAR.CONFIG', ruta: '/admin/settings' }
+    { icon: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', route: '/admin' },
+    { icon: 'person', label: 'SIDEBAR.PROFILE', route: '/admin/profile' },
+    { icon: 'event_available', label: 'SIDEBAR.RESERVATIONS', route: '/admin/reservations' },
+    { icon: 'payments', label: 'SIDEBAR.PAYMENTS', route: '/admin/payments' },
+    { icon: 'admin_panel_settings', label: 'SIDEBAR.MANAGEMENT', route: '/admin/management' },
+    { icon: 'schedule', label: 'SIDEBAR.SCHEDULE_BAYS', route: '/admin/schedule' },
+    { icon: 'engineering', label: 'SIDEBAR.OPERATORS', route: '/admin/operators' },
+    { icon: 'bar_chart', label: 'SIDEBAR.REPORTS', route: '/admin/reports' },
+    { icon: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', route: '/admin/notifications' },
+    { icon: 'settings', label: 'SIDEBAR.CONFIG', route: '/admin/settings' }
   ];
 
   menuItems: {
-    icono: string;
+    icon: string;
     label: string;
-    ruta: string;
+    route: string;
   }[] = [];
 
 
@@ -82,7 +82,7 @@ export class SidebarComponent implements OnInit {
       case 'OPERARIO':
         this.menuItems = this.operatorMenu;
         this.logoRoute = '/operator';
-                                  
+
         break;
 
       case 'ADMIN':
@@ -106,16 +106,16 @@ export class SidebarComponent implements OnInit {
     this.isOpen = false;
   }
 
-  cerrarSesion() {
+  logout() {
     const dialogRef = this.dialog.open(ConfirmLogoutDialogComponent, {
       panelClass: 'custom-dialog'
     });
 
-    dialogRef.afterClosed().subscribe(confirmado => {
+    dialogRef.afterClosed().subscribe(confirmed => {
 
-      if (confirmado) {
+      if (confirmed) {
         localStorage.removeItem('token');
-        localStorage.removeItem('usuario');
+        localStorage.removeItem('user');
 
       this.router.navigateByUrl('/');
       }

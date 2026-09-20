@@ -13,12 +13,12 @@ import { ProfileCardComponent } from '../../../../shared/components/profile-card
 export class AdminProfileComponent {
 
   // datos del usuario administrador (según los mockups aprobados)
-  usuario = {
-    nombre: 'Laura Méndez',
+  user = {
+    name: 'Laura Méndez',
     email: 'laura.mendez@lavadovehicular.co',
-    telefono: '+57 312 490 8821',
-    direccion: 'Calle 127 #19A-48, Bogotá, Colombia',
-    iniciales: 'LM',
-    miembroDesde: 'Marzo 2019'
+    phone: '+57 312 490 8821',
+    address: 'Calle 127 #19A-48, Bogotá, Colombia',
+    initials: 'LM',
+    memberSince: 'Marzo 2019'
   };
 }

@@ -15,12 +15,12 @@ import { ProfileCardComponent } from '../../../../shared/components/profile-card
 export class ProfileComponent {
 
   // datos del usuario operator
-  usuario = {
-    nombre: 'Juan Díaz',
+  user = {
+    name: 'Juan Díaz',
     email: 'juan@email.com',
-    telefono: '+1234 567 890',
-    direccion: 'Calle Principal #123',
-    iniciales: 'JD',
-    miembroDesde: 'Enero 2026'
+    phone: '+1234 567 890',
+    address: 'Calle Principal #123',
+    initials: 'JD',
+    memberSince: 'Enero 2026'
   };
 }

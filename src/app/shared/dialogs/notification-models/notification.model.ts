@@ -17,12 +17,12 @@ export interface AppNotification {
   read: boolean;
 }
 
-export function claseTipoNotificacion(tipo: NotificationType): string {
-  if (tipo === 'cancelacion') return 'tipo-error';
-  if (tipo === 'mensaje' || tipo === 'sistema') return 'tipo-neutral';
-  return 'tipo-primary';
+export function notificationTypeClass(type: NotificationType): string {
+  if (type === 'cancelacion') return 'type-error';
+  if (type === 'mensaje' || type === 'sistema') return 'type-neutral';
+  return 'type-primary';
 }
 
-export function labelTipoNotificacion(tipo: NotificationType): string {
-  return 'NOTIFICATIONS.TYPE_LABEL.' + tipo.toUpperCase();
+export function notificationTypeLabel(type: NotificationType): string {
+  return 'NOTIFICATIONS.TYPE_LABEL.' + type.toUpperCase();
 }

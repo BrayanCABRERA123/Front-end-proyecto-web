@@ -5,8 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   AppNotification,
-  claseTipoNotificacion,
-  labelTipoNotificacion
+  notificationTypeClass,
+  notificationTypeLabel
 } from '../notification-models/notification.model';
 
 @Component({
@@ -18,8 +18,8 @@ import {
 })
 export class NotificationDetailModal {
 
-  claseTipo = claseTipoNotificacion;
-  labelTipo = labelTipoNotificacion;
+  typeClass = notificationTypeClass;
+  typeLabel = notificationTypeLabel;
 
   constructor(
     private dialogRef: MatDialogRef<NotificationDetailModal>,
@@ -27,7 +27,7 @@ export class NotificationDetailModal {
     @Inject(MAT_DIALOG_DATA) public notification: AppNotification
   ) {}
 
-  cerrar() {
+  close() {
     this.dialogRef.close();
   }
 }

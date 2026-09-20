@@ -1,3 +1,5 @@
+@use '../../../../styles/mixins' as *;
+
 .dialog-container {
   background: var(--card);
   color: var(--text);
@@ -8,12 +10,12 @@
 
 .dialog-title {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   margin-bottom: 8px;
 }
 
 .dialog-text {
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text-secondary);
   margin-bottom: 20px;
 }

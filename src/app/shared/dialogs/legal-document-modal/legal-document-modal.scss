@@ -1,3 +1,5 @@
+@use '../../../../styles/mixins' as *;
+
 .legal-dialog {
   background: var(--card);
   color: var(--text);
@@ -36,13 +38,13 @@
   h2 {
     margin: 0 0 4px;
     font-size: 17px;
-    font-weight: 700;
+    font-weight: $fw-bold;
     padding-right: 28px;
   }
 }
 
 .legal-updated {
-  font-size: 12px;
+  font-size: $fs-caption;
   color: var(--text-secondary);
 }
 
@@ -66,7 +68,7 @@
   align-items: center;
   gap: 6px;
   padding: 8px 20px;
-  font-size: 12px;
+  font-size: $fs-caption;
   color: var(--text-secondary);
   background: var(--item-hover);
 
@@ -87,8 +89,8 @@
   margin-bottom: 16px;
 
   h3 {
-    font-size: 14px;
-    font-weight: 700;
+    font-size: $fs-body;
+    font-weight: $fw-bold;
     margin: 0 0 6px;
     color: var(--text);
   }
@@ -121,7 +123,7 @@
 
   p {
     margin: 0;
-    font-size: 12px;
+    font-size: $fs-caption;
     color: var(--text-secondary);
     line-height: 1.5;
   }
@@ -138,8 +140,8 @@
     padding: 10px 16px;
     border-radius: 10px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: $fw-semibold;
+    font-size: $fs-body;
   }
 }
 

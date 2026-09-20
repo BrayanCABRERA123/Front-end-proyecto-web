@@ -46,10 +46,10 @@ export class SettingsPanelComponent implements OnInit {
 
   // abre el documento legal solo para consulta (sin botones de aceptación,
   // el usuario ya aceptó al registrarse)
-  verDocumentoLegal(tipo: LegalDocumentType): void {
+  viewLegalDocument(type: LegalDocumentType): void {
     this.dialog.open(LegalDocumentModal, {
       panelClass: 'custom-dialog',
-      data: { type: tipo, mode: 'view' }
+      data: { type, mode: 'view' }
     });
   }
 

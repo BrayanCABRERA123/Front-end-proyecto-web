@@ -13,7 +13,7 @@
 
 .page-title {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
@@ -45,7 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: $fs-h3;
   font-weight: 800;
   color: var(--primary);
   flex-shrink: 0;
@@ -59,7 +59,7 @@
 .user-name {
   margin: 0;
   font-size: 19px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
 }
 
@@ -76,7 +76,7 @@
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   transition: 0.25s ease;
   flex-shrink: 0;
 
@@ -153,8 +153,8 @@
   label {
     display: block;
     margin-bottom: 6px;
-    font-size: 12px;
-    font-weight: 700;
+    font-size: $fs-caption;
+    font-weight: $fw-bold;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     color: var(--text-secondary);
@@ -168,8 +168,8 @@
     background: rgba(120, 120, 120, 0.06);
     color: var(--text);
     padding: 0 14px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: $fs-body;
+    font-weight: $fw-semibold;
     outline: none;
     box-sizing: border-box;
     transition: 0.25s ease;
@@ -215,8 +215,8 @@
 
 .error-msg {
   margin: 6px 0 0;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
   color: var(--error);
 }
 
@@ -244,7 +244,7 @@
   color: var(--text);
   padding: 0 8px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   cursor: pointer;
   font-family: inherit;
   transition: 0.25s ease;
@@ -317,7 +317,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   transition: background-color 0.15s ease;
 
@@ -348,8 +348,8 @@
   background: rgba(120, 120, 120, 0.06);
   color: var(--text);
   padding: 0 14px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   outline: none;
   box-sizing: border-box;
   transition: 0.25s ease;
@@ -396,8 +396,8 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: $fs-body;
+  font-weight: $fw-bold;
   transition: 0.25s ease;
   background: var(--primary);
   color: #fff;
@@ -456,8 +456,8 @@
 
   h3 {
     margin: 0;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: $fs-subtitle;
+    font-weight: $fw-bold;
     color: var(--text);
   }
 }
@@ -523,14 +523,14 @@
 
 .card-content .title {
   margin: 0;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: $fs-body;
+  font-weight: $fw-bold;
   color: var(--text);
 }
 
 .card-content .subtitle {
   margin: 3px 0 0;
-  font-size: 12px;
+  font-size: $fs-caption;
   color: var(--text-secondary);
 }
 
@@ -542,7 +542,7 @@
   padding: 0 16px;
   cursor: pointer;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   transition: 0.25s ease;
   white-space: nowrap;
   font-family: inherit;

@@ -2,13 +2,13 @@
 
   <div class="detail-header">
 
-    <mat-icon class="icon-bubble" [ngClass]="claseTipo(notification.type)">
+    <mat-icon class="icon-bubble" [ngClass]="typeClass(notification.type)">
       {{ notification.icon }}
     </mat-icon>
 
     <div>
-      <span class="type-badge" [ngClass]="claseTipo(notification.type)">
-        {{ labelTipo(notification.type) | translate }}
+      <span class="type-badge" [ngClass]="typeClass(notification.type)">
+        {{ typeLabel(notification.type) | translate }}
       </span>
 
       <h2 class="dialog-title">{{ notification.title | translate }}</h2>
@@ -33,7 +33,7 @@
   </div>
 
   <div class="dialog-actions">
-    <button class="btn-confirm" (click)="cerrar()">
+    <button class="btn-confirm" (click)="close()">
       {{ 'COMMON.CLOSE' | translate }}
     </button>
   </div>

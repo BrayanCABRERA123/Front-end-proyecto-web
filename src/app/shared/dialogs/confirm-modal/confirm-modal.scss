@@ -1,3 +1,5 @@
+@use '../../../../styles/mixins' as *;
+
 .dialog-container {
   background: var(--card);
   color: var(--text);
@@ -18,7 +20,7 @@
   background: var(--primary-soft);
   color: var(--primary);
 
-  &.peligro {
+  &.danger {
     background: var(--error-soft);
     color: var(--error);
   }
@@ -30,12 +32,12 @@
 
 .dialog-title {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   margin-bottom: 8px;
 }
 
 .dialog-text {
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text-secondary);
   margin-bottom: 20px;
   line-height: 1.5;
@@ -72,7 +74,7 @@
   border-radius: 10px;
   cursor: pointer;
 
-  &.peligro {
+  &.danger {
     background: var(--error);
   }
 
@@ -80,7 +82,7 @@
     background: var(--primary-hover);
   }
 
-  &.peligro:hover {
+  &.danger:hover {
     filter: brightness(0.92);
   }
 }

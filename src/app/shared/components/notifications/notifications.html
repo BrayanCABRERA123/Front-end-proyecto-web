@@ -7,14 +7,14 @@
       <div class="header-title">
         <h1>{{ 'NOTIFICATIONS.CENTER_TITLE' | translate }}</h1>
 
-        @if (totalNoLeidas > 0) {
+        @if (totalUnread > 0) {
           <span class="unread-pill">
-            {{ totalNoLeidas }} {{ 'NOTIFICATIONS.UNREAD_PLURAL' | translate }}
+            {{ totalUnread }} {{ 'NOTIFICATIONS.UNREAD_PLURAL' | translate }}
           </span>
         }
       </div>
 
-      <button class="btn-mark-all" (click)="marcarTodoComoLeido()">
+      <button class="btn-mark-all" (click)="markAllAsRead()">
         <mat-icon>done_all</mat-icon>
         {{ 'NOTIFICATIONS.MARK_ALL_READ' | translate }}
       </button>
@@ -38,14 +38,14 @@
       <button
         type="button"
         class="tab"
-        [class.active]="tabActiva === tab.key"
-        (click)="cambiarTab(tab.key)">
+        [class.active]="activeTab === tab.key"
+        (click)="changeTab(tab.key)">
 
         <mat-icon>{{ tab.icon }}</mat-icon>
         {{ tab.label | translate }}
 
-        @if (contarNoLeidas(tab.key) > 0) {
-          <span class="tab-count">{{ contarNoLeidas(tab.key) }}</span>
+        @if (countUnread(tab.key) > 0) {
+          <span class="tab-count">{{ countUnread(tab.key) }}</span>
         }
       </button>
     }
@@ -65,10 +65,10 @@
         </label>
 
         <div class="select-wrapper">
-          <select class="filter-select" [(ngModel)]="estadoInput">
-            <option value="todas">{{ 'ASSIGNED_SERVICES.FILTERS.ALL' | translate }}</option>
-            <option value="leidas">{{ 'NOTIFICATIONS.READ' | translate }}</option>
-            <option value="no-leidas">{{ 'NOTIFICATIONS.UNREAD' | translate }}</option>
+          <select class="filter-select" [(ngModel)]="statusInput">
+            <option value="all">{{ 'ASSIGNED_SERVICES.FILTERS.ALL' | translate }}</option>
+            <option value="read">{{ 'NOTIFICATIONS.READ' | translate }}</option>
+            <option value="unread">{{ 'NOTIFICATIONS.UNREAD' | translate }}</option>
           </select>
         </div>
       </div>
@@ -79,19 +79,19 @@
         </label>
 
         <div class="date-range">
-          <input type="date" class="filter-input" [(ngModel)]="fechaDesdeInput">
+          <input type="date" class="filter-input" [(ngModel)]="dateFromInput">
           <span class="date-sep">-</span>
-          <input type="date" class="filter-input" [(ngModel)]="fechaHastaInput">
+          <input type="date" class="filter-input" [(ngModel)]="dateToInput">
         </div>
       </div>
 
       <div class="filter-actions">
 
-        <button class="btn-reset" (click)="resetFiltros()">
+        <button class="btn-reset" (click)="resetFilters()">
           <mat-icon>refresh</mat-icon>
         </button>
 
-        <button class="btn-filter" (click)="aplicarFiltros()">
+        <button class="btn-filter" (click)="applyFilters()">
           <mat-icon>search</mat-icon>
           {{ 'ASSIGNED_SERVICES.FILTERS.FILTER_BTN' | translate }}
         </button>
@@ -104,13 +104,13 @@
   <!-- LISTA -->
   <div class="list">
 
-    @for (n of notificacionesFiltradas; track n.id) {
+    @for (n of filteredNotifications; track n.id) {
 
       <div class="item" [class.unread]="!n.read">
 
         <div class="left">
 
-          <mat-icon class="icon-bubble" [ngClass]="claseTipo(n.type)">{{ n.icon }}</mat-icon>
+          <mat-icon class="icon-bubble" [ngClass]="typeClass(n.type)">{{ n.icon }}</mat-icon>
 
           <div class="texts">
 
@@ -121,8 +121,8 @@
 
               <p class="title">{{ n.title | translate }}</p>
 
-              <span class="type-badge" [ngClass]="claseTipo(n.type)">
-                {{ labelTipo(n.type) | translate }}
+              <span class="type-badge" [ngClass]="typeClass(n.type)">
+                {{ typeLabel(n.type) | translate }}
               </span>
             </div>
 
@@ -137,23 +137,23 @@
           <span class="date">{{ n.date | date: 'dd/MM/yyyy' }} - {{ n.time }}</span>
 
           @if (n.read) {
-            <button class="btn-toggle" (click)="marcarNoLeido(n)">
+            <button class="btn-toggle" (click)="markAsUnread(n)">
               <mat-icon>mail</mat-icon>
               {{ 'NOTIFICATIONS.MARK_UNREAD' | translate }}
             </button>
           } @else {
-            <button class="btn-toggle unread-action" (click)="marcarLeido(n)">
+            <button class="btn-toggle unread-action" (click)="markAsRead(n)">
               <mat-icon>done_all</mat-icon>
               {{ 'NOTIFICATIONS.MARK_READ' | translate }}
             </button>
           }
 
-          <button class="btn-detail" (click)="verDetalle(n)">
+          <button class="btn-detail" (click)="viewDetail(n)">
             <mat-icon>visibility</mat-icon>
             {{ 'NOTIFICATIONS.BTN_DETAIL' | translate }}
           </button>
 
-          <mat-icon class="delete" (click)="pedirEliminar(n)">delete</mat-icon>
+          <mat-icon class="delete" (click)="requestDelete(n)">delete</mat-icon>
 
         </div>
 

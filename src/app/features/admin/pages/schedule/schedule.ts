@@ -173,11 +173,11 @@ export class ScheduleComponent {
 
   deleteException(exception: ScheduleException): void {
     const data: ConfirmModalData = {
-      titulo: 'ADMIN_MANAGEMENT.DELETE_CONFIRM.TITLE',
-      mensaje: 'ADMIN_MANAGEMENT.DELETE_CONFIRM.MESSAGE',
-      textoConfirmar: 'ADMIN_MANAGEMENT.DELETE_CONFIRM.CONFIRM',
-      textoCancelar: 'ADMIN_MANAGEMENT.DELETE_CONFIRM.CANCEL',
-      peligro: true
+      title: 'ADMIN_MANAGEMENT.DELETE_CONFIRM.TITLE',
+      message: 'ADMIN_MANAGEMENT.DELETE_CONFIRM.MESSAGE',
+      confirmText: 'ADMIN_MANAGEMENT.DELETE_CONFIRM.CONFIRM',
+      cancelText: 'ADMIN_MANAGEMENT.DELETE_CONFIRM.CANCEL',
+      danger: true
     };
 
     const dialogRef = this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data });

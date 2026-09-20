@@ -96,11 +96,11 @@ export class HomeComponent {
 
   requestFinish(r: Reservation) {
     const data: ConfirmModalData = {
-      titulo: 'SCHEDULE.FINISH_TITLE',
-      mensaje: 'SCHEDULE.FINISH_MESSAGE',
-      textoConfirmar: 'SCHEDULE.FINISH_CONFIRM',
-      textoCancelar: 'COMMON.CANCEL',
-      peligro: false
+      title: 'SCHEDULE.FINISH_TITLE',
+      message: 'SCHEDULE.FINISH_MESSAGE',
+      confirmText: 'SCHEDULE.FINISH_CONFIRM',
+      cancelText: 'COMMON.CANCEL',
+      danger: false
     };
 
     const dialogRef = this.dialog.open(ConfirmModal, {

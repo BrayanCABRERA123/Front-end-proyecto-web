@@ -15,7 +15,7 @@ export class ConfirmLogoutDialogComponent {
 
   constructor(private dialogRef: MatDialogRef<ConfirmLogoutDialogComponent>) {}
 
-  cerrar(valor: boolean) {
-    this.dialogRef.close(valor);
+  close(value: boolean) {
+    this.dialogRef.close(value);
   }
 }

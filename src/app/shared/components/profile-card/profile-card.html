@@ -6,17 +6,17 @@
 
   <!-- Resumen del usuario -->
   <div class="card summary-card">
-    <div class="avatar">{{ usuario.iniciales }}</div>
+    <div class="avatar">{{ user.initials }}</div>
 
     <div class="summary-info">
-      <h2 class="user-name">{{ usuario.nombre }}</h2>
-      <p class="subtitle">{{ 'PROFILE.MEMBER_SINCE' | translate:{date: usuario.miembroDesde} }}</p>
+      <h2 class="user-name">{{ user.name }}</h2>
+      <p class="subtitle">{{ 'PROFILE.MEMBER_SINCE' | translate:{date: user.memberSince} }}</p>
     </div>
 
-    <div class="edit-status" [class.editing]="editando" [class.saved]="!editando">
-      <mat-icon>{{ editando ? 'edit' : 'check_circle' }}</mat-icon>
+    <div class="edit-status" [class.editing]="editing" [class.saved]="!editing">
+      <mat-icon>{{ editing ? 'edit' : 'check_circle' }}</mat-icon>
       <span>
-        {{ editando ? ('PROFILE.EDIT_MODE' | translate) : ('PROFILE.SAVED_MODE' | translate) }}
+        {{ editing ? ('PROFILE.EDIT_MODE' | translate) : ('PROFILE.SAVED_MODE' | translate) }}
       </span>
     </div>
   </div>
@@ -27,19 +27,19 @@
     <div class="fields-grid">
 
       <!-- nombre -->
-      <div class="field-card" [class.field-error]="form.get('nombre')?.invalid && form.get('nombre')?.touched">
+      <div class="field-card" [class.field-error]="form.get('name')?.invalid && form.get('name')?.touched">
         <div class="field-icon"><mat-icon>person</mat-icon></div>
         <div class="field-body">
           <label>{{ 'PROFILE.NAME' | translate }}</label>
-          <input type="text" formControlName="nombre"/>
+          <input type="text" formControlName="name"/>
 
-          @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
+          @if (form.get('name')?.invalid && form.get('name')?.touched) {
             <p class="error-msg">
-              @if (form.get('nombre')?.hasError('required')) {
+              @if (form.get('name')?.hasError('required')) {
                 {{ 'PROFILE.VALIDATION.NAME_REQUIRED' | translate }}
-              } @else if (form.get('nombre')?.hasError('minlength')) {
+              } @else if (form.get('name')?.hasError('minlength')) {
                 {{ 'PROFILE.VALIDATION.NAME_MIN' | translate }}
-              } @else if (form.get('nombre')?.hasError('pattern')) {
+              } @else if (form.get('name')?.hasError('pattern')) {
                 {{ 'PROFILE.VALIDATION.NAME_INVALID' | translate }}
               }
             </p>
@@ -67,7 +67,7 @@
       </div>
 
       <!-- telefono -->
-      <div class="field-card" [class.field-error]="form.get('telefonoNumero')?.invalid && form.get('telefonoNumero')?.touched">
+      <div class="field-card" [class.field-error]="form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched">
         <div class="field-icon"><mat-icon>phone</mat-icon></div>
         <div class="field-body">
           <label>{{ 'PROFILE.PHONE' | translate }}</label>
@@ -78,23 +78,23 @@
               <button
                 type="button"
                 class="phone-select-trigger"
-                [disabled]="!editando"
-                (click)="toggleTelefonoDropdown()">
+                [disabled]="!editing"
+                (click)="togglePhoneDropdown()">
 
-                <span class="fi fi-{{ paisSeleccionado.flagCode }} fis"></span>
-                <span class="phone-indicativo">{{ paisSeleccionado.indicativo }}</span>
+                <span class="fi fi-{{ selectedCountry.flagCode }} fis"></span>
+                <span class="phone-indicativo">{{ selectedCountry.dialCode }}</span>
                 <mat-icon class="chevron">expand_more</mat-icon>
               </button>
 
-              @if (telefonoDropdownOpen) {
+              @if (phoneDropdownOpen) {
                 <div class="phone-dropdown">
-                  @for (pais of paises; track pais.code) {
+                  @for (country of countries; track country.code) {
                     <div
                       class="phone-option"
-                      [class.active]="pais.code === form.get('telefonoPais')?.value"
-                      (click)="seleccionarPais(pais.code)">
-                      <span class="fi fi-{{ pais.flagCode }} fis"></span>
-                      <span>{{ pais.indicativo }}</span>
+                      [class.active]="country.code === form.get('phoneCountry')?.value"
+                      (click)="selectCountry(country.code)">
+                      <span class="fi fi-{{ country.flagCode }} fis"></span>
+                      <span>{{ country.dialCode }}</span>
                     </div>
                   }
                 </div>
@@ -104,16 +104,16 @@
             <input
               type="text"
               class="phone-input"
-              formControlName="telefonoNumero"
-              [maxlength]="paisSeleccionado.digitos"
+              formControlName="phoneNumber"
+              [maxlength]="selectedCountry.digits"
               inputmode="numeric"/>
           </div>
 
-          @if (form.get('telefonoNumero')?.invalid && form.get('telefonoNumero')?.touched) {
+          @if (form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched) {
             <p class="error-msg">
-              @if (form.get('telefonoNumero')?.hasError('required')) {
+              @if (form.get('phoneNumber')?.hasError('required')) {
                 {{ 'PROFILE.VALIDATION.PHONE_REQUIRED' | translate }}
-              } @else if (form.get('telefonoNumero')?.hasError('telefonoInvalido')) {
+              } @else if (form.get('phoneNumber')?.hasError('invalidPhone')) {
                 {{ 'PROFILE.VALIDATION.PHONE_INVALID' | translate }}
               }
             </p>
@@ -122,17 +122,17 @@
       </div>
 
       <!-- direccion -->
-      <div class="field-card" [class.field-error]="form.get('direccion')?.invalid && form.get('direccion')?.touched">
+      <div class="field-card" [class.field-error]="form.get('address')?.invalid && form.get('address')?.touched">
         <div class="field-icon"><mat-icon>home</mat-icon></div>
         <div class="field-body">
           <label>{{ 'PROFILE.ADDRESS' | translate }}</label>
-          <input type="text" formControlName="direccion"/>
+          <input type="text" formControlName="address"/>
 
-          @if (form.get('direccion')?.invalid && form.get('direccion')?.touched) {
+          @if (form.get('address')?.invalid && form.get('address')?.touched) {
             <p class="error-msg">
-              @if (form.get('direccion')?.hasError('required')) {
+              @if (form.get('address')?.hasError('required')) {
                 {{ 'PROFILE.VALIDATION.ADDRESS_REQUIRED' | translate }}
-              } @else if (form.get('direccion')?.hasError('minlength')) {
+              } @else if (form.get('address')?.hasError('minlength')) {
                 {{ 'PROFILE.VALIDATION.ADDRESS_MIN' | translate }}
               }
             </p>
@@ -146,12 +146,12 @@
       <button
         type="button"
         class="btn-edit"
-        [class.saved-mode]="!editando"
-        [disabled]="editando && form.invalid"
-        (click)="toggleEditar()">
+        [class.saved-mode]="!editing"
+        [disabled]="editing && form.invalid"
+        (click)="toggleEdit()">
 
-        <mat-icon>{{ editando ? 'save' : 'edit' }}</mat-icon>
-        <span>{{ editando ? ('PROFILE.SAVE' | translate) : ('PROFILE.EDIT' | translate) }}</span>
+        <mat-icon>{{ editing ? 'save' : 'edit' }}</mat-icon>
+        <span>{{ editing ? ('PROFILE.SAVE' | translate) : ('PROFILE.EDIT' | translate) }}</span>
       </button>
     </div>
 

@@ -1,3 +1,5 @@
+@use '../../../../styles/mixins' as *;
+
 .content {
   flex: 1;
   padding: 40px 48px;
@@ -13,7 +15,7 @@
   gap: 6px;
 
   p {
-    font-size: 14px;
+    font-size: $fs-body;
     color: var(--text-secondary);
     margin: 0;
     max-width: 600px;
@@ -37,7 +39,7 @@
 
   h1 {
     font-size: 26px;
-    font-weight: 700;
+    font-weight: $fw-bold;
     color: var(--text);
     margin: 0;
   }
@@ -47,7 +49,7 @@
   background: var(--primary);
   color: #ffffff;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   padding: 4px 12px;
   border-radius: 20px;
   white-space: nowrap;
@@ -62,8 +64,8 @@
   color: var(--text);
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   cursor: pointer;
   transition: 0.2s;
   white-space: nowrap;
@@ -106,8 +108,8 @@
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   border-radius: 10px;
   cursor: pointer;
   transition: 0.2s;
@@ -134,8 +136,8 @@
 .tab-count {
   background: var(--primary-soft);
   color: var(--primary);
-  font-size: 12px;
-  font-weight: 700;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
   min-width: 20px;
   height: 20px;
   padding: 0 6px;
@@ -163,7 +165,7 @@
 
 .filters-title {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   color: var(--text);
   margin: 0;
 }
@@ -182,8 +184,8 @@
 }
 
 .filter-label {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: $fs-caption;
+  font-weight: $fw-medium;
   color: var(--text-secondary);
 }
 
@@ -201,7 +203,7 @@
   padding: 10px 12px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text);
   background: var(--card);
   outline: none;
@@ -230,7 +232,7 @@
   padding: 10px 36px 10px 12px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text);
   background: var(--card);
   outline: none;
@@ -294,8 +296,8 @@
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   cursor: pointer;
   transition: 0.2s;
   box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
@@ -377,10 +379,10 @@
 }
 
 .title {
-  font-weight: 600;
+  font-weight: $fw-semibold;
   margin: 0;
   color: var(--text);
-  font-size: 14px;
+  font-size: $fs-body;
 }
 
 .desc {
@@ -389,20 +391,20 @@
   margin: 4px 0 0;
 }
 
-.icon-bubble.tipo-primary,
-.type-badge.tipo-primary {
+.icon-bubble.type-primary,
+.type-badge.type-primary {
   background: var(--primary-soft);
   color: var(--primary);
 }
 
-.icon-bubble.tipo-error,
-.type-badge.tipo-error {
+.icon-bubble.type-error,
+.type-badge.type-error {
   background: var(--error-soft);
   color: var(--error);
 }
 
-.icon-bubble.tipo-neutral,
-.type-badge.tipo-neutral {
+.icon-bubble.type-neutral,
+.type-badge.type-neutral {
   background: var(--neutral-badge-soft);
   color: var(--neutral-badge);
 }
@@ -410,7 +412,7 @@
 .type-badge {
   display: inline-block;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   padding: 3px 10px;
   border-radius: 20px;
   white-space: nowrap;
@@ -424,7 +426,7 @@
 }
 
 .date {
-  font-size: 12px;
+  font-size: $fs-caption;
   color: var(--text-muted);
   white-space: nowrap;
 }
@@ -435,8 +437,8 @@
   color: var(--text);
   padding: 6px 14px;
   border-radius: 10px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -471,7 +473,7 @@
   color: var(--text);
   padding: 6px 12px;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: $fs-caption;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -522,7 +524,7 @@
 
   p {
     margin: 0;
-    font-size: 14px;
+    font-size: $fs-body;
   }
 }
 
@@ -643,7 +645,7 @@
   }
 
   .header-title h1 {
-    font-size: 20px;
+    font-size: $fs-h3;
   }
 
   .filters-card {
@@ -662,7 +664,7 @@
   }
 
   .header h1 {
-    font-size: 20px;
+    font-size: $fs-h3;
   }
 
   .filters-card {
