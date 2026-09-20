@@ -1,0 +1,107 @@
+@use '../../../../styles/mixins' as *;
+
+.role-dialog {
+  background: var(--card);
+  color: var(--text);
+  border-radius: 16px;
+  width: min(420px, 90vw);
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+
+    h2 { @include subtitle; color: var(--text); font-weight: $fw-bold; margin: 0 0 2px; }
+    p { @include caption-text; color: var(--text-secondary); margin: 0; }
+  }
+
+  &__body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+
+    button {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: $fw-semibold;
+      font-size: $fs-body;
+    }
+  }
+}
+
+.close-x {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover { color: var(--text); }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  span { @include caption-text; color: var(--text-secondary); }
+
+  input, select {
+    font-family: $font-family-base;
+    font-size: $fs-body;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+
+    &:focus { outline: none; border-color: var(--primary); }
+    &::placeholder { color: var(--text-muted); }
+  }
+
+  select { cursor: pointer; }
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  @include body-text;
+  color: var(--text);
+  cursor: pointer;
+
+  input[type="checkbox"] { accent-color: var(--primary); width: 16px; height: 16px; }
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+
+  &:hover { background: var(--item-hover); }
+}
+
+.btn-confirm {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+
+  &:hover { background: var(--primary-hover); }
+  &:disabled { opacity: .5; cursor: not-allowed; }
+}

@@ -1,0 +1,48 @@
+<div class="role-dialog">
+
+  <div class="role-dialog__header">
+    <div>
+      <h2>{{ 'CREATE_USER_MODAL.TITLE' | translate }}</h2>
+      <p>{{ 'CREATE_USER_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+    <button type="button" class="close-x" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="role-dialog__body">
+
+    <label class="field">
+      <span>{{ 'CREATE_USER_MODAL.NAME_LABEL' | translate }}</span>
+      <input type="text" [(ngModel)]="name" [placeholder]="'CREATE_USER_MODAL.NAME_PLACEHOLDER' | translate">
+    </label>
+
+    <label class="field">
+      <span>{{ 'CREATE_USER_MODAL.EMAIL_LABEL' | translate }}</span>
+      <input type="email" [(ngModel)]="email" [placeholder]="'CREATE_USER_MODAL.EMAIL_PLACEHOLDER' | translate">
+    </label>
+
+    <label class="field">
+      <span>{{ 'CREATE_USER_MODAL.ROLE_LABEL' | translate }}</span>
+      <select [(ngModel)]="role">
+        @for (r of roleOptions; track r) {
+          <option [value]="r">{{ r }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="checkbox-row">
+      <input type="checkbox" [(ngModel)]="invite">
+      {{ 'CREATE_USER_MODAL.INVITE_LABEL' | translate }}
+    </label>
+
+  </div>
+
+  <div class="role-dialog__actions">
+    <button class="btn-cancel" type="button" (click)="close()">
+      {{ 'CREATE_USER_MODAL.CANCEL' | translate }}
+    </button>
+    <button class="btn-confirm" type="button" [disabled]="!canCreate" (click)="create()">
+      {{ 'CREATE_USER_MODAL.CREATE' | translate }}
+    </button>
+  </div>
+
+</div>

@@ -1,13 +1,272 @@
 <div class="home-layout">
-
   <app-sidebar rol="ADMIN"></app-sidebar>
 
   <main class="home-content">
-    <app-coming-soon
-      icon="admin_panel_settings"
-      [pageTitle]="'ADMIN_PAGES.MANAGEMENT.TITLE' | translate"
-      [pageSubtitle]="'ADMIN_PAGES.MANAGEMENT.SUBTITLE' | translate">
-    </app-coming-soon>
-  </main>
 
+    <!-- barra de pestañas -->
+    <div class="tabs-bar">
+      <div class="tabs">
+        @for (t of tabs; track t.key) {
+          <button
+            class="tab"
+            [class.tab--active]="activeTab === t.key"
+            (click)="setTab(t.key)">
+            <mat-icon>{{ t.icon }}</mat-icon>
+            {{ ('ADMIN_MANAGEMENT.TABS.' + t.key.toUpperCase()) | translate }}
+          </button>
+        }
+      </div>
+
+      <span class="status-line">
+        <i class="status-dot"></i>
+        {{ 'ADMIN_MANAGEMENT.STATUS_LINE' | translate }}
+      </span>
+    </div>
+
+    <!-- ================= USUARIOS ================= -->
+    @if (activeTab === 'users') {
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h1>{{ 'ADMIN_PAGES.MANAGEMENT.TITLE' | translate }}</h1>
+            <p>{{ 'ADMIN_MANAGEMENT.USERS.SUBTITLE' | translate }}</p>
+          </div>
+          <button class="btn-primary" (click)="openCreateUser()">
+            <mat-icon>person_add</mat-icon>
+            {{ 'ADMIN_MANAGEMENT.USERS.CREATE_USER' | translate }}
+          </button>
+        </div>
+
+        <div class="filters-row">
+          <div class="chips">
+            <button class="chip" [class.chip--active]="userFilter === 'enabled'" (click)="userFilter = 'enabled'">
+              {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.ENABLED' | translate }} <span class="chip-count">{{ enabledCount }}</span>
+            </button>
+            <button class="chip" [class.chip--active]="userFilter === 'registered'" (click)="userFilter = 'registered'">
+              {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.REGISTERED' | translate }} <span class="chip-count">{{ registeredCount }}</span>
+            </button>
+            <button class="chip" [class.chip--active]="userFilter === 'disabled'" (click)="userFilter = 'disabled'">
+              {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.DISABLED' | translate }} <span class="chip-count">{{ disabledCount }}</span>
+            </button>
+          </div>
+
+          <div class="search-box">
+            <mat-icon>search</mat-icon>
+            <input type="text" [(ngModel)]="usersSearch" [placeholder]="'ADMIN_MANAGEMENT.USERS.SEARCH_PLACEHOLDER' | translate">
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.NAME' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.EMAIL' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.USER_TYPE' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.DATE_ADDED' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.INVITED' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.STATUS' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.ACTIONS' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (u of filteredUsers; track u.id) {
+                <tr>
+                  <td class="avatar-cell">
+                    <span class="avatar">{{ u.name.charAt(0) }}</span>
+                    {{ u.name }}
+                  </td>
+                  <td>{{ u.email }}</td>
+                  <td><span class="type-chip">{{ u.userType }}</span></td>
+                  <td>{{ u.dateAdded }}</td>
+                  <td>{{ (u.invited ? 'ADMIN_MANAGEMENT.USERS.YES' : 'ADMIN_MANAGEMENT.USERS.NO') | translate }}</td>
+                  <td><span class="status-pill status-pill--active">{{ ('ADMIN_MANAGEMENT.USERS.STATUS.' + u.status) | translate }}</span></td>
+                  <td class="actions-cell">
+                    <button class="btn-icon"><mat-icon>edit</mat-icon></button>
+                    <button class="btn-icon btn-icon--danger" (click)="deleteUser(u)"><mat-icon>delete</mat-icon></button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    }
+
+    <!-- ================= ROLES ================= -->
+    @if (activeTab === 'roles') {
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h1>{{ 'ADMIN_MANAGEMENT.TABS.ROLES' | translate }}</h1>
+            <p>{{ 'ADMIN_MANAGEMENT.ROLES.SUBTITLE' | translate }}</p>
+          </div>
+          <button class="btn-primary" (click)="openCreateRole()">
+            <mat-icon>add</mat-icon>
+            {{ 'ADMIN_MANAGEMENT.ROLES.CREATE_ROLE' | translate }}
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.NAME' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.DESCRIPTION' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.PERMISSIONS' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.USERS' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.ACTIONS' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (r of roles; track r.id) {
+                <tr>
+                  <td><strong>{{ r.name }}</strong></td>
+                  <td class="description-cell">{{ r.description }}</td>
+                  <td>
+                    @for (p of r.permissions; track p) {
+                      <span class="permission-chip">{{ p }}</span>
+                    }
+                  </td>
+                  <td>{{ 'ADMIN_MANAGEMENT.ROLES.USERS_COUNT' | translate:{ count: r.usersCount } }}</td>
+                  <td class="actions-cell">
+                    <button class="btn-icon"><mat-icon>edit</mat-icon></button>
+                    <button class="btn-icon btn-icon--danger" (click)="deleteRole(r)"><mat-icon>delete</mat-icon></button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    }
+
+    <!-- ================= SERVICIOS ================= -->
+    @if (activeTab === 'services') {
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h1>{{ 'ADMIN_MANAGEMENT.TABS.SERVICES' | translate }}</h1>
+            <p>{{ 'ADMIN_MANAGEMENT.SERVICES.SUBTITLE' | translate }}</p>
+          </div>
+          <button class="btn-primary" (click)="openCreateService()">
+            <mat-icon>add</mat-icon>
+            {{ 'ADMIN_MANAGEMENT.SERVICES.CREATE_SERVICE' | translate }}
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.NAME' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.PRICE' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.DURATION' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.CATEGORY' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.STATUS' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.ACTIONS' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (s of services; track s.id) {
+                <tr>
+                  <td><strong>{{ s.name }}</strong></td>
+                  <td class="accent">{{ cop(s.price) }}</td>
+                  <td>{{ s.durationMin }} {{ 'ADMIN_MANAGEMENT.SERVICES.MINUTES_SUFFIX' | translate }}</td>
+                  <td><span class="type-chip">{{ s.category }}</span></td>
+                  <td>
+                    <span [class]="'status-pill status-pill--' + (s.status === 'active' ? 'active' : 'inactive')">
+                      {{ ('ADMIN_MANAGEMENT.SERVICES.STATUS.' + s.status) | translate }}
+                    </span>
+                  </td>
+                  <td class="actions-cell">
+                    <button class="btn-icon" (click)="openEditService(s)"><mat-icon>edit</mat-icon></button>
+                    <button class="btn-icon btn-icon--danger" (click)="deleteService(s)"><mat-icon>delete</mat-icon></button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    }
+
+    <!-- ================= PROMOCIONES ================= -->
+    @if (activeTab === 'promotions') {
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h1>{{ 'ADMIN_MANAGEMENT.TABS.PROMOTIONS' | translate }}</h1>
+            <p>{{ 'ADMIN_MANAGEMENT.PROMOTIONS.SUBTITLE' | translate }}</p>
+          </div>
+          <button class="btn-primary">
+            <mat-icon>add</mat-icon>
+            {{ 'ADMIN_MANAGEMENT.PROMOTIONS.CREATE_PROMOTION' | translate }}
+          </button>
+        </div>
+
+        <div class="promo-grid">
+          @for (p of promotions; track p.id) {
+            <article class="promo-card" [class.promo-card--featured]="p.featured">
+              <div class="promo-card__icon"><mat-icon>{{ p.icon }}</mat-icon></div>
+
+              <h3>{{ p.name }}</h3>
+              <p class="muted">{{ p.description }}</p>
+
+              <div class="promo-card__price">
+                {{ cop(p.price) }} <span class="muted">· {{ p.durationMin }} {{ 'ADMIN_MANAGEMENT.SERVICES.MINUTES_SUFFIX' | translate }}</span>
+              </div>
+
+              <div class="coupon-tag">
+                {{ 'ADMIN_MANAGEMENT.PROMOTIONS.COUPON' | translate }}: <strong>{{ p.couponCode }}</strong>
+                <span class="muted">{{ 'ADMIN_MANAGEMENT.PROMOTIONS.REDEMPTIONS' | translate:{ count: p.redemptions } }}</span>
+              </div>
+
+              <ul class="feature-list">
+                @for (f of p.features; track f) {
+                  <li><mat-icon>check</mat-icon> {{ f }}</li>
+                }
+              </ul>
+
+              <button class="btn-primary full">
+                {{ 'ADMIN_MANAGEMENT.PROMOTIONS.START_NOW' | translate }} →
+              </button>
+
+              <div class="promo-card__footer">
+                <span>
+                  {{ 'ADMIN_MANAGEMENT.PROMOTIONS.STATUS_LABEL' | translate }}:
+                  {{ (p.featured ? 'ADMIN_MANAGEMENT.PROMOTIONS.STATUS.featured' : 'ADMIN_MANAGEMENT.PROMOTIONS.STATUS.active') | translate }}
+                </span>
+                <a>{{ 'ADMIN_MANAGEMENT.PROMOTIONS.EDIT_CARD' | translate }}</a>
+              </div>
+            </article>
+          }
+        </div>
+
+        <div class="promo-stats">
+          <div>
+            <span class="muted">{{ 'ADMIN_MANAGEMENT.PROMOTIONS.STATS.TOTAL_REDEMPTIONS' | translate }}</span>
+            <strong>{{ totalRedemptions | number }}</strong>
+          </div>
+          <div>
+            <span class="muted">{{ 'ADMIN_MANAGEMENT.PROMOTIONS.STATS.CLIENT_SAVINGS' | translate }}</span>
+            <strong>{{ cop(4800000) }}</strong>
+          </div>
+          <div>
+            <span class="muted">{{ 'ADMIN_MANAGEMENT.PROMOTIONS.STATS.CONVERSION' | translate }}</span>
+            <strong>31.2%</strong>
+          </div>
+        </div>
+
+      </div>
+    }
+
+  </main>
 </div>

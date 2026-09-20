@@ -1130,5 +1130,133 @@
     "NOTES_PLACEHOLDER": "Ex. Verificar mancha na estofaria traseira direita...",
     "CANCEL": "Cancelar",
     "CONFIRM": "Confirmar Atribuição"
+  },
+  "ADMIN_MANAGEMENT": {
+    "STATUS_LINE": "Sistema on-line · Filial principal",
+    "TABS": {
+      "USERS": "Usuários",
+      "ROLES": "Funções",
+      "SERVICES": "Serviços",
+      "PROMOTIONS": "Promoções"
+    },
+    "USERS": {
+      "FILTERS": {
+        "ENABLED": "Habilitados",
+        "REGISTERED": "Registrados",
+        "DISABLED": "Desabilitados"
+      },
+      "SEARCH_PLACEHOLDER": "Buscar por nome, e-mail ou função...",
+      "CREATE_USER": "Criar usuário",
+      "SUBTITLE": "Supervisione os acessos da equipe, funções atribuídas e status das contas.",
+      "TABLE": {
+        "NAME": "Nomes",
+        "EMAIL": "E-mail",
+        "USER_TYPE": "Tipo de usuário",
+        "DATE_ADDED": "Data de cadastro",
+        "INVITED": "Convidado",
+        "STATUS": "Status",
+        "ACTIONS": "Ações"
+      },
+      "YES": "Sim",
+      "NO": "Não",
+      "STATUS": {
+        "active": "Ativo",
+        "disabled": "Desabilitado"
+      }
+    },
+    "ROLES": {
+      "CREATE_ROLE": "Criar função",
+      "SUBTITLE": "Defina o que cada tipo de usuário pode ver e fazer dentro do painel.",
+      "TABLE": {
+        "NAME": "Função",
+        "DESCRIPTION": "Descrição",
+        "PERMISSIONS": "Permissões",
+        "USERS": "Usuários",
+        "ACTIONS": "Ações"
+      },
+      "USERS_COUNT": "{{count}} usuários"
+    },
+    "SERVICES": {
+      "CREATE_SERVICE": "Adicionar serviço",
+      "SUBTITLE": "Gerencie o catálogo de serviços oferecidos aos clientes.",
+      "TABLE": {
+        "NAME": "Nome",
+        "PRICE": "Preço",
+        "DURATION": "Duração",
+        "CATEGORY": "Categoria",
+        "STATUS": "Status",
+        "ACTIONS": "Ações"
+      },
+      "STATUS": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "MINUTES_SUFFIX": "min"
+    },
+    "PROMOTIONS": {
+      "CREATE_PROMOTION": "Criar promoção",
+      "SUBTITLE": "Gerencie os pacotes promocionais e cupons de desconto.",
+      "COUPON": "Cupom",
+      "REDEMPTIONS": "{{count}} resgates",
+      "START_NOW": "Começar agora",
+      "EDIT_CARD": "Editar cartão",
+      "STATUS_LABEL": "Status",
+      "STATUS": {
+        "active": "Ativo",
+        "featured": "Destaque"
+      },
+      "STATS": {
+        "TOTAL_REDEMPTIONS": "Total de resgates",
+        "CLIENT_SAVINGS": "Economia dos clientes",
+        "CONVERSION": "Conversão de cupons"
+      }
+    },
+    "DELETE_CONFIRM": {
+      "TITLE": "Excluir este registro?",
+      "MESSAGE": "Esta ação não pode ser desfeita.",
+      "CONFIRM": "Excluir",
+      "CANCEL": "Cancelar"
+    }
+  },
+  "CREATE_ROLE_MODAL": {
+    "TITLE": "Criar Função de Usuário",
+    "ROLE_NAME_LABEL": "Nome da Função",
+    "ROLE_NAME_PLACEHOLDER": "Ex. Supervisor de Baia",
+    "DESCRIPTION_LABEL": "Descrição",
+    "DESCRIPTION_PLACEHOLDER": "Funções principais do cargo...",
+    "PERMISSIONS_LABEL": "Permissões Habilitadas",
+    "PERMISSIONS": {
+      "VIEW_PANELS": "Ver painéis",
+      "CREATE_RECORDS": "Criar registros",
+      "EDIT_DATA": "Editar dados",
+      "DELETE": "Excluir"
+    },
+    "CANCEL": "Cancelar",
+    "CREATE": "Criar Função"
+  },
+  "SERVICE_MODAL": {
+    "TITLE_CREATE": "Adicionar Novo Serviço",
+    "TITLE_EDIT": "Editar Serviço",
+    "SUBTITLE": "Configure a tarifa e o tempo para atribuição de baia",
+    "NAME_LABEL": "Nome do Serviço",
+    "NAME_PLACEHOLDER": "Ex. Desinfecção com Ozônio",
+    "PRICE_LABEL": "Preço (COP)",
+    "DESCRIPTION_LABEL": "Descrição",
+    "DESCRIPTION_PLACEHOLDER": "Descreva os detalhes do serviço...",
+    "DURATION_LABEL": "Duração estimada",
+    "CATEGORY_LABEL": "Categoria",
+    "SAVE": "Salvar Serviço"
+  },
+  "CREATE_USER_MODAL": {
+    "TITLE": "Criar Usuário",
+    "SUBTITLE": "Convide alguém para administrar a plataforma",
+    "NAME_LABEL": "Nome completo",
+    "NAME_PLACEHOLDER": "Ex. Maria Fernanda Lopez",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "email@exemplo.com",
+    "ROLE_LABEL": "Função atribuída",
+    "INVITE_LABEL": "Enviar convite por e-mail",
+    "CANCEL": "Cancelar",
+    "CREATE": "Criar Usuário"
   }
 }

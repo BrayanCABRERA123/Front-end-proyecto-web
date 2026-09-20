@@ -1130,5 +1130,133 @@
     "NOTES_PLACEHOLDER": "Ex. Vérifier une tache sur la sellerie arrière droite...",
     "CANCEL": "Annuler",
     "CONFIRM": "Confirmer l'assignation"
+  },
+  "ADMIN_MANAGEMENT": {
+    "STATUS_LINE": "Système en ligne · Succursale principale",
+    "TABS": {
+      "USERS": "Utilisateurs",
+      "ROLES": "Rôles",
+      "SERVICES": "Services",
+      "PROMOTIONS": "Promotions"
+    },
+    "USERS": {
+      "FILTERS": {
+        "ENABLED": "Activés",
+        "REGISTERED": "Enregistrés",
+        "DISABLED": "Désactivés"
+      },
+      "SEARCH_PLACEHOLDER": "Rechercher par nom, e-mail ou rôle...",
+      "CREATE_USER": "Créer un utilisateur",
+      "SUBTITLE": "Supervisez les accès du personnel, les rôles assignés et l'état des comptes.",
+      "TABLE": {
+        "NAME": "Noms",
+        "EMAIL": "E-mail",
+        "USER_TYPE": "Type d'utilisateur",
+        "DATE_ADDED": "Date d'ajout",
+        "INVITED": "Invité",
+        "STATUS": "Statut",
+        "ACTIONS": "Actions"
+      },
+      "YES": "Oui",
+      "NO": "Non",
+      "STATUS": {
+        "active": "Actif",
+        "disabled": "Désactivé"
+      }
+    },
+    "ROLES": {
+      "CREATE_ROLE": "Créer un rôle",
+      "SUBTITLE": "Définissez ce que chaque type d'utilisateur peut voir et faire dans le panneau.",
+      "TABLE": {
+        "NAME": "Rôle",
+        "DESCRIPTION": "Description",
+        "PERMISSIONS": "Permissions",
+        "USERS": "Utilisateurs",
+        "ACTIONS": "Actions"
+      },
+      "USERS_COUNT": "{{count}} utilisateurs"
+    },
+    "SERVICES": {
+      "CREATE_SERVICE": "Ajouter un service",
+      "SUBTITLE": "Gérez le catalogue de services proposés aux clients.",
+      "TABLE": {
+        "NAME": "Nom",
+        "PRICE": "Prix",
+        "DURATION": "Durée",
+        "CATEGORY": "Catégorie",
+        "STATUS": "Statut",
+        "ACTIONS": "Actions"
+      },
+      "STATUS": {
+        "active": "Actif",
+        "inactive": "Inactif"
+      },
+      "MINUTES_SUFFIX": "min"
+    },
+    "PROMOTIONS": {
+      "CREATE_PROMOTION": "Créer une promotion",
+      "SUBTITLE": "Gérez les forfaits promotionnels et les coupons de réduction.",
+      "COUPON": "Coupon",
+      "REDEMPTIONS": "{{count}} utilisations",
+      "START_NOW": "Commencer",
+      "EDIT_CARD": "Modifier la carte",
+      "STATUS_LABEL": "Statut",
+      "STATUS": {
+        "active": "Actif",
+        "featured": "En vedette"
+      },
+      "STATS": {
+        "TOTAL_REDEMPTIONS": "Utilisations totales",
+        "CLIENT_SAVINGS": "Économies clients",
+        "CONVERSION": "Conversion des coupons"
+      }
+    },
+    "DELETE_CONFIRM": {
+      "TITLE": "Supprimer cet enregistrement ?",
+      "MESSAGE": "Cette action est irréversible.",
+      "CONFIRM": "Supprimer",
+      "CANCEL": "Annuler"
+    }
+  },
+  "CREATE_ROLE_MODAL": {
+    "TITLE": "Créer un rôle utilisateur",
+    "ROLE_NAME_LABEL": "Nom du rôle",
+    "ROLE_NAME_PLACEHOLDER": "Ex. Superviseur de baie",
+    "DESCRIPTION_LABEL": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Fonctions principales du rôle...",
+    "PERMISSIONS_LABEL": "Permissions activées",
+    "PERMISSIONS": {
+      "VIEW_PANELS": "Voir les panneaux",
+      "CREATE_RECORDS": "Créer des enregistrements",
+      "EDIT_DATA": "Modifier les données",
+      "DELETE": "Supprimer"
+    },
+    "CANCEL": "Annuler",
+    "CREATE": "Créer le rôle"
+  },
+  "SERVICE_MODAL": {
+    "TITLE_CREATE": "Ajouter un nouveau service",
+    "TITLE_EDIT": "Modifier le service",
+    "SUBTITLE": "Définissez le tarif et la durée pour l'assignation de baie",
+    "NAME_LABEL": "Nom du service",
+    "NAME_PLACEHOLDER": "Ex. Désinfection à l'ozone",
+    "PRICE_LABEL": "Prix (COP)",
+    "DESCRIPTION_LABEL": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Décrivez les détails du service...",
+    "DURATION_LABEL": "Durée estimée",
+    "CATEGORY_LABEL": "Catégorie",
+    "SAVE": "Enregistrer le service"
+  },
+  "CREATE_USER_MODAL": {
+    "TITLE": "Créer un utilisateur",
+    "SUBTITLE": "Invitez une personne à gérer la plateforme",
+    "NAME_LABEL": "Nom complet",
+    "NAME_PLACEHOLDER": "Ex. Maria Fernanda Lopez",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "email@exemple.com",
+    "ROLE_LABEL": "Rôle assigné",
+    "INVITE_LABEL": "Envoyer une invitation par e-mail",
+    "CANCEL": "Annuler",
+    "CREATE": "Créer l'utilisateur"
   }
 }

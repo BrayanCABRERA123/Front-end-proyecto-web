@@ -1,0 +1,65 @@
+<div class="service-dialog">
+
+  <div class="service-dialog__header">
+    <div class="header-icon">+</div>
+    <div>
+      <h2>{{ (isEditing ? 'SERVICE_MODAL.TITLE_EDIT' : 'SERVICE_MODAL.TITLE_CREATE') | translate }}</h2>
+      <p>{{ 'SERVICE_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="service-dialog__body">
+
+    <div class="row-2">
+      <label class="field">
+        <span>{{ 'SERVICE_MODAL.NAME_LABEL' | translate }}</span>
+        <input type="text" [(ngModel)]="name" [placeholder]="'SERVICE_MODAL.NAME_PLACEHOLDER' | translate">
+      </label>
+
+      <label class="field">
+        <span>{{ 'SERVICE_MODAL.PRICE_LABEL' | translate }}</span>
+        <input type="number" min="0" [(ngModel)]="price" placeholder="45.000">
+      </label>
+    </div>
+
+    <label class="field">
+      <span>{{ 'SERVICE_MODAL.DESCRIPTION_LABEL' | translate }}</span>
+      <textarea
+        rows="2"
+        [(ngModel)]="description"
+        [placeholder]="'SERVICE_MODAL.DESCRIPTION_PLACEHOLDER' | translate">
+      </textarea>
+    </label>
+
+    <div class="row-2">
+      <label class="field">
+        <span>{{ 'SERVICE_MODAL.DURATION_LABEL' | translate }}</span>
+        <select [(ngModel)]="durationMin">
+          <option [ngValue]="15">15 min</option>
+          <option [ngValue]="30">30 min</option>
+          <option [ngValue]="45">45 min</option>
+          <option [ngValue]="60">60 min</option>
+          <option [ngValue]="90">90 min</option>
+          <option [ngValue]="120">120 min</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span>{{ 'SERVICE_MODAL.CATEGORY_LABEL' | translate }}</span>
+        <select [(ngModel)]="category">
+          @for (c of categories; track c.value) {
+            <option [value]="c.value">{{ c.label }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+  </div>
+
+  <div class="service-dialog__actions">
+    <button class="btn-confirm full" type="button" [disabled]="!canSave" (click)="save()">
+      {{ 'SERVICE_MODAL.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>

@@ -1130,5 +1130,133 @@
     "NOTES_PLACEHOLDER": "E.g. Check stain on rear right upholstery...",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm Assignment"
+  },
+  "ADMIN_MANAGEMENT": {
+    "STATUS_LINE": "System online · Main branch",
+    "TABS": {
+      "USERS": "Users",
+      "ROLES": "Roles",
+      "SERVICES": "Services",
+      "PROMOTIONS": "Promotions"
+    },
+    "USERS": {
+      "FILTERS": {
+        "ENABLED": "Enabled",
+        "REGISTERED": "Registered",
+        "DISABLED": "Disabled"
+      },
+      "SEARCH_PLACEHOLDER": "Search by name, email or role...",
+      "CREATE_USER": "Create user",
+      "SUBTITLE": "Oversee staff access, assigned roles and account status.",
+      "TABLE": {
+        "NAME": "Name",
+        "EMAIL": "Email",
+        "USER_TYPE": "User type",
+        "DATE_ADDED": "Date added",
+        "INVITED": "Invited",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "YES": "Yes",
+      "NO": "No",
+      "STATUS": {
+        "active": "Active",
+        "disabled": "Disabled"
+      }
+    },
+    "ROLES": {
+      "CREATE_ROLE": "Create role",
+      "SUBTITLE": "Define what each type of user can see and do inside the panel.",
+      "TABLE": {
+        "NAME": "Role",
+        "DESCRIPTION": "Description",
+        "PERMISSIONS": "Permissions",
+        "USERS": "Users",
+        "ACTIONS": "Actions"
+      },
+      "USERS_COUNT": "{{count}} users"
+    },
+    "SERVICES": {
+      "CREATE_SERVICE": "Add service",
+      "SUBTITLE": "Manage the catalog of services offered to clients.",
+      "TABLE": {
+        "NAME": "Name",
+        "PRICE": "Price",
+        "DURATION": "Duration",
+        "CATEGORY": "Category",
+        "STATUS": "Status",
+        "ACTIONS": "Actions"
+      },
+      "STATUS": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "MINUTES_SUFFIX": "min"
+    },
+    "PROMOTIONS": {
+      "CREATE_PROMOTION": "Create promotion",
+      "SUBTITLE": "Manage promotional packages and discount coupons.",
+      "COUPON": "Coupon",
+      "REDEMPTIONS": "{{count}} redemptions",
+      "START_NOW": "Start now",
+      "EDIT_CARD": "Edit card",
+      "STATUS_LABEL": "Status",
+      "STATUS": {
+        "active": "Active",
+        "featured": "Featured"
+      },
+      "STATS": {
+        "TOTAL_REDEMPTIONS": "Total redemptions",
+        "CLIENT_SAVINGS": "Client savings",
+        "CONVERSION": "Coupon conversion"
+      }
+    },
+    "DELETE_CONFIRM": {
+      "TITLE": "Delete this record?",
+      "MESSAGE": "This action cannot be undone.",
+      "CONFIRM": "Delete",
+      "CANCEL": "Cancel"
+    }
+  },
+  "CREATE_ROLE_MODAL": {
+    "TITLE": "Create User Role",
+    "ROLE_NAME_LABEL": "Role Name",
+    "ROLE_NAME_PLACEHOLDER": "E.g. Bay Supervisor",
+    "DESCRIPTION_LABEL": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Main responsibilities of the role...",
+    "PERMISSIONS_LABEL": "Enabled Permissions",
+    "PERMISSIONS": {
+      "VIEW_PANELS": "View panels",
+      "CREATE_RECORDS": "Create records",
+      "EDIT_DATA": "Edit data",
+      "DELETE": "Delete"
+    },
+    "CANCEL": "Cancel",
+    "CREATE": "Create Role"
+  },
+  "SERVICE_MODAL": {
+    "TITLE_CREATE": "Add New Service",
+    "TITLE_EDIT": "Edit Service",
+    "SUBTITLE": "Set the rate and time used for bay assignment",
+    "NAME_LABEL": "Service Name",
+    "NAME_PLACEHOLDER": "E.g. Ozone Disinfection",
+    "PRICE_LABEL": "Price (COP)",
+    "DESCRIPTION_LABEL": "Description",
+    "DESCRIPTION_PLACEHOLDER": "Describe the service details...",
+    "DURATION_LABEL": "Estimated duration",
+    "CATEGORY_LABEL": "Category",
+    "SAVE": "Save Service"
+  },
+  "CREATE_USER_MODAL": {
+    "TITLE": "Create User",
+    "SUBTITLE": "Invite someone to manage the platform",
+    "NAME_LABEL": "Full name",
+    "NAME_PLACEHOLDER": "E.g. Maria Fernanda Lopez",
+    "EMAIL_LABEL": "Email",
+    "EMAIL_PLACEHOLDER": "email@example.com",
+    "ROLE_LABEL": "Assigned role",
+    "INVITE_LABEL": "Send email invitation",
+    "CANCEL": "Cancel",
+    "CREATE": "Create User"
   }
 }
