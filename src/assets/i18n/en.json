@@ -1540,5 +1540,80 @@
     "METHOD_LABEL": "Payment method",
     "CANCEL": "Cancel",
     "REGISTER": "Register payment"
+  },
+  "BUSINESS_DATA": {
+    "TITLE": "Business Data",
+    "STATUS_BADGE": "Active company",
+    "SUBTITLE": "Manage {{name}}'s tax, corporate and official contact information.",
+    "DISCARD": "Discard",
+    "SAVE": "Save changes",
+    "GENERAL": {
+      "TITLE": "General information",
+      "SUBTITLE": "Corporate data and legal representation",
+      "LEGAL_NAME": "Legal name",
+      "TAX_ID": "Tax ID",
+      "BUSINESS_TYPE": "Business type",
+      "FOUNDATION_DATE": "Founding date",
+      "LEGAL_REP": "Legal representative",
+      "LEGAL_REP_DOC": "Document"
+    },
+    "CONTACT": {
+      "TITLE": "Location & contact",
+      "SUBTITLE": "Main office address and official contact details",
+      "ADDRESS": "Main office address",
+      "PHONE": "Contact phone",
+      "WHATSAPP": "Official WhatsApp",
+      "EMAIL": "Corporate email",
+      "WEBSITE": "Official website"
+    },
+    "FISCAL": {
+      "TITLE": "Tax information",
+      "SUBTITLE": "Taxation, electronic invoicing and DIAN resolutions",
+      "REGIME": "Tax regime",
+      "CIIU": "CIIU activity",
+      "DIAN_RESOLUTION": "DIAN resolution",
+      "PREFIX": "Authorized prefix",
+      "RANGE": "Invoice range",
+      "ELECTRONIC_INVOICING": "Electronic invoicing enabled",
+      "ELECTRONIC_INVOICING_DESC": "Automatic e-invoice submission as required by DIAN"
+    },
+    "CHANNELS": {
+      "TITLE": "Official channels",
+      "SUBTITLE": "Social media, support lines and business hours",
+      "INSTAGRAM": "Instagram",
+      "FACEBOOK": "Facebook page",
+      "SUPPORT_LINE": "Customer support line (national)",
+      "SERVICE_HOURS": "Business hours"
+    }
+  },
+  "PAYMENT_METHODS_SECTION": {
+    "TITLE": "Payment methods",
+    "ACTIVE_COUNT": "{{count}} active",
+    "SUBTITLE": "Configure the accounts clients will transfer to and upload receipts for.",
+    "ADD_METHOD": "Add payment method",
+    "ACCOUNT_NUMBER_LABEL": "Phone / account number",
+    "QR_ACTIVE": "QR active and verified",
+    "REPLACE": "Replace",
+    "UPLOAD_QR": "Upload QR",
+    "NO_QR_NEEDED": "No QR needed: the operator or cashier will validate the payment in person at the bay with a physical or terminal receipt.",
+    "HOLDER": "Account holder"
+  },
+  "ADD_PAYMENT_METHOD_MODAL": {
+    "TITLE": "Add payment method",
+    "NAME_LABEL": "Method name",
+    "NAME_PLACEHOLDER": "E.g. Nequi Colombia",
+    "TYPE_LABEL": "Type",
+    "TYPE_PLACEHOLDER": "E.g. Digital wallet",
+    "HOLDER_LABEL": "Account holder",
+    "ACCOUNT_LABEL": "Phone / account number",
+    "CANCEL": "Cancel",
+    "SAVE": "Add method"
+  },
+  "ADMIN_SETTINGS": {
+    "TABS": {
+      "GENERAL": "General",
+      "BUSINESS": "Business data",
+      "PAYMENTS": "Payment methods"
+    }
   }
 }

@@ -1,0 +1,41 @@
+<div class="method-dialog">
+
+  <div class="method-dialog__header">
+    <h2>{{ 'ADD_PAYMENT_METHOD_MODAL.TITLE' | translate }}</h2>
+    <button type="button" class="close-x" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="method-dialog__body">
+
+    <label class="field">
+      <span>{{ 'ADD_PAYMENT_METHOD_MODAL.NAME_LABEL' | translate }}</span>
+      <input type="text" [(ngModel)]="name" [placeholder]="'ADD_PAYMENT_METHOD_MODAL.NAME_PLACEHOLDER' | translate">
+    </label>
+
+    <label class="field">
+      <span>{{ 'ADD_PAYMENT_METHOD_MODAL.TYPE_LABEL' | translate }}</span>
+      <input type="text" [(ngModel)]="type" [placeholder]="'ADD_PAYMENT_METHOD_MODAL.TYPE_PLACEHOLDER' | translate">
+    </label>
+
+    <label class="field">
+      <span>{{ 'ADD_PAYMENT_METHOD_MODAL.HOLDER_LABEL' | translate }}</span>
+      <input type="text" [(ngModel)]="holder">
+    </label>
+
+    <label class="field">
+      <span>{{ 'ADD_PAYMENT_METHOD_MODAL.ACCOUNT_LABEL' | translate }}</span>
+      <input type="text" [(ngModel)]="accountNumber">
+    </label>
+
+  </div>
+
+  <div class="method-dialog__actions">
+    <button class="btn-cancel" type="button" (click)="close()">
+      {{ 'ADD_PAYMENT_METHOD_MODAL.CANCEL' | translate }}
+    </button>
+    <button class="btn-confirm" type="button" [disabled]="!canSave" (click)="save()">
+      {{ 'ADD_PAYMENT_METHOD_MODAL.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>

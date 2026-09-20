@@ -1,0 +1,179 @@
+<div class="business-data">
+
+  <div class="section-header">
+    <div>
+      <div class="title-row">
+        <h2>{{ 'BUSINESS_DATA.TITLE' | translate }}</h2>
+        <span class="status-badge">{{ 'BUSINESS_DATA.STATUS_BADGE' | translate }}</span>
+      </div>
+      <p>{{ 'BUSINESS_DATA.SUBTITLE' | translate:{ name: data.legalName } }}</p>
+    </div>
+
+    <div class="section-header__actions">
+      <button class="btn-outline" (click)="discard()">{{ 'BUSINESS_DATA.DISCARD' | translate }}</button>
+      <button class="btn-primary" (click)="save()">
+        <mat-icon>check</mat-icon>
+        {{ 'BUSINESS_DATA.SAVE' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- información general -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><mat-icon>domain</mat-icon></div>
+        <div>
+          <h3>{{ 'BUSINESS_DATA.GENERAL.TITLE' | translate }}</h3>
+          <p>{{ 'BUSINESS_DATA.GENERAL.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.GENERAL.LEGAL_NAME' | translate }} *</span>
+        <input type="text" [(ngModel)]="data.legalName">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.GENERAL.TAX_ID' | translate }} *</span>
+        <input type="text" [(ngModel)]="data.taxId">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.GENERAL.BUSINESS_TYPE' | translate }}</span>
+        <input type="text" [(ngModel)]="data.businessType">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.GENERAL.FOUNDATION_DATE' | translate }}</span>
+        <input type="date" [(ngModel)]="data.foundationDate">
+      </label>
+
+      <div class="row-2">
+        <label class="field">
+          <span>{{ 'BUSINESS_DATA.GENERAL.LEGAL_REP' | translate }}</span>
+          <input type="text" [(ngModel)]="data.legalRep">
+        </label>
+        <label class="field">
+          <span>{{ 'BUSINESS_DATA.GENERAL.LEGAL_REP_DOC' | translate }}</span>
+          <input type="text" [(ngModel)]="data.legalRepDoc">
+        </label>
+      </div>
+    </div>
+
+    <!-- ubicación y contacto -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><mat-icon>location_on</mat-icon></div>
+        <div>
+          <h3>{{ 'BUSINESS_DATA.CONTACT.TITLE' | translate }}</h3>
+          <p>{{ 'BUSINESS_DATA.CONTACT.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.CONTACT.ADDRESS' | translate }} *</span>
+        <input type="text" [(ngModel)]="data.address">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.CONTACT.PHONE' | translate }} *</span>
+        <input type="text" [(ngModel)]="data.phone">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.CONTACT.WHATSAPP' | translate }}</span>
+        <input type="text" [(ngModel)]="data.whatsapp">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.CONTACT.EMAIL' | translate }}</span>
+        <input type="email" [(ngModel)]="data.email">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.CONTACT.WEBSITE' | translate }}</span>
+        <input type="text" [(ngModel)]="data.website">
+      </label>
+    </div>
+
+    <!-- información fiscal -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><mat-icon>receipt_long</mat-icon></div>
+        <div>
+          <h3>{{ 'BUSINESS_DATA.FISCAL.TITLE' | translate }}</h3>
+          <p>{{ 'BUSINESS_DATA.FISCAL.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.FISCAL.REGIME' | translate }}</span>
+        <input type="text" [(ngModel)]="data.taxRegime">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.FISCAL.CIIU' | translate }}</span>
+        <input type="text" [(ngModel)]="data.ciiuActivity">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.FISCAL.DIAN_RESOLUTION' | translate }}</span>
+        <input type="text" [(ngModel)]="data.dianResolution">
+      </label>
+
+      <div class="row-2">
+        <label class="field">
+          <span>{{ 'BUSINESS_DATA.FISCAL.PREFIX' | translate }}</span>
+          <input type="text" [(ngModel)]="data.invoicePrefix">
+        </label>
+        <label class="field">
+          <span>{{ 'BUSINESS_DATA.FISCAL.RANGE' | translate }}</span>
+          <input type="text" [(ngModel)]="data.invoiceRange">
+        </label>
+      </div>
+
+      <label class="toggle-row">
+        <div>
+          <strong>{{ 'BUSINESS_DATA.FISCAL.ELECTRONIC_INVOICING' | translate }}</strong>
+          <span class="muted">{{ 'BUSINESS_DATA.FISCAL.ELECTRONIC_INVOICING_DESC' | translate }}</span>
+        </div>
+        <input type="checkbox" [(ngModel)]="data.electronicInvoicing" class="switch-input">
+      </label>
+    </div>
+
+    <!-- canales oficiales -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon"><mat-icon>share</mat-icon></div>
+        <div>
+          <h3>{{ 'BUSINESS_DATA.CHANNELS.TITLE' | translate }}</h3>
+          <p>{{ 'BUSINESS_DATA.CHANNELS.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.CHANNELS.INSTAGRAM' | translate }}</span>
+        <input type="text" [(ngModel)]="data.instagram">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.CHANNELS.FACEBOOK' | translate }}</span>
+        <input type="text" [(ngModel)]="data.facebook">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.CHANNELS.SUPPORT_LINE' | translate }}</span>
+        <input type="text" [(ngModel)]="data.supportLine">
+      </label>
+
+      <label class="field">
+        <span>{{ 'BUSINESS_DATA.CHANNELS.SERVICE_HOURS' | translate }}</span>
+        <input type="text" [(ngModel)]="data.serviceHours">
+      </label>
+    </div>
+
+  </div>
+
+</div>

@@ -1540,5 +1540,80 @@
     "METHOD_LABEL": "Método de pago",
     "CANCEL": "Cancelar",
     "REGISTER": "Registrar pago"
+  },
+  "BUSINESS_DATA": {
+    "TITLE": "Datos del Negocio",
+    "STATUS_BADGE": "Empresa activa",
+    "SUBTITLE": "Administra la información fiscal, corporativa y canales oficiales de atención de {{name}}.",
+    "DISCARD": "Descartar",
+    "SAVE": "Guardar cambios",
+    "GENERAL": {
+      "TITLE": "Información general",
+      "SUBTITLE": "Datos corporativos y representación legal",
+      "LEGAL_NAME": "Razón social",
+      "TAX_ID": "NIT / Identificación tributaria",
+      "BUSINESS_TYPE": "Tipo de negocio",
+      "FOUNDATION_DATE": "Fecha de constitución",
+      "LEGAL_REP": "Representante legal",
+      "LEGAL_REP_DOC": "Documento"
+    },
+    "CONTACT": {
+      "TITLE": "Ubicación y contacto",
+      "SUBTITLE": "Dirección de sede principal y datos oficiales de contacto",
+      "ADDRESS": "Dirección sede principal",
+      "PHONE": "Teléfono de contacto",
+      "WHATSAPP": "WhatsApp oficial",
+      "EMAIL": "Correo electrónico corporativo",
+      "WEBSITE": "Sitio web oficial"
+    },
+    "FISCAL": {
+      "TITLE": "Información fiscal",
+      "SUBTITLE": "Tributación, facturación electrónica y resoluciones DIAN",
+      "REGIME": "Régimen fiscal",
+      "CIIU": "Actividad CIIU",
+      "DIAN_RESOLUTION": "Resolución DIAN",
+      "PREFIX": "Prefijo autorizado",
+      "RANGE": "Rango de facturación",
+      "ELECTRONIC_INVOICING": "Facturación electrónica habilitada",
+      "ELECTRONIC_INVOICING_DESC": "Envío automático de facturas electrónicas decretado por la DIAN"
+    },
+    "CHANNELS": {
+      "TITLE": "Canales oficiales",
+      "SUBTITLE": "Redes sociales, líneas de soporte y horarios comerciales",
+      "INSTAGRAM": "Instagram",
+      "FACEBOOK": "Facebook page",
+      "SUPPORT_LINE": "Línea de atención al cliente (nacional)",
+      "SERVICE_HOURS": "Horario de atención"
+    }
+  },
+  "PAYMENT_METHODS_SECTION": {
+    "TITLE": "Métodos de pago",
+    "ACTIVE_COUNT": "{{count}} activos",
+    "SUBTITLE": "Configura las cuentas donde los clientes transferirán el valor de los servicios y subirán comprobantes.",
+    "ADD_METHOD": "Agregar método de pago",
+    "ACCOUNT_NUMBER_LABEL": "Número de celular / cuenta",
+    "QR_ACTIVE": "QR activo y verificado",
+    "REPLACE": "Reemplazar",
+    "UPLOAD_QR": "Subir QR",
+    "NO_QR_NEEDED": "Sin QR requerido: el operario o cajero validará el recaudo presencialmente en bahía con recibo físico o de terminal.",
+    "HOLDER": "Titular"
+  },
+  "ADD_PAYMENT_METHOD_MODAL": {
+    "TITLE": "Agregar método de pago",
+    "NAME_LABEL": "Nombre del método",
+    "NAME_PLACEHOLDER": "Ej. Nequi Colombia",
+    "TYPE_LABEL": "Tipo",
+    "TYPE_PLACEHOLDER": "Ej. Billetera digital",
+    "HOLDER_LABEL": "Titular de la cuenta",
+    "ACCOUNT_LABEL": "Número de celular / cuenta",
+    "CANCEL": "Cancelar",
+    "SAVE": "Agregar método"
+  },
+  "ADMIN_SETTINGS": {
+    "TABS": {
+      "GENERAL": "General",
+      "BUSINESS": "Datos del negocio",
+      "PAYMENTS": "Métodos de pago"
+    }
   }
 }

@@ -12,6 +12,42 @@
   overflow-y: auto;
 }
 
+/* pestañas, mismo patrón que usamos en Gestión */
+.tabs-bar {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-secondary);
+  font-weight: $fw-semibold;
+  font-size: $fs-body;
+  cursor: pointer;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+  &:hover { color: var(--text); }
+
+  &--active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+}
+
+.tab-panel--hidden {
+  display: none;
+}
+
 /* tablet */
 @include tablet {
   .config-content {

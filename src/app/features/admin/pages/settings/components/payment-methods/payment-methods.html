@@ -1,0 +1,76 @@
+<div class="payment-methods">
+
+  <div class="section-header">
+    <div>
+      <div class="title-row">
+        <h2>{{ 'PAYMENT_METHODS_SECTION.TITLE' | translate }}</h2>
+        <span class="count-badge">{{ 'PAYMENT_METHODS_SECTION.ACTIVE_COUNT' | translate:{ count: activeCount } }}</span>
+      </div>
+      <p>{{ 'PAYMENT_METHODS_SECTION.SUBTITLE' | translate }}</p>
+    </div>
+
+    <button class="btn-primary" (click)="openAddMethod()">
+      <mat-icon>add</mat-icon>
+      {{ 'PAYMENT_METHODS_SECTION.ADD_METHOD' | translate }}
+    </button>
+  </div>
+
+  <div class="methods-list">
+    @for (m of methods; track m.id) {
+      <div class="method-card">
+
+        <div class="method-card__top">
+          <div class="method-card__identity">
+            <div [class]="'method-icon method-icon--' + m.id"><mat-icon>{{ m.needsQr ? 'qr_code_2' : 'payments' }}</mat-icon></div>
+            <div>
+              <div class="name-row">
+                <strong>{{ m.name }}</strong>
+                <span class="type-chip">{{ m.type }}</span>
+              </div>
+              <span class="muted">{{ 'PAYMENT_METHODS_SECTION.HOLDER' | translate }}: {{ m.holder }}</span>
+            </div>
+          </div>
+
+          <label class="switch">
+            <input type="checkbox" [checked]="m.active" (change)="toggle(m)">
+            <span class="switch__track"></span>
+          </label>
+        </div>
+
+        @if (m.accountNumber) {
+          <div class="method-card__bottom">
+            <div class="account-info">
+              <span class="muted">{{ 'PAYMENT_METHODS_SECTION.ACCOUNT_NUMBER_LABEL' | translate }}</span>
+              <strong>{{ m.accountNumber }}</strong>
+            </div>
+
+            @if (m.needsQr) {
+              <div class="qr-box">
+                <mat-icon>qr_code_2</mat-icon>
+                <div>
+                  @if (m.qrFileName) {
+                    <strong>{{ m.qrFileName }}</strong>
+                    <span class="muted">{{ 'PAYMENT_METHODS_SECTION.QR_ACTIVE' | translate }}</span>
+                  } @else {
+                    <span class="muted">—</span>
+                  }
+                </div>
+                <label class="btn-outline btn-sm">
+                  {{ (m.qrFileName ? 'PAYMENT_METHODS_SECTION.REPLACE' : 'PAYMENT_METHODS_SECTION.UPLOAD_QR') | translate }}
+                  <input type="file" accept="image/*" hidden (change)="onQrSelected(m, $event)">
+                </label>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-qr-note">
+            <mat-icon>info</mat-icon>
+            {{ 'PAYMENT_METHODS_SECTION.NO_QR_NEEDED' | translate }}
+          </div>
+        }
+
+      </div>
+    }
+  </div>
+
+</div>

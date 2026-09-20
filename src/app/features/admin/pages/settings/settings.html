@@ -3,7 +3,33 @@
   <app-sidebar rol="ADMIN"></app-sidebar>
 
   <div class="config-content">
-    <app-settings-panel></app-settings-panel>
+
+    <!-- pestañas -->
+    <div class="tabs-bar">
+      @for (t of tabs; track t.key) {
+        <button
+          class="tab"
+          [class.tab--active]="activeTab === t.key"
+          (click)="setTab(t.key)">
+          <mat-icon>{{ t.icon }}</mat-icon>
+          {{ t.labelKey | translate }}
+        </button>
+      }
+    </div>
+
+    <!-- una sola pestaña visible a la vez, como en Gestión -->
+    <div class="tab-panel" [class.tab-panel--hidden]="activeTab !== 'general'">
+      <app-settings-panel></app-settings-panel>
+    </div>
+
+    <div class="tab-panel" [class.tab-panel--hidden]="activeTab !== 'business'">
+      <app-business-data></app-business-data>
+    </div>
+
+    <div class="tab-panel" [class.tab-panel--hidden]="activeTab !== 'payments'">
+      <app-payment-methods></app-payment-methods>
+    </div>
+
   </div>
 
 </div>
