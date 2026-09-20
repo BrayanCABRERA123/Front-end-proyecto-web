@@ -1,0 +1,31 @@
+<div class="history-dialog">
+
+  <div class="history-dialog__header">
+    <div>
+      <h2>{{ 'SCHEDULE_HISTORY_MODAL.TITLE' | translate }}</h2>
+      <p>{{ 'SCHEDULE_HISTORY_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+    <button type="button" class="close-x" (click)="close()" aria-label="close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="history-dialog__body">
+    @if (entries.length === 0) {
+      <p class="empty">{{ 'SCHEDULE_HISTORY_MODAL.EMPTY' | translate }}</p>
+    } @else {
+      <ul class="timeline">
+        @for (e of entries; track e.date + e.description) {
+          <li>
+            <span class="dot"></span>
+            <div>
+              <strong>{{ e.description }}</strong>
+              <span class="muted">{{ e.date }} · {{ e.author }}</span>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+</div>

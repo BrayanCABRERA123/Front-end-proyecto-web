@@ -1,0 +1,72 @@
+@use '../../../../styles/mixins' as *;
+
+.history-dialog {
+  background: var(--card);
+  color: var(--text);
+  border-radius: 16px;
+  width: min(420px, 90vw);
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+
+    h2 { @include subtitle; color: var(--text); font-weight: $fw-bold; margin: 0 0 2px; }
+    p { @include caption-text; color: var(--text-secondary); margin: 0; }
+  }
+
+  &__body {
+    padding: 16px 20px;
+    overflow-y: auto;
+  }
+}
+
+.close-x {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+
+  &:hover { color: var(--text); }
+}
+
+.empty {
+  @include caption-text;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 20px 0;
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+
+    &:last-child { border-bottom: none; }
+
+    strong { display: block; @include body-text; color: var(--text); }
+    .muted { @include caption-text; color: var(--text-secondary); }
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  margin-top: 6px;
+}

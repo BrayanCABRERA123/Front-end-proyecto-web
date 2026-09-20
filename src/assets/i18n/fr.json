@@ -1258,5 +1258,91 @@
     "INVITE_LABEL": "Envoyer une invitation par e-mail",
     "CANCEL": "Annuler",
     "CREATE": "Créer l'utilisateur"
+  },
+  "ADMIN_SCHEDULE": {
+    "OPEN_TODAY": "Ouvert aujourd'hui",
+    "HISTORY": "Historique",
+    "TABS": {
+      "BUSINESS_HOURS": "Horaires du commerce",
+      "BAYS": "Baies de lavage"
+    },
+    "WEEKLY": "Hebdomadaire",
+    "ACTIVE_BAYS_COUNT": "{{count}} actives",
+    "BUSINESS_HOURS_SECTION": {
+      "TITLE": "Horaire hebdomadaire régulier",
+      "SUBTITLE": "Définissez les heures d'ouverture et de fermeture pour chaque jour de la semaine. Les créneaux de réservation seront générés dans cette plage.",
+      "TIMEZONE": "Fuseau horaire",
+      "OPEN_LABEL": "Ouverture",
+      "CLOSE_LABEL": "Fermeture",
+      "PAUSE_LABEL": "Pause",
+      "PAUSE_NONE": "Continu (sans pause)",
+      "PAUSE_LUNCH": "Avec pause déjeuner",
+      "PAUSE_NOT_APPLICABLE": "Non applicable",
+      "OPEN_STATE": "Ouvert",
+      "CLOSED_STATE": "Fermé",
+      "WORKING": "Ouvré",
+      "REST": "Repos",
+      "IMPACT_NOTE": "Les changements affectent le moteur de réservation en temps réel.",
+      "RESET": "Réinitialiser",
+      "SAVE": "Enregistrer",
+      "SAVED": "Modifications enregistrées"
+    },
+    "DAYS": {
+      "monday": "Lundi",
+      "tuesday": "Mardi",
+      "wednesday": "Mercredi",
+      "thursday": "Jeudi",
+      "friday": "Vendredi",
+      "saturday": "Samedi",
+      "sunday": "Dimanche"
+    },
+    "EXCEPTIONS_SECTION": {
+      "TITLE": "Exceptions et jours spéciaux",
+      "COUNT": "{{count}} programmées",
+      "SUBTITLE": "Remplace l'horaire habituel lors des jours fériés nationaux, des maintenances planifiées ou des journées réduites.",
+      "ADD": "Ajouter une exception",
+      "TABLE": {
+        "DATE": "Date",
+        "TYPE": "Type",
+        "SCHEDULE": "Horaire applicable",
+        "REASON": "Motif / notes",
+        "ACTIONS": "Actions"
+      },
+      "TYPE": {
+        "holiday": "Jour férié national",
+        "special": "Horaire spécial"
+      },
+      "CLOSED_ALL_DAY": "Fermé toute la journée"
+    },
+    "BAYS_SECTION": {
+      "SUBTITLE": "Activez, désactivez ou mettez en maintenance chaque baie physique du local.",
+      "ADD_BAY": "Ajouter une baie",
+      "STATUS": {
+        "active": "Active",
+        "maintenance": "En maintenance",
+        "inactive": "Inactive"
+      },
+      "CURRENT_OPERATOR": "Opérateur actuel",
+      "NONE_ASSIGNED": "Non assignée"
+    }
+  },
+  "SCHEDULE_EXCEPTION_MODAL": {
+    "TITLE_CREATE": "Ajouter une exception",
+    "TITLE_EDIT": "Modifier l'exception",
+    "DATE_LABEL": "Date",
+    "TYPE_LABEL": "Type",
+    "CLOSED_ALL_DAY_LABEL": "Fermé toute la journée",
+    "OPEN_LABEL": "Ouverture",
+    "CLOSE_LABEL": "Fermeture",
+    "REASON_LABEL": "Motif / notes",
+    "REASON_PLACEHOLDER": "Ex. Jour de l'Indépendance de Carthagène",
+    "CANCEL": "Annuler",
+    "SAVE": "Enregistrer l'exception"
+  },
+  "SCHEDULE_HISTORY_MODAL": {
+    "TITLE": "Historique des modifications",
+    "SUBTITLE": "Dernières modifications de l'horaire du commerce",
+    "CLOSE": "Fermer",
+    "EMPTY": "Aucune modification enregistrée pour le moment"
   }
 }

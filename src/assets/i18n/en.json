@@ -1258,5 +1258,91 @@
     "INVITE_LABEL": "Send email invitation",
     "CANCEL": "Cancel",
     "CREATE": "Create User"
+  },
+  "ADMIN_SCHEDULE": {
+    "OPEN_TODAY": "Open today",
+    "HISTORY": "History",
+    "TABS": {
+      "BUSINESS_HOURS": "Business hours",
+      "BAYS": "Wash bays"
+    },
+    "WEEKLY": "Weekly",
+    "ACTIVE_BAYS_COUNT": "{{count}} active",
+    "BUSINESS_HOURS_SECTION": {
+      "TITLE": "Regular weekly schedule",
+      "SUBTITLE": "Set the opening and closing times for each day of the week. Booking slots will be generated within this range.",
+      "TIMEZONE": "Time zone",
+      "OPEN_LABEL": "Opening",
+      "CLOSE_LABEL": "Closing",
+      "PAUSE_LABEL": "Break",
+      "PAUSE_NONE": "Continuous (no break)",
+      "PAUSE_LUNCH": "With lunch break",
+      "PAUSE_NOT_APPLICABLE": "Not applicable",
+      "OPEN_STATE": "Open",
+      "CLOSED_STATE": "Closed",
+      "WORKING": "Working",
+      "REST": "Day off",
+      "IMPACT_NOTE": "Changes affect the booking engine in real time.",
+      "RESET": "Reset values",
+      "SAVE": "Save changes",
+      "SAVED": "Changes saved"
+    },
+    "DAYS": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "EXCEPTIONS_SECTION": {
+      "TITLE": "Exceptions and special days",
+      "COUNT": "{{count}} scheduled",
+      "SUBTITLE": "Overrides the regular schedule for national holidays, planned maintenance or shortened days.",
+      "ADD": "Add exception",
+      "TABLE": {
+        "DATE": "Date",
+        "TYPE": "Type",
+        "SCHEDULE": "Applicable hours",
+        "REASON": "Reason / notes",
+        "ACTIONS": "Actions"
+      },
+      "TYPE": {
+        "holiday": "National holiday",
+        "special": "Special hours"
+      },
+      "CLOSED_ALL_DAY": "Closed all day"
+    },
+    "BAYS_SECTION": {
+      "SUBTITLE": "Activate, deactivate or put each physical bay under maintenance.",
+      "ADD_BAY": "Add bay",
+      "STATUS": {
+        "active": "Active",
+        "maintenance": "Under maintenance",
+        "inactive": "Inactive"
+      },
+      "CURRENT_OPERATOR": "Current operator",
+      "NONE_ASSIGNED": "Unassigned"
+    }
+  },
+  "SCHEDULE_EXCEPTION_MODAL": {
+    "TITLE_CREATE": "Add exception",
+    "TITLE_EDIT": "Edit exception",
+    "DATE_LABEL": "Date",
+    "TYPE_LABEL": "Type",
+    "CLOSED_ALL_DAY_LABEL": "Closed all day",
+    "OPEN_LABEL": "Opening",
+    "CLOSE_LABEL": "Closing",
+    "REASON_LABEL": "Reason / notes",
+    "REASON_PLACEHOLDER": "E.g. Cartagena Independence Day",
+    "CANCEL": "Cancel",
+    "SAVE": "Save exception"
+  },
+  "SCHEDULE_HISTORY_MODAL": {
+    "TITLE": "Change history",
+    "SUBTITLE": "Latest changes to the business schedule",
+    "CLOSE": "Close",
+    "EMPTY": "No changes recorded yet"
   }
 }

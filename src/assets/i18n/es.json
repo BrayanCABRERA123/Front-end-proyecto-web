@@ -1258,5 +1258,91 @@
     "INVITE_LABEL": "Enviar invitación por correo",
     "CANCEL": "Cancelar",
     "CREATE": "Crear Usuario"
+  },
+  "ADMIN_SCHEDULE": {
+    "OPEN_TODAY": "Abierto hoy",
+    "HISTORY": "Historial",
+    "TABS": {
+      "BUSINESS_HOURS": "Horario del negocio",
+      "BAYS": "Bahías de lavado"
+    },
+    "WEEKLY": "Semanal",
+    "ACTIVE_BAYS_COUNT": "{{count}} activas",
+    "BUSINESS_HOURS_SECTION": {
+      "TITLE": "Horario semanal regular",
+      "SUBTITLE": "Define las horas de apertura y cierre para cada día de la semana. Los turnos de reserva se generarán dentro de este rango.",
+      "TIMEZONE": "Zona horaria",
+      "OPEN_LABEL": "Apertura",
+      "CLOSE_LABEL": "Cierre",
+      "PAUSE_LABEL": "Pausa",
+      "PAUSE_NONE": "Continuo (sin pausa)",
+      "PAUSE_LUNCH": "Con pausa de almuerzo",
+      "PAUSE_NOT_APPLICABLE": "No aplica",
+      "OPEN_STATE": "Abierto",
+      "CLOSED_STATE": "Cerrado",
+      "WORKING": "Laboral",
+      "REST": "Descanso",
+      "IMPACT_NOTE": "Los cambios impactan el motor de reservas en tiempo real.",
+      "RESET": "Restablecer valores",
+      "SAVE": "Guardar cambios",
+      "SAVED": "Cambios guardados"
+    },
+    "DAYS": {
+      "monday": "Lunes",
+      "tuesday": "Martes",
+      "wednesday": "Miércoles",
+      "thursday": "Jueves",
+      "friday": "Viernes",
+      "saturday": "Sábado",
+      "sunday": "Domingo"
+    },
+    "EXCEPTIONS_SECTION": {
+      "TITLE": "Excepciones y días especiales",
+      "COUNT": "{{count}} programados",
+      "SUBTITLE": "Sobrescribe el horario habitual en feriados nacionales, mantenimientos programados o jornadas reducidas.",
+      "ADD": "Agregar excepción",
+      "TABLE": {
+        "DATE": "Fecha",
+        "TYPE": "Tipo",
+        "SCHEDULE": "Horario aplicable",
+        "REASON": "Motivo / descripción",
+        "ACTIONS": "Acciones"
+      },
+      "TYPE": {
+        "holiday": "Festivo nacional",
+        "special": "Horario especial"
+      },
+      "CLOSED_ALL_DAY": "Cerrado todo el día"
+    },
+    "BAYS_SECTION": {
+      "SUBTITLE": "Activa, desactiva o pon en mantenimiento cada bahía física del local.",
+      "ADD_BAY": "Agregar bahía",
+      "STATUS": {
+        "active": "Activa",
+        "maintenance": "En mantenimiento",
+        "inactive": "Inactiva"
+      },
+      "CURRENT_OPERATOR": "Operario actual",
+      "NONE_ASSIGNED": "Sin asignar"
+    }
+  },
+  "SCHEDULE_EXCEPTION_MODAL": {
+    "TITLE_CREATE": "Agregar excepción",
+    "TITLE_EDIT": "Editar excepción",
+    "DATE_LABEL": "Fecha",
+    "TYPE_LABEL": "Tipo",
+    "CLOSED_ALL_DAY_LABEL": "Cerrado todo el día",
+    "OPEN_LABEL": "Apertura",
+    "CLOSE_LABEL": "Cierre",
+    "REASON_LABEL": "Motivo / descripción",
+    "REASON_PLACEHOLDER": "Ej. Día de la Independencia de Cartagena",
+    "CANCEL": "Cancelar",
+    "SAVE": "Guardar excepción"
+  },
+  "SCHEDULE_HISTORY_MODAL": {
+    "TITLE": "Historial de cambios",
+    "SUBTITLE": "Últimas modificaciones al horario del negocio",
+    "CLOSE": "Cerrar",
+    "EMPTY": "Todavía no hay cambios registrados"
   }
 }
