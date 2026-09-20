@@ -1,0 +1,85 @@
+<div class="home-layout">
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <main class="home-content">
+
+    @if (!operator) {
+      <p class="muted">Operario no encontrado.</p>
+    } @else {
+
+      <!-- breadcrumb -->
+      <nav class="breadcrumb">
+        <a (click)="goToOperatorsList()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'OPERATOR_DETAIL.BACK_TO_OPERATORS' | translate }}
+        </a>
+        <span>/</span>
+        <a (click)="goToOperatorsList()">{{ 'ADMIN_PAGES.OPERATORS.TITLE' | translate }}</a>
+        <span>/</span>
+        <a (click)="goBack()">{{ 'OPERATOR_DETAIL.BREADCRUMB_AVAILABILITY' | translate:{ name: operator.name } }}</a>
+      </nav>
+
+      <!-- encabezado de semana -->
+      <div class="week-header">
+        <div class="week-nav">
+          <button class="nav-btn"><mat-icon>chevron_left</mat-icon></button>
+          <strong>{{ 'OPERATOR_CALENDAR.WEEK_LABEL' | translate:{ week: 43, from: '21 Oct', to: '27 Oct, 2026' } }}</strong>
+          <button class="nav-btn"><mat-icon>chevron_right</mat-icon></button>
+        </div>
+
+        <span class="full-day-chip">
+          <mat-icon>schedule</mat-icon>
+          {{ 'OPERATOR_CALENDAR.FULL_DAY' | translate:{ from: '08:00 AM', to: '06:00 PM' } }}
+        </span>
+
+        <div class="view-toggle">
+          <button [class.view-toggle__btn--active]="view === 'week'" class="view-toggle__btn" (click)="setView('week')">{{ 'OPERATOR_CALENDAR.VIEW.WEEK' | translate }}</button>
+          <button [class.view-toggle__btn--active]="view === 'day'" class="view-toggle__btn" (click)="setView('day')">{{ 'OPERATOR_CALENDAR.VIEW.DAY' | translate }}</button>
+          <button [class.view-toggle__btn--active]="view === 'month'" class="view-toggle__btn" (click)="setView('month')">{{ 'OPERATOR_CALENDAR.VIEW.MONTH' | translate }}</button>
+        </div>
+      </div>
+
+      <!-- leyenda -->
+      <div class="legend">
+        <span><i class="dot dot--available"></i> {{ 'OPERATOR_CALENDAR.LEGEND.AVAILABLE' | translate }}</span>
+        <span><i class="dot dot--service"></i> {{ 'OPERATOR_CALENDAR.LEGEND.SERVICE' | translate }}</span>
+        <span><i class="dot dot--leave"></i> {{ 'OPERATOR_CALENDAR.LEGEND.LEAVE' | translate }}</span>
+        <span><i class="dot dot--lunch"></i> {{ 'OPERATOR_CALENDAR.LEGEND.LUNCH' | translate }}</span>
+      </div>
+
+      @if (view === 'week') {
+        <!-- grilla semanal -->
+        <div class="week-grid">
+          @for (dayIndex of dayIndexes; track dayIndex) {
+            <div class="day-column">
+              <div class="day-column__header">{{ dayLabel(dayIndex) }}</div>
+
+              <div class="day-column__body">
+                @for (block of blocksForDay(dayIndex); track block.startTime) {
+                  <div [class]="'block block--' + block.type">
+                    <span class="block__time">{{ block.startTime }} - {{ block.endTime }}</span>
+                    <span class="block__label">{{ block.label }}</span>
+                    @if (block.bay) { <span class="block__bay">{{ block.bay }}</span> }
+                  </div>
+                }
+
+                @if (blocksForDay(dayIndex).length === 0) {
+                  <div class="block block--available">
+                    <span class="block__label">{{ 'OPERATOR_CALENDAR.FREE_SLOT' | translate }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="card empty-view">
+          <mat-icon>construction</mat-icon>
+          <p>{{ 'COMING_SOON.MESSAGE' | translate }}</p>
+        </div>
+      }
+
+    }
+
+  </main>
+</div>

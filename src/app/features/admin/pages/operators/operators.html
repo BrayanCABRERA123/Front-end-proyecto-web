@@ -1,13 +1,147 @@
 <div class="home-layout">
-
   <app-sidebar rol="ADMIN"></app-sidebar>
 
   <main class="home-content">
-    <app-coming-soon
-      icon="engineering"
-      [pageTitle]="'ADMIN_PAGES.OPERATORS.TITLE' | translate"
-      [pageSubtitle]="'ADMIN_PAGES.OPERATORS.SUBTITLE' | translate">
-    </app-coming-soon>
-  </main>
 
+    <!-- encabezado -->
+    <div class="page-header">
+      <div class="page-header__left">
+        <div class="header-icon"><mat-icon>engineering</mat-icon></div>
+        <div>
+          <h1>{{ 'ADMIN_PAGES.OPERATORS.TITLE' | translate }}</h1>
+          <p>{{ 'ADMIN_PAGES.OPERATORS.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="page-header__actions">
+        <button class="btn-outline">
+          <mat-icon>event</mat-icon>
+          {{ 'ADMIN_OPERATORS.ASSIGN_SHIFTS' | translate }}
+        </button>
+        <button class="btn-primary">
+          <mat-icon>person_add</mat-icon>
+          {{ 'ADMIN_OPERATORS.NEW_OPERATOR' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- stats -->
+    <div class="stats-grid">
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.ON_STAFF' | translate }}</p>
+          <p class="stat-value">{{ operators.length }}</p>
+          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.ON_STAFF_DETAIL' | translate:{ hired: operators.length - 2, interns: 2 } }}</span>
+        </div>
+        <div class="stat-icon"><mat-icon>badge</mat-icon></div>
+      </div>
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.AVAILABLE_TODAY' | translate }}</p>
+          <p class="stat-value">{{ countByStatus('available') }}</p>
+          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVAILABLE_DETAIL' | translate:{ count: 3 } }}</span>
+        </div>
+        <div class="stat-icon stat-icon--success"><mat-icon>check_circle</mat-icon></div>
+      </div>
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.WEEKLY_SERVICES' | translate }}</p>
+          <p class="stat-value">{{ weeklyServicesTotal }}</p>
+          <span class="muted accent">↗ +14% {{ 'ADMIN_OPERATORS.STATS.WEEKLY_SERVICES_DETAIL' | translate }}</span>
+        </div>
+        <div class="stat-icon"><mat-icon>local_car_wash</mat-icon></div>
+      </div>
+
+      <div class="card stat-card">
+        <div>
+          <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.AVG_RATING' | translate }}</p>
+          <p class="stat-value">{{ averageRating }}<span class="muted">/5.0</span></p>
+          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVG_RATING_DETAIL' | translate:{ count: totalReviews } }}</span>
+        </div>
+        <div class="stat-icon stat-icon--warning"><mat-icon>star</mat-icon></div>
+      </div>
+
+    </div>
+
+    <!-- filtros -->
+    <div class="card filters-card">
+
+      <div class="search-box">
+        <mat-icon>search</mat-icon>
+        <input type="text" [(ngModel)]="search" [placeholder]="'ADMIN_OPERATORS.FILTERS.SEARCH_PLACEHOLDER' | translate">
+      </div>
+
+      <div class="chips">
+        <button class="chip" [class.chip--active]="statusFilter === 'all'" (click)="statusFilter = 'all'">
+          {{ 'ADMIN_OPERATORS.FILTERS.ALL' | translate }} <span class="chip-count">{{ operators.length }}</span>
+        </button>
+        <button class="chip" [class.chip--active]="statusFilter === 'available'" (click)="statusFilter = 'available'">
+          {{ 'ADMIN_OPERATORS.FILTERS.AVAILABLE' | translate }} <span class="chip-count">{{ countByStatus('available') }}</span>
+        </button>
+        <button class="chip" [class.chip--active]="statusFilter === 'in_service'" (click)="statusFilter = 'in_service'">
+          {{ 'ADMIN_OPERATORS.FILTERS.IN_SERVICE' | translate }} <span class="chip-count">{{ countByStatus('in_service') }}</span>
+        </button>
+        <button class="chip" [class.chip--active]="statusFilter === 'medical_leave'" (click)="statusFilter = 'medical_leave'">
+          {{ 'ADMIN_OPERATORS.FILTERS.ABSENT' | translate }} <span class="chip-count">{{ countByStatus('medical_leave') }}</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- grid de operarios -->
+    <div class="operators-grid">
+      @for (o of filteredOperators; track o.id) {
+        <article class="operator-card">
+
+          <div class="operator-card__top">
+            <div class="avatar-wrap">
+              <span class="avatar">{{ o.initials }}</span>
+              @if (o.featured) { <mat-icon class="featured-star">star</mat-icon> }
+            </div>
+            <span [class]="'status-pill status-pill--' + o.status">{{ ('ADMIN_OPERATORS.STATUS.' + o.status) | translate }}</span>
+          </div>
+
+          <strong class="operator-card__name">{{ o.name }}</strong>
+          <span class="muted">{{ o.specialty }}</span>
+
+          <div class="operator-card__meta">
+            <div>
+              <span class="muted">{{ 'ADMIN_OPERATORS.CARD.RATING' | translate }}</span>
+              <strong>★ {{ o.rating }} <span class="muted">({{ o.reviewsCount }})</span></strong>
+            </div>
+            <div>
+              <span class="muted">{{ 'ADMIN_OPERATORS.CARD.ASSIGNED_BAY' | translate }}</span>
+              <strong>{{ o.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) }}</strong>
+            </div>
+          </div>
+
+          <span class="services-line">
+            <mat-icon>check_circle</mat-icon>
+            {{ o.weeklyServices }} {{ 'ADMIN_OPERATORS.CARD.SERVICES_SUFFIX' | translate }}
+            {{ o.weeklyServices === 0 ? ('(' + ('ADMIN_OPERATORS.STATUS.medical_leave' | translate) + ')') : '' }}
+          </span>
+
+          <div class="tag-list">
+            @for (t of o.tags; track t) { <span class="tag">{{ t }}</span> }
+          </div>
+
+          <button
+            class="btn-primary full"
+            [class.btn-warning]="o.status === 'medical_leave'"
+            (click)="goToDetail(o)">
+            {{ (o.status === 'medical_leave' ? 'ADMIN_OPERATORS.CARD.REGISTER_RETURN' : 'ADMIN_OPERATORS.CARD.VIEW_AVAILABILITY') | translate }}
+          </button>
+
+        </article>
+      }
+    </div>
+
+    <p class="showing-line">
+      {{ 'ADMIN_OPERATORS.SHOWING' | translate:{ shown: filteredOperators.length, total: operators.length } }}
+    </p>
+
+  </main>
 </div>

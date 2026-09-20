@@ -1344,5 +1344,112 @@
     "SUBTITLE": "Dernières modifications de l'horaire du commerce",
     "CLOSE": "Fermer",
     "EMPTY": "Aucune modification enregistrée pour le moment"
+  },
+  "ADMIN_OPERATORS": {
+    "ASSIGN_SHIFTS": "Assigner des horaires",
+    "NEW_OPERATOR": "Nouvel opérateur",
+    "STATS": {
+      "ON_STAFF": "Opérateurs au total",
+      "ON_STAFF_DETAIL": "{{hired}} embauchés · {{interns}} stagiaires",
+      "AVAILABLE_TODAY": "Disponibles aujourd'hui",
+      "AVAILABLE_DETAIL": "{{count}} en poste l'après-midi (14h00 - 22h00)",
+      "WEEKLY_SERVICES": "Services de la semaine",
+      "WEEKLY_SERVICES_DETAIL": "vs semaine précédente",
+      "AVG_RATING": "Note moyenne",
+      "AVG_RATING_DETAIL": "Basé sur {{count}} avis clients"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Rechercher par nom ou spécialité...",
+      "ALL": "Tous",
+      "AVAILABLE": "Disponibles",
+      "IN_SERVICE": "En service",
+      "ABSENT": "Absents"
+    },
+    "CARD": {
+      "RATING": "Note des clients",
+      "ASSIGNED_BAY": "Baie assignée",
+      "WEEKLY_SERVICES": "Services de la semaine",
+      "SERVICES_SUFFIX": "services",
+      "UNASSIGNED": "Non assignée",
+      "VIEW_AVAILABILITY": "Voir la disponibilité",
+      "REGISTER_RETURN": "Enregistrer le retour"
+    },
+    "STATUS": {
+      "available": "Disponible",
+      "in_service": "En service",
+      "medical_leave": "Congé médical"
+    },
+    "SHOWING": "Affichage de {{shown}} sur {{total}} opérateurs enregistrés"
+  },
+  "OPERATOR_DETAIL": {
+    "BACK_TO_OPERATORS": "Retour aux opérateurs",
+    "BREADCRUMB_AVAILABILITY": "Disponibilité de {{name}}",
+    "ID_LABEL": "ID",
+    "RATINGS_COUNT": "{{count}} avis",
+    "ASSIGNED_BAY": "Baie assignée",
+    "REGISTER_ABSENCE": "Enregistrer une absence",
+    "EDIT_AVAILABILITY": "Modifier la disponibilité",
+    "ASSIGN_BAY_SHIFT": "Assigner baie / horaire",
+    "STATS": {
+      "WEEKLY_SERVICES": "Services de la semaine",
+      "SERVICES_SUFFIX": "services",
+      "VS_LAST_WEEK": "vs semaine précédente",
+      "AVAILABLE_HOURS": "Heures disponibles",
+      "HOURS_USED_NOTE": "{{percent}}% de la capacité opérationnelle utilisée",
+      "PUNCTUALITY": "Ponctualité",
+      "PUNCTUALITY_NOTE": "Excellent historique de présence",
+      "WEEKLY_REVENUE": "Revenus générés cette semaine",
+      "GOAL_NOTE": "{{percent}}% de l'objectif hebdomadaire atteint"
+    },
+    "TODAY_HISTORY": {
+      "TITLE": "Historique des services du jour",
+      "COUNT": "{{count}} services assignés",
+      "SUBTITLE": "Gestion du flux de travail en temps réel pour {{bay}}",
+      "TABLE": {
+        "SERVICE_VEHICLE": "Service et véhicule",
+        "BAY": "Baie",
+        "TIME": "Horaire",
+        "STATUS": "Statut",
+        "ACTION": "Action"
+      },
+      "STATUS": {
+        "completed": "Terminé",
+        "in_progress": "En cours",
+        "scheduled": "Planifié"
+      },
+      "ACTION": {
+        "completed": "Détails",
+        "in_progress": "Journal",
+        "scheduled": "Voir l'ordre"
+      }
+    },
+    "SKILLS": {
+      "TITLE": "Compétences et certifications"
+    },
+    "BAY_RULE": {
+      "TITLE": "Règle d'exploitation des baies",
+      "TEXT": "Les créneaux de service assignés à {{name}} ne peuvent pas chevaucher les créneaux de maintenance générale dans {{bay}}.",
+      "EXPORT": "Exporter la fiche technique (PDF)"
+    },
+    "ASSIGNED_NOTE": "Créneaux et horaires assignés par l'administration centrale.",
+    "VIEW_FULL_CALENDAR": "Voir le calendrier complet de {{name}}"
+  },
+  "OPERATOR_CALENDAR": {
+    "WEEK_LABEL": "Semaine {{week}} : {{from}} – {{to}}",
+    "FULL_DAY": "Journée complète : {{from}} – {{to}}",
+    "VIEW": {
+      "WEEK": "Semaine",
+      "DAY": "Jour",
+      "MONTH": "Mois"
+    },
+    "LEGEND": {
+      "AVAILABLE": "Disponible",
+      "SERVICE": "Service assigné",
+      "LEAVE": "Absence approuvée",
+      "LUNCH": "Déjeuner / pause"
+    },
+    "TODAY": "Aujourd'hui",
+    "ADD_SERVICE": "Planifier un service",
+    "FREE_SLOT": "Disponible"
   }
 }

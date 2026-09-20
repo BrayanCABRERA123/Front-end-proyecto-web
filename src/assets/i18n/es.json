@@ -1344,5 +1344,112 @@
     "SUBTITLE": "Últimas modificaciones al horario del negocio",
     "CLOSE": "Cerrar",
     "EMPTY": "Todavía no hay cambios registrados"
+  },
+  "ADMIN_OPERATORS": {
+    "ASSIGN_SHIFTS": "Asignar turnos",
+    "NEW_OPERATOR": "Nuevo operario",
+    "STATS": {
+      "ON_STAFF": "Operarios en plantilla",
+      "ON_STAFF_DETAIL": "{{hired}} contratados · {{interns}} pasantes",
+      "AVAILABLE_TODAY": "Disponibles hoy",
+      "AVAILABLE_DETAIL": "{{count}} en turno tarde (14:00 - 22:00)",
+      "WEEKLY_SERVICES": "Servicios de la semana",
+      "WEEKLY_SERVICES_DETAIL": "vs semana anterior",
+      "AVG_RATING": "Calificación promedio",
+      "AVG_RATING_DETAIL": "Basado en {{count}} reseñas de clientes"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Buscar por nombre o especialidad...",
+      "ALL": "Todos",
+      "AVAILABLE": "Disponibles",
+      "IN_SERVICE": "En servicio",
+      "ABSENT": "Ausentes"
+    },
+    "CARD": {
+      "RATING": "Calificación clientes",
+      "ASSIGNED_BAY": "Bahía asignada",
+      "WEEKLY_SERVICES": "Servicios semana",
+      "SERVICES_SUFFIX": "servicios",
+      "UNASSIGNED": "Sin asignar",
+      "VIEW_AVAILABILITY": "Ver disponibilidad",
+      "REGISTER_RETURN": "Registrar reingreso"
+    },
+    "STATUS": {
+      "available": "Disponible",
+      "in_service": "En servicio",
+      "medical_leave": "Permiso médico"
+    },
+    "SHOWING": "Mostrando {{shown}} de {{total}} operarios registrados"
+  },
+  "OPERATOR_DETAIL": {
+    "BACK_TO_OPERATORS": "Volver a Operarios",
+    "BREADCRUMB_AVAILABILITY": "Disponibilidad de {{name}}",
+    "ID_LABEL": "ID",
+    "RATINGS_COUNT": "{{count}} valoraciones",
+    "ASSIGNED_BAY": "Bahía asignada",
+    "REGISTER_ABSENCE": "Registrar ausencia",
+    "EDIT_AVAILABILITY": "Editar disponibilidad",
+    "ASSIGN_BAY_SHIFT": "Asignar bahía / turno",
+    "STATS": {
+      "WEEKLY_SERVICES": "Servicios de la semana",
+      "SERVICES_SUFFIX": "servicios",
+      "VS_LAST_WEEK": "vs semana anterior",
+      "AVAILABLE_HOURS": "Horas disponibles",
+      "HOURS_USED_NOTE": "{{percent}}% del cupo operativo ocupado",
+      "PUNCTUALITY": "Puntualidad",
+      "PUNCTUALITY_NOTE": "Excelente registro de turnos",
+      "WEEKLY_REVENUE": "Ingresos generados semana",
+      "GOAL_NOTE": "{{percent}}% de meta semanal cumplida"
+    },
+    "TODAY_HISTORY": {
+      "TITLE": "Historial de servicios de hoy",
+      "COUNT": "{{count}} servicios asignados",
+      "SUBTITLE": "Gestión de flujo de trabajo en tiempo real para {{bay}}",
+      "TABLE": {
+        "SERVICE_VEHICLE": "Servicio y vehículo",
+        "BAY": "Bahía",
+        "TIME": "Horario",
+        "STATUS": "Estado",
+        "ACTION": "Acción"
+      },
+      "STATUS": {
+        "completed": "Completado",
+        "in_progress": "En proceso",
+        "scheduled": "Agendado"
+      },
+      "ACTION": {
+        "completed": "Detalles",
+        "in_progress": "Bitácora",
+        "scheduled": "Ver orden"
+      }
+    },
+    "SKILLS": {
+      "TITLE": "Habilidades y certificaciones"
+    },
+    "BAY_RULE": {
+      "TITLE": "Regla operativa de bahías",
+      "TEXT": "Los bloques de servicio asignados a {{name}} no pueden solaparse con turnos de mantenimiento general en {{bay}}.",
+      "EXPORT": "Exportar ficha técnica (PDF)"
+    },
+    "ASSIGNED_NOTE": "Bloques y turnos asignados por la administración central.",
+    "VIEW_FULL_CALENDAR": "Ver calendario completo de {{name}}"
+  },
+  "OPERATOR_CALENDAR": {
+    "WEEK_LABEL": "Semana {{week}}: {{from}} – {{to}}",
+    "FULL_DAY": "Jornada completa: {{from}} – {{to}}",
+    "VIEW": {
+      "WEEK": "Semana",
+      "DAY": "Día",
+      "MONTH": "Mes"
+    },
+    "LEGEND": {
+      "AVAILABLE": "Disponible",
+      "SERVICE": "Servicio asignado",
+      "LEAVE": "Ausencia aprobada",
+      "LUNCH": "Almuerzo / pausa"
+    },
+    "TODAY": "Hoy",
+    "ADD_SERVICE": "Agendar servicio",
+    "FREE_SLOT": "Disponible"
   }
 }

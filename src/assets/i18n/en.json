@@ -1344,5 +1344,112 @@
     "SUBTITLE": "Latest changes to the business schedule",
     "CLOSE": "Close",
     "EMPTY": "No changes recorded yet"
+  },
+  "ADMIN_OPERATORS": {
+    "ASSIGN_SHIFTS": "Assign shifts",
+    "NEW_OPERATOR": "New operator",
+    "STATS": {
+      "ON_STAFF": "Operators on staff",
+      "ON_STAFF_DETAIL": "{{hired}} hired · {{interns}} interns",
+      "AVAILABLE_TODAY": "Available today",
+      "AVAILABLE_DETAIL": "{{count}} on afternoon shift (2:00 PM - 10:00 PM)",
+      "WEEKLY_SERVICES": "Services this week",
+      "WEEKLY_SERVICES_DETAIL": "vs last week",
+      "AVG_RATING": "Average rating",
+      "AVG_RATING_DETAIL": "Based on {{count}} client reviews"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Search by name or specialty...",
+      "ALL": "All",
+      "AVAILABLE": "Available",
+      "IN_SERVICE": "In service",
+      "ABSENT": "Absent"
+    },
+    "CARD": {
+      "RATING": "Client rating",
+      "ASSIGNED_BAY": "Assigned bay",
+      "WEEKLY_SERVICES": "Weekly services",
+      "SERVICES_SUFFIX": "services",
+      "UNASSIGNED": "Unassigned",
+      "VIEW_AVAILABILITY": "View availability",
+      "REGISTER_RETURN": "Register return"
+    },
+    "STATUS": {
+      "available": "Available",
+      "in_service": "In service",
+      "medical_leave": "Medical leave"
+    },
+    "SHOWING": "Showing {{shown}} of {{total}} registered operators"
+  },
+  "OPERATOR_DETAIL": {
+    "BACK_TO_OPERATORS": "Back to Operators",
+    "BREADCRUMB_AVAILABILITY": "{{name}}'s Availability",
+    "ID_LABEL": "ID",
+    "RATINGS_COUNT": "{{count}} ratings",
+    "ASSIGNED_BAY": "Assigned bay",
+    "REGISTER_ABSENCE": "Register absence",
+    "EDIT_AVAILABILITY": "Edit availability",
+    "ASSIGN_BAY_SHIFT": "Assign bay / shift",
+    "STATS": {
+      "WEEKLY_SERVICES": "Services this week",
+      "SERVICES_SUFFIX": "services",
+      "VS_LAST_WEEK": "vs last week",
+      "AVAILABLE_HOURS": "Available hours",
+      "HOURS_USED_NOTE": "{{percent}}% of operating capacity used",
+      "PUNCTUALITY": "Punctuality",
+      "PUNCTUALITY_NOTE": "Excellent shift record",
+      "WEEKLY_REVENUE": "Revenue generated this week",
+      "GOAL_NOTE": "{{percent}}% of weekly goal reached"
+    },
+    "TODAY_HISTORY": {
+      "TITLE": "Today's service history",
+      "COUNT": "{{count}} services assigned",
+      "SUBTITLE": "Real-time workflow management for {{bay}}",
+      "TABLE": {
+        "SERVICE_VEHICLE": "Service & vehicle",
+        "BAY": "Bay",
+        "TIME": "Time",
+        "STATUS": "Status",
+        "ACTION": "Action"
+      },
+      "STATUS": {
+        "completed": "Completed",
+        "in_progress": "In progress",
+        "scheduled": "Scheduled"
+      },
+      "ACTION": {
+        "completed": "Details",
+        "in_progress": "Log",
+        "scheduled": "View order"
+      }
+    },
+    "SKILLS": {
+      "TITLE": "Skills and certifications"
+    },
+    "BAY_RULE": {
+      "TITLE": "Bay operating rule",
+      "TEXT": "Service blocks assigned to {{name}} cannot overlap with general maintenance shifts in {{bay}}.",
+      "EXPORT": "Export technical sheet (PDF)"
+    },
+    "ASSIGNED_NOTE": "Blocks and shifts assigned by central administration.",
+    "VIEW_FULL_CALENDAR": "View {{name}}'s full calendar"
+  },
+  "OPERATOR_CALENDAR": {
+    "WEEK_LABEL": "Week {{week}}: {{from}} – {{to}}",
+    "FULL_DAY": "Full day: {{from}} – {{to}}",
+    "VIEW": {
+      "WEEK": "Week",
+      "DAY": "Day",
+      "MONTH": "Month"
+    },
+    "LEGEND": {
+      "AVAILABLE": "Available",
+      "SERVICE": "Assigned service",
+      "LEAVE": "Approved leave",
+      "LUNCH": "Lunch / break"
+    },
+    "TODAY": "Today",
+    "ADD_SERVICE": "Schedule service",
+    "FREE_SLOT": "Available"
   }
 }

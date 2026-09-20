@@ -7,6 +7,8 @@ import { ReservationsComponent } from './pages/reservations/reservations';
 import { ManagementComponent } from './pages/management/management';
 import { ScheduleComponent } from './pages/schedule/schedule';
 import { OperatorsComponent } from './pages/operators/operators';
+import { OperatorDetailComponent } from './pages/operator-detail/operator-detail';
+import { OperatorCalendarComponent } from './pages/operator-calendar/operator-calendar';
 import { AdminNotificationsComponent } from './pages/notifications/notifications';
 import { AdminProfileComponent } from './pages/profile/profile';
 import { AdminSettingsComponent } from './pages/settings/settings';
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'management', component: ManagementComponent },
   { path: 'schedule', component: ScheduleComponent },
   { path: 'operators', component: OperatorsComponent },
+  { path: 'operators/:id/calendar', component: OperatorCalendarComponent },
+  { path: 'operators/:id', component: OperatorDetailComponent },
   { path: 'reports', component: ReportsComponent },
   { path: 'notifications', component: AdminNotificationsComponent },
   { path: 'profile', component: AdminProfileComponent },

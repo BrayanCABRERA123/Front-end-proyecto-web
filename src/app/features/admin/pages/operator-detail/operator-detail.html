@@ -1,0 +1,187 @@
+<div class="home-layout">
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <main class="home-content">
+
+    @if (!operator) {
+      <p class="muted">Operario no encontrado.</p>
+    } @else {
+
+      <!-- breadcrumb -->
+      <nav class="breadcrumb">
+        <a (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'OPERATOR_DETAIL.BACK_TO_OPERATORS' | translate }}
+        </a>
+        <span>/</span>
+        <a (click)="goBack()">{{ 'ADMIN_PAGES.OPERATORS.TITLE' | translate }}</a>
+        <span>/</span>
+        <span class="current">{{ 'OPERATOR_DETAIL.BREADCRUMB_AVAILABILITY' | translate:{ name: operator.name } }}</span>
+      </nav>
+
+      <!-- tarjeta de cabecera -->
+      <div class="card header-card">
+
+        <div class="header-card__identity">
+          <span class="avatar-lg">{{ operator.initials }}</span>
+
+          <div>
+            <div class="name-row">
+              <strong>{{ operator.name }}</strong>
+              <span [class]="'status-pill status-pill--' + operator.status">
+                {{ ('ADMIN_OPERATORS.STATUS.' + operator.status) | translate }}
+              </span>
+              <span class="id-chip">{{ 'OPERATOR_DETAIL.ID_LABEL' | translate }}: {{ operator.id }}</span>
+            </div>
+
+            <p class="specialty">
+              <mat-icon>verified</mat-icon>
+              {{ operator.specialty }}
+            </p>
+
+            <p class="sub-line">
+              <span>★ {{ operator.rating }} ({{ 'OPERATOR_DETAIL.RATINGS_COUNT' | translate:{ count: operator.reviewsCount } }})</span>
+              <span><mat-icon>directions_car</mat-icon> {{ 'OPERATOR_DETAIL.ASSIGNED_BAY' | translate }}: {{ operator.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) }}</span>
+            </p>
+
+            <p class="sub-line">
+              <span><mat-icon>call</mat-icon> {{ operator.phone }}</span>
+              <span><mat-icon>mail</mat-icon> {{ operator.email }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="header-card__actions">
+          <button class="btn-outline btn-danger">
+            <mat-icon>event_busy</mat-icon>
+            {{ 'OPERATOR_DETAIL.REGISTER_ABSENCE' | translate }}
+          </button>
+          <button class="btn-primary">
+            <mat-icon>edit_calendar</mat-icon>
+            {{ 'OPERATOR_DETAIL.EDIT_AVAILABILITY' | translate }}
+          </button>
+          <button class="btn-outline">
+            <mat-icon>meeting_room</mat-icon>
+            {{ 'OPERATOR_DETAIL.ASSIGN_BAY_SHIFT' | translate }}
+          </button>
+        </div>
+
+      </div>
+
+      <!-- stats -->
+      <div class="stats-grid">
+
+        <div class="card stat-card">
+          <p class="stat-label">{{ 'OPERATOR_DETAIL.STATS.WEEKLY_SERVICES' | translate }}</p>
+          <p class="stat-value">{{ operator.weeklyServices }} <span class="muted">{{ 'OPERATOR_DETAIL.STATS.SERVICES_SUFFIX' | translate }}</span></p>
+          <span class="muted accent">↗ +{{ operator.weeklyServicesChange }}% {{ 'OPERATOR_DETAIL.STATS.VS_LAST_WEEK' | translate }}</span>
+        </div>
+
+        <div class="card stat-card">
+          <p class="stat-label">{{ 'OPERATOR_DETAIL.STATS.AVAILABLE_HOURS' | translate }}</p>
+          <p class="stat-value">{{ operator.availableHours }} <span class="muted">/ {{ operator.totalHours }} hrs</span></p>
+          <div class="progress-bar"><div class="progress-bar__fill" [style.width.%]="hoursUsedPercent"></div></div>
+          <span class="muted">{{ 'OPERATOR_DETAIL.STATS.HOURS_USED_NOTE' | translate:{ percent: hoursUsedPercent } }}</span>
+        </div>
+
+        <div class="card stat-card">
+          <p class="stat-label">{{ 'OPERATOR_DETAIL.STATS.PUNCTUALITY' | translate }}</p>
+          <p class="stat-value">{{ operator.punctuality }}%</p>
+          <span class="muted">{{ 'OPERATOR_DETAIL.STATS.PUNCTUALITY_NOTE' | translate }}</span>
+        </div>
+
+        <div class="card stat-card">
+          <p class="stat-label">{{ 'OPERATOR_DETAIL.STATS.WEEKLY_REVENUE' | translate }}</p>
+          <p class="stat-value">{{ cop(operator.weeklyRevenue) }} <span class="muted">COP</span></p>
+          <span class="muted accent">{{ 'OPERATOR_DETAIL.STATS.GOAL_NOTE' | translate:{ percent: operator.weeklyGoalPercent } }}</span>
+        </div>
+
+      </div>
+
+      <div class="row-2">
+
+        <!-- historial de hoy -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TITLE' | translate }}</h2>
+              <p>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.SUBTITLE' | translate:{ bay: operator.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) } }}</p>
+            </div>
+            <span class="count-chip">{{ 'OPERATOR_DETAIL.TODAY_HISTORY.COUNT' | translate:{ count: operator.todayServices.length } }}</span>
+          </div>
+
+          @if (operator.todayServices.length === 0) {
+            <p class="muted">—</p>
+          } @else {
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.SERVICE_VEHICLE' | translate }}</th>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.BAY' | translate }}</th>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.TIME' | translate }}</th>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.STATUS' | translate }}</th>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.ACTION' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (s of operator.todayServices; track s.code) {
+                    <tr>
+                      <td>
+                        <strong>{{ s.code }} · {{ s.vehicle }}</strong>
+                        <span class="muted">{{ s.service }}</span>
+                      </td>
+                      <td>{{ s.bay }}</td>
+                      <td>{{ s.time }}</td>
+                      <td>
+                        <span [class]="'status-pill status-pill--' + s.status">
+                          {{ ('OPERATOR_DETAIL.TODAY_HISTORY.STATUS.' + s.status) | translate }}
+                        </span>
+                      </td>
+                      <td><a class="link">{{ ('OPERATOR_DETAIL.TODAY_HISTORY.ACTION.' + s.status) | translate }}</a></td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+
+        <!-- habilidades -->
+        <div class="card">
+          <div class="card-header">
+            <h2>{{ 'OPERATOR_DETAIL.SKILLS.TITLE' | translate }}</h2>
+          </div>
+
+          <ul class="skills-list">
+            @for (c of operator.certifications; track c.name) {
+              <li>
+                <span>{{ c.name }}</span>
+                <span class="skill-level">{{ c.level }}</span>
+              </li>
+            }
+          </ul>
+
+          <div class="bay-rule">
+            <mat-icon>info</mat-icon>
+            <div>
+              <strong>{{ 'OPERATOR_DETAIL.BAY_RULE.TITLE' | translate }}</strong>
+              <p>{{ 'OPERATOR_DETAIL.BAY_RULE.TEXT' | translate:{ name: operator.name, bay: operator.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) } }}</p>
+              <a class="link">{{ 'OPERATOR_DETAIL.BAY_RULE.EXPORT' | translate }}</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-note">
+        <span class="muted">{{ 'OPERATOR_DETAIL.ASSIGNED_NOTE' | translate }}</span>
+        <a class="link" (click)="goToCalendar()">
+          {{ 'OPERATOR_DETAIL.VIEW_FULL_CALENDAR' | translate:{ name: operator.name } }} →
+        </a>
+      </div>
+
+    }
+
+  </main>
+</div>

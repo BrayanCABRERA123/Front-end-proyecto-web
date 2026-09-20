@@ -1344,5 +1344,112 @@
     "SUBTITLE": "Últimas modificações no horário do negócio",
     "CLOSE": "Fechar",
     "EMPTY": "Ainda não há alterações registradas"
+  },
+  "ADMIN_OPERATORS": {
+    "ASSIGN_SHIFTS": "Atribuir turnos",
+    "NEW_OPERATOR": "Novo operador",
+    "STATS": {
+      "ON_STAFF": "Operadores no quadro",
+      "ON_STAFF_DETAIL": "{{hired}} contratados · {{interns}} estagiários",
+      "AVAILABLE_TODAY": "Disponíveis hoje",
+      "AVAILABLE_DETAIL": "{{count}} no turno da tarde (14:00 - 22:00)",
+      "WEEKLY_SERVICES": "Serviços da semana",
+      "WEEKLY_SERVICES_DETAIL": "vs semana anterior",
+      "AVG_RATING": "Avaliação média",
+      "AVG_RATING_DETAIL": "Com base em {{count}} avaliações de clientes"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Buscar por nome ou especialidade...",
+      "ALL": "Todos",
+      "AVAILABLE": "Disponíveis",
+      "IN_SERVICE": "Em atendimento",
+      "ABSENT": "Ausentes"
+    },
+    "CARD": {
+      "RATING": "Avaliação dos clientes",
+      "ASSIGNED_BAY": "Baia atribuída",
+      "WEEKLY_SERVICES": "Serviços da semana",
+      "SERVICES_SUFFIX": "serviços",
+      "UNASSIGNED": "Não atribuída",
+      "VIEW_AVAILABILITY": "Ver disponibilidade",
+      "REGISTER_RETURN": "Registrar retorno"
+    },
+    "STATUS": {
+      "available": "Disponível",
+      "in_service": "Em atendimento",
+      "medical_leave": "Licença médica"
+    },
+    "SHOWING": "Mostrando {{shown}} de {{total}} operadores registrados"
+  },
+  "OPERATOR_DETAIL": {
+    "BACK_TO_OPERATORS": "Voltar para Operadores",
+    "BREADCRUMB_AVAILABILITY": "Disponibilidade de {{name}}",
+    "ID_LABEL": "ID",
+    "RATINGS_COUNT": "{{count}} avaliações",
+    "ASSIGNED_BAY": "Baia atribuída",
+    "REGISTER_ABSENCE": "Registrar ausência",
+    "EDIT_AVAILABILITY": "Editar disponibilidade",
+    "ASSIGN_BAY_SHIFT": "Atribuir baia / turno",
+    "STATS": {
+      "WEEKLY_SERVICES": "Serviços da semana",
+      "SERVICES_SUFFIX": "serviços",
+      "VS_LAST_WEEK": "vs semana anterior",
+      "AVAILABLE_HOURS": "Horas disponíveis",
+      "HOURS_USED_NOTE": "{{percent}}% da capacidade operacional ocupada",
+      "PUNCTUALITY": "Pontualidade",
+      "PUNCTUALITY_NOTE": "Excelente histórico de turnos",
+      "WEEKLY_REVENUE": "Receita gerada na semana",
+      "GOAL_NOTE": "{{percent}}% da meta semanal atingida"
+    },
+    "TODAY_HISTORY": {
+      "TITLE": "Histórico de serviços de hoje",
+      "COUNT": "{{count}} serviços atribuídos",
+      "SUBTITLE": "Gestão do fluxo de trabalho em tempo real para {{bay}}",
+      "TABLE": {
+        "SERVICE_VEHICLE": "Serviço e veículo",
+        "BAY": "Baia",
+        "TIME": "Horário",
+        "STATUS": "Status",
+        "ACTION": "Ação"
+      },
+      "STATUS": {
+        "completed": "Concluído",
+        "in_progress": "Em andamento",
+        "scheduled": "Agendado"
+      },
+      "ACTION": {
+        "completed": "Detalhes",
+        "in_progress": "Registro",
+        "scheduled": "Ver ordem"
+      }
+    },
+    "SKILLS": {
+      "TITLE": "Habilidades e certificações"
+    },
+    "BAY_RULE": {
+      "TITLE": "Regra operacional das baias",
+      "TEXT": "Os blocos de serviço atribuídos a {{name}} não podem se sobrepor aos turnos de manutenção geral na {{bay}}.",
+      "EXPORT": "Exportar ficha técnica (PDF)"
+    },
+    "ASSIGNED_NOTE": "Blocos e turnos atribuídos pela administração central.",
+    "VIEW_FULL_CALENDAR": "Ver calendário completo de {{name}}"
+  },
+  "OPERATOR_CALENDAR": {
+    "WEEK_LABEL": "Semana {{week}}: {{from}} – {{to}}",
+    "FULL_DAY": "Jornada completa: {{from}} – {{to}}",
+    "VIEW": {
+      "WEEK": "Semana",
+      "DAY": "Dia",
+      "MONTH": "Mês"
+    },
+    "LEGEND": {
+      "AVAILABLE": "Disponível",
+      "SERVICE": "Serviço atribuído",
+      "LEAVE": "Ausência aprovada",
+      "LUNCH": "Almoço / pausa"
+    },
+    "TODAY": "Hoje",
+    "ADD_SERVICE": "Agendar serviço",
+    "FREE_SLOT": "Disponível"
   }
 }

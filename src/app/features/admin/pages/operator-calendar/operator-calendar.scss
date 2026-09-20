@@ -1,0 +1,203 @@
+@use '../../../../../styles/mixins' as *;
+
+.home-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.home-content {
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+  padding: 28px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.muted { @include caption-text; color: var(--text-secondary); }
+
+/* breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  @include caption-text;
+  color: var(--text-secondary);
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-decoration: none;
+
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+    &:hover { color: var(--primary); }
+  }
+}
+
+/* encabezado de semana */
+.week-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.week-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  strong { @include subtitle; color: var(--text); font-weight: $fw-bold; }
+}
+
+.nav-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover { background: var(--item-hover); }
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.full-day-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  @include caption-text;
+  font-weight: $fw-semibold;
+  color: var(--primary);
+  background: var(--primary-soft);
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+}
+
+.view-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: $border-radius-sm;
+  overflow: hidden;
+
+  &__btn {
+    background: var(--card);
+    border: none;
+    padding: 8px 14px;
+    font-size: $fs-caption;
+    font-weight: $fw-semibold;
+    color: var(--text-secondary);
+    cursor: pointer;
+
+    &--active { background: var(--primary); color: #ffffff; }
+  }
+}
+
+/* leyenda */
+.legend {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  @include caption-text;
+  color: var(--text-secondary);
+
+  span { display: flex; align-items: center; gap: 6px; }
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  display: inline-block;
+
+  &--available { background: var(--success); }
+  &--service { background: var(--primary); }
+  &--leave { background: var(--error); }
+  &--lunch { background: var(--warning); }
+}
+
+/* grilla semanal */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.day-column {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: $border-radius;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.day-column__header {
+  @include caption-text;
+  font-weight: $fw-bold;
+  color: var(--text);
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.day-column__body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  flex: 1;
+}
+
+.block {
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &__time { font-size: 10px; font-weight: $fw-bold; opacity: .85; }
+  &__label { font-size: 11px; font-weight: $fw-semibold; line-height: 1.3; }
+  &__bay { font-size: 10px; opacity: .8; }
+
+  &--available { background: var(--success-soft); color: var(--success); }
+  &--service { background: var(--primary-soft); color: var(--primary); }
+  &--leave { background: var(--error-soft); color: var(--error); }
+  &--lunch { background: var(--warning-soft); color: var(--warning); }
+}
+
+.empty-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 20px;
+  text-align: center;
+  color: var(--text-secondary);
+
+  mat-icon { font-size: 32px; width: 32px; height: 32px; color: var(--primary); }
+}
+
+/* responsive */
+@include tablet {
+  .home-content { padding: 20px; }
+  .week-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@include mobile {
+  .week-grid { grid-template-columns: 1fr; }
+}
