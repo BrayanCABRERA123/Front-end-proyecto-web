@@ -15,7 +15,7 @@ import { ConfirmLogoutDialogComponent } from '../../../shared/dialogs/confirm-lo
 })
 
 export class SidebarComponent implements OnInit {
-  @Input() rol: 'CLIENTE' | 'OPERARIO' | 'ADMIN' = 'CLIENTE';
+  @Input() rol: 'CLIENT' | 'OPERATOR' | 'ADMIN' = 'CLIENT';
   // controla si el sidebar está abierto en mobile
   isOpen: boolean = false;
   logoRoute = '/';
@@ -74,12 +74,12 @@ export class SidebarComponent implements OnInit {
 
     switch (this.rol) {
 
-      case 'CLIENTE':
+      case 'CLIENT':
         this.menuItems = this.clientMenu;
         this.logoRoute = '/client';
         break;
 
-      case 'OPERARIO':
+      case 'OPERATOR':
         this.menuItems = this.operatorMenu;
         this.logoRoute = '/operator';
 
