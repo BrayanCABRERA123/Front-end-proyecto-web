@@ -21,36 +21,36 @@ import { ExportReportModalComponent } from '../../../../shared/dialogs/export-re
 export class ReportsComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('barCanvas') barCanvas!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('rankingCard') serviciosMasVendidosEl!: ElementRef<HTMLDivElement>;
+  @ViewChild('rankingCard') topServicesEl!: ElementRef<HTMLDivElement>;
 
   private chart?: Chart;
 
   // datos de la gráfica semanal (mock)
-  dias = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-  serviciosPorDia = [12, 22, 18, 22, 15, 30, 25];
-  ingresosPorDia = [420, 700, 560, 920, 480, 1580, 1180];
+  days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+  servicesPerDay = [12, 22, 18, 22, 15, 30, 25];
+  revenuePerDay = [420, 700, 560, 920, 480, 1580, 1180];
 
   // tarjetas de reporte
-  reporteDia = { servicios: 15, ingresos: 500 };
-  reporteSemana = { servicios: 75, ingresos: 2500 };
-  reporteMes = { servicios: 300, ingresos: 10000 };
+  dayReport = { services: 15, revenue: 500 };
+  weekReport = { services: 75, revenue: 2500 };
+  monthReport = { services: 300, revenue: 10000 };
 
   // ingresos totales del año
-  ingresosAnio = 120000;
+  yearRevenue = 120000;
 
   // ranking de servicios más vendidos
-  serviciosMasVendidos = [
-    { nombre: 'Lavado completo', ventas: 120, porcentaje: 100, color: '#2ec4b6' },
-    { nombre: 'Encerado premium', ventas: 90, porcentaje: 75, color: '#3b82f6' },
-    { nombre: 'Lavado básico', ventas: 70, porcentaje: 58, color: '#2ec4b6' }
+  topServices = [
+    { name: 'Lavado completo', sales: 120, percentage: 100, color: '#2ec4b6' },
+    { name: 'Encerado premium', sales: 90, percentage: 75, color: '#3b82f6' },
+    { name: 'Lavado básico', sales: 70, percentage: 58, color: '#2ec4b6' }
   ];
 
   constructor(private dialog: MatDialog, private translate: TranslateService) {}
 
   ngAfterViewInit(): void {
-    this.crearGrafica();
+    this.createChart();
     // pequeño retraso para que el navegador aplique el estado inicial (0%) antes de animar
-    setTimeout(() => this.animarBarras(), 100);
+    setTimeout(() => this.animateBars(), 100);
   }
 
   ngOnDestroy(): void {
@@ -58,17 +58,17 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
   }
 
   // crea la gráfica de barras con tooltip personalizado y animación de entrada
-  private crearGrafica(): void {
-    const etiquetas = this.dias.map(d => this.translate.instant('REPORTS.DAYS.' + d));
+  private createChart(): void {
+    const labels = this.days.map(d => this.translate.instant('REPORTS.DAYS.' + d));
 
     this.chart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
-        labels: etiquetas,
+        labels: labels,
         datasets: [
           {
             label: this.translate.instant('REPORTS.CHART.SERVICES'),
-            data: this.serviciosPorDia,
+            data: this.servicesPerDay,
             backgroundColor: '#0f5a52',
             yAxisID: 'yServicios',
             borderRadius: 4,
@@ -76,7 +76,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
           },
           {
             label: this.translate.instant('REPORTS.CHART.REVENUE'),
-            data: this.ingresosPorDia,
+            data: this.revenuePerDay,
             backgroundColor: '#5eead4',
             yAxisID: 'yIngresos',
             borderRadius: 4,
@@ -110,10 +110,10 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
             titleFont: { weight: 'bold' },
             callbacks: {
               label: (ctx) => {
-                const valor = ctx.dataset.label === this.translate.instant('REPORTS.CHART.REVENUE')
+                const value = ctx.dataset.label === this.translate.instant('REPORTS.CHART.REVENUE')
                   ? '$' + ctx.parsed.y
                   : ctx.parsed.y;
-                return `${ctx.dataset.label}: ${valor}`;
+                return `${ctx.dataset.label}: ${value}`;
               }
             }
           }
@@ -142,26 +142,26 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
   }
 
   // anima las barras de progreso de "servicios más vendidos" de 0 hasta su valor real
-  private animarBarras(): void {
-    const barras = this.serviciosMasVendidosEl?.nativeElement.querySelectorAll<HTMLElement>('.ranking-fill');
-    barras?.forEach(barra => {
-      const destino = barra.dataset['target'] ?? '0';
+  private animateBars(): void {
+    const bars = this.topServicesEl?.nativeElement.querySelectorAll<HTMLElement>('.ranking-fill');
+    bars?.forEach(bar => {
+      const target = bar.dataset['target'] ?? '0';
       requestAnimationFrame(() => {
-        barra.style.width = destino + '%';
+        bar.style.width = target + '%';
       });
     });
   }
 
   // abre el modal de exportación con la vista previa del reporte
-  abrirModalExportar(): void {
+  openExportModal(): void {
     this.dialog.open(ExportReportModalComponent, {
       panelClass: 'custom-dialog',
       data: {
-        reporteDia: this.reporteDia,
-        reporteSemana: this.reporteSemana,
-        reporteMes: this.reporteMes,
-        ingresosAnio: this.ingresosAnio,
-        serviciosMasVendidos: this.serviciosMasVendidos
+        dayReport: this.dayReport,
+        weekReport: this.weekReport,
+        monthReport: this.monthReport,
+        yearRevenue: this.yearRevenue,
+        topServices: this.topServices
       }
     });
   }

@@ -1,6 +1,6 @@
 <div class="modal-box">
 
-  <button class="btn-close-icon" (click)="cerrar()">
+  <button class="btn-close-icon" (click)="close()">
     <mat-icon>close</mat-icon>
   </button>
 
@@ -11,32 +11,32 @@
   <div class="preview-grid">
     <div class="preview-item">
       <span>{{ 'REPORTS.SUMMARY.DAY' | translate }}</span>
-      <strong>{{ data.reporteDia.servicios }} {{ 'REPORTS.MODAL.SERVICES_LABEL' | translate }} · ${{ data.reporteDia.ingresos | number }}</strong>
+      <strong>{{ data.dayReport.services }} {{ 'REPORTS.MODAL.SERVICES_LABEL' | translate }} · ${{ data.dayReport.revenue | number }}</strong>
     </div>
     <div class="preview-item">
       <span>{{ 'REPORTS.SUMMARY.WEEK' | translate }}</span>
-      <strong>{{ data.reporteSemana.servicios }} {{ 'REPORTS.MODAL.SERVICES_LABEL' | translate }} · ${{ data.reporteSemana.ingresos | number }}</strong>
+      <strong>{{ data.weekReport.services }} {{ 'REPORTS.MODAL.SERVICES_LABEL' | translate }} · ${{ data.weekReport.revenue | number }}</strong>
     </div>
     <div class="preview-item">
       <span>{{ 'REPORTS.SUMMARY.MONTH' | translate }}</span>
-      <strong>{{ data.reporteMes.servicios }} {{ 'REPORTS.MODAL.SERVICES_LABEL' | translate }} · ${{ data.reporteMes.ingresos | number }}</strong>
+      <strong>{{ data.monthReport.services }} {{ 'REPORTS.MODAL.SERVICES_LABEL' | translate }} · ${{ data.monthReport.revenue | number }}</strong>
     </div>
   </div>
 
   <div class="preview-top">
     <p class="preview-top-title">{{ 'REPORTS.TOP_SERVICES.TITLE' | translate }}</p>
-    <div class="preview-top-item" *ngFor="let s of data.serviciosMasVendidos">
-      <span>{{ s.nombre }}</span>
-      <strong>{{ s.ventas }} {{ 'REPORTS.TOP_SERVICES.SALES' | translate }}</strong>
+    <div class="preview-top-item" *ngFor="let s of data.topServices">
+      <span>{{ s.name }}</span>
+      <strong>{{ s.sales }} {{ 'REPORTS.TOP_SERVICES.SALES' | translate }}</strong>
     </div>
   </div>
 
   <div class="modal-actions">
-    <button class="btn-secondary" (click)="exportarExcel()">
+    <button class="btn-secondary" (click)="exportExcel()">
       <mat-icon>grid_on</mat-icon>
       {{ 'REPORTS.MODAL.EXPORT_EXCEL' | translate }}
     </button>
-    <button class="btn-confirm" (click)="exportarPDF()">
+    <button class="btn-confirm" (click)="exportPDF()">
       <mat-icon>picture_as_pdf</mat-icon>
       {{ 'REPORTS.MODAL.EXPORT_PDF' | translate }}
     </button>

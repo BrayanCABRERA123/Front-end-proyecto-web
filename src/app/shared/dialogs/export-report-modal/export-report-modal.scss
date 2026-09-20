@@ -20,7 +20,7 @@
   right: 16px;
   background: transparent;
   border: none;
-  font-size: 20px;
+  font-size: $fs-h3;
   color: var(--text);
   cursor: pointer;
   transition: 0.2s;
@@ -34,12 +34,12 @@
 h2 {
   margin: 0 0 4px;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: $fw-bold;
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: $fs-body;
   margin: 0;
 }
 
@@ -76,7 +76,7 @@ h2 {
 }
 
 .preview-top-title {
-  font-weight: 700;
+  font-weight: $fw-bold;
   margin: 0 0 8px;
   font-size: 0.9rem;
 }
@@ -104,8 +104,8 @@ h2 {
   padding: 12px;
   border-radius: 10px;
   border: none;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   cursor: pointer;
   transition: 0.2s;
 }
