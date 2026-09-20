@@ -19,63 +19,63 @@ import { FormsModule } from '@angular/forms';
 export class PaymentComponent {
 
   // métodos de pago disponibles
-  metodosPago = [
-    { id: 'CARD', icono: 'credit_card', label: 'PAYMENT.METHOD.CARD', desc: 'PAYMENT.METHOD.CARD_DESC' },
-    { id: 'PAYPAL', icono: 'account_balance_wallet', label: 'PAYMENT.METHOD.PAYPAL', desc: 'PAYMENT.METHOD.PAYPAL_DESC' },
-    { id: 'TRANSFER', icono: 'account_balance', label: 'PAYMENT.METHOD.TRANSFER', desc: 'PAYMENT.METHOD.TRANSFER_DESC' }
+  paymentMethods = [
+    { id: 'CARD', icon: 'credit_card', label: 'PAYMENT.METHOD.CARD', desc: 'PAYMENT.METHOD.CARD_DESC' },
+    { id: 'PAYPAL', icon: 'account_balance_wallet', label: 'PAYMENT.METHOD.PAYPAL', desc: 'PAYMENT.METHOD.PAYPAL_DESC' },
+    { id: 'TRANSFER', icon: 'account_balance', label: 'PAYMENT.METHOD.TRANSFER', desc: 'PAYMENT.METHOD.TRANSFER_DESC' }
   ];
 
   // método seleccionado por el usuario
-  metodoSeleccionado = 'CARD';
+  selectedMethod = 'CARD';
 
   // datos del formulario de tarjeta
-  tarjeta = {
-    nombre: '',
-    numero: '',
-    vencimiento: '',
+  card = {
+    name: '',
+    number: '',
+    expiry: '',
     cvv: ''
   };
 
   // resumen del servicio a pagar
-  resumenServicio = {
-    servicio: 'PREMIUM',
-    vehiculo: 'CAR',
-    placa: 'ABC123',
+  serviceSummary = {
+    service: 'PREMIUM',
+    vehicle: 'CAR',
+    plate: 'ABC123',
     base: 45000,
-    domicilio: 6000
+    deliveryFee: 6000
   };
 
-  get totalAPagar(): number {
-    return this.resumenServicio.base + this.resumenServicio.domicilio;
+  get totalToPay(): number {
+    return this.serviceSummary.base + this.serviceSummary.deliveryFee;
   }
 
   // historial de pagos del cliente
-  historialPagos = [
-    { codigo: 'PG-5012', tipo: 'PREMIUM', vehiculo: 'CAR', fecha: '12 Ago 2026', metodo: 'Tarjeta ••4821', monto: 45000, estado: 'PAID' },
-    { codigo: 'PG-5008', tipo: 'BASIC', vehiculo: 'MOTO', fecha: '05 Ago 2026', metodo: 'PayPal', monto: 18000, estado: 'PAID' },
-    { codigo: 'PG-4990', tipo: 'FULL', vehiculo: 'TRUCK', fecha: '28 Jul 2026', metodo: 'Transferencia', monto: 72000, estado: 'PENDING' },
-    { codigo: 'PG-4975', tipo: 'PREMIUM', vehiculo: 'CAR', fecha: '19 Jul 2026', metodo: 'Tarjeta ••4821', monto: 45000, estado: 'REFUNDED' },
-    { codigo: 'PG-4960', tipo: 'BASIC', vehiculo: 'CAR', fecha: '08 Jul 2026', metodo: 'Tarjeta ••4821', monto: 22000, estado: 'PAID' }
+  paymentHistory = [
+    { code: 'PG-5012', type: 'PREMIUM', vehicle: 'CAR', date: '12 Ago 2026', method: 'Tarjeta ••4821', amount: 45000, status: 'PAID' },
+    { code: 'PG-5008', type: 'BASIC', vehicle: 'MOTO', date: '05 Ago 2026', method: 'PayPal', amount: 18000, status: 'PAID' },
+    { code: 'PG-4990', type: 'FULL', vehicle: 'TRUCK', date: '28 Jul 2026', method: 'Transferencia', amount: 72000, status: 'PENDING' },
+    { code: 'PG-4975', type: 'PREMIUM', vehicle: 'CAR', date: '19 Jul 2026', method: 'Tarjeta ••4821', amount: 45000, status: 'REFUNDED' },
+    { code: 'PG-4960', type: 'BASIC', vehicle: 'CAR', date: '08 Jul 2026', method: 'Tarjeta ••4821', amount: 22000, status: 'PAID' }
   ];
 
-  get totalPagado(): number {
-    return this.historialPagos
-      .filter(p => p.estado === 'PAID')
-      .reduce((sum, p) => sum + p.monto, 0);
+  get totalPaid(): number {
+    return this.paymentHistory
+      .filter(p => p.status === 'PAID')
+      .reduce((sum, p) => sum + p.amount, 0);
   }
 
-  seleccionarMetodo(id: string) {
-    this.metodoSeleccionado = id;
+  selectMethod(id: string) {
+    this.selectedMethod = id;
   }
 
-  pagar() {
+  pay() {
     // TODO: integrar con el backend de pagos (Commercial service)
-    console.log('Procesando pago por', this.totalAPagar, 'con método', this.metodoSeleccionado);
+    console.log('Procesando pago por', this.totalToPay, 'con método', this.selectedMethod);
   }
 
-  descargarComprobante(codigo: string) {
+  downloadReceipt(code: string) {
     // TODO: integrar descarga real del comprobante
-    console.log('Descargando comprobante de', codigo);
+    console.log('Descargando comprobante de', code);
   }
 
 }

@@ -43,8 +43,8 @@
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   cursor: pointer;
   white-space: nowrap;
   transition: 0.2s;
@@ -83,13 +83,13 @@
   justify-content: center;
 }
 
-.stat-valor {
+.stat-value {
   font-size: 1.75rem;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
 }
 
-.stat-valor-fecha {
+.stat-value-date {
   font-size: 1.15rem;
 }
 
@@ -131,18 +131,18 @@
   flex-shrink: 0;
 }
 
-.vehicle-titulo {
+.vehicle-title {
   flex: 1;
   min-width: 0;
 }
 
-.vehicle-nombre {
-  font-weight: 700;
+.vehicle-name {
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
 
-.vehicle-subtitulo {
+.vehicle-subtitle {
   color: var(--text-muted);
   font-size: 0.85rem;
   margin: 2px 0 0;
@@ -161,13 +161,13 @@
   }
 }
 
-.vehicle-detalle {
+.vehicle-detail {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.vehicle-detalle-row {
+.vehicle-detail-row {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;

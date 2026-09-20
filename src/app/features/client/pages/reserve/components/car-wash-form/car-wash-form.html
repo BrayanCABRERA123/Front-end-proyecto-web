@@ -16,15 +16,15 @@
       <div class="vehicle-options">
         <button
           class="vehicle-option"
-          *ngFor="let v of vehiculos"
-          [class.selected]="vehiculoSeleccionado === v.id"
-          (click)="seleccionarVehiculo(v.id)">
+          *ngFor="let v of vehicles"
+          [class.selected]="selectedVehicleId === v.id"
+          (click)="selectVehicle(v.id)">
           <div class="vehicle-icon">
-            <mat-icon>{{ v.tipo === 'MOTO' ? 'two_wheeler' : (v.tipo === 'TRUCK' ? 'local_shipping' : 'directions_car') }}</mat-icon>
+            <mat-icon>{{ v.type === 'MOTO' ? 'two_wheeler' : (v.type === 'TRUCK' ? 'local_shipping' : 'directions_car') }}</mat-icon>
           </div>
           <div class="vehicle-info">
-            <p class="vehicle-nombre">{{ v.marca }} {{ v.modelo }}</p>
-            <p class="vehicle-detalle">{{ ('VEHICLE.' + v.tipo) | translate }} · {{ v.placa }}</p>
+            <p class="vehicle-name">{{ v.brand }} {{ v.model }}</p>
+            <p class="vehicle-detail">{{ ('VEHICLE.' + v.type) | translate }} · {{ v.plate }}</p>
           </div>
         </button>
       </div>
@@ -48,15 +48,15 @@
       <div class="service-options">
         <button
           class="service-option"
-          *ngFor="let s of servicios"
-          [class.selected]="servicioSeleccionado === s"
-          (click)="seleccionarServicio(s)">
+          *ngFor="let s of services"
+          [class.selected]="selectedService === s"
+          (click)="selectService(s)">
 
-          <span class="badge-popular" *ngIf="s === servicioMasPopular">{{ 'RESERVE.STEP2.POPULAR' | translate }}</span>
+          <span class="badge-popular" *ngIf="s === mostPopularService">{{ 'RESERVE.STEP2.POPULAR' | translate }}</span>
 
-          <p class="service-nombre">{{ ('SERVICE.' + s) | translate }}</p>
-          <p class="service-precio">{{ ('SERVICE.' + s + '_PRICE') | translate }}</p>
-          <p class="service-tiempo"><mat-icon>schedule</mat-icon> {{ ('SERVICE.' + s + '_TIME') | translate }}</p>
+          <p class="service-name">{{ ('SERVICE.' + s) | translate }}</p>
+          <p class="service-price">{{ ('SERVICE.' + s + '_PRICE') | translate }}</p>
+          <p class="service-time"><mat-icon>schedule</mat-icon> {{ ('SERVICE.' + s + '_TIME') | translate }}</p>
 
           <ul class="service-items">
             <li *ngFor="let item of (('SERVICE.' + s + '_ITEMS') | translate)">
@@ -84,7 +84,7 @@
             <mat-icon class="label-icon">calendar_today</mat-icon>
           </label>
           <div class="input-wrapper">
-            <input type="date" class="form-input" [(ngModel)]="fecha" [min]="minDate" [max]="maxDate" />
+            <input type="date" class="form-input" [(ngModel)]="date" [min]="minDate" [max]="maxDate" />
           </div>
         </div>
 
@@ -94,9 +94,9 @@
             <mat-icon class="label-icon">schedule</mat-icon>
           </label>
           <div class="select-wrapper">
-            <select class="form-select" [(ngModel)]="hora">
+            <select class="form-select" [(ngModel)]="time">
               <option value="" disabled selected>{{ 'RESERVE.SELECT_TIME' | translate }}</option>
-              <option *ngFor="let h of horasDisponibles" [value]="h">{{ h }}</option>
+              <option *ngFor="let h of availableTimes" [value]="h">{{ h }}</option>
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
           </div>
@@ -114,7 +114,7 @@
             type="text"
             class="form-input has-icon"
             [placeholder]="'RESERVE.ADDRESS_PLACEHOLDER' | translate"
-            [(ngModel)]="direccion" />
+            [(ngModel)]="address" />
         </div>
       </div>
     </div>
@@ -127,35 +127,35 @@
 
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.VEHICLE' | translate }}</span>
-      <strong>{{ vehiculo ? (vehiculo.marca + ' ' + vehiculo.modelo) : '—' }}</strong>
+      <strong>{{ vehicle ? (vehicle.brand + ' ' + vehicle.model) : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.PLATE' | translate }}</span>
-      <strong>{{ vehiculo ? vehiculo.placa : '—' }}</strong>
+      <strong>{{ vehicle ? vehicle.plate : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.SERVICE' | translate }}</span>
-      <strong>{{ servicioSeleccionado ? (('SERVICE.' + servicioSeleccionado) | translate) : '—' }}</strong>
+      <strong>{{ selectedService ? (('SERVICE.' + selectedService) | translate) : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.DURATION' | translate }}</span>
-      <strong>{{ servicioSeleccionado ? (('SERVICE.' + servicioSeleccionado + '_TIME') | translate) : '—' }}</strong>
+      <strong>{{ selectedService ? (('SERVICE.' + selectedService + '_TIME') | translate) : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.DATE' | translate }}</span>
-      <strong>{{ fecha || '—' }}</strong>
+      <strong>{{ date || '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.TIME' | translate }}</span>
-      <strong>{{ hora || '—' }}</strong>
+      <strong>{{ time || '—' }}</strong>
     </div>
 
     <div class="summary-total">
       <span><mat-icon>attach_money</mat-icon> {{ 'RESERVE.SUMMARY.TOTAL' | translate }}</span>
-      <strong>{{ totalServicio ? ('$' + (totalServicio | number)) : '$—' }}</strong>
+      <strong>{{ serviceTotal ? ('$' + (serviceTotal | number)) : '$—' }}</strong>
     </div>
 
-    <button class="btn-primary" [disabled]="!formularioValido" (click)="onSubmit()">
+    <button class="btn-primary" [disabled]="!isFormValid" (click)="onSubmit()">
       {{ 'RESERVE.SUMMARY.SUBMIT' | translate }} <mat-icon>arrow_forward</mat-icon>
     </button>
 

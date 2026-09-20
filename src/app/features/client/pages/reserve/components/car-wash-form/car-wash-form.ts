@@ -16,91 +16,91 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class CarWashFormComponent implements OnInit {
 
   // vehículos registrados del cliente (mismo mock que en Mis Vehículos)
-  vehiculos = [
-    { id: 1, tipo: 'SEDAN', marca: 'Mazda', modelo: '3 Sedán', placa: 'ABC-123' },
-    { id: 2, tipo: 'MOTO', marca: 'Yamaha', modelo: 'FZ 2.0', placa: 'XYZ-98D' },
-    { id: 3, tipo: 'TRUCK', marca: 'Toyota', modelo: 'Prado', placa: 'JKL-457' }
+  vehicles = [
+    { id: 1, type: 'SEDAN', brand: 'Mazda', model: '3 Sedán', plate: 'ABC-123' },
+    { id: 2, type: 'MOTO', brand: 'Yamaha', model: 'FZ 2.0', plate: 'XYZ-98D' },
+    { id: 3, type: 'TRUCK', brand: 'Toyota', model: 'Prado', plate: 'JKL-457' }
   ];
 
   // catálogo de servicios disponibles
-  servicios = ['BASIC', 'PREMIUM', 'FULL'];
-  servicioMasPopular = 'PREMIUM';
+  services = ['BASIC', 'PREMIUM', 'FULL'];
+  mostPopularService = 'PREMIUM';
 
   // selección del usuario
-  vehiculoSeleccionado: number | null = null;
-  servicioSeleccionado: string = '';
-  fecha: string = '';
-  hora: string = '';
-  direccion: string = '';
+  selectedVehicleId: number | null = null;
+  selectedService: string = '';
+  date: string = '';
+  time: string = '';
+  address: string = '';
 
   // rango de fechas permitido
   minDate: string = '';
   maxDate: string = '';
-  horasDisponibles: string[] = [];
+  availableTimes: string[] = [];
 
   constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
-    const hoy = new Date();
-    this.minDate = hoy.toISOString().split('T')[0];
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
 
     const max = new Date();
-    max.setDate(hoy.getDate() + 60);
+    max.setDate(today.getDate() + 60);
     this.maxDate = max.toISOString().split('T')[0];
 
-    this.generarHoras();
+    this.generateTimes();
   }
 
-  generarHoras(): void {
-    this.horasDisponibles = [];
+  generateTimes(): void {
+    this.availableTimes = [];
 
     for (let h = 8; h <= 12; h++) {
-      this.horasDisponibles.push(h.toString().padStart(2, '0') + ':00');
+      this.availableTimes.push(h.toString().padStart(2, '0') + ':00');
     }
     for (let h = 13; h <= 18; h++) {
-      this.horasDisponibles.push(h.toString().padStart(2, '0') + ':00');
+      this.availableTimes.push(h.toString().padStart(2, '0') + ':00');
     }
   }
 
-  seleccionarVehiculo(id: number) {
-    this.vehiculoSeleccionado = id;
+  selectVehicle(id: number) {
+    this.selectedVehicleId = id;
   }
 
-  seleccionarServicio(servicio: string) {
-    this.servicioSeleccionado = servicio;
+  selectService(service: string) {
+    this.selectedService = service;
   }
 
-  get vehiculo() {
-    return this.vehiculos.find(v => v.id === this.vehiculoSeleccionado) ?? null;
+  get vehicle() {
+    return this.vehicles.find(v => v.id === this.selectedVehicleId) ?? null;
   }
 
   // extrae el valor numérico del precio del servicio (ej. "$35.000" -> 35000)
-  get totalServicio(): number {
-    if (!this.servicioSeleccionado) return 0;
+  get serviceTotal(): number {
+    if (!this.selectedService) return 0;
 
-    const clave = `SERVICE.${this.servicioSeleccionado}_PRICE`;
-    const texto: string = this.translate.instant(clave);
-    const numero = texto.replace(/[^0-9]/g, '');
+    const key = `SERVICE.${this.selectedService}_PRICE`;
+    const text: string = this.translate.instant(key);
+    const number = text.replace(/[^0-9]/g, '');
 
-    return numero ? parseInt(numero, 10) : 0;
+    return number ? parseInt(number, 10) : 0;
   }
 
-  get formularioValido(): boolean {
-    return !!this.vehiculoSeleccionado && !!this.servicioSeleccionado && !!this.fecha && !!this.hora && !!this.direccion;
+  get isFormValid(): boolean {
+    return !!this.selectedVehicleId && !!this.selectedService && !!this.date && !!this.time && !!this.address;
   }
 
   // se ejecuta al hacer clic en "Reservar Ahora"
   onSubmit(): void {
-    if (!this.formularioValido) return;
+    if (!this.isFormValid) return;
 
     // TODO: integrar con el backend de reservas
     console.log('Reserva enviada', {
-      vehiculo: this.vehiculo,
-      servicio: this.servicioSeleccionado,
-      fecha: this.fecha,
-      hora: this.hora,
-      direccion: this.direccion,
-      total: this.totalServicio
+      vehicle: this.vehicle,
+      service: this.selectedService,
+      date: this.date,
+      time: this.time,
+      address: this.address,
+      total: this.serviceTotal
     });
   }
 

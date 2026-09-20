@@ -1,6 +1,6 @@
 <div class="modal-box">
 
-  <button class="btn-close-icon" (click)="cancelar()">
+  <button class="btn-close-icon" (click)="cancel()">
     <mat-icon>close</mat-icon>
   </button>
 
@@ -10,9 +10,9 @@
   <div class="form-group">
     <label class="form-label">{{ 'VEHICLES.MODAL.TYPE' | translate }} *</label>
     <div class="select-wrapper">
-      <select class="form-select" [(ngModel)]="tipo">
+      <select class="form-select" [(ngModel)]="type">
         <option value="" disabled selected>{{ 'VEHICLES.MODAL.TYPE_PLACEHOLDER' | translate }}</option>
-        <option *ngFor="let t of tiposVehiculo" [value]="t">{{ ('VEHICLE.' + t) | translate }}</option>
+        <option *ngFor="let t of vehicleTypes" [value]="t">{{ ('VEHICLE.' + t) | translate }}</option>
       </select>
       <mat-icon class="select-icon">expand_more</mat-icon>
     </div>
@@ -21,19 +21,19 @@
   <div class="form-row">
     <div class="form-group">
       <label class="form-label">{{ 'VEHICLES.MODAL.BRAND' | translate }} *</label>
-      <input type="text" class="form-input" [(ngModel)]="marca" placeholder="Mazda" />
+      <input type="text" class="form-input" [(ngModel)]="brand" placeholder="Mazda" />
     </div>
 
     <div class="form-group">
       <label class="form-label">{{ 'VEHICLES.MODAL.MODEL' | translate }}</label>
-      <input type="text" class="form-input" [(ngModel)]="modelo" placeholder="3 Sedán" />
+      <input type="text" class="form-input" [(ngModel)]="model" placeholder="3 Sedán" />
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group">
       <label class="form-label">{{ 'VEHICLES.MODAL.PLATE' | translate }} *</label>
-      <input type="text" class="form-input" [(ngModel)]="placa" placeholder="ABC-123" />
+      <input type="text" class="form-input" [(ngModel)]="plate" placeholder="ABC-123" />
     </div>
 
     <div class="form-group">
@@ -43,8 +43,8 @@
   </div>
 
   <div class="modal-actions">
-    <button class="btn-cancel" (click)="cancelar()">{{ 'VEHICLES.MODAL.CANCEL' | translate }}</button>
-    <button class="btn-confirm" [disabled]="!formularioValido" (click)="guardar()">
+    <button class="btn-cancel" (click)="cancel()">{{ 'VEHICLES.MODAL.CANCEL' | translate }}</button>
+    <button class="btn-confirm" [disabled]="!isFormValid" (click)="save()">
       {{ 'VEHICLES.MODAL.SAVE' | translate }}
     </button>
   </div>

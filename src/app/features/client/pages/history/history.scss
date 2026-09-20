@@ -42,7 +42,7 @@
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   color: var(--text-secondary);
   white-space: nowrap;
   min-width: 80px;
@@ -66,7 +66,7 @@
   align-items: center;
   gap: 7px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: $fw-medium;
   color: var(--text);
   cursor: pointer;
   padding: 7px 14px;
@@ -88,7 +88,7 @@
     background: rgba(var(--primary-rgb), 0.12);
     border-color: var(--primary);
     color: var(--primary);
-    font-weight: 700;
+    font-weight: $fw-bold;
   }
 }
 
@@ -123,12 +123,12 @@
 .date-label {
   font-size: 13px;
   color: var(--text-secondary);
-  font-weight: 400;
+  font-weight: $fw-regular;
   white-space: nowrap;
 }
 
 .date-separator {
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text-secondary);
   opacity: 0.5;
 }
@@ -141,7 +141,7 @@
   color: var(--text);
   background-color: var(--card);
   outline: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: all 0.2s ease;
   width: 140px;
 
@@ -180,7 +180,7 @@
   color: var(--text);
   background-color: var(--card);
   outline: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: all 0.2s ease;
   width: 240px;
 
@@ -220,7 +220,7 @@
   color: var(--text);
   background-color: var(--card);  
   outline: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: all 0.2s ease;
   box-sizing: border-box; // ← importante para que no desborde
 

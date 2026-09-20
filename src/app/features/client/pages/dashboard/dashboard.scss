@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 .home-layout {
   display: flex;
   min-height: 100vh;
@@ -65,7 +67,7 @@
   background: var(--primary-soft);
   color: var(--primary);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: $fw-semibold;
 
   mat-icon { font-size: 1.1rem; width: 1.1rem; height: 1.1rem; }
 }
@@ -98,7 +100,7 @@
   justify-content: center;
 }
 
-.stat-valor { font-size: 1.75rem; font-weight: 700; color: var(--text); }
+.stat-value { font-size: 1.75rem; font-weight: $fw-bold; color: var(--text); }
 .stat-label { color: var(--text-secondary); font-size: 0.9rem; }
 
 .dashboard-row {
@@ -137,7 +139,7 @@
   padding: 0.3rem 0.8rem;
   border-radius: 999px;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: $fw-semibold;
 }
 
 .badge-completed,
@@ -154,7 +156,7 @@
   flex-wrap: wrap;
 }
 
-.next-service-nombre { font-weight: 600; margin: 0 0 0.25rem; color: var(--text); }
+.next-service-name { font-weight: $fw-semibold; margin: 0 0 0.25rem; color: var(--text); }
 .next-service-fecha { color: var(--text-secondary); margin: 0 0 0.5rem; }
 
 .next-service-meta {
@@ -178,7 +180,7 @@
   background: var(--card);
   color: var(--text);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   white-space: nowrap;
   transition: border-color 0.2s ease, color 0.2s ease;
 
@@ -248,9 +250,9 @@
   &:last-child { margin-bottom: 0; }
 }
 
-.vehicle-nombre { font-weight: 600; margin: 0; color: var(--text); }
-.vehicle-placa { color: var(--text-muted); font-size: 0.85rem; margin: 0.15rem 0 0; }
-.vehicle-fecha { color: var(--text-muted); font-size: 0.85rem; }
+.vehicle-name { font-weight: $fw-semibold; margin: 0; color: var(--text); }
+.vehicle-plate { color: var(--text-muted); font-size: 0.85rem; margin: 0.15rem 0 0; }
+.vehicle-date { color: var(--text-muted); font-size: 0.85rem; }
 
 .benefits-grid {
   display: flex;
@@ -264,7 +266,7 @@
   background: var(--primary-soft);
 }
 
-.benefit-titulo { font-weight: 600; margin: 0; color: var(--text); }
+.benefit-title { font-weight: $fw-semibold; margin: 0; color: var(--text); }
 .benefit-desc { color: var(--text-secondary); font-size: 0.85rem; margin: 0.15rem 0 0; }
 
 .loyalty-progress { margin-top: 1.25rem; }
@@ -275,12 +277,12 @@
   gap: 1rem;
 }
 
-.link-ver-todo {
+.link-view-all {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
   color: var(--primary);
-  font-weight: 600;
+  font-weight: $fw-semibold;
   cursor: pointer;
 
   mat-icon { font-size: 1.1rem; width: 1.1rem; height: 1.1rem; }
@@ -298,8 +300,8 @@
   &:last-child { margin-bottom: 0; }
 }
 
-.history-nombre { font-weight: 600; margin: 0; color: var(--text); }
-.history-fecha { color: var(--text-muted); font-size: 0.85rem; margin: 0.15rem 0 0; }
+.history-name { font-weight: $fw-semibold; margin: 0; color: var(--text); }
+.history-date { color: var(--text-muted); font-size: 0.85rem; margin: 0.15rem 0 0; }
 
 .history-right {
   display: flex;
@@ -307,7 +309,7 @@
   gap: 1rem;
 }
 
-.history-precio { font-weight: 700; color: var(--text); }
+.history-price { font-weight: $fw-bold; color: var(--text); }
 
 :host-context(body.green-dark) .stat-card,
 :host-context(body.pink-dark) .stat-card,

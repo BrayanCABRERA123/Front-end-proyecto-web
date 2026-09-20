@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RegisterVehicleModalComponent } from '../../../../shared/dialogs/register-vehicle-modal/register-vehicle-modal';
 
 // íconos según el tipo de vehículo
-const ICONO_POR_TIPO: Record<string, string> = {
+const ICON_BY_TYPE: Record<string, string> = {
   CAR: 'directions_car',
   SEDAN: 'directions_car',
   SUV: 'directions_car',
@@ -29,53 +29,53 @@ const ICONO_POR_TIPO: Record<string, string> = {
 export class VehiclesComponent {
 
   // vehículos registrados por el cliente
-  vehiculos = [
-    { id: 1, tipo: 'SEDAN', marca: 'Mazda', modelo: '3 Sedán', placa: 'ABC-123', color: 'Gris', ultimoLavado: '10 Ago 2026', servicio: 'PREMIUM', totalLavados: 8 },
-    { id: 2, tipo: 'MOTO', marca: 'Yamaha', modelo: 'FZ 2.0', placa: 'XYZ-98D', color: 'Azul', ultimoLavado: '02 Ago 2026', servicio: 'BASIC', totalLavados: 4 },
-    { id: 3, tipo: 'TRUCK', marca: 'Toyota', modelo: 'Prado', placa: 'JKL-457', color: 'Blanco', ultimoLavado: '24 Jul 2026', servicio: 'FULL', totalLavados: 2 }
+  vehicles = [
+    { id: 1, type: 'SEDAN', brand: 'Mazda', model: '3 Sedán', plate: 'ABC-123', color: 'Gris', lastWash: '10 Ago 2026', service: 'PREMIUM', totalWashes: 8 },
+    { id: 2, type: 'MOTO', brand: 'Yamaha', model: 'FZ 2.0', plate: 'XYZ-98D', color: 'Azul', lastWash: '02 Ago 2026', service: 'BASIC', totalWashes: 4 },
+    { id: 3, type: 'TRUCK', brand: 'Toyota', model: 'Prado', plate: 'JKL-457', color: 'Blanco', lastWash: '24 Jul 2026', service: 'FULL', totalWashes: 2 }
   ];
 
-  get totalVehiculos(): number {
-    return this.vehiculos.length;
+  get totalVehicles(): number {
+    return this.vehicles.length;
   }
 
-  get totalLavados(): number {
-    return this.vehiculos.reduce((sum, v) => sum + v.totalLavados, 0);
+  get totalWashes(): number {
+    return this.vehicles.reduce((sum, v) => sum + v.totalWashes, 0);
   }
 
-  get ultimoLavadoGeneral(): string {
-    return this.vehiculos[0]?.ultimoLavado ?? '-';
+  get lastWashOverall(): string {
+    return this.vehicles[0]?.lastWash ?? '-';
   }
 
   constructor(private dialog: MatDialog) {}
 
   // ícono correspondiente al tipo de vehículo
-  iconoDe(tipo: string): string {
-    return ICONO_POR_TIPO[tipo] ?? 'directions_car';
+  iconFor(type: string): string {
+    return ICON_BY_TYPE[type] ?? 'directions_car';
   }
 
   // abre el modal para registrar un nuevo vehículo
-  abrirModalRegistro() {
+  openRegisterModal() {
     const dialogRef = this.dialog.open(RegisterVehicleModalComponent, {
       panelClass: 'custom-dialog'
     });
 
-    dialogRef.afterClosed().subscribe(nuevoVehiculo => {
-      if (nuevoVehiculo) {
-        this.vehiculos.push({
+    dialogRef.afterClosed().subscribe(newVehicle => {
+      if (newVehicle) {
+        this.vehicles.push({
           id: Date.now(),
-          ...nuevoVehiculo,
-          ultimoLavado: '-',
-          servicio: '-',
-          totalLavados: 0
+          ...newVehicle,
+          lastWash: '-',
+          service: '-',
+          totalWashes: 0
         });
       }
     });
   }
 
   // elimina un vehículo registrado
-  eliminarVehiculo(id: number) {
-    this.vehiculos = this.vehiculos.filter(v => v.id !== id);
+  removeVehicle(id: number) {
+    this.vehicles = this.vehicles.filter(v => v.id !== id);
   }
 
 }

@@ -15,24 +15,24 @@ import { RatingModalComponent } from '../../../../../../shared/dialogs/rating-mo
 export class HistoryCardComponent {
 
   // recibe el servicio del padre
-  @Input() servicio: any;
+  @Input() service: any;
 
-  // inyeccion de servicios 
+  // inyeccion de servicios
   constructor(
     private translate: TranslateService,
     private dialog: MatDialog
   ) { }
 
   // metodo que traduce extras
-  getExtrasTraducidos(extras: string[]): string[] {
+  getTranslatedExtras(extras: string[]): string[] {
     return extras.map(e => this.translate.instant('EXTRA.' + e));
   }
 
-  abrirCalificacion(servicio: any): void {
+  openRating(service: any): void {
 
     this.dialog.open(RatingModalComponent, {
       width: '600px',
-      data: servicio
+      data: service
     });
 
   }

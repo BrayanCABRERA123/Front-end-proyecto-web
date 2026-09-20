@@ -114,7 +114,7 @@
   }
 
   .method-label {
-    font-weight: 600;
+    font-weight: $fw-semibold;
     color: var(--text);
   }
 
@@ -200,7 +200,7 @@
   background: var(--item-bg);
   color: var(--text);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   white-space: nowrap;
 }
 
@@ -220,13 +220,13 @@
   }
 }
 
-.payment-nombre {
-  font-weight: 600;
+.payment-name {
+  font-weight: $fw-semibold;
   color: var(--text);
   margin: 0;
 }
 
-.payment-fecha {
+.payment-date {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -247,8 +247,8 @@
   gap: 12px;
 }
 
-.payment-monto {
-  font-weight: 700;
+.payment-amount {
+  font-weight: $fw-bold;
   color: var(--text);
 }
 
@@ -256,7 +256,7 @@
   padding: 5px 12px;
   border-radius: 999px;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   white-space: nowrap;
 }
 
@@ -326,7 +326,7 @@
   border-radius: $border-radius-sm;
   background: var(--primary);
   color: #ffffff;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   font-size: 0.95rem;
   cursor: pointer;
   transition: 0.2s;

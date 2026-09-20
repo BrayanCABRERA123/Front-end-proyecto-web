@@ -12,14 +12,14 @@
 }
 
 .page-title {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 1.75rem;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0 0 6px 0;
 }
 
 .page-subtitle {
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text-secondary);
   margin: 0 0 24px 0;
 }
@@ -31,5 +31,5 @@
 @include mobile {
   .page-container { flex-direction: column; height: auto; min-height: 100vh; }
   .main-content { padding: 72px 16px 24px; }
-  .page-title { font-size: 20px; }
+  .page-title { font-size: 1.4rem; }
 }

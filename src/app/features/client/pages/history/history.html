@@ -17,23 +17,23 @@
           {{ 'HISTORY.FILTERS' | translate }}
         </span>
         <div class="radio-group">
-          <label class="radio-filter" [class.active]="filtroActivo === 'todos'">
-            <input type="radio" name="filtro" value="todos" [(ngModel)]="filtroActivo" />
+          <label class="radio-filter" [class.active]="activeFilter === 'todos'">
+            <input type="radio" name="filtro" value="todos" [(ngModel)]="activeFilter" />
             {{ 'HISTORY.ALL' | translate }}
           </label>
-          <label class="radio-filter" [class.active]="filtroActivo === 'pagados'">
-            <input type="radio" name="filtro" value="pagados" [(ngModel)]="filtroActivo" />
+          <label class="radio-filter" [class.active]="activeFilter === 'pagados'">
+            <input type="radio" name="filtro" value="pagados" [(ngModel)]="activeFilter" />
             {{ 'HISTORY.PAID' | translate }}
           </label>
-          <label class="radio-filter" [class.active]="filtroActivo === 'pendientes'">
-            <input type="radio" name="filtro" value="pendientes" [(ngModel)]="filtroActivo" />
+          <label class="radio-filter" [class.active]="activeFilter === 'pendientes'">
+            <input type="radio" name="filtro" value="pendientes" [(ngModel)]="activeFilter" />
             {{ 'HISTORY.PENDING' | translate }}
           </label>
         </div>
       </div>
 
       <div class="filters-divider"></div>
-      
+
       <!-- Fila 2: Fecha + Búsqueda en la misma línea -->
       <div class="filter-section row-inline">
 
@@ -46,12 +46,12 @@
           <div class="date-inputs">
             <div class="date-group">
               <span class="date-label">{{ 'HISTORY.FROM' | translate }}</span>
-              <input type="date" class="date-input" [(ngModel)]="fechaDesde" />
+              <input type="date" class="date-input" [(ngModel)]="dateFrom" />
             </div>
             <span class="date-separator">→</span>
             <div class="date-group">
               <span class="date-label">{{ 'HISTORY.TO' | translate }}</span>
-              <input type="date" class="date-input" [(ngModel)]="fechaHasta" />
+              <input type="date" class="date-input" [(ngModel)]="dateTo" />
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@
           </span>
           <div class="search-input-wrapper flex-grow">
             <mat-icon class="search-icon">search</mat-icon>
-            <input type="text" class="search-input" [(ngModel)]="busqueda"
+            <input type="text" class="search-input" [(ngModel)]="search"
               [placeholder]="'HISTORY.SEARCH_PLACEHOLDER' | translate" />
           </div>
         </div>
@@ -78,12 +78,12 @@
     <!-- Lista -->
     <div class="history-list">
 
-      @for (servicio of serviciosFiltrados; track servicio.id) {
-      <app-history-card [servicio]="servicio"></app-history-card>
+      @for (service of filteredServices; track service.id) {
+      <app-history-card [service]="service"></app-history-card>
       }
 
       <!-- Vacío -->
-      @if (serviciosFiltrados.length === 0) {
+      @if (filteredServices.length === 0) {
       <div class="empty-state">
         <mat-icon>search_off</mat-icon>
         <p>{{ 'HISTORY.EMPTY' | translate }}</p>

@@ -35,8 +35,8 @@
   font-size: 24px;
   width: 24px;
   height: 24px;
-  &.pagado { color: var(--primary); }
-  &.pendiente { color: #ff4d4d; }
+  &.paid { color: var(--primary); }
+  &.pending { color: #ff4d4d; }
 }
 
 .card-title-group {
@@ -47,19 +47,19 @@
 
 .card-title {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   color: var(--text);
 }
 
 .card-date {
   font-size: 13px;
-  font-weight: 400;
+  font-weight: $fw-regular;
   color: var(--text-muted);
 }
 
 .card-price {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   color: var(--primary);
 }
 
@@ -77,14 +77,14 @@
 }
 
 .detail-item {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: $fs-body;
+  font-weight: $fw-regular;
   color: var(--text);
   margin: 0;
 }
 
 .detail-label {
-  font-weight: 500;
+  font-weight: $fw-medium;
   color: var(--text-secondary);
 }
 
@@ -96,7 +96,7 @@
   flex-shrink: 0;
 }
 
-.btn-pagado {
+.btn-paid {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -106,15 +106,15 @@
   border: none;
   border-radius: 10px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: $fw-medium;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: 0.2s;
   &:hover { filter: brightness(1.1); }
   mat-icon { font-size: 18px; width: 18px; height: 18px; }
 }
 
-.btn-pendiente {
+.btn-pending {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -124,15 +124,15 @@
   border: none;
   border-radius: 10px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: $fw-medium;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: 0.2s;
   &:hover { filter: brightness(1.1); }
   mat-icon { font-size: 18px; width: 18px; height: 18px; }
 }
 
-.btn-calificar {
+.btn-rate {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -142,9 +142,9 @@
   border: 1.5px solid var(--primary);
   border-radius: 10px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: $fw-medium;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
   transition: all 0.2s ease;
   mat-icon { font-size: 18px; width: 18px; height: 18px; }
   &:hover { background-color: var(--primary); color: #ffffff; }
@@ -158,7 +158,7 @@
   .history-card { margin: 0; padding: 16px; border-radius: 12px; }
   .card-body { flex-direction: column; align-items: flex-start; }
   .card-actions { width: 100%; align-items: stretch; }
-  .btn-pagado, .btn-pendiente, .btn-calificar { width: 100%; justify-content: center; padding: 12px; }
-  .card-title { font-size: 14px; }
-  .card-price { font-size: 16px; }
+  .btn-paid, .btn-pending, .btn-rate { width: 100%; justify-content: center; padding: 12px; }
+  .card-title { font-size: $fs-body; }
+  .card-price { font-size: $fs-subtitle; }
 }

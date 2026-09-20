@@ -2,7 +2,7 @@
 
   <div class="modal-box">
 
-    <button class="btn-close-icon" (click)="cerrarModal()">
+    <button class="btn-close-icon" (click)="closeModal()">
 
       ✕
 
@@ -22,7 +22,7 @@
 
     <div class="stars">
 
-      <mat-icon *ngFor="let star of [1,2,3,4,5]" (click)="calificar(star)" [class.active]="star <= rating">
+      <mat-icon *ngFor="let star of [1,2,3,4,5]" (click)="rate(star)" [class.active]="star <= rating">
 
         star
 
@@ -36,13 +36,13 @@
         {{ 'RATINGS.COMMENT' | translate }}
       </label>
 
-      <textarea [(ngModel)]="comentario" [placeholder]="'RATINGS.PLACEHOLDER' | translate">
+      <textarea [(ngModel)]="comment" [placeholder]="'RATINGS.PLACEHOLDER' | translate">
 
       </textarea>
 
     </div>
 
-    <button class="btn-submit" (click)="enviar()">
+    <button class="btn-submit" (click)="submit()">
 
       {{ 'RATINGS.SUBMIT' | translate }}
 

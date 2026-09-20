@@ -61,7 +61,7 @@
   border-radius: 50%;
   background: var(--primary);
   color: #ffffff;
-  font-weight: 700;
+  font-weight: $fw-bold;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,14 +112,14 @@
   }
 }
 
-.vehicle-nombre {
-  font-weight: 600;
+.vehicle-name {
+  font-weight: $fw-semibold;
   color: var(--text);
   margin: 0;
   font-size: 0.9rem;
 }
 
-.vehicle-detalle {
+.vehicle-detail {
   color: var(--text-muted);
   font-size: 0.8rem;
   margin: 2px 0 0;
@@ -132,7 +132,7 @@
 
   a {
     color: var(--primary);
-    font-weight: 600;
+    font-weight: $fw-semibold;
     text-decoration: none;
 
     &:hover {
@@ -182,25 +182,25 @@
   background: var(--primary);
   color: #ffffff;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: $fw-bold;
   padding: 3px 10px;
   border-radius: 999px;
 }
 
-.service-nombre {
-  font-weight: 700;
+.service-name {
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 6px 0 0;
 }
 
-.service-precio {
+.service-price {
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: $fw-bold;
   color: var(--text);
   margin: 0;
 }
 
-.service-tiempo {
+.service-time {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -263,8 +263,8 @@
 }
 
 .form-label {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: $fs-body;
+  font-weight: $fw-medium;
   color: var(--text);
   display: flex;
   align-items: center;
@@ -297,7 +297,7 @@
   padding: 11px 12px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text);
   background-color: var(--card);
   outline: none;
@@ -338,7 +338,7 @@
   padding: 11px 40px 11px 12px;
   border: 1.5px solid var(--border);
   border-radius: 10px;
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text);
   background-color: var(--card);
   outline: none;
@@ -431,7 +431,7 @@
   border: none;
   border-radius: 10px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   cursor: pointer;
   font-family: $font-family;
   transition: 0.2s;

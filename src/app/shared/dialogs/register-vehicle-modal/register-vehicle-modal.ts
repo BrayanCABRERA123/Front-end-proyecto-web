@@ -15,34 +15,34 @@ import { TranslateModule } from '@ngx-translate/core';
 export class RegisterVehicleModalComponent {
 
   // tipos de vehículo disponibles (reutiliza las claves ya usadas en VEHICLE.*)
-  tiposVehiculo = ['CAR', 'SEDAN', 'SUV', 'PICKUP', 'TRUCK', 'MOTO'];
+  vehicleTypes = ['CAR', 'SEDAN', 'SUV', 'PICKUP', 'TRUCK', 'MOTO'];
 
   // datos del formulario
-  tipo = '';
-  marca = '';
-  modelo = '';
-  placa = '';
+  type = '';
+  brand = '';
+  model = '';
+  plate = '';
   color = '';
 
   constructor(private dialogRef: MatDialogRef<RegisterVehicleModalComponent>) {}
 
   // valida que los campos obligatorios estén completos
-  get formularioValido(): boolean {
-    return !!this.tipo && !!this.marca && !!this.placa;
+  get isFormValid(): boolean {
+    return !!this.type && !!this.brand && !!this.plate;
   }
 
-  cancelar() {
+  cancel() {
     this.dialogRef.close();
   }
 
-  guardar() {
-    if (!this.formularioValido) return;
+  save() {
+    if (!this.isFormValid) return;
 
     this.dialogRef.close({
-      tipo: this.tipo,
-      marca: this.marca,
-      modelo: this.modelo,
-      placa: this.placa,
+      type: this.type,
+      brand: this.brand,
+      model: this.model,
+      plate: this.plate,
       color: this.color
     });
   }

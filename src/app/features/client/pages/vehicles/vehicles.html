@@ -12,7 +12,7 @@
         <p>{{ 'VEHICLES.SUBTITLE' | translate }}</p>
       </div>
 
-      <button class="btn-primary" (click)="abrirModalRegistro()">
+      <button class="btn-primary" (click)="openRegisterModal()">
         <mat-icon>add</mat-icon>
         {{ 'VEHICLES.REGISTER_BUTTON' | translate }}
       </button>
@@ -22,58 +22,58 @@
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-icon"><mat-icon>directions_car</mat-icon></div>
-        <span class="stat-valor">{{ totalVehiculos }}</span>
+        <span class="stat-value">{{ totalVehicles }}</span>
         <span class="stat-label">{{ 'VEHICLES.STATS.TOTAL' | translate }}</span>
       </div>
 
       <div class="stat-card">
         <div class="stat-icon"><mat-icon>water_drop</mat-icon></div>
-        <span class="stat-valor">{{ totalLavados }}</span>
+        <span class="stat-value">{{ totalWashes }}</span>
         <span class="stat-label">{{ 'VEHICLES.STATS.WASHES' | translate }}</span>
       </div>
 
       <div class="stat-card">
         <div class="stat-icon"><mat-icon>schedule</mat-icon></div>
-        <span class="stat-valor stat-valor-fecha">{{ ultimoLavadoGeneral }}</span>
+        <span class="stat-value stat-value-date">{{ lastWashOverall }}</span>
         <span class="stat-label">{{ 'VEHICLES.STATS.LAST_WASH' | translate }}</span>
       </div>
     </div>
 
     <!-- Grid de vehículos -->
     <div class="vehicles-grid">
-      <div class="vehicle-card" *ngFor="let vehiculo of vehiculos">
+      <div class="vehicle-card" *ngFor="let vehicle of vehicles">
 
         <div class="vehicle-card-header">
           <div class="vehicle-icon">
-            <mat-icon>{{ iconoDe(vehiculo.tipo) }}</mat-icon>
+            <mat-icon>{{ iconFor(vehicle.type) }}</mat-icon>
           </div>
 
-          <div class="vehicle-titulo">
-            <p class="vehicle-nombre">{{ vehiculo.marca }} {{ vehiculo.modelo }}</p>
-            <p class="vehicle-subtitulo">{{ ('VEHICLE.' + vehiculo.tipo) | translate }} · {{ vehiculo.color }}</p>
+          <div class="vehicle-title">
+            <p class="vehicle-name">{{ vehicle.brand }} {{ vehicle.model }}</p>
+            <p class="vehicle-subtitle">{{ ('VEHICLE.' + vehicle.type) | translate }} · {{ vehicle.color }}</p>
           </div>
 
-          <button class="btn-icon" (click)="eliminarVehiculo(vehiculo.id)">
+          <button class="btn-icon" (click)="removeVehicle(vehicle.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
 
-        <div class="vehicle-detalle">
-          <div class="vehicle-detalle-row">
+        <div class="vehicle-detail">
+          <div class="vehicle-detail-row">
             <span>{{ 'VEHICLES.CARD.PLATE' | translate }}</span>
-            <strong>{{ vehiculo.placa }}</strong>
+            <strong>{{ vehicle.plate }}</strong>
           </div>
-          <div class="vehicle-detalle-row">
+          <div class="vehicle-detail-row">
             <span>{{ 'VEHICLES.CARD.LAST_WASH' | translate }}</span>
-            <strong>{{ vehiculo.ultimoLavado }}</strong>
+            <strong>{{ vehicle.lastWash }}</strong>
           </div>
-          <div class="vehicle-detalle-row">
+          <div class="vehicle-detail-row">
             <span>{{ 'VEHICLES.CARD.SERVICE' | translate }}</span>
-            <strong>{{ vehiculo.servicio === '-' ? '-' : (('SERVICE.' + vehiculo.servicio) | translate) }}</strong>
+            <strong>{{ vehicle.service === '-' ? '-' : (('SERVICE.' + vehicle.service) | translate) }}</strong>
           </div>
-          <div class="vehicle-detalle-row">
+          <div class="vehicle-detail-row">
             <span>{{ 'VEHICLES.CARD.TOTAL_WASHES' | translate }}</span>
-            <strong>{{ vehiculo.totalLavados }}</strong>
+            <strong>{{ vehicle.totalWashes }}</strong>
           </div>
         </div>
 

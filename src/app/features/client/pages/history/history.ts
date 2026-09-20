@@ -25,81 +25,81 @@ export class HistoryComponent {
   constructor(private translate: TranslateService) {}
 
   // filtro activo
-  filtroActivo: string = 'todos';
+  activeFilter: string = 'todos';
 
   // fechas
-  fechaDesde: string = '';
-  fechaHasta: string = '';
+  dateFrom: string = '';
+  dateTo: string = '';
 
   // buscador
-  busqueda: string = '';
+  search: string = '';
 
-  mostrarModalCalificacion = false;
+  showRatingModal = false;
 
-  abrirModalCalificacion(): void {
-    this.mostrarModalCalificacion = true;
+  openRatingModal(): void {
+    this.showRatingModal = true;
   }
 
-  // SERVICIOS 
-  servicios = [
+  // SERVICIOS
+  services = [
   {
     id: 1,
-    titulo: 'PREMIUM',
-    fecha: '28/03/2026',
-    direccion: 'Calle Falsa 123, Springfield',
-    tipoServicio: 'FULL',
-    serviciosExtra: ['WAX', 'VACUUM'],
-    asignacionTipo: 'MANUAL',
-    operador: 'Juan',
-    estado: 'COMPLETED',
-    precio: 35,
-    pagado: true
+    title: 'PREMIUM',
+    date: '28/03/2026',
+    address: 'Calle Falsa 123, Springfield',
+    serviceType: 'FULL',
+    extras: ['WAX', 'VACUUM'],
+    assignmentType: 'MANUAL',
+    operator: 'Juan',
+    status: 'COMPLETED',
+    price: 35,
+    paid: true
   },
   {
     id: 2,
-    titulo: 'BASIC',
-    fecha: '16/12/2025',
-    direccion: 'Calle 42 #13-33',
-    tipoServicio: 'FULL',
-    serviciosExtra: ['WAX'],
-    asignacionTipo: 'AUTO',
-    operador: '',
-    estado: 'PENDING',
-    precio: 35,
-    pagado: false
+    title: 'BASIC',
+    date: '16/12/2025',
+    address: 'Calle 42 #13-33',
+    serviceType: 'FULL',
+    extras: ['WAX'],
+    assignmentType: 'AUTO',
+    operator: '',
+    status: 'PENDING',
+    price: 35,
+    paid: false
   }
 ];
 
   // TRADUCIR EXTRAS
-  getExtrasTraducidos(extras: string[]): string[] {
+  getTranslatedExtras(extras: string[]): string[] {
     return extras.map(e => this.translate.instant('EXTRA.' + e));
   }
 
   // FILTRO COMPLETO
-  get serviciosFiltrados() {
-    return this.servicios.filter(servicio => {
+  get filteredServices() {
+    return this.services.filter(service => {
 
       // filtro por estado
-      if (this.filtroActivo === 'pagados' && !servicio.pagado) return false;
-      if (this.filtroActivo === 'pendientes' && servicio.pagado) return false;
+      if (this.activeFilter === 'pagados' && !service.paid) return false;
+      if (this.activeFilter === 'pendientes' && service.paid) return false;
 
       // filtro por texto
-      if (this.busqueda) {
-      const texto = this.busqueda.toLowerCase();
+      if (this.search) {
+      const text = this.search.toLowerCase();
 
       return (
-        servicio.direccion.toLowerCase().includes(texto) ||
+        service.address.toLowerCase().includes(text) ||
 
-        this.translate.instant('SERVICE.' + servicio.tipoServicio)
+        this.translate.instant('SERVICE.' + service.serviceType)
           .toLowerCase()
-          .includes(texto) ||
+          .includes(text) ||
 
-        this.translate.instant('ASSIGNMENT.' + servicio.asignacionTipo)
+        this.translate.instant('ASSIGNMENT.' + service.assignmentType)
           .toLowerCase()
-          .includes(texto) ||
+          .includes(text) ||
 
-        (servicio.operador &&
-          servicio.operador.toLowerCase().includes(texto))
+        (service.operator &&
+          service.operator.toLowerCase().includes(text))
       );
     }
 

@@ -8,23 +8,23 @@
       <!-- Estado -->
       <mat-icon
         class="status-icon"
-        [class.pagado]="servicio.pagado"
-        [class.pendiente]="!servicio.pagado">
+        [class.paid]="service.paid"
+        [class.pending]="!service.paid">
         check_circle
       </mat-icon>
 
       <!-- Título dinámico traducido -->
       <div class="card-title-group">
         <span class="card-title">
-          {{ ('SERVICE.' + servicio.titulo) | translate }}
+          {{ ('SERVICE.' + service.title) | translate }}
         </span>
-        <span class="card-date">{{ servicio.fecha }}</span>
+        <span class="card-date">{{ service.date }}</span>
       </div>
 
     </div>
 
     <!-- Precio -->
-    <span class="card-price">${{ servicio.precio }}</span>
+    <span class="card-price">${{ service.price }}</span>
   </div>
 
   <!-- Body -->
@@ -37,7 +37,7 @@
         <span class="detail-label">
           {{ 'HISTORY_CARD.ADDRESS' | translate }}:
         </span>
-        {{ servicio.direccion }}
+        {{ service.address }}
       </p>
 
       <!-- Tipo de servicio -->
@@ -45,7 +45,7 @@
         <span class="detail-label">
           {{ 'HISTORY_CARD.TYPE' | translate }}:
         </span>
-        {{ ('SERVICE.' + servicio.tipoServicio) | translate }}
+        {{ ('SERVICE.' + service.serviceType) | translate }}
       </p>
 
       <!-- Servicios extra -->
@@ -53,7 +53,7 @@
         <span class="detail-label">
           {{ 'HISTORY_CARD.EXTRA' | translate }}:
         </span>
-        {{ getExtrasTraducidos(servicio.serviciosExtra).join(' / ') }}
+        {{ getTranslatedExtras(service.extras).join(' / ') }}
       </p>
 
       <!-- Operario -->
@@ -61,10 +61,10 @@
         <span class="detail-label">
           {{ 'HISTORY_CARD.OPERATOR' | translate }}:
         </span>
-        {{ ('ASSIGNMENT.' + servicio.asignacionTipo) | translate }}
+        {{ ('ASSIGNMENT.' + service.assignmentType) | translate }}
 
-        <span *ngIf="servicio.operador">
-          ({{ servicio.operador }})
+        <span *ngIf="service.operator">
+          ({{ service.operator }})
         </span>
       </p>
 
@@ -73,7 +73,7 @@
         <span class="detail-label">
           {{ 'HISTORY_CARD.STATUS' | translate }}:
         </span>
-        {{ ('STATUS.' + servicio.estado) | translate }}
+        {{ ('STATUS.' + service.status) | translate }}
       </p>
 
     </div>
@@ -82,24 +82,24 @@
     <div class="card-actions">
 
       <!-- Pagado -->
-      @if (servicio.pagado) {
-        <button class="btn-pagado">
+      @if (service.paid) {
+        <button class="btn-paid">
           {{ 'HISTORY_CARD.PAID' | translate }}
           <mat-icon>check</mat-icon>
         </button>
       }
 
       <!-- Pendiente -->
-      @if (!servicio.pagado) {
-        <button class="btn-pendiente">
+      @if (!service.paid) {
+        <button class="btn-pending">
           {{ 'HISTORY_CARD.PENDING' | translate }}
           <mat-icon>schedule</mat-icon>
         </button>
       }
 
       <!-- Calificar -->
-      @if (servicio.pagado) {
-        <button class="btn-calificar" (click)="abrirCalificacion(servicio)">
+      @if (service.paid) {
+        <button class="btn-rate" (click)="openRating(service)">
           {{ 'HISTORY_CARD.RATE' | translate }}
           <mat-icon>star_outline</mat-icon>
         </button>

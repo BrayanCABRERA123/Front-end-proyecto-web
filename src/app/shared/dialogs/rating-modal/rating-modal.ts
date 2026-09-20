@@ -23,26 +23,26 @@ export class RatingModalComponent {
     private dialogRef: MatDialogRef<RatingModalComponent>
   ) { }
 
-  cerrarModal(): void {
+  closeModal(): void {
     this.dialogRef.close();
-  } 
+  }
 
   rating = 0;
 
-  comentario = '';
+  comment = '';
 
-  calificar(valor: number): void {
-    this.rating = valor;
+  rate(value: number): void {
+    this.rating = value;
   }
 
-  enviar(): void {
+  submit(): void {
 
     console.log({
       rating: this.rating,
-      comentario: this.comentario
+      comment: this.comment
     });
 
-    this.cerrarModal();
+    this.closeModal();
   }
 
 }
