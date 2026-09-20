@@ -35,24 +35,24 @@
 
     <div class="footer-column">
       <h4 class="footer-column-title">{{ 'FOOTER.COMPANY.TITLE' | translate }}</h4>
-      <a href="#nosotros" class="footer-link">{{ 'FOOTER.COMPANY.ABOUT' | translate }}</a>
-      <a href="#contacto" class="footer-link">{{ 'FOOTER.COMPANY.CAREERS' | translate }}</a>
-      <a href="#contacto" class="footer-link">{{ 'FOOTER.COMPANY.CONTACT' | translate }}</a>
+      <a href="#about" class="footer-link">{{ 'FOOTER.COMPANY.ABOUT' | translate }}</a>
+      <a href="#contact" class="footer-link">{{ 'FOOTER.COMPANY.CAREERS' | translate }}</a>
+      <a href="#contact" class="footer-link">{{ 'FOOTER.COMPANY.CONTACT' | translate }}</a>
     </div>
 
     <div class="footer-column">
       <h4 class="footer-column-title">{{ 'FOOTER.SERVICES_TITLE' | translate }}</h4>
-      <a href="#servicio-basico" class="footer-link">{{ 'SERVICE.BASIC' | translate }}</a>
-      <a href="#servicio-premium" class="footer-link">{{ 'SERVICE.PREMIUM' | translate }}</a>
-      <a href="#servicio-completo" class="footer-link">{{ 'SERVICE.FULL' | translate }}</a>
+      <a href="#service-basic" class="footer-link">{{ 'SERVICE.BASIC' | translate }}</a>
+      <a href="#service-premium" class="footer-link">{{ 'SERVICE.PREMIUM' | translate }}</a>
+      <a href="#service-full" class="footer-link">{{ 'SERVICE.FULL' | translate }}</a>
     </div>
 
     <div class="footer-column">
       <h4 class="footer-column-title">{{ 'FOOTER.SUPPORT.TITLE' | translate }}</h4>
       <a href="#" class="footer-link">{{ 'CONFIG.HELP_CENTER' | translate }}</a>
       <a href="#" class="footer-link">{{ 'FOOTER.SUPPORT.FAQ' | translate }}</a>
-      <a href="#" class="footer-link" (click)="verDocumentoLegal('terms', $event)">{{ 'FOOTER.LEGAL.TERMS' | translate }}</a>
-      <a href="#" class="footer-link" (click)="verDocumentoLegal('privacy', $event)">{{ 'FOOTER.LEGAL.PRIVACY' | translate }}</a>
+      <a href="#" class="footer-link" (click)="viewLegalDocument('terms', $event)">{{ 'FOOTER.LEGAL.TERMS' | translate }}</a>
+      <a href="#" class="footer-link" (click)="viewLegalDocument('privacy', $event)">{{ 'FOOTER.LEGAL.PRIVACY' | translate }}</a>
     </div>
 
   </div>

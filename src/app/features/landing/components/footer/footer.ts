@@ -20,12 +20,12 @@ export class FooterComponent {
   constructor(private dialog: MatDialog) {}
 
   // el visitante puede leer los documentos legales sin necesidad de registrarse
-  verDocumentoLegal(tipo: LegalDocumentType, event: Event): void {
+  viewLegalDocument(type: LegalDocumentType, event: Event): void {
     event.preventDefault();
 
     this.dialog.open(LegalDocumentModal, {
       panelClass: 'custom-dialog',
-      data: { type: tipo, mode: 'view' }
+      data: { type, mode: 'view' }
     });
   }
 }

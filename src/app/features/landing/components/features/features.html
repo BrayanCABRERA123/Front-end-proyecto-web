@@ -1,4 +1,4 @@
-<section id="nosotros" class="features-section">
+<section id="about" class="features-section">
 
   <!-- bloque "quiénes somos": texto + ilustración decorativa + cifras -->
   <div class="about-block">
@@ -41,13 +41,13 @@
   <p class="features-subtitle">{{ 'FEATURES.SUBTITLE' | translate }}</p>
 
   <div class="features-grid">
-    @for (feature of features; track feature.titulo) {
+    @for (feature of features; track feature.title) {
       <div class="feature-card">
         <div class="feature-icon">
-          <mat-icon>{{ feature.icono }}</mat-icon>
+          <mat-icon>{{ feature.icon }}</mat-icon>
         </div>
-        <p class="feature-titulo">{{ feature.titulo | translate }}</p>
-        <p class="feature-descripcion">{{ feature.descripcion | translate }}</p>
+        <p class="feature-title">{{ feature.title | translate }}</p>
+        <p class="feature-description">{{ feature.description | translate }}</p>
       </div>
     }
   </div>

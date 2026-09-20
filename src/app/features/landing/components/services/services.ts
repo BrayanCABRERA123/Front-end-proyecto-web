@@ -15,7 +15,7 @@ export class ServicesComponent {
   // reutiliza las claves SERVICE.* que ya existen en los JSON de idiomas
   plans = [
     {
-      anchorId: 'servicio-basico',
+      anchorId: 'service-basic',
       icon: 'local_car_wash',
       nameKey: 'SERVICE.BASIC',
       descKey: 'SERVICE.BASIC_DESC',
@@ -25,7 +25,7 @@ export class ServicesComponent {
       popular: false
     },
     {
-      anchorId: 'servicio-premium',
+      anchorId: 'service-premium',
       icon: 'workspace_premium',
       nameKey: 'SERVICE.PREMIUM',
       descKey: 'SERVICE.PREMIUM_DESC',
@@ -35,7 +35,7 @@ export class ServicesComponent {
       popular: true
     },
     {
-      anchorId: 'servicio-completo',
+      anchorId: 'service-full',
       icon: 'auto_awesome',
       nameKey: 'SERVICE.FULL',
       descKey: 'SERVICE.FULL_DESC',

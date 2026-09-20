@@ -22,19 +22,19 @@ export class FeaturesComponent {
 
   features = [
     {
-      icono: 'water_drop',
-      titulo: 'FEATURES.ITEMS.ECO.TITLE',
-      descripcion: 'FEATURES.ITEMS.ECO.DESC'
+      icon: 'water_drop',
+      title: 'FEATURES.ITEMS.ECO.TITLE',
+      description: 'FEATURES.ITEMS.ECO.DESC'
     },
     {
-      icono: 'shield',
-      titulo: 'FEATURES.ITEMS.PROTECTION.TITLE',
-      descripcion: 'FEATURES.ITEMS.PROTECTION.DESC'
+      icon: 'shield',
+      title: 'FEATURES.ITEMS.PROTECTION.TITLE',
+      description: 'FEATURES.ITEMS.PROTECTION.DESC'
     },
     {
-      icono: 'star',
-      titulo: 'FEATURES.ITEMS.RATING.TITLE',
-      descripcion: 'FEATURES.ITEMS.RATING.DESC'
+      icon: 'star',
+      title: 'FEATURES.ITEMS.RATING.TITLE',
+      description: 'FEATURES.ITEMS.RATING.DESC'
     }
   ];
 }

@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 .footer {
   padding: 56px 48px 24px;
   background-color: var(--card);
@@ -36,7 +38,7 @@
   gap: 10px;
 
   .logo-img { width: 26px; height: 26px; }
-  .logo-text { font-size: 17px; font-weight: 700; color: var(--text); }
+  .logo-text { font-size: 17px; font-weight: $fw-bold; color: var(--text); }
 }
 
 .footer-description {
@@ -81,7 +83,7 @@
 
 .footer-column-title {
   font-size: 13px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text);

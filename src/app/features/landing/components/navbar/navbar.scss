@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 .navbar {
   position: fixed;
   top: 0;
@@ -34,7 +36,7 @@ body.pink-dark .navbar {
 
   .logo-text {
     font-size: 18px;
-    font-weight: 700;
+    font-weight: $fw-bold;
     color: #1a1a1a;
     letter-spacing: 0.3px;
   }
@@ -57,8 +59,8 @@ body.pink-dark .navbar .logo-text {
 }
 
 .nav-link {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   color: inherit;
   text-decoration: none;
   opacity: 0.75;
@@ -79,8 +81,8 @@ body.pink-dark .navbar .logo-text {
   padding: 10px 20px;
   color: #1a1a1a;
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: $fs-body;
+  font-weight: $fw-medium;
   border-radius: 10px;
   transition: all 0.2s ease;
 
@@ -98,8 +100,8 @@ body.pink-dark .btn-login {
   background-color: var(--primary);
   color: #ffffff;
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   border-radius: 10px;
   transition: all 0.2s ease;
 
@@ -121,7 +123,7 @@ body.pink-dark .btn-login {
   border: 1px solid rgba(0,0,0,0.1);
 
   cursor: pointer;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   font-size: 13px;
 
   backdrop-filter: blur(10px);
@@ -194,16 +196,16 @@ body.pink-dark .lang-btn {
   gap: 10px;
 
   .fi { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
-  strong { font-size: 14px; color: var(--text); }
+  strong { font-size: $fs-body; color: var(--text); }
 }
 
 .lang-sub {
-  font-size: 12px;
+  font-size: $fs-caption;
   color: var(--text-secondary);
 }
 
 .lang-check {
-  font-size: 20px;
+  font-size: $fs-h3;
   color: transparent;
   transition: all 0.2s ease;
 }

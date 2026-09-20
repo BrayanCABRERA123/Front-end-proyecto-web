@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 .contact-section {
   position: relative;
   padding: 80px 48px 96px;
@@ -23,8 +25,8 @@
 }
 
 .contact-eyebrow {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
   letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--primary);
@@ -39,7 +41,7 @@
 }
 
 .contact-subtitle {
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text-secondary);
   margin: 0 0 32px 0;
   text-align: center;
@@ -95,8 +97,8 @@
 }
 
 .contact-label {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   color: var(--text-secondary);
@@ -105,7 +107,7 @@
 
 .contact-value {
   font-size: 14.5px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   color: var(--text);
 }
 
@@ -122,7 +124,7 @@
 
   text-decoration: none;
   font-size: 14.5px;
-  font-weight: 700;
+  font-weight: $fw-bold;
 
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
   transition: all 0.25s ease;

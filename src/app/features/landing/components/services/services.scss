@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 .services-section {
   padding: 80px 48px;
   background-color: var(--bg);
@@ -11,8 +13,8 @@
 }
 
 .services-eyebrow {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
   letter-spacing: 1.2px;
   text-transform: uppercase;
   color: var(--primary);
@@ -27,7 +29,7 @@
 }
 
 .services-subtitle {
-  font-size: 14px;
+  font-size: $fs-body;
   color: var(--text-secondary);
   margin: 0 0 36px 0;
   text-align: center;
@@ -88,7 +90,7 @@
   color: #ffffff;
 
   font-size: 11px;
-  font-weight: 700;
+  font-weight: $fw-bold;
   letter-spacing: 0.4px;
   text-transform: uppercase;
 
@@ -130,8 +132,8 @@
 }
 
 .service-time {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: $fs-caption;
+  font-weight: $fw-medium;
   color: var(--text-secondary);
 }
 
@@ -170,8 +172,8 @@
   color: #ffffff;
 
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: $fs-body;
+  font-weight: $fw-bold;
 
   transition: all 0.2s ease;
 

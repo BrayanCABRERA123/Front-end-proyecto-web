@@ -1,6 +1,8 @@
+@use '../../../../styles/mixins' as *;
+
 .landing-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family-base;
 }

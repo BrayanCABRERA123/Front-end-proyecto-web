@@ -1,3 +1,5 @@
+@use '../../../../../styles/mixins' as *;
+
 .hero-section {
   position: relative;
   min-height: 80vh;
@@ -47,7 +49,7 @@
 
   color: #ffffff;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: $fw-medium;
   width: fit-content;
 
   mat-icon { font-size: 16px; width: 16px; height: 16px; }
@@ -87,8 +89,8 @@
   color: #131C20;
 
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: $fs-body;
+  font-weight: $fw-bold;
   border-radius: 10px;
   transition: all 0.2s ease;
 
@@ -107,8 +109,8 @@
   color: #ffffff;
 
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
   border-radius: 10px;
   border: 1.5px solid rgba(255, 255, 255, 0.5);
 
