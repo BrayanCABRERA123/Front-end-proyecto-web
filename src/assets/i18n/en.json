@@ -1451,5 +1451,94 @@
     "TODAY": "Today",
     "ADD_SERVICE": "Schedule service",
     "FREE_SLOT": "Available"
+  },
+  "ADMIN_PAYMENTS": {
+    "TITLE": "Payment Management & Verification",
+    "SUBTITLE": "Audit bank receipts, validate transfers and control daily collections",
+    "EXPORT": "Export reconciliation",
+    "REGISTER_MANUAL": "Register manual payment",
+    "STATS": {
+      "PENDING": "Pending review",
+      "PENDING_NOTE": "Priority attention",
+      "APPROVED_TODAY": "Approved today",
+      "REJECTED": "Rejected / inconsistent",
+      "REJECTED_NOTE": "Invalid receipt",
+      "TOTAL_COLLECTED": "Total collected (day)",
+      "TRANSACTIONS_NOTE": "{{count}} transactions"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Search by client, document or reference...",
+      "ALL_METHODS": "Method: All",
+      "ALL_STATUSES": "All statuses",
+      "PENDING_ONLY": "Pending validation",
+      "ACTIVE_FILTER": "Active filter",
+      "CLEAR_FILTERS": "Clear filters"
+    },
+    "TABLE": {
+      "CLIENT": "Client",
+      "REFERENCE": "Reference / receipt",
+      "METHOD": "Payment method",
+      "AMOUNT": "Amount",
+      "DATE_TIME": "Date / time",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    },
+    "STATUS": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "ACTIONS": {
+      "review": "Review",
+      "receipt": "Receipt",
+      "view_reason": "View reason"
+    },
+    "PAGINATION": {
+      "SHOWING": "Showing {{from}} to {{to}} of {{total}} transactions",
+      "PAGE_OF": "Page {{current}} of {{total}}",
+      "PREVIOUS": "Previous",
+      "NEXT": "Next"
+    }
+  },
+  "PAYMENT_REVIEW_MODAL": {
+    "TITLE": "Review payment {{code}}",
+    "SUBTITLE": "Compare the receipt submitted by the client against the booking details",
+    "RECEIPT_ATTACHED": "Attached receipt",
+    "LINKED_BOOKING": "Linked booking",
+    "SERVICE_VEHICLE": "Service & vehicle",
+    "SCHEDULE_BAY": "Schedule & bay",
+    "OPERATOR": "Operator",
+    "BANK_RECONCILIATION": "Bank reconciliation details",
+    "VERIFIED_NOTE": "Verified against gateway",
+    "METHOD": "Payment method",
+    "TRANSACTION_REFERENCE": "Transaction reference",
+    "COPY": "Copy",
+    "COPIED": "Copied",
+    "AMOUNT_COMPARISON": "Amount comparison",
+    "AMOUNT_TO_PAY": "Amount due (service)",
+    "AMOUNT_DECLARED": "Amount declared on receipt",
+    "MATCH_TITLE": "The amounts match exactly!",
+    "MATCH_TEXT": "The payment covers 100% of the official rate agreed for the booking.",
+    "MATCH_BADGE": "Compliant (0% difference)",
+    "MISMATCH_TITLE": "The amounts don't match",
+    "MISMATCH_TEXT": "Review the receipt before approving this payment.",
+    "AUDITED_BY": "Reviewed by",
+    "CANCEL": "Cancel",
+    "REJECT": "Reject",
+    "APPROVE": "Approve payment",
+    "REJECT_REASON_LABEL": "Rejection reason",
+    "REJECT_REASON_PLACEHOLDER": "E.g. The amount doesn't match the service price"
+  },
+  "MANUAL_PAYMENT_MODAL": {
+    "TITLE": "Register manual payment",
+    "SUBTITLE": "Use this when a client paid at the counter and it wasn't logged by the app",
+    "CLIENT_LABEL": "Client",
+    "CLIENT_PLACEHOLDER": "Client name",
+    "SERVICE_LABEL": "Service",
+    "SERVICE_PLACEHOLDER": "E.g. Basic Wash",
+    "AMOUNT_LABEL": "Amount (COP)",
+    "METHOD_LABEL": "Payment method",
+    "CANCEL": "Cancel",
+    "REGISTER": "Register payment"
   }
 }

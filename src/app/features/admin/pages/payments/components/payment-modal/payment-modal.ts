@@ -1,18 +1,17 @@
-// modal para registrar un pago manual
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
-// mismos valores que MetodoPago en payments.ts, para no duplicar tipos incompatibles
-export type MetodoPago = 'CREDIT_CARD' | 'BANK_TRANSFER' | 'PAYPAL' | 'CASH';
+import { PaymentMethod } from '../../../../../../shared/dialogs/payment-review-modal/payment-review.model';
 
-// forma de los datos que emite el modal al registrar un pago
-export interface PagoManual {
-  cliente: string;
-  servicio: string;
-  monto: number;
-  metodoPago: MetodoPago;
+// lo que este modal devuelve cuando el admin registra el pago
+export interface ManualPaymentResult {
+  client: string;
+  service: string;
+  amount: number;
+  method: PaymentMethod;
 }
 
 @Component({
@@ -23,42 +22,43 @@ export interface PagoManual {
   styleUrl: './payment-modal.scss'
 })
 export class PaymentModalComponent {
-  @Input() abierto = false;
 
-  @Output() cerrar = new EventEmitter<void>();
-  @Output() registrarPago = new EventEmitter<PagoManual>();
-
-  readonly metodos: { value: MetodoPago; label: string }[] = [
-    { value: 'CASH', label: 'Efectivo' },
-    { value: 'CREDIT_CARD', label: 'Tarjeta de Crédito' },
-    { value: 'BANK_TRANSFER', label: 'Transferencia Bancaria' },
-    { value: 'PAYPAL', label: 'PayPal' }
+  // los mismos 4 métodos que se usan en el resto de la app (nada de tarjeta/PayPal,
+  // acá se paga por QR con Nequi/Daviplata/transferencia o en efectivo)
+  methods: { value: PaymentMethod; label: string }[] = [
+    { value: 'cash', label: 'Efectivo' },
+    { value: 'nequi', label: 'Nequi' },
+    { value: 'daviplata', label: 'Daviplata' },
+    { value: 'bancolombia', label: 'Transferencia Bancolombia' },
   ];
 
-  form: PagoManual = this.formVacio();
+  client = '';
+  service = '';
+  amount: number | null = null;
+  method: PaymentMethod = 'cash';
 
-  private formVacio(): PagoManual {
-    return { cliente: '', servicio: '', monto: 0, metodoPago: 'CASH' };
+  constructor(private dialogRef: MatDialogRef<PaymentModalComponent>) {}
+
+  get canRegister(): boolean {
+    return this.client.trim().length > 0
+      && this.service.trim().length > 0
+      && !!this.amount && this.amount > 0;
   }
 
-  onCancelar(): void {
-    this.form = this.formVacio();
-    this.cerrar.emit();
+  close(): void {
+    this.dialogRef.close(null);
   }
 
-  onSubmit(ngForm: NgForm): void {
-    if (ngForm.invalid || this.form.monto <= 0) {
-      Object.values(ngForm.controls).forEach(control => control.markAsTouched());
-      return;
-    }
-    this.registrarPago.emit({ ...this.form });
-    this.form = this.formVacio();
-    ngForm.resetForm();
-  }
+  register(): void {
+    if (!this.canRegister) return;
 
-  onOverlayClick(event: MouseEvent): void {
-    if (event.target === event.currentTarget) {
-      this.onCancelar();
-    }
+    const result: ManualPaymentResult = {
+      client: this.client.trim(),
+      service: this.service.trim(),
+      amount: this.amount ?? 0,
+      method: this.method
+    };
+
+    this.dialogRef.close(result);
   }
 }

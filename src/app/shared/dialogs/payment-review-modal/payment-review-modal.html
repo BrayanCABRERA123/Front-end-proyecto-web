@@ -1,0 +1,169 @@
+<div class="review-dialog">
+
+  <div class="review-header">
+    <div class="review-header__text">
+      <div class="title-row">
+        <h2>{{ 'PAYMENT_REVIEW_MODAL.TITLE' | translate:{ code: data.code } }}</h2>
+        <span [class]="'status-pill status-pill--' + data.status">
+          {{ ('ADMIN_PAYMENTS.STATUS.' + data.status) | translate }}
+        </span>
+      </div>
+      <p>{{ 'PAYMENT_REVIEW_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+    <button class="close-x" type="button" (click)="close()" aria-label="close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="review-body">
+
+    <div class="review-columns">
+
+      <!-- comprobante (representación visual, no es una imagen real) -->
+      <div class="receipt-column">
+        <span class="eyebrow">{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_ATTACHED' | translate }}</span>
+
+        <div class="receipt-mock" [attr.data-method]="data.method">
+
+          @switch (data.method) {
+            @case ('nequi') { <div class="receipt-mock__brand">Nequi Colombia</div> }
+            @case ('daviplata') { <div class="receipt-mock__brand">Daviplata</div> }
+            @case ('bancolombia') { <div class="receipt-mock__brand">Bancolombia</div> }
+            @default { <div class="receipt-mock__brand">Pago en efectivo</div> }
+          }
+
+          <mat-icon class="receipt-mock__check">check_circle</mat-icon>
+          <span class="receipt-mock__amount">{{ cop(data.amountDeclared) }},00</span>
+
+          <div class="receipt-mock__details">
+            <div><span>Para</span><strong>Express Car Wash S.A.S.</strong></div>
+            <div><span>NIT / Celular</span><strong>{{ data.bankAccount }}</strong></div>
+            <div><span>Referencia</span><strong>{{ data.transactionReference }}</strong></div>
+            <div><span>Fecha y hora</span><strong>{{ data.receiptDate }}</strong></div>
+          </div>
+
+          <div class="receipt-mock__barcode"></div>
+        </div>
+      </div>
+
+      <!-- info del cliente / cita / conciliación -->
+      <div class="details-column">
+
+        <div class="info-block">
+          <div class="info-block__top">
+            <strong>{{ data.client }}</strong>
+            <span class="booking-chip">{{ 'PAYMENT_REVIEW_MODAL.LINKED_BOOKING' | translate }}: {{ data.bookingCode }}</span>
+          </div>
+          <span class="muted">{{ data.phone }} · {{ data.email }}</span>
+        </div>
+
+        <div class="info-grid">
+          <div>
+            <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.SERVICE_VEHICLE' | translate }}</span>
+            <strong>{{ data.service }}</strong>
+            <span class="muted">{{ data.vehicle }} · {{ data.plate }}</span>
+          </div>
+          <div>
+            <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.SCHEDULE_BAY' | translate }}</span>
+            <strong>{{ data.scheduleLabel }}</strong>
+            <span class="muted">{{ data.bay }} · {{ 'PAYMENT_REVIEW_MODAL.OPERATOR' | translate }}: {{ data.operator }}</span>
+          </div>
+        </div>
+
+        <div class="reconciliation-block">
+          <div class="reconciliation-block__top">
+            <span class="field-label">{{ 'PAYMENT_REVIEW_MODAL.BANK_RECONCILIATION' | translate }}</span>
+            <span class="muted-chip">{{ 'PAYMENT_REVIEW_MODAL.VERIFIED_NOTE' | translate }}</span>
+          </div>
+
+          <div class="info-grid">
+            <div>
+              <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.METHOD' | translate }}</span>
+              <strong class="capitalize">{{ data.method }}</strong>
+            </div>
+            <div>
+              <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.TRANSACTION_REFERENCE' | translate }}</span>
+              <strong>{{ data.transactionReference }}</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="amount-block">
+          <span class="field-label">{{ 'PAYMENT_REVIEW_MODAL.AMOUNT_COMPARISON' | translate }}</span>
+
+          <div class="info-grid">
+            <div>
+              <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.AMOUNT_TO_PAY' | translate }}</span>
+              <strong>{{ cop(data.amountDue) }} COP</strong>
+            </div>
+            <div>
+              <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.AMOUNT_DECLARED' | translate }}</span>
+              <strong>{{ cop(data.amountDeclared) }} COP</strong>
+            </div>
+          </div>
+
+          @if (amountsMatch) {
+            <div class="match-box match-box--ok">
+              <mat-icon>check_circle</mat-icon>
+              <div>
+                <strong>{{ 'PAYMENT_REVIEW_MODAL.MATCH_TITLE' | translate }}</strong>
+                <p>{{ 'PAYMENT_REVIEW_MODAL.MATCH_TEXT' | translate }}</p>
+              </div>
+              <span class="match-badge">{{ 'PAYMENT_REVIEW_MODAL.MATCH_BADGE' | translate }}</span>
+            </div>
+          } @else {
+            <div class="match-box match-box--fail">
+              <mat-icon>error</mat-icon>
+              <div>
+                <strong>{{ 'PAYMENT_REVIEW_MODAL.MISMATCH_TITLE' | translate }}</strong>
+                <p>{{ 'PAYMENT_REVIEW_MODAL.MISMATCH_TEXT' | translate }}</p>
+              </div>
+              <span class="match-badge match-badge--fail">{{ differencePercent }}%</span>
+            </div>
+          }
+        </div>
+
+        @if (askingRejectReason) {
+          <div class="reject-reason">
+            <label>{{ 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL' | translate }}</label>
+            <textarea
+              rows="2"
+              [(ngModel)]="rejectReason"
+              [placeholder]="'PAYMENT_REVIEW_MODAL.REJECT_REASON_PLACEHOLDER' | translate">
+            </textarea>
+          </div>
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="review-footer">
+    <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.AUDITED_BY' | translate }}: Laura Méndez</span>
+
+    <div class="review-footer__actions">
+      @if (askingRejectReason) {
+        <button class="btn-outline" type="button" (click)="askingRejectReason = false">
+          {{ 'PAYMENT_REVIEW_MODAL.CANCEL' | translate }}
+        </button>
+        <button class="btn-reject" type="button" [disabled]="!rejectReason.trim()" (click)="confirmReject()">
+          {{ 'PAYMENT_REVIEW_MODAL.REJECT' | translate }}
+        </button>
+      } @else {
+        <button class="btn-outline" type="button" (click)="close()">
+          {{ 'PAYMENT_REVIEW_MODAL.CANCEL' | translate }}
+        </button>
+        <button class="btn-reject" type="button" (click)="startReject()">
+          {{ 'PAYMENT_REVIEW_MODAL.REJECT' | translate }}
+        </button>
+        <button class="btn-approve" type="button" (click)="approve()">
+          <mat-icon>check</mat-icon>
+          {{ 'PAYMENT_REVIEW_MODAL.APPROVE' | translate }}
+        </button>
+      }
+    </div>
+  </div>
+
+</div>

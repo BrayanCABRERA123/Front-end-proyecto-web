@@ -1451,5 +1451,94 @@
     "TODAY": "Aujourd'hui",
     "ADD_SERVICE": "Planifier un service",
     "FREE_SLOT": "Disponible"
+  },
+  "ADMIN_PAYMENTS": {
+    "TITLE": "Gestion et vérification des paiements",
+    "SUBTITLE": "Auditez les justificatifs bancaires, validez les virements et contrôlez les recouvrements quotidiens",
+    "EXPORT": "Exporter la conciliation",
+    "REGISTER_MANUAL": "Enregistrer un paiement manuel",
+    "STATS": {
+      "PENDING": "En attente de vérification",
+      "PENDING_NOTE": "Attention prioritaire",
+      "APPROVED_TODAY": "Approuvés aujourd'hui",
+      "REJECTED": "Rejetés / incohérents",
+      "REJECTED_NOTE": "Justificatif invalide",
+      "TOTAL_COLLECTED": "Total encaissé (jour)",
+      "TRANSACTIONS_NOTE": "{{count}} transactions"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Rechercher par client, document ou référence...",
+      "ALL_METHODS": "Méthode : Toutes",
+      "ALL_STATUSES": "Tous les statuts",
+      "PENDING_ONLY": "En attente de validation",
+      "ACTIVE_FILTER": "Filtre actif",
+      "CLEAR_FILTERS": "Effacer les filtres"
+    },
+    "TABLE": {
+      "CLIENT": "Client",
+      "REFERENCE": "Référence / justificatif",
+      "METHOD": "Méthode de paiement",
+      "AMOUNT": "Montant",
+      "DATE_TIME": "Date / heure",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions"
+    },
+    "STATUS": {
+      "pending": "En attente",
+      "approved": "Approuvé",
+      "rejected": "Rejeté"
+    },
+    "ACTIONS": {
+      "review": "Vérifier",
+      "receipt": "Reçu",
+      "view_reason": "Voir le motif"
+    },
+    "PAGINATION": {
+      "SHOWING": "Affichage de {{from}} à {{to}} sur {{total}} transactions",
+      "PAGE_OF": "Page {{current}} sur {{total}}",
+      "PREVIOUS": "Précédent",
+      "NEXT": "Suivant"
+    }
+  },
+  "PAYMENT_REVIEW_MODAL": {
+    "TITLE": "Vérifier le paiement {{code}}",
+    "SUBTITLE": "Comparez le justificatif envoyé par le client avec les données de la réservation",
+    "RECEIPT_ATTACHED": "Justificatif joint",
+    "LINKED_BOOKING": "Réservation liée",
+    "SERVICE_VEHICLE": "Service et véhicule",
+    "SCHEDULE_BAY": "Horaire et baie",
+    "OPERATOR": "Opérateur",
+    "BANK_RECONCILIATION": "Données de rapprochement bancaire",
+    "VERIFIED_NOTE": "Vérifié auprès de la passerelle",
+    "METHOD": "Méthode de paiement",
+    "TRANSACTION_REFERENCE": "Référence de transaction",
+    "COPY": "Copier",
+    "COPIED": "Copié",
+    "AMOUNT_COMPARISON": "Comparaison des montants",
+    "AMOUNT_TO_PAY": "Montant dû (service)",
+    "AMOUNT_DECLARED": "Montant déclaré sur le justificatif",
+    "MATCH_TITLE": "Les montants correspondent exactement !",
+    "MATCH_TEXT": "Le paiement couvre 100 % du tarif officiel convenu pour la réservation.",
+    "MATCH_BADGE": "Conforme (0% d'écart)",
+    "MISMATCH_TITLE": "Les montants ne correspondent pas",
+    "MISMATCH_TEXT": "Vérifiez le justificatif avant d'approuver ce paiement.",
+    "AUDITED_BY": "Vérifié par",
+    "CANCEL": "Annuler",
+    "REJECT": "Rejeter",
+    "APPROVE": "Approuver le paiement",
+    "REJECT_REASON_LABEL": "Motif du rejet",
+    "REJECT_REASON_PLACEHOLDER": "Ex. Le montant ne correspond pas au prix du service"
+  },
+  "MANUAL_PAYMENT_MODAL": {
+    "TITLE": "Enregistrer un paiement manuel",
+    "SUBTITLE": "À utiliser quand un client a payé en caisse et que ce n'a pas été enregistré par l'application",
+    "CLIENT_LABEL": "Client",
+    "CLIENT_PLACEHOLDER": "Nom du client",
+    "SERVICE_LABEL": "Service",
+    "SERVICE_PLACEHOLDER": "Ex. Lavage basique",
+    "AMOUNT_LABEL": "Montant (COP)",
+    "METHOD_LABEL": "Méthode de paiement",
+    "CANCEL": "Annuler",
+    "REGISTER": "Enregistrer le paiement"
   }
 }

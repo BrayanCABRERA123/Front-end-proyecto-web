@@ -1,124 +1,144 @@
 <div class="home-layout">
-
-  <!-- Sidebar izquierdo -->
   <app-sidebar rol="ADMIN"></app-sidebar>
 
-  <!-- Contenido principal derecho -->
   <main class="home-content">
 
-    <div class="payments-header">
-      <div class="header-icon"><mat-icon>check_circle</mat-icon></div>
-      <div>
-        <h1>{{ 'PAYMENTS.TITLE' | translate }}</h1>
-        <p>{{ 'PAYMENTS.SUBTITLE' | translate }}</p>
+    <!-- encabezado -->
+    <div class="page-header">
+      <div class="page-header__left">
+        <div class="header-icon"><mat-icon>account_balance_wallet</mat-icon></div>
+        <div>
+          <h1>{{ 'ADMIN_PAYMENTS.TITLE' | translate }}</h1>
+          <p>{{ 'ADMIN_PAYMENTS.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="page-header__actions">
+        <button class="btn-outline">
+          <mat-icon>download</mat-icon>
+          {{ 'ADMIN_PAYMENTS.EXPORT' | translate }}
+        </button>
+        <button class="btn-primary" (click)="openManualModal()">
+          <mat-icon>add</mat-icon>
+          {{ 'ADMIN_PAYMENTS.REGISTER_MANUAL' | translate }}
+        </button>
       </div>
     </div>
 
-    <!-- Tarjetas de estadísticas -->
+    <!-- stats -->
     <div class="stats-grid">
 
       <div class="card stat-card">
-        <div>
-          <p class="stat-label">{{ 'PAYMENTS.STATS.TOTAL_COLLECTED' | translate }}</p>
-          <p class="stat-valor">${{ totalRecaudado | number }}</p>
-        </div>
-        <div class="stat-icon stat-icon-primary"><mat-icon>attach_money</mat-icon></div>
+        <p class="stat-label">{{ 'ADMIN_PAYMENTS.STATS.PENDING' | translate }}</p>
+        <p class="stat-value">{{ stats.pending }}</p>
+        <span class="badge badge--warning">{{ 'ADMIN_PAYMENTS.STATS.PENDING_NOTE' | translate }}</span>
       </div>
 
       <div class="card stat-card">
-        <div>
-          <p class="stat-label">{{ 'PAYMENTS.STATS.VERIFIED' | translate }}</p>
-          <p class="stat-valor">{{ pagosVerificados }}</p>
-        </div>
-        <div class="stat-icon stat-icon-primary"><mat-icon>check_circle</mat-icon></div>
+        <p class="stat-label">{{ 'ADMIN_PAYMENTS.STATS.APPROVED_TODAY' | translate }}</p>
+        <p class="stat-value">{{ stats.approvedToday }}</p>
+        <span class="badge badge--success">{{ cop(stats.approvedAmount) }} COP</span>
       </div>
 
       <div class="card stat-card">
-        <div>
-          <p class="stat-label">{{ 'PAYMENTS.STATS.PENDING' | translate }}</p>
-          <p class="stat-valor">{{ pagosPendientes }}</p>
-        </div>
-        <div class="stat-icon stat-icon-warning"><mat-icon>credit_card</mat-icon></div>
+        <p class="stat-label">{{ 'ADMIN_PAYMENTS.STATS.REJECTED' | translate }}</p>
+        <p class="stat-value">{{ stats.rejected }}</p>
+        <span class="badge badge--error">{{ 'ADMIN_PAYMENTS.STATS.REJECTED_NOTE' | translate }}</span>
+      </div>
+
+      <div class="card stat-card">
+        <p class="stat-label">{{ 'ADMIN_PAYMENTS.STATS.TOTAL_COLLECTED' | translate }}</p>
+        <p class="stat-value">{{ cop(stats.totalCollected) }}</p>
+        <span class="badge badge--primary">{{ 'ADMIN_PAYMENTS.STATS.TRANSACTIONS_NOTE' | translate:{ count: stats.transactionsCount } }}</span>
       </div>
 
     </div>
 
-    <!-- Filtros por rango de fechas -->
+    <!-- filtros -->
     <div class="card filters-card">
 
-      <div class="form-group">
-        <label><mat-icon>calendar_today</mat-icon> {{ 'PAYMENTS.FILTERS.FROM' | translate }}</label>
-        <input type="date" class="form-input" [(ngModel)]="filtroDesde" />
+      <div class="search-box">
+        <mat-icon>search</mat-icon>
+        <input type="text" [(ngModel)]="search" [placeholder]="'ADMIN_PAYMENTS.FILTERS.SEARCH_PLACEHOLDER' | translate">
       </div>
 
-      <div class="form-group">
-        <label><mat-icon>calendar_today</mat-icon> {{ 'PAYMENTS.FILTERS.TO' | translate }}</label>
-        <input type="date" class="form-input" [(ngModel)]="filtroHasta" />
-      </div>
+      <select [(ngModel)]="methodFilter">
+        <option value="">{{ 'ADMIN_PAYMENTS.FILTERS.ALL_METHODS' | translate }}</option>
+        <option value="nequi">Nequi</option>
+        <option value="daviplata">Daviplata</option>
+        <option value="bancolombia">Bancolombia</option>
+        <option value="cash">Efectivo</option>
+      </select>
 
-      <button class="btn-outline" (click)="aplicarFiltros()">{{ 'PAYMENTS.FILTERS.APPLY' | translate }}</button>
+      <select [(ngModel)]="statusFilter">
+        <option value="">{{ 'ADMIN_PAYMENTS.FILTERS.ALL_STATUSES' | translate }}</option>
+        <option value="pending">{{ 'ADMIN_PAYMENTS.FILTERS.PENDING_ONLY' | translate }}</option>
+        <option value="approved">{{ 'ADMIN_PAYMENTS.STATUS.approved' | translate }}</option>
+        <option value="rejected">{{ 'ADMIN_PAYMENTS.STATUS.rejected' | translate }}</option>
+      </select>
 
-      <button class="btn-primary btn-manual" (click)="registroManual()">
-        <mat-icon>add</mat-icon>
-        {{ 'PAYMENTS.FILTERS.MANUAL_REGISTER' | translate }}
+      <button class="btn-outline" (click)="clearFilters()">
+        {{ 'ADMIN_PAYMENTS.FILTERS.CLEAR_FILTERS' | translate }}
       </button>
 
     </div>
 
-    <!-- Lista de pagos -->
+    <!-- tabla -->
     <div class="card table-card">
-      <h2>{{ 'PAYMENTS.LIST_TITLE' | translate }}</h2>
-
       <div class="table-wrapper">
-        <table class="payments-table">
+        <table>
           <thead>
             <tr>
-              <th>{{ 'PAYMENTS.TABLE.PAYMENT_ID' | translate }}</th>
-              <th>{{ 'PAYMENTS.TABLE.SERVICE' | translate }}</th>
-              <th>{{ 'PAYMENTS.TABLE.AMOUNT' | translate }}</th>
-              <th>{{ 'PAYMENTS.TABLE.METHOD' | translate }}</th>
-              <th>{{ 'PAYMENTS.TABLE.DATE' | translate }}</th>
-              <th>{{ 'PAYMENTS.TABLE.CLIENT' | translate }}</th>
-              <th>{{ 'PAYMENTS.TABLE.ACTIONS' | translate }}</th>
+              <th>{{ 'ADMIN_PAYMENTS.TABLE.CLIENT' | translate }}</th>
+              <th>{{ 'ADMIN_PAYMENTS.TABLE.REFERENCE' | translate }}</th>
+              <th>{{ 'ADMIN_PAYMENTS.TABLE.METHOD' | translate }}</th>
+              <th>{{ 'ADMIN_PAYMENTS.TABLE.AMOUNT' | translate }}</th>
+              <th>{{ 'ADMIN_PAYMENTS.TABLE.DATE_TIME' | translate }}</th>
+              <th>{{ 'ADMIN_PAYMENTS.TABLE.STATUS' | translate }}</th>
+              <th>{{ 'ADMIN_PAYMENTS.TABLE.ACTIONS' | translate }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let pago of pagos">
-              <td>{{ pago.id }}</td>
-              <td>{{ pago.servicio }}</td>
-              <td class="monto">${{ pago.monto }}</td>
-              <td>
-                <span class="metodo-badge" [ngClass]="claseMetodo(pago.metodoPago)">
-                  <mat-icon>{{ iconoMetodo(pago.metodoPago) }}</mat-icon>
-                  {{ ('PAYMENTS.METHODS.' + pago.metodoPago) | translate }}
-                </span>
-              </td>
-              <td>{{ pago.fecha }}</td>
-              <td>{{ pago.cliente }}</td>
-              <td>
-                <button *ngIf="!pago.verificado" class="btn-verify" (click)="verificarPago(pago)">
-                  <mat-icon>check</mat-icon>
-                  {{ 'PAYMENTS.STATUS.VERIFY' | translate }}
-                </button>
-                <span *ngIf="pago.verificado" class="badge-verified">
-                  <mat-icon>check</mat-icon>
-                  {{ 'PAYMENTS.STATUS.VERIFIED' | translate }}
-                </span>
-              </td>
-            </tr>
+            @for (p of filteredPayments; track p.code) {
+              <tr>
+                <td>
+                  <strong>{{ p.client }}</strong>
+                  <span class="muted">{{ p.phone }}</span>
+                </td>
+                <td>
+                  <strong>{{ p.code }}</strong>
+                  <span class="muted">{{ p.reference }}</span>
+                </td>
+                <td><span [class]="'method-chip method-chip--' + p.method">{{ p.method }}</span></td>
+                <td class="amount-cell">{{ cop(p.amount) }} <span class="muted">COP</span></td>
+                <td>
+                  <strong>{{ p.date }}, {{ p.time }}</strong>
+                  <span class="muted">{{ p.service }}</span>
+                </td>
+                <td>
+                  <span [class]="'status-pill status-pill--' + p.status">
+                    {{ ('ADMIN_PAYMENTS.STATUS.' + p.status) | translate }}
+                  </span>
+                </td>
+                <td class="actions-cell">
+                  @if (p.status === 'pending') {
+                    <button class="btn-review" (click)="openReview(p)">{{ 'ADMIN_PAYMENTS.ACTIONS.review' | translate }}</button>
+                  } @else if (p.status === 'approved') {
+                    <button class="btn-outline btn-sm" (click)="openReview(p)">{{ 'ADMIN_PAYMENTS.ACTIONS.receipt' | translate }}</button>
+                  } @else {
+                    <button class="btn-outline btn-sm btn-sm--danger" (click)="viewRejectionReason(p)">{{ 'ADMIN_PAYMENTS.ACTIONS.view_reason' | translate }}</button>
+                  }
+                </td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
 
+      <div class="pagination-line muted">
+        {{ 'ADMIN_PAYMENTS.PAGINATION.SHOWING' | translate:{ from: 1, to: filteredPayments.length, total: filteredPayments.length } }}
+      </div>
     </div>
 
-    <!-- Modal de registro manual de pago -->
-    <app-payment-modal
-      [abierto]="modalAbierto"
-      (cerrar)="cerrarModal()"
-      (registrarPago)="onRegistrarPago($event)">
-    </app-payment-modal>
-
   </main>
-
 </div>

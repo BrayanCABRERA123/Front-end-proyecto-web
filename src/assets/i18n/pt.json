@@ -1451,5 +1451,94 @@
     "TODAY": "Hoje",
     "ADD_SERVICE": "Agendar serviço",
     "FREE_SLOT": "Disponível"
+  },
+  "ADMIN_PAYMENTS": {
+    "TITLE": "Gestão e Verificação de Pagamentos",
+    "SUBTITLE": "Audite comprovantes bancários, valide transferências e controle os recebimentos diários",
+    "EXPORT": "Exportar conciliação",
+    "REGISTER_MANUAL": "Registrar pagamento manual",
+    "STATS": {
+      "PENDING": "Pendentes de revisão",
+      "PENDING_NOTE": "Atenção prioritária",
+      "APPROVED_TODAY": "Aprovados hoje",
+      "REJECTED": "Rejeitados / inconsistentes",
+      "REJECTED_NOTE": "Comprovante inválido",
+      "TOTAL_COLLECTED": "Total recebido (dia)",
+      "TRANSACTIONS_NOTE": "{{count}} transações"
+    },
+    "FILTERS": {
+      "SEARCH_PLACEHOLDER": "Buscar por cliente, documento ou referência...",
+      "ALL_METHODS": "Método: Todos",
+      "ALL_STATUSES": "Todos os status",
+      "PENDING_ONLY": "Pendente de validação",
+      "ACTIVE_FILTER": "Filtro ativo",
+      "CLEAR_FILTERS": "Limpar filtros"
+    },
+    "TABLE": {
+      "CLIENT": "Cliente",
+      "REFERENCE": "Referência / comprovante",
+      "METHOD": "Método de pagamento",
+      "AMOUNT": "Valor",
+      "DATE_TIME": "Data / hora",
+      "STATUS": "Status",
+      "ACTIONS": "Ações"
+    },
+    "STATUS": {
+      "pending": "Pendente",
+      "approved": "Aprovado",
+      "rejected": "Rejeitado"
+    },
+    "ACTIONS": {
+      "review": "Revisar",
+      "receipt": "Recibo",
+      "view_reason": "Ver motivo"
+    },
+    "PAGINATION": {
+      "SHOWING": "Mostrando {{from}} a {{to}} de {{total}} transações",
+      "PAGE_OF": "Página {{current}} de {{total}}",
+      "PREVIOUS": "Anterior",
+      "NEXT": "Próxima"
+    }
+  },
+  "PAYMENT_REVIEW_MODAL": {
+    "TITLE": "Revisar pagamento {{code}}",
+    "SUBTITLE": "Compare o comprovante enviado pelo cliente com os dados registrados na reserva",
+    "RECEIPT_ATTACHED": "Comprovante anexado",
+    "LINKED_BOOKING": "Reserva vinculada",
+    "SERVICE_VEHICLE": "Serviço e veículo",
+    "SCHEDULE_BAY": "Horário e baia",
+    "OPERATOR": "Operador",
+    "BANK_RECONCILIATION": "Dados de conciliação bancária",
+    "VERIFIED_NOTE": "Verificado com a operadora",
+    "METHOD": "Método de pagamento",
+    "TRANSACTION_REFERENCE": "Referência da transação",
+    "COPY": "Copiar",
+    "COPIED": "Copiado",
+    "AMOUNT_COMPARISON": "Comparação de valores",
+    "AMOUNT_TO_PAY": "Valor a pagar (serviço)",
+    "AMOUNT_DECLARED": "Valor declarado no comprovante",
+    "MATCH_TITLE": "Os valores coincidem exatamente!",
+    "MATCH_TEXT": "O pagamento cobre 100% da tarifa oficial combinada na reserva.",
+    "MATCH_BADGE": "Conforme (0% de diferença)",
+    "MISMATCH_TITLE": "Os valores não coincidem",
+    "MISMATCH_TEXT": "Revise o comprovante antes de aprovar este pagamento.",
+    "AUDITED_BY": "Auditado por",
+    "CANCEL": "Cancelar",
+    "REJECT": "Rejeitar",
+    "APPROVE": "Aprovar pagamento",
+    "REJECT_REASON_LABEL": "Motivo da rejeição",
+    "REJECT_REASON_PLACEHOLDER": "Ex. O valor não corresponde ao preço do serviço"
+  },
+  "MANUAL_PAYMENT_MODAL": {
+    "TITLE": "Registrar pagamento manual",
+    "SUBTITLE": "Use quando um cliente pagou no caixa e isso não foi registrado pelo aplicativo",
+    "CLIENT_LABEL": "Cliente",
+    "CLIENT_PLACEHOLDER": "Nome do cliente",
+    "SERVICE_LABEL": "Serviço",
+    "SERVICE_PLACEHOLDER": "Ex. Lavagem Básica",
+    "AMOUNT_LABEL": "Valor (COP)",
+    "METHOD_LABEL": "Método de pagamento",
+    "CANCEL": "Cancelar",
+    "REGISTER": "Registrar pagamento"
   }
 }

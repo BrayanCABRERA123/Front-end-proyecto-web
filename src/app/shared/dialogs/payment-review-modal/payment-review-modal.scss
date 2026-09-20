@@ -1,0 +1,282 @@
+@use '../../../../styles/mixins' as *;
+
+.review-dialog {
+  background: var(--card);
+  color: var(--text);
+  border-radius: 16px;
+  width: min(760px, 92vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid var(--border);
+
+  &__text p { @include caption-text; color: var(--text-secondary); margin: 4px 0 0; }
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  h2 { @include subtitle; color: var(--text); font-weight: $fw-bold; margin: 0; }
+}
+
+.close-x {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+
+  &:hover { color: var(--text); }
+}
+
+.review-body {
+  overflow-y: auto;
+  padding: 16px 20px;
+  flex: 1;
+}
+
+.review-columns {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 20px;
+}
+
+.eyebrow, .field-label {
+  display: block;
+  font-size: 11px;
+  font-weight: $fw-semibold;
+  letter-spacing: .03em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* comprobante simulado */
+.receipt-mock {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+
+  &__brand { @include caption-text; font-weight: $fw-bold; color: var(--text-secondary); }
+  &__check { color: var(--success); font-size: 32px; width: 32px; height: 32px; margin: 4px 0; }
+  &__amount { @include heading-2; color: var(--text); }
+
+  &__details {
+    width: 100%;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+
+    div { display: flex; justify-content: space-between; gap: 8px; }
+    span { @include caption-text; color: var(--text-secondary); }
+    strong { @include caption-text; color: var(--text); font-weight: $fw-semibold; }
+  }
+
+  &__barcode {
+    width: 100%;
+    height: 28px;
+    margin-top: 12px;
+    border-radius: 4px;
+    background: repeating-linear-gradient(90deg, var(--text) 0 2px, transparent 2px 5px);
+    opacity: .4;
+  }
+}
+
+/* columna de detalles */
+.details-column { display: flex; flex-direction: column; gap: 14px; }
+
+.info-block {
+  &__top { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+  strong { @include body-text-bold; color: var(--text); }
+}
+
+.booking-chip {
+  font-size: 11px;
+  font-weight: $fw-semibold;
+  color: var(--primary);
+  background: var(--primary-soft);
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.muted { @include caption-text; color: var(--text-secondary); }
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  div { display: flex; flex-direction: column; gap: 2px; }
+  strong { @include caption-text; color: var(--text); font-weight: $fw-bold; }
+}
+
+.capitalize { text-transform: capitalize; }
+
+.reconciliation-block, .amount-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+
+  &__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+}
+
+.muted-chip {
+  font-size: 10px;
+  font-weight: $fw-semibold;
+  color: var(--text-secondary);
+  background: var(--item-bg);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.match-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 12px;
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; margin-top: 1px; }
+
+  strong { display: block; @include caption-text; font-weight: $fw-bold; margin-bottom: 2px; }
+  p { @include caption-text; margin: 0; }
+
+  &--ok {
+    background: var(--success-soft);
+    color: var(--success);
+    mat-icon { color: var(--success); }
+    p { color: var(--success); opacity: .85; }
+  }
+
+  &--fail {
+    background: var(--error-soft);
+    color: var(--error);
+    mat-icon { color: var(--error); }
+    p { color: var(--error); opacity: .85; }
+  }
+}
+
+.match-badge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: $fw-bold;
+  background: rgba(255, 255, 255, .5);
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.reject-reason {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label { @include caption-text; color: var(--text-secondary); }
+
+  textarea {
+    font-family: $font-family-base;
+    font-size: $fs-body;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--error);
+    border-radius: 10px;
+    padding: 10px 12px;
+    resize: vertical;
+
+    &:focus { outline: none; }
+    &::placeholder { color: var(--text-muted); }
+  }
+}
+
+/* status pill del encabezado (reutiliza los mismos 3 estados de la tabla) */
+.status-pill {
+  font-size: 11px;
+  font-weight: $fw-semibold;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+
+  &--pending { background: var(--warning-soft); color: var(--warning); }
+  &--approved { background: var(--success-soft); color: var(--success); }
+  &--rejected { background: var(--error-soft); color: var(--error); }
+}
+
+/* pie con las acciones */
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+
+  &__actions { display: flex; gap: 8px; }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: $fw-semibold;
+    font-size: $fs-caption;
+
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+
+  &:hover { background: var(--item-hover); }
+}
+
+.btn-reject {
+  background: transparent;
+  border: 1px solid var(--error);
+  color: var(--error);
+
+  &:hover { background: var(--error-soft); }
+  &:disabled { opacity: .5; cursor: not-allowed; }
+}
+
+.btn-approve {
+  background: var(--success);
+  border: none;
+  color: #ffffff;
+
+  &:hover { opacity: .9; }
+}
+
+/* responsive */
+@media (max-width: 640px) {
+  .review-columns { grid-template-columns: 1fr; }
+  .info-grid { grid-template-columns: 1fr; }
+}
