@@ -1,41 +1,41 @@
 <div class="calendar-card">
 
   <div class="calendar-header">
-    <button class="btn-nav" (click)="mesAnterior()">
+    <button class="btn-nav" (click)="previousMonth()">
       <mat-icon>chevron_left</mat-icon>
     </button>
 
-    <h2 class="mes-titulo">{{ tituloMes }}</h2>
+    <h2 class="month-title">{{ monthTitle }}</h2>
 
-    <button class="btn-nav" (click)="mesSiguiente()">
+    <button class="btn-nav" (click)="nextMonth()">
       <mat-icon>chevron_right</mat-icon>
     </button>
   </div>
 
-  <div class="dias-semana">
-    @for (dia of diasSemanaCortos; track dia) {
-      <span>{{ dia }}</span>
+  <div class="weekdays">
+    @for (day of shortWeekdays; track day) {
+      <span>{{ day }}</span>
     }
   </div>
 
-  <div class="semanas">
-    @for (semana of semanas; track $index) {
-      <div class="semana">
-        @for (dia of semana; track dia.fecha) {
+  <div class="weeks">
+    @for (week of weeks; track $index) {
+      <div class="week">
+        @for (day of week; track day.date) {
           <button
-            class="dia-celda"
-            [class.fuera-de-mes]="!dia.delMesActual"
-            [class.seleccionado]="dia.fecha === fechaSeleccionada"
-            [class.es-hoy]="dia.esHoy && dia.fecha !== fechaSeleccionada"
-            [disabled]="!dia.delMesActual"
-            (click)="seleccionarDia(dia)">
+            class="day-cell"
+            [class.outside-month]="!day.inCurrentMonth"
+            [class.selected]="day.date === selectedDate"
+            [class.is-today]="day.isToday && day.date !== selectedDate"
+            [disabled]="!day.inCurrentMonth"
+            (click)="selectDay(day)">
 
-            <span class="dia-numero">{{ dia.numero }}</span>
+            <span class="day-number">{{ day.number }}</span>
 
-            @if (dia.cantidadServicios > 0) {
-              <span class="dia-puntos">
-                @for (p of puntos(dia.cantidadServicios); track $index) {
-                  <span class="punto"></span>
+            @if (day.serviceCount > 0) {
+              <span class="day-dots">
+                @for (p of dots(day.serviceCount); track $index) {
+                  <span class="dot"></span>
                 }
               </span>
             }
@@ -47,7 +47,7 @@
 
   <div class="calendar-footer">
     <span>{{ 'SCHEDULE.CALENDAR.SERVICES_OF_DAY' | translate }}</span>
-    <strong>{{ serviciosPorFecha[fechaSeleccionada] ?? 0 }}</strong>
+    <strong>{{ servicesByDate[selectedDate] ?? 0 }}</strong>
   </div>
 
 </div>

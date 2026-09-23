@@ -13,11 +13,11 @@ import { Reserva } from '../../../../shared/dialogs/reservation-models/reservati
 import { Api } from '../../../../core/services/api';
 
 interface Stat {
-  icono: string;
-  valor: number | string;
+  icon: string;
+  value: number | string;
   label: string;
-  notificacion: number;
-  ruta: string;
+  notification: number;
+  route: string;
 }
 
 @Component({
@@ -36,12 +36,12 @@ interface Stat {
 })
 export class HomeComponent implements OnInit {
 
-  nombreOperator = 'Camilo';
+  operatorName = 'Camilo';
 
-  notificacionesSinLeer = 0;
-  calificacionPromedio = 0;
+  unreadNotifications = 0;
+  averageRating = 0;
 
-  reservasHoy: Reserva[] = [];
+  todayReservations: Reserva[] = [];
 
   private readonly operatorId = 1;
 
@@ -53,70 +53,70 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const hoy = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
 
-    this.api.getReservationsByOperator(this.operatorId).subscribe(reservas => {
-      this.reservasHoy = reservas.filter(r => r.fecha === hoy);
+    this.api.getReservationsByOperator(this.operatorId).subscribe(reservations => {
+      this.todayReservations = reservations.filter(r => r.fecha === today);
       this.cdr.detectChanges();
     });
 
-    this.api.getNotifications(this.operatorId).subscribe(notificaciones => {
-      this.notificacionesSinLeer = notificaciones.filter(n => !n.read).length;
+    this.api.getNotifications(this.operatorId).subscribe(notifications => {
+      this.unreadNotifications = notifications.filter(n => !n.read).length;
       this.cdr.detectChanges();
     });
 
-    this.api.getOperatorQualifications(this.operatorId).subscribe(calificaciones => {
-      if (calificaciones.length === 0) return;
-      const suma = calificaciones.reduce((sum: number, c: any) => sum + c.estrellas, 0);
-      this.calificacionPromedio = Math.round((suma / calificaciones.length) * 10) / 10;
+    this.api.getOperatorQualifications(this.operatorId).subscribe(ratings => {
+      if (ratings.length === 0) return;
+      const sum = ratings.reduce((total: number, r: any) => total + r.stars, 0);
+      this.averageRating = Math.round((sum / ratings.length) * 10) / 10;
       this.cdr.detectChanges();
     });
   }
 
-  get totalHoy(): number {
-    return this.reservasHoy.length;
+  get todayTotal(): number {
+    return this.todayReservations.length;
   }
 
-  get enProgreso(): number {
-    return this.reservasHoy.filter(r => r.estado === 'en_progreso').length;
+  get inProgress(): number {
+    return this.todayReservations.filter(r => r.estado === 'en_progreso').length;
   }
 
-  get pendientes(): number {
-    return this.reservasHoy.filter(r => r.estado === 'pendiente').length;
+  get pending(): number {
+    return this.todayReservations.filter(r => r.estado === 'pendiente').length;
   }
 
-  get finalizadosHoy(): number {
-    return this.reservasHoy.filter(r => r.estado === 'finalizado').length;
+  get todayCompleted(): number {
+    return this.todayReservations.filter(r => r.estado === 'finalizado').length;
   }
 
-  get porcentajeProgreso(): number {
-    if (this.totalHoy === 0) return 0;
-    return (this.finalizadosHoy / this.totalHoy) * 100;
+  get progressPercentage(): number {
+    if (this.todayTotal === 0) return 0;
+    return (this.todayCompleted / this.todayTotal) * 100;
   }
 
   get stats(): Stat[] {
     return [
-      { icono: 'calendar_today', valor: this.totalHoy, label: 'OPERATOR_HOME.STATS.ASSIGNED', notificacion: 0, ruta: '/operator/schedule' },
-      { icono: 'sync', valor: this.enProgreso, label: 'OPERATOR_HOME.STATS.IN_PROGRESS', notificacion: 0, ruta: '/operator/schedule' },
-      { icono: 'notifications', valor: this.notificacionesSinLeer, label: 'OPERATOR_HOME.STATS.NOTIFICATIONS', notificacion: this.notificacionesSinLeer, ruta: '/operator/notifications' },
-      { icono: 'star_outline', valor: this.calificacionPromedio, label: 'OPERATOR_HOME.STATS.RATING', notificacion: 0, ruta: '/operator/qualifications' }
+      { icon: 'calendar_today', value: this.todayTotal, label: 'OPERATOR_HOME.STATS.ASSIGNED', notification: 0, route: '/operator/schedule' },
+      { icon: 'sync', value: this.inProgress, label: 'OPERATOR_HOME.STATS.IN_PROGRESS', notification: 0, route: '/operator/schedule' },
+      { icon: 'notifications', value: this.unreadNotifications, label: 'OPERATOR_HOME.STATS.NOTIFICATIONS', notification: this.unreadNotifications, route: '/operator/notifications' },
+      { icon: 'star_outline', value: this.averageRating, label: 'OPERATOR_HOME.STATS.RATING', notification: 0, route: '/operator/qualifications' }
     ];
   }
 
-  irA(ruta: string) {
-    this.router.navigateByUrl(ruta);
+  goTo(route: string) {
+    this.router.navigateByUrl(route);
   }
 
-  irAAgenda() {
+  goToSchedule() {
     this.router.navigateByUrl('/operator/schedule');
   }
 
-  iniciarServicio(r: Reserva) {
+  startService(r: Reserva) {
     if (r.estado !== 'pendiente') return;
     r.estado = 'en_progreso';
   }
 
-  pedirFinalizar(r: Reserva) {
+  requestFinish(r: Reserva) {
     const data: ConfirmModalData = {
       titulo: 'SCHEDULE.FINISH_TITLE',
       mensaje: 'SCHEDULE.FINISH_MESSAGE',
@@ -130,25 +130,25 @@ export class HomeComponent implements OnInit {
       data
     });
 
-    dialogRef.afterClosed().subscribe(confirmado => {
-      if (!confirmado) return;
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
       r.estado = 'finalizado';
       this.cdr.detectChanges();
     });
   }
 
-  verDetalle(r: Reserva) {
+  viewDetail(r: Reserva) {
     const dialogRef = this.dialog.open(ReservationDetailModal, {
       panelClass: 'custom-dialog',
       data: r
     });
 
-    dialogRef.afterClosed().subscribe(accion => {
-      if (accion === 'iniciar') {
-        this.iniciarServicio(r);
+    dialogRef.afterClosed().subscribe(action => {
+      if (action === 'iniciar') {
+        this.startService(r);
         this.cdr.detectChanges();
-      } else if (accion === 'finalizar') {
-        this.pedirFinalizar(r);
+      } else if (action === 'finalizar') {
+        this.requestFinish(r);
       }
     });
   }

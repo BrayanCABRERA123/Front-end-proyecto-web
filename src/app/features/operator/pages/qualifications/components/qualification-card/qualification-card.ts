@@ -14,6 +14,6 @@ import { TranslateModule } from '@ngx-translate/core';
 export class QualificationCardComponent {
 
   // recibe los datos del padre
-  @Input() calificacion: any;
-  @Input() estrellas: number[] = [];
+  @Input() rating: any;
+  @Input() stars: number[] = [];
 }

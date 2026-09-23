@@ -13,16 +13,16 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ServiceTableComponent {
 
   // recibe la lista de servicios del padre
-  @Input() servicios: any[] = [];
+  @Input() services: any[] = [];
 
   // recibe el servicio seleccionado para resaltarlo
-  @Input() servicioSeleccionado: any;
+  @Input() selectedService: any;
 
   // avisa al padre cuando el usuario selecciona un servicio
   @Output() serviceSelected = new EventEmitter<any>();
 
   // se ejecuta cuando el usuario hace clic en una fila
-  onSelectService(servicio: any): void {
-    this.serviceSelected.emit(servicio);
+  onSelectService(service: any): void {
+    this.serviceSelected.emit(service);
   }
 }

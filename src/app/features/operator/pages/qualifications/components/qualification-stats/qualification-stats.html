@@ -5,11 +5,11 @@
       <mat-icon class="stat-icon">star_outline</mat-icon>
       <span class="stat-label">{{ 'QUALIFICATION_STATS.AVG_RATING' | translate }}</span>
     </div>
-    <p class="stat-value">{{ calificacionPromedio }}</p>
+    <p class="stat-value">{{ averageRating }}</p>
     <div class="stars-row">
-      @for (estrella of estrellas; track $index) {
-        <mat-icon class="star" [class.filled]="estrella === 1">
-          {{ estrella === 1 ? 'star' : 'star_border' }}
+      @for (star of stars; track $index) {
+        <mat-icon class="star" [class.filled]="star === 1">
+          {{ star === 1 ? 'star' : 'star_border' }}
         </mat-icon>
       }
     </div>
@@ -20,11 +20,11 @@
       <mat-icon class="stat-icon">trending_up</mat-icon>
       <span class="stat-label">{{ 'QUALIFICATION_STATS.SATISFACTION_LEVEL' | translate }}</span>
     </div>
-    <p class="stat-value">{{ nivelSatisfaccion }}</p>
+    <p class="stat-value">{{ satisfactionLevel }}</p>
     <div class="progress-bar">
       <div
         class="progress-fill"
-        [style.width.%]="porcentajeSatisfaccion">
+        [style.width.%]="satisfactionPercentage">
       </div>
     </div>
   </div>
@@ -34,7 +34,7 @@
       <mat-icon class="stat-icon">chat_bubble_outline</mat-icon>
       <span class="stat-label">{{ 'QUALIFICATION_STATS.TOTAL' | translate }}</span>
     </div>
-    <p class="stat-value">{{ totalCalificaciones }}</p>
+    <p class="stat-value">{{ totalRatings }}</p>
     <p class="stat-sublabel">{{ 'QUALIFICATION_STATS.LAST_12_MONTHS' | translate }}</p>
   </div>
 

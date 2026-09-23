@@ -7,13 +7,13 @@
     <div class="top-row">
       <div class="welcome-text">
         <h1 class="page-title">
-          {{ 'OPERATOR_HOME.TITLE' | translate: { name: nombreOperator } }}
+          {{ 'OPERATOR_HOME.TITLE' | translate: { name: operatorName } }}
         </h1>
         <p class="page-subtitle">
-          {{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: pendientes } }}
+          {{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: pending } }}
         </p>
       </div>
-      <button class="btn-ver-servicios" (click)="irAAgenda()">
+      <button class="btn-view-services" (click)="goToSchedule()">
         <mat-icon>visibility</mat-icon>
         {{ 'OPERATOR_HOME.BTN_SERVICES' | translate }}
       </button>
@@ -21,7 +21,7 @@
 
     <div class="stats-grid">
       @for (stat of stats; track stat.label) {
-        <app-stats-card [stat]="stat" (abrir)="irA($event)"></app-stats-card>
+        <app-stats-card [stat]="stat" (open)="goTo($event)"></app-stats-card>
       }
     </div>
 
@@ -37,12 +37,12 @@
           </span>
         </div>
         <p class="progress-numbers">
-          {{ finalizadosHoy }} / {{ totalHoy }}
+          {{ todayCompleted }} / {{ todayTotal }}
         </p>
         <div class="progress-bar">
           <div
             class="progress-fill"
-            [style.width.%]="porcentajeProgreso">
+            [style.width.%]="progressPercentage">
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
         <div class="counter-icon">
           <mat-icon>sync</mat-icon>
         </div>
-        <p class="counter-value">{{ enProgreso }}</p>
+        <p class="counter-value">{{ inProgress }}</p>
         <p class="counter-label">{{ 'OPERATOR_HOME.IN_PROGRESS' | translate }}</p>
       </div>
 
@@ -59,13 +59,13 @@
         <div class="counter-icon">
           <mat-icon>calendar_month</mat-icon>
         </div>
-        <p class="counter-value">{{ pendientes }}</p>
+        <p class="counter-value">{{ pending }}</p>
         <p class="counter-label">{{ 'OPERATOR_HOME.PENDING' | translate }}</p>
       </div>
 
     </div>
 
-    <div class="reservas-section">
+    <div class="bookings-section">
       <div class="section-header">
         <mat-icon class="section-icon">trending_up</mat-icon>
         <h2 class="section-title">
@@ -73,12 +73,12 @@
         </h2>
       </div>
 
-      <div class="reservas-list">
-        @for (reserva of reservasHoy; track reserva.id) {
+      <div class="bookings-list">
+        @for (reservation of todayReservations; track reservation.id) {
           <app-pending-service-card
-            [reserva]="reserva"
-            (iniciar)="iniciarServicio($event)"
-            (verDetalle)="verDetalle($event)">
+            [reservation]="reservation"
+            (start)="startService($event)"
+            (viewDetail)="viewDetail($event)">
           </app-pending-service-card>
         } @empty {
           <p class="empty-text">{{ 'OPERATOR_HOME.EMPTY' | translate }}</p>

@@ -30,19 +30,19 @@ export class AssignedServicesComponent implements OnInit {
   // estadísticas — label usa clave de traducción
   get stats() {
     return [
-      { valor: this.servicios.length, label: 'ASSIGNED_SERVICES.STATS.TOTAL', color: 'total' },
-      { valor: this.servicios.filter(s => s.estadoColor === 'pendiente').length, label: 'ASSIGNED_SERVICES.STATS.PENDING', color: 'pendiente' },
-      { valor: this.servicios.filter(s => s.estadoColor === 'progreso').length, label: 'ASSIGNED_SERVICES.STATS.IN_PROGRESS', color: 'progreso' },
-      { valor: this.servicios.filter(s => s.estadoColor === 'finalizado').length, label: 'ASSIGNED_SERVICES.STATS.COMPLETED_TODAY', color: 'finalizado' }
+      { value: this.services.length, label: 'ASSIGNED_SERVICES.STATS.TOTAL', color: 'total' },
+      { value: this.services.filter(s => s.statusColor === 'pending').length, label: 'ASSIGNED_SERVICES.STATS.PENDING', color: 'pending' },
+      { value: this.services.filter(s => s.statusColor === 'progress').length, label: 'ASSIGNED_SERVICES.STATS.IN_PROGRESS', color: 'progress' },
+      { value: this.services.filter(s => s.statusColor === 'completed').length, label: 'ASSIGNED_SERVICES.STATS.COMPLETED_TODAY', color: 'completed' }
     ];
   }
 
   // filtros de búsqueda
-  filtroFecha: string = '';
-  filtroTipoServicio: string = '';
-  filtroVehiculo: string = '';
+  dateFilter: string = '';
+  serviceTypeFilter: string = '';
+  vehicleFilter: string = '';
 
-  tiposServicio = [
+  serviceTypes = [
     { value: '',             label: 'ASSIGNED_SERVICES.FILTERS.ALL' },
     { value: 'basico',       label: 'SERVICE.BASIC' },
     { value: 'premium',      label: 'SERVICE.PREMIUM' },
@@ -50,30 +50,30 @@ export class AssignedServicesComponent implements OnInit {
     { value: 'desinfeccion', label: 'SERVICE.BASIC' }
   ];
 
-  servicios: any[] = [];
+  services: any[] = [];
 
   // servicio seleccionado para ver el detalle
-  servicioSeleccionado: any = null;
+  selectedService: any = null;
 
   constructor(private api: Api, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.api.getAssignedServices(this.operatorId).subscribe(servicios => {
-      this.servicios = servicios;
-      this.servicioSeleccionado = servicios[0] ?? null;
+    this.api.getAssignedServices(this.operatorId).subscribe(services => {
+      this.services = services;
+      this.selectedService = services[0] ?? null;
       this.cdr.detectChanges();
     });
   }
 
   // se ejecuta cuando el usuario selecciona un servicio en la tabla
-  onServiceSelected(servicio: any): void {
-    this.servicioSeleccionado = servicio;
+  onServiceSelected(service: any): void {
+    this.selectedService = service;
   }
 
   // filtra los servicios según los filtros activos
-  get serviciosFiltrados() {
-    return this.servicios.filter(s => {
-      if (this.filtroTipoServicio && s.tipoServicio !== this.filtroTipoServicio) return false;
+  get filteredServices() {
+    return this.services.filter(s => {
+      if (this.serviceTypeFilter && s.serviceType !== this.serviceTypeFilter) return false;
       return true;
     });
   }

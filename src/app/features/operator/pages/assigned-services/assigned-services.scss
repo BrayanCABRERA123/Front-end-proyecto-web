@@ -1,3 +1,5 @@
+@use '../../../../../styles/variables' as *;
+
 // contenedor principal con sidebar y contenido en fila
 .page-container {
   display: flex;
@@ -61,17 +63,17 @@
     color: var(--text);
   }
 
-  &.pendiente {
+  &.pending {
     background-color: rgba(249, 168, 37, 0.15);
     color: #F9A825;
   }
 
-  &.progreso {
+  &.progress {
     background-color: rgba(30, 136, 229, 0.12);
     color: #1E88E5;
   }
 
-  &.finalizado {
+  &.completed {
     background-color: rgba(var(--primary-rgb), 0.15);
     color: var(--primary);
   }
@@ -159,7 +161,7 @@
   color: var(--text);
   background-color: var(--card);
   outline: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: border-color 0.2s ease;
   width: 160px;
 
@@ -201,7 +203,7 @@
   outline: none;
   appearance: none;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: border-color 0.2s ease;
   width: 160px;
 
@@ -265,7 +267,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: background-color 0.2s ease;
   box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
 

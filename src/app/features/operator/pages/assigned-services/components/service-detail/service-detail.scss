@@ -1,3 +1,5 @@
+@use '../../../../../../../styles/variables' as *;
+
 // card principal del detalle
 .detail-card {
   background-color: var(--card);
@@ -32,23 +34,23 @@
 }
 
 // badge de estado
-.estado-badge {
+.status-badge {
   padding: 4px 14px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
 
-  &.pendiente {
+  &.pending {
     background-color: rgba(249, 168, 37, 0.15);
     color: #F9A825;
   }
 
-  &.progreso {
+  &.progress {
     background-color: rgba(30, 136, 229, 0.12);
     color: #1E88E5;
   }
 
-  &.finalizado {
+  &.completed {
     background-color: rgba(var(--primary-rgb), 0.15);
     color: var(--primary);
   }
@@ -147,7 +149,7 @@
 }
 
 // botón iniciar 
-.btn-iniciar {
+.btn-start {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -159,7 +161,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: background-color 0.2s ease;
   box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
 
@@ -175,7 +177,7 @@
 }
 
 // botón reportar
-.btn-reportar {
+.btn-report {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -187,7 +189,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: all 0.2s ease;
 
   mat-icon {
@@ -203,7 +205,7 @@
 }
 
 // botón finalizar — neutro
-.btn-finalizar {
+.btn-finish {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -215,7 +217,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: all 0.2s ease;
 
   mat-icon {
@@ -238,7 +240,7 @@
 }
 
 // botón contactar cliente
-.btn-contactar {
+.btn-contact {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -250,7 +252,7 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: all 0.2s ease;
   width: fit-content;
 
@@ -284,10 +286,10 @@
     flex-direction: column;
   }
 
-  .btn-iniciar,
-  .btn-reportar,
-  .btn-finalizar,
-  .btn-contactar {
+  .btn-start,
+  .btn-report,
+  .btn-finish,
+  .btn-contact {
     width: 100%;
     justify-content: center;
   }

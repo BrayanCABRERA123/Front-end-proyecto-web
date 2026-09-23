@@ -17,12 +17,12 @@ import {
   styleUrl: './pending-service-card.scss'
 })
 export class PendingServiceCardComponent {
-  @Input() reserva!: Reserva;
+  @Input() reservation!: Reserva;
 
-  @Output() iniciar = new EventEmitter<Reserva>();
-  @Output() verDetalle = new EventEmitter<Reserva>();
+  @Output() start = new EventEmitter<Reserva>();
+  @Output() viewDetail = new EventEmitter<Reserva>();
 
-  claseEstado = claseEstadoReserva;
-  iconoEstado = iconoEstadoReserva;
-  labelEstado = labelEstadoReserva;
+  statusClass = claseEstadoReserva;
+  statusIcon = iconoEstadoReserva;
+  statusLabel = labelEstadoReserva;
 }

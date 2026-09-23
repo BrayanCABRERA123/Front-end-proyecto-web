@@ -4,12 +4,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 // una celda del calendario
-interface DiaCalendario {
-  fecha: string;        // 'AAAA-MM-DD'
-  numero: number;       // dia del mes (1-31)
-  delMesActual: boolean; // false = dia "relleno" de otro mes
-  cantidadServicios: number;
-  esHoy: boolean;
+interface CalendarDay {
+  date: string;         // 'AAAA-MM-DD'
+  number: number;       // dia del mes (1-31)
+  inCurrentMonth: boolean; // false = dia "relleno" de otro mes
+  serviceCount: number;
+  isToday: boolean;
 }
 
 @Component({
@@ -22,109 +22,109 @@ interface DiaCalendario {
 export class MiniCalendarComponent implements OnChanges {
 
   // mapa 'AAAA-MM-DD' -> cuantos servicios hay ese dia
-  @Input() serviciosPorFecha: Record<string, number> = {};
-  @Input() fechaSeleccionada: string = '';
+  @Input() servicesByDate: Record<string, number> = {};
+  @Input() selectedDate: string = '';
 
-  @Output() fechaSeleccionadaChange = new EventEmitter<string>();
+  @Output() selectedDateChange = new EventEmitter<string>();
 
   // mes que se esta mostrando actualmente (siempre el dia 1 de ese mes)
-  mesMostrado = new Date();
+  shownMonth = new Date();
 
-  semanas: DiaCalendario[][] = [];
+  weeks: CalendarDay[][] = [];
 
   constructor(private translate: TranslateService) {}
 
   // nombre del mes mostrado, ej: 'Septiembre 2026'
-  get tituloMes(): string {
-    const meses: string[] = this.translate.instant('CALENDAR.MONTHS');
-    const nombre = meses[this.mesMostrado.getMonth()];
-    return `${nombre} ${this.mesMostrado.getFullYear()}`;
+  get monthTitle(): string {
+    const months: string[] = this.translate.instant('CALENDAR.MONTHS');
+    const name = months[this.shownMonth.getMonth()];
+    return `${name} ${this.shownMonth.getFullYear()}`;
   }
 
   // encabezados de columna: Lun, Mar, Mie...
-  get diasSemanaCortos(): string[] {
+  get shortWeekdays(): string[] {
     return this.translate.instant('CALENDAR.DAYS_SHORT');
   }
 
   // como el input llega despues de crear el componente, generamos
   // el calendario cada vez que algo relevante cambie
   ngOnChanges(changes: SimpleChanges): void {
-    // OJO: 'serviciosPorFecha' llega de un getter en el padre, que crea
+    // OJO: 'servicesByDate' llega de un getter en el padre, que crea
     // un objeto nuevo en cada revision de Angular -> eso dispara ngOnChanges
     // todo el tiempo. Por eso solo reubicamos el mes cuando la fecha
     // seleccionada CAMBIO de verdad, para no pisar la navegacion manual
     // del usuario con los botones < >.
-    if (changes['fechaSeleccionada'] && this.fechaSeleccionada) {
-      const [anio, mes] = this.fechaSeleccionada.split('-').map(Number);
-      this.mesMostrado = new Date(anio, mes - 1, 1);
+    if (changes['selectedDate'] && this.selectedDate) {
+      const [year, month] = this.selectedDate.split('-').map(Number);
+      this.shownMonth = new Date(year, month - 1, 1);
     }
-    this.generarCalendario();
+    this.buildCalendar();
   }
 
-  mesAnterior() {
-    this.mesMostrado = new Date(this.mesMostrado.getFullYear(), this.mesMostrado.getMonth() - 1, 1);
-    this.generarCalendario();
+  previousMonth() {
+    this.shownMonth = new Date(this.shownMonth.getFullYear(), this.shownMonth.getMonth() - 1, 1);
+    this.buildCalendar();
   }
 
-  mesSiguiente() {
-    this.mesMostrado = new Date(this.mesMostrado.getFullYear(), this.mesMostrado.getMonth() + 1, 1);
-    this.generarCalendario();
+  nextMonth() {
+    this.shownMonth = new Date(this.shownMonth.getFullYear(), this.shownMonth.getMonth() + 1, 1);
+    this.buildCalendar();
   }
 
-  seleccionarDia(dia: DiaCalendario) {
-    if (!dia.delMesActual) return;
-    this.fechaSeleccionadaChange.emit(dia.fecha);
+  selectDay(day: CalendarDay) {
+    if (!day.inCurrentMonth) return;
+    this.selectedDateChange.emit(day.date);
   }
 
   // convierte una fecha real a texto 'AAAA-MM-DD' (sin usar toISOString,
   // que convierte a UTC y puede correr el dia segun la zona horaria)
-  private aTextoFecha(fecha: Date): string {
-    const anio = fecha.getFullYear();
-    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-    const dia = String(fecha.getDate()).padStart(2, '0');
-    return `${anio}-${mes}-${dia}`;
+  private toDateText(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
-  private generarCalendario() {
-    const anio = this.mesMostrado.getFullYear();
-    const mes = this.mesMostrado.getMonth();
+  private buildCalendar() {
+    const year = this.shownMonth.getFullYear();
+    const month = this.shownMonth.getMonth();
 
-    const hoyTexto = this.aTextoFecha(new Date());
+    const todayText = this.toDateText(new Date());
 
-    const primerDiaMes = new Date(anio, mes, 1);
-    const ultimoDiaMes = new Date(anio, mes + 1, 0);
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
 
     // getDay() da 0=domingo..6=sabado; convertimos a 0=lunes..6=domingo
-    const offsetInicio = (primerDiaMes.getDay() + 6) % 7;
+    const startOffset = (firstDayOfMonth.getDay() + 6) % 7;
 
     // primer dia que se pinta en la grilla (puede ser del mes anterior)
-    const inicioGrilla = new Date(anio, mes, 1 - offsetInicio);
+    const gridStart = new Date(year, month, 1 - startOffset);
 
-    const totalCeldas = Math.ceil((offsetInicio + ultimoDiaMes.getDate()) / 7) * 7;
+    const totalCells = Math.ceil((startOffset + lastDayOfMonth.getDate()) / 7) * 7;
 
-    const celdas: DiaCalendario[] = [];
-    for (let i = 0; i < totalCeldas; i++) {
-      const fecha = new Date(inicioGrilla.getFullYear(), inicioGrilla.getMonth(), inicioGrilla.getDate() + i);
-      const fechaTexto = this.aTextoFecha(fecha);
+    const cells: CalendarDay[] = [];
+    for (let i = 0; i < totalCells; i++) {
+      const date = new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate() + i);
+      const dateText = this.toDateText(date);
 
-      celdas.push({
-        fecha: fechaTexto,
-        numero: fecha.getDate(),
-        delMesActual: fecha.getMonth() === mes,
-        cantidadServicios: this.serviciosPorFecha[fechaTexto] ?? 0,
-        esHoy: fechaTexto === hoyTexto
+      cells.push({
+        date: dateText,
+        number: date.getDate(),
+        inCurrentMonth: date.getMonth() === month,
+        serviceCount: this.servicesByDate[dateText] ?? 0,
+        isToday: dateText === todayText
       });
     }
 
     // partimos el arreglo plano en semanas de 7
-    this.semanas = [];
-    for (let i = 0; i < celdas.length; i += 7) {
-      this.semanas.push(celdas.slice(i, i + 7));
+    this.weeks = [];
+    for (let i = 0; i < cells.length; i += 7) {
+      this.weeks.push(cells.slice(i, i + 7));
     }
   }
 
   // limitamos a maximo 3 puntitos para que no se amontonen visualmente
-  puntos(cantidad: number): number[] {
-    return Array(Math.min(cantidad, 3)).fill(0);
+  dots(count: number): number[] {
+    return Array(Math.min(count, 3)).fill(0);
   }
 }

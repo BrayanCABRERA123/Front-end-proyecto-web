@@ -14,24 +14,24 @@
     </thead>
 
     <tbody>
-      @for (servicio of servicios; track servicio.id) {
+      @for (service of services; track service.id) {
         <tr
           class="table-row"
-          [class.selected]="servicioSeleccionado?.id === servicio.id"
-          (click)="onSelectService(servicio)">
-          <td class="td-id">{{ servicio.id }}</td>
-          <td>{{ servicio.tipoServicio }}</td>
-          <td class="td-ubicacion">{{ servicio.ubicacion }}</td>
-          <td>{{ servicio.fechaHora }}</td>
-          <td>{{ servicio.vehiculo }}</td>
-          <td>{{ servicio.client }}</td>
+          [class.selected]="selectedService?.id === service.id"
+          (click)="onSelectService(service)">
+          <td class="td-id">{{ service.id }}</td>
+          <td>{{ service.serviceType }}</td>
+          <td class="td-location">{{ service.location }}</td>
+          <td>{{ service.dateTime }}</td>
+          <td>{{ service.vehicle }}</td>
+          <td>{{ service.client }}</td>
           <td>
             <span
-              class="estado-badge"
-              [class.pendiente]="servicio.estadoColor === 'pendiente'"
-              [class.progreso]="servicio.estadoColor === 'progreso'"
-              [class.finalizado]="servicio.estadoColor === 'finalizado'">
-              {{ servicio.estado }}
+              class="status-badge"
+              [class.pending]="service.statusColor === 'pending'"
+              [class.progress]="service.statusColor === 'progress'"
+              [class.completed]="service.statusColor === 'completed'">
+              {{ service.status }}
             </span>
           </td>
         </tr>

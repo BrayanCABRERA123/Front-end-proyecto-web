@@ -17,14 +17,14 @@ import {
   styleUrl: './history-table.scss'
 })
 export class HistoryTableComponent {
-  @Input() servicios: ServicioHistorial[] = [];
-  @Output() verDetalle = new EventEmitter<ServicioHistorial>();
+  @Input() services: ServicioHistorial[] = [];
+  @Output() viewDetail = new EventEmitter<ServicioHistorial>();
 
-  claseEstado = claseEstadoHistorial;
-  iconoEstado = iconoEstadoHistorial;
-  labelEstado = labelEstadoHistorial;
+  statusClass = claseEstadoHistorial;
+  statusIcon = iconoEstadoHistorial;
+  statusLabel = labelEstadoHistorial;
 
-  estrellasLlenas(calificacion: number | null): number[] {
-    return Array(calificacion ?? 0).fill(0);
+  filledStars(rating: number | null): number[] {
+    return Array(rating ?? 0).fill(0);
   }
 }

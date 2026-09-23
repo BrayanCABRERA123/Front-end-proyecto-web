@@ -11,19 +11,19 @@
     </div>
 
     <app-history-stats
-      [finalizados]="finalizados"
-      [canceladosReasignados]="canceladosReasignados"
-      [totalGenerado]="totalGenerado"
-      [calificacionPromedio]="calificacionPromedio">
+      [completed]="completed"
+      [canceledOrReassigned]="canceledOrReassigned"
+      [totalGenerated]="totalGenerated"
+      [averageRating]="averageRating">
     </app-history-stats>
 
     <div class="progress-card">
       <div class="progress-header">
         <span>{{ 'SERVICE_HISTORY.COMPLETION_RATE' | translate }}</span>
-        <strong>{{ tasaCompletados }}%</strong>
+        <strong>{{ completionRate }}%</strong>
       </div>
       <div class="progress-bar">
-        <div class="progress-fill" [style.width.%]="porcentajeAnimado"></div>
+        <div class="progress-fill" [style.width.%]="animatedPercentage"></div>
       </div>
     </div>
 
@@ -37,28 +37,28 @@
             <input
               type="text"
               class="search-input"
-              [(ngModel)]="busqueda"
+              [(ngModel)]="search"
               [placeholder]="'SERVICE_HISTORY.SEARCH_PLACEHOLDER' | translate" />
           </div>
         </div>
 
         <div class="filter-group">
-          <input type="date" class="filter-input" [(ngModel)]="filtroFecha" />
+          <input type="date" class="filter-input" [(ngModel)]="dateFilter" />
         </div>
 
         <div class="filter-group">
           <div class="select-wrapper">
-            <select class="filter-select" [(ngModel)]="filtroServicio">
+            <select class="filter-select" [(ngModel)]="serviceFilter">
               <option value="">{{ 'SERVICE_HISTORY.ALL_SERVICES' | translate }}</option>
-              @for (tipo of tiposServicio; track tipo) {
-                <option [value]="tipo">{{ ('SERVICE.' + tipo) | translate }}</option>
+              @for (type of serviceTypes; track type) {
+                <option [value]="type">{{ ('SERVICE.' + type) | translate }}</option>
               }
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
           </div>
         </div>
 
-        <button class="btn-reset" (click)="limpiarFiltros()">
+        <button class="btn-reset" (click)="clearFilters()">
           <mat-icon>refresh</mat-icon>
           {{ 'SERVICE_HISTORY.CLEAR' | translate }}
         </button>
@@ -66,25 +66,25 @@
       </div>
 
       <div class="tabs">
-        <button class="tab" [class.active]="tabActiva === 'todos'" (click)="cambiarTab('todos')">
-          {{ 'SERVICE_HISTORY.TABS.ALL' | translate }} ({{ contarTab('todos') }})
+        <button class="tab" [class.active]="activeTab === 'todos'" (click)="changeTab('todos')">
+          {{ 'SERVICE_HISTORY.TABS.ALL' | translate }} ({{ countTab('todos') }})
         </button>
-        <button class="tab" [class.active]="tabActiva === 'finalizado'" (click)="cambiarTab('finalizado')">
-          {{ 'SERVICE_HISTORY.TABS.DONE' | translate }} ({{ contarTab('finalizado') }})
+        <button class="tab" [class.active]="activeTab === 'finalizado'" (click)="changeTab('finalizado')">
+          {{ 'SERVICE_HISTORY.TABS.DONE' | translate }} ({{ countTab('finalizado') }})
         </button>
-        <button class="tab" [class.active]="tabActiva === 'cancelado'" (click)="cambiarTab('cancelado')">
-          {{ 'SERVICE_HISTORY.TABS.CANCELED' | translate }} ({{ contarTab('cancelado') }})
+        <button class="tab" [class.active]="activeTab === 'cancelado'" (click)="changeTab('cancelado')">
+          {{ 'SERVICE_HISTORY.TABS.CANCELED' | translate }} ({{ countTab('cancelado') }})
         </button>
-        <button class="tab" [class.active]="tabActiva === 'reasignado'" (click)="cambiarTab('reasignado')">
-          {{ 'SERVICE_HISTORY.TABS.REASSIGNED' | translate }} ({{ contarTab('reasignado') }})
+        <button class="tab" [class.active]="activeTab === 'reasignado'" (click)="changeTab('reasignado')">
+          {{ 'SERVICE_HISTORY.TABS.REASSIGNED' | translate }} ({{ countTab('reasignado') }})
         </button>
       </div>
 
     </div>
 
     <app-history-table
-      [servicios]="serviciosFiltrados"
-      (verDetalle)="verDetalle($event)">
+      [services]="filteredServices"
+      (viewDetail)="viewDetail($event)">
     </app-history-table>
 
   </div>

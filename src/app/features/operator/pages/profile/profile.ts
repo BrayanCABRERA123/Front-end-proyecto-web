@@ -15,7 +15,9 @@ import { ProfileCardComponent } from '../../../../shared/components/profile-card
 export class ProfileComponent {
 
   // datos del usuario operator
-  usuario = {
+  // OJO: las llaves (nombre, telefono, etc.) son el contrato del @Input "usuario"
+  // de shared/components/profile-card — no se traducen aquí, ese componente es compartido.
+  user = {
     nombre: 'Juan Díaz',
     email: 'juan@email.com',
     telefono: '+1234 567 890',

@@ -38,7 +38,7 @@
   }
 }
 
-.badge-servicio {
+.service-badge {
   background: var(--primary-soft);
   color: var(--primary);
   font-size: 12px;
@@ -47,18 +47,18 @@
   border-radius: 999px;
 }
 
-.celda-vehiculo {
+.vehicle-cell {
   display: flex;
   flex-direction: column;
   gap: 2px;
 
-  .placa {
+  .plate {
     font-size: 11px;
     color: var(--text-muted);
   }
 }
 
-.estrellas {
+.stars {
   display: flex;
   gap: 1px;
 
@@ -70,11 +70,11 @@
   }
 }
 
-.sin-calificar {
+.not-rated {
   color: var(--text-muted);
 }
 
-.estado-badge {
+.status-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -90,6 +90,7 @@
   }
 }
 
+// los .estado-* vienen de claseEstadoHistorial (shared/dialogs/history-models), no se traducen aquí
 .estado-finalizado {
   background: var(--success);
   color: #ffffff;
@@ -105,7 +106,7 @@
   color: var(--neutral-badge);
 }
 
-.btn-ver {
+.btn-view {
   width: 34px;
   height: 34px;
   border-radius: 10px;

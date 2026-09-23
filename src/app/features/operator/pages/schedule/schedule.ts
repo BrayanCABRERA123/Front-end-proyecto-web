@@ -8,7 +8,6 @@ import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confi
 import { ReservationDetailModal } from '../../../../shared/dialogs/reservation-detail-modal/reservation-detail-modal';
 import {
   Reserva,
-  EstadoReserva,
   claseEstadoReserva,
   iconoEstadoReserva,
   labelEstadoReserva
@@ -16,7 +15,7 @@ import {
 import { MiniCalendarComponent } from './mini-calendar/mini-calendar';
 import { Api } from '../../../../core/services/api';
 
-type Tab = 'dia' | 'semana' | 'realizados';
+type Tab = 'day' | 'week' | 'done';
 
 @Component({
   selector: 'app-schedule',
@@ -27,11 +26,11 @@ type Tab = 'dia' | 'semana' | 'realizados';
 })
 export class ScheduleComponent implements OnInit {
 
-  tabActiva: Tab = 'dia';
+  activeTab: Tab = 'day';
 
-  fechaSeleccionada = this.hoyComoTexto();
+  selectedDate = this.todayAsText();
 
-  reservas: Reserva[] = [];
+  reservations: Reserva[] = [];
 
   private readonly operatorId = 1;
 
@@ -43,101 +42,101 @@ export class ScheduleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.api.getReservationsByOperator(this.operatorId).subscribe(reservas => {
-      this.reservas = reservas;
+    this.api.getReservationsByOperator(this.operatorId).subscribe(reservations => {
+      this.reservations = reservations;
       this.cdr.detectChanges();
     });
   }
 
-  get serviciosPorFecha(): Record<string, number> {
-    const mapa: Record<string, number> = {};
-    for (const r of this.reservas) {
-      mapa[r.fecha] = (mapa[r.fecha] ?? 0) + 1;
+  get servicesByDate(): Record<string, number> {
+    const map: Record<string, number> = {};
+    for (const r of this.reservations) {
+      map[r.fecha] = (map[r.fecha] ?? 0) + 1;
     }
-    return mapa;
+    return map;
   }
 
-  cambiarTab(tab: Tab) {
-    this.tabActiva = tab;
+  changeTab(tab: Tab) {
+    this.activeTab = tab;
   }
 
-  onFechaSeleccionada(fecha: string) {
-    this.fechaSeleccionada = fecha;
+  onDateSelected(date: string) {
+    this.selectedDate = date;
   }
 
-  get reservasDelDia(): Reserva[] {
-    return this.reservas
-      .filter(r => r.fecha === this.fechaSeleccionada)
+  get dayReservations(): Reserva[] {
+    return this.reservations
+      .filter(r => r.fecha === this.selectedDate)
       .sort((a, b) => a.hora.localeCompare(b.hora));
   }
 
-  get reservasDeLaSemana(): Reserva[] {
-    const { inicio, fin } = this.rangoSemana(this.fechaSeleccionada);
-    return this.reservas
-      .filter(r => r.fecha >= inicio && r.fecha <= fin)
+  get weekReservations(): Reserva[] {
+    const { start, end } = this.weekRange(this.selectedDate);
+    return this.reservations
+      .filter(r => r.fecha >= start && r.fecha <= end)
       .sort((a, b) => (a.fecha + a.hora).localeCompare(b.fecha + b.hora));
   }
 
-  get reservasRealizadas(): Reserva[] {
-    return this.reservas
+  get doneReservations(): Reserva[] {
+    return this.reservations
       .filter(r => r.estado === 'finalizado')
       .sort((a, b) => (b.fecha + b.hora).localeCompare(a.fecha + a.hora));
   }
 
-  get listaVisible(): Reserva[] {
-    if (this.tabActiva === 'semana') return this.reservasDeLaSemana;
-    if (this.tabActiva === 'realizados') return this.reservasRealizadas;
-    return this.reservasDelDia;
+  get visibleList(): Reserva[] {
+    if (this.activeTab === 'week') return this.weekReservations;
+    if (this.activeTab === 'done') return this.doneReservations;
+    return this.dayReservations;
   }
 
-  get totalDelDia(): number {
-    return this.reservasDelDia.length;
+  get dayTotal(): number {
+    return this.dayReservations.length;
   }
 
-  get pendientesDelDia(): number {
-    return this.reservasDelDia.filter(r => r.estado === 'pendiente').length;
+  get dayPending(): number {
+    return this.dayReservations.filter(r => r.estado === 'pendiente').length;
   }
 
-  get enProgresoDelDia(): number {
-    return this.reservasDelDia.filter(r => r.estado === 'en_progreso').length;
+  get dayInProgress(): number {
+    return this.dayReservations.filter(r => r.estado === 'en_progreso').length;
   }
 
-  get finalizadosDelDia(): number {
-    return this.reservasDelDia.filter(r => r.estado === 'finalizado').length;
+  get dayCompleted(): number {
+    return this.dayReservations.filter(r => r.estado === 'finalizado').length;
   }
 
-  get viendoHoy(): boolean {
-    return this.fechaSeleccionada === this.hoyComoTexto();
+  get viewingToday(): boolean {
+    return this.selectedDate === this.todayAsText();
   }
 
-  get proximoServicio(): Reserva | null {
-    if (!this.viendoHoy) return null;
+  get nextService(): Reserva | null {
+    if (!this.viewingToday) return null;
 
-    const ahora = new Date();
-    const siguientes = this.reservasDelDia
+    const now = new Date();
+    const next = this.dayReservations
       .filter(r => r.estado !== 'finalizado')
-      .filter(r => new Date(`${r.fecha}T${r.hora}`).getTime() >= ahora.getTime())
+      .filter(r => new Date(`${r.fecha}T${r.hora}`).getTime() >= now.getTime())
       .sort((a, b) => a.hora.localeCompare(b.hora));
 
-    return siguientes[0] ?? null;
+    return next[0] ?? null;
   }
 
-  get minutosParaElProximo(): number {
-    if (!this.proximoServicio) return 0;
-    const fechaHora = new Date(`${this.proximoServicio.fecha}T${this.proximoServicio.hora}`);
-    return Math.max(0, Math.round((fechaHora.getTime() - Date.now()) / 60000));
+  get minutesToNext(): number {
+    if (!this.nextService) return 0;
+    const dateTime = new Date(`${this.nextService.fecha}T${this.nextService.hora}`);
+    return Math.max(0, Math.round((dateTime.getTime() - Date.now()) / 60000));
   }
 
-  claseEstado = claseEstadoReserva;
-  iconoEstado = iconoEstadoReserva;
-  labelEstado = labelEstadoReserva;
+  statusClass = claseEstadoReserva;
+  statusIcon = iconoEstadoReserva;
+  statusLabel = labelEstadoReserva;
 
-  iniciarServicio(r: Reserva) {
+  startService(r: Reserva) {
     if (r.estado !== 'pendiente') return;
     r.estado = 'en_progreso';
   }
 
-  pedirFinalizar(r: Reserva) {
+  requestFinish(r: Reserva) {
     const data: ConfirmModalData = {
       titulo: 'SCHEDULE.FINISH_TITLE',
       mensaje: 'SCHEDULE.FINISH_MESSAGE',
@@ -151,60 +150,59 @@ export class ScheduleComponent implements OnInit {
       data
     });
 
-    dialogRef.afterClosed().subscribe(confirmado => {
-      if (!confirmado) return;
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
 
       r.estado = 'finalizado';
 
-     
       this.cdr.detectChanges();
     });
   }
 
-  verDetalle(r: Reserva) {
+  viewDetail(r: Reserva) {
     const dialogRef = this.dialog.open(ReservationDetailModal, {
       panelClass: 'custom-dialog',
       data: r
     });
 
-    dialogRef.afterClosed().subscribe(accion => {
-      if (accion === 'iniciar') {
-        this.iniciarServicio(r);
+    dialogRef.afterClosed().subscribe(action => {
+      if (action === 'iniciar') {
+        this.startService(r);
         this.cdr.detectChanges();
-      } else if (accion === 'finalizar') {
-        this.pedirFinalizar(r);
+      } else if (action === 'finalizar') {
+        this.requestFinish(r);
       }
     });
   }
 
-  get fechaLegible(): string {
-    const [, mes, dia] = this.fechaSeleccionada.split('-').map(Number);
-    const meses: string[] = this.translate.instant('CALENDAR.MONTHS');
-    return `${dia} ${this.translate.instant('SCHEDULE.OF')} ${meses[mes - 1]}`;
+  get readableDate(): string {
+    const [, month, day] = this.selectedDate.split('-').map(Number);
+    const months: string[] = this.translate.instant('CALENDAR.MONTHS');
+    return `${day} ${this.translate.instant('SCHEDULE.OF')} ${months[month - 1]}`;
   }
 
-  private hoyComoTexto(): string {
-    const hoy = new Date();
-    const anio = hoy.getFullYear();
-    const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-    const dia = String(hoy.getDate()).padStart(2, '0');
-    return `${anio}-${mes}-${dia}`;
+  private todayAsText(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
-  private rangoSemana(fechaTexto: string): { inicio: string; fin: string } {
-    const [anio, mes, dia] = fechaTexto.split('-').map(Number);
-    const fecha = new Date(anio, mes - 1, dia);
+  private weekRange(dateText: string): { start: string; end: string } {
+    const [year, month, day] = dateText.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
 
-    const offsetLunes = (fecha.getDay() + 6) % 7; // 0=lunes..6=domingo
-    const lunes = new Date(fecha);
-    lunes.setDate(fecha.getDate() - offsetLunes);
+    const mondayOffset = (date.getDay() + 6) % 7; // 0=lunes..6=domingo
+    const monday = new Date(date);
+    monday.setDate(date.getDate() - mondayOffset);
 
-    const domingo = new Date(lunes);
-    domingo.setDate(lunes.getDate() + 6);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
 
-    const aTexto = (d: Date) =>
+    const toText = (d: Date) =>
       `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
-    return { inicio: aTexto(lunes), fin: aTexto(domingo) };
+    return { start: toText(monday), end: toText(sunday) };
   }
 }

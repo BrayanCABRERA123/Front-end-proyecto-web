@@ -31,19 +31,19 @@ export class QualificationsComponent implements OnInit {
   private readonly operatorId = 1;
 
   // filtros de búsqueda
-  filtroFecha: string = '';
-  filtroTipoServicio: string = '';
-  filtroEstrellas: string = '';
+  dateFilter: string = '';
+  serviceTypeFilter: string = '';
+  starsFilter: string = '';
 
   // opciones de los selects
-  tiposServicio = [
+  serviceTypes = [
   { value: '', label: 'QUALIFICATIONS.TYPE_ALL' },
   { value: 'basico',   label: 'QUALIFICATIONS.TYPE_BASIC' },
   { value: 'premium',  label: 'QUALIFICATIONS.TYPE_PREMIUM' },
   { value: 'completo', label: 'QUALIFICATIONS.TYPE_FULL' }
 ];
 
-estrellas = [
+starsOptions = [
   { value: '', label: 'QUALIFICATIONS.STARS_ALL' },
   { value: '5', label: 'QUALIFICATIONS.STARS_5' },
   { value: '4', label: 'QUALIFICATIONS.STARS_4' },
@@ -53,52 +53,52 @@ estrellas = [
 ];
 
   // lista de calificaciones recibidas (viene de la API mock)
-  calificaciones: any[] = [];
+  ratings: any[] = [];
 
   constructor(private api: Api, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.api.getOperatorQualifications(this.operatorId).subscribe(calificaciones => {
-      this.calificaciones = calificaciones;
+    this.api.getOperatorQualifications(this.operatorId).subscribe(ratings => {
+      this.ratings = ratings;
       this.cdr.detectChanges();
     });
   }
 
   // estadísticas generales, derivadas de las calificaciones cargadas
-  get totalCalificaciones(): number {
-    return this.calificaciones.length;
+  get totalRatings(): number {
+    return this.ratings.length;
   }
 
-  get calificacionPromedio(): number {
-    if (this.calificaciones.length === 0) return 0;
-    const suma = this.calificaciones.reduce((sum, c) => sum + c.estrellas, 0);
-    return Math.round((suma / this.calificaciones.length) * 10) / 10;
+  get averageRating(): number {
+    if (this.ratings.length === 0) return 0;
+    const sum = this.ratings.reduce((total, r) => total + r.stars, 0);
+    return Math.round((sum / this.ratings.length) * 10) / 10;
   }
 
-  get porcentajeSatisfaccion(): number {
-    if (this.calificaciones.length === 0) return 0;
-    const positivas = this.calificaciones.filter(c => c.estrellas >= 4).length;
-    return Math.round((positivas / this.calificaciones.length) * 100);
+  get satisfactionPercentage(): number {
+    if (this.ratings.length === 0) return 0;
+    const positive = this.ratings.filter(r => r.stars >= 4).length;
+    return Math.round((positive / this.ratings.length) * 100);
   }
 
-  get nivelSatisfaccion(): string {
-    if (this.porcentajeSatisfaccion >= 80) return 'Muy alto';
-    if (this.porcentajeSatisfaccion >= 60) return 'Alto';
-    if (this.porcentajeSatisfaccion >= 40) return 'Medio';
+  get satisfactionLevel(): string {
+    if (this.satisfactionPercentage >= 80) return 'Muy alto';
+    if (this.satisfactionPercentage >= 60) return 'Alto';
+    if (this.satisfactionPercentage >= 40) return 'Medio';
     return 'Bajo';
   }
 
   // filtra las calificaciones según los filtros activos
-  get calificacionesFiltradas() {
-    return this.calificaciones.filter(c => {
-      if (this.filtroEstrellas && c.estrellas !== parseInt(this.filtroEstrellas)) return false;
-      if (this.filtroTipoServicio && c.tipoServicio.toLowerCase().includes(this.filtroTipoServicio) === false) return false;
+  get filteredRatings() {
+    return this.ratings.filter(r => {
+      if (this.starsFilter && r.stars !== parseInt(this.starsFilter)) return false;
+      if (this.serviceTypeFilter && r.serviceType.toLowerCase().includes(this.serviceTypeFilter) === false) return false;
       return true;
     });
   }
 
   // genera un arreglo de estrellas para mostrar en el template
-  getEstrellas(cantidad: number): number[] {
-    return Array(5).fill(0).map((_, i) => i < cantidad ? 1 : 0);
+  getStars(count: number): number[] {
+    return Array(5).fill(0).map((_, i) => i < count ? 1 : 0);
   }
 }

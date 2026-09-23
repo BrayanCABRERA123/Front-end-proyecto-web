@@ -1,3 +1,5 @@
+@use '../../../../../styles/variables' as *;
+
 // contenedor principal con sidebar y contenido en fila
 .page-container {
   display: flex;
@@ -134,7 +136,7 @@
   color: var(--text);
   background-color: var(--card);
   outline: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: border-color 0.2s ease;
   width: 160px;
  
@@ -177,7 +179,7 @@
   outline: none;
   appearance: none;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: border-color 0.2s ease;
   width: 160px;
  
@@ -245,7 +247,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: $font-family;
   transition: background-color 0.2s ease;
   flex: 1;
  

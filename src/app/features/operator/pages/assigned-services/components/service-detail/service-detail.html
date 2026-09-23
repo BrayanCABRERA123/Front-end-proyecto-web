@@ -2,14 +2,14 @@
 
   <div class="detail-header">
     <h3 class="detail-title">
-      {{ 'ASSIGNED_SERVICES.DETAIL.TITLE' | translate }} ({{ servicio.id }})
+      {{ 'ASSIGNED_SERVICES.DETAIL.TITLE' | translate }} ({{ service.id }})
     </h3>
     <span
-      class="estado-badge"
-      [class.pendiente]="servicio.estadoColor === 'pendiente'"
-      [class.progreso]="servicio.estadoColor === 'progreso'"
-      [class.finalizado]="servicio.estadoColor === 'finalizado'">
-      {{ servicio.estado }}
+      class="status-badge"
+      [class.pending]="service.statusColor === 'pending'"
+      [class.progress]="service.statusColor === 'progress'"
+      [class.completed]="service.statusColor === 'completed'">
+      {{ service.status }}
     </span>
   </div>
 
@@ -18,33 +18,33 @@
     <div class="detail-col">
       <div class="detail-item">
         <span class="detail-label">ID</span>
-        <span class="detail-value">{{ servicio.id }}</span>
+        <span class="detail-value">{{ service.id }}</span>
       </div>
       <div class="detail-item">
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.CLIENT' | translate }}</span>
-        <span class="detail-value">{{ servicio.client }}</span>
+        <span class="detail-value">{{ service.client }}</span>
       </div>
       <div class="detail-item">
         <mat-icon class="detail-icon">location_on</mat-icon>
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.ADDRESS' | translate }}</span>
-        <span class="detail-value bold">{{ servicio.ubicacionCompleta }}</span>
+        <span class="detail-value bold">{{ service.fullAddress }}</span>
       </div>
     </div>
 
     <div class="detail-col">
       <div class="detail-item">
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.SERVICE_TYPE' | translate }}</span>
-        <span class="detail-value bold">{{ servicio.tipoServicio }}</span>
+        <span class="detail-value bold">{{ service.serviceType }}</span>
       </div>
       <div class="detail-item">
         <mat-icon class="detail-icon">schedule</mat-icon>
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.SCHEDULED_TIME' | translate }}</span>
-        <span class="detail-value bold">{{ servicio.fechaHora }}</span>
+        <span class="detail-value bold">{{ service.dateTime }}</span>
       </div>
       <div class="detail-item">
         <mat-icon class="detail-icon">calendar_today</mat-icon>
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.PAYMENT_METHOD' | translate }}</span>
-        <span class="detail-value bold">{{ servicio.metodoPago }}</span>
+        <span class="detail-value bold">{{ service.paymentMethod }}</span>
       </div>
     </div>
 
@@ -58,15 +58,15 @@
   <div class="actions-section">
     <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.PROGRESS_TITLE' | translate }}</p>
     <div class="action-buttons">
-      <button class="btn-iniciar">
+      <button class="btn-start">
         <mat-icon>play_circle_outline</mat-icon>
         {{ 'ASSIGNED_SERVICES.DETAIL.START' | translate }}
       </button>
-      <button class="btn-reportar">
+      <button class="btn-report">
         <mat-icon>refresh</mat-icon>
         {{ 'ASSIGNED_SERVICES.DETAIL.REPORT' | translate }}
       </button>
-      <button class="btn-finalizar">
+      <button class="btn-finish">
         <mat-icon>flag</mat-icon>
         {{ 'ASSIGNED_SERVICES.DETAIL.FINISH' | translate }}
       </button>
@@ -75,7 +75,7 @@
 
   <div class="extra-section">
     <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.EXTRA_TITLE' | translate }}</p>
-    <button class="btn-contactar">
+    <button class="btn-contact">
       <mat-icon>phone</mat-icon>
       {{ 'ASSIGNED_SERVICES.DETAIL.CONTACT' | translate }}
     </button>
