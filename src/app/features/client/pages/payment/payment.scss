@@ -387,4 +387,41 @@
   .payment-right {
     justify-content: space-between;
   }
+}.badge-approved { background: var(--success-soft); color: var(--success); }
+.badge-rejected { background: var(--error-soft); color: var(--error); }
+
+.payable-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.payable-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+
+  &.selected { border-color: var(--primary); }
+}
+
+.empty-note {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.pay-error {
+  color: var(--error);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
 }

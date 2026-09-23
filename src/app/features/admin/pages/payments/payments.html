@@ -54,6 +54,10 @@
 
     </div>
 
+    @if (errorMessage) {
+      <p class="page-error">{{ errorMessage }}</p>
+    }
+
     <!-- filtros -->
     <div class="card filters-card">
 
@@ -68,6 +72,7 @@
         <option value="daviplata">Daviplata</option>
         <option value="bancolombia">Bancolombia</option>
         <option value="cash">Efectivo</option>
+        <option value="card">Tarjeta</option>
       </select>
 
       <select [(ngModel)]="statusFilter">
@@ -99,7 +104,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (p of filteredPayments; track p.code) {
+            @for (p of filteredPayments; track p.id) {
               <tr>
                 <td>
                   <strong>{{ p.client }}</strong>
@@ -109,11 +114,11 @@
                   <strong>{{ p.code }}</strong>
                   <span class="muted">{{ p.reference }}</span>
                 </td>
-                <td><span [class]="'method-chip method-chip--' + p.method">{{ p.method }}</span></td>
+                <td><span [class]="'method-chip method-chip--' + p.method">{{ p.methodName }}</span></td>
                 <td class="amount-cell">{{ cop(p.amount) }} <span class="muted">COP</span></td>
                 <td>
                   <strong>{{ p.date }}, {{ p.time }}</strong>
-                  <span class="muted">{{ p.service }}</span>
+                  <span class="muted">{{ p.bookingCode }} · {{ p.service }}</span>
                 </td>
                 <td>
                   <span [class]="'status-pill status-pill--' + p.status">

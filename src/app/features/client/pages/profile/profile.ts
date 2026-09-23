@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // importamos el sidebar del client
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // importamos el componente compartido de perfil
 import { ProfileCardComponent } from '../../../../shared/components/profile-card/profile-card';
+import { Auth } from '../../../../core/services/auth';
 
 @Component({
   selector: 'app-profile',
@@ -12,15 +13,24 @@ import { ProfileCardComponent } from '../../../../shared/components/profile-card
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
-  // datos del usuario client
-  user = {
-    name: 'Juan Díaz',
-    email: 'juan@email.com',
-    phone: '+1234 567 890',
-    address: 'Calle Principal #123',
-    initials: 'JD',
-    memberSince: 'Enero 2026'
-  };
+  // datos del usuario client, tomados de la sesión (Auth)
+  user = { name: '', email: '', phone: '', address: '', initials: '', memberSince: '' };
+
+  constructor(private auth: Auth) {}
+
+  ngOnInit(): void {
+    const currentUser = this.auth.getCurrentUser();
+    if (!currentUser) return;
+
+    this.user = {
+      name: currentUser.nombre,
+      email: currentUser.correo,
+      phone: currentUser.telefono ?? '',
+      address: '',
+      initials: currentUser.iniciales,
+      memberSince: new Date(currentUser.createdAt).toLocaleDateString('es-CO', { month: 'long', year: 'numeric' })
+    };
+  }
 }

@@ -280,3 +280,11 @@
   .review-columns { grid-template-columns: 1fr; }
   .info-grid { grid-template-columns: 1fr; }
 }
+
+.reject-reason__text {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--error-soft);
+  color: var(--error);
+}

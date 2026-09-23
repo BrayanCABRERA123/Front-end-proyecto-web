@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BackButtonComponent } from '../../../../shared/components/back-button/back-button';
 import { AuthSidePanelComponent } from '../../../../shared/components/auth-side-panel/auth-side-panel';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { Auth } from '../../../../core/services/auth';
 
 
 @Component({
@@ -33,12 +34,18 @@ export class LoginComponent {
 
   mostrarContrasena = false;
 
-  loginError = false;
+  // clave i18n del error a mostrar (credenciales inválidas o cuenta inhabilitada)
+  loginError: string | null = null;
+
+  cargando = false;
 
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private auth: Auth,
+    private cdr: ChangeDetectorRef
   ) {
 
     this.loginForm = this.fb.group({
@@ -97,30 +104,33 @@ export class LoginComponent {
     const contrasena =
       this.loginForm.value.contrasena;
 
+    this.cargando = true;
+    this.loginError = null;
 
-    // simulación backend temporal
-    const usuarioDemo = {
+    this.auth.login(correo, contrasena).subscribe({
 
-      correo: 'admin@gmail.com',
-      contrasena: 'Admin123!'
+      next: ({ user }) => {
 
-    };
+        this.cargando = false;
 
+        const redirect = this.route.snapshot.queryParamMap.get('redirect');
 
-    if (
-      correo === usuarioDemo.correo &&
-      contrasena === usuarioDemo.contrasena
-    ) {
+        this.router.navigateByUrl(redirect || this.auth.homeRouteFor(user.rol));
 
-      this.loginError = false;
+      },
 
-      this.router.navigate(['/client']);
+      error: (err: Error) => {
 
-    } else {
+        this.cargando = false;
+        this.loginError =
+          err.message === 'ACCOUNT_DISABLED' ? 'LOGIN.ACCOUNT_DISABLED'
+          : err.message === 'SERVER_UNAVAILABLE' ? 'COMMON.SERVER_UNAVAILABLE'
+          : 'LOGIN.INVALID_CREDENTIALS';
+        this.cdr.detectChanges();
 
-      this.loginError = true;
+      }
 
-    }
+    });
 
   }
 

@@ -10,7 +10,7 @@ export interface ServiceHistoryItem {
   plate: string;
   client: string;
   address: string;
-  paymentMethod: string;
+  paymentMethod: string | null; // código payment_method_type (NEQUI, CASH...); null si no ha pagado
   amount: number;
   rating: number | null;
   comment: string | null;

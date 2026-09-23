@@ -57,6 +57,10 @@
           </div>
         </div>
 
+        @if (usersError) {
+          <p class="users-error">{{ usersError }}</p>
+        }
+
         <div class="table-wrapper">
           <table>
             <thead>
@@ -65,7 +69,7 @@
                 <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.EMAIL' | translate }}</th>
                 <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.USER_TYPE' | translate }}</th>
                 <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.DATE_ADDED' | translate }}</th>
-                <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.INVITED' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.PHONE' | translate }}</th>
                 <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.STATUS' | translate }}</th>
                 <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.ACTIONS' | translate }}</th>
               </tr>
@@ -78,12 +82,22 @@
                     {{ u.name }}
                   </td>
                   <td>{{ u.email }}</td>
-                  <td><span class="type-chip">{{ u.userType }}</span></td>
+                  <td><span class="type-chip">{{ u.roleName }}</span></td>
                   <td>{{ u.dateAdded }}</td>
-                  <td>{{ (u.invited ? 'ADMIN_MANAGEMENT.USERS.YES' : 'ADMIN_MANAGEMENT.USERS.NO') | translate }}</td>
-                  <td><span class="status-pill status-pill--active">{{ ('ADMIN_MANAGEMENT.USERS.STATUS.' + u.status) | translate }}</span></td>
+                  <td>{{ u.phone || '—' }}</td>
+                  <td>
+                    <span class="status-pill" [class.status-pill--active]="u.status === 'active'" [class.status-pill--inactive]="u.status !== 'active'">
+                      {{ ('ADMIN_MANAGEMENT.USERS.STATUS.' + u.status) | translate }}
+                    </span>
+                  </td>
                   <td class="actions-cell">
-                    <button class="btn-icon"><mat-icon>edit</mat-icon></button>
+                    @if (u.operatorId) {
+                      <button class="btn-icon" (click)="viewOperator(u)" [title]="'ADMIN_MANAGEMENT.USERS.VIEW_OPERATOR' | translate"><mat-icon>badge</mat-icon></button>
+                    }
+                    <button class="btn-icon" (click)="toggleUserStatus(u)"
+                      [title]="(u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE') | translate">
+                      <mat-icon>{{ u.status === 'active' ? 'block' : 'check_circle' }}</mat-icon>
+                    </button>
                     <button class="btn-icon btn-icon--danger" (click)="deleteUser(u)"><mat-icon>delete</mat-icon></button>
                   </td>
                 </tr>

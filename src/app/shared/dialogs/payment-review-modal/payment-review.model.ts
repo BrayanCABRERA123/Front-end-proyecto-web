@@ -1,4 +1,5 @@
-export type PaymentMethod = 'nequi' | 'bancolombia' | 'daviplata' | 'cash';
+// códigos de payment_method_type en minúscula (así los devuelve el mock API)
+export type PaymentMethod = 'nequi' | 'bancolombia' | 'daviplata' | 'cash' | 'card';
 
 // todo lo que la tabla de pagos le pasa al modal para revisar un pago pendiente
 export interface PaymentReviewData {
@@ -20,6 +21,9 @@ export interface PaymentReviewData {
   amountDeclared: number;
   receiptDate: string; // "Hoy, 14:48 COT"
   bankAccount: string; // NIT/celular que aparece en el comprobante
+  accountHolder?: string; // titular de la cuenta del negocio que recibió el pago
+  rejectionReason?: string | null; // se muestra cuando el pago ya fue rechazado
+  auditedBy?: string; // admin con sesión iniciada
 }
 
 export type PaymentReviewAction = 'approved' | 'rejected';

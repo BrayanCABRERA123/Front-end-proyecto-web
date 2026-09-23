@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from '../../core/guards/auth-guard';
+import { roleGuard } from '../../core/guards/role-guard';
 import { TasksComponent } from './pages/tasks/tasks';
 // importamos el home del operator
 import { HomeComponent } from './pages/home/home';
@@ -12,16 +14,22 @@ import { ConfigurationOperatorComponent } from './pages/configuration-operator/c
 import { ScheduleComponent } from './pages/schedule/schedule';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  // ruta para tareas
-  { path: 'tasks', component: TasksComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'assigned-services', component: AssignedServicesComponent },
-  { path: 'schedule', component: ScheduleComponent },
-  { path: 'notifications', component: OperatorNotificationsComponent },
-  { path: 'service-history', component: ServiceHistoryComponent },
-  { path: 'qualifications', component: QualificationsComponent },
-  { path: 'settings', component: ConfigurationOperatorComponent }
+  {
+    path: '',
+    canActivate: [authGuard, roleGuard(['OPERATOR'])],
+    children: [
+      { path: '', component: HomeComponent },
+      // ruta para tareas
+      { path: 'tasks', component: TasksComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'assigned-services', component: AssignedServicesComponent },
+      { path: 'schedule', component: ScheduleComponent },
+      { path: 'notifications', component: OperatorNotificationsComponent },
+      { path: 'service-history', component: ServiceHistoryComponent },
+      { path: 'qualifications', component: QualificationsComponent },
+      { path: 'settings', component: ConfigurationOperatorComponent }
+    ]
+  }
 ];
 
 @NgModule({

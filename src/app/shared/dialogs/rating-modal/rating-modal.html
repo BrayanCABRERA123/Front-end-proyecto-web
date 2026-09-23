@@ -42,7 +42,7 @@
 
     </div>
 
-    <button class="btn-submit" (click)="submit()">
+    <button class="btn-submit" (click)="submit()" [disabled]="rating === 0 || saving">
 
       {{ 'RATINGS.SUBMIT' | translate }}
 

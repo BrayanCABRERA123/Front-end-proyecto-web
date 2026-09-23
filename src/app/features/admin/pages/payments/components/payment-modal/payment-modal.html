@@ -10,31 +10,44 @@
 
   <div class="manual-dialog__body">
 
+    <!-- reserva pendiente de pago: de ahí salen cliente, servicio y monto (los fija el mock) -->
     <label class="field">
-      <span>{{ 'MANUAL_PAYMENT_MODAL.CLIENT_LABEL' | translate }}</span>
-      <input type="text" [(ngModel)]="client" [placeholder]="'MANUAL_PAYMENT_MODAL.CLIENT_PLACEHOLDER' | translate">
-    </label>
-
-    <label class="field">
-      <span>{{ 'MANUAL_PAYMENT_MODAL.SERVICE_LABEL' | translate }}</span>
-      <input type="text" [(ngModel)]="service" [placeholder]="'MANUAL_PAYMENT_MODAL.SERVICE_PLACEHOLDER' | translate">
+      <span>{{ 'MANUAL_PAYMENT_MODAL.BOOKING_LABEL' | translate }}</span>
+      <select [(ngModel)]="bookingId">
+        <option [ngValue]="null" disabled>{{ 'MANUAL_PAYMENT_MODAL.BOOKING_PLACEHOLDER' | translate }}</option>
+        @for (b of bookings; track b.bookingId) {
+          <option [ngValue]="b.bookingId">{{ b.code }} · {{ b.client }} · {{ b.service }} · {{ b.date }}</option>
+        }
+      </select>
+      @if (!bookings.length) {
+        <small class="muted">{{ 'MANUAL_PAYMENT_MODAL.NO_BOOKINGS' | translate }}</small>
+      }
     </label>
 
     <div class="row-2">
       <label class="field">
         <span>{{ 'MANUAL_PAYMENT_MODAL.AMOUNT_LABEL' | translate }}</span>
-        <input type="number" min="0" [(ngModel)]="amount" placeholder="45.000">
+        <input type="text" [value]="selectedBooking ? '$' + (selectedBooking.amount | number) : '—'" readonly>
       </label>
 
       <label class="field">
         <span>{{ 'MANUAL_PAYMENT_MODAL.METHOD_LABEL' | translate }}</span>
-        <select [(ngModel)]="method">
-          @for (m of methods; track m.value) {
-            <option [value]="m.value">{{ m.label }}</option>
+        <select [(ngModel)]="paymentAccountId">
+          @for (m of methods; track m.paymentAccountId) {
+            <option [ngValue]="m.paymentAccountId">{{ m.name }}</option>
           }
         </select>
       </label>
     </div>
+
+    <label class="field">
+      <span>{{ 'MANUAL_PAYMENT_MODAL.REFERENCE_LABEL' | translate }}</span>
+      <input type="text" [(ngModel)]="reference" [placeholder]="'MANUAL_PAYMENT_MODAL.REFERENCE_PLACEHOLDER' | translate">
+    </label>
+
+    @if (errorMessage) {
+      <small class="field-error">{{ errorMessage }}</small>
+    }
 
   </div>
 

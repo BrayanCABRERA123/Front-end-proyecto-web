@@ -367,3 +367,9 @@ table {
   .home-content { padding: 20px; }
   .filters-row { flex-direction: column; align-items: stretch; }
 }
+
+.users-error {
+  color: var(--error);
+  font-weight: $fw-semibold;
+  margin: 0 0 12px;
+}

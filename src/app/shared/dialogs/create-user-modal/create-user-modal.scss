@@ -105,3 +105,14 @@
   &:hover { background: var(--primary-hover); }
   &:disabled { opacity: .5; cursor: not-allowed; }
 }
+
+.field-hint {
+  @include caption-text;
+  color: var(--text-muted);
+}
+
+.field-error {
+  @include caption-text;
+  color: var(--error);
+  margin: 0;
+}

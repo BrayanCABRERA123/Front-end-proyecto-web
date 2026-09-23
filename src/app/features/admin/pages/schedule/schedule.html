@@ -27,6 +27,10 @@
       </div>
     </div>
 
+    @if (errorMessage) {
+      <p class="page-error">{{ errorMessage }}</p>
+    }
+
     <!-- pestañas -->
     <div class="tabs">
       <button class="tab" [class.tab--active]="activeTab === 'hours'" (click)="setTab('hours')">

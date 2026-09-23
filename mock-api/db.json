@@ -1,0 +1,1825 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "nombre": "Laura Méndez",
+      "correo": "admin@gmail.com",
+      "telefono": "3011234567",
+      "contrasena": "Admin123!",
+      "iniciales": "LM",
+      "rol": "ADMIN",
+      "aceptaTerminos": true,
+      "aceptaPoliticaDatos": true,
+      "isActive": true,
+      "createdAt": "2024-01-05T08:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "nombre": "Camilo Torres",
+      "correo": "camilo.operario@gmail.com",
+      "telefono": "3021234567",
+      "contrasena": "Operario123!",
+      "iniciales": "CT",
+      "rol": "OPERATOR",
+      "aceptaTerminos": true,
+      "aceptaPoliticaDatos": true,
+      "isActive": true,
+      "createdAt": "2024-02-01T08:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "nombre": "Andrés Mora",
+      "correo": "andres.operario@gmail.com",
+      "telefono": "3031234567",
+      "contrasena": "Operario123!",
+      "iniciales": "AM",
+      "rol": "OPERATOR",
+      "aceptaTerminos": true,
+      "aceptaPoliticaDatos": true,
+      "isActive": true,
+      "createdAt": "2023-11-15T08:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "nombre": "Mateo Gómez",
+      "correo": "mateo.operario@gmail.com",
+      "telefono": "3041234567",
+      "contrasena": "Operario123!",
+      "iniciales": "MG",
+      "rol": "OPERATOR",
+      "aceptaTerminos": true,
+      "aceptaPoliticaDatos": true,
+      "isActive": true,
+      "createdAt": "2025-01-10T08:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "nombre": "Juan Díaz",
+      "correo": "juan.diaz@gmail.com",
+      "telefono": "3051234567",
+      "contrasena": "Cliente123!",
+      "iniciales": "JD",
+      "rol": "CLIENT",
+      "aceptaTerminos": true,
+      "aceptaPoliticaDatos": true,
+      "isActive": true,
+      "createdAt": "2025-03-10T08:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "nombre": "Demo Cliente",
+      "correo": "demo.cliente@gmail.com",
+      "telefono": "3061234567",
+      "contrasena": "Demo123!",
+      "iniciales": "DC",
+      "rol": "CLIENT",
+      "aceptaTerminos": true,
+      "aceptaPoliticaDatos": true,
+      "isActive": true,
+      "createdAt": "2025-06-01T08:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "nombre": "Brayan Estiven Patiño Cabrera",
+      "correo": "bspc1507@gmail.com",
+      "telefono": "3071234567",
+      "contrasena": "Brayan123!",
+      "iniciales": "BE",
+      "rol": "CLIENT",
+      "aceptaTerminos": true,
+      "aceptaPoliticaDatos": true,
+      "isActive": true,
+      "createdAt": "2026-09-20T08:00:00.000Z"
+    }
+  ],
+  "customers": [
+    {
+      "id": 1,
+      "userId": 5,
+      "loyaltyPoints": 120,
+      "customerSince": "2025-03-10"
+    },
+    {
+      "id": 2,
+      "userId": 6,
+      "loyaltyPoints": 40,
+      "customerSince": "2025-06-01"
+    },
+    {
+      "id": 3,
+      "userId": 7,
+      "loyaltyPoints": 0,
+      "customerSince": "2026-09-20"
+    }
+  ],
+  "vehicleTypes": [
+    {
+      "id": 1,
+      "code": "CAR",
+      "name": "Automóvil",
+      "sizeFactor": 1,
+      "displayOrder": 1,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "code": "SEDAN",
+      "name": "Sedán",
+      "sizeFactor": 1,
+      "displayOrder": 2,
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "code": "SUV",
+      "name": "SUV",
+      "sizeFactor": 1.3,
+      "displayOrder": 3,
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "code": "PICKUP",
+      "name": "Pickup",
+      "sizeFactor": 1.4,
+      "displayOrder": 4,
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "code": "TRUCK",
+      "name": "Camioneta",
+      "sizeFactor": 1.6,
+      "displayOrder": 5,
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "code": "MOTO",
+      "name": "Moto",
+      "sizeFactor": 0.5,
+      "displayOrder": 6,
+      "isActive": true
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 1,
+      "customerId": 1,
+      "licensePlate": "ABC123",
+      "vehicleTypeId": 2,
+      "brand": "Mazda",
+      "model": "3",
+      "color": "Blanco",
+      "createdAt": "2025-03-11T09:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "customerId": 1,
+      "licensePlate": "XYZ789",
+      "vehicleTypeId": 3,
+      "brand": "Chevrolet",
+      "model": "Tracker",
+      "color": "Gris",
+      "createdAt": "2025-05-02T09:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "customerId": 2,
+      "licensePlate": "DEF456",
+      "vehicleTypeId": 6,
+      "brand": "Yamaha",
+      "model": "FZ",
+      "color": "Negro",
+      "createdAt": "2025-06-02T09:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "customerId": 3,
+      "licensePlate": "GHI321",
+      "vehicleTypeId": 1,
+      "brand": "Renault",
+      "model": "Logan",
+      "color": "Rojo",
+      "createdAt": "2026-09-20T09:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "customerId": 3,
+      "licensePlate": "BDC123",
+      "vehicleTypeId": 3,
+      "brand": "Mazda",
+      "model": "2 sedan",
+      "color": "gris",
+      "createdAt": "2026-09-23T20:38:41.809Z"
+    },
+    {
+      "id": 6,
+      "customerId": 3,
+      "licensePlate": "AGGDBD123",
+      "vehicleTypeId": 5,
+      "brand": "Brayan Estiven Patiño Cabrera",
+      "model": "3232323",
+      "color": "color",
+      "createdAt": "2026-09-23T20:41:51.415Z"
+    }
+  ],
+  "serviceCategories": [
+    {
+      "id": 1,
+      "code": "LAVADO",
+      "name": "Lavado",
+      "description": "Servicios de lavado exterior/interior",
+      "displayOrder": 1,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "code": "BRILLADO",
+      "name": "Brillado y Encerado",
+      "description": "Servicios de encerado y pulido",
+      "displayOrder": 2,
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "code": "DETAILING",
+      "name": "Detailing",
+      "description": "Detallado profundo interior y exterior",
+      "displayOrder": 3,
+      "isActive": true
+    }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "code": "BASIC",
+      "name": "Lavado Básico",
+      "description": "Lavado exterior del vehículo",
+      "serviceCategoryId": 1,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "code": "FULL",
+      "name": "Lavado Completo",
+      "description": "Lavado exterior e interior",
+      "serviceCategoryId": 1,
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "code": "PREMIUM",
+      "name": "Lavado Premium",
+      "description": "Lavado completo con encerado",
+      "serviceCategoryId": 3,
+      "isActive": true
+    }
+  ],
+  "servicePrices": [
+    {
+      "id": 1,
+      "serviceId": 1,
+      "vehicleTypeId": 1,
+      "price": 20000,
+      "estimatedMinutes": 45,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 2,
+      "serviceId": 1,
+      "vehicleTypeId": 2,
+      "price": 20000,
+      "estimatedMinutes": 45,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 3,
+      "serviceId": 1,
+      "vehicleTypeId": 3,
+      "price": 26000,
+      "estimatedMinutes": 45,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 4,
+      "serviceId": 1,
+      "vehicleTypeId": 4,
+      "price": 28000,
+      "estimatedMinutes": 45,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 5,
+      "serviceId": 1,
+      "vehicleTypeId": 5,
+      "price": 32000,
+      "estimatedMinutes": 45,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 6,
+      "serviceId": 1,
+      "vehicleTypeId": 6,
+      "price": 10000,
+      "estimatedMinutes": 45,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 7,
+      "serviceId": 2,
+      "vehicleTypeId": 1,
+      "price": 50000,
+      "estimatedMinutes": 120,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 8,
+      "serviceId": 2,
+      "vehicleTypeId": 2,
+      "price": 50000,
+      "estimatedMinutes": 120,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 9,
+      "serviceId": 2,
+      "vehicleTypeId": 3,
+      "price": 65000,
+      "estimatedMinutes": 120,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 10,
+      "serviceId": 2,
+      "vehicleTypeId": 4,
+      "price": 70000,
+      "estimatedMinutes": 120,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 11,
+      "serviceId": 2,
+      "vehicleTypeId": 5,
+      "price": 80000,
+      "estimatedMinutes": 120,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 12,
+      "serviceId": 2,
+      "vehicleTypeId": 6,
+      "price": 25000,
+      "estimatedMinutes": 120,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 13,
+      "serviceId": 3,
+      "vehicleTypeId": 1,
+      "price": 35000,
+      "estimatedMinutes": 75,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 14,
+      "serviceId": 3,
+      "vehicleTypeId": 2,
+      "price": 35000,
+      "estimatedMinutes": 75,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 15,
+      "serviceId": 3,
+      "vehicleTypeId": 3,
+      "price": 45500,
+      "estimatedMinutes": 75,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 16,
+      "serviceId": 3,
+      "vehicleTypeId": 4,
+      "price": 49000,
+      "estimatedMinutes": 75,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 17,
+      "serviceId": 3,
+      "vehicleTypeId": 5,
+      "price": 56000,
+      "estimatedMinutes": 75,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    },
+    {
+      "id": 18,
+      "serviceId": 3,
+      "vehicleTypeId": 6,
+      "price": 17500,
+      "estimatedMinutes": 75,
+      "validFrom": "2025-01-01",
+      "validTo": null
+    }
+  ],
+  "establishment": [
+    {
+      "id": 1,
+      "legalName": "LavaRápido Vehicular S.A.S.",
+      "tradeName": "LavaRápido Vehicular",
+      "taxId": "900.123.456-7",
+      "address": "Cra 45 #12-34, Bogotá D.C.",
+      "phone": "3001234567",
+      "email": "contacto@lavarapidovehicular.com",
+      "logoUrl": null,
+      "businessType": "Lavado y Detailing Automotriz",
+      "foundationDate": "2019-03-15",
+      "legalRep": "Laura Méndez Ríos",
+      "legalRepDoc": "CC 1.032.456.789",
+      "whatsapp": "3001234567",
+      "website": "www.lavarapidovehicular.com",
+      "taxRegime": "Responsable de IVA 19% · Régimen Ordinario",
+      "ciiuActivity": "4520 - Mantenimiento y reparación de vehículos",
+      "dianResolution": "No. 18764002345678",
+      "invoicePrefix": "LV",
+      "invoiceRange": "4500-5500",
+      "electronicInvoicing": true,
+      "instagram": "@lavarapido_vehicular",
+      "facebook": "LavaRápido Vehicular",
+      "supportLine": "018000-123-456",
+      "serviceHours": "Lunes a sábado 8:00 AM - 6:00 PM"
+    }
+  ],
+  "businessHours": [
+    {
+      "id": 1,
+      "dayOfWeek": 1,
+      "opensAt": "08:00",
+      "closesAt": "18:00",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "dayOfWeek": 2,
+      "opensAt": "08:00",
+      "closesAt": "18:00",
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "dayOfWeek": 3,
+      "opensAt": "08:00",
+      "closesAt": "18:00",
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "dayOfWeek": 4,
+      "opensAt": "08:00",
+      "closesAt": "18:00",
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "dayOfWeek": 5,
+      "opensAt": "08:00",
+      "closesAt": "18:00",
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "dayOfWeek": 6,
+      "opensAt": "08:00",
+      "closesAt": "14:00",
+      "isActive": true
+    },
+    {
+      "id": 7,
+      "dayOfWeek": 7,
+      "opensAt": "00:00",
+      "closesAt": "00:00",
+      "isActive": false
+    }
+  ],
+  "businessHourExceptions": [
+    {
+      "id": 1,
+      "exceptionDate": "2026-12-25",
+      "isClosed": true,
+      "opensAt": null,
+      "closesAt": null,
+      "reason": "Navidad"
+    },
+    {
+      "id": 2,
+      "exceptionDate": "2027-01-01",
+      "isClosed": true,
+      "opensAt": null,
+      "closesAt": null,
+      "reason": "Año Nuevo"
+    },
+    {
+      "id": 3,
+      "exceptionDate": "2026-10-12",
+      "isClosed": false,
+      "opensAt": "09:00",
+      "closesAt": "13:00",
+      "reason": "Horario especial - Día de la Raza"
+    }
+  ],
+  "serviceBays": [
+    {
+      "id": 1,
+      "code": "BAHIA-1",
+      "name": "Bahía 1",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "code": "BAHIA-2",
+      "name": "Bahía 2",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "code": "BAHIA-3",
+      "name": "Bahía 3",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "id": 4,
+      "code": "BAHIA-4",
+      "name": "Bahía 4",
+      "isActive": false,
+      "status": "maintenance"
+    }
+  ],
+  "bookingStatuses": [
+    {
+      "id": 1,
+      "code": "PENDING",
+      "name": "Pendiente",
+      "isFinal": false,
+      "displayOrder": 1
+    },
+    {
+      "id": 2,
+      "code": "CONFIRMED",
+      "name": "Confirmado",
+      "isFinal": false,
+      "displayOrder": 2
+    },
+    {
+      "id": 3,
+      "code": "IN_PROGRESS",
+      "name": "En curso",
+      "isFinal": false,
+      "displayOrder": 3
+    },
+    {
+      "id": 4,
+      "code": "COMPLETED",
+      "name": "Completado",
+      "isFinal": true,
+      "displayOrder": 4
+    },
+    {
+      "id": 5,
+      "code": "CANCELLED",
+      "name": "Cancelado",
+      "isFinal": true,
+      "displayOrder": 5
+    },
+    {
+      "id": 6,
+      "code": "NO_SHOW",
+      "name": "No se presentó",
+      "isFinal": true,
+      "displayOrder": 6
+    }
+  ],
+  "cancellationReasons": [
+    {
+      "id": 1,
+      "code": "CLIENT_REQUEST",
+      "name": "Solicitud del cliente",
+      "isCustomerFault": false
+    },
+    {
+      "id": 2,
+      "code": "NO_SHOW",
+      "name": "El cliente no llegó",
+      "isCustomerFault": true
+    },
+    {
+      "id": 3,
+      "code": "WEATHER",
+      "name": "Condiciones climáticas",
+      "isCustomerFault": false
+    },
+    {
+      "id": 4,
+      "code": "OTHER",
+      "name": "Otro motivo",
+      "isCustomerFault": false
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1,
+      "code": "SV-0001",
+      "vehicleId": 1,
+      "serviceBayId": 1,
+      "serviceAddress": "Cra. 45 #23-10, Bogotá",
+      "scheduledStart": "2026-09-20T09:00:00.000Z",
+      "scheduledEnd": "2026-09-20T09:45:00.000Z",
+      "bookingStatusId": 4,
+      "bookedBy": 5,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    },
+    {
+      "id": 2,
+      "code": "SV-0002",
+      "vehicleId": 2,
+      "serviceBayId": 2,
+      "serviceAddress": "Cra. 45 #23-10, Bogotá",
+      "scheduledStart": "2026-09-21T10:00:00.000Z",
+      "scheduledEnd": "2026-09-21T12:00:00.000Z",
+      "bookingStatusId": 4,
+      "bookedBy": 5,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    },
+    {
+      "id": 3,
+      "code": "SV-0003",
+      "vehicleId": 3,
+      "serviceBayId": 1,
+      "serviceAddress": "Calle 42 #13-33, Bogotá",
+      "scheduledStart": "2026-09-22T14:00:00.000Z",
+      "scheduledEnd": "2026-09-22T15:15:00.000Z",
+      "bookingStatusId": 4,
+      "bookedBy": 6,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    },
+    {
+      "id": 4,
+      "code": "SV-0004",
+      "vehicleId": 1,
+      "serviceBayId": 3,
+      "serviceAddress": "Cra. 45 #23-10, Bogotá",
+      "scheduledStart": "2026-09-23T09:00:00.000Z",
+      "scheduledEnd": "2026-09-23T09:45:00.000Z",
+      "bookingStatusId": 2,
+      "bookedBy": 5,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    },
+    {
+      "id": 5,
+      "code": "SV-0005",
+      "vehicleId": 4,
+      "serviceBayId": 2,
+      "serviceAddress": "Calle 127 #19A-48, Bogotá",
+      "scheduledStart": "2026-09-23T11:00:00.000Z",
+      "scheduledEnd": "2026-09-23T13:00:00.000Z",
+      "bookingStatusId": 3,
+      "bookedBy": 7,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    },
+    {
+      "id": 6,
+      "code": "SV-0006",
+      "vehicleId": 2,
+      "serviceBayId": 1,
+      "serviceAddress": "Cra. 45 #23-10, Bogotá",
+      "scheduledStart": "2026-09-24T08:00:00.000Z",
+      "scheduledEnd": "2026-09-24T09:15:00.000Z",
+      "bookingStatusId": 1,
+      "bookedBy": 5,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    },
+    {
+      "id": 7,
+      "code": "SV-0007",
+      "vehicleId": 3,
+      "serviceBayId": 4,
+      "serviceAddress": "Calle 42 #13-33, Bogotá",
+      "scheduledStart": "2026-09-19T16:00:00.000Z",
+      "scheduledEnd": "2026-09-19T16:45:00.000Z",
+      "bookingStatusId": 5,
+      "bookedBy": 6,
+      "cancellationReasonId": 3,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": "Cliente canceló por lluvia"
+    },
+    {
+      "id": 8,
+      "code": "SV-0008",
+      "vehicleId": 1,
+      "serviceBayId": 2,
+      "serviceAddress": "Cra. 45 #23-10, Bogotá",
+      "scheduledStart": "2026-09-25T10:00:00.000Z",
+      "scheduledEnd": "2026-09-25T11:15:00.000Z",
+      "bookingStatusId": 2,
+      "bookedBy": 5,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    },
+    {
+      "id": 9,
+      "code": "SV-0009",
+      "vehicleId": 4,
+      "serviceBayId": 3,
+      "serviceAddress": "Calle 127 #19A-48, Bogotá",
+      "scheduledStart": "2026-09-18T09:00:00.000Z",
+      "scheduledEnd": "2026-09-18T10:15:00.000Z",
+      "bookingStatusId": 4,
+      "bookedBy": 7,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    },
+    {
+      "id": 10,
+      "code": "SV-0010",
+      "vehicleId": 2,
+      "serviceBayId": 1,
+      "serviceAddress": "Cra. 45 #23-10, Bogotá",
+      "scheduledStart": "2026-09-26T09:00:00.000Z",
+      "scheduledEnd": "2026-09-26T09:45:00.000Z",
+      "bookingStatusId": 1,
+      "bookedBy": 6,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    },
+    {
+      "id": 11,
+      "code": "SV-0011",
+      "vehicleId": 5,
+      "serviceBayId": null,
+      "serviceAddress": "Calle 23 b 16-07",
+      "scheduledStart": "2026-09-23T16:00:00.000Z",
+      "scheduledEnd": "2026-09-23T18:00:00.000Z",
+      "bookingStatusId": 1,
+      "bookedBy": 7,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
+    }
+  ],
+  "bookingServices": [
+    {
+      "id": 1,
+      "bookingId": 1,
+      "servicePriceId": 2,
+      "quantity": 1
+    },
+    {
+      "id": 2,
+      "bookingId": 2,
+      "servicePriceId": 9,
+      "quantity": 1
+    },
+    {
+      "id": 3,
+      "bookingId": 3,
+      "servicePriceId": 18,
+      "quantity": 1
+    },
+    {
+      "id": 4,
+      "bookingId": 4,
+      "servicePriceId": 2,
+      "quantity": 1
+    },
+    {
+      "id": 5,
+      "bookingId": 5,
+      "servicePriceId": 7,
+      "quantity": 1
+    },
+    {
+      "id": 6,
+      "bookingId": 6,
+      "servicePriceId": 3,
+      "quantity": 1
+    },
+    {
+      "id": 7,
+      "bookingId": 7,
+      "servicePriceId": 18,
+      "quantity": 1
+    },
+    {
+      "id": 8,
+      "bookingId": 8,
+      "servicePriceId": 14,
+      "quantity": 1
+    },
+    {
+      "id": 9,
+      "bookingId": 8,
+      "servicePriceId": 2,
+      "quantity": 1
+    },
+    {
+      "id": 10,
+      "bookingId": 9,
+      "servicePriceId": 1,
+      "quantity": 1
+    },
+    {
+      "id": 11,
+      "bookingId": 10,
+      "servicePriceId": 9,
+      "quantity": 1
+    },
+    {
+      "id": 12,
+      "bookingId": 11,
+      "servicePriceId": 9,
+      "quantity": 1
+    }
+  ],
+  "executionStatuses": [
+    {
+      "id": 1,
+      "code": "PENDING",
+      "name": "Pendiente",
+      "isFinal": false
+    },
+    {
+      "id": 2,
+      "code": "IN_PROGRESS",
+      "name": "En curso",
+      "isFinal": false
+    },
+    {
+      "id": 3,
+      "code": "COMPLETED",
+      "name": "Completado",
+      "isFinal": true
+    },
+    {
+      "id": 4,
+      "code": "CANCELLED",
+      "name": "Cancelado",
+      "isFinal": true
+    }
+  ],
+  "operators": [
+    {
+      "id": 1,
+      "userId": 2,
+      "hiredOn": "2024-02-01",
+      "isActive": true,
+      "specialty": "Técnico Detailing Especializado",
+      "rating": 4.8,
+      "totalServices": 210,
+      "tags": [
+        "Pulido cerámico",
+        "Corrección barniz"
+      ],
+      "featured": false,
+      "punctuality": 98.5,
+      "weeklyRevenueGoal": 300000,
+      "certifications": [
+        {
+          "name": "Detailing Cerámico 9H",
+          "level": "Certificado"
+        },
+        {
+          "name": "Lavado a mano",
+          "level": "Nivel Experto"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "hiredOn": "2023-11-15",
+      "isActive": true,
+      "specialty": "Lavado General & Encerado",
+      "rating": 4.6,
+      "totalServices": 340,
+      "tags": [
+        "Cera Carnauba",
+        "Limpieza vidrios"
+      ],
+      "featured": false,
+      "punctuality": 97.1,
+      "weeklyRevenueGoal": 250000,
+      "certifications": [
+        {
+          "name": "Encerado con cera Carnauba",
+          "level": "Nivel Experto"
+        },
+        {
+          "name": "Pulido de faros",
+          "level": "Certificado"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "userId": 4,
+      "hiredOn": "2025-01-10",
+      "isActive": true,
+      "specialty": "Tapicería e Interiores",
+      "rating": 4.9,
+      "totalServices": 95,
+      "tags": [
+        "Limpieza a vapor",
+        "Hidratación cuero"
+      ],
+      "featured": true,
+      "punctuality": 99.1,
+      "weeklyRevenueGoal": 200000,
+      "certifications": [
+        {
+          "name": "Hidratación de cuero",
+          "level": "Certificado"
+        }
+      ]
+    }
+  ],
+  "operatorAvailability": [
+    {
+      "id": 1,
+      "operatorId": 1,
+      "dayOfWeek": 1,
+      "startsAt": "08:00",
+      "endsAt": "17:00",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "operatorId": 1,
+      "dayOfWeek": 2,
+      "startsAt": "08:00",
+      "endsAt": "17:00",
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "operatorId": 1,
+      "dayOfWeek": 3,
+      "startsAt": "08:00",
+      "endsAt": "17:00",
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "operatorId": 1,
+      "dayOfWeek": 4,
+      "startsAt": "08:00",
+      "endsAt": "17:00",
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "operatorId": 1,
+      "dayOfWeek": 5,
+      "startsAt": "08:00",
+      "endsAt": "17:00",
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "operatorId": 2,
+      "dayOfWeek": 2,
+      "startsAt": "09:00",
+      "endsAt": "18:00",
+      "isActive": true
+    },
+    {
+      "id": 7,
+      "operatorId": 2,
+      "dayOfWeek": 4,
+      "startsAt": "09:00",
+      "endsAt": "18:00",
+      "isActive": true
+    },
+    {
+      "id": 8,
+      "operatorId": 2,
+      "dayOfWeek": 6,
+      "startsAt": "09:00",
+      "endsAt": "14:00",
+      "isActive": true
+    },
+    {
+      "id": 9,
+      "operatorId": 3,
+      "dayOfWeek": 1,
+      "startsAt": "08:00",
+      "endsAt": "16:00",
+      "isActive": true
+    },
+    {
+      "id": 10,
+      "operatorId": 3,
+      "dayOfWeek": 3,
+      "startsAt": "08:00",
+      "endsAt": "16:00",
+      "isActive": true
+    },
+    {
+      "id": 11,
+      "operatorId": 3,
+      "dayOfWeek": 5,
+      "startsAt": "08:00",
+      "endsAt": "16:00",
+      "isActive": true
+    }
+  ],
+  "operatorAbsence": [
+    {
+      "id": 1,
+      "operatorId": 2,
+      "startsAt": "2026-09-28T00:00:00.000Z",
+      "endsAt": "2026-09-30T23:59:00.000Z",
+      "reason": "Vacaciones"
+    },
+    {
+      "id": 2,
+      "operatorId": 3,
+      "startsAt": "2026-10-05T00:00:00.000Z",
+      "endsAt": "2026-10-05T23:59:00.000Z",
+      "reason": "Cita médica"
+    }
+  ],
+  "serviceExecutions": [
+    {
+      "id": 1,
+      "bookingServiceId": 1,
+      "operatorId": 1,
+      "executionStatusId": 3,
+      "startedAt": "2026-09-20T09:00:00.000Z",
+      "finishedAt": "2026-09-20T09:45:00.000Z",
+      "qualityRating": 5,
+      "qualityComment": "Excelente servicio",
+      "ratedAt": "2026-09-20T10:00:00.000Z",
+      "isCommentVisible": true
+    },
+    {
+      "id": 2,
+      "bookingServiceId": 2,
+      "operatorId": 2,
+      "executionStatusId": 3,
+      "startedAt": "2026-09-21T10:00:00.000Z",
+      "finishedAt": "2026-09-21T12:00:00.000Z",
+      "qualityRating": 4,
+      "qualityComment": "Buen trabajo, un poco lento",
+      "ratedAt": "2026-09-21T12:30:00.000Z",
+      "isCommentVisible": true
+    },
+    {
+      "id": 3,
+      "bookingServiceId": 3,
+      "operatorId": 3,
+      "executionStatusId": 3,
+      "startedAt": "2026-09-22T14:00:00.000Z",
+      "finishedAt": "2026-09-22T15:15:00.000Z",
+      "qualityRating": null,
+      "qualityComment": null,
+      "ratedAt": null,
+      "isCommentVisible": true
+    },
+    {
+      "id": 4,
+      "bookingServiceId": 4,
+      "operatorId": 1,
+      "executionStatusId": 1,
+      "startedAt": null,
+      "finishedAt": null,
+      "qualityRating": null,
+      "qualityComment": null,
+      "ratedAt": null,
+      "isCommentVisible": true
+    },
+    {
+      "id": 5,
+      "bookingServiceId": 5,
+      "operatorId": 2,
+      "executionStatusId": 2,
+      "startedAt": "2026-09-23T11:00:00.000Z",
+      "finishedAt": null,
+      "qualityRating": null,
+      "qualityComment": null,
+      "ratedAt": null,
+      "isCommentVisible": true
+    },
+    {
+      "id": 6,
+      "bookingServiceId": 6,
+      "operatorId": 3,
+      "executionStatusId": 1,
+      "startedAt": null,
+      "finishedAt": null,
+      "qualityRating": null,
+      "qualityComment": null,
+      "ratedAt": null,
+      "isCommentVisible": true
+    },
+    {
+      "id": 7,
+      "bookingServiceId": 7,
+      "operatorId": 1,
+      "executionStatusId": 4,
+      "startedAt": null,
+      "finishedAt": null,
+      "qualityRating": null,
+      "qualityComment": null,
+      "ratedAt": null,
+      "isCommentVisible": true
+    },
+    {
+      "id": 8,
+      "bookingServiceId": 8,
+      "operatorId": 2,
+      "executionStatusId": 1,
+      "startedAt": null,
+      "finishedAt": null,
+      "qualityRating": null,
+      "qualityComment": null,
+      "ratedAt": null,
+      "isCommentVisible": true
+    },
+    {
+      "id": 9,
+      "bookingServiceId": 9,
+      "operatorId": 2,
+      "executionStatusId": 1,
+      "startedAt": null,
+      "finishedAt": null,
+      "qualityRating": null,
+      "qualityComment": null,
+      "ratedAt": null,
+      "isCommentVisible": true
+    },
+    {
+      "id": 10,
+      "bookingServiceId": 10,
+      "operatorId": 3,
+      "executionStatusId": 3,
+      "startedAt": "2026-09-18T09:00:00.000Z",
+      "finishedAt": "2026-09-18T10:15:00.000Z",
+      "qualityRating": 5,
+      "qualityComment": "Rápido y limpio",
+      "ratedAt": "2026-09-18T10:30:00.000Z",
+      "isCommentVisible": true
+    },
+    {
+      "id": 11,
+      "bookingServiceId": 11,
+      "operatorId": 1,
+      "executionStatusId": 1,
+      "startedAt": null,
+      "finishedAt": null,
+      "qualityRating": null,
+      "qualityComment": null,
+      "ratedAt": null,
+      "isCommentVisible": true
+    }
+  ],
+  "discountTypes": [
+    {
+      "id": 1,
+      "code": "PERCENTAGE",
+      "name": "Porcentaje"
+    },
+    {
+      "id": 2,
+      "code": "FIXED",
+      "name": "Monto fijo"
+    }
+  ],
+  "promotions": [
+    {
+      "id": 1,
+      "code": "WELCOME10",
+      "name": "Bienvenida 10%",
+      "description": "10% de descuento en tu primer lavado",
+      "discountTypeId": 1,
+      "discountValue": 10,
+      "maxDiscountAmount": 10000,
+      "minPurchaseAmount": 0,
+      "isPublic": true,
+      "minCompletedBooking": 0,
+      "validFrom": "2026-01-01",
+      "validTo": "2026-12-31",
+      "maxRedemptions": null,
+      "maxRedemptionsPerCustomer": 1,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "code": "LOYALTY20",
+      "name": "Fidelidad 20%",
+      "description": "20% de descuento para clientes frecuentes",
+      "discountTypeId": 1,
+      "discountValue": 20,
+      "maxDiscountAmount": 20000,
+      "minPurchaseAmount": 30000,
+      "isPublic": false,
+      "minCompletedBooking": 5,
+      "validFrom": "2026-01-01",
+      "validTo": "2026-12-31",
+      "maxRedemptions": 200,
+      "maxRedemptionsPerCustomer": 2,
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "code": "AQUA5000",
+      "name": "Descuento $5.000",
+      "description": "5.000 de descuento en lavado completo o premium",
+      "discountTypeId": 2,
+      "discountValue": 5000,
+      "maxDiscountAmount": null,
+      "minPurchaseAmount": 20000,
+      "isPublic": true,
+      "minCompletedBooking": 0,
+      "validFrom": "2026-06-01",
+      "validTo": "2026-11-30",
+      "maxRedemptions": 500,
+      "maxRedemptionsPerCustomer": null,
+      "isActive": true
+    }
+  ],
+  "paymentMethodTypes": [
+    {
+      "id": 1,
+      "code": "NEQUI",
+      "name": "Nequi",
+      "requiresAccount": true,
+      "requiresReceipt": true,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "code": "BANCOLOMBIA",
+      "name": "Bancolombia",
+      "requiresAccount": true,
+      "requiresReceipt": true,
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "code": "DAVIPLATA",
+      "name": "Daviplata",
+      "requiresAccount": true,
+      "requiresReceipt": true,
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "code": "CASH",
+      "name": "Efectivo",
+      "requiresAccount": false,
+      "requiresReceipt": false,
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "code": "CARD",
+      "name": "Tarjeta",
+      "requiresAccount": false,
+      "requiresReceipt": false,
+      "isActive": true
+    }
+  ],
+  "paymentAccounts": [
+    {
+      "id": 1,
+      "paymentMethodTypeId": 1,
+      "accountHolder": "LavaRápido Vehicular",
+      "accountNumber": "3001234567",
+      "qrImageUrl": null,
+      "instructions": "Envía el pago y sube el comprobante",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "paymentMethodTypeId": 2,
+      "accountHolder": "LavaRápido Vehicular SAS",
+      "accountNumber": "12345678901",
+      "qrImageUrl": null,
+      "instructions": "Cuenta de ahorros",
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "paymentMethodTypeId": 3,
+      "accountHolder": "LavaRápido Vehicular",
+      "accountNumber": "3001234567",
+      "qrImageUrl": null,
+      "instructions": null,
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "paymentMethodTypeId": 4,
+      "accountHolder": "Caja LavaRápido",
+      "accountNumber": null,
+      "qrImageUrl": null,
+      "instructions": "Pago contra entrega",
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "paymentMethodTypeId": 5,
+      "accountHolder": "LavaRápido Vehicular",
+      "accountNumber": null,
+      "qrImageUrl": null,
+      "instructions": "Datáfono en sede",
+      "isActive": true
+    }
+  ],
+  "paymentStatuses": [
+    {
+      "id": 1,
+      "code": "PENDING",
+      "name": "Pendiente",
+      "isFinal": false
+    },
+    {
+      "id": 2,
+      "code": "APPROVED",
+      "name": "Aprobado",
+      "isFinal": true
+    },
+    {
+      "id": 3,
+      "code": "REJECTED",
+      "name": "Rechazado",
+      "isFinal": true
+    }
+  ],
+  "payments": [
+    {
+      "id": 1,
+      "bookingId": 1,
+      "paymentAccountId": 1,
+      "paymentStatusId": 2,
+      "amount": 20000,
+      "processedAt": "2026-09-20T10:00:00.000Z",
+      "approvedBy": 1,
+      "rejectionReason": null
+    },
+    {
+      "id": 2,
+      "bookingId": 2,
+      "paymentAccountId": 2,
+      "paymentStatusId": 2,
+      "amount": 65000,
+      "processedAt": "2026-09-21T12:30:00.000Z",
+      "approvedBy": 1,
+      "rejectionReason": null
+    },
+    {
+      "id": 3,
+      "bookingId": 3,
+      "paymentAccountId": 4,
+      "paymentStatusId": 2,
+      "amount": 17500,
+      "processedAt": "2026-09-22T15:30:00.000Z",
+      "approvedBy": 1,
+      "rejectionReason": null
+    },
+    {
+      "id": 4,
+      "bookingId": 8,
+      "paymentAccountId": 1,
+      "paymentStatusId": 1,
+      "amount": 65500,
+      "processedAt": null,
+      "approvedBy": null,
+      "rejectionReason": null
+    },
+    {
+      "id": 5,
+      "bookingId": 9,
+      "paymentAccountId": 4,
+      "paymentStatusId": 2,
+      "amount": 20000,
+      "processedAt": "2026-09-18T10:30:00.000Z",
+      "approvedBy": 1,
+      "rejectionReason": null
+    },
+    {
+      "id": 6,
+      "bookingId": 5,
+      "paymentAccountId": 5,
+      "paymentStatusId": 3,
+      "amount": 50000,
+      "processedAt": "2026-09-23T11:30:00.000Z",
+      "approvedBy": 1,
+      "rejectionReason": "Comprobante ilegible"
+    }
+  ],
+  "paymentReceipts": [
+    {
+      "id": 1,
+      "paymentId": 1,
+      "fileUrl": "/uploads/receipts/receipt-1.jpg",
+      "transactionReference": "NQ-88231",
+      "reportedAmount": 20000,
+      "uploadedAt": "2026-09-20T09:50:00.000Z",
+      "uploadedBy": 5,
+      "reviewedAt": "2026-09-20T10:00:00.000Z",
+      "reviewedBy": 1,
+      "reviewComment": "Verificado"
+    },
+    {
+      "id": 2,
+      "paymentId": 2,
+      "fileUrl": "/uploads/receipts/receipt-2.jpg",
+      "transactionReference": "BC-55210",
+      "reportedAmount": 65000,
+      "uploadedAt": "2026-09-21T12:20:00.000Z",
+      "uploadedBy": 5,
+      "reviewedAt": "2026-09-21T12:30:00.000Z",
+      "reviewedBy": 1,
+      "reviewComment": "Verificado"
+    },
+    {
+      "id": 3,
+      "paymentId": 4,
+      "fileUrl": "/uploads/receipts/receipt-4.jpg",
+      "transactionReference": "NQ-91002",
+      "reportedAmount": 65500,
+      "uploadedAt": "2026-09-23T08:00:00.000Z",
+      "uploadedBy": 5,
+      "reviewedAt": null,
+      "reviewedBy": null,
+      "reviewComment": null
+    },
+    {
+      "id": 4,
+      "paymentId": 6,
+      "fileUrl": "/uploads/receipts/receipt-6.jpg",
+      "transactionReference": null,
+      "reportedAmount": 50000,
+      "uploadedAt": "2026-09-23T11:35:00.000Z",
+      "uploadedBy": 7,
+      "reviewedAt": "2026-09-23T11:40:00.000Z",
+      "reviewedBy": 1,
+      "reviewComment": "Comprobante ilegible, se solicita reenvío"
+    }
+  ],
+  "loyaltyMovementTypes": [
+    {
+      "id": 1,
+      "code": "EARNED",
+      "name": "Puntos ganados",
+      "sign": 1
+    },
+    {
+      "id": 2,
+      "code": "REDEEMED",
+      "name": "Puntos redimidos",
+      "sign": -1
+    },
+    {
+      "id": 3,
+      "code": "EXPIRED",
+      "name": "Puntos vencidos",
+      "sign": -1
+    }
+  ],
+  "loyaltyTransactions": [
+    {
+      "id": 1,
+      "customerId": 1,
+      "loyaltyMovementTypeId": 1,
+      "bookingId": 1,
+      "points": 20,
+      "balanceAfter": 20,
+      "expiresOn": null,
+      "description": "Lavado completado",
+      "createdAt": "2026-09-20T10:05:00.000Z"
+    },
+    {
+      "id": 2,
+      "customerId": 1,
+      "loyaltyMovementTypeId": 1,
+      "bookingId": 2,
+      "points": 65,
+      "balanceAfter": 85,
+      "expiresOn": null,
+      "description": "Lavado completado",
+      "createdAt": "2026-09-21T12:35:00.000Z"
+    },
+    {
+      "id": 3,
+      "customerId": 1,
+      "loyaltyMovementTypeId": 1,
+      "bookingId": null,
+      "points": 35,
+      "balanceAfter": 120,
+      "expiresOn": null,
+      "description": "Bono de bienvenida",
+      "createdAt": "2026-09-22T09:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "customerId": 2,
+      "loyaltyMovementTypeId": 1,
+      "bookingId": 3,
+      "points": 40,
+      "balanceAfter": 40,
+      "expiresOn": null,
+      "description": "Lavado completado",
+      "createdAt": "2026-09-22T15:35:00.000Z"
+    }
+  ],
+  "notificationTypes": [
+    {
+      "id": 1,
+      "code": "RECORDATORIO",
+      "name": "Recordatorio",
+      "displayOrder": 1,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "code": "PROMOCION",
+      "name": "Promoción",
+      "displayOrder": 2,
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "code": "CONFIRMACION",
+      "name": "Confirmación",
+      "displayOrder": 3,
+      "isActive": true
+    },
+    {
+      "id": 4,
+      "code": "CANCELACION",
+      "name": "Cancelación",
+      "displayOrder": 4,
+      "isActive": true
+    },
+    {
+      "id": 5,
+      "code": "MENSAJE",
+      "name": "Mensaje",
+      "displayOrder": 5,
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "code": "SISTEMA",
+      "name": "Sistema",
+      "displayOrder": 6,
+      "isActive": true
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "userId": 5,
+      "notificationTypeId": 3,
+      "type": "confirmacion",
+      "icon": "event_available",
+      "title": "Reserva confirmada",
+      "desc": "Tu lavado premium quedó programado para el 25 de septiembre a las 10:00 a.m.",
+      "referenceEntity": "booking",
+      "referenceId": 8,
+      "isRead": false,
+      "sentAt": "2026-09-21T09:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "userId": 5,
+      "notificationTypeId": 1,
+      "type": "recordatorio",
+      "icon": "schedule",
+      "title": "Recordatorio de servicio",
+      "desc": "Tu lavado Básico está programado para hoy a las 9:00 a.m.",
+      "referenceEntity": "booking",
+      "referenceId": 4,
+      "isRead": false,
+      "sentAt": "2026-09-23T07:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "userId": 5,
+      "notificationTypeId": 2,
+      "type": "promocion",
+      "icon": "local_offer",
+      "title": "¡Promoción especial!",
+      "desc": "Obtén un 10% de descuento en tu próximo lavado. Usa el código WELCOME10.",
+      "referenceEntity": null,
+      "referenceId": null,
+      "isRead": true,
+      "sentAt": "2026-09-18T10:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "userId": 5,
+      "notificationTypeId": 6,
+      "type": "sistema",
+      "icon": "info",
+      "title": "Perfil actualizado",
+      "desc": "Tu perfil ha sido actualizado correctamente.",
+      "referenceEntity": null,
+      "referenceId": null,
+      "isRead": true,
+      "sentAt": "2026-09-15T16:20:00.000Z"
+    },
+    {
+      "id": 5,
+      "userId": 6,
+      "notificationTypeId": 3,
+      "type": "confirmacion",
+      "icon": "event_available",
+      "title": "Reserva confirmada",
+      "desc": "Tu lavado premium fue confirmado para el 22 de septiembre.",
+      "referenceEntity": "booking",
+      "referenceId": 3,
+      "isRead": true,
+      "sentAt": "2026-09-20T11:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "userId": 6,
+      "notificationTypeId": 4,
+      "type": "cancelacion",
+      "icon": "cancel",
+      "title": "Cancelación",
+      "desc": "El servicio SV-0007 fue cancelado.",
+      "referenceEntity": "booking",
+      "referenceId": 7,
+      "isRead": false,
+      "sentAt": "2026-09-19T16:30:00.000Z"
+    },
+    {
+      "id": 7,
+      "userId": 7,
+      "notificationTypeId": 1,
+      "type": "recordatorio",
+      "icon": "schedule",
+      "title": "Recordatorio de pago pendiente",
+      "desc": "Tu pago para el servicio de hoy está pendiente de revisión.",
+      "referenceEntity": "payment",
+      "referenceId": 6,
+      "isRead": false,
+      "sentAt": "2026-09-23T11:40:00.000Z"
+    },
+    {
+      "id": 8,
+      "userId": 2,
+      "notificationTypeId": 6,
+      "type": "sistema",
+      "icon": "assignment",
+      "title": "Nuevo servicio asignado",
+      "desc": "Se te asignó el lavado del vehículo ABC123 a las 9:00 a.m.",
+      "referenceEntity": "booking",
+      "referenceId": 4,
+      "isRead": false,
+      "sentAt": "2026-09-23T07:30:00.000Z"
+    },
+    {
+      "id": 9,
+      "userId": 2,
+      "notificationTypeId": 5,
+      "type": "mensaje",
+      "icon": "chat",
+      "title": "Mensaje del cliente",
+      "desc": "\"Voy a estar 5 minutos tarde, por favor espérame.\"",
+      "referenceEntity": "booking",
+      "referenceId": 1,
+      "isRead": true,
+      "sentAt": "2026-09-20T08:55:00.000Z"
+    },
+    {
+      "id": 10,
+      "userId": 3,
+      "notificationTypeId": 6,
+      "type": "sistema",
+      "icon": "assignment",
+      "title": "Nuevo servicio asignado",
+      "desc": "Se te asignó el lavado del vehículo GHI321 a las 11:00 a.m.",
+      "referenceEntity": "booking",
+      "referenceId": 5,
+      "isRead": false,
+      "sentAt": "2026-09-23T08:00:00.000Z"
+    },
+    {
+      "id": 11,
+      "userId": 4,
+      "notificationTypeId": 3,
+      "type": "confirmacion",
+      "icon": "event_available",
+      "title": "Actualización de estado",
+      "desc": "El cliente confirmó la dirección para el servicio SV-0006.",
+      "referenceEntity": "booking",
+      "referenceId": 6,
+      "isRead": true,
+      "sentAt": "2026-09-22T17:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "userId": 1,
+      "notificationTypeId": 6,
+      "type": "sistema",
+      "icon": "payments",
+      "title": "Pago pendiente de revisión",
+      "desc": "Hay un comprobante de pago pendiente de revisión (Nequi, $65.500).",
+      "referenceEntity": "payment",
+      "referenceId": 4,
+      "isRead": false,
+      "sentAt": "2026-09-23T08:00:00.000Z"
+    },
+    {
+      "id": 13,
+      "userId": 1,
+      "notificationTypeId": 4,
+      "type": "cancelacion",
+      "icon": "cancel",
+      "title": "Cancelación de reserva",
+      "desc": "El cliente canceló el servicio SV-0007.",
+      "referenceEntity": "booking",
+      "referenceId": 7,
+      "isRead": true,
+      "sentAt": "2026-09-19T16:30:00.000Z"
+    },
+    {
+      "id": 14,
+      "userId": 7,
+      "notificationTypeId": 3,
+      "type": "confirmacion",
+      "icon": "event_available",
+      "title": "Reserva recibida",
+      "desc": "Tu reserva SV-0011 para el 2026-09-23 a las 16:00 quedó registrada y está pendiente de confirmación.",
+      "referenceEntity": "booking",
+      "referenceId": 11,
+      "isRead": false,
+      "sentAt": "2026-09-23T15:38:58.852Z"
+    }
+  ],
+  "scheduleChangeLog": [
+    {
+      "id": 1,
+      "author": "Laura Méndez",
+      "description": "Bahía 4 pasó a en mantenimiento",
+      "createdAt": "2026-08-20T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "author": "Laura Méndez",
+      "description": "Se agregó la excepción 'Navidad' (2026-12-25)",
+      "createdAt": "2026-09-02T09:00:00.000Z"
+    }
+  ]
+}

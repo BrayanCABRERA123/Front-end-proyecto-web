@@ -200,6 +200,13 @@ table {
   &--daviplata { background: var(--error-soft); color: var(--error); }
   &--bancolombia { background: #E6EFFF; color: #2B5FD9; }
   &--cash { background: var(--success-soft); color: var(--success); }
+  &--card { background: var(--primary-soft); color: var(--primary); }
+}
+
+.page-error {
+  color: var(--error);
+  font-weight: $fw-semibold;
+  margin: 0 0 12px;
 }
 
 .amount-cell { font-weight: $fw-bold; }

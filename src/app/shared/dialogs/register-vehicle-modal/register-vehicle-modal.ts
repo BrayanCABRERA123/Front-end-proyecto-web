@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { Catalog } from '../../../core/services/catalog';
 
 @Component({
   selector: 'app-register-vehicle-modal',
@@ -12,10 +13,10 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './register-vehicle-modal.html',
   styleUrls: ['./register-vehicle-modal.scss']
 })
-export class RegisterVehicleModalComponent {
+export class RegisterVehicleModalComponent implements OnInit {
 
-  // tipos de vehículo disponibles (reutiliza las claves ya usadas en VEHICLE.*)
-  vehicleTypes = ['CAR', 'SEDAN', 'SUV', 'PICKUP', 'TRUCK', 'MOTO'];
+  // tipos de vehículo activos del catálogo (vehicle_type); el código se traduce con VEHICLE.*
+  vehicleTypes: string[] = [];
 
   // datos del formulario
   type = '';
@@ -24,7 +25,18 @@ export class RegisterVehicleModalComponent {
   plate = '';
   color = '';
 
-  constructor(private dialogRef: MatDialogRef<RegisterVehicleModalComponent>) {}
+  constructor(
+    private dialogRef: MatDialogRef<RegisterVehicleModalComponent>,
+    private catalog: Catalog,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.catalog.vehicleTypes$().subscribe(types => {
+      this.vehicleTypes = types.filter(t => t.isActive).map(t => t.code);
+      this.cdr.markForCheck();
+    });
+  }
 
   // valida que los campos obligatorios estén completos
   get isFormValid(): boolean {

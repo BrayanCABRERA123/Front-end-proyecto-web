@@ -46,7 +46,7 @@
       <mat-icon>payments</mat-icon>
       <div>
         <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.PAYMENT' | translate }}</span>
-        <span class="detail-value">{{ ('SERVICE_HISTORY.METHODS.' + service.paymentMethod) | translate }} · ${{ service.amount | number }}</span>
+        <span class="detail-value">{{ service.paymentMethod ? (('SERVICE_HISTORY.METHODS.' + service.paymentMethod) | translate) : '—' }} · ${{ service.amount | number }}</span>
       </div>
     </div>
 

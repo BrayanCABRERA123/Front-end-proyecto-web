@@ -77,12 +77,13 @@
 
       <div class="date-box">
         <mat-icon>calendar_today</mat-icon>
-        <input type="date" [(ngModel)]="selectedDate">
-        <span class="today-chip">{{ 'ADMIN_RESERVATIONS.FILTERS.TODAY' | translate }}</span>
+        <input type="date" [(ngModel)]="selectedDate" (ngModelChange)="load()">
+        <span class="today-chip" (click)="goToToday()">{{ 'ADMIN_RESERVATIONS.FILTERS.TODAY' | translate }}</span>
       </div>
 
       <select [(ngModel)]="statusFilter" (ngModelChange)="currentPage = 1">
         <option value="">{{ 'ADMIN_RESERVATIONS.FILTERS.ALL_STATUSES' | translate }}</option>
+        <option value="pending">{{ 'ADMIN_RESERVATIONS.STATUS.pending' | translate }}</option>
         <option value="confirmed">{{ 'ADMIN_RESERVATIONS.STATUS.confirmed' | translate }}</option>
         <option value="in_progress">{{ 'ADMIN_RESERVATIONS.STATUS.in_progress' | translate }}</option>
         <option value="completed">{{ 'ADMIN_RESERVATIONS.STATUS.completed' | translate }}</option>
@@ -103,6 +104,10 @@
     </div>
 
     <!-- tabla -->
+    @if (errorMessage) {
+      <p class="page-error">{{ errorMessage }}</p>
+    }
+
     <div class="card table-card">
       <div class="table-wrapper">
         <table class="bookings-table">
@@ -118,7 +123,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (b of pagedBookings; track b.code) {
+            @for (b of pagedBookings; track b.id) {
               <tr>
                 <td>
                   <strong>{{ b.client }}</strong>
@@ -133,7 +138,7 @@
                 </td>
                 <td>
                   <strong>{{ b.date }} · {{ b.timeRange }}</strong>
-                  <span class="muted">{{ b.relativeTime }}</span>
+                  <span class="muted">{{ b.relative.key | translate: b.relative.params }}</span>
                 </td>
                 <td>
                   @if (b.operator) {

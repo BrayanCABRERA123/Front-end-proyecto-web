@@ -11,6 +11,15 @@ export interface Reservation {
   address: string;
   durationMin: number;
   status: ReservationStatus;
+  // datos extra que ya manda el mock API (GET /me/operator/*)
+  endTime?: string;
+  serviceName?: string;
+  clientPhone?: string | null;
+  vehicleName?: string;
+  plate?: string;
+  bay?: string | null;
+  paymentMethodName?: string | null;
+  amount?: number;
 }
 
 export function reservationStatusClass(status: ReservationStatus): string {

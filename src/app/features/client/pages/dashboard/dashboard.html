@@ -39,7 +39,7 @@
     <!-- Próximo servicio + accesos rápidos -->
     <div class="dashboard-row">
 
-      <div class="card next-service-card">
+      <div class="card next-service-card" *ngIf="nextService; else noNextService">
         <div class="card-header">
           <div class="card-title">
             <mat-icon>schedule</mat-icon>
@@ -53,14 +53,14 @@
         <div class="next-service-body">
           <div class="next-service-info">
             <p class="next-service-name">
-              {{ ('SERVICE.' + nextService.type) | translate }} —
-              {{ ('VEHICLE.' + nextService.vehicle) | translate }} · {{ nextService.plate }}
+              {{ nextService.mainService ? ('SERVICE.' + nextService.mainService | translate) : '' }} —
+              {{ nextService.vehicle ? (('VEHICLE.' + nextService.vehicle.type) | translate) : '' }} · {{ nextService.vehicle?.plate }}
             </p>
-            <p class="next-service-date">{{ nextService.date }}</p>
+            <p class="next-service-date">{{ nextService.date }} {{ nextService.time }}</p>
 
             <div class="next-service-meta">
               <span><mat-icon>location_on</mat-icon> {{ nextService.address }}</span>
-              <span><mat-icon>call</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ nextService.operator }}</span>
+              <span *ngIf="nextService.operator"><mat-icon>call</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ nextService.operator }}</span>
             </div>
           </div>
 
@@ -75,6 +75,16 @@
           <div class="progress-fill" [style.width.%]="nextService.progress"></div>
         </div>
       </div>
+
+      <ng-template #noNextService>
+        <div class="card next-service-card">
+          <div class="card-title">
+            <mat-icon>schedule</mat-icon>
+            <h2>{{ 'DASHBOARD.NEXT_SERVICE.TITLE' | translate }}</h2>
+          </div>
+          <p class="next-service-date">{{ 'DASHBOARD.NEXT_SERVICE.NONE' | translate }}</p>
+        </div>
+      </ng-template>
 
       <div class="card quick-access-card">
         <h2>{{ 'DASHBOARD.QUICK_ACCESS.TITLE' | translate }}</h2>

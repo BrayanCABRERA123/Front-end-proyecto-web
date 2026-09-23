@@ -64,12 +64,15 @@
     "STATUS": "Status",
     "PAID": "Pago",
     "PENDING": "Pendente",
-    "RATE": "Avaliar serviço"
+    "RATE": "Avaliar serviço",
+    "VEHICLE": "Veículo"
   },
   "COMMON": {
     "CLOSE": "Fechar",
     "CANCEL": "Cancelar",
-    "DELETE": "Excluir"
+    "DELETE": "Excluir",
+    "SERVER_UNAVAILABLE": "Não foi possível conectar ao servidor. Inicie o app com \"npm run dev\" (sobe o mock API na porta 3000).",
+    "UNKNOWN_ERROR": "Ocorreu um erro inesperado. Tente novamente."
   },
   "SERVICE": {
     "BASIC": "Básico",
@@ -108,10 +111,15 @@
     "COMPLETED": "Concluído",
     "PENDING": "Pendente",
     "CONFIRMED": "Confirmado",
+    "IN_PROGRESS": "A caminho",
     "CANCELED": "Cancelado",
+    "CANCELLED": "Cancelado",
+    "NO_SHOW": "Não compareceu",
     "ON_THE_WAY": "A caminho",
     "PAID": "Pago",
-    "REFUNDED": "Reembolsado"
+    "REFUNDED": "Reembolsado",
+    "APPROVED": "Aprovado",
+    "REJECTED": "Rejeitado"
   },
   "ASSIGNMENT": {
     "MANUAL": "Manual",
@@ -139,7 +147,8 @@
       "TITLE": "Seu próximo serviço",
       "VIEW_DETAIL": "Ver detalhe",
       "OPERATOR_ASSIGNED": "Operador designado",
-      "PROGRESS": "Progresso do serviço"
+      "PROGRESS": "Progresso do serviço",
+      "NONE": "Você não tem serviços próximos. Agende uma lavagem!"
     },
     "QUICK_ACCESS": {
       "TITLE": "Acessos rápidos",
@@ -347,7 +356,8 @@
     "STEP2": {
       "TITLE": "Tipo de serviço",
       "SUBTITLE": "Escolha o nível de limpeza que prefere",
-      "POPULAR": "Mais popular"
+      "POPULAR": "Mais popular",
+      "SELECT_VEHICLE_FIRST": "Selecione primeiro um veículo para ver preços e duração."
     },
     "STEP3": {
       "TITLE": "Data e localização",
@@ -364,7 +374,12 @@
       "TOTAL": "Total",
       "SUBMIT": "Reservar Agora",
       "NOTE": "Avisaremos quando o lavador estiver a caminho. Você pode pagar online ou em dinheiro."
-    }
+    },
+    "SELECT_SERVICE_FIRST": "Selecione um serviço para ver os horários disponíveis.",
+    "SLOT_UNAVAILABLE": "indisponível",
+    "DAY_CLOSED": "Não atendemos nesse dia",
+    "ERROR_SLOT_TAKEN": "Esse horário não está mais disponível. Escolha outro.",
+    "ERROR_GENERIC": "Não foi possível criar a reserva. Tente novamente."
   },
   "APP": {
     "TITLE": "Lavagem de Veículos"
@@ -422,7 +437,8 @@
     "BUTTON": "Entrar",
     "NO_ACCOUNT": "Não tem uma conta?",
     "REGISTER": "Cadastre-se",
-    "INVALID_CREDENTIALS": "E-mail ou senha incorretos"
+    "INVALID_CREDENTIALS": "E-mail ou senha incorretos",
+    "ACCOUNT_DISABLED": "Sua conta está desativada. Fale com o administrador."
   },
   "REGISTER": {
     "TITLE": "Criar Conta",
@@ -458,6 +474,7 @@
     "ALREADY_ACCOUNT": "Já tem uma conta?",
     "LOGIN": "Entrar",
     "INVALID_CREDENTIALS": "E-mail ou senha incorretos",
+    "EMAIL_TAKEN": "Este e-mail já está cadastrado",
     "ACCEPT_TERMS": "Li e aceito os",
     "TERMS_LINK": "Termos e Condições",
     "AND": "e a",
@@ -546,8 +563,9 @@
       "REPORT": "Reportar progresso",
       "FINISH": "Finalizar Serviço",
       "EXTRA_TITLE": "Opções adicionais",
-      "CONTACT": "Contatar o cliente"
-    }
+      "CONTACT": "Telefone do cliente"
+    },
+    "EMPTY": "Você não tem serviços atribuídos."
   },
   "OPERATOR_HOME": {
     "TITLE": "Olá, {{name}}!  Bem-vindo!",
@@ -597,7 +615,9 @@
       "CARD": "Cartão",
       "PSE": "PSE",
       "NEQUI": "Nequi",
-      "CASH": "Dinheiro"
+      "CASH": "Dinheiro",
+      "BANCOLOMBIA": "Bancolombia",
+      "DAVIPLATA": "Daviplata"
     }
   },
   "HISTORY_STATS": {
@@ -647,7 +667,14 @@
     "AVG_RATING": "Avaliação média",
     "SATISFACTION_LEVEL": "Nível de satisfação",
     "TOTAL": "Total de avaliações recebidas",
-    "LAST_12_MONTHS": "Nos últimos 12 meses"
+    "LAST_12_MONTHS": "Nos últimos 12 meses",
+    "LEVEL": {
+      "NONE": "Sem avaliações",
+      "VERY_HIGH": "Muito alto",
+      "HIGH": "Alto",
+      "MEDIUM": "Médio",
+      "LOW": "Baixo"
+    }
   },
   "PAYMENT": {
     "TITLE": "Gateway de Pagamento",
@@ -667,7 +694,11 @@
       "CARD_NUMBER": "Número do cartão",
       "EXPIRY": "Vencimento",
       "CVV": "CVV",
-      "SECURE_NOTE": "Transação criptografada. Não armazenamos os dados do seu cartão."
+      "SECURE_NOTE": "Transação criptografada. Não armazenamos os dados do seu cartão.",
+      "ACCOUNT": "Conta de destino",
+      "REFERENCE": "Referência da transação",
+      "REFERENCE_PLACEHOLDER": "Ex.: NQ-88231",
+      "REVIEW_NOTE": "Seu pagamento ficará em análise até o administrador verificá-lo."
     },
     "SUMMARY": {
       "TITLE": "Resumo do serviço",
@@ -681,8 +712,16 @@
     },
     "HISTORY": {
       "TITLE": "Histórico de pagamentos",
-      "TOTAL_PAID": "Total pago"
-    }
+      "TOTAL_PAID": "Total pago",
+      "EMPTY": "Você ainda não tem pagamentos."
+    },
+    "BOOKING": {
+      "TITLE": "Reserva a pagar",
+      "NONE": "Você não tem reservas pendentes de pagamento."
+    },
+    "SUCCESS": "Pagamento registrado. Aguardando verificação.",
+    "ERROR_ALREADY_PAID": "Esta reserva já tem um pagamento registrado.",
+    "ERROR_GENERIC": "Não foi possível registrar o pagamento. Tente novamente."
   },
   "VEHICLES": {
     "TITLE": "Meus Veículos",
@@ -1111,14 +1150,25 @@
       "confirmed": "Confirmada",
       "in_progress": "Em andamento",
       "completed": "Concluída",
-      "cancelled": "Cancelada"
+      "cancelled": "Cancelada",
+      "pending": "Pendente"
     },
     "PAGINATION": {
       "SHOWING": "Mostrando {{from}} a {{to}} de {{total}} reservas",
       "PREVIOUS": "Anterior",
       "NEXT": "Próxima"
     },
-    "ASSIGN": "Atribuir"
+    "ASSIGN": "Atribuir",
+    "RELATIVE": {
+      "COMPLETED": "Concluído com sucesso",
+      "CANCELLED": "Cancelada",
+      "ENDS_IN": "Termina em {{min}} min",
+      "OVERDUE": "Passou do horário de término",
+      "IN_MINUTES": "Em {{min}} minutos",
+      "IN_HOURS": "Em {{hours}} horas",
+      "IN_DAYS": "Em {{days}} dias",
+      "LATE": "Horário passou, não iniciado"
+    }
   },
   "ASSIGN_OPERATOR_MODAL": {
     "TITLE": "Atribuir Operador à Reserva {{code}}",
@@ -1155,14 +1205,18 @@
         "DATE_ADDED": "Data de cadastro",
         "INVITED": "Convidado",
         "STATUS": "Status",
-        "ACTIONS": "Ações"
+        "ACTIONS": "Ações",
+        "PHONE": "Telefone"
       },
       "YES": "Sim",
       "NO": "Não",
       "STATUS": {
         "active": "Ativo",
         "disabled": "Desabilitado"
-      }
+      },
+      "VIEW_OPERATOR": "Ver ficha do operador",
+      "ENABLE": "Ativar",
+      "DISABLE": "Desativar"
     },
     "ROLES": {
       "CREATE_ROLE": "Criar função",
@@ -1249,15 +1303,23 @@
   },
   "CREATE_USER_MODAL": {
     "TITLE": "Criar Usuário",
-    "SUBTITLE": "Convide alguém para administrar a plataforma",
+    "SUBTITLE": "Crie a conta de um operador ou administrador. Ele poderá entrar imediatamente.",
     "NAME_LABEL": "Nome completo",
     "NAME_PLACEHOLDER": "Ex. Maria Fernanda Lopez",
     "EMAIL_LABEL": "E-mail",
-    "EMAIL_PLACEHOLDER": "email@exemplo.com",
+    "EMAIL_PLACEHOLDER": "usuario@gmail.com",
     "ROLE_LABEL": "Função atribuída",
     "INVITE_LABEL": "Enviar convite por e-mail",
     "CANCEL": "Cancelar",
-    "CREATE": "Criar Usuário"
+    "CREATE": "Criar Usuário",
+    "PHONE_LABEL": "Telefone (opcional)",
+    "PASSWORD_LABEL": "Senha inicial",
+    "PASSWORD_HINT": "Mínimo 8 caracteres, uma maiúscula e um número. Compartilhe com a pessoa.",
+    "SPECIALTY_LABEL": "Especialidade (opcional)",
+    "SPECIALTY_PLACEHOLDER": "Ex.: Lavagem externa",
+    "OPERATOR_NOTE": "É atribuído um horário base Seg-Sex 08:00-17:00, ajustável em Horários.",
+    "EMAIL_INVALID": "Deve ser um e-mail @gmail.com válido",
+    "PHONE_INVALID": "10 dígitos, começando com 3"
   },
   "ADMIN_SCHEDULE": {
     "OPEN_TODAY": "Aberto hoje",
@@ -1531,7 +1593,7 @@
   },
   "MANUAL_PAYMENT_MODAL": {
     "TITLE": "Registrar pagamento manual",
-    "SUBTITLE": "Use quando um cliente pagou no caixa e isso não foi registrado pelo aplicativo",
+    "SUBTITLE": "Registre um pagamento recebido no local para uma reserva pendente. Fica aprovado na hora.",
     "CLIENT_LABEL": "Cliente",
     "CLIENT_PLACEHOLDER": "Nome do cliente",
     "SERVICE_LABEL": "Serviço",
@@ -1539,7 +1601,12 @@
     "AMOUNT_LABEL": "Valor (COP)",
     "METHOD_LABEL": "Método de pagamento",
     "CANCEL": "Cancelar",
-    "REGISTER": "Registrar pagamento"
+    "REGISTER": "Registrar pagamento",
+    "BOOKING_LABEL": "Reserva",
+    "BOOKING_PLACEHOLDER": "Selecione a reserva a pagar",
+    "NO_BOOKINGS": "Não há reservas pendentes de pagamento.",
+    "REFERENCE_LABEL": "Referência (opcional)",
+    "REFERENCE_PLACEHOLDER": "Ex.: número do comprovante ou transferência"
   },
   "BUSINESS_DATA": {
     "TITLE": "Dados do Negócio",

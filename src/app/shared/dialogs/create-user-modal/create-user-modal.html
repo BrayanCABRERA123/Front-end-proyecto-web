@@ -11,6 +11,15 @@
   <div class="role-dialog__body">
 
     <label class="field">
+      <span>{{ 'CREATE_USER_MODAL.ROLE_LABEL' | translate }}</span>
+      <select [(ngModel)]="role">
+        @for (r of roleOptions; track r.code) {
+          <option [value]="r.code">{{ r.name }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="field">
       <span>{{ 'CREATE_USER_MODAL.NAME_LABEL' | translate }}</span>
       <input type="text" [(ngModel)]="name" [placeholder]="'CREATE_USER_MODAL.NAME_PLACEHOLDER' | translate">
     </label>
@@ -18,21 +27,37 @@
     <label class="field">
       <span>{{ 'CREATE_USER_MODAL.EMAIL_LABEL' | translate }}</span>
       <input type="email" [(ngModel)]="email" [placeholder]="'CREATE_USER_MODAL.EMAIL_PLACEHOLDER' | translate">
+      @if (emailInvalid) {
+        <small class="field-error">{{ 'CREATE_USER_MODAL.EMAIL_INVALID' | translate }}</small>
+      }
     </label>
 
     <label class="field">
-      <span>{{ 'CREATE_USER_MODAL.ROLE_LABEL' | translate }}</span>
-      <select [(ngModel)]="role">
-        @for (r of roleOptions; track r) {
-          <option [value]="r">{{ r }}</option>
-        }
-      </select>
+      <span>{{ 'CREATE_USER_MODAL.PHONE_LABEL' | translate }}</span>
+      <input type="tel" [(ngModel)]="phone" maxlength="10" placeholder="3001234567">
+      @if (phoneInvalid) {
+        <small class="field-error">{{ 'CREATE_USER_MODAL.PHONE_INVALID' | translate }}</small>
+      }
     </label>
 
-    <label class="checkbox-row">
-      <input type="checkbox" [(ngModel)]="invite">
-      {{ 'CREATE_USER_MODAL.INVITE_LABEL' | translate }}
+    <!-- contraseña inicial: con ella el usuario inicia sesión de una vez -->
+    <label class="field">
+      <span>{{ 'CREATE_USER_MODAL.PASSWORD_LABEL' | translate }}</span>
+      <input type="text" [(ngModel)]="password" autocomplete="new-password">
+      <small [class.field-error]="passwordInvalid" class="field-hint">{{ 'CREATE_USER_MODAL.PASSWORD_HINT' | translate }}</small>
     </label>
+
+    @if (role === 'OPERATOR') {
+      <label class="field">
+        <span>{{ 'CREATE_USER_MODAL.SPECIALTY_LABEL' | translate }}</span>
+        <input type="text" [(ngModel)]="specialty" [placeholder]="'CREATE_USER_MODAL.SPECIALTY_PLACEHOLDER' | translate">
+        <small class="field-hint">{{ 'CREATE_USER_MODAL.OPERATOR_NOTE' | translate }}</small>
+      </label>
+    }
+
+    @if (errorMessage) {
+      <p class="field-error">{{ errorMessage }}</p>
+    }
 
   </div>
 

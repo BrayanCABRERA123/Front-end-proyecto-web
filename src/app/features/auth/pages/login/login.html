@@ -65,9 +65,13 @@
                         {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
                     </a>
 
+                    <span class="error-msg" *ngIf="loginError">
+                        {{ loginError | translate }}
+                    </span>
+
                     <button
                         type="submit"
-                        [disabled]="loginForm.invalid">
+                        [disabled]="loginForm.invalid || cargando">
 
                         {{ 'LOGIN.BUTTON' | translate }}
 

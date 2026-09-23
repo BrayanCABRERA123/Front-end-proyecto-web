@@ -79,7 +79,7 @@
     <div class="history-list">
 
       @for (service of filteredServices; track service.id) {
-      <app-history-card [service]="service"></app-history-card>
+      <app-history-card [service]="service" (rated)="onRated($event)"></app-history-card>
       }
 
       <!-- Vacío -->

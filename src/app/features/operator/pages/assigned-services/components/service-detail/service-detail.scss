@@ -300,3 +300,8 @@
     font-size: $fs-body;
   }
 }
+.btn-start:disabled,
+.btn-finish:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

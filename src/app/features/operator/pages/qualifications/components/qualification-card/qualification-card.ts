@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { OperatorRating } from '../../../../../../core/services/operator-work';
 
 
 @Component({
@@ -14,6 +15,6 @@ import { TranslateModule } from '@ngx-translate/core';
 export class QualificationCardComponent {
 
   // recibe los datos del padre
-  @Input() rating: any;
+  @Input() rating!: OperatorRating;
   @Input() stars: number[] = [];
 }

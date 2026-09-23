@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // importamos el sidebar del layout
@@ -10,6 +10,10 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart } from 'chart.js/auto';
 // modal de exportación de reportes
 import { ExportReportModalComponent } from '../../../../shared/dialogs/export-report-modal/export-report-modal';
+import { AdminReportsService } from '../../../../core/services/admin-reports';
+
+// colores alternados del ranking (solo presentación)
+const RANKING_COLORS = ['#2ec4b6', '#3b82f6'];
 
 @Component({
   selector: 'app-reports',
@@ -18,38 +22,66 @@ import { ExportReportModalComponent } from '../../../../shared/dialogs/export-re
   templateUrl: './reports.html',
   styleUrls: ['./reports.scss']
 })
-export class ReportsComponent implements AfterViewInit, OnDestroy {
+export class ReportsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('barCanvas') barCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('rankingCard') topServicesEl!: ElementRef<HTMLDivElement>;
 
   private chart?: Chart;
 
-  // datos de la gráfica semanal (mock)
+  // todo lo calcula el mock (GET /admin/reports): servicios = reservas completadas,
+  // ingresos = pagos aprobados, semana de lunes a domingo
   days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-  servicesPerDay = [12, 22, 18, 22, 15, 30, 25];
-  revenuePerDay = [420, 700, 560, 920, 480, 1580, 1180];
+  servicesPerDay: number[] = [];
+  revenuePerDay: number[] = [];
 
   // tarjetas de reporte
-  dayReport = { services: 15, revenue: 500 };
-  weekReport = { services: 75, revenue: 2500 };
-  monthReport = { services: 300, revenue: 10000 };
+  dayReport = { services: 0, revenue: 0 };
+  weekReport = { services: 0, revenue: 0 };
+  monthReport = { services: 0, revenue: 0 };
 
   // ingresos totales del año
-  yearRevenue = 120000;
+  yearRevenue = 0;
 
   // ranking de servicios más vendidos
-  topServices = [
-    { name: 'Lavado completo', sales: 120, percentage: 100, color: '#2ec4b6' },
-    { name: 'Encerado premium', sales: 90, percentage: 75, color: '#3b82f6' },
-    { name: 'Lavado básico', sales: 70, percentage: 58, color: '#2ec4b6' }
-  ];
+  topServices: { name: string; sales: number; percentage: number; color: string }[] = [];
 
-  constructor(private dialog: MatDialog, private translate: TranslateService) {}
+  private viewReady = false;
+  private dataReady = false;
+
+  constructor(
+    private dialog: MatDialog,
+    private translate: TranslateService,
+    private reportsService: AdminReportsService
+  ) {}
+
+  ngOnInit(): void {
+    this.reportsService.get$().subscribe(r => {
+      this.days = r.days;
+      this.servicesPerDay = r.servicesPerDay;
+      this.revenuePerDay = r.revenuePerDay;
+      this.dayReport = r.dayReport;
+      this.weekReport = r.weekReport;
+      this.monthReport = r.monthReport;
+      this.yearRevenue = r.yearRevenue;
+      this.topServices = r.topServices.map((s, i) => ({ ...s, color: RANKING_COLORS[i % RANKING_COLORS.length] }));
+      this.dataReady = true;
+      this.renderWhenReady();
+    });
+  }
 
   ngAfterViewInit(): void {
+    this.viewReady = true;
+    this.renderWhenReady();
+  }
+
+  // la gráfica necesita el <canvas> (vista) y los datos (mock): se dibuja cuando están ambos
+  private renderWhenReady(): void {
+    if (!this.viewReady || !this.dataReady) return;
+
+    this.chart?.destroy();
     this.createChart();
-    // pequeño retraso para que el navegador aplique el estado inicial (0%) antes de animar
+    // pequeño retraso para que el ranking ya esté pintado (0%) antes de animar
     setTimeout(() => this.animateBars(), 100);
   }
 

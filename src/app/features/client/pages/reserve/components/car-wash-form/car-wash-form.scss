@@ -459,3 +459,7 @@
 :host-context(body.pink-dark) .summary-card {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
 }
+.summary-error {
+  color: var(--error);
+  font-weight: 600;
+}

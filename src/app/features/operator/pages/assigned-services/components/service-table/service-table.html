@@ -20,20 +20,24 @@
           [class.selected]="selectedService?.id === service.id"
           (click)="onSelectService(service)">
           <td class="td-id">{{ service.id }}</td>
-          <td>{{ service.serviceType }}</td>
-          <td class="td-location">{{ service.location }}</td>
-          <td>{{ service.dateTime }}</td>
-          <td>{{ service.vehicle }}</td>
+          <td>{{ service.serviceName }}</td>
+          <td class="td-location" [title]="service.address">{{ service.address }}</td>
+          <td>{{ service.date | date: 'dd/MM/yyyy' }} - {{ service.time }}</td>
+          <td>{{ service.vehicleName }} - {{ service.plate }}</td>
           <td>{{ service.client }}</td>
           <td>
             <span
               class="status-badge"
-              [class.pending]="service.statusColor === 'pending'"
-              [class.progress]="service.statusColor === 'progress'"
-              [class.completed]="service.statusColor === 'completed'">
-              {{ service.status }}
+              [class.pending]="service.status === 'pendiente'"
+              [class.progress]="service.status === 'en_progreso'"
+              [class.completed]="service.status === 'finalizado'">
+              {{ statusLabel(service.status) | translate }}
             </span>
           </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="7" class="td-location">{{ 'ASSIGNED_SERVICES.EMPTY' | translate }}</td>
         </tr>
       }
     </tbody>

@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 
 // sirve para usar cosas basicas de HTML
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LegalDocumentModal, LegalDocumentType } from '../../../../shared/dialogs/legal-document-modal/legal-document-modal';
 
+import { Auth } from '../../../../core/services/auth';
+
+
+const REGISTER_ERROR_KEYS: Record<string, string> = {
+  EMAIL_TAKEN: 'REGISTER.EMAIL_TAKEN',
+  TERMS_NOT_ACCEPTED: 'REGISTER.TERMS_REQUIRED',
+  SERVER_UNAVAILABLE: 'COMMON.SERVER_UNAVAILABLE'
+};
 
 @Component({
   selector: 'app-register',
@@ -49,13 +57,16 @@ export class RegisterComponent {
   mostrarContrasena: boolean = false;
   mostrarConfirmar: boolean = false;
   cargando: boolean = false;
-  loginError: boolean = false;
+  // clave i18n del error real devuelto por el mock API (antes todo se mostraba como "correo ya registrado")
+  registerError: string | null = null;
 
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private auth: Auth,
+    private cdr: ChangeDetectorRef
   ) {
 
     this.registerForm = this.fb.group({
@@ -236,15 +247,30 @@ export class RegisterComponent {
     if (this.registerForm.invalid) return;
 
     this.cargando = true;
+    this.registerError = null;
 
-    setTimeout(() => {
+    const { nombre, correo, contrasena, telefono, aceptaTerminos, aceptaPoliticaDatos } = this.registerForm.value;
 
-      this.cargando = false;
+    this.auth.register(nombre, correo, contrasena, telefono, aceptaTerminos, aceptaPoliticaDatos).subscribe({
 
-      // redirigir al login después del registro
-      this.router.navigate(['/auth/login']);
+      next: ({ user }) => {
 
-    }, 1500);
+        this.cargando = false;
+
+        // ya quedó autenticado tras registrarse: directo a su panel, sin pasar por login
+        this.router.navigateByUrl(this.auth.homeRouteFor(user.rol));
+
+      },
+
+      error: (err: Error) => {
+
+        this.cargando = false;
+        this.registerError = REGISTER_ERROR_KEYS[err.message] ?? 'COMMON.UNKNOWN_ERROR';
+        this.cdr.detectChanges();
+
+      }
+
+    });
 
   }
 

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import {
   reservationStatusLabel
 } from '../../../../shared/dialogs/reservation-models/reservation.model';
 import { MiniCalendarComponent } from './mini-calendar/mini-calendar';
+import { OperatorWorkService } from '../../../../core/services/operator-work';
 
 type Tab = 'day' | 'week' | 'completed';
 
@@ -24,40 +25,40 @@ type Tab = 'day' | 'week' | 'completed';
   templateUrl: './schedule.html',
   styleUrl: './schedule.scss'
 })
-export class ScheduleComponent {
+export class ScheduleComponent implements OnInit {
 
   activeTab: Tab = 'day';
 
   selectedDate = this.todayAsText();
 
-  reservations: Reservation[] = [
-    { id: 1, code: 'SV-2098', date: '2026-08-31', time: '09:00', service: 'BASIC', client: 'Mario Casas', vehicle: 'CAR', address: 'Chapinero', durationMin: 30, status: 'finalizado' },
-    { id: 2, code: 'SV-2099', date: '2026-08-31', time: '15:00', service: 'FULL', client: 'Diana Ríos', vehicle: 'SUV', address: 'Suba', durationMin: 60, status: 'finalizado' },
+  // servicios asignados al operario autenticado (GET /me/operator/services)
+  reservations: Reservation[] = [];
 
-    { id: 3, code: 'SV-2100', date: '2026-09-01', time: '11:00', service: 'PREMIUM', client: 'Felipe Cruz', vehicle: 'CAR', address: 'Usaquén', durationMin: 50, status: 'finalizado' },
-
-    { id: 4, code: 'SV-2101', date: '2026-09-02', time: '08:00', service: 'PREMIUM', client: 'Carlos Méndez', vehicle: 'CAR', address: 'Chapinero', durationMin: 50, status: 'finalizado' },
-    { id: 5, code: 'SV-2102', date: '2026-09-02', time: '10:00', service: 'BASIC', client: 'Ana Ruiz', vehicle: 'MOTO', address: 'Usaquén', durationMin: 25, status: 'en_progreso' },
-    { id: 6, code: 'SV-2103', date: '2026-09-02', time: '13:30', service: 'FULL', client: 'Pedro López', vehicle: 'PICKUP', address: 'Suba', durationMin: 70, status: 'pendiente' },
-    { id: 7, code: 'SV-2104', date: '2026-09-02', time: '16:00', service: 'PREMIUM', client: 'Sofía Herrera', vehicle: 'CAR', address: 'Teusaquillo', durationMin: 55, status: 'pendiente' },
-
-    { id: 8, code: 'SV-2105', date: '2026-09-03', time: '09:30', service: 'BASIC', client: 'Julián Ortiz', vehicle: 'MOTO', address: 'Engativá', durationMin: 25, status: 'pendiente' },
-    { id: 9, code: 'SV-2106', date: '2026-09-03', time: '14:00', service: 'PREMIUM', client: 'Laura Peña', vehicle: 'CAR', address: 'Kennedy', durationMin: 50, status: 'pendiente' },
-
-    { id: 10, code: 'SV-2107', date: '2026-09-04', time: '10:00', service: 'FULL', client: 'Ricardo Nova', vehicle: 'TRUCK', address: 'Fontibón', durationMin: 70, status: 'pendiente' },
-
-    { id: 11, code: 'SV-2108', date: '2026-09-06', time: '08:30', service: 'BASIC', client: 'Camila Torres', vehicle: 'CAR', address: 'Chapinero', durationMin: 30, status: 'pendiente' }
-  ];
+  // calculado una vez por carga: un getter nuevo en cada ciclo re-dispararía ngOnChanges del mini calendario
+  servicesByDate: Record<string, number> = {};
 
   constructor(
     private translate: TranslateService,
     private dialog: MatDialog,
+    private operatorWork: OperatorWorkService,
     private cdr: ChangeDetectorRef
   ) {}
 
-  get servicesByDate(): Record<string, number> {
+  ngOnInit(): void {
+    this.load();
+  }
+
+  private load(): void {
+    this.operatorWork.services$().subscribe(({ items }) => {
+      this.reservations = items;
+      this.servicesByDate = this.countByDate(items);
+      this.cdr.markForCheck();
+    });
+  }
+
+  private countByDate(items: Reservation[]): Record<string, number> {
     const map: Record<string, number> = {};
-    for (const r of this.reservations) {
+    for (const r of items) {
       map[r.date] = (map[r.date] ?? 0) + 1;
     }
     return map;
@@ -140,7 +141,7 @@ export class ScheduleComponent {
 
   startService(r: Reservation) {
     if (r.status !== 'pendiente') return;
-    r.status = 'en_progreso';
+    this.operatorWork.start$(r.id).subscribe(() => this.load());
   }
 
   requestFinish(r: Reservation) {
@@ -159,11 +160,7 @@ export class ScheduleComponent {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-
-      r.status = 'finalizado';
-
-
-      this.cdr.detectChanges();
+      this.operatorWork.finish$(r.id).subscribe(() => this.load());
     });
   }
 
@@ -176,7 +173,6 @@ export class ScheduleComponent {
     dialogRef.afterClosed().subscribe(action => {
       if (action === 'start') {
         this.startService(r);
-        this.cdr.detectChanges();
       } else if (action === 'finish') {
         this.requestFinish(r);
       }

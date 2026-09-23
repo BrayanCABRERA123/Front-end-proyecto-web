@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,15 +17,22 @@ type StatusFilter = 'all' | OperatorStatus;
   templateUrl: './operators.html',
   styleUrl: './operators.scss'
 })
-export class OperatorsComponent {
+export class OperatorsComponent implements OnInit {
 
   search = '';
   statusFilter: StatusFilter = 'all';
 
   constructor(
     private router: Router,
-    private store: OperatorsStore
+    private store: OperatorsStore,
+    private cdr: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    // el store llega vacío hasta que resuelve GET /operators; markForCheck repinta
+    // esta vista cuando llegue (la app corre sin zone.js, ver login.ts).
+    this.store.list$().subscribe(() => this.cdr.markForCheck());
+  }
 
   get operators(): Operator[] {
     return this.store.operators;

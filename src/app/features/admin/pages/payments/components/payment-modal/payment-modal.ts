@@ -1,19 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { PaymentMethod } from '../../../../../../shared/dialogs/payment-review-modal/payment-review.model';
+import { AdminPaymentsService, PayableBooking } from '../../../../../../core/services/admin-payments';
+import { PaymentMethod } from '../../../../../../core/services/payments';
 
-// lo que este modal devuelve cuando el admin registra el pago
-export interface ManualPaymentResult {
-  client: string;
-  service: string;
-  amount: number;
-  method: PaymentMethod;
-}
-
+// Registro de un pago recibido en sede. Se elige una reserva pendiente de pago (cliente,
+// servicio y monto salen de ella) y el método; el mock lo guarda como APROBADO.
+// Cierra con true cuando el pago quedó registrado.
 @Component({
   selector: 'app-payment-modal',
   standalone: true,
@@ -21,44 +18,58 @@ export interface ManualPaymentResult {
   templateUrl: './payment-modal.html',
   styleUrl: './payment-modal.scss'
 })
-export class PaymentModalComponent {
+export class PaymentModalComponent implements OnInit {
 
-  // los mismos 4 métodos que se usan en el resto de la app (nada de tarjeta/PayPal,
-  // acá se paga por QR con Nequi/Daviplata/transferencia o en efectivo)
-  methods: { value: PaymentMethod; label: string }[] = [
-    { value: 'cash', label: 'Efectivo' },
-    { value: 'nequi', label: 'Nequi' },
-    { value: 'daviplata', label: 'Daviplata' },
-    { value: 'bancolombia', label: 'Transferencia Bancolombia' },
-  ];
+  bookings: PayableBooking[] = [];
+  methods: PaymentMethod[] = [];
 
-  client = '';
-  service = '';
-  amount: number | null = null;
-  method: PaymentMethod = 'cash';
+  bookingId: number | null = null;
+  paymentAccountId: number | null = null;
+  reference = '';
 
-  constructor(private dialogRef: MatDialogRef<PaymentModalComponent>) {}
+  saving = false;
+  errorMessage: string | null = null;
+
+  constructor(
+    private dialogRef: MatDialogRef<PaymentModalComponent>,
+    private adminPayments: AdminPaymentsService
+  ) {}
+
+  ngOnInit(): void {
+    this.adminPayments.manualOptions$().subscribe(options => {
+      this.bookings = options.bookings;
+      this.methods = options.methods;
+      // efectivo por defecto: es el caso más común de pago en sede
+      this.paymentAccountId = (options.methods.find(m => m.code === 'CASH') ?? options.methods[0])?.paymentAccountId ?? null;
+    });
+  }
+
+  get selectedBooking(): PayableBooking | null {
+    return this.bookings.find(b => b.bookingId === this.bookingId) ?? null;
+  }
 
   get canRegister(): boolean {
-    return this.client.trim().length > 0
-      && this.service.trim().length > 0
-      && !!this.amount && this.amount > 0;
+    return !!this.bookingId && !!this.paymentAccountId && !this.saving;
   }
 
   close(): void {
-    this.dialogRef.close(null);
+    this.dialogRef.close(false);
   }
 
   register(): void {
     if (!this.canRegister) return;
 
-    const result: ManualPaymentResult = {
-      client: this.client.trim(),
-      service: this.service.trim(),
-      amount: this.amount ?? 0,
-      method: this.method
-    };
+    this.saving = true;
+    this.errorMessage = null;
 
-    this.dialogRef.close(result);
+    this.adminPayments
+      .registerManual$(this.bookingId!, this.paymentAccountId!, this.reference.trim() || undefined)
+      .subscribe({
+        next: () => this.dialogRef.close(true),
+        error: (err: HttpErrorResponse) => {
+          this.saving = false;
+          this.errorMessage = err.error?.message ?? 'Error';
+        }
+      });
   }
 }

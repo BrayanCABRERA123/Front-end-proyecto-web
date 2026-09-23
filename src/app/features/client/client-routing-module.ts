@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from '../../core/guards/auth-guard';
+import { roleGuard } from '../../core/guards/role-guard';
 // importamos las páginas
 import { DashboardComponent } from './pages/dashboard/dashboard';
 import { ProfileComponent } from './pages/profile/profile';
@@ -14,17 +16,22 @@ import { VehiclesComponent } from './pages/vehicles/vehicles';
 
 
 const routes: Routes = [
-  // importamos las rutas
-  { path: '', component: DashboardComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'ratings', component: RatingModalComponent},
-  { path: 'reserve', component: ReserveComponent },
-  { path: 'notifications', component: ClientNotificationsComponent},
-  { path: 'history', component: HistoryComponent },
-  { path: 'configuration', component: ConfigurationComponent },
-  { path: 'payment', component: PaymentComponent },
-  { path: 'vehicles', component: VehiclesComponent },
-
+  {
+    path: '',
+    canActivate: [authGuard, roleGuard(['CLIENT'])],
+    children: [
+      // importamos las rutas
+      { path: '', component: DashboardComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'ratings', component: RatingModalComponent },
+      { path: 'reserve', component: ReserveComponent },
+      { path: 'notifications', component: ClientNotificationsComponent },
+      { path: 'history', component: HistoryComponent },
+      { path: 'configuration', component: ConfigurationComponent },
+      { path: 'payment', component: PaymentComponent },
+      { path: 'vehicles', component: VehiclesComponent },
+    ]
+  }
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +16,7 @@ type CalendarView = 'week' | 'day' | 'month';
   templateUrl: './operator-calendar.html',
   styleUrl: './operator-calendar.scss'
 })
-export class OperatorCalendarComponent {
+export class OperatorCalendarComponent implements OnInit {
 
   operator: Operator | undefined;
   view: CalendarView = 'week';
@@ -28,10 +28,17 @@ export class OperatorCalendarComponent {
     private route: ActivatedRoute,
     private router: Router,
     private store: OperatorsStore,
-    private translate: TranslateService
-  ) {
+    private translate: TranslateService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') ?? '';
-    this.operator = this.store.getById(id);
+
+    this.store.getById$(id).subscribe(operator => {
+      this.operator = operator;
+      this.cdr.markForCheck();
+    });
   }
 
   dayLabel(index: number): string {

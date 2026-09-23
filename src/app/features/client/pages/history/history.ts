@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { HistoryCardComponent } from './components/history-card/history-card';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Booking, BookingsService } from '../../../../core/services/bookings';
 
 @Component({
   selector: 'app-history',
@@ -20,9 +21,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './history.html',
   styleUrl: './history.scss'
 })
-export class HistoryComponent {
+export class HistoryComponent implements OnInit {
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private bookingsService: BookingsService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   // filtro activo
   activeFilter: string = 'todos';
@@ -34,76 +39,51 @@ export class HistoryComponent {
   // buscador
   search: string = '';
 
-  showRatingModal = false;
+  // reservas del cliente (GET /me/bookings, más recientes primero)
+  services: Booking[] = [];
 
-  openRatingModal(): void {
-    this.showRatingModal = true;
+  ngOnInit(): void {
+    this.bookingsService.myBookings$().subscribe(bookings => {
+      this.services = bookings;
+      this.cdr.markForCheck();
+    });
   }
 
-  // SERVICIOS
-  services = [
-  {
-    id: 1,
-    title: 'PREMIUM',
-    date: '28/03/2026',
-    address: 'Calle Falsa 123, Springfield',
-    serviceType: 'FULL',
-    extras: ['WAX', 'VACUUM'],
-    assignmentType: 'MANUAL',
-    operator: 'Juan',
-    status: 'COMPLETED',
-    price: 35,
-    paid: true
-  },
-  {
-    id: 2,
-    title: 'BASIC',
-    date: '16/12/2025',
-    address: 'Calle 42 #13-33',
-    serviceType: 'FULL',
-    extras: ['WAX'],
-    assignmentType: 'AUTO',
-    operator: '',
-    status: 'PENDING',
-    price: 35,
-    paid: false
-  }
-];
-
-  // TRADUCIR EXTRAS
-  getTranslatedExtras(extras: string[]): string[] {
-    return extras.map(e => this.translate.instant('EXTRA.' + e));
+  // la tarjeta avisa cuando el cliente calificó, para reflejar el cambio sin recargar
+  onRated(updated: Booking): void {
+    this.services = this.services.map(s => (s.id === updated.id ? updated : s));
+    this.cdr.markForCheck();
   }
 
   // FILTRO COMPLETO
-  get filteredServices() {
+  get filteredServices(): Booking[] {
     return this.services.filter(service => {
 
-      // filtro por estado
+      // filtro por estado de pago
       if (this.activeFilter === 'pagados' && !service.paid) return false;
       if (this.activeFilter === 'pendientes' && service.paid) return false;
 
+      // filtro por rango de fechas (yyyy-mm-dd, igual que el <input type="date">)
+      const day = service.scheduledStart.slice(0, 10);
+      if (this.dateFrom && day < this.dateFrom) return false;
+      if (this.dateTo && day > this.dateTo) return false;
+
       // filtro por texto
       if (this.search) {
-      const text = this.search.toLowerCase();
+        const text = this.search.toLowerCase();
 
-      return (
-        service.address.toLowerCase().includes(text) ||
+        return (
+          (service.address ?? '').toLowerCase().includes(text) ||
+          service.code.toLowerCase().includes(text) ||
+          (service.vehicle?.plate ?? '').toLowerCase().includes(text) ||
+          service.services.some(s =>
+            this.translate.instant('SERVICE.' + s.code).toLowerCase().includes(text)
+          ) ||
+          (service.operator ?? '').toLowerCase().includes(text)
+        );
+      }
 
-        this.translate.instant('SERVICE.' + service.serviceType)
-          .toLowerCase()
-          .includes(text) ||
-
-        this.translate.instant('ASSIGNMENT.' + service.assignmentType)
-          .toLowerCase()
-          .includes(text) ||
-
-        (service.operator &&
-          service.operator.toLowerCase().includes(text))
-      );
-    }
-
-    return true;
-  });
+      return true;
+    });
   }
 }

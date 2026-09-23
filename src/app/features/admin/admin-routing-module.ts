@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from '../../core/guards/auth-guard';
+import { roleGuard } from '../../core/guards/role-guard';
 import { DashboardComponent } from './pages/dashboard/dashboard';
 import { ReportsComponent } from './pages/reports/reports';
 import { PaymentsComponent } from './pages/payments/payments';
@@ -14,18 +16,24 @@ import { AdminProfileComponent } from './pages/profile/profile';
 import { AdminSettingsComponent } from './pages/settings/settings';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
-  { path: 'reservations', component: ReservationsComponent },
-  { path: 'payments', component: PaymentsComponent },
-  { path: 'management', component: ManagementComponent },
-  { path: 'schedule', component: ScheduleComponent },
-  { path: 'operators', component: OperatorsComponent },
-  { path: 'operators/:id/calendar', component: OperatorCalendarComponent },
-  { path: 'operators/:id', component: OperatorDetailComponent },
-  { path: 'reports', component: ReportsComponent },
-  { path: 'notifications', component: AdminNotificationsComponent },
-  { path: 'profile', component: AdminProfileComponent },
-  { path: 'settings', component: AdminSettingsComponent },
+  {
+    path: '',
+    canActivate: [authGuard, roleGuard(['ADMIN'])],
+    children: [
+      { path: '', component: DashboardComponent },
+      { path: 'reservations', component: ReservationsComponent },
+      { path: 'payments', component: PaymentsComponent },
+      { path: 'management', component: ManagementComponent },
+      { path: 'schedule', component: ScheduleComponent },
+      { path: 'operators', component: OperatorsComponent },
+      { path: 'operators/:id/calendar', component: OperatorCalendarComponent },
+      { path: 'operators/:id', component: OperatorDetailComponent },
+      { path: 'reports', component: ReportsComponent },
+      { path: 'notifications', component: AdminNotificationsComponent },
+      { path: 'profile', component: AdminProfileComponent },
+      { path: 'settings', component: AdminSettingsComponent },
+    ]
+  }
 ];
 
 @NgModule({

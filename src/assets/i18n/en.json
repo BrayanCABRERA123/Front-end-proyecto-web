@@ -64,12 +64,15 @@
     "STATUS": "Status",
     "PAID": "Paid",
     "PENDING": "Pending",
-    "RATE": "Rate Service"
+    "RATE": "Rate Service",
+    "VEHICLE": "Vehicle"
   },
   "COMMON": {
     "CLOSE": "Close",
     "CANCEL": "Cancel",
-    "DELETE": "Delete"
+    "DELETE": "Delete",
+    "SERVER_UNAVAILABLE": "Could not reach the server. Start the app with \"npm run dev\" (it runs the mock API on port 3000).",
+    "UNKNOWN_ERROR": "Something went wrong. Please try again."
   },
   "SERVICE": {
     "BASIC": "Basic",
@@ -108,10 +111,15 @@
     "COMPLETED": "Completed",
     "PENDING": "Pending",
     "CONFIRMED": "Confirmed",
+    "IN_PROGRESS": "On the way",
     "CANCELED": "Canceled",
+    "CANCELLED": "Canceled",
+    "NO_SHOW": "No show",
     "ON_THE_WAY": "On the way",
     "PAID": "Paid",
-    "REFUNDED": "Refunded"
+    "REFUNDED": "Refunded",
+    "APPROVED": "Approved",
+    "REJECTED": "Rejected"
   },
   "ASSIGNMENT": {
     "MANUAL": "Manual",
@@ -139,7 +147,8 @@
       "TITLE": "Your next service",
       "VIEW_DETAIL": "View detail",
       "OPERATOR_ASSIGNED": "Assigned operator",
-      "PROGRESS": "Service progress"
+      "PROGRESS": "Service progress",
+      "NONE": "You have no upcoming services. Book a wash!"
     },
     "QUICK_ACCESS": {
       "TITLE": "Quick access",
@@ -347,7 +356,8 @@
     "STEP2": {
       "TITLE": "Service type",
       "SUBTITLE": "Choose the cleaning level you prefer",
-      "POPULAR": "Most popular"
+      "POPULAR": "Most popular",
+      "SELECT_VEHICLE_FIRST": "Select a vehicle first to see prices and duration."
     },
     "STEP3": {
       "TITLE": "Date and location",
@@ -364,7 +374,12 @@
       "TOTAL": "Total",
       "SUBMIT": "Book Now",
       "NOTE": "We'll notify you when the washer is on the way. You can pay online or in cash."
-    }
+    },
+    "SELECT_SERVICE_FIRST": "Select a service to see available times.",
+    "SLOT_UNAVAILABLE": "unavailable",
+    "DAY_CLOSED": "We are closed that day",
+    "ERROR_SLOT_TAKEN": "That time slot is no longer available. Pick another time.",
+    "ERROR_GENERIC": "The booking could not be created. Please try again."
   },
   "APP": {
     "TITLE": "Car Wash Service"
@@ -422,7 +437,8 @@
     "BUTTON": "Login",
     "NO_ACCOUNT": "Don't have an account?",
     "REGISTER": "Sign up",
-    "INVALID_CREDENTIALS": "Incorrect email or password"
+    "INVALID_CREDENTIALS": "Incorrect email or password",
+    "ACCOUNT_DISABLED": "Your account is disabled. Please contact the administrator."
   },
   "REGISTER": {
     "TITLE": "Create Account",
@@ -458,6 +474,7 @@
     "ALREADY_ACCOUNT": "Already have an account?",
     "LOGIN": "Log in",
     "INVALID_CREDENTIALS": "Incorrect email or password",
+    "EMAIL_TAKEN": "This email is already registered",
     "ACCEPT_TERMS": "I have read and accept the",
     "TERMS_LINK": "Terms and Conditions",
     "AND": "and the",
@@ -546,8 +563,9 @@
       "REPORT": "Report progress",
       "FINISH": "Finish Service",
       "EXTRA_TITLE": "Additional options",
-      "CONTACT": "Contact client"
-    }
+      "CONTACT": "Client phone"
+    },
+    "EMPTY": "You have no assigned services."
   },
   "OPERATOR_HOME": {
     "TITLE": "Hello, {{name}}!  Welcome!",
@@ -597,7 +615,9 @@
       "CARD": "Card",
       "PSE": "PSE",
       "NEQUI": "Nequi",
-      "CASH": "Cash"
+      "CASH": "Cash",
+      "BANCOLOMBIA": "Bancolombia",
+      "DAVIPLATA": "Daviplata"
     }
   },
   "HISTORY_STATS": {
@@ -647,7 +667,14 @@
     "AVG_RATING": "Average rating",
     "SATISFACTION_LEVEL": "Satisfaction level",
     "TOTAL": "Total ratings received",
-    "LAST_12_MONTHS": "In the last 12 months"
+    "LAST_12_MONTHS": "In the last 12 months",
+    "LEVEL": {
+      "NONE": "No ratings yet",
+      "VERY_HIGH": "Very high",
+      "HIGH": "High",
+      "MEDIUM": "Medium",
+      "LOW": "Low"
+    }
   },
   "PAYMENT": {
     "TITLE": "Payment Gateway",
@@ -667,7 +694,11 @@
       "CARD_NUMBER": "Card number",
       "EXPIRY": "Expiry",
       "CVV": "CVV",
-      "SECURE_NOTE": "Encrypted transaction. We do not store your card data."
+      "SECURE_NOTE": "Encrypted transaction. We do not store your card data.",
+      "ACCOUNT": "Destination account",
+      "REFERENCE": "Transaction reference",
+      "REFERENCE_PLACEHOLDER": "e.g. NQ-88231",
+      "REVIEW_NOTE": "Your payment will be under review until an administrator verifies it."
     },
     "SUMMARY": {
       "TITLE": "Service summary",
@@ -681,8 +712,16 @@
     },
     "HISTORY": {
       "TITLE": "Payment history",
-      "TOTAL_PAID": "Total paid"
-    }
+      "TOTAL_PAID": "Total paid",
+      "EMPTY": "You have no payments yet."
+    },
+    "BOOKING": {
+      "TITLE": "Booking to pay",
+      "NONE": "You have no bookings pending payment."
+    },
+    "SUCCESS": "Payment registered. Pending verification.",
+    "ERROR_ALREADY_PAID": "This booking already has a registered payment.",
+    "ERROR_GENERIC": "The payment could not be registered. Please try again."
   },
   "VEHICLES": {
     "TITLE": "My Vehicles",
@@ -1111,14 +1150,25 @@
       "confirmed": "Confirmed",
       "in_progress": "In progress",
       "completed": "Completed",
-      "cancelled": "Cancelled"
+      "cancelled": "Cancelled",
+      "pending": "Pending"
     },
     "PAGINATION": {
       "SHOWING": "Showing {{from}} to {{to}} of {{total}} bookings",
       "PREVIOUS": "Previous",
       "NEXT": "Next"
     },
-    "ASSIGN": "Assign"
+    "ASSIGN": "Assign",
+    "RELATIVE": {
+      "COMPLETED": "Completed successfully",
+      "CANCELLED": "Cancelled",
+      "ENDS_IN": "Ends in {{min}} min",
+      "OVERDUE": "Past its end time",
+      "IN_MINUTES": "In {{min}} minutes",
+      "IN_HOURS": "In {{hours}} hours",
+      "IN_DAYS": "In {{days}} days",
+      "LATE": "Start time passed, not started"
+    }
   },
   "ASSIGN_OPERATOR_MODAL": {
     "TITLE": "Assign Operator to Booking {{code}}",
@@ -1155,14 +1205,18 @@
         "DATE_ADDED": "Date added",
         "INVITED": "Invited",
         "STATUS": "Status",
-        "ACTIONS": "Actions"
+        "ACTIONS": "Actions",
+        "PHONE": "Phone"
       },
       "YES": "Yes",
       "NO": "No",
       "STATUS": {
         "active": "Active",
         "disabled": "Disabled"
-      }
+      },
+      "VIEW_OPERATOR": "View operator profile",
+      "ENABLE": "Enable",
+      "DISABLE": "Disable"
     },
     "ROLES": {
       "CREATE_ROLE": "Create role",
@@ -1249,15 +1303,23 @@
   },
   "CREATE_USER_MODAL": {
     "TITLE": "Create User",
-    "SUBTITLE": "Invite someone to manage the platform",
+    "SUBTITLE": "Create an operator or administrator account. They can sign in right away.",
     "NAME_LABEL": "Full name",
     "NAME_PLACEHOLDER": "E.g. Maria Fernanda Lopez",
     "EMAIL_LABEL": "Email",
-    "EMAIL_PLACEHOLDER": "email@example.com",
+    "EMAIL_PLACEHOLDER": "user@gmail.com",
     "ROLE_LABEL": "Assigned role",
     "INVITE_LABEL": "Send email invitation",
     "CANCEL": "Cancel",
-    "CREATE": "Create User"
+    "CREATE": "Create User",
+    "PHONE_LABEL": "Phone (optional)",
+    "PASSWORD_LABEL": "Initial password",
+    "PASSWORD_HINT": "At least 8 characters, one uppercase letter and one number. Share it with the person.",
+    "SPECIALTY_LABEL": "Specialty (optional)",
+    "SPECIALTY_PLACEHOLDER": "e.g. Exterior wash",
+    "OPERATOR_NOTE": "A default Mon-Fri 08:00-17:00 schedule is assigned; adjust it in Schedule.",
+    "EMAIL_INVALID": "Must be a valid @gmail.com address",
+    "PHONE_INVALID": "10 digits, starting with 3"
   },
   "ADMIN_SCHEDULE": {
     "OPEN_TODAY": "Open today",
@@ -1531,7 +1593,7 @@
   },
   "MANUAL_PAYMENT_MODAL": {
     "TITLE": "Register manual payment",
-    "SUBTITLE": "Use this when a client paid at the counter and it wasn't logged by the app",
+    "SUBTITLE": "Record an in-store payment for a pending booking. It is approved immediately.",
     "CLIENT_LABEL": "Client",
     "CLIENT_PLACEHOLDER": "Client name",
     "SERVICE_LABEL": "Service",
@@ -1539,7 +1601,12 @@
     "AMOUNT_LABEL": "Amount (COP)",
     "METHOD_LABEL": "Payment method",
     "CANCEL": "Cancel",
-    "REGISTER": "Register payment"
+    "REGISTER": "Register payment",
+    "BOOKING_LABEL": "Booking",
+    "BOOKING_PLACEHOLDER": "Select the booking to pay",
+    "NO_BOOKINGS": "There are no bookings pending payment.",
+    "REFERENCE_LABEL": "Reference (optional)",
+    "REFERENCE_PLACEHOLDER": "e.g. voucher or transfer number"
   },
   "BUSINESS_DATA": {
     "TITLE": "Business Data",

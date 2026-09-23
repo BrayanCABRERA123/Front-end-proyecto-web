@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // importamos el sidebar del layout
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
@@ -8,6 +8,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 // modal de registro de vehículo
 import { RegisterVehicleModalComponent } from '../../../../shared/dialogs/register-vehicle-modal/register-vehicle-modal';
+import { Vehicle, VehiclesService } from '../../../../core/services/vehicles';
+import { Catalog, VehicleType } from '../../../../core/services/catalog';
+import { HttpErrorResponse } from '@angular/common/http';
 
 // íconos según el tipo de vehículo
 const ICON_BY_TYPE: Record<string, string> = {
@@ -26,14 +29,31 @@ const ICON_BY_TYPE: Record<string, string> = {
   templateUrl: './vehicles.html',
   styleUrls: ['./vehicles.scss']
 })
-export class VehiclesComponent {
+export class VehiclesComponent implements OnInit {
 
   // vehículos registrados por el cliente
-  vehicles = [
-    { id: 1, type: 'SEDAN', brand: 'Mazda', model: '3 Sedán', plate: 'ABC-123', color: 'Gris', lastWash: '10 Ago 2026', service: 'PREMIUM', totalWashes: 8 },
-    { id: 2, type: 'MOTO', brand: 'Yamaha', model: 'FZ 2.0', plate: 'XYZ-98D', color: 'Azul', lastWash: '02 Ago 2026', service: 'BASIC', totalWashes: 4 },
-    { id: 3, type: 'TRUCK', brand: 'Toyota', model: 'Prado', plate: 'JKL-457', color: 'Blanco', lastWash: '24 Jul 2026', service: 'FULL', totalWashes: 2 }
-  ];
+  vehicles: Vehicle[] = [];
+
+  private vehicleTypes: VehicleType[] = [];
+
+  // mensaje del mock API (placa duplicada, vehículo con reservas, etc.)
+  errorMessage: string | null = null;
+
+  constructor(
+    private dialog: MatDialog,
+    private vehiclesService: VehiclesService,
+    private catalog: Catalog,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.catalog.vehicleTypes$().subscribe(types => (this.vehicleTypes = types));
+
+    this.vehiclesService.myVehicles$().subscribe(vehicles => {
+      this.vehicles = vehicles;
+      this.cdr.markForCheck();
+    });
+  }
 
   get totalVehicles(): number {
     return this.vehicles.length;
@@ -43,11 +63,13 @@ export class VehiclesComponent {
     return this.vehicles.reduce((sum, v) => sum + v.totalWashes, 0);
   }
 
+  // el lavado más reciente entre todos los vehículos
   get lastWashOverall(): string {
-    return this.vehicles[0]?.lastWash ?? '-';
+    const latest = this.vehicles
+      .filter(v => v.lastWashAt)
+      .sort((a, b) => b.lastWashAt!.localeCompare(a.lastWashAt!))[0];
+    return latest?.lastWash ?? '-';
   }
-
-  constructor(private dialog: MatDialog) {}
 
   // ícono correspondiente al tipo de vehículo
   iconFor(type: string): string {
@@ -61,21 +83,44 @@ export class VehiclesComponent {
     });
 
     dialogRef.afterClosed().subscribe(newVehicle => {
-      if (newVehicle) {
-        this.vehicles.push({
-          id: Date.now(),
-          ...newVehicle,
-          lastWash: '-',
-          service: '-',
-          totalWashes: 0
+      if (!newVehicle) return;
+
+      const vehicleType = this.vehicleTypes.find(t => t.code === newVehicle.type);
+
+      this.vehiclesService
+        .create$({
+          licensePlate: newVehicle.plate,
+          vehicleTypeId: vehicleType ? vehicleType.id : this.vehicleTypes[0]?.id,
+          brand: newVehicle.brand,
+          model: newVehicle.model,
+          color: newVehicle.color
+        })
+        .subscribe({
+          next: vehicle => {
+            this.errorMessage = null;
+            this.vehicles = [...this.vehicles, vehicle];
+            this.cdr.markForCheck();
+          },
+          error: (err: HttpErrorResponse) => this.showError(err)
         });
-      }
     });
   }
 
   // elimina un vehículo registrado
   removeVehicle(id: number) {
-    this.vehicles = this.vehicles.filter(v => v.id !== id);
+    this.vehiclesService.remove$(id).subscribe({
+      next: () => {
+        this.errorMessage = null;
+        this.vehicles = this.vehicles.filter(v => v.id !== id);
+        this.cdr.markForCheck();
+      },
+      error: (err: HttpErrorResponse) => this.showError(err)
+    });
+  }
+
+  private showError(err: HttpErrorResponse) {
+    this.errorMessage = err.error?.message ?? 'Error';
+    this.cdr.markForCheck();
   }
 
 }

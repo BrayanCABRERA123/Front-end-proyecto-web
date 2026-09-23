@@ -3,7 +3,7 @@
   <div class="card-header">
     <div class="client-info">
       <p class="client-name">{{ rating.client }}</p>
-      <p class="service-type">{{ rating.serviceType }}</p>
+      <p class="service-type">{{ ('SERVICE.' + rating.service) | translate }}</p>
       <div class="stars-row">
         @for (star of stars; track $index) {
           <mat-icon class="star" [class.filled]="star === 1">
@@ -15,17 +15,16 @@
 
     <div class="card-actions">
       <span class="card-date">{{ rating.date }}</span>
-      <button class="btn-view">
-        <mat-icon>visibility</mat-icon>
-      </button>
     </div>
   </div>
 
-  <p class="card-comment">{{ rating.comment }}</p>
+  @if (rating.comment) {
+    <p class="card-comment">"{{ rating.comment }}"</p>
+  }
 
   <div class="card-details">
     <span class="detail-item">
-      {{ 'QUALIFICATION_CARD.DURATION' | translate }}: {{ rating.duration }}
+      {{ 'QUALIFICATION_CARD.DURATION' | translate }}: {{ rating.durationMin }} min
     </span>
     <span class="detail-separator">·</span>
     <span class="detail-item">

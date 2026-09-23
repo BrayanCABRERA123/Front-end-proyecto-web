@@ -56,10 +56,10 @@
         </div>
 
         <div class="filter-actions">
-          <button class="btn-reset">
+          <button class="btn-reset" (click)="resetFilters()">
             <mat-icon>refresh</mat-icon>
           </button>
-          <button class="btn-filter">
+          <button class="btn-filter" (click)="applyFilters()">
             <mat-icon>search</mat-icon>
             {{ 'ASSIGNED_SERVICES.FILTERS.FILTER_BTN' | translate }}
           </button>
@@ -75,7 +75,10 @@
     </app-service-table>
 
     @if (selectedService) {
-      <app-service-detail [service]="selectedService">
+      <app-service-detail
+        [service]="selectedService"
+        (start)="startService($event)"
+        (finish)="finishService($event)">
       </app-service-detail>
     }
 

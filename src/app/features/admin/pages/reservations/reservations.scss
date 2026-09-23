@@ -179,6 +179,7 @@
 }
 
 .today-chip {
+  cursor: pointer;
   font-size: 10px;
   font-weight: $fw-bold;
   color: var(--primary);
@@ -279,6 +280,7 @@ select {
   border-radius: 999px;
   white-space: nowrap;
 
+  &--pending { background: var(--warning-soft); color: var(--warning); }
   &--confirmed { background: var(--primary-soft); color: var(--primary); }
   &--in_progress { background: var(--success-soft); color: var(--success); }
   &--completed { background: var(--neutral-badge-soft); color: var(--neutral-badge); }
@@ -359,4 +361,10 @@ select {
   .page-header { flex-direction: column; align-items: flex-start; }
   .page-header__actions { width: 100%; }
   .btn-primary, .btn-outline { flex: 1; justify-content: center; }
+}
+
+.page-error {
+  color: var(--error);
+  font-weight: $fw-semibold;
+  margin: 0 0 12px;
 }

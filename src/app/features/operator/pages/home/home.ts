@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { ReservationDetailModal } from '../../../../shared/dialogs/reservation-detail-modal/reservation-detail-modal';
 import { Reservation } from '../../../../shared/dialogs/reservation-models/reservation.model';
+import { OperatorWorkService } from '../../../../core/services/operator-work';
 
 interface Stat {
   icon: string;
@@ -33,43 +34,44 @@ interface Stat {
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  operatorName = 'Camilo';
+  // jornada de hoy del operario autenticado (GET /me/operator/dashboard, ya calculada)
+  operatorName = '';
+  unreadNotifications = 0;
+  averageRating = 0;
+  todayReservations: Reservation[] = [];
 
-  unreadNotifications = 2;
-  averageRating = 4.3;
-
-  todayReservations: Reservation[] = [
-    { id: 1, code: 'SV-2101', date: '2026-09-03', time: '14:00', service: 'PREMIUM', client: 'Juan Felipe González', vehicle: 'CAR', address: 'Calle Sur 123, Los Rosales', durationMin: 50, status: 'en_progreso' },
-    { id: 2, code: 'SV-2102', date: '2026-09-03', time: '16:30', service: 'BASIC', client: 'Esneider Sánchez', vehicle: 'TRUCK', address: 'Calle Norte 7-06, Miraflores', durationMin: 30, status: 'pendiente' }
-  ];
+  totalToday = 0;
+  inProgress = 0;
+  pending = 0;
+  completedToday = 0;
+  progressPercentage = 0;
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
+    private operatorWork: OperatorWorkService,
     private cdr: ChangeDetectorRef
   ) {}
 
-  get totalToday(): number {
-    return this.todayReservations.length;
+  ngOnInit(): void {
+    this.load();
   }
 
-  get inProgress(): number {
-    return this.todayReservations.filter(r => r.status === 'en_progreso').length;
-  }
-
-  get pending(): number {
-    return this.todayReservations.filter(r => r.status === 'pendiente').length;
-  }
-
-  get completedToday(): number {
-    return this.todayReservations.filter(r => r.status === 'finalizado').length;
-  }
-
-  get progressPercentage(): number {
-    if (this.totalToday === 0) return 0;
-    return (this.completedToday / this.totalToday) * 100;
+  private load(): void {
+    this.operatorWork.dashboard$().subscribe(d => {
+      this.operatorName = d.name;
+      this.unreadNotifications = d.unreadNotifications;
+      this.averageRating = d.averageRating;
+      this.todayReservations = d.todayServices;
+      this.totalToday = d.today.total;
+      this.inProgress = d.today.inProgress;
+      this.pending = d.today.pending;
+      this.completedToday = d.today.completed;
+      this.progressPercentage = d.today.progressPercentage;
+      this.cdr.markForCheck();
+    });
   }
 
   get stats(): Stat[] {
@@ -89,9 +91,10 @@ export class HomeComponent {
     this.router.navigateByUrl('/operator/schedule');
   }
 
+  // el mock cambia service_execution y la reserva; se recarga para refrescar contadores
   startService(r: Reservation) {
     if (r.status !== 'pendiente') return;
-    r.status = 'en_progreso';
+    this.operatorWork.start$(r.id).subscribe(() => this.load());
   }
 
   requestFinish(r: Reservation) {
@@ -110,8 +113,7 @@ export class HomeComponent {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      r.status = 'finalizado';
-      this.cdr.detectChanges();
+      this.operatorWork.finish$(r.id).subscribe(() => this.load());
     });
   }
 
@@ -124,7 +126,6 @@ export class HomeComponent {
     dialogRef.afterClosed().subscribe(action => {
       if (action === 'start') {
         this.startService(r);
-        this.cdr.detectChanges();
       } else if (action === 'finish') {
         this.requestFinish(r);
       }

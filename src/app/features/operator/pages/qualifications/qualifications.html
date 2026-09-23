@@ -58,10 +58,10 @@
         </div>
 
         <div class="filter-actions">
-          <button class="btn-reset">
+          <button class="btn-reset" (click)="resetFilters()">
             <mat-icon>refresh</mat-icon>
           </button>
-          <button class="btn-filter">
+          <button class="btn-filter" (click)="applyFilters()">
             <mat-icon>search</mat-icon>
             {{ 'QUALIFICATIONS.BTN_FILTER' | translate }}
           </button>

@@ -29,6 +29,7 @@
             @case ('nequi') { <div class="receipt-mock__brand">Nequi Colombia</div> }
             @case ('daviplata') { <div class="receipt-mock__brand">Daviplata</div> }
             @case ('bancolombia') { <div class="receipt-mock__brand">Bancolombia</div> }
+            @case ('card') { <div class="receipt-mock__brand">Datáfono</div> }
             @default { <div class="receipt-mock__brand">Pago en efectivo</div> }
           }
 
@@ -36,7 +37,7 @@
           <span class="receipt-mock__amount">{{ cop(data.amountDeclared) }},00</span>
 
           <div class="receipt-mock__details">
-            <div><span>Para</span><strong>Express Car Wash S.A.S.</strong></div>
+            <div><span>Para</span><strong>{{ data.accountHolder || '—' }}</strong></div>
             <div><span>NIT / Celular</span><strong>{{ data.bankAccount }}</strong></div>
             <div><span>Referencia</span><strong>{{ data.transactionReference }}</strong></div>
             <div><span>Fecha y hora</span><strong>{{ data.receiptDate }}</strong></div>
@@ -123,6 +124,13 @@
           }
         </div>
 
+        @if (data.status === 'rejected' && data.rejectionReason) {
+          <div class="reject-reason">
+            <label>{{ 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL' | translate }}</label>
+            <p class="reject-reason__text">{{ data.rejectionReason }}</p>
+          </div>
+        }
+
         @if (askingRejectReason) {
           <div class="reject-reason">
             <label>{{ 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL' | translate }}</label>
@@ -141,7 +149,7 @@
   </div>
 
   <div class="review-footer">
-    <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.AUDITED_BY' | translate }}: Laura Méndez</span>
+    <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.AUDITED_BY' | translate }}: {{ data.auditedBy || '—' }}</span>
 
     <div class="review-footer__actions">
       @if (askingRejectReason) {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import {
 } from '../../dialogs/notification-models/notification.model';
 import { NotificationDetailModal } from '../../dialogs/notification-detail-modal/notification-detail-modal';
 import { ConfirmModal, ConfirmModalData } from '../../dialogs/confirm-modal/confirm-modal';
+import { NotificationsService } from '../../../core/services/notifications';
 
 export type { AppNotification, NotificationType };
 
@@ -103,19 +104,43 @@ export class NotificationsComponent {
     });
   }
 
+  // Cambios optimistas: se reflejan de inmediato y se revierten si el mock API falla.
   markAsRead(n: AppNotification) {
-    n.read = true;
+    this.setRead(n, true);
   }
 
   markAsUnread(n: AppNotification) {
-    n.read = false;
+    this.setRead(n, false);
   }
 
   markAllAsRead() {
-    this.notifications.forEach(n => n.read = true);
+    const unread = this.notifications.filter(n => !n.read);
+    unread.forEach(n => n.read = true);
+
+    this.notificationsService.markAllRead$().subscribe({
+      error: () => {
+        unread.forEach(n => n.read = false);
+        this.cdr.markForCheck();
+      }
+    });
   }
 
-  constructor(private dialog: MatDialog) {}
+  private setRead(n: AppNotification, read: boolean) {
+    n.read = read;
+
+    this.notificationsService.markRead$(n.id, read).subscribe({
+      error: () => {
+        n.read = !read;
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  constructor(
+    private dialog: MatDialog,
+    private notificationsService: NotificationsService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   viewDetail(n: AppNotification) {
     this.dialog.open(NotificationDetailModal, {
@@ -136,9 +161,12 @@ export class NotificationsComponent {
     });
 
     dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
+      if (!confirmed) return;
+
+      this.notificationsService.remove$(n.id).subscribe(() => {
         this.notifications = this.notifications.filter(x => x.id !== n.id);
-      }
+        this.cdr.markForCheck();
+      });
     });
   }
 

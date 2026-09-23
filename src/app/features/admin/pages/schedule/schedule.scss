@@ -413,3 +413,9 @@ table {
 
   .dash { display: none; }
 }
+
+.page-error {
+  color: var(--error);
+  font-weight: $fw-semibold;
+  margin: 0 0 12px;
+}

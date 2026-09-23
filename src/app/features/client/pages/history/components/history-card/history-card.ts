@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RatingModalComponent } from '../../../../../../shared/dialogs/rating-modal/rating-modal';
+import { Booking } from '../../../../../../core/services/bookings';
 
 @Component({
   selector: 'app-history-card',
@@ -14,8 +15,11 @@ import { RatingModalComponent } from '../../../../../../shared/dialogs/rating-mo
 })
 export class HistoryCardComponent {
 
-  // recibe el servicio del padre
-  @Input() service: any;
+  // recibe la reserva del padre
+  @Input() service!: Booking;
+
+  // avisa al padre cuando se guardó la calificación
+  @Output() rated = new EventEmitter<Booking>();
 
   // inyeccion de servicios
   constructor(
@@ -23,16 +27,20 @@ export class HistoryCardComponent {
     private dialog: MatDialog
   ) { }
 
-  // metodo que traduce extras
+  // los extras son servicios adicionales de la misma reserva (códigos del catálogo)
   getTranslatedExtras(extras: string[]): string[] {
-    return extras.map(e => this.translate.instant('EXTRA.' + e));
+    return extras.map(e => this.translate.instant('SERVICE.' + e));
   }
 
-  openRating(service: any): void {
+  openRating(service: Booking): void {
 
-    this.dialog.open(RatingModalComponent, {
+    const dialogRef = this.dialog.open(RatingModalComponent, {
       width: '600px',
       data: service
+    });
+
+    dialogRef.afterClosed().subscribe((updated?: Booking) => {
+      if (updated) this.rated.emit(updated);
     });
 
   }

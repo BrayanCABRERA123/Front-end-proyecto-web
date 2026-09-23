@@ -2,14 +2,14 @@
 
   <div class="detail-header">
     <h3 class="detail-title">
-      {{ 'ASSIGNED_SERVICES.DETAIL.TITLE' | translate }} ({{ service.id }})
+      {{ 'ASSIGNED_SERVICES.DETAIL.TITLE' | translate }} ({{ service.code }})
     </h3>
     <span
       class="status-badge"
-      [class.pending]="service.statusColor === 'pending'"
-      [class.progress]="service.statusColor === 'progress'"
-      [class.completed]="service.statusColor === 'completed'">
-      {{ service.status }}
+      [class.pending]="service.status === 'pendiente'"
+      [class.progress]="service.status === 'en_progreso'"
+      [class.completed]="service.status === 'finalizado'">
+      {{ statusLabel(service.status) | translate }}
     </span>
   </div>
 
@@ -18,7 +18,7 @@
     <div class="detail-col">
       <div class="detail-item">
         <span class="detail-label">ID</span>
-        <span class="detail-value">{{ service.id }}</span>
+        <span class="detail-value">{{ service.code }}</span>
       </div>
       <div class="detail-item">
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.CLIENT' | translate }}</span>
@@ -27,24 +27,24 @@
       <div class="detail-item">
         <mat-icon class="detail-icon">location_on</mat-icon>
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.ADDRESS' | translate }}</span>
-        <span class="detail-value bold">{{ service.fullAddress }}</span>
+        <span class="detail-value bold">{{ service.address }}</span>
       </div>
     </div>
 
     <div class="detail-col">
       <div class="detail-item">
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.SERVICE_TYPE' | translate }}</span>
-        <span class="detail-value bold">{{ service.serviceType }}</span>
+        <span class="detail-value bold">{{ service.serviceName }} · {{ service.vehicleName }} ({{ service.plate }})</span>
       </div>
       <div class="detail-item">
         <mat-icon class="detail-icon">schedule</mat-icon>
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.SCHEDULED_TIME' | translate }}</span>
-        <span class="detail-value bold">{{ service.dateTime }}</span>
+        <span class="detail-value bold">{{ service.date | date: 'dd/MM/yyyy' }} · {{ service.time }} - {{ service.endTime }}<span *ngIf="service.bay"> · {{ service.bay }}</span></span>
       </div>
       <div class="detail-item">
         <mat-icon class="detail-icon">calendar_today</mat-icon>
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.PAYMENT_METHOD' | translate }}</span>
-        <span class="detail-value bold">{{ service.paymentMethod }}</span>
+        <span class="detail-value bold">{{ service.paymentMethodName || '—' }}</span>
       </div>
     </div>
 
@@ -58,15 +58,11 @@
   <div class="actions-section">
     <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.PROGRESS_TITLE' | translate }}</p>
     <div class="action-buttons">
-      <button class="btn-start">
+      <button class="btn-start" [disabled]="service.status !== 'pendiente'" (click)="start.emit(service)">
         <mat-icon>play_circle_outline</mat-icon>
         {{ 'ASSIGNED_SERVICES.DETAIL.START' | translate }}
       </button>
-      <button class="btn-report">
-        <mat-icon>refresh</mat-icon>
-        {{ 'ASSIGNED_SERVICES.DETAIL.REPORT' | translate }}
-      </button>
-      <button class="btn-finish">
+      <button class="btn-finish" [disabled]="service.status !== 'en_progreso'" (click)="finish.emit(service)">
         <mat-icon>flag</mat-icon>
         {{ 'ASSIGNED_SERVICES.DETAIL.FINISH' | translate }}
       </button>
@@ -75,10 +71,11 @@
 
   <div class="extra-section">
     <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.EXTRA_TITLE' | translate }}</p>
-    <button class="btn-contact">
+    <!-- el teléfono se muestra como texto: los enlaces tel: no son confiables en todos los navegadores -->
+    <span class="btn-contact">
       <mat-icon>phone</mat-icon>
-      {{ 'ASSIGNED_SERVICES.DETAIL.CONTACT' | translate }}
-    </button>
+      {{ 'ASSIGNED_SERVICES.DETAIL.CONTACT' | translate }}: {{ service.clientPhone || '—' }}
+    </span>
   </div>
 
 </div>

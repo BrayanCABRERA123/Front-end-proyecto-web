@@ -20,7 +20,7 @@
           [class.selected]="selectedVehicleId === v.id"
           (click)="selectVehicle(v.id)">
           <div class="vehicle-icon">
-            <mat-icon>{{ v.type === 'MOTO' ? 'two_wheeler' : (v.type === 'TRUCK' ? 'local_shipping' : 'directions_car') }}</mat-icon>
+            <mat-icon>{{ iconFor(v.type) }}</mat-icon>
           </div>
           <div class="vehicle-info">
             <p class="vehicle-name">{{ v.brand }} {{ v.model }}</p>
@@ -45,21 +45,24 @@
         </div>
       </div>
 
+      <p class="no-vehicle-note" *ngIf="!selectedVehicleId">{{ 'RESERVE.STEP2.SELECT_VEHICLE_FIRST' | translate }}</p>
+
       <div class="service-options">
         <button
           class="service-option"
           *ngFor="let s of services"
-          [class.selected]="selectedService === s"
+          [class.selected]="selectedService?.servicePriceId === s.servicePriceId"
           (click)="selectService(s)">
 
-          <span class="badge-popular" *ngIf="s === mostPopularService">{{ 'RESERVE.STEP2.POPULAR' | translate }}</span>
+          <span class="badge-popular" *ngIf="s.code === mostPopularService">{{ 'RESERVE.STEP2.POPULAR' | translate }}</span>
 
-          <p class="service-name">{{ ('SERVICE.' + s) | translate }}</p>
-          <p class="service-price">{{ ('SERVICE.' + s + '_PRICE') | translate }}</p>
-          <p class="service-time"><mat-icon>schedule</mat-icon> {{ ('SERVICE.' + s + '_TIME') | translate }}</p>
+          <p class="service-name">{{ ('SERVICE.' + s.code) | translate }}</p>
+          <!-- precio y duración vienen del mock según el tipo de vehículo (service_price) -->
+          <p class="service-price">${{ s.price | number }}</p>
+          <p class="service-time"><mat-icon>schedule</mat-icon> {{ s.estimatedMinutes }} min</p>
 
           <ul class="service-items">
-            <li *ngFor="let item of (('SERVICE.' + s + '_ITEMS') | translate)">
+            <li *ngFor="let item of (('SERVICE.' + s.code + '_ITEMS') | translate)">
               <mat-icon>check_circle</mat-icon> {{ item }}
             </li>
           </ul>
@@ -84,7 +87,7 @@
             <mat-icon class="label-icon">calendar_today</mat-icon>
           </label>
           <div class="input-wrapper">
-            <input type="date" class="form-input" [(ngModel)]="date" [min]="minDate" [max]="maxDate" />
+            <input type="date" class="form-input" [(ngModel)]="date" (ngModelChange)="onDateChange()" [min]="minDate" [max]="maxDate" />
           </div>
         </div>
 
@@ -94,14 +97,21 @@
             <mat-icon class="label-icon">schedule</mat-icon>
           </label>
           <div class="select-wrapper">
-            <select class="form-select" [(ngModel)]="time">
+            <select class="form-select" [(ngModel)]="time" [disabled]="!slots.length">
               <option value="" disabled selected>{{ 'RESERVE.SELECT_TIME' | translate }}</option>
-              <option *ngFor="let h of availableTimes" [value]="h">{{ h }}</option>
+              <option *ngFor="let slot of slots" [value]="slot.time" [disabled]="!slot.available">
+                {{ slot.time }}{{ slot.available ? '' : ' — ' + ('RESERVE.SLOT_UNAVAILABLE' | translate) }}
+              </option>
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
           </div>
         </div>
       </div>
+
+      <p class="no-vehicle-note" *ngIf="dayClosed">
+        {{ 'RESERVE.DAY_CLOSED' | translate }}<span *ngIf="dayClosedReason"> ({{ dayClosedReason }})</span>
+      </p>
+      <p class="no-vehicle-note" *ngIf="date && !selectedService">{{ 'RESERVE.SELECT_SERVICE_FIRST' | translate }}</p>
 
       <div class="form-group">
         <label class="form-label">
@@ -135,11 +145,11 @@
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.SERVICE' | translate }}</span>
-      <strong>{{ selectedService ? (('SERVICE.' + selectedService) | translate) : '—' }}</strong>
+      <strong>{{ selectedService ? (('SERVICE.' + selectedService.code) | translate) : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.DURATION' | translate }}</span>
-      <strong>{{ selectedService ? (('SERVICE.' + selectedService + '_TIME') | translate) : '—' }}</strong>
+      <strong>{{ selectedService ? selectedService.estimatedMinutes + ' min' : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.DATE' | translate }}</span>
@@ -155,7 +165,9 @@
       <strong>{{ serviceTotal ? ('$' + (serviceTotal | number)) : '$—' }}</strong>
     </div>
 
-    <button class="btn-primary" [disabled]="!isFormValid" (click)="onSubmit()">
+    <p class="summary-note summary-error" *ngIf="errorKey">{{ errorKey | translate }}</p>
+
+    <button class="btn-primary" [disabled]="!isFormValid || submitting" (click)="onSubmit()">
       {{ 'RESERVE.SUMMARY.SUBMIT' | translate }} <mat-icon>arrow_forward</mat-icon>
     </button>
 

@@ -34,7 +34,7 @@
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.PAYMENT' | translate">
-            {{ ('SERVICE_HISTORY.METHODS.' + s.paymentMethod) | translate }}
+            {{ s.paymentMethod ? (('SERVICE_HISTORY.METHODS.' + s.paymentMethod) | translate) : '—' }}
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.AMOUNT' | translate">

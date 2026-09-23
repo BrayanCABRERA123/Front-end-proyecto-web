@@ -1,13 +1,25 @@
 // definimos el componente
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 // importamos el sidebar
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { Payment, PaymentMethod, PaymentsService } from '../../../../core/services/payments';
+import { Booking } from '../../../../core/services/bookings';
+
+// ícono por método de pago (payment_method_type.code del SQL)
+const ICON_BY_METHOD: Record<string, string> = {
+  NEQUI: 'smartphone',
+  DAVIPLATA: 'smartphone',
+  BANCOLOMBIA: 'account_balance',
+  CASH: 'payments',
+  CARD: 'credit_card'
+};
 
 @Component({
   selector: 'app-payment',
@@ -16,66 +28,103 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './payment.html',
   styleUrls: ['./payment.scss']
 })
-export class PaymentComponent {
+export class PaymentComponent implements OnInit {
 
-  // métodos de pago disponibles
-  paymentMethods = [
-    { id: 'CARD', icon: 'credit_card', label: 'PAYMENT.METHOD.CARD', desc: 'PAYMENT.METHOD.CARD_DESC' },
-    { id: 'PAYPAL', icon: 'account_balance_wallet', label: 'PAYMENT.METHOD.PAYPAL', desc: 'PAYMENT.METHOD.PAYPAL_DESC' },
-    { id: 'TRANSFER', icon: 'account_balance', label: 'PAYMENT.METHOD.TRANSFER', desc: 'PAYMENT.METHOD.TRANSFER_DESC' }
-  ];
+  // métodos de pago habilitados por el negocio (cuentas activas)
+  paymentMethods: PaymentMethod[] = [];
 
   // método seleccionado por el usuario
-  selectedMethod = 'CARD';
+  selectedMethod: PaymentMethod | null = null;
 
-  // datos del formulario de tarjeta
-  card = {
-    name: '',
-    number: '',
-    expiry: '',
-    cvv: ''
-  };
+  // referencia de la transferencia (Nequi/Bancolombia/Daviplata requieren comprobante)
+  transactionReference = '';
 
-  // resumen del servicio a pagar
-  serviceSummary = {
-    service: 'PREMIUM',
-    vehicle: 'CAR',
-    plate: 'ABC123',
-    base: 45000,
-    deliveryFee: 6000
-  };
+  // reservas que el cliente todavía puede pagar
+  payableBookings: Booking[] = [];
+  selectedBooking: Booking | null = null;
+
+  // historial de pagos del cliente y total aprobado (calculado por el mock)
+  paymentHistory: Payment[] = [];
+  totalPaid = 0;
+
+  paying = false;
+  errorKey: string | null = null;
+  successKey: string | null = null;
+
+  constructor(
+    private paymentsService: PaymentsService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.loadOverview();
+  }
+
+  private loadOverview(): void {
+    this.paymentsService.overview$().subscribe(overview => {
+      this.paymentMethods = overview.methods;
+      this.payableBookings = overview.payableBookings;
+      this.paymentHistory = overview.history;
+      this.totalPaid = overview.totalPaid;
+
+      // conserva la selección si sigue siendo pagable; si no, toma la primera pendiente
+      this.selectedBooking =
+        this.payableBookings.find(b => b.id === this.selectedBooking?.id) ?? this.payableBookings[0] ?? null;
+      this.selectedMethod = this.selectedMethod ?? this.paymentMethods[0] ?? null;
+      this.cdr.markForCheck();
+    });
+  }
 
   get totalToPay(): number {
-    return this.serviceSummary.base + this.serviceSummary.deliveryFee;
+    return this.selectedBooking?.price ?? 0;
   }
 
-  // historial de pagos del cliente
-  paymentHistory = [
-    { code: 'PG-5012', type: 'PREMIUM', vehicle: 'CAR', date: '12 Ago 2026', method: 'Tarjeta ••4821', amount: 45000, status: 'PAID' },
-    { code: 'PG-5008', type: 'BASIC', vehicle: 'MOTO', date: '05 Ago 2026', method: 'PayPal', amount: 18000, status: 'PAID' },
-    { code: 'PG-4990', type: 'FULL', vehicle: 'TRUCK', date: '28 Jul 2026', method: 'Transferencia', amount: 72000, status: 'PENDING' },
-    { code: 'PG-4975', type: 'PREMIUM', vehicle: 'CAR', date: '19 Jul 2026', method: 'Tarjeta ••4821', amount: 45000, status: 'REFUNDED' },
-    { code: 'PG-4960', type: 'BASIC', vehicle: 'CAR', date: '08 Jul 2026', method: 'Tarjeta ••4821', amount: 22000, status: 'PAID' }
-  ];
-
-  get totalPaid(): number {
-    return this.paymentHistory
-      .filter(p => p.status === 'PAID')
-      .reduce((sum, p) => sum + p.amount, 0);
+  get canPay(): boolean {
+    if (!this.selectedBooking || !this.selectedMethod || this.paying) return false;
+    return !this.selectedMethod.requiresReceipt || !!this.transactionReference.trim();
   }
 
-  selectMethod(id: string) {
-    this.selectedMethod = id;
+  iconFor(method: PaymentMethod): string {
+    return ICON_BY_METHOD[method.code] ?? 'payments';
   }
 
+  selectMethod(method: PaymentMethod) {
+    this.selectedMethod = method;
+    this.errorKey = null;
+  }
+
+  selectBooking(booking: Booking) {
+    this.selectedBooking = booking;
+    this.errorKey = null;
+  }
+
+  // registra el pago; queda PENDIENTE hasta que el admin lo verifique contra el extracto
   pay() {
-    // TODO: integrar con el backend de pagos (Commercial service)
-    console.log('Procesando pago por', this.totalToPay, 'con método', this.selectedMethod);
-  }
+    if (!this.canPay) return;
 
-  downloadReceipt(code: string) {
-    // TODO: integrar descarga real del comprobante
-    console.log('Descargando comprobante de', code);
+    this.paying = true;
+    this.errorKey = null;
+    this.successKey = null;
+
+    this.paymentsService
+      .create$({
+        bookingId: this.selectedBooking!.id,
+        paymentAccountId: this.selectedMethod!.paymentAccountId,
+        transactionReference: this.transactionReference.trim() || undefined
+      })
+      .subscribe({
+        next: () => {
+          this.paying = false;
+          this.transactionReference = '';
+          this.successKey = 'PAYMENT.SUCCESS';
+          this.loadOverview();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.paying = false;
+          this.errorKey = err.status === 409 ? 'PAYMENT.ERROR_ALREADY_PAID' : 'PAYMENT.ERROR_GENERIC';
+          this.cdr.markForCheck();
+        }
+      });
   }
 
 }

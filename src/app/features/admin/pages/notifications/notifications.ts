@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationsComponent, AppNotification } from '../../../../shared/components/notifications/notifications';
+import { NotificationsService } from '../../../../core/services/notifications';
 
 @Component({
   selector: 'app-admin-notifications',
@@ -20,39 +21,21 @@ import { NotificationsComponent, AppNotification } from '../../../../shared/comp
   templateUrl: './notifications.html',
   styleUrls: ['./notifications.scss']
 })
-export class AdminNotificationsComponent {
+export class AdminNotificationsComponent implements OnInit {
 
-  notifications: AppNotification[] = [
-    {
-      id: 1,
-      icon: 'warning',
-      type: 'recordatorio',
-      title: 'NOTIFICATIONS.NEW_SERVICE',
-      desc: 'NOTIFICATIONS.NEW_SERVICE_DESC',
-      date: '2026-09-19',
-      time: '08:40',
-      read: false
-    },
-    {
-      id: 2,
-      icon: 'check_circle',
-      type: 'confirmacion',
-      title: 'NOTIFICATIONS.STATUS_UPDATE',
-      desc: 'NOTIFICATIONS.STATUS_UPDATE_DESC',
-      date: '2026-09-18',
-      time: '16:05',
-      read: true
-    },
-    {
-      id: 3,
-      icon: 'desktop_windows',
-      type: 'sistema',
-      title: 'NOTIFICATIONS.SYSTEM',
-      desc: 'NOTIFICATIONS.SYSTEM_DESC',
-      date: '2026-09-17',
-      time: '09:00',
-      read: true
-    }
-  ];
+  // El mock API filtra por el usuario del JWT: cada rol ve solo sus notificaciones.
+  notifications: AppNotification[] = [];
+
+  constructor(
+    private notificationsService: NotificationsService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.notificationsService.myNotifications$().subscribe(notifications => {
+      this.notifications = notifications;
+      this.cdr.markForCheck();
+    });
+  }
 
 }

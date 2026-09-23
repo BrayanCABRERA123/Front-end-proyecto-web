@@ -13,7 +13,7 @@
             <p class="muted">{{ today }} · <span class="accent">{{ 'ADMIN_DASHBOARD.SUBTITLE' | translate }}</span></p>
           </div>
         </div>
-        <button class="btn btn--primary">
+        <button class="btn btn--primary" routerLink="/admin/reservations">
           <mat-icon>calendar_today</mat-icon>
           {{ 'ADMIN_DASHBOARD.VIEW_TODAY_BOOKINGS' | translate }}
         </button>
@@ -24,7 +24,7 @@
         <article class="card stat">
           <div class="stat__top">
             <div class="icon-box"><mat-icon>event</mat-icon></div>
-            <span class="badge badge--success">↗ +{{ stats.vsYesterday }} {{ 'ADMIN_DASHBOARD.STATS.VS_YESTERDAY' | translate }}</span>
+            <span class="badge" [class.badge--success]="stats.vsYesterday >= 0" [class.badge--error]="stats.vsYesterday < 0">{{ stats.vsYesterday >= 0 ? '↗ +' : '↘ ' }}{{ stats.vsYesterday }} {{ 'ADMIN_DASHBOARD.STATS.VS_YESTERDAY' | translate }}</span>
           </div>
           <strong class="stat__value">{{ stats.bookingsToday }}</strong>
           <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.BOOKINGS_TODAY' | translate }}</span>
@@ -83,8 +83,8 @@
           </div>
 
           <footer class="chart__footer">
-            <span class="muted"><i class="dot"></i> {{ 'ADMIN_DASHBOARD.REVENUE_CHART.PEAK_DAY' | translate }}: Sábado</span>
-            <a class="link">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.VIEW_REPORT' | translate }} →</a>
+            <span class="muted"><i class="dot"></i> {{ 'ADMIN_DASHBOARD.REVENUE_CHART.PEAK_DAY' | translate }}: {{ peakDay || '—' }}</span>
+            <a class="link" routerLink="/admin/reports">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.VIEW_REPORT' | translate }} →</a>
           </footer>
         </article>
 
@@ -115,7 +115,7 @@
             }
           </ul>
 
-          <a class="link link--center">{{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.MANAGE_SHIFTS' | translate }} →</a>
+          <a class="link link--center" routerLink="/admin/schedule">{{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.MANAGE_SHIFTS' | translate }} →</a>
         </article>
       </div>
 
@@ -131,7 +131,7 @@
           </div>
 
           <ul class="list">
-            @for (p of pendingPayments; track p.reference) {
+            @for (p of pendingPayments; track p.id) {
               <li class="row-item">
                 <div class="row-item__info">
                   <div>
@@ -141,14 +141,14 @@
                   <p class="muted">{{ p.service }}</p>
                   <p class="muted small">Ref: {{ p.reference }} <b class="accent">{{ cop(p.amount) }} COP</b></p>
                 </div>
-                <button class="btn btn--primary btn--sm">
+                <button class="btn btn--primary btn--sm" routerLink="/admin/payments">
                   <mat-icon>visibility</mat-icon> {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.REVIEW' | translate }}
                 </button>
               </li>
             }
           </ul>
 
-          <a class="link link--center">{{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.VIEW_ALL' | translate:{ count: stats.pendingPayments } }} →</a>
+          <a class="link link--center" routerLink="/admin/payments">{{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.VIEW_ALL' | translate:{ count: stats.pendingPayments } }} →</a>
         </article>
 
         <article class="card">
@@ -157,30 +157,30 @@
               <h2><mat-icon class="accent">assignment_ind</mat-icon> {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.TITLE' | translate }}</h2>
               <p class="muted">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.SUBTITLE' | translate }}</p>
             </div>
-            <span class="badge badge--warning">{{ unassignedBookings.length }} {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.TO_ASSIGN' | translate }}</span>
+            <span class="badge badge--warning">{{ unassignedCount }} {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.TO_ASSIGN' | translate }}</span>
           </div>
 
           <ul class="list">
-            @for (r of unassignedBookings; track r.time) {
+            @for (r of unassignedBookings; track r.id) {
               <li class="row-item">
                 <div class="row-item__info">
                   <p>
-                    <span class="tag tag--time">{{ r.time }} · {{ r.bay }}</span>
+                    <span class="tag tag--time">{{ r.date }} {{ r.time }} · {{ r.bay }}</span>
                     @if (r.isUpcoming) { <span class="muted small">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.UPCOMING' | translate }}</span> }
                   </p>
                   <strong>{{ r.client }} — {{ r.vehicle }}</strong>
                   <p class="muted small accent">
-                    <mat-icon class="tiny">{{ r.icon }}</mat-icon> {{ r.service }}
+                    <mat-icon class="tiny">local_car_wash</mat-icon> {{ r.service }}
                   </p>
                 </div>
-                <button class="btn btn--primary btn--sm">
+                <button class="btn btn--primary btn--sm" routerLink="/admin/reservations">
                   <mat-icon>person_add</mat-icon> {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.ASSIGN' | translate }}
                 </button>
               </li>
             }
           </ul>
 
-          <a class="link link--center">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.VIEW_ALL' | translate }} →</a>
+          <a class="link link--center" routerLink="/admin/reservations">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.VIEW_ALL' | translate }} →</a>
         </article>
       </div>
 

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,19 +12,10 @@ import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confi
 import { CreateUserModal, CreateUserResult } from '../../../../shared/dialogs/create-user-modal/create-user-modal';
 import { CreateRoleModal, CreateRoleResult } from '../../../../shared/dialogs/create-role-modal/create-role-modal';
 import { ServiceModal, ServiceModalData, ServiceModalResult } from '../../../../shared/dialogs/service-modal/service-modal';
+import { AdminUsersService, StaffUser } from '../../../../core/services/admin-users';
+import { OperatorsStore } from '../../services/operators-store';
 
 type ManagementTab = 'users' | 'roles' | 'services' | 'promotions';
-
-// --- pestaña Usuarios ---
-interface AdminUser {
-  id: string;
-  name: string;
-  email: string;
-  userType: string;
-  dateAdded: string;
-  invited: boolean;
-  status: 'active' | 'disabled';
-}
 
 // --- pestaña Roles ---
 interface UserRole {
@@ -64,7 +57,7 @@ interface Promotion {
   templateUrl: './management.html',
   styleUrl: './management.scss'
 })
-export class ManagementComponent {
+export class ManagementComponent implements OnInit {
 
   activeTab: ManagementTab = 'users';
 
@@ -78,11 +71,11 @@ export class ManagementComponent {
   userFilter: 'enabled' | 'registered' | 'disabled' = 'enabled';
   usersSearch = '';
 
-  users: AdminUser[] = [
-    { id: 'u1', name: 'Uziel Loranca Cantoral', email: 'nathan.roberts@example.com', userType: 'Administrador', dateAdded: '2023-02-07', invited: false, status: 'active' },
-    { id: 'u2', name: 'Iver Avedillo Herbias', email: 'deanna.curtis@example.com', userType: 'Administrador', dateAdded: '2023-08-15', invited: true, status: 'active' },
-    { id: 'u3', name: 'Aguilda Lloredo Ruifrancos', email: 'debbie.baker@example.com', userType: 'Administrador', dateAdded: '2023-03-03', invited: false, status: 'active' },
-  ];
+  // cuentas del personal (GET /admin/users): administradores y operarios
+  users: StaffUser[] = [];
+
+  // mensaje del mock API (no se puede borrar un operario con historial, etc.)
+  usersError: string | null = null;
 
   roles: UserRole[] = [
     { id: 'r1', name: 'Administrador', description: 'Acceso total a todos los paneles y operaciones del negocio.', permissions: ['view_panels', 'create_records', 'edit_data', 'delete'], usersCount: 3 },
@@ -115,7 +108,24 @@ export class ManagementComponent {
     },
   ];
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private adminUsers: AdminUsersService,
+    private operatorsStore: OperatorsStore,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  private loadUsers(): void {
+    this.adminUsers.list$().subscribe(users => {
+      this.users = users;
+      this.cdr.markForCheck();
+    });
+  }
 
   setTab(tab: ManagementTab): void {
     this.activeTab = tab;
@@ -123,47 +133,71 @@ export class ManagementComponent {
 
   // --- USUARIOS ---
 
-  get filteredUsers(): AdminUser[] {
+  get filteredUsers(): StaffUser[] {
     const term = this.usersSearch.trim().toLowerCase();
 
     return this.users
-      .filter(u => (this.userFilter === 'disabled' ? u.status === 'disabled' : u.status === 'active'))
-      .filter(u => this.userFilter !== 'registered' || u.invited)
+      // 'registered' = todas las cuentas del personal, sin importar el estado
+      .filter(u => this.userFilter === 'registered'
+        || (this.userFilter === 'disabled' ? u.status === 'disabled' : u.status === 'active'))
       .filter(u => !term
         || u.name.toLowerCase().includes(term)
         || u.email.toLowerCase().includes(term)
-        || u.userType.toLowerCase().includes(term));
+        || u.roleName.toLowerCase().includes(term));
   }
 
   get enabledCount(): number { return this.users.filter(u => u.status === 'active').length; }
-  get registeredCount(): number { return this.users.filter(u => u.invited).length; }
+  get registeredCount(): number { return this.users.length; }
   get disabledCount(): number { return this.users.filter(u => u.status === 'disabled').length; }
 
+  // el modal crea la cuenta en el mock API y devuelve el usuario ya creado
   openCreateUser(): void {
     const dialogRef = this.dialog.open(CreateUserModal, { panelClass: 'custom-dialog' });
 
     dialogRef.afterClosed().subscribe((result: CreateUserResult | null) => {
       if (!result) return;
 
-      this.users = [
-        ...this.users,
-        {
-          id: 'u' + (this.users.length + 1),
-          name: result.name,
-          email: result.email,
-          userType: result.role,
-          dateAdded: new Date().toISOString().slice(0, 10),
-          invited: result.invite,
-          status: 'active'
-        }
-      ];
+      this.usersError = null;
+      this.users = [result, ...this.users];
+      if (result.role === 'OPERATOR') this.operatorsStore.invalidate();
+      this.cdr.markForCheck();
     });
   }
 
-  deleteUser(user: AdminUser): void {
-    this.confirmDelete(() => {
-      this.users = this.users.filter(u => u.id !== user.id);
+  // habilita / inhabilita el acceso (una cuenta inhabilitada no puede iniciar sesión)
+  toggleUserStatus(user: StaffUser): void {
+    this.adminUsers.setActive$(user.id, user.status !== 'active').subscribe({
+      next: updated => {
+        this.usersError = null;
+        this.users = this.users.map(u => (u.id === updated.id ? updated : u));
+        if (updated.role === 'OPERATOR') this.operatorsStore.invalidate();
+        this.cdr.markForCheck();
+      },
+      error: (err: HttpErrorResponse) => this.showUsersError(err)
     });
+  }
+
+  viewOperator(user: StaffUser): void {
+    if (user.operatorId) this.router.navigate(['/admin/operators', user.operatorId]);
+  }
+
+  deleteUser(user: StaffUser): void {
+    this.confirmDelete(() => {
+      this.adminUsers.remove$(user.id).subscribe({
+        next: () => {
+          this.usersError = null;
+          this.users = this.users.filter(u => u.id !== user.id);
+          if (user.role === 'OPERATOR') this.operatorsStore.invalidate();
+          this.cdr.markForCheck();
+        },
+        error: (err: HttpErrorResponse) => this.showUsersError(err)
+      });
+    });
+  }
+
+  private showUsersError(err: HttpErrorResponse): void {
+    this.usersError = err.error?.message ?? 'Error';
+    this.cdr.markForCheck();
   }
 
   // --- ROLES ---

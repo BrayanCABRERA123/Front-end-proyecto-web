@@ -16,15 +16,15 @@
       <!-- Título dinámico traducido -->
       <div class="card-title-group">
         <span class="card-title">
-          {{ ('SERVICE.' + service.title) | translate }}
+          {{ service.mainService ? (('SERVICE.' + service.mainService) | translate) : service.code }}
         </span>
-        <span class="card-date">{{ service.date }}</span>
+        <span class="card-date">{{ service.code }} · {{ service.date }} {{ service.time }}</span>
       </div>
 
     </div>
 
     <!-- Precio -->
-    <span class="card-price">${{ service.price }}</span>
+    <span class="card-price">${{ service.price | number }}</span>
   </div>
 
   <!-- Body -->
@@ -43,9 +43,9 @@
       <!-- Tipo de servicio -->
       <p class="detail-item">
         <span class="detail-label">
-          {{ 'HISTORY_CARD.TYPE' | translate }}:
+          {{ 'HISTORY_CARD.VEHICLE' | translate }}:
         </span>
-        {{ ('SERVICE.' + service.serviceType) | translate }}
+        {{ service.vehicle ? (('VEHICLE.' + service.vehicle.type) | translate) + ' · ' + service.vehicle.plate : '-' }}
       </p>
 
       <!-- Servicios extra -->
@@ -53,7 +53,7 @@
         <span class="detail-label">
           {{ 'HISTORY_CARD.EXTRA' | translate }}:
         </span>
-        {{ getTranslatedExtras(service.extras).join(' / ') }}
+        {{ service.extras.length ? getTranslatedExtras(service.extras).join(' / ') : '-' }}
       </p>
 
       <!-- Operario -->
@@ -61,11 +61,8 @@
         <span class="detail-label">
           {{ 'HISTORY_CARD.OPERATOR' | translate }}:
         </span>
-        {{ ('ASSIGNMENT.' + service.assignmentType) | translate }}
-
-        <span *ngIf="service.operator">
-          ({{ service.operator }})
-        </span>
+        <!-- sin operario asignado aún: el sistema lo asigna automáticamente -->
+        {{ service.operator ?? ('ASSIGNMENT.AUTO' | translate) }}
       </p>
 
       <!-- Estado -->
@@ -97,8 +94,14 @@
         </button>
       }
 
-      <!-- Calificar -->
-      @if (service.paid) {
+      <!-- Calificar (solo servicios finalizados y aún sin calificar) -->
+      @if (service.rating) {
+        <span class="btn-paid">
+          {{ service.rating }}/5
+          <mat-icon>star</mat-icon>
+        </span>
+      }
+      @if (service.canRate) {
         <button class="btn-rate" (click)="openRating(service)">
           {{ 'HISTORY_CARD.RATE' | translate }}
           <mat-icon>star_outline</mat-icon>

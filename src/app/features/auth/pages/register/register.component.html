@@ -414,6 +414,10 @@
 
             </div>
 
+            <span class="error-msg" *ngIf="registerError">
+              {{ registerError | translate }}
+            </span>
+
             <button
               type="submit"
               class="btn-register"

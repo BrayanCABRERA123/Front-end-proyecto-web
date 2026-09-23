@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { ProfileCardComponent } from '../../../../shared/components/profile-card/profile-card';
+import { Auth } from '../../../../core/services/auth';
 
 @Component({
   selector: 'app-admin-profile',
@@ -10,15 +11,24 @@ import { ProfileCardComponent } from '../../../../shared/components/profile-card
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
-export class AdminProfileComponent {
+export class AdminProfileComponent implements OnInit {
 
-  // datos del usuario administrador (según los mockups aprobados)
-  user = {
-    name: 'Laura Méndez',
-    email: 'laura.mendez@lavadovehicular.co',
-    phone: '+57 312 490 8821',
-    address: 'Calle 127 #19A-48, Bogotá, Colombia',
-    initials: 'LM',
-    memberSince: 'Marzo 2019'
-  };
+  // datos del usuario administrador, tomados de la sesión (Auth)
+  user = { name: '', email: '', phone: '', address: '', initials: '', memberSince: '' };
+
+  constructor(private auth: Auth) {}
+
+  ngOnInit(): void {
+    const currentUser = this.auth.getCurrentUser();
+    if (!currentUser) return;
+
+    this.user = {
+      name: currentUser.nombre,
+      email: currentUser.correo,
+      phone: currentUser.telefono ?? '',
+      address: '',
+      initials: currentUser.iniciales,
+      memberSince: new Date(currentUser.createdAt).toLocaleDateString('es-CO', { month: 'long', year: 'numeric' })
+    };
+  }
 }

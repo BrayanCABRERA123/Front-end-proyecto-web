@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Booking, BookingsService } from '../../../core/services/bookings';
+
 @Component({
   selector: 'app-rating-modal',
   standalone: true,
@@ -18,31 +20,43 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class RatingModalComponent {
 
-
+  // Opcionales: el componente también está registrado como ruta (/client/ratings),
+  // donde no hay diálogo ni reserva que calificar.
   constructor(
-    private dialogRef: MatDialogRef<RatingModalComponent>
+    private bookingsService: BookingsService,
+    private cdr: ChangeDetectorRef,
+    @Optional() private dialogRef: MatDialogRef<RatingModalComponent> | null,
+    @Optional() @Inject(MAT_DIALOG_DATA) private booking: Booking | null
   ) { }
 
-  closeModal(): void {
-    this.dialogRef.close();
+  closeModal(result?: Booking): void {
+    this.dialogRef?.close(result);
   }
 
   rating = 0;
 
   comment = '';
 
+  saving = false;
+
   rate(value: number): void {
     this.rating = value;
   }
 
+  // Guarda la calificación en el mock (service_execution.quality_rating) y devuelve
+  // la reserva actualizada a quien abrió el modal.
   submit(): void {
+    if (!this.booking || this.rating === 0 || this.saving) return;
 
-    console.log({
-      rating: this.rating,
-      comment: this.comment
+    this.saving = true;
+
+    this.bookingsService.rate$(this.booking.id, this.rating, this.comment).subscribe({
+      next: updated => this.closeModal(updated),
+      error: () => {
+        this.saving = false;
+        this.cdr.markForCheck();
+      }
     });
-
-    this.closeModal();
   }
 
 }

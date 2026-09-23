@@ -16,6 +16,34 @@
       <!-- Columna izquierda -->
       <div class="payment-main">
 
+        <!-- Reserva a pagar -->
+        <div class="card">
+          <div class="card-title">
+            <mat-icon>event_note</mat-icon>
+            <h2>{{ 'PAYMENT.BOOKING.TITLE' | translate }}</h2>
+          </div>
+
+          <div class="payable-list" *ngIf="payableBookings.length; else noPayable">
+            <button
+              class="payable-option"
+              *ngFor="let booking of payableBookings"
+              [class.selected]="selectedBooking?.id === booking.id"
+              (click)="selectBooking(booking)">
+              <span>
+                <strong>{{ booking.code }}</strong> ·
+                {{ booking.mainService ? (('SERVICE.' + booking.mainService) | translate) : '' }} —
+                {{ booking.vehicle?.plate }} · {{ booking.date }} {{ booking.time }}
+                <span *ngIf="booking.paymentStatus === 'REJECTED'"> · {{ 'STATUS.REJECTED' | translate }}</span>
+              </span>
+              <strong>${{ booking.price | number }}</strong>
+            </button>
+          </div>
+
+          <ng-template #noPayable>
+            <p class="empty-note">{{ 'PAYMENT.BOOKING.NONE' | translate }}</p>
+          </ng-template>
+        </div>
+
         <!-- Método de pago -->
         <div class="card">
           <div class="card-title">
@@ -27,42 +55,30 @@
             <button
               class="method-option"
               *ngFor="let method of paymentMethods"
-              [class.selected]="selectedMethod === method.id"
-              (click)="selectMethod(method.id)">
-              <mat-icon>{{ method.icon }}</mat-icon>
-              <span class="method-label">{{ method.label | translate }}</span>
-              <span class="method-desc">{{ method.desc | translate }}</span>
+              [class.selected]="selectedMethod?.paymentAccountId === method.paymentAccountId"
+              (click)="selectMethod(method)">
+              <mat-icon>{{ iconFor(method) }}</mat-icon>
+              <span class="method-label">{{ method.name }}</span>
+              <span class="method-desc">{{ method.instructions }}</span>
             </button>
           </div>
 
-          <!-- Formulario de tarjeta -->
-          <form class="card-form" *ngIf="selectedMethod === 'CARD'">
-            <div class="form-field">
-              <label>{{ 'PAYMENT.FORM.CARD_NAME' | translate }}</label>
-              <input type="text" [(ngModel)]="card.name" name="name"
-                     placeholder="{{ 'PAYMENT.FORM.CARD_NAME_PLACEHOLDER' | translate }}" />
+          <!-- Datos de la cuenta + referencia del comprobante -->
+          <form class="card-form" *ngIf="selectedMethod" (submit)="$event.preventDefault()">
+            <div class="form-field" *ngIf="selectedMethod.accountNumber">
+              <label>{{ 'PAYMENT.FORM.ACCOUNT' | translate }}</label>
+              <input type="text" [value]="selectedMethod.accountHolder + ' — ' + selectedMethod.accountNumber" readonly />
             </div>
 
-            <div class="form-field">
-              <label>{{ 'PAYMENT.FORM.CARD_NUMBER' | translate }}</label>
-              <input type="text" [(ngModel)]="card.number" name="number"
-                     placeholder="4821 0000 0000 0000" />
-            </div>
-
-            <div class="form-row">
-              <div class="form-field">
-                <label>{{ 'PAYMENT.FORM.EXPIRY' | translate }}</label>
-                <input type="text" [(ngModel)]="card.expiry" name="expiry" placeholder="MM/AA" />
-              </div>
-              <div class="form-field">
-                <label>{{ 'PAYMENT.FORM.CVV' | translate }}</label>
-                <input type="text" [(ngModel)]="card.cvv" name="cvv" placeholder="123" />
-              </div>
+            <div class="form-field" *ngIf="selectedMethod.requiresReceipt">
+              <label>{{ 'PAYMENT.FORM.REFERENCE' | translate }}</label>
+              <input type="text" [(ngModel)]="transactionReference" name="transactionReference"
+                     [placeholder]="'PAYMENT.FORM.REFERENCE_PLACEHOLDER' | translate" />
             </div>
 
             <div class="secure-note">
               <mat-icon>verified_user</mat-icon>
-              <span>{{ 'PAYMENT.FORM.SECURE_NOTE' | translate }}</span>
+              <span>{{ 'PAYMENT.FORM.REVIEW_NOTE' | translate }}</span>
             </div>
           </form>
         </div>
@@ -79,13 +95,19 @@
             </span>
           </div>
 
+          <p class="empty-note" *ngIf="!paymentHistory.length">{{ 'PAYMENT.HISTORY.EMPTY' | translate }}</p>
+
           <div class="payment-item" *ngFor="let payment of paymentHistory">
             <div>
               <p class="payment-name">
-                {{ payment.code }} · {{ ('SERVICE.' + payment.type) | translate }} — {{ ('VEHICLE.' + payment.vehicle) | translate }}
+                {{ payment.bookingCode }} ·
+                {{ payment.service ? (('SERVICE.' + payment.service) | translate) : '' }} —
+                {{ payment.vehicle ? (('VEHICLE.' + payment.vehicle.type) | translate) : '' }}
               </p>
               <p class="payment-date">
                 <mat-icon>schedule</mat-icon> {{ payment.date }} · {{ payment.method }}
+                <span *ngIf="payment.reference"> · {{ payment.reference }}</span>
+                <span *ngIf="payment.rejectionReason"> · {{ payment.rejectionReason }}</span>
               </p>
             </div>
 
@@ -94,9 +116,6 @@
               <span class="badge" [class]="'badge-' + payment.status.toLowerCase()">
                 {{ ('STATUS.' + payment.status) | translate }}
               </span>
-              <button class="btn-icon" (click)="downloadReceipt(payment.code)">
-                <mat-icon>download</mat-icon>
-              </button>
             </div>
           </div>
         </div>
@@ -109,19 +128,17 @@
 
         <div class="summary-row">
           <span>{{ 'PAYMENT.SUMMARY.SERVICE' | translate }}</span>
-          <strong>{{ ('SERVICE.' + serviceSummary.service) | translate }}</strong>
+          <strong>{{ selectedBooking?.mainService ? (('SERVICE.' + selectedBooking?.mainService) | translate) : '—' }}</strong>
         </div>
         <div class="summary-row">
           <span>{{ 'PAYMENT.SUMMARY.VEHICLE' | translate }}</span>
-          <strong>{{ ('VEHICLE.' + serviceSummary.vehicle) | translate }} — {{ serviceSummary.plate }}</strong>
+          <strong>
+            {{ selectedBooking?.vehicle ? (('VEHICLE.' + selectedBooking?.vehicle?.type) | translate) + ' — ' + selectedBooking?.vehicle?.plate : '—' }}
+          </strong>
         </div>
-        <div class="summary-row">
-          <span>{{ 'PAYMENT.SUMMARY.BASE' | translate }}</span>
-          <strong>${{ serviceSummary.base | number }}</strong>
-        </div>
-        <div class="summary-row">
-          <span>{{ 'PAYMENT.SUMMARY.DELIVERY' | translate }}</span>
-          <strong>${{ serviceSummary.deliveryFee | number }}</strong>
+        <div class="summary-row" *ngFor="let line of selectedBooking?.services">
+          <span>{{ line.name }}</span>
+          <strong>${{ line.price * line.quantity | number }}</strong>
         </div>
 
         <div class="summary-total">
@@ -129,7 +146,10 @@
           <strong>${{ totalToPay | number }}</strong>
         </div>
 
-        <button class="btn-primary" (click)="pay()">
+        <p class="pay-error" *ngIf="errorKey">{{ errorKey | translate }}</p>
+        <p class="empty-note" *ngIf="successKey">{{ successKey | translate }}</p>
+
+        <button class="btn-primary" [disabled]="!canPay" (click)="pay()">
           {{ 'PAYMENT.SUMMARY.PAY_BUTTON' | translate }} ${{ totalToPay | number }}
         </button>
 
