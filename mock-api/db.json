@@ -90,6 +90,32 @@
       "aceptaPoliticaDatos": true,
       "isActive": true,
       "createdAt": "2026-09-20T08:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "nombre": "camilo",
+      "correo": "cami@gmail.com",
+      "telefono": "3212121212",
+      "contrasena": "B1079177274s*",
+      "iniciales": "C",
+      "rol": "CLIENT",
+      "aceptaTerminos": true,
+      "aceptaPoliticaDatos": true,
+      "isActive": true,
+      "createdAt": "2026-09-23T20:44:20.074Z"
+    },
+    {
+      "id": 9,
+      "nombre": "carlos",
+      "correo": "cjsarasty@gmail.com",
+      "telefono": "3214084743",
+      "contrasena": "Car123456789@",
+      "iniciales": "C",
+      "rol": "CLIENT",
+      "aceptaTerminos": true,
+      "aceptaPoliticaDatos": true,
+      "isActive": true,
+      "createdAt": "2026-09-23T20:53:02.852Z"
     }
   ],
   "customers": [
@@ -110,6 +136,18 @@
       "userId": 7,
       "loyaltyPoints": 0,
       "customerSince": "2026-09-20"
+    },
+    {
+      "id": 4,
+      "userId": 8,
+      "loyaltyPoints": 0,
+      "customerSince": "2026-09-23"
+    },
+    {
+      "id": 5,
+      "userId": 9,
+      "loyaltyPoints": 0,
+      "customerSince": "2026-09-23"
     }
   ],
   "vehicleTypes": [
@@ -222,6 +260,16 @@
       "model": "3232323",
       "color": "color",
       "createdAt": "2026-09-23T20:41:51.415Z"
+    },
+    {
+      "id": 7,
+      "customerId": 5,
+      "licensePlate": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "vehicleTypeId": 1,
+      "brand": "Brayan Stiven",
+      "model": "3 pertas",
+      "color": "gggg",
+      "createdAt": "2026-09-23T20:57:41.737Z"
     }
   ],
   "serviceCategories": [
@@ -564,8 +612,8 @@
       "id": 3,
       "code": "BAHIA-3",
       "name": "Bahía 3",
-      "isActive": true,
-      "status": "active"
+      "isActive": false,
+      "status": "inactive"
     },
     {
       "id": 4,
@@ -810,6 +858,21 @@
       "pointsRedeemed": 0,
       "pointsDiscountAmount": 0,
       "notes": null
+    },
+    {
+      "id": 12,
+      "code": "SV-0012",
+      "vehicleId": 7,
+      "serviceBayId": null,
+      "serviceAddress": "ggggg",
+      "scheduledStart": "2026-09-23T16:00:00.000Z",
+      "scheduledEnd": "2026-09-23T17:15:00.000Z",
+      "bookingStatusId": 1,
+      "bookedBy": 9,
+      "cancellationReasonId": null,
+      "pointsRedeemed": 0,
+      "pointsDiscountAmount": 0,
+      "notes": null
     }
   ],
   "bookingServices": [
@@ -883,6 +946,12 @@
       "id": 12,
       "bookingId": 11,
       "servicePriceId": 9,
+      "quantity": 1
+    },
+    {
+      "id": 13,
+      "bookingId": 12,
+      "servicePriceId": 13,
       "quantity": 1
     }
   ],
@@ -1462,6 +1531,17 @@
       "processedAt": "2026-09-23T11:30:00.000Z",
       "approvedBy": 1,
       "rejectionReason": "Comprobante ilegible"
+    },
+    {
+      "id": 7,
+      "bookingId": 12,
+      "paymentAccountId": 3,
+      "paymentStatusId": 3,
+      "amount": 35000,
+      "processedAt": "2026-09-23T16:08:54.759Z",
+      "approvedBy": 1,
+      "rejectionReason": "Comprobante falso",
+      "createdAt": "2026-09-23T16:00:49.511Z"
     }
   ],
   "paymentReceipts": [
@@ -1512,6 +1592,18 @@
       "reviewedAt": "2026-09-23T11:40:00.000Z",
       "reviewedBy": 1,
       "reviewComment": "Comprobante ilegible, se solicita reenvío"
+    },
+    {
+      "id": 5,
+      "paymentId": 7,
+      "fileUrl": null,
+      "transactionReference": "bgggg",
+      "reportedAmount": 35000,
+      "uploadedAt": "2026-09-23T16:00:49.513Z",
+      "uploadedBy": 9,
+      "reviewedAt": "2026-09-23T16:08:54.759Z",
+      "reviewedBy": 1,
+      "reviewComment": "Comprobante falso"
     }
   ],
   "loyaltyMovementTypes": [
@@ -1806,6 +1898,19 @@
       "referenceId": 11,
       "isRead": false,
       "sentAt": "2026-09-23T15:38:58.852Z"
+    },
+    {
+      "id": 15,
+      "userId": 9,
+      "notificationTypeId": 4,
+      "type": "cancelacion",
+      "icon": "money_off",
+      "title": "Pago rechazado",
+      "desc": "Tu pago de la reserva SV-0012 fue rechazado: Comprobante falso. Puedes volver a pagarla desde \"Pagar servicio\".",
+      "referenceEntity": "payment",
+      "referenceId": 7,
+      "isRead": false,
+      "sentAt": "2026-09-23T16:08:54.763Z"
     }
   ],
   "scheduleChangeLog": [
@@ -1820,6 +1925,72 @@
       "author": "Laura Méndez",
       "description": "Se agregó la excepción 'Navidad' (2026-12-25)",
       "createdAt": "2026-09-02T09:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a en mantenimiento",
+      "createdAt": "2026-09-23T16:41:14.475Z"
+    },
+    {
+      "id": 4,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a inactiva",
+      "createdAt": "2026-09-23T16:41:15.677Z"
+    },
+    {
+      "id": 5,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a activa",
+      "createdAt": "2026-09-23T16:41:19.129Z"
+    },
+    {
+      "id": 6,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a en mantenimiento",
+      "createdAt": "2026-09-23T16:41:19.835Z"
+    },
+    {
+      "id": 7,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a inactiva",
+      "createdAt": "2026-09-23T16:41:20.455Z"
+    },
+    {
+      "id": 8,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a activa",
+      "createdAt": "2026-09-23T16:41:21.148Z"
+    },
+    {
+      "id": 9,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a en mantenimiento",
+      "createdAt": "2026-09-23T16:41:21.681Z"
+    },
+    {
+      "id": 10,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a inactiva",
+      "createdAt": "2026-09-23T16:41:22.369Z"
+    },
+    {
+      "id": 11,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a activa",
+      "createdAt": "2026-09-23T16:41:23.011Z"
+    },
+    {
+      "id": 12,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a en mantenimiento",
+      "createdAt": "2026-09-23T16:41:24.053Z"
+    },
+    {
+      "id": 13,
+      "author": "Laura Méndez",
+      "description": "Bahía 3 pasó a inactiva",
+      "createdAt": "2026-09-23T16:41:24.891Z"
     }
   ]
 }
