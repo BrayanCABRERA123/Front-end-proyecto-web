@@ -459,13 +459,7 @@
     "PHONE_MIN": "O número deve ter 10 dígitos",
     "PASSWORD_REQUIRED": "A senha é obrigatória",
     "CONFIRM_REQUIRED": "Você deve confirmar a senha",
-    "PASSWORDS_NOT_MATCH": "As senhas não coincidem",
-    "REQUIREMENTS": {
-      "MIN": "Mínimo de 8 caracteres",
-      "UPPERCASE": "Pelo menos uma letra maiúscula",
-      "NUMBER": "Pelo menos um número",
-      "SPECIAL": "Pelo menos um caractere especial"
-    },
+    "PASSWORDS_NOT_MATCH": "As senhas não coincidem",
     "BUTTON": "Cadastrar",
     "BUTTON_LOADING": "Cadastrando...",
     "SUCCESS_TITLE": "Cadastro realizado com sucesso!",
@@ -506,13 +500,7 @@
       "BUTTON": "Atualizar Senha",
       "SUCCESS_TITLE": "Senha atualizada!",
       "SUCCESS_MESSAGE": "Sua senha foi alterada com sucesso. Agora você pode entrar com sua nova senha.",
-      "SUCCESS_BUTTON": "Ir para o login",
-      "REQUIREMENTS": {
-        "MIN": "Mínimo de 8 caracteres",
-        "UPPERCASE": "Pelo menos uma letra maiúscula",
-        "NUMBER": "Pelo menos um número",
-        "SPECIAL": "Pelo menos um caractere especial"
-      }
+      "SUCCESS_BUTTON": "Ir para o login"
     }
   },
   "AUTH_PANEL": {

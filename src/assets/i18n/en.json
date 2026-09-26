@@ -459,13 +459,7 @@
     "PHONE_MIN": "The number must contain 10 digits",
     "PASSWORD_REQUIRED": "Password is required",
     "CONFIRM_REQUIRED": "You must confirm the password",
-    "PASSWORDS_NOT_MATCH": "Passwords do not match",
-    "REQUIREMENTS": {
-      "MIN": "Minimum 8 characters",
-      "UPPERCASE": "At least one uppercase letter",
-      "NUMBER": "At least one number",
-      "SPECIAL": "At least one special character"
-    },
+    "PASSWORDS_NOT_MATCH": "Passwords do not match",
     "BUTTON": "Register",
     "BUTTON_LOADING": "Registering...",
     "SUCCESS_TITLE": "Registration successful!",
@@ -506,13 +500,7 @@
       "BUTTON": "Update Password",
       "SUCCESS_TITLE": "Password updated!",
       "SUCCESS_MESSAGE": "Your password was changed successfully. You can now log in with your new password.",
-      "SUCCESS_BUTTON": "Go to login",
-      "REQUIREMENTS": {
-        "MIN": "Minimum 8 characters",
-        "UPPERCASE": "At least one uppercase letter",
-        "NUMBER": "At least one number",
-        "SPECIAL": "At least one special character"
-      }
+      "SUCCESS_BUTTON": "Go to login"
     }
   },
   "AUTH_PANEL": {
@@ -1669,7 +1657,7 @@
     }
   },
   "PASSWORD_REQUIREMENTS": {
-    "MIN": "At least 8 characters",
+    "MIN": "Minimum 8 characters",
     "UPPERCASE": "At least one uppercase letter",
     "NUMBER": "At least one number",
     "SPECIAL": "At least one special character"

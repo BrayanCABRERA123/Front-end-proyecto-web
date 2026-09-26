@@ -8,6 +8,9 @@ import { BackButtonComponent } from '../../../../shared/components/back-button/b
 
 import { AuthSidePanelComponent } from '../../../../shared/components/auth-side-panel/auth-side-panel';
 
+// lista reutilizable de requisitos de la contraseña
+import { PasswordRequirementsComponent } from '../../../../shared/components/password-requirements/password-requirements';
+
 // nos sirve para crear el formulario y sus validaciones
 import {
   FormBuilder,
@@ -38,7 +41,8 @@ import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-
     ReactiveFormsModule,
     TranslateModule,
     BackButtonComponent,
-    AuthSidePanelComponent
+    AuthSidePanelComponent,
+    PasswordRequirementsComponent
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
@@ -192,25 +196,9 @@ export class RegisterComponent {
     return this.registerForm.controls;
   }
 
-  // Validar contraseña correcta
+  // contraseña actual para la lista de requisitos (app-password-requirements)
   get password(): string {
     return this.registerForm.get('contrasena')?.value || '';
-  }
-
-  get hasMinLength(): boolean {
-    return this.password.length >= 8;
-  }
-
-  get hasUppercase(): boolean {
-    return /[A-Z]/.test(this.password);
-  }
-
-  get hasNumber(): boolean {
-    return /[0-9]/.test(this.password);
-  }
-
-  get hasSpecialChar(): boolean {
-    return /[!@#$%^&*(),.?":{}|<>]/.test(this.password);
   }
 
 

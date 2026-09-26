@@ -459,13 +459,7 @@
     "PHONE_MIN": "El número debe tener 10 dígitos",
     "PASSWORD_REQUIRED": "La contraseña es obligatoria",
     "CONFIRM_REQUIRED": "Debes confirmar la contraseña",
-    "PASSWORDS_NOT_MATCH": "Las contraseñas no coinciden",
-    "REQUIREMENTS": {
-      "MIN": "Mínimo 8 caracteres",
-      "UPPERCASE": "Al menos una mayúscula",
-      "NUMBER": "Al menos un número",
-      "SPECIAL": "Al menos un carácter especial"
-    },
+    "PASSWORDS_NOT_MATCH": "Las contraseñas no coinciden",
     "BUTTON": "Registrarse",
     "BUTTON_LOADING": "Registrando...",
     "SUCCESS_TITLE": "¡Registro exitoso!",
@@ -506,13 +500,7 @@
       "BUTTON": "Actualizar Contraseña",
       "SUCCESS_TITLE": "¡Contraseña actualizada!",
       "SUCCESS_MESSAGE": "Tu contraseña se cambió correctamente. Ya puedes iniciar sesión con tu nueva contraseña.",
-      "SUCCESS_BUTTON": "Ir a iniciar sesión",
-      "REQUIREMENTS": {
-        "MIN": "Mínimo 8 caracteres",
-        "UPPERCASE": "Al menos una mayúscula",
-        "NUMBER": "Al menos un número",
-        "SPECIAL": "Al menos un carácter especial"
-      }
+      "SUCCESS_BUTTON": "Ir a iniciar sesión"
     }
   },
   "AUTH_PANEL": {

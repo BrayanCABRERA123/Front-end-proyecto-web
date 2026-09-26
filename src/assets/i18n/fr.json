@@ -459,13 +459,7 @@
     "PHONE_MIN": "Le numéro doit contenir 10 chiffres",
     "PASSWORD_REQUIRED": "Le mot de passe est obligatoire",
     "CONFIRM_REQUIRED": "Vous devez confirmer le mot de passe",
-    "PASSWORDS_NOT_MATCH": "Les mots de passe ne correspondent pas",
-    "REQUIREMENTS": {
-      "MIN": "Minimum 8 caractères",
-      "UPPERCASE": "Au moins une majuscule",
-      "NUMBER": "Au moins un chiffre",
-      "SPECIAL": "Au moins un caractère spécial"
-    },
+    "PASSWORDS_NOT_MATCH": "Les mots de passe ne correspondent pas",
     "BUTTON": "S'inscrire",
     "BUTTON_LOADING": "Inscription...",
     "SUCCESS_TITLE": "Inscription réussie !",
@@ -506,13 +500,7 @@
       "BUTTON": "Mettre à Jour le Mot de Passe",
       "SUCCESS_TITLE": "Mot de passe mis à jour !",
       "SUCCESS_MESSAGE": "Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
-      "SUCCESS_BUTTON": "Aller à la connexion",
-      "REQUIREMENTS": {
-        "MIN": "Minimum 8 caractères",
-        "UPPERCASE": "Au moins une majuscule",
-        "NUMBER": "Au moins un chiffre",
-        "SPECIAL": "Au moins un caractère spécial"
-      }
+      "SUCCESS_BUTTON": "Aller à la connexion"
     }
   },
   "AUTH_PANEL": {
@@ -1669,7 +1657,7 @@
     }
   },
   "PASSWORD_REQUIREMENTS": {
-    "MIN": "Au moins 8 caractères",
+    "MIN": "Minimum 8 caractères",
     "UPPERCASE": "Au moins une majuscule",
     "NUMBER": "Au moins un chiffre",
     "SPECIAL": "Au moins un caractère spécial"

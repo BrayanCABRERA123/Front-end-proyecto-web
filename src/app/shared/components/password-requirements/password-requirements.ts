@@ -15,6 +15,9 @@ export class PasswordRequirementsComponent {
   // contraseña que se está escribiendo
   @Input() password: string = '';
 
+  // espacio superior en px (cada pantalla puede ajustarlo a su diseño)
+  @Input() marginTop: number = 10;
+
   get hasMinLength(): boolean { return this.password.length >= 8; }
   get hasUppercase(): boolean { return /[A-Z]/.test(this.password); }
   get hasNumber(): boolean { return /[0-9]/.test(this.password); }

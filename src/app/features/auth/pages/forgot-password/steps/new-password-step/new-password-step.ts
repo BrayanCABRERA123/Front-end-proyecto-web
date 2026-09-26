@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+// lista reutilizable de requisitos de la contraseña
+import { PasswordRequirementsComponent } from '../../../../../../shared/components/password-requirements/password-requirements';
 
 @Component({
   selector: 'app-new-password-step',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule, RouterModule],
+  imports: [CommonModule, FormsModule, TranslateModule, RouterModule, PasswordRequirementsComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './new-password-step.html',
   styleUrl: './new-password-step.scss'

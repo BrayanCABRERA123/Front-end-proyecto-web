@@ -251,46 +251,11 @@
 
               </div>
 
-              <!-- CHECKLIST -->
-              <div class="requirements">
-
-                <div class="requirement" [class.met]="hasMinLength">
-                  <span class="req-dot"></span>
-
-                  {{
-                    'REGISTER.REQUIREMENTS.MIN'
-                    | translate
-                  }}
-                </div>
-
-                <div class="requirement" [class.met]="hasUppercase">
-                  <span class="req-dot"></span>
-
-                  {{
-                    'REGISTER.REQUIREMENTS.UPPERCASE'
-                    | translate
-                  }}
-                </div>
-
-                <div class="requirement" [class.met]="hasNumber">
-                  <span class="req-dot"></span>
-
-                  {{
-                    'REGISTER.REQUIREMENTS.NUMBER'
-                    | translate
-                  }}
-                </div>
-
-                <div class="requirement" [class.met]="hasSpecialChar">
-                  <span class="req-dot"></span>
-
-                  {{
-                    'REGISTER.REQUIREMENTS.SPECIAL'
-                    | translate
-                  }}
-                </div>
-
-              </div>
+              <!-- CHECKLIST (componente compartido) -->
+              <app-password-requirements
+                [password]="password"
+                [marginTop]="12">
+              </app-password-requirements>
 
               <span
                 class="error-msg"
