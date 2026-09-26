@@ -8,6 +8,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 // modal de registro de vehículo
 import { RegisterVehicleModalComponent } from '../../../../shared/dialogs/register-vehicle-modal/register-vehicle-modal';
+// modal reutilizable de confirmación para acciones peligrosas
+import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 
 // íconos según el tipo de vehículo
 const ICON_BY_TYPE: Record<string, string> = {
@@ -73,8 +75,34 @@ export class VehiclesComponent {
     });
   }
 
+  // pide confirmación antes de eliminar un vehículo registrado
+  confirmRemoveVehicle(id: number) {
+    const vehicle = this.vehicles.find(v => v.id === id);
+    if (!vehicle) return;
+
+    const data: ConfirmModalData = {
+      title: 'VEHICLES.DELETE.TITLE',
+      message: 'VEHICLES.DELETE.MESSAGE',
+      messageParams: {
+        name: `${vehicle.brand} ${vehicle.model}`.trim(),
+        plate: vehicle.plate
+      },
+      danger: true
+    };
+
+    const dialogRef = this.dialog.open(ConfirmModal, {
+      panelClass: 'custom-dialog',
+      data
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) this.removeVehicle(id);
+    });
+  }
+
   // elimina un vehículo registrado
-  removeVehicle(id: number) {
+  private removeVehicle(id: number) {
+    // TODO: integrar con el backend para eliminar el vehículo
     this.vehicles = this.vehicles.filter(v => v.id !== id);
   }
 

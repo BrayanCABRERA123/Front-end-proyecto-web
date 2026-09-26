@@ -8,6 +8,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export interface ConfirmModalData {
   title: string;
   message: string;
+  // valores opcionales para interpolar en el mensaje (ej. {{ plate }})
+  messageParams?: Record<string, string>;
   confirmText?: string;
   cancelText?: string;
   danger?: boolean;
@@ -24,6 +26,7 @@ export class ConfirmModal {
 
   title: string;
   message: string;
+  messageParams: Record<string, string>;
   confirmText: string;
   cancelText: string;
   danger: boolean;
@@ -34,6 +37,7 @@ export class ConfirmModal {
   ) {
     this.title = data.title;
     this.message = data.message;
+    this.messageParams = data.messageParams ?? {};
     this.confirmText = data.confirmText ?? 'COMMON.DELETE';
     this.cancelText = data.cancelText ?? 'COMMON.CANCEL';
     this.danger = data.danger ?? true;

@@ -53,7 +53,7 @@
             <p class="vehicle-subtitle">{{ ('VEHICLE.' + vehicle.type) | translate }} · {{ vehicle.color }}</p>
           </div>
 
-          <button class="btn-icon" (click)="removeVehicle(vehicle.id)">
+          <button class="btn-icon" (click)="confirmRemoveVehicle(vehicle.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>

@@ -739,6 +739,10 @@
       "SERVICE": "Servicio",
       "TOTAL_WASHES": "Total de lavados"
     },
+    "DELETE": {
+      "TITLE": "¿Eliminar vehículo?",
+      "MESSAGE": "Se eliminará {{name}} con placa {{plate}} de tu cuenta. Esta acción no se puede deshacer."
+    },
     "MODAL": {
       "TITLE": "Registrar nuevo vehículo",
       "SUBTITLE": "Agrega los datos de tu vehículo para reservar lavados más rápido.",

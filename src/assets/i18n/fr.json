@@ -739,6 +739,10 @@
       "SERVICE": "Service",
       "TOTAL_WASHES": "Total des lavages"
     },
+    "DELETE": {
+      "TITLE": "Supprimer le véhicule ?",
+      "MESSAGE": "{{name}} immatriculé {{plate}} sera supprimé de votre compte. Cette action est irréversible."
+    },
     "MODAL": {
       "TITLE": "Enregistrer un nouveau véhicule",
       "SUBTITLE": "Ajoutez les informations de votre véhicule pour réserver plus vite.",

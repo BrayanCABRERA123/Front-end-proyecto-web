@@ -739,6 +739,10 @@
       "SERVICE": "Serviço",
       "TOTAL_WASHES": "Total de lavagens"
     },
+    "DELETE": {
+      "TITLE": "Excluir veículo?",
+      "MESSAGE": "{{name}} com placa {{plate}} será removido da sua conta. Esta ação não pode ser desfeita."
+    },
     "MODAL": {
       "TITLE": "Registrar novo veículo",
       "SUBTITLE": "Adicione os dados do seu veículo para reservar lavagens mais rápido.",

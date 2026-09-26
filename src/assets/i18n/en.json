@@ -739,6 +739,10 @@
       "SERVICE": "Service",
       "TOTAL_WASHES": "Total washes"
     },
+    "DELETE": {
+      "TITLE": "Delete vehicle?",
+      "MESSAGE": "{{name}} with plate {{plate}} will be removed from your account. This action cannot be undone."
+    },
     "MODAL": {
       "TITLE": "Register new vehicle",
       "SUBTITLE": "Add your vehicle details to book washes faster.",
