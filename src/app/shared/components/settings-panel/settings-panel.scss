@@ -44,17 +44,21 @@
 }
 
 /* grid */
+// izquierda: Notificaciones y Ayuda (una debajo de la otra)
+// derecha: Apariencia, que ocupa las dos filas
+// "auto 1fr": la primera fila mide solo lo que mide Notificaciones y el espacio
+// sobrante de Apariencia se va a la segunda fila (así no quedan huecos ni tarjetas montadas)
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
   column-gap: 30px;
-  row-gap: 0px;
+  row-gap: 20px;
   align-items: start;
 
   .card:nth-child(1) { grid-column: 1; grid-row: 1; }
   .card:nth-child(2) { grid-column: 2; grid-row: 1 / span 2; }
   .card:nth-child(3) { grid-column: 1; grid-row: 2; }
-  .card:nth-child(4) { grid-column: 1; grid-row: 3; }
 }
 
 /* cards */
@@ -64,7 +68,6 @@
   border-radius: 18px;
   padding: 18px 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  margin-bottom: -110px;
 }
 
 /* card header */
@@ -355,12 +358,12 @@
 
   .grid {
     grid-template-columns: 1fr;
+    grid-template-rows: none;
     row-gap: 16px;
 
     .card:nth-child(1) { grid-column: 1; grid-row: auto; }
     .card:nth-child(2) { grid-column: 1; grid-row: auto; }
     .card:nth-child(3) { grid-column: 1; grid-row: auto; }
-    .card:nth-child(4) { grid-column: 1; grid-row: auto; }
   }
 }
 
@@ -378,12 +381,12 @@
 
   .grid {
     grid-template-columns: 1fr;
+    grid-template-rows: none;
     row-gap: 16px;
 
     .card:nth-child(1) { grid-column: 1; grid-row: auto; }
     .card:nth-child(2) { grid-column: 1; grid-row: auto; }
     .card:nth-child(3) { grid-column: 1; grid-row: auto; }
-    .card:nth-child(4) { grid-column: 1; grid-row: auto; }
   }
 
   .themes {
