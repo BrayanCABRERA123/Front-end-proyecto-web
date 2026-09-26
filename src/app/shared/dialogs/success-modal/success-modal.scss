@@ -1,0 +1,84 @@
+@use '../../../../styles/mixins' as *;
+
+.dialog-container {
+  background: var(--card);
+  color: var(--text);
+  padding: 28px 24px 24px;
+  border-radius: 16px;
+  width: 340px;
+  max-width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* ICONO CON ANIMACIÓN DE ENTRADA */
+.icon-circle {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--success-soft);
+  color: var(--success);
+  animation: pop-in .35s ease-out;
+
+  mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(.4);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.dialog-title {
+  font-size: 18px;
+  font-weight: $fw-bold;
+  margin-bottom: 8px;
+}
+
+.dialog-text {
+  font-size: $fs-body;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+
+  button {
+    flex: 1;
+  }
+}
+
+.btn-confirm {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: $fw-bold;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+}

@@ -25,6 +25,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LegalDocumentModal, LegalDocumentType } from '../../../../shared/dialogs/legal-document-modal/legal-document-modal';
 
+// modal reutilizable para mostrar el mensaje de registro exitoso
+import { SuccessModal, SuccessModalData } from '../../../../shared/dialogs/success-modal/success-modal';
+
 
 @Component({
   selector: 'app-register',
@@ -241,10 +244,35 @@ export class RegisterComponent {
 
       this.cargando = false;
 
-      // redirigir al login después del registro
-      this.router.navigate(['/auth/login']);
+      this.mostrarRegistroExitoso();
 
     }, 1500);
+
+  }
+
+
+  // muestra el modal de registro exitoso y, al cerrarlo, redirige al login
+  mostrarRegistroExitoso() {
+
+    const data: SuccessModalData = {
+      title: 'REGISTER.SUCCESS_TITLE',
+      message: 'REGISTER.SUCCESS_MESSAGE',
+      buttonText: 'REGISTER.SUCCESS_BUTTON'
+    };
+
+    const dialogRef = this.dialog.open(SuccessModal, {
+      panelClass: 'custom-dialog',
+      // evita que se cierre al hacer clic afuera o con ESC, así el usuario
+      // siempre pasa por el botón y se garantiza la redirección
+      disableClose: true,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      // redirigir al login después del registro
+      // (el login está en la ruta vacía del módulo auth, es decir "/auth")
+      this.router.navigate(['/auth']);
+    });
 
   }
 

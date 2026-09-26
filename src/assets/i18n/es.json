@@ -69,7 +69,8 @@
   "COMMON": {
     "CLOSE": "Cerrar",
     "CANCEL": "Cancelar",
-    "DELETE": "Eliminar"
+    "DELETE": "Eliminar",
+    "ACCEPT": "Aceptar"
   },
   "SERVICE": {
     "BASIC": "Básico",
@@ -455,6 +456,9 @@
     },
     "BUTTON": "Registrarse",
     "BUTTON_LOADING": "Registrando...",
+    "SUCCESS_TITLE": "¡Registro exitoso!",
+    "SUCCESS_MESSAGE": "Tu cuenta fue creada correctamente. Ahora puedes iniciar sesión.",
+    "SUCCESS_BUTTON": "Ir a iniciar sesión",
     "ALREADY_ACCOUNT": "¿Ya tienes cuenta?",
     "LOGIN": "Inicia sesión",
     "INVALID_CREDENTIALS": "Correo o contraseña incorrectos",

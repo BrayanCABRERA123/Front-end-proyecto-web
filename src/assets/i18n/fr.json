@@ -69,7 +69,8 @@
   "COMMON": {
     "CLOSE": "Fermer",
     "CANCEL": "Annuler",
-    "DELETE": "Supprimer"
+    "DELETE": "Supprimer",
+    "ACCEPT": "Accepter"
   },
   "SERVICE": {
     "BASIC": "Basique",
@@ -455,6 +456,9 @@
     },
     "BUTTON": "S'inscrire",
     "BUTTON_LOADING": "Inscription...",
+    "SUCCESS_TITLE": "Inscription réussie !",
+    "SUCCESS_MESSAGE": "Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.",
+    "SUCCESS_BUTTON": "Aller à la connexion",
     "ALREADY_ACCOUNT": "Vous avez déjà un compte ?",
     "LOGIN": "Se connecter",
     "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect",

@@ -1,0 +1,17 @@
+<div class="dialog-container">
+
+  <!-- ICONO DE ÉXITO -->
+  <div class="icon-circle">
+    <mat-icon>check_circle</mat-icon>
+  </div>
+
+  <h2 class="dialog-title">{{ title | translate }}</h2>
+  <p class="dialog-text">{{ message | translate }}</p>
+
+  <div class="dialog-actions">
+    <button class="btn-confirm" (click)="close()">
+      {{ buttonText | translate }}
+    </button>
+  </div>
+
+</div>

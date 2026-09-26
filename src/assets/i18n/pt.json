@@ -69,7 +69,8 @@
   "COMMON": {
     "CLOSE": "Fechar",
     "CANCEL": "Cancelar",
-    "DELETE": "Excluir"
+    "DELETE": "Excluir",
+    "ACCEPT": "Aceitar"
   },
   "SERVICE": {
     "BASIC": "Básico",
@@ -455,6 +456,9 @@
     },
     "BUTTON": "Cadastrar",
     "BUTTON_LOADING": "Cadastrando...",
+    "SUCCESS_TITLE": "Cadastro realizado com sucesso!",
+    "SUCCESS_MESSAGE": "Sua conta foi criada com sucesso. Agora você pode entrar.",
+    "SUCCESS_BUTTON": "Ir para o login",
     "ALREADY_ACCOUNT": "Já tem uma conta?",
     "LOGIN": "Entrar",
     "INVALID_CREDENTIALS": "E-mail ou senha incorretos",
