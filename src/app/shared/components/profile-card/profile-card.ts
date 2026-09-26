@@ -11,6 +11,9 @@ import {
   ValidationErrors,
   ValidatorFn
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+// modal reutilizable para mostrar el mensaje de perfil actualizado
+import { StatusModal, StatusModalData } from '../../dialogs/status-modal/status-modal';
 
 interface PhoneCountry {
   code: string;
@@ -51,7 +54,11 @@ export class ProfileCardComponent implements OnInit, OnChanges {
 
   phoneDropdownOpen: boolean = false;
 
-  constructor(private fb: FormBuilder, private elRef: ElementRef) {}
+  constructor(
+    private fb: FormBuilder,
+    private elRef: ElementRef,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -171,5 +178,20 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     this.editing = false;
     this.form.disable();
     this.phoneDropdownOpen = false;
+
+    this.showProfileSaved();
+  }
+
+  // muestra el modal de perfil actualizado (sirve para cliente, operador y admin)
+  private showProfileSaved(): void {
+    const data: StatusModalData = {
+      title: 'PROFILE.SUCCESS_TITLE',
+      message: 'PROFILE.SUCCESS_MESSAGE'
+    };
+
+    this.dialog.open(StatusModal, {
+      panelClass: 'custom-dialog',
+      data
+    });
   }
 }

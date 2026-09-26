@@ -297,6 +297,8 @@
     "ADDRESS": "Endereço",
     "EDIT": "Editar perfil",
     "SAVE": "Salvar",
+    "SUCCESS_TITLE": "Perfil atualizado!",
+    "SUCCESS_MESSAGE": "Seus dados foram salvos com sucesso.",
     "PASSWORD": "Senha",
     "CHANGE_PASSWORD": "Alterar senha",
     "PASSWORD_DESC": "Recomenda-se uma senha segura",

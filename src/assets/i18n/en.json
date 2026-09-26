@@ -297,6 +297,8 @@
     "ADDRESS": "Address",
     "EDIT": "Edit profile",
     "SAVE": "Save",
+    "SUCCESS_TITLE": "Profile updated!",
+    "SUCCESS_MESSAGE": "Your information was saved successfully.",
     "PASSWORD": "Password",
     "CHANGE_PASSWORD": "Change password",
     "PASSWORD_DESC": "A strong password is recommended",
