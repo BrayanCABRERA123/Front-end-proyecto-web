@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // importamos el sidebar del layout
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
@@ -52,7 +52,10 @@ export class VehiclesComponent {
     return this.vehicles[0]?.lastWash ?? '-';
   }
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   // ícono correspondiente al tipo de vehículo
   iconFor(type: string): string {
@@ -81,6 +84,7 @@ export class VehiclesComponent {
         service: '-',
         totalWashes: 0
       });
+      this.refreshView();
 
       this.showSuccess('VEHICLES.SUCCESS.CREATED_TITLE', 'VEHICLES.SUCCESS.CREATED_MESSAGE');
     });
@@ -114,6 +118,7 @@ export class VehiclesComponent {
       // TODO: integrar con el backend para actualizar el vehículo
       // se conservan los datos de lavados y solo se cambian los del formulario
       this.vehicles = this.vehicles.map(v => v.id === id ? { ...v, ...updated } : v);
+      this.refreshView();
 
       this.showSuccess('VEHICLES.SUCCESS.UPDATED_TITLE', 'VEHICLES.SUCCESS.UPDATED_MESSAGE');
     });
@@ -156,6 +161,13 @@ export class VehiclesComponent {
   private removeVehicle(id: number) {
     // TODO: integrar con el backend para eliminar el vehículo
     this.vehicles = this.vehicles.filter(v => v.id !== id);
+    this.refreshView();
+  }
+
+  // la app es zoneless: los cambios hechos dentro de afterClosed() no se pintan solos,
+  // así que avisamos a Angular que redibuje la pantalla
+  private refreshView() {
+    this.cdr.markForCheck();
   }
 
 }
