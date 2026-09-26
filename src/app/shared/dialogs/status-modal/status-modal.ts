@@ -8,12 +8,20 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 // tipos de estado que puede mostrar el modal
 export type StatusModalType = 'success' | 'error';
 
+// fila opcional de detalle (ej. resumen de una reserva)
+// label es llave de traducción, value es el texto ya listo para mostrar
+export interface StatusModalDetail {
+  label: string;
+  value: string;
+}
+
 // datos que recibe el modal (se pasan como llaves de traducción)
 export interface StatusModalData {
   title: string;
   message: string;
   buttonText?: string;
   type?: StatusModalType;
+  details?: StatusModalDetail[];
 }
 
 // modal reutilizable para mostrar un mensaje de estado (éxito o error)
@@ -30,6 +38,7 @@ export class StatusModal {
   message: string;
   buttonText: string;
   type: StatusModalType;
+  details: StatusModalDetail[];
 
   constructor(
     private dialogRef: MatDialogRef<StatusModal>,
@@ -41,6 +50,8 @@ export class StatusModal {
     this.buttonText = data.buttonText ?? 'COMMON.ACCEPT';
     // si no se envía el tipo, el modal es de éxito por defecto
     this.type = data.type ?? 'success';
+    // si no se envían detalles, no se muestra la lista
+    this.details = data.details ?? [];
   }
 
   // ícono de Material según el tipo de estado

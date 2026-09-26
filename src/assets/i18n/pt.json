@@ -339,6 +339,9 @@
     "ASSIGNMENT": "Atribuição do operador",
     "SELECT": "Selecionar",
     "SUBMIT": "Reservar agora",
+    "SUCCESS_TITLE": "Reserva criada!",
+    "SUCCESS_MESSAGE": "Sua lavagem foi agendada. Este é o resumo da sua reserva:",
+    "SUCCESS_BUTTON": "Ir para o pagamento",
     "STEP1": {
       "TITLE": "Escolha seu veículo",
       "SUBTITLE": "Selecione um dos seus veículos registrados",

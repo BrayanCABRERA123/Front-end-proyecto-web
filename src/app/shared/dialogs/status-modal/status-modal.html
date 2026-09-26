@@ -8,6 +8,18 @@
   <h2 class="dialog-title">{{ title | translate }}</h2>
   <p class="dialog-text">{{ message | translate }}</p>
 
+  <!-- DETALLES OPCIONALES (ej. resumen de la reserva) -->
+  @if (details.length) {
+    <div class="details">
+      @for (detail of details; track detail.label) {
+        <div class="detail-row">
+          <span>{{ detail.label | translate }}</span>
+          <strong>{{ detail.value }}</strong>
+        </div>
+      }
+    </div>
+  }
+
   <div class="dialog-actions">
     <button class="btn-confirm" (click)="close()">
       {{ buttonText | translate }}

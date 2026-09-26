@@ -339,6 +339,9 @@
     "ASSIGNMENT": "Affectation de l’opérateur",
     "SELECT": "Sélectionner",
     "SUBMIT": "Réserver",
+    "SUCCESS_TITLE": "Réservation créée !",
+    "SUCCESS_MESSAGE": "Votre lavage a été programmé. Voici le résumé de votre réservation :",
+    "SUCCESS_BUTTON": "Aller au paiement",
     "STEP1": {
       "TITLE": "Choisissez votre véhicule",
       "SUBTITLE": "Sélectionnez un de vos véhicules enregistrés",

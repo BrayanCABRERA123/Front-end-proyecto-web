@@ -339,6 +339,9 @@
     "ASSIGNMENT": "Operator assignment",
     "SELECT": "Select",
     "SUBMIT": "Book now",
+    "SUCCESS_TITLE": "Booking created!",
+    "SUCCESS_MESSAGE": "Your wash has been scheduled. Here is your booking summary:",
+    "SUCCESS_BUTTON": "Go to payment",
     "STEP1": {
       "TITLE": "Choose your vehicle",
       "SUBTITLE": "Select one of your registered vehicles",

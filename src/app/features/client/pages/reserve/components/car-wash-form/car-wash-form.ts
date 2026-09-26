@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 // iconos de Material
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+// modal reutilizable para mostrar el mensaje de reserva exitosa
+import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
 
 @Component({
   selector: 'app-car-wash-form',
@@ -38,7 +41,11 @@ export class CarWashFormComponent implements OnInit {
   maxDate: string = '';
   availableTimes: string[] = [];
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     const today = new Date();
@@ -101,6 +108,41 @@ export class CarWashFormComponent implements OnInit {
       time: this.time,
       address: this.address,
       total: this.serviceTotal
+    });
+
+    this.showReservationSuccess();
+  }
+
+  // muestra el modal de reserva exitosa con el resumen y, al cerrarlo, lleva al pago
+  private showReservationSuccess(): void {
+    const vehicle = this.vehicle;
+
+    const data: StatusModalData = {
+      title: 'RESERVE.SUCCESS_TITLE',
+      message: 'RESERVE.SUCCESS_MESSAGE',
+      buttonText: 'RESERVE.SUCCESS_BUTTON',
+      // mismo resumen que se ve en la tarjeta lateral del formulario
+      details: [
+        { label: 'RESERVE.SUMMARY.VEHICLE', value: `${vehicle?.brand} ${vehicle?.model}` },
+        { label: 'RESERVE.SUMMARY.PLATE', value: vehicle?.plate ?? '' },
+        { label: 'RESERVE.SUMMARY.SERVICE', value: this.translate.instant(`SERVICE.${this.selectedService}`) },
+        { label: 'RESERVE.SUMMARY.DATE', value: this.date },
+        { label: 'RESERVE.SUMMARY.TIME', value: this.time },
+        { label: 'RESERVE.SUMMARY.TOTAL', value: this.translate.instant(`SERVICE.${this.selectedService}_PRICE`) }
+      ]
+    };
+
+    const dialogRef = this.dialog.open(StatusModal, {
+      panelClass: 'custom-dialog',
+      // evita que se cierre al hacer clic afuera o con ESC, así el usuario
+      // siempre pasa por el botón y se garantiza la redirección al pago
+      disableClose: true,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      // el siguiente paso del flujo es pagar la reserva
+      this.router.navigate(['/client/payment']);
     });
   }
 
