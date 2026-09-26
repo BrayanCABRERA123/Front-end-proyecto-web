@@ -46,7 +46,7 @@ export class HistoryComponent {
     id: 1,
     title: 'PREMIUM',
     date: '28/03/2026',
-    serviceType: 'FULL',
+    serviceType: 'PREMIUM',
     extras: ['WAX', 'VACUUM'],
     assignmentType: 'MANUAL',
     operator: 'Juan',
@@ -58,12 +58,12 @@ export class HistoryComponent {
     id: 2,
     title: 'BASIC',
     date: '16/12/2025',
-    serviceType: 'FULL',
+    serviceType: 'BASIC',
     extras: ['WAX'],
     assignmentType: 'AUTO',
     operator: '',
     status: 'PENDING',
-    price: 35,
+    price: 20,
     paid: false
   }
 ];
