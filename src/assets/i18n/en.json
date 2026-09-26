@@ -112,7 +112,8 @@
     "PENDING": "Pending",
     "CONFIRMED": "Confirmed",
     "CANCELED": "Canceled",
-    "ON_THE_WAY": "On the way",
+    "IN_WASH": "Washing",
+    "READY": "Ready for pickup",
     "PAID": "Paid",
     "REFUNDED": "Refunded"
   },
@@ -141,6 +142,8 @@
     "NEXT_SERVICE": {
       "TITLE": "Your next service",
       "VIEW_DETAIL": "View detail",
+      "DETAIL_MESSAGE": "Here are the details of your next wash.",
+      "STATUS": "Status",
       "OPERATOR_ASSIGNED": "Assigned operator",
       "PROGRESS": "Service progress"
     },
@@ -348,13 +351,14 @@
     "SUBTITLE": "Schedule your next wash in a few steps",
     "DATE": "Date",
     "TIME": "Time",
-    "SELECT_TIME": "Select a time",
-    "ADDRESS": "Address",
-    "ADDRESS_PLACEHOLDER": "Street, number, city...",
+    "SELECT_TIME": "Select a time",
     "VEHICLE": "Vehicle type",
     "SERVICE": "Service type",
     "ASSIGNMENT": "Operator assignment",
     "SELECT": "Select",
+    "LOCATION": {
+      "TITLE": "Service location"
+    },
     "SUBMIT": "Book now",
     "SUCCESS_TITLE": "Booking created!",
     "SUCCESS_MESSAGE": "Your wash has been scheduled. Here is your booking summary:",
@@ -371,8 +375,8 @@
       "POPULAR": "Most popular"
     },
     "STEP3": {
-      "TITLE": "Date and location",
-      "SUBTITLE": "Tell us when and where to wash your vehicle"
+      "TITLE": "Date and time",
+      "SUBTITLE": "Choose when you will bring your vehicle to the car wash"
     },
     "SUMMARY": {
       "TITLE": "Your booking summary",
@@ -382,9 +386,10 @@
       "DURATION": "Estimated duration",
       "DATE": "Date",
       "TIME": "Time",
+      "LOCATION": "Location",
       "TOTAL": "Total",
       "SUBMIT": "Book Now",
-      "NOTE": "We'll notify you when the washer is on the way. You can pay online or in cash."
+      "NOTE": "We will be waiting for you at our location. Please arrive a few minutes early. You can pay online or at the car wash."
     }
   },
   "APP": {

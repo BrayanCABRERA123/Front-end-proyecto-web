@@ -142,9 +142,12 @@
   font-weight: $fw-semibold;
 }
 
-.badge-completed,
-.badge-confirmed { background: var(--success-soft); color: var(--success); }
-.badge-on_the_way { background: var(--primary-soft); color: var(--primary); }
+.badge-completed { background: var(--success-soft); color: var(--success); }
+// estados del servicio en el lavadero (Confirmado → En lavado → Listo para recoger)
+// confirmado y en lavado usan el color principal del tema (verde o rosado)
+.badge-confirmed,
+.badge-in_wash { background: var(--primary-soft); color: var(--primary); }
+.badge-ready { background: var(--success-soft); color: var(--success); }
 .badge-pending { background: var(--warning-soft); color: var(--warning); }
 .badge-canceled { background: var(--error-soft); color: var(--error); }
 

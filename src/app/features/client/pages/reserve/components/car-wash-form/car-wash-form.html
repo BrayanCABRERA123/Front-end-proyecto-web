@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <!-- PASO 3: Fecha y ubicación -->
+    <!-- PASO 3: Fecha, hora y lugar (sede del lavadero) -->
     <div class="step-card">
       <div class="step-title">
         <span class="step-number">3</span>
@@ -103,18 +103,13 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">
-          {{ 'RESERVE.ADDRESS' | translate }}
-          <mat-icon class="label-icon">location_on</mat-icon>
-        </label>
-        <div class="input-wrapper">
-          <mat-icon class="input-icon">location_on</mat-icon>
-          <input
-            type="text"
-            class="form-input has-icon"
-            [placeholder]="'RESERVE.ADDRESS_PLACEHOLDER' | translate"
-            [(ngModel)]="address" />
+      <!-- LUGAR DEL SERVICIO: el cliente lleva su vehículo a la sede (no es a domicilio) -->
+      <div class="location-box">
+        <mat-icon>storefront</mat-icon>
+        <div>
+          <p class="location-title">{{ 'RESERVE.LOCATION.TITLE' | translate }}</p>
+          <p class="location-name">{{ location.name }}</p>
+          <p class="location-address">{{ location.address }}</p>
         </div>
       </div>
     </div>
@@ -148,6 +143,10 @@
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.TIME' | translate }}</span>
       <strong>{{ time || '—' }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.LOCATION' | translate }}</span>
+      <strong>{{ location.name }}</strong>
     </div>
 
     <div class="summary-total">

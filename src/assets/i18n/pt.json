@@ -112,7 +112,8 @@
     "PENDING": "Pendente",
     "CONFIRMED": "Confirmado",
     "CANCELED": "Cancelado",
-    "ON_THE_WAY": "A caminho",
+    "IN_WASH": "Em lavagem",
+    "READY": "Pronto para retirar",
     "PAID": "Pago",
     "REFUNDED": "Reembolsado"
   },
@@ -141,6 +142,8 @@
     "NEXT_SERVICE": {
       "TITLE": "Seu próximo serviço",
       "VIEW_DETAIL": "Ver detalhe",
+      "DETAIL_MESSAGE": "Estes são os dados da sua próxima lavagem.",
+      "STATUS": "Status",
       "OPERATOR_ASSIGNED": "Operador designado",
       "PROGRESS": "Progresso do serviço"
     },
@@ -348,13 +351,14 @@
     "SUBTITLE": "Agende sua próxima lavagem em poucos passos",
     "DATE": "Data",
     "TIME": "Hora",
-    "SELECT_TIME": "Selecione um horário",
-    "ADDRESS": "Endereço",
-    "ADDRESS_PLACEHOLDER": "Rua, número, cidade...",
+    "SELECT_TIME": "Selecione um horário",
     "VEHICLE": "Tipo de veículo",
     "SERVICE": "Tipo de serviço",
     "ASSIGNMENT": "Atribuição do operador",
     "SELECT": "Selecionar",
+    "LOCATION": {
+      "TITLE": "Local do serviço"
+    },
     "SUBMIT": "Reservar agora",
     "SUCCESS_TITLE": "Reserva criada!",
     "SUCCESS_MESSAGE": "Sua lavagem foi agendada. Este é o resumo da sua reserva:",
@@ -371,8 +375,8 @@
       "POPULAR": "Mais popular"
     },
     "STEP3": {
-      "TITLE": "Data e localização",
-      "SUBTITLE": "Diga-nos quando e onde lavar seu veículo"
+      "TITLE": "Data e hora",
+      "SUBTITLE": "Escolha quando você trará seu veículo ao lava-rápido"
     },
     "SUMMARY": {
       "TITLE": "Resumo da sua reserva",
@@ -382,9 +386,10 @@
       "DURATION": "Duração estimada",
       "DATE": "Data",
       "TIME": "Hora",
+      "LOCATION": "Local",
       "TOTAL": "Total",
       "SUBMIT": "Reservar Agora",
-      "NOTE": "Avisaremos quando o lavador estiver a caminho. Você pode pagar online ou em dinheiro."
+      "NOTE": "Esperamos você na nossa unidade. Chegue alguns minutos antes do horário. Você pode pagar online ou no lava-rápido."
     }
   },
   "APP": {

@@ -59,20 +59,20 @@
             <p class="next-service-date">{{ nextService.date }}</p>
 
             <div class="next-service-meta">
-              <span><mat-icon>location_on</mat-icon> {{ nextService.address }}</span>
-              <span><mat-icon>call</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ nextService.operator }}</span>
+              <span><mat-icon>storefront</mat-icon> {{ location.name }} · {{ location.address }}</span>
+              <span><mat-icon>person</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ nextService.operator }}</span>
             </div>
           </div>
 
-          <button class="btn-outline">{{ 'DASHBOARD.NEXT_SERVICE.VIEW_DETAIL' | translate }}</button>
+          <button class="btn-outline" (click)="viewNextServiceDetail()">{{ 'DASHBOARD.NEXT_SERVICE.VIEW_DETAIL' | translate }}</button>
         </div>
 
         <div class="progress-row">
           <span>{{ 'DASHBOARD.NEXT_SERVICE.PROGRESS' | translate }}</span>
-          <span>{{ nextService.progress }}%</span>
+          <span>{{ nextServiceProgress }}%</span>
         </div>
         <div class="progress-bar">
-          <div class="progress-fill" [style.width.%]="nextService.progress"></div>
+          <div class="progress-fill" [style.width.%]="nextServiceProgress"></div>
         </div>
       </div>
 

@@ -112,7 +112,8 @@
     "PENDING": "Pendiente",
     "CONFIRMED": "Confirmado",
     "CANCELED": "Cancelado",
-    "ON_THE_WAY": "En camino",
+    "IN_WASH": "En lavado",
+    "READY": "Listo para recoger",
     "PAID": "Pagado",
     "REFUNDED": "Reembolsado"
   },
@@ -141,6 +142,8 @@
     "NEXT_SERVICE": {
       "TITLE": "Tu próximo servicio",
       "VIEW_DETAIL": "Ver detalle",
+      "DETAIL_MESSAGE": "Estos son los datos de tu próximo lavado.",
+      "STATUS": "Estado",
       "OPERATOR_ASSIGNED": "Operario asignado",
       "PROGRESS": "Avance del servicio"
     },
@@ -348,13 +351,14 @@
     "SUBTITLE": "Programa tu próximo lavado en pocos pasos",
     "DATE": "Fecha",
     "TIME": "Hora",
-    "SELECT_TIME": "Selecciona una hora",
-    "ADDRESS": "Dirección",
-    "ADDRESS_PLACEHOLDER": "Calle, número, ciudad...",
+    "SELECT_TIME": "Selecciona una hora",
     "VEHICLE": "Tipo de vehículo",
     "SERVICE": "Tipo de servicio",
     "ASSIGNMENT": "Asignación de operario",
     "SELECT": "Seleccionar",
+    "LOCATION": {
+      "TITLE": "Lugar del servicio"
+    },
     "SUBMIT": "Reservar ahora",
     "SUCCESS_TITLE": "¡Reserva creada!",
     "SUCCESS_MESSAGE": "Tu lavado quedó programado. Este es el resumen de tu reserva:",
@@ -371,8 +375,8 @@
       "POPULAR": "Más popular"
     },
     "STEP3": {
-      "TITLE": "Fecha y ubicación",
-      "SUBTITLE": "Dinos cuándo y dónde lavar tu vehículo"
+      "TITLE": "Fecha y hora",
+      "SUBTITLE": "Elige cuándo traerás tu vehículo al lavadero"
     },
     "SUMMARY": {
       "TITLE": "Resumen de tu reserva",
@@ -382,9 +386,10 @@
       "DURATION": "Duración estimada",
       "DATE": "Fecha",
       "TIME": "Hora",
+      "LOCATION": "Lugar",
       "TOTAL": "Total",
       "SUBMIT": "Reservar Ahora",
-      "NOTE": "Te notificaremos cuando el lavador esté en camino. Puedes pagar en línea o en efectivo."
+      "NOTE": "Te esperamos en nuestra sede. Llega unos minutos antes de tu hora. Puedes pagar en línea o en el lavadero."
     }
   },
   "APP": {

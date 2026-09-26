@@ -112,7 +112,8 @@
     "PENDING": "En attente",
     "CONFIRMED": "Confirmé",
     "CANCELED": "Annulé",
-    "ON_THE_WAY": "En route",
+    "IN_WASH": "En lavage",
+    "READY": "Prêt à récupérer",
     "PAID": "Payé",
     "REFUNDED": "Remboursé"
   },
@@ -141,6 +142,8 @@
     "NEXT_SERVICE": {
       "TITLE": "Votre prochain service",
       "VIEW_DETAIL": "Voir détail",
+      "DETAIL_MESSAGE": "Voici les détails de votre prochain lavage.",
+      "STATUS": "Statut",
       "OPERATOR_ASSIGNED": "Opérateur assigné",
       "PROGRESS": "Avancement du service"
     },
@@ -348,13 +351,14 @@
     "SUBTITLE": "Planifiez votre prochain lavage en quelques étapes",
     "DATE": "Date",
     "TIME": "Heure",
-    "SELECT_TIME": "Sélectionnez une heure",
-    "ADDRESS": "Adresse",
-    "ADDRESS_PLACEHOLDER": "Rue, numéro, ville...",
+    "SELECT_TIME": "Sélectionnez une heure",
     "VEHICLE": "Type de véhicule",
     "SERVICE": "Type de service",
     "ASSIGNMENT": "Affectation de l’opérateur",
     "SELECT": "Sélectionner",
+    "LOCATION": {
+      "TITLE": "Lieu du service"
+    },
     "SUBMIT": "Réserver",
     "SUCCESS_TITLE": "Réservation créée !",
     "SUCCESS_MESSAGE": "Votre lavage a été programmé. Voici le résumé de votre réservation :",
@@ -371,8 +375,8 @@
       "POPULAR": "Le plus populaire"
     },
     "STEP3": {
-      "TITLE": "Date et lieu",
-      "SUBTITLE": "Dites-nous quand et où laver votre véhicule"
+      "TITLE": "Date et heure",
+      "SUBTITLE": "Choisissez quand vous apporterez votre véhicule à la station"
     },
     "SUMMARY": {
       "TITLE": "Résumé de votre réservation",
@@ -382,9 +386,10 @@
       "DURATION": "Durée estimée",
       "DATE": "Date",
       "TIME": "Heure",
+      "LOCATION": "Lieu",
       "TOTAL": "Total",
       "SUBMIT": "Réserver maintenant",
-      "NOTE": "Nous vous préviendrons quand le laveur sera en route. Vous pouvez payer en ligne ou en espèces."
+      "NOTE": "Nous vous attendons dans notre station. Arrivez quelques minutes en avance. Vous pouvez payer en ligne ou sur place."
     }
   },
   "APP": {

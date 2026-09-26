@@ -8,6 +8,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 // modal reutilizable para mostrar el mensaje de reserva exitosa
 import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
+// sede del lavadero: el cliente lleva su vehículo allí
+import { BUSINESS_LOCATION } from '../../../../../../core/constants/business-location';
 
 @Component({
   selector: 'app-car-wash-form',
@@ -34,7 +36,9 @@ export class CarWashFormComponent implements OnInit {
   selectedService: string = '';
   date: string = '';
   time: string = '';
-  address: string = '';
+
+  // lugar donde se presta el servicio (sede única, no es a domicilio)
+  location = BUSINESS_LOCATION;
 
   // rango de fechas permitido
   minDate: string = '';
@@ -93,7 +97,7 @@ export class CarWashFormComponent implements OnInit {
   }
 
   get isFormValid(): boolean {
-    return !!this.selectedVehicleId && !!this.selectedService && !!this.date && !!this.time && !!this.address;
+    return !!this.selectedVehicleId && !!this.selectedService && !!this.date && !!this.time;
   }
 
   // se ejecuta al hacer clic en "Reservar Ahora"
@@ -106,7 +110,6 @@ export class CarWashFormComponent implements OnInit {
       service: this.selectedService,
       date: this.date,
       time: this.time,
-      address: this.address,
       total: this.serviceTotal
     });
 
@@ -128,6 +131,7 @@ export class CarWashFormComponent implements OnInit {
         { label: 'RESERVE.SUMMARY.SERVICE', value: this.translate.instant(`SERVICE.${this.selectedService}`) },
         { label: 'RESERVE.SUMMARY.DATE', value: this.date },
         { label: 'RESERVE.SUMMARY.TIME', value: this.time },
+        { label: 'RESERVE.SUMMARY.LOCATION', value: this.location.address },
         { label: 'RESERVE.SUMMARY.TOTAL', value: this.translate.instant(`SERVICE.${this.selectedService}_PRICE`) }
       ]
     };

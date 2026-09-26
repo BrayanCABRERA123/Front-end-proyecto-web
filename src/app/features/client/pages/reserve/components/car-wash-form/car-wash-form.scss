@@ -282,13 +282,41 @@
   position: relative;
   display: flex;
   align-items: center;
+}
 
-  .input-icon {
-    position: absolute;
-    left: 12px;
-    font-size: 18px;
-    color: var(--text-muted);
-    pointer-events: none;
+/* LUGAR DEL SERVICIO (sede del lavadero, solo lectura) */
+.location-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--primary-soft);
+
+  > mat-icon {
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .location-title {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .location-name {
+    font-size: $fs-body;
+    font-weight: $fw-semibold;
+    color: var(--text);
+  }
+
+  .location-address {
+    font-size: $fs-body;
+    color: var(--text-secondary);
   }
 }
 
@@ -304,10 +332,6 @@
   box-sizing: border-box;
   font-family: $font-family;
   transition: all 0.2s ease;
-
-  &.has-icon {
-    padding-left: 40px;
-  }
 
   &:focus {
     border-color: var(--primary);

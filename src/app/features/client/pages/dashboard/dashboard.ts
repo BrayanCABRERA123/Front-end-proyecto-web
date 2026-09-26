@@ -6,8 +6,21 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+// modal reutilizable que también muestra una lista de detalles
+import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
+// sede del lavadero: el cliente lleva su vehículo allí (no es a domicilio)
+import { BUSINESS_LOCATION } from '../../../../core/constants/business-location';
+
+// avance del servicio según su estado (Confirmado → En lavado → Listo → Finalizado)
+const PROGRESS_BY_STATUS: Record<string, number> = {
+  CONFIRMED: 25,
+  IN_WASH: 50,
+  READY: 75,
+  COMPLETED: 100
+};
 
 @Component({
   selector: 'app-dashboard',
@@ -41,11 +54,17 @@ export class DashboardComponent {
     vehicle: 'CAR',
     plate: 'ABC-123',
     date: '25/02/2026 10:00 AM',
-    address: 'Cra. 45 #23-10, Bogotá',
     operator: 'Laura Gómez',
-    status: 'ON_THE_WAY',
-    progress: 60
+    status: 'CONFIRMED'
   };
+
+  // lugar del servicio (sede única del lavadero)
+  location = BUSINESS_LOCATION;
+
+  // porcentaje de avance calculado a partir del estado del servicio
+  get nextServiceProgress(): number {
+    return PROGRESS_BY_STATUS[this.nextService.status] ?? 0;
+  }
 
   // accesos rápidos
   quickAccess = [
@@ -83,13 +102,45 @@ export class DashboardComponent {
   ];
 
   //CONSTRUCTOR
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private translate: TranslateService
+  ) {}
 
   // METODO
   goTo(route: string | null | undefined) {
     if (route) {
       this.router.navigate(['/client', route]);
     }
+  }
+
+  // muestra el detalle del próximo servicio en el modal de estado (tipo info)
+  viewNextServiceDetail() {
+    const service = this.nextService;
+    const t = (key: string) => this.translate.instant(key);
+
+    const data: StatusModalData = {
+      type: 'info',
+      icon: 'event',
+      title: 'DASHBOARD.NEXT_SERVICE.TITLE',
+      message: 'DASHBOARD.NEXT_SERVICE.DETAIL_MESSAGE',
+      buttonText: 'COMMON.CLOSE',
+      details: [
+        { label: 'RESERVE.SUMMARY.SERVICE', value: t(`SERVICE.${service.type}`) },
+        { label: 'RESERVE.SUMMARY.VEHICLE', value: `${t(`VEHICLE.${service.vehicle}`)} · ${service.plate}` },
+        { label: 'RESERVE.SUMMARY.DATE', value: service.date },
+        { label: 'RESERVE.SUMMARY.LOCATION', value: this.location.address },
+        { label: 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED', value: service.operator },
+        { label: 'DASHBOARD.NEXT_SERVICE.STATUS', value: t(`STATUS.${service.status}`) },
+        { label: 'DASHBOARD.NEXT_SERVICE.PROGRESS', value: `${this.nextServiceProgress}%` }
+      ]
+    };
+
+    this.dialog.open(StatusModal, {
+      panelClass: 'custom-dialog',
+      data
+    });
   }
 
 }
