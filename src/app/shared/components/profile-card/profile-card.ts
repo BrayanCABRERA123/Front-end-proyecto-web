@@ -14,6 +14,8 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 // modal reutilizable para mostrar el mensaje de perfil actualizado
 import { StatusModal, StatusModalData } from '../../dialogs/status-modal/status-modal';
+// modal con el formulario para cambiar la contraseña
+import { ChangePasswordModal } from '../../dialogs/change-password-modal/change-password-modal';
 
 interface PhoneCountry {
   code: string;
@@ -184,11 +186,30 @@ export class ProfileCardComponent implements OnInit, OnChanges {
 
   // muestra el modal de perfil actualizado (sirve para cliente, operador y admin)
   private showProfileSaved(): void {
-    const data: StatusModalData = {
+    this.showSuccess({
       title: 'PROFILE.SUCCESS_TITLE',
       message: 'PROFILE.SUCCESS_MESSAGE'
-    };
+    });
+  }
 
+  // abre el modal para cambiar la contraseña y, si se guardó, muestra el éxito
+  openChangePassword(): void {
+    const dialogRef = this.dialog.open(ChangePasswordModal, {
+      panelClass: 'custom-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((changed: boolean) => {
+      if (!changed) return;
+
+      this.showSuccess({
+        title: 'PROFILE.PASSWORD_SUCCESS_TITLE',
+        message: 'PROFILE.PASSWORD_SUCCESS_MESSAGE'
+      });
+    });
+  }
+
+  // abre el modal de estado de éxito con los textos indicados
+  private showSuccess(data: StatusModalData): void {
     this.dialog.open(StatusModal, {
       panelClass: 'custom-dialog',
       data

@@ -299,6 +299,8 @@
     "SAVE": "Salvar",
     "SUCCESS_TITLE": "Perfil atualizado!",
     "SUCCESS_MESSAGE": "Seus dados foram salvos com sucesso.",
+    "PASSWORD_SUCCESS_TITLE": "Senha atualizada!",
+    "PASSWORD_SUCCESS_MESSAGE": "Sua senha foi alterada com sucesso.",
     "PASSWORD": "Senha",
     "CHANGE_PASSWORD": "Alterar senha",
     "PASSWORD_DESC": "Recomenda-se uma senha segura",
@@ -1660,5 +1662,22 @@
       "BUSINESS": "Dados do negócio",
       "PAYMENTS": "Métodos de pagamento"
     }
+  },
+  "PASSWORD_REQUIREMENTS": {
+    "MIN": "Mínimo de 8 caracteres",
+    "UPPERCASE": "Pelo menos uma letra maiúscula",
+    "NUMBER": "Pelo menos um número",
+    "SPECIAL": "Pelo menos um caractere especial"
+  },
+  "CHANGE_PASSWORD_MODAL": {
+    "TITLE": "Alterar senha",
+    "SUBTITLE": "Digite sua senha atual e crie uma nova",
+    "CURRENT": "Senha atual",
+    "NEW": "Nova senha",
+    "CONFIRM": "Confirmar nova senha",
+    "CURRENT_REQUIRED": "Digite sua senha atual",
+    "SAME_PASSWORD": "A nova senha deve ser diferente da atual",
+    "NOT_MATCH": "As senhas não coincidem",
+    "SAVE": "Salvar"
   }
 }

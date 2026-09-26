@@ -299,6 +299,8 @@
     "SAVE": "Enregistrer",
     "SUCCESS_TITLE": "Profil mis à jour !",
     "SUCCESS_MESSAGE": "Vos informations ont été enregistrées avec succès.",
+    "PASSWORD_SUCCESS_TITLE": "Mot de passe mis à jour !",
+    "PASSWORD_SUCCESS_MESSAGE": "Votre mot de passe a été modifié avec succès.",
     "PASSWORD": "Mot de passe",
     "CHANGE_PASSWORD": "Changer le mot de passe",
     "PASSWORD_DESC": "Un mot de passe sécurisé est recommandé",
@@ -1660,5 +1662,22 @@
       "BUSINESS": "Données de l'entreprise",
       "PAYMENTS": "Méthodes de paiement"
     }
+  },
+  "PASSWORD_REQUIREMENTS": {
+    "MIN": "Au moins 8 caractères",
+    "UPPERCASE": "Au moins une majuscule",
+    "NUMBER": "Au moins un chiffre",
+    "SPECIAL": "Au moins un caractère spécial"
+  },
+  "CHANGE_PASSWORD_MODAL": {
+    "TITLE": "Changer le mot de passe",
+    "SUBTITLE": "Saisissez votre mot de passe actuel et créez-en un nouveau",
+    "CURRENT": "Mot de passe actuel",
+    "NEW": "Nouveau mot de passe",
+    "CONFIRM": "Confirmer le nouveau mot de passe",
+    "CURRENT_REQUIRED": "Saisissez votre mot de passe actuel",
+    "SAME_PASSWORD": "Le nouveau mot de passe doit être différent de l’actuel",
+    "NOT_MATCH": "Les mots de passe ne correspondent pas",
+    "SAVE": "Enregistrer"
   }
 }

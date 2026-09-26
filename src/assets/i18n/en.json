@@ -299,6 +299,8 @@
     "SAVE": "Save",
     "SUCCESS_TITLE": "Profile updated!",
     "SUCCESS_MESSAGE": "Your information was saved successfully.",
+    "PASSWORD_SUCCESS_TITLE": "Password updated!",
+    "PASSWORD_SUCCESS_MESSAGE": "Your password was changed successfully.",
     "PASSWORD": "Password",
     "CHANGE_PASSWORD": "Change password",
     "PASSWORD_DESC": "A strong password is recommended",
@@ -1660,5 +1662,22 @@
       "BUSINESS": "Business data",
       "PAYMENTS": "Payment methods"
     }
+  },
+  "PASSWORD_REQUIREMENTS": {
+    "MIN": "At least 8 characters",
+    "UPPERCASE": "At least one uppercase letter",
+    "NUMBER": "At least one number",
+    "SPECIAL": "At least one special character"
+  },
+  "CHANGE_PASSWORD_MODAL": {
+    "TITLE": "Change password",
+    "SUBTITLE": "Enter your current password and create a new one",
+    "CURRENT": "Current password",
+    "NEW": "New password",
+    "CONFIRM": "Confirm new password",
+    "CURRENT_REQUIRED": "Enter your current password",
+    "SAME_PASSWORD": "The new password must be different from the current one",
+    "NOT_MATCH": "Passwords do not match",
+    "SAVE": "Save"
   }
 }

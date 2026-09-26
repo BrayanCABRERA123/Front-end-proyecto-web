@@ -299,6 +299,8 @@
     "SAVE": "Guardar",
     "SUCCESS_TITLE": "¡Perfil actualizado!",
     "SUCCESS_MESSAGE": "Tus datos se guardaron correctamente.",
+    "PASSWORD_SUCCESS_TITLE": "¡Contraseña actualizada!",
+    "PASSWORD_SUCCESS_MESSAGE": "Tu contraseña se cambió correctamente.",
     "PASSWORD": "Contraseña",
     "CHANGE_PASSWORD": "Cambiar contraseña",
     "PASSWORD_DESC": "Se recomienda una contraseña segura",
@@ -1660,5 +1662,22 @@
       "BUSINESS": "Datos del negocio",
       "PAYMENTS": "Métodos de pago"
     }
+  },
+  "PASSWORD_REQUIREMENTS": {
+    "MIN": "Mínimo 8 caracteres",
+    "UPPERCASE": "Al menos una mayúscula",
+    "NUMBER": "Al menos un número",
+    "SPECIAL": "Al menos un carácter especial"
+  },
+  "CHANGE_PASSWORD_MODAL": {
+    "TITLE": "Cambiar contraseña",
+    "SUBTITLE": "Ingresa tu contraseña actual y crea una nueva",
+    "CURRENT": "Contraseña actual",
+    "NEW": "Nueva contraseña",
+    "CONFIRM": "Confirmar nueva contraseña",
+    "CURRENT_REQUIRED": "Ingresa tu contraseña actual",
+    "SAME_PASSWORD": "La nueva contraseña debe ser diferente a la actual",
+    "NOT_MATCH": "Las contraseñas no coinciden",
+    "SAVE": "Guardar"
   }
 }
