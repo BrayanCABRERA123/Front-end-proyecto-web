@@ -16,6 +16,9 @@ import { StatusModal, StatusModalData } from '../../dialogs/status-modal/status-
 import { BUSINESS_CONTACT } from '../../../core/constants/business-contact';
 import { BUSINESS_LOCATION } from '../../../core/constants/business-location';
 
+// llave donde se guardan las preferencias de notificaciones (igual que 'theme' y 'lang')
+const NOTIFICATIONS_KEY = 'notificationSettings';
+
 @Component({
   selector: 'app-settings-panel',
   standalone: true,
@@ -31,6 +34,7 @@ import { BUSINESS_LOCATION } from '../../../core/constants/business-location';
 })
 export class SettingsPanelComponent implements OnInit {
 
+  // valores por defecto; en ngOnInit se reemplazan por los guardados
   settings = {
     push: true,
     email: true,
@@ -80,7 +84,30 @@ export class SettingsPanelComponent implements OnInit {
     });
   }
 
+  // guarda los interruptores de notificaciones cada vez que el usuario cambia uno
+  saveNotificationSettings(): void {
+    try {
+      localStorage.setItem(NOTIFICATIONS_KEY, JSON.stringify(this.settings));
+    } catch {
+      // si el navegador no permite guardar, el cambio queda solo mientras la página esté abierta
+    }
+  }
+
+  // carga los interruptores guardados (si no hay nada, se quedan los valores por defecto)
+  private loadNotificationSettings(): void {
+    try {
+      const saved = localStorage.getItem(NOTIFICATIONS_KEY);
+      if (saved) {
+        this.settings = { ...this.settings, ...JSON.parse(saved) };
+      }
+    } catch {
+      // si el valor guardado está dañado, se usan los valores por defecto
+    }
+  }
+
   ngOnInit(): void {
+
+    this.loadNotificationSettings();
 
     const savedTheme = localStorage.getItem('theme');
     const savedLang = localStorage.getItem('lang');

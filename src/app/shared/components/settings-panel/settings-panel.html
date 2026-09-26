@@ -18,7 +18,7 @@
             <p class="title">{{ 'CONFIG.PUSH' | translate }}</p>
             <span class="subtitle">{{ 'CONFIG.PUSH_DESC' | translate }}</span>
           </div>
-          <mat-slide-toggle [(ngModel)]="settings.push"></mat-slide-toggle>
+          <mat-slide-toggle [(ngModel)]="settings.push" (ngModelChange)="saveNotificationSettings()"></mat-slide-toggle>
         </div>
 
         <div class="divider"></div>
@@ -28,7 +28,7 @@
             <p class="title">{{ 'CONFIG.EMAIL' | translate }}</p>
             <span class="subtitle">{{ 'CONFIG.EMAIL_DESC' | translate }}</span>
           </div>
-          <mat-slide-toggle [(ngModel)]="settings.email"></mat-slide-toggle>
+          <mat-slide-toggle [(ngModel)]="settings.email" (ngModelChange)="saveNotificationSettings()"></mat-slide-toggle>
         </div>
 
         <div class="divider"></div>
@@ -38,7 +38,7 @@
             <p class="title">{{ 'CONFIG.PROMO' | translate }}</p>
             <span class="subtitle">{{ 'CONFIG.PROMO_DESC' | translate }}</span>
           </div>
-          <mat-slide-toggle [(ngModel)]="settings.promo"></mat-slide-toggle>
+          <mat-slide-toggle [(ngModel)]="settings.promo" (ngModelChange)="saveNotificationSettings()"></mat-slide-toggle>
         </div>
 
       </div>
