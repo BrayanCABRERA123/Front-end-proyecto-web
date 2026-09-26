@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
 // importamos el sidebar
@@ -9,6 +9,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 
+// tipos para que el código sea más claro
+type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
+type FlowStep = 'PENDING' | 'VERIFYING';
+
+interface PaymentMethod {
+  id: PaymentMethodId;
+  icon: string;
+  label: string;
+  desc: string;
+}
+
 @Component({
   selector: 'app-payment',
   standalone: true,
@@ -16,66 +27,162 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './payment.html',
   styleUrls: ['./payment.scss']
 })
-export class PaymentComponent {
+export class PaymentComponent implements OnInit, OnDestroy {
+
+  // paso del flujo (simulación): pendiente de confirmación o en verificación
+  flowStep: FlowStep = 'PENDING';
+
+  // código de la reserva
+  reservationCode = 'RES-9420';
 
   // métodos de pago disponibles
-  paymentMethods = [
-    { id: 'CARD', icon: 'credit_card', label: 'PAYMENT.METHOD.CARD', desc: 'PAYMENT.METHOD.CARD_DESC' },
-    { id: 'PAYPAL', icon: 'account_balance_wallet', label: 'PAYMENT.METHOD.PAYPAL', desc: 'PAYMENT.METHOD.PAYPAL_DESC' },
-    { id: 'TRANSFER', icon: 'account_balance', label: 'PAYMENT.METHOD.TRANSFER', desc: 'PAYMENT.METHOD.TRANSFER_DESC' }
+  paymentMethods: PaymentMethod[] = [
+    { id: 'NEQUI', icon: 'smartphone', label: 'PAYMENT.METHOD.NEQUI', desc: 'PAYMENT.METHOD.NEQUI_DESC' },
+    { id: 'DAVIPLATA', icon: 'account_balance', label: 'PAYMENT.METHOD.DAVIPLATA', desc: 'PAYMENT.METHOD.DAVIPLATA_DESC' },
+    { id: 'TRANSFER', icon: 'receipt_long', label: 'PAYMENT.METHOD.TRANSFER', desc: 'PAYMENT.METHOD.TRANSFER_DESC' },
+    { id: 'CASH', icon: 'payments', label: 'PAYMENT.METHOD.CASH', desc: 'PAYMENT.METHOD.CASH_DESC' }
   ];
 
   // método seleccionado por el usuario
-  selectedMethod = 'CARD';
+  selectedMethod: PaymentMethodId = 'NEQUI';
 
-  // datos del formulario de tarjeta
-  card = {
-    name: '',
-    number: '',
-    expiry: '',
-    cvv: ''
+  // datos de la cuenta que recibe el pago
+  payee = {
+    name: 'Lavado Vehicular S.A.S.',
+    key: '318 450 9988',
+    accountType: 'PAYMENT.QR.ACCOUNT_TYPE_VALUE'
   };
 
-  // resumen del servicio a pagar
+  // resumen de la reserva
   serviceSummary = {
     service: 'PREMIUM',
-    vehicle: 'CAR',
-    plate: 'ABC123',
-    base: 45000,
-    deliveryFee: 6000
+    serviceName: 'Lavado Premium Automóvil',
+    serviceDesc: 'PAYMENT.SUMMARY.PREMIUM_DESC',
+    vehicleModel: 'Mazda CX-30',
+    plate: 'KLL-302',
+    schedule: 'Hoy, 24 Octubre 2024 · 14:00 - 15:15',
+    subtotal: 60000,
+    discountPercent: 15,
+    coupon: 'BIENVENIDO15'
   };
 
+  get discountAmount(): number {
+    return Math.round(this.serviceSummary.subtotal * this.serviceSummary.discountPercent / 100);
+  }
+
   get totalToPay(): number {
-    return this.serviceSummary.base + this.serviceSummary.deliveryFee;
+    return this.serviceSummary.subtotal - this.discountAmount;
   }
 
-  // historial de pagos del cliente
-  paymentHistory = [
-    { code: 'PG-5012', type: 'PREMIUM', vehicle: 'CAR', date: '12 Ago 2026', method: 'Tarjeta ••4821', amount: 45000, status: 'PAID' },
-    { code: 'PG-5008', type: 'BASIC', vehicle: 'MOTO', date: '05 Ago 2026', method: 'PayPal', amount: 18000, status: 'PAID' },
-    { code: 'PG-4990', type: 'FULL', vehicle: 'TRUCK', date: '28 Jul 2026', method: 'Transferencia', amount: 72000, status: 'PENDING' },
-    { code: 'PG-4975', type: 'PREMIUM', vehicle: 'CAR', date: '19 Jul 2026', method: 'Tarjeta ••4821', amount: 45000, status: 'REFUNDED' },
-    { code: 'PG-4960', type: 'BASIC', vehicle: 'CAR', date: '08 Jul 2026', method: 'Tarjeta ••4821', amount: 22000, status: 'PAID' }
-  ];
+  // temporizador del QR (15 minutos)
+  qrSecondsLeft = 15 * 60;
+  private timerId?: ReturnType<typeof setInterval>;
 
-  get totalPaid(): number {
-    return this.paymentHistory
-      .filter(p => p.status === 'PAID')
-      .reduce((sum, p) => sum + p.amount, 0);
+  get qrTimeLeft(): string {
+    const m = Math.floor(this.qrSecondsLeft / 60).toString().padStart(2, '0');
+    const s = (this.qrSecondsLeft % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   }
 
-  selectMethod(id: string) {
+  // confirmación del pago
+  receiptFile: File | null = null;
+  isDragging = false;
+  transactionRef = '';
+  copied = false;
+
+  // la referencia debe tener entre 8 y 12 caracteres alfanuméricos
+  get isRefValid(): boolean {
+    return /^[A-Za-z0-9]{8,12}$/.test(this.transactionRef);
+  }
+
+  get canConfirm(): boolean {
+    if (this.selectedMethod === 'CASH') return true;
+    return !!this.receiptFile && this.isRefValid;
+  }
+
+
+  ngOnInit(): void {
+    this.timerId = setInterval(() => {
+      if (this.qrSecondsLeft > 0) this.qrSecondsLeft--;
+    }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerId) clearInterval(this.timerId);
+  }
+
+  setFlowStep(step: FlowStep) {
+    this.flowStep = step;
+  }
+
+  selectMethod(id: PaymentMethodId) {
     this.selectedMethod = id;
   }
 
-  pay() {
-    // TODO: integrar con el backend de pagos (Commercial service)
-    console.log('Procesando pago por', this.totalToPay, 'con método', this.selectedMethod);
+  copyKey() {
+    navigator.clipboard?.writeText(this.payee.key.replace(/\s/g, ''));
+    this.copied = true;
+    setTimeout(() => (this.copied = false), 2000);
   }
 
-  downloadReceipt(code: string) {
-    // TODO: integrar descarga real del comprobante
-    console.log('Descargando comprobante de', code);
+  // --- subida del comprobante ---
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = true;
   }
+
+  onDragLeave() {
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+    const file = event.dataTransfer?.files?.[0];
+    if (file) this.setReceipt(file);
+  }
+
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) this.setReceipt(file);
+  }
+
+  private setReceipt(file: File) {
+    const validType = ['image/jpeg', 'image/png'].includes(file.type);
+    const validSize = file.size <= 10 * 1024 * 1024;
+    if (!validType || !validSize) {
+      alert('Solo JPG o PNG de máximo 10MB');
+      return;
+    }
+    this.receiptFile = file;
+  }
+
+  removeReceipt() {
+    this.receiptFile = null;
+  }
+
+  get receiptSize(): string {
+    if (!this.receiptFile) return '';
+    return (this.receiptFile.size / (1024 * 1024)).toFixed(1) + 'MB';
+  }
+
+  confirmPayment() {
+    if (!this.canConfirm) return;
+    // TODO: integrar con el backend de pagos (Commercial service)
+    console.log('Confirmando pago', {
+      reserva: this.reservationCode,
+      metodo: this.selectedMethod,
+      referencia: this.transactionRef,
+      monto: this.totalToPay,
+      comprobante: this.receiptFile?.name
+    });
+    this.flowStep = 'VERIFYING';
+  }
+
+  cancelReservation() {
+    // TODO: integrar cancelación real
+    console.log('Cancelando reserva', this.reservationCode);
+  }
+
 
 }

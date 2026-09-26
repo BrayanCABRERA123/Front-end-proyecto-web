@@ -649,41 +649,75 @@
     "TOTAL": "Total de avaliações recebidas",
     "LAST_12_MONTHS": "Nos últimos 12 meses"
   },
-  "PAYMENT": {
-    "TITLE": "Gateway de Pagamento",
-    "SUBTITLE": "Pague seu serviço com segurança e consulte seu histórico.",
-    "METHOD": {
-      "TITLE": "Método de pagamento",
-      "CARD": "Cartão",
-      "CARD_DESC": "Débito / Crédito",
-      "PAYPAL": "PayPal",
-      "PAYPAL_DESC": "Conta vinculada",
-      "TRANSFER": "Transferência",
-      "TRANSFER_DESC": "PSE / Bancos"
-    },
-    "FORM": {
-      "CARD_NAME": "Nome no cartão",
-      "CARD_NAME_PLACEHOLDER": "Juan Díaz",
-      "CARD_NUMBER": "Número do cartão",
-      "EXPIRY": "Vencimento",
-      "CVV": "CVV",
-      "SECURE_NOTE": "Transação criptografada. Não armazenamos os dados do seu cartão."
-    },
-    "SUMMARY": {
-      "TITLE": "Resumo do serviço",
-      "SERVICE": "Serviço",
-      "VEHICLE": "Veículo",
-      "BASE": "Base",
-      "DELIVERY": "Entrega",
-      "TOTAL": "Total a pagar",
-      "PAY_BUTTON": "Pagar",
-      "CANCEL_NOTE": "Você pode cancelar sem custo até 2 horas antes."
-    },
-    "HISTORY": {
-      "TITLE": "Histórico de pagamentos",
-      "TOTAL_PAID": "Total pago"
-    }
+"PAYMENT": {
+  "TITLE": "Pagamentos",
+  "SUBTITLE": "Pague seu serviço com segurança",
+  "STEP": "Passo 2 de 2 · Reserva confirmada",
+  "FLOW": {
+    "LABEL": "MODO DE SIMULAÇÃO DE FLUXO:",
+    "PENDING": "Aguardando confirmação",
+    "VERIFYING": "Em verificação"
   },
+  "METHOD": {
+    "TITLE": "Selecione sua forma de pagamento",
+    "NO_FEES": "Sem taxas adicionais",
+    "NEQUI": "Nequi",
+    "NEQUI_DESC": "Escaneie e pague pelo app",
+    "DAVIPLATA": "Daviplata",
+    "DAVIPLATA_DESC": "Escaneie e pague pelo app",
+    "TRANSFER": "Transferência",
+    "TRANSFER_DESC": "Escaneie ou use os dados da conta",
+    "CASH": "Dinheiro",
+    "CASH_DESC": "Pague no local ao receber o serviço"
+  },
+  "QR": {
+    "INSTANT": "PAGAMENTO DIGITAL IMEDIATO",
+    "VIA": "Via",
+    "VALID_FOR": "O código é válido por 15 minutos",
+    "SCAN_HINT": "Pode ser escaneado na tela",
+    "VERIFIED": "Verificado",
+    "KEY": "Chave / Conta autorizada",
+    "COPY": "Copiar número",
+    "COPIED": "Copiado",
+    "ACCOUNT_TYPE": "Tipo de conta",
+    "ACCOUNT_TYPE_VALUE": "Chave / Conta poupança vinculada",
+    "AMOUNT": "Valor a pagar",
+    "HINT": "Abra seu app, escaneie o código e confirme o pagamento pelo valor exato."
+  },
+  "CASH": {
+    "TITLE": "Pagamento em dinheiro",
+    "DESC": "Você pagará diretamente no local ao retirar seu veículo. Sua reserva fica garantida."
+  },
+  "CONFIRM": {
+    "TITLE": "Confirme seu pagamento",
+    "DROP": "Arraste seu comprovante aqui ou clique para procurar",
+    "FORMATS": "Formatos permitidos: JPG ou PNG (máx. 10MB)",
+    "REFERENCE": "Referência da transação",
+    "REFERENCE_HINT": "Número de 8 a 12 caracteres emitido pelo seu banco",
+    "AMOUNT": "Valor pago",
+    "AMOUNT_HINT": "Valor definido pela reserva com desconto",
+    "INFO": "Um administrador verificará seu pagamento e você receberá uma notificação. Sua vaga ficará 100% garantida e pronta no horário reservado."
+  },
+  "SUMMARY": {
+    "TITLE": "Resumo da reserva",
+    "PREMIUM_DESC": "Exterior detalhado, enceramento cerâmico e aspiração interna profunda",
+    "VEHICLE": "Veículo atribuído",
+    "SUBTOTAL": "Subtotal",
+    "DISCOUNT": "Desconto aplicado",
+    "COUPON": "Cupom",
+    "COUPON_OK": "Aplicado com sucesso",
+    "TOTAL": "TOTAL A PAGAR",
+    "TAX": "IVA (19%) incluído",
+    "PAY_BUTTON": "Já fiz o pagamento",
+    "CASH_BUTTON": "Confirmar reserva",
+    "CANCEL": "Cancelar reserva",
+    "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box"
+  },
+  "HELP": {
+    "TITLE": "Precisa de ajuda com seu pagamento?",
+    "DESC": "Central de atendimento ao cliente:"
+  }
+},
   "VEHICLES": {
     "TITLE": "Meus Veículos",
     "SUBTITLE": "Consulte seus veículos registrados e sua última lavagem",
