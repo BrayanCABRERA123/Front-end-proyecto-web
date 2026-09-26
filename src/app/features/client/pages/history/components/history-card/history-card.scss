@@ -96,30 +96,35 @@
   flex-shrink: 0;
 }
 
-.btn-paid {
+// etiqueta del estado del pago (informativa, no se puede hacer clic)
+.pay-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: $fw-medium;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+  &.paid {
+    background-color: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  &.pending {
+    background-color: var(--warning-soft);
+    color: var(--warning);
+  }
+}
+
+// botón para ir a pagar un servicio pendiente
+.btn-pay {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
   background-color: var(--primary);
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: $fw-medium;
-  cursor: pointer;
-  font-family: $font-family-base;
-  transition: 0.2s;
-  &:hover { filter: brightness(1.1); }
-  mat-icon { font-size: 18px; width: 18px; height: 18px; }
-}
-
-.btn-pending {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background-color: #ff4d4d;
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -178,7 +183,7 @@
   .history-card { margin: 0; padding: 16px; border-radius: 12px; }
   .card-body { flex-direction: column; align-items: flex-start; }
   .card-actions { width: 100%; align-items: stretch; }
-  .btn-paid, .btn-pending, .btn-rate, .rated-badge { width: 100%; justify-content: center; padding: 12px; }
+  .pay-badge, .btn-pay, .btn-rate, .rated-badge { width: 100%; justify-content: center; padding: 12px; }
   .card-title { font-size: $fs-body; }
   .card-price { font-size: $fs-subtitle; }
 }

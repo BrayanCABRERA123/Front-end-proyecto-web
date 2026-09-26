@@ -73,19 +73,22 @@
     <!-- Acciones -->
     <div class="card-actions">
 
-      <!-- Pagado -->
+      <!-- Estado del pago: etiqueta informativa (no es un botón) -->
       @if (service.paid) {
-        <button class="btn-paid">
+        <span class="pay-badge paid">
           {{ 'HISTORY_CARD.PAID' | translate }}
           <mat-icon>check</mat-icon>
-        </button>
-      }
-
-      <!-- Pendiente -->
-      @if (!service.paid) {
-        <button class="btn-pending">
+        </span>
+      } @else {
+        <span class="pay-badge pending">
           {{ 'HISTORY_CARD.PENDING' | translate }}
           <mat-icon>schedule</mat-icon>
+        </span>
+
+        <!-- Acción: ir a pagar el servicio pendiente -->
+        <button class="btn-pay" (click)="goToPayment()">
+          {{ 'HISTORY_CARD.PAY_NOW' | translate }}
+          <mat-icon>arrow_forward</mat-icon>
         </button>
       }
 

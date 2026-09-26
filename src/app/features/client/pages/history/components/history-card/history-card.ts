@@ -6,6 +6,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RatingModalComponent, RatingModalData, RatingResult } from '../../../../../../shared/dialogs/rating-modal/rating-modal';
 // modal reutilizable para mostrar mensajes de éxito
 import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-history-card',
@@ -23,8 +24,15 @@ export class HistoryCardComponent {
   constructor(
     private translate: TranslateService,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) { }
+
+  // lleva a la pantalla de pago del servicio pendiente
+  // TODO: enviar el id del servicio cuando la pantalla de pago lo use (hoy muestra una reserva de prueba)
+  goToPayment(): void {
+    this.router.navigate(['/client/payment']);
+  }
 
   // metodo que traduce extras
   getTranslatedExtras(extras: string[]): string[] {

@@ -60,6 +60,7 @@
     "STATUS": "Estado",
     "PAID": "Pagado",
     "PENDING": "Pendiente",
+    "PAY_NOW": "Pagar ahora",
     "RATED": "Calificado",
     "EDIT_RATING": "Editar calificación",
     "RATE": "Calificar Servicio"
