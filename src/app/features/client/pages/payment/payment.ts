@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 // modal reutilizable para mostrar mensajes de éxito o error
 import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
+// modal reutilizable de confirmación para acciones peligrosas
+import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
+import { Router } from '@angular/router';
 
 // tipos para que el código sea más claro
 type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
@@ -104,7 +107,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.timerId = setInterval(() => {
@@ -192,16 +198,48 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   // abre el modal de estado (éxito o error) con los textos indicados
-  private showStatusModal(data: StatusModalData) {
-    this.dialog.open(StatusModal, {
+  private showStatusModal(data: StatusModalData, disableClose = false) {
+    return this.dialog.open(StatusModal, {
       panelClass: 'custom-dialog',
+      disableClose,
       data
     });
   }
 
+  // pide confirmación antes de cancelar la reserva (acción irreversible)
   cancelReservation() {
-    // TODO: integrar cancelación real
-    console.log('Cancelando reserva', this.reservationCode);
+    const data: ConfirmModalData = {
+      title: 'PAYMENT.CANCEL_CONFIRM.TITLE',
+      message: 'PAYMENT.CANCEL_CONFIRM.MESSAGE',
+      messageParams: { code: this.reservationCode },
+      confirmText: 'PAYMENT.CANCEL_CONFIRM.CONFIRM',
+      // "Volver" en vez de "Cancelar" para no confundir con "cancelar reserva"
+      cancelText: 'PAYMENT.CANCEL_CONFIRM.BACK',
+      danger: true
+    };
+
+    const dialogRef = this.dialog.open(ConfirmModal, {
+      panelClass: 'custom-dialog',
+      data
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) this.onReservationCancelled();
+    });
+  }
+
+  // avisa que la reserva se canceló y, al cerrar, vuelve al inicio del cliente
+  private onReservationCancelled() {
+    // TODO: integrar cancelación real con el backend
+    const dialogRef = this.showStatusModal({
+      title: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_TITLE',
+      message: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_MESSAGE',
+      messageParams: { code: this.reservationCode }
+    }, true);
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['/client']);
+    });
   }
 
 

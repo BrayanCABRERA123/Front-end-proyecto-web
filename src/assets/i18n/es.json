@@ -657,6 +657,14 @@
     "LAST_12_MONTHS": "En los últimos 12 meses"
   },
 "PAYMENT": {
+  "CANCEL_CONFIRM": {
+    "TITLE": "¿Cancelar reserva?",
+    "MESSAGE": "Se cancelará la reserva {{code}} y se liberará el horario. Esta acción no se puede deshacer.",
+    "CONFIRM": "Sí, cancelar",
+    "BACK": "Volver",
+    "SUCCESS_TITLE": "Reserva cancelada",
+    "SUCCESS_MESSAGE": "La reserva {{code}} fue cancelada correctamente."
+  },
   "SUCCESS_TITLE": "¡Pago enviado!",
   "SUCCESS_MESSAGE": "Recibimos tu pago. Está en revisión y te avisaremos cuando sea aprobado.",
   "INVALID_FILE_TITLE": "Archivo no válido",

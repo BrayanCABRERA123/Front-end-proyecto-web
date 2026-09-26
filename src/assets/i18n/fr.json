@@ -657,6 +657,14 @@
     "LAST_12_MONTHS": "Au cours des 12 derniers mois"
   },
 "PAYMENT": {
+  "CANCEL_CONFIRM": {
+    "TITLE": "Annuler la réservation ?",
+    "MESSAGE": "La réservation {{code}} sera annulée et le créneau sera libéré. Cette action est irréversible.",
+    "CONFIRM": "Oui, annuler",
+    "BACK": "Retour",
+    "SUCCESS_TITLE": "Réservation annulée",
+    "SUCCESS_MESSAGE": "La réservation {{code}} a été annulée avec succès."
+  },
   "SUCCESS_TITLE": "Paiement envoyé !",
   "SUCCESS_MESSAGE": "Nous avons reçu votre paiement. Il est en cours de vérification et nous vous informerons dès son approbation.",
   "INVALID_FILE_TITLE": "Fichier non valide",

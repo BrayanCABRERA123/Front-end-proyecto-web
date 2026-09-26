@@ -19,6 +19,8 @@ export interface StatusModalDetail {
 export interface StatusModalData {
   title: string;
   message: string;
+  // valores opcionales para interpolar en el mensaje (ej. {{ code }})
+  messageParams?: Record<string, string>;
   buttonText?: string;
   type?: StatusModalType;
   details?: StatusModalDetail[];
@@ -36,6 +38,7 @@ export class StatusModal {
 
   title: string;
   message: string;
+  messageParams: Record<string, string>;
   buttonText: string;
   type: StatusModalType;
   details: StatusModalDetail[];
@@ -46,6 +49,7 @@ export class StatusModal {
   ) {
     this.title = data.title;
     this.message = data.message;
+    this.messageParams = data.messageParams ?? {};
     // si no se envía texto para el botón, usamos "Aceptar" por defecto
     this.buttonText = data.buttonText ?? 'COMMON.ACCEPT';
     // si no se envía el tipo, el modal es de éxito por defecto

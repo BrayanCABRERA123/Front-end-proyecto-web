@@ -657,6 +657,14 @@
     "LAST_12_MONTHS": "In the last 12 months"
   },
 "PAYMENT": {
+  "CANCEL_CONFIRM": {
+    "TITLE": "Cancel booking?",
+    "MESSAGE": "Booking {{code}} will be cancelled and the time slot will be released. This action cannot be undone.",
+    "CONFIRM": "Yes, cancel",
+    "BACK": "Go back",
+    "SUCCESS_TITLE": "Booking cancelled",
+    "SUCCESS_MESSAGE": "Booking {{code}} was cancelled successfully."
+  },
   "SUCCESS_TITLE": "Payment sent!",
   "SUCCESS_MESSAGE": "We received your payment. It is under review and we will notify you once it is approved.",
   "INVALID_FILE_TITLE": "Invalid file",

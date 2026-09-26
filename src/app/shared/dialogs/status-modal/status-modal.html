@@ -6,7 +6,7 @@
   </div>
 
   <h2 class="dialog-title">{{ title | translate }}</h2>
-  <p class="dialog-text">{{ message | translate }}</p>
+  <p class="dialog-text">{{ message | translate: messageParams }}</p>
 
   <!-- DETALLES OPCIONALES (ej. resumen de la reserva) -->
   @if (details.length) {
