@@ -653,11 +653,6 @@
   "TITLE": "Pagos",
   "SUBTITLE": "Paga tu servicio de forma segura",
   "STEP": "Paso 2 de 2 · Reserva confirmada",
-  "FLOW": {
-    "LABEL": "MODO DE SIMULACIÓN DE FLUJO:",
-    "PENDING": "Pendiente de confirmación",
-    "VERIFYING": "En verificación"
-  },
   "METHOD": {
     "TITLE": "Selecciona tu método de pago",
     "NO_FEES": "Sin comisiones adicionales",

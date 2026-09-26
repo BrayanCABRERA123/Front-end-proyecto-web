@@ -653,11 +653,6 @@
   "TITLE": "Payments",
   "SUBTITLE": "Pay for your service securely",
   "STEP": "Step 2 of 2 · Booking confirmed",
-  "FLOW": {
-    "LABEL": "FLOW SIMULATION MODE:",
-    "PENDING": "Pending confirmation",
-    "VERIFYING": "Under verification"
-  },
   "METHOD": {
     "TITLE": "Select your payment method",
     "NO_FEES": "No additional fees",

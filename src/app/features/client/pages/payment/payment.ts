@@ -29,7 +29,7 @@ interface PaymentMethod {
 })
 export class PaymentComponent implements OnInit, OnDestroy {
 
-  // paso del flujo (simulación): pendiente de confirmación o en verificación
+  // estado del pago: pendiente de confirmación o en verificación
   flowStep: FlowStep = 'PENDING';
 
   // código de la reserva
@@ -109,10 +109,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.timerId) clearInterval(this.timerId);
-  }
-
-  setFlowStep(step: FlowStep) {
-    this.flowStep = step;
   }
 
   selectMethod(id: PaymentMethodId) {

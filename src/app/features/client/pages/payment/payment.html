@@ -6,19 +6,6 @@
   <!-- Contenido principal derecho -->
   <main class="home-content">
 
-    <!-- Simulación del flujo -->
-    <div class="flow-bar">
-      <span class="flow-label">{{ 'PAYMENT.FLOW.LABEL' | translate }}</span>
-      <div class="flow-steps">
-        <button class="flow-step" [class.active]="flowStep === 'PENDING'" (click)="setFlowStep('PENDING')">
-          <mat-icon>pending_actions</mat-icon> 1. {{ 'PAYMENT.FLOW.PENDING' | translate }}
-        </button>
-        <button class="flow-step" [class.active]="flowStep === 'VERIFYING'" (click)="setFlowStep('VERIFYING')">
-          <mat-icon>hourglass_top</mat-icon> 2. {{ 'PAYMENT.FLOW.VERIFYING' | translate }}
-        </button>
-      </div>
-    </div>
-
     <div class="payment-header">
       <span class="step-pill">
         <mat-icon>check_circle</mat-icon>
