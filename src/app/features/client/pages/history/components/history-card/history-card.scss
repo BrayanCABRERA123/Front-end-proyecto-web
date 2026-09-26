@@ -150,6 +150,26 @@
   &:hover { background-color: var(--primary); color: #ffffff; }
 }
 
+// reemplaza a "Calificar" cuando ya se calificó; al hacer clic permite editar
+.rated-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  color: var(--primary);
+  background-color: rgba(var(--primary-rgb), 0.08);
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: $fw-medium;
+  font-family: $font-family-base;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  .edit-icon { font-size: 15px; width: 15px; height: 15px; margin-left: 4px; opacity: .7; }
+  &:hover { border-color: var(--primary); }
+}
+
 @include tablet {
   .history-card { margin: 0; }
 }
@@ -158,7 +178,7 @@
   .history-card { margin: 0; padding: 16px; border-radius: 12px; }
   .card-body { flex-direction: column; align-items: flex-start; }
   .card-actions { width: 100%; align-items: stretch; }
-  .btn-paid, .btn-pending, .btn-rate { width: 100%; justify-content: center; padding: 12px; }
+  .btn-paid, .btn-pending, .btn-rate, .rated-badge { width: 100%; justify-content: center; padding: 12px; }
   .card-title { font-size: $fs-body; }
   .card-price { font-size: $fs-subtitle; }
 }

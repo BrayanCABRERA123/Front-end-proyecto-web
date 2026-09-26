@@ -64,6 +64,8 @@
     "STATUS": "Status",
     "PAID": "Paid",
     "PENDING": "Pending",
+    "RATED": "Rated",
+    "EDIT_RATING": "Edit rating",
     "RATE": "Rate Service"
   },
   "COMMON": {
@@ -333,6 +335,12 @@
     "QUESTION": "How was your experience?",
     "COMMENT": "Comments (optional)",
     "PLACEHOLDER": "Tell us more about your experience...",
+    "SUCCESS_TITLE": "Thanks for your rating!",
+    "SUCCESS_MESSAGE": "Your feedback helps us improve our service.",
+    "EDIT_TITLE": "Edit rating",
+    "EDIT_SUBMIT": "Save changes",
+    "UPDATED_TITLE": "Rating updated!",
+    "UPDATED_MESSAGE": "Your rating was saved successfully.",
     "SUBMIT": "Submit rating"
   },
   "RESERVE": {

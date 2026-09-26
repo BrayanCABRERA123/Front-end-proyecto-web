@@ -64,6 +64,8 @@
     "STATUS": "Statut",
     "PAID": "Payé",
     "PENDING": "En attente",
+    "RATED": "Évalué",
+    "EDIT_RATING": "Modifier l’évaluation",
     "RATE": "Évaluer le service"
   },
   "COMMON": {
@@ -333,6 +335,12 @@
     "QUESTION": "Comment a été votre expérience ?",
     "COMMENT": "Commentaires (optionnel)",
     "PLACEHOLDER": "Parlez-nous de votre expérience...",
+    "SUCCESS_TITLE": "Merci pour votre évaluation !",
+    "SUCCESS_MESSAGE": "Votre avis nous aide à améliorer notre service.",
+    "EDIT_TITLE": "Modifier l’évaluation",
+    "EDIT_SUBMIT": "Enregistrer les modifications",
+    "UPDATED_TITLE": "Évaluation mise à jour !",
+    "UPDATED_MESSAGE": "Votre évaluation a été enregistrée avec succès.",
     "SUBMIT": "Envoyer l’évaluation"
   },
   "RESERVE": {

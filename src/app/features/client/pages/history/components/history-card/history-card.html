@@ -97,11 +97,24 @@
         </button>
       }
 
-      <!-- Calificar -->
-      @if (service.paid) {
+      <!-- Calificar (solo si está pagado y aún no se ha calificado) -->
+      @if (service.paid && !service.rating) {
         <button class="btn-rate" (click)="openRating(service)">
           {{ 'HISTORY_CARD.RATE' | translate }}
           <mat-icon>star_outline</mat-icon>
+        </button>
+      }
+
+      <!-- Ya calificado: al hacer clic se puede editar la calificación -->
+      @if (service.rating) {
+        <button
+          class="rated-badge"
+          [attr.title]="'HISTORY_CARD.EDIT_RATING' | translate"
+          (click)="openRating(service)">
+          {{ 'HISTORY_CARD.RATED' | translate }}
+          <mat-icon>star</mat-icon>
+          {{ service.rating }}
+          <mat-icon class="edit-icon">edit</mat-icon>
         </button>
       }
 

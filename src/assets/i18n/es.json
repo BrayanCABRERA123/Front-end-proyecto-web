@@ -64,6 +64,8 @@
     "STATUS": "Estado",
     "PAID": "Pagado",
     "PENDING": "Pendiente",
+    "RATED": "Calificado",
+    "EDIT_RATING": "Editar calificación",
     "RATE": "Calificar Servicio"
   },
   "COMMON": {
@@ -333,6 +335,12 @@
     "QUESTION": "¿Cómo fue tu experiencia?",
     "COMMENT": "Comentarios (opcional)",
     "PLACEHOLDER": "Cuéntanos más sobre tu experiencia...",
+    "SUCCESS_TITLE": "¡Gracias por tu calificación!",
+    "SUCCESS_MESSAGE": "Tu opinión nos ayuda a mejorar nuestro servicio.",
+    "EDIT_TITLE": "Editar calificación",
+    "EDIT_SUBMIT": "Guardar cambios",
+    "UPDATED_TITLE": "¡Calificación actualizada!",
+    "UPDATED_MESSAGE": "Tu calificación se guardó correctamente.",
     "SUBMIT": "Enviar calificación"
   },
   "RESERVE": {

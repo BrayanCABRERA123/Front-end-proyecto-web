@@ -173,8 +173,13 @@ textarea {
   cursor: pointer;
   transition: 0.2s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     filter: brightness(1.08);
+  }
+
+  &:disabled {
+    opacity: .5;
+    cursor: not-allowed;
   }
 }
 

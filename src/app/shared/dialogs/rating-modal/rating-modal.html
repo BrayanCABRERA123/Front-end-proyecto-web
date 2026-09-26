@@ -8,8 +8,9 @@
 
     </button>
 
+    <!-- el título y el botón cambian si se está editando una calificación -->
     <h2>
-      {{ 'RATINGS.TITLE' | translate }}
+      {{ (isEditMode ? 'RATINGS.EDIT_TITLE' : 'RATINGS.TITLE') | translate }}
     </h2>
 
     <p class="subtitle">
@@ -42,9 +43,10 @@
 
     </div>
 
-    <button class="btn-submit" (click)="submit()">
+    <!-- deshabilitado hasta que el usuario elija al menos una estrella -->
+    <button class="btn-submit" [disabled]="!canSubmit" (click)="submit()">
 
-      {{ 'RATINGS.SUBMIT' | translate }}
+      {{ (isEditMode ? 'RATINGS.EDIT_SUBMIT' : 'RATINGS.SUBMIT') | translate }}
 
     </button>
 
