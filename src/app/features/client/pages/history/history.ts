@@ -46,7 +46,6 @@ export class HistoryComponent {
     id: 1,
     title: 'PREMIUM',
     date: '28/03/2026',
-    address: 'Calle Falsa 123, Springfield',
     serviceType: 'FULL',
     extras: ['WAX', 'VACUUM'],
     assignmentType: 'MANUAL',
@@ -59,7 +58,6 @@ export class HistoryComponent {
     id: 2,
     title: 'BASIC',
     date: '16/12/2025',
-    address: 'Calle 42 #13-33',
     serviceType: 'FULL',
     extras: ['WAX'],
     assignmentType: 'AUTO',
@@ -88,8 +86,6 @@ export class HistoryComponent {
       const text = this.search.toLowerCase();
 
       return (
-        service.address.toLowerCase().includes(text) ||
-
         this.translate.instant('SERVICE.' + service.serviceType)
           .toLowerCase()
           .includes(text) ||

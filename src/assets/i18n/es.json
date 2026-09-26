@@ -52,12 +52,11 @@
     "DATE": "Fecha",
     "FROM": "Desde",
     "TO": "Hasta",
-    "SEARCH_LABEL": "Buscar por dirección, servicio u operario",
+    "SEARCH_LABEL": "Buscar por servicio u operario",
     "SEARCH_PLACEHOLDER": "Escribe para buscar...",
     "EMPTY": "No se encontraron servicios"
   },
-  "HISTORY_CARD": {
-    "ADDRESS": "Dirección",
+  "HISTORY_CARD": {
     "TYPE": "Tipo de servicio",
     "EXTRA": "Servicios extra",
     "OPERATOR": "Asignación de operario",
@@ -232,7 +231,7 @@
       "SISTEMA": "Sistema"
     },
     "SERVICE_REMINDER_TITLE": "Recordatorio de servicio",
-    "SERVICE_REMINDER_DESC": "Tu lavado Premium SV-2034 es hoy a las 3:00 p.m. El operario llegará a tu dirección registrada.",
+    "SERVICE_REMINDER_DESC": "Tu lavado Premium SV-2034 es hoy a las 3:00 p.m. Te esperamos en nuestra sede, llega unos minutos antes.",
     "PENDING_PAYMENT_TITLE": "Recordatorio de pago pendiente",
     "PENDING_PAYMENT_DESC": "El servicio SV-1998 tiene un saldo pendiente de $18.000.",
     "PROMO_FULL_WASH_TITLE": "20% OFF en lavado Completo",
@@ -244,7 +243,7 @@
     "PAYMENT_APPROVED_DESC": "Recibimos tu pago de $45.000 para el servicio SV-1042.",
     "CLIENT_CANCELLATION_DESC": "El servicio SV-1690 fue cancelado por el cliente.",
     "OPERATOR_MESSAGE_TITLE": "Mensaje del operario",
-    "OPERATOR_MESSAGE_DESC": "\"Voy a estar 5 minutos tarde, por favor esperarme.\"",
+    "OPERATOR_MESSAGE_DESC": "\"Tu vehículo ya está listo, puedes pasar a recogerlo.\"",
     "DELETE_TITLE": "¿Eliminar esta notificación?",
     "DELETE_MESSAGE": "Esta acción no se puede deshacer.",
     "ADMIN_SUBTITLE": "Aquí puedes ver las notificaciones administrativas: pagos por verificar, reservas sin operario, novedades del equipo y del sistema."
