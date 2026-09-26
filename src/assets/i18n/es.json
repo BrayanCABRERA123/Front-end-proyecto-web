@@ -492,6 +492,9 @@
       "CONFIRM": "Confirmar Contraseña",
       "CONFIRM_PLACEHOLDER": "••••••••",
       "BUTTON": "Actualizar Contraseña",
+      "SUCCESS_TITLE": "¡Contraseña actualizada!",
+      "SUCCESS_MESSAGE": "Tu contraseña se cambió correctamente. Ya puedes iniciar sesión con tu nueva contraseña.",
+      "SUCCESS_BUTTON": "Ir a iniciar sesión",
       "REQUIREMENTS": {
         "MIN": "Mínimo 8 caracteres",
         "UPPERCASE": "Al menos una mayúscula",
@@ -654,6 +657,10 @@
     "LAST_12_MONTHS": "En los últimos 12 meses"
   },
 "PAYMENT": {
+  "SUCCESS_TITLE": "¡Pago enviado!",
+  "SUCCESS_MESSAGE": "Recibimos tu pago. Está en revisión y te avisaremos cuando sea aprobado.",
+  "INVALID_FILE_TITLE": "Archivo no válido",
+  "INVALID_FILE_MESSAGE": "Solo se permiten imágenes JPG o PNG de máximo 10MB.",
   "TITLE": "Pagos",
   "SUBTITLE": "Paga tu servicio de forma segura",
   "STEP": "Paso 2 de 2 · Reserva confirmada",

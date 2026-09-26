@@ -8,6 +8,9 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+// modal reutilizable para mostrar mensajes de éxito o error
+import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
 
 // tipos para que el código sea más claro
 type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
@@ -101,6 +104,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
 
+  constructor(private dialog: MatDialog) {}
+
   ngOnInit(): void {
     this.timerId = setInterval(() => {
       if (this.qrSecondsLeft > 0) this.qrSecondsLeft--;
@@ -147,7 +152,12 @@ export class PaymentComponent implements OnInit, OnDestroy {
     const validType = ['image/jpeg', 'image/png'].includes(file.type);
     const validSize = file.size <= 10 * 1024 * 1024;
     if (!validType || !validSize) {
-      alert('Solo JPG o PNG de máximo 10MB');
+      // mostramos el error en el modal de estado (en rojo) en lugar de alert()
+      this.showStatusModal({
+        type: 'error',
+        title: 'PAYMENT.INVALID_FILE_TITLE',
+        message: 'PAYMENT.INVALID_FILE_MESSAGE'
+      });
       return;
     }
     this.receiptFile = file;
@@ -173,6 +183,20 @@ export class PaymentComponent implements OnInit, OnDestroy {
       comprobante: this.receiptFile?.name
     });
     this.flowStep = 'VERIFYING';
+
+    // avisamos al usuario que su pago quedó enviado y en revisión
+    this.showStatusModal({
+      title: 'PAYMENT.SUCCESS_TITLE',
+      message: 'PAYMENT.SUCCESS_MESSAGE'
+    });
+  }
+
+  // abre el modal de estado (éxito o error) con los textos indicados
+  private showStatusModal(data: StatusModalData) {
+    this.dialog.open(StatusModal, {
+      panelClass: 'custom-dialog',
+      data
+    });
   }
 
   cancelReservation() {

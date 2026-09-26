@@ -24,6 +24,11 @@
   color: var(--success);
   animation: pop-in .35s ease-out;
 
+  &.error {
+    background: var(--error-soft);
+    color: var(--error);
+  }
+
   mat-icon {
     font-size: 36px;
     width: 36px;

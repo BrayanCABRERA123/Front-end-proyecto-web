@@ -492,6 +492,9 @@
       "CONFIRM": "Confirm Password",
       "CONFIRM_PLACEHOLDER": "••••••••",
       "BUTTON": "Update Password",
+      "SUCCESS_TITLE": "Password updated!",
+      "SUCCESS_MESSAGE": "Your password was changed successfully. You can now log in with your new password.",
+      "SUCCESS_BUTTON": "Go to login",
       "REQUIREMENTS": {
         "MIN": "Minimum 8 characters",
         "UPPERCASE": "At least one uppercase letter",
@@ -654,6 +657,10 @@
     "LAST_12_MONTHS": "In the last 12 months"
   },
 "PAYMENT": {
+  "SUCCESS_TITLE": "Payment sent!",
+  "SUCCESS_MESSAGE": "We received your payment. It is under review and we will notify you once it is approved.",
+  "INVALID_FILE_TITLE": "Invalid file",
+  "INVALID_FILE_MESSAGE": "Only JPG or PNG images up to 10MB are allowed.",
   "TITLE": "Payments",
   "SUBTITLE": "Pay for your service securely",
   "STEP": "Step 2 of 2 · Booking confirmed",

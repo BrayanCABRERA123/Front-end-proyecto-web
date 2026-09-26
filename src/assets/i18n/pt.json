@@ -492,6 +492,9 @@
       "CONFIRM": "Confirmar Senha",
       "CONFIRM_PLACEHOLDER": "••••••••",
       "BUTTON": "Atualizar Senha",
+      "SUCCESS_TITLE": "Senha atualizada!",
+      "SUCCESS_MESSAGE": "Sua senha foi alterada com sucesso. Agora você pode entrar com sua nova senha.",
+      "SUCCESS_BUTTON": "Ir para o login",
       "REQUIREMENTS": {
         "MIN": "Mínimo de 8 caracteres",
         "UPPERCASE": "Pelo menos uma letra maiúscula",
@@ -654,6 +657,10 @@
     "LAST_12_MONTHS": "Nos últimos 12 meses"
   },
 "PAYMENT": {
+  "SUCCESS_TITLE": "Pagamento enviado!",
+  "SUCCESS_MESSAGE": "Recebemos seu pagamento. Ele está em análise e avisaremos quando for aprovado.",
+  "INVALID_FILE_TITLE": "Arquivo inválido",
+  "INVALID_FILE_MESSAGE": "Apenas imagens JPG ou PNG de até 10MB são permitidas.",
   "TITLE": "Pagamentos",
   "SUBTITLE": "Pague seu serviço com segurança",
   "STEP": "Passo 2 de 2 · Reserva confirmada",

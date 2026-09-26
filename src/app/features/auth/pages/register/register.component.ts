@@ -26,7 +26,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LegalDocumentModal, LegalDocumentType } from '../../../../shared/dialogs/legal-document-modal/legal-document-modal';
 
 // modal reutilizable para mostrar el mensaje de registro exitoso
-import { SuccessModal, SuccessModalData } from '../../../../shared/dialogs/success-modal/success-modal';
+import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
 
 
 @Component({
@@ -254,13 +254,13 @@ export class RegisterComponent {
   // muestra el modal de registro exitoso y, al cerrarlo, redirige al login
   mostrarRegistroExitoso() {
 
-    const data: SuccessModalData = {
+    const data: StatusModalData = {
       title: 'REGISTER.SUCCESS_TITLE',
       message: 'REGISTER.SUCCESS_MESSAGE',
       buttonText: 'REGISTER.SUCCESS_BUTTON'
     };
 
-    const dialogRef = this.dialog.open(SuccessModal, {
+    const dialogRef = this.dialog.open(StatusModal, {
       panelClass: 'custom-dialog',
       // evita que se cierre al hacer clic afuera o con ESC, así el usuario
       // siempre pasa por el botón y se garantiza la redirección
