@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, computed } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmLogoutDialogComponent } from '../../../shared/dialogs/confirm-logout/confirm-logout';
+// usuario de la sesión: el mismo que se edita en el perfil
+import { UserSession } from '../../../core/services/user-session';
 
 @Component({
   selector: 'app-sidebar',
@@ -20,11 +22,12 @@ export class SidebarComponent implements OnInit {
   isOpen: boolean = false;
   logoRoute = '/';
 
-  user = {
-    name: 'Juan Díaz',
-    email: 'juan@email.com',
-    initials: 'JD'
-  };
+  // se actualiza solo cuando el usuario cambia su nombre o correo en el perfil
+  user = computed(() => ({
+    name: this.session.user().name,
+    email: this.session.user().email,
+    initials: this.session.initials()
+  }));
 
   /*Menu opciones Client */
   clientMenu = [
@@ -94,7 +97,11 @@ export class SidebarComponent implements OnInit {
 
   }
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private session: UserSession
+  ) {}
 
   // abre o cierra el sidebar en mobile
   toggleSidebar(): void {

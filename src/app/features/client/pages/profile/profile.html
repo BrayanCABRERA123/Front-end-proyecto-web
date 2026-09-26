@@ -2,5 +2,5 @@
 <div class="profile-container">
   <app-sidebar rol="CLIENT"></app-sidebar>
   <!-- componente compartido de perfil -->
-  <app-profile-card [user]="user"></app-profile-card>
+  <app-profile-card [user]="user()" (saved)="onSaved($event)"></app-profile-card>
 </div>
