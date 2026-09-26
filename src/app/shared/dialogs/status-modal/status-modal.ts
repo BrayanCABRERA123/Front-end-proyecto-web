@@ -6,7 +6,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 // tipos de estado que puede mostrar el modal
-export type StatusModalType = 'success' | 'error';
+// info: para mostrar información/detalles sin que sea un éxito o un error
+export type StatusModalType = 'success' | 'error' | 'info';
 
 // fila opcional de detalle (ej. resumen de una reserva)
 // label es llave de traducción, value es el texto ya listo para mostrar
@@ -23,8 +24,17 @@ export interface StatusModalData {
   messageParams?: Record<string, string>;
   buttonText?: string;
   type?: StatusModalType;
+  // ícono de Material opcional; si no se envía se usa el del tipo
+  icon?: string;
   details?: StatusModalDetail[];
 }
+
+// ícono por defecto de cada tipo
+const ICON_BY_TYPE: Record<StatusModalType, string> = {
+  success: 'check_circle',
+  error: 'error',
+  info: 'info'
+};
 
 // modal reutilizable para mostrar un mensaje de estado (éxito o error)
 @Component({
@@ -58,9 +68,9 @@ export class StatusModal {
     this.details = data.details ?? [];
   }
 
-  // ícono de Material según el tipo de estado
+  // ícono enviado por quien abre el modal o, si no, el del tipo de estado
   get icon(): string {
-    return this.type === 'error' ? 'error' : 'check_circle';
+    return this.data.icon ?? ICON_BY_TYPE[this.type];
   }
 
   // cierra el modal
