@@ -16,6 +16,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { StatusModal, StatusModalData } from '../../dialogs/status-modal/status-modal';
 // modal con el formulario para cambiar la contraseña
 import { ChangePasswordModal } from '../../dialogs/change-password-modal/change-password-modal';
+// modal reutilizable de confirmación para acciones peligrosas
+import { ConfirmModal, ConfirmModalData } from '../../dialogs/confirm-modal/confirm-modal';
+import { Router } from '@angular/router';
 
 interface PhoneCountry {
   code: string;
@@ -59,7 +62,8 @@ export class ProfileCardComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private elRef: ElementRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -205,6 +209,48 @@ export class ProfileCardComponent implements OnInit, OnChanges {
         title: 'PROFILE.PASSWORD_SUCCESS_TITLE',
         message: 'PROFILE.PASSWORD_SUCCESS_MESSAGE'
       });
+    });
+  }
+
+  // pide confirmación antes de eliminar la cuenta (acción irreversible)
+  confirmDeleteAccount(): void {
+    const data: ConfirmModalData = {
+      title: 'PROFILE.DELETE_CONFIRM_TITLE',
+      message: 'PROFILE.DELETE_CONFIRM_MESSAGE',
+      confirmText: 'PROFILE.DELETE_CONFIRM_BUTTON',
+      danger: true
+    };
+
+    const dialogRef = this.dialog.open(ConfirmModal, {
+      panelClass: 'custom-dialog',
+      data
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (!confirmed) return;
+      this.deleteAccount();
+    });
+  }
+
+  // elimina la cuenta, cierra la sesión y, al cerrar el aviso, vuelve al inicio
+  private deleteAccount(): void {
+    // TODO: integrar con el backend para eliminar la cuenta
+    // se limpia la sesión igual que en el cierre de sesión del sidebar
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    const dialogRef = this.dialog.open(StatusModal, {
+      panelClass: 'custom-dialog',
+      // la sesión ya se cerró, así que el usuario siempre debe salir por el botón
+      disableClose: true,
+      data: {
+        title: 'PROFILE.DELETE_SUCCESS_TITLE',
+        message: 'PROFILE.DELETE_SUCCESS_MESSAGE'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigateByUrl('/');
     });
   }
 
