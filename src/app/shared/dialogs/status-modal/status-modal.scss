@@ -20,8 +20,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--success-soft);
-  color: var(--success);
+  // éxito usa el color principal para respetar el tema (verde o rosado)
+  background: var(--primary-soft);
+  color: var(--primary);
   animation: pop-in .35s ease-out;
 
   &.error {
