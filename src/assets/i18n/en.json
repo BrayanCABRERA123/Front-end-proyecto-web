@@ -12,10 +12,7 @@
     "THEME": "Choose theme",
     "THEME_DESC": "Customize the app colors",
     "LANGUAGE": "Languages",
-    "LANGUAGE_DESC": "Change language",
-    "LOCATION": "Location",
-    "LOCATION_SHARE": "Share Location",
-    "LOCATION_DESC": "Allow access to your current location",
+    "LANGUAGE_DESC": "Change language",
     "HELP": "Help",
     "HELP_CENTER": "Help Center",
     "OPEN": "Open",
@@ -299,6 +296,7 @@
     "EMAIL": "Email",
     "PHONE": "Phone",
     "ADDRESS": "Address",
+    "OPTIONAL": "optional",
     "EDIT": "Edit profile",
     "SAVE": "Save",
     "SUCCESS_TITLE": "Profile updated!",
@@ -326,8 +324,7 @@
       "EMAIL_REQUIRED": "Email is required",
       "EMAIL_INVALID": "Please enter a valid email address",
       "PHONE_REQUIRED": "Phone number is required",
-      "PHONE_INVALID": "The number is not valid for the selected country",
-      "ADDRESS_REQUIRED": "Address is required",
+      "PHONE_INVALID": "The number is not valid for the selected country",
       "ADDRESS_MIN": "Address must be at least 5 characters"
     }
   },

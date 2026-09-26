@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, HostListener, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, HostListener, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,6 +19,14 @@ import { ChangePasswordModal } from '../../dialogs/change-password-modal/change-
 // modal reutilizable de confirmación para acciones peligrosas
 import { ConfirmModal, ConfirmModalData } from '../../dialogs/confirm-modal/confirm-modal';
 import { Router } from '@angular/router';
+
+// datos que emite el perfil al guardar (la página de cada rol decide dónde guardarlos)
+export interface ProfileSaveData {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+}
 
 interface PhoneCountry {
   code: string;
@@ -45,6 +53,9 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     initials: '',
     memberSince: ''
   };
+
+  // avisa a la página con los datos nuevos cuando el usuario guarda
+  @Output() saved = new EventEmitter<ProfileSaveData>();
 
   editing: boolean = false;
 
@@ -84,15 +95,16 @@ export class ProfileCardComponent implements OnInit, OnChanges {
           Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
         ]
       ],
-      phoneCountry: [this.countries[0].code, Validators.required],
+      phoneCountry: [this.parsePhone(this.user.phone).country, Validators.required],
       phoneNumber: [
-        this.cleanNumber(this.user.phone),
+        this.parsePhone(this.user.phone).number,
         Validators.required
       ],
+      // opcional: el servicio es en la sede, la dirección queda solo como dato de contacto
+      // (minLength no marca error si el campo está vacío)
       address: [
         this.user.address,
         [
-          Validators.required,
           Validators.minLength(5),
           Validators.maxLength(100)
         ]
@@ -107,7 +119,8 @@ export class ProfileCardComponent implements OnInit, OnChanges {
       this.form.patchValue({
         name: this.user.name,
         email: this.user.email,
-        phoneNumber: this.cleanNumber(this.user.phone),
+        phoneCountry: this.parsePhone(this.user.phone).country,
+        phoneNumber: this.parsePhone(this.user.phone).number,
         address: this.user.address
       });
     }
@@ -131,8 +144,23 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     this.phoneDropdownOpen = false;
   }
 
-  private cleanNumber(phone: string): string {
-    return phone.replace(/\D/g, '').slice(-10);
+  // separa el indicativo del país y el número (ej. "+57 3001234567" -> CO + "3001234567")
+  private parsePhone(phone: string): { country: string; number: string } {
+    const value = (phone ?? '').trim();
+
+    // se revisan primero los indicativos más largos para no confundir +1 con +12...
+    const country = [...this.countries]
+      .sort((a, b) => b.dialCode.length - a.dialCode.length)
+      .find(c => value.startsWith(c.dialCode));
+
+    if (!country) {
+      return { country: this.countries[0].code, number: value.replace(/\D/g, '') };
+    }
+
+    return {
+      country: country.code,
+      number: value.slice(country.dialCode.length).replace(/\D/g, '')
+    };
   }
 
   private phoneValidator(): ValidatorFn {
@@ -179,7 +207,15 @@ export class ProfileCardComponent implements OnInit, OnChanges {
       return;
     }
 
-    console.log('Guardar cambios:', this.form.value);
+    const value = this.form.value;
+
+    // se emiten los datos para que la página los guarde (y el sidebar se actualice)
+    this.saved.emit({
+      name: value.name.trim(),
+      email: value.email.trim(),
+      phone: `${this.selectedCountry.dialCode} ${value.phoneNumber}`,
+      address: (value.address ?? '').trim()
+    });
 
     this.editing = false;
     this.form.disable();

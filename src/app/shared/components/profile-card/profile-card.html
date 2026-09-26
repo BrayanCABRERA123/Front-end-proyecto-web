@@ -125,16 +125,13 @@
       <div class="field-card" [class.field-error]="form.get('address')?.invalid && form.get('address')?.touched">
         <div class="field-icon"><mat-icon>home</mat-icon></div>
         <div class="field-body">
-          <label>{{ 'PROFILE.ADDRESS' | translate }}</label>
+          <!-- dirección opcional: el servicio es en la sede del lavadero -->
+          <label>{{ 'PROFILE.ADDRESS' | translate }} ({{ 'PROFILE.OPTIONAL' | translate }})</label>
           <input type="text" formControlName="address"/>
 
-          @if (form.get('address')?.invalid && form.get('address')?.touched) {
+          @if (form.get('address')?.hasError('minlength') && form.get('address')?.touched) {
             <p class="error-msg">
-              @if (form.get('address')?.hasError('required')) {
-                {{ 'PROFILE.VALIDATION.ADDRESS_REQUIRED' | translate }}
-              } @else if (form.get('address')?.hasError('minlength')) {
-                {{ 'PROFILE.VALIDATION.ADDRESS_MIN' | translate }}
-              }
+              {{ 'PROFILE.VALIDATION.ADDRESS_MIN' | translate }}
             </p>
           }
         </div>

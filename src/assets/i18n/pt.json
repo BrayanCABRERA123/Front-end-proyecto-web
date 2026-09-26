@@ -12,10 +12,7 @@
     "THEME": "Escolher tema",
     "THEME_DESC": "Personalize as cores do aplicativo",
     "LANGUAGE": "Idiomas",
-    "LANGUAGE_DESC": "Alterar idioma",
-    "LOCATION": "Localização",
-    "LOCATION_SHARE": "Compartilhar localização",
-    "LOCATION_DESC": "Permitir acesso à sua localização atual",
+    "LANGUAGE_DESC": "Alterar idioma",
     "HELP": "Ajuda",
     "HELP_CENTER": "Central de ajuda",
     "OPEN": "Abrir",
@@ -299,6 +296,7 @@
     "EMAIL": "Email",
     "PHONE": "Telefone",
     "ADDRESS": "Endereço",
+    "OPTIONAL": "opcional",
     "EDIT": "Editar perfil",
     "SAVE": "Salvar",
     "SUCCESS_TITLE": "Perfil atualizado!",
@@ -326,8 +324,7 @@
       "EMAIL_REQUIRED": "O e-mail é obrigatório",
       "EMAIL_INVALID": "Digite um e-mail válido",
       "PHONE_REQUIRED": "O telefone é obrigatório",
-      "PHONE_INVALID": "O número não é válido para o país selecionado",
-      "ADDRESS_REQUIRED": "O endereço é obrigatório",
+      "PHONE_INVALID": "O número não é válido para o país selecionado",
       "ADDRESS_MIN": "O endereço deve ter pelo menos 5 caracteres"
     }
   },

@@ -29,8 +29,7 @@ export class SettingsPanelComponent implements OnInit {
   settings = {
     push: true,
     email: true,
-    promo: false,
-    location: true
+    promo: false
   };
 
   selectedTheme: string = 'green-light';
