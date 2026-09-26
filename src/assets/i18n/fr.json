@@ -15,6 +15,15 @@
     "LANGUAGE_DESC": "Changer la langue",
     "HELP": "Aide",
     "HELP_CENTER": "Centre d'aide",
+    "HELP_MODAL": {
+      "MESSAGE": "Des questions ou un problème ? Contactez-nous par l’un de ces canaux.",
+      "WHATSAPP": "WhatsApp",
+      "SUPPORT_LINE": "Service client",
+      "EMAIL": "E-mail",
+      "HOURS": "Horaires",
+      "HOURS_VALUE": "Du lundi au samedi, 7h00 - 18h30",
+      "ADDRESS": "Adresse"
+    },
     "OPEN": "Ouvrir",
     "LEGAL_SECTION": "Mentions légales",
     "VIEW_TERMS": "Voir les Conditions Générales",
