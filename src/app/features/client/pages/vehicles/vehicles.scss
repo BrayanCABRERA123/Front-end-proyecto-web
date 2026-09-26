@@ -148,6 +148,12 @@
   margin: 2px 0 0;
 }
 
+// botones de editar y eliminar en la tarjeta
+.card-actions {
+  display: flex;
+  gap: 4px;
+}
+
 .btn-icon {
   border: none;
   background: transparent;
@@ -158,6 +164,11 @@
 
   &:hover {
     color: var(--error);
+  }
+
+  // editar no es una acción peligrosa, por eso usa el color principal
+  &.edit:hover {
+    color: var(--primary);
   }
 }
 

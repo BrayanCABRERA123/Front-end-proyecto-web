@@ -739,11 +739,33 @@
       "SERVICE": "Serviço",
       "TOTAL_WASHES": "Total de lavagens"
     },
+    "VALIDATION": {
+      "TYPE_REQUIRED": "Selecione o tipo de veículo",
+      "BRAND_REQUIRED": "A marca é obrigatória",
+      "BRAND_MIN": "A marca deve ter pelo menos 2 caracteres",
+      "BRAND_INVALID": "A marca só pode conter letras, números, espaços e hífens",
+      "PLATE_REQUIRED": "A placa é obrigatória",
+      "PLATE_CAR_INVALID": "Formato inválido. Deve ter 3 letras e 3 números (ABC123). Não são permitidas placas de outros países nem de uso publicitário.",
+      "PLATE_MOTO_INVALID": "Formato inválido. Deve ter 3 letras, 2 números e 1 letra (ABC12D). Não são permitidas placas de outros países nem de uso publicitário.",
+      "PLATE_TAKEN": "Você já tem um veículo cadastrado com esta placa",
+      "COLOR_INVALID": "A cor só pode conter letras"
+    },
+    "SUCCESS": {
+      "CREATED_TITLE": "Veículo cadastrado!",
+      "CREATED_MESSAGE": "Seu veículo foi adicionado com sucesso. Agora você pode usá-lo nas suas reservas.",
+      "UPDATED_TITLE": "Veículo atualizado!",
+      "UPDATED_MESSAGE": "Os dados do seu veículo foram salvos com sucesso."
+    },
     "DELETE": {
       "TITLE": "Excluir veículo?",
       "MESSAGE": "{{name}} com placa {{plate}} será removido da sua conta. Esta ação não pode ser desfeita."
     },
     "MODAL": {
+      "EDIT_TITLE": "Editar veículo",
+      "EDIT_SUBTITLE": "Atualize os dados do seu veículo.",
+      "EDIT_SAVE": "Salvar alterações",
+      "PLATE_HINT_CAR": "Placa oficial colombiana: 3 letras e 3 números (ABC123).",
+      "PLATE_HINT_MOTO": "Placa oficial colombiana de moto: 3 letras, 2 números e 1 letra (ABC12D).",
       "TITLE": "Registrar novo veículo",
       "SUBTITLE": "Adicione os dados do seu veículo para reservar lavagens mais rápido.",
       "TYPE": "Tipo de veículo",

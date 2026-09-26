@@ -739,11 +739,33 @@
       "SERVICE": "Service",
       "TOTAL_WASHES": "Total washes"
     },
+    "VALIDATION": {
+      "TYPE_REQUIRED": "Select the vehicle type",
+      "BRAND_REQUIRED": "Brand is required",
+      "BRAND_MIN": "Brand must have at least 2 characters",
+      "BRAND_INVALID": "Brand can only contain letters, numbers, spaces and hyphens",
+      "PLATE_REQUIRED": "Plate is required",
+      "PLATE_CAR_INVALID": "Invalid format. It must have 3 letters and 3 numbers (ABC123). Foreign or promotional plates are not allowed.",
+      "PLATE_MOTO_INVALID": "Invalid format. It must have 3 letters, 2 numbers and 1 letter (ABC12D). Foreign or promotional plates are not allowed.",
+      "PLATE_TAKEN": "You already have a vehicle registered with this plate",
+      "COLOR_INVALID": "Color can only contain letters"
+    },
+    "SUCCESS": {
+      "CREATED_TITLE": "Vehicle registered!",
+      "CREATED_MESSAGE": "Your vehicle was added successfully. You can now use it in your bookings.",
+      "UPDATED_TITLE": "Vehicle updated!",
+      "UPDATED_MESSAGE": "Your vehicle information was saved successfully."
+    },
     "DELETE": {
       "TITLE": "Delete vehicle?",
       "MESSAGE": "{{name}} with plate {{plate}} will be removed from your account. This action cannot be undone."
     },
     "MODAL": {
+      "EDIT_TITLE": "Edit vehicle",
+      "EDIT_SUBTITLE": "Update your vehicle information.",
+      "EDIT_SAVE": "Save changes",
+      "PLATE_HINT_CAR": "Official Colombian plate: 3 letters and 3 numbers (ABC123).",
+      "PLATE_HINT_MOTO": "Official Colombian motorcycle plate: 3 letters, 2 numbers and 1 letter (ABC12D).",
       "TITLE": "Register new vehicle",
       "SUBTITLE": "Add your vehicle details to book washes faster.",
       "TYPE": "Vehicle type",

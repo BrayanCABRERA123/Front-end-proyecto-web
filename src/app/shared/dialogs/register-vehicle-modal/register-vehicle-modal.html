@@ -4,49 +4,124 @@
     <mat-icon>close</mat-icon>
   </button>
 
-  <h2>{{ 'VEHICLES.MODAL.TITLE' | translate }}</h2>
-  <p class="subtitle">{{ 'VEHICLES.MODAL.SUBTITLE' | translate }}</p>
+  <!-- el título y el botón cambian si es registro o edición -->
+  <h2>{{ (isEditMode ? 'VEHICLES.MODAL.EDIT_TITLE' : 'VEHICLES.MODAL.TITLE') | translate }}</h2>
+  <p class="subtitle">{{ (isEditMode ? 'VEHICLES.MODAL.EDIT_SUBTITLE' : 'VEHICLES.MODAL.SUBTITLE') | translate }}</p>
 
-  <div class="form-group">
-    <label class="form-label">{{ 'VEHICLES.MODAL.TYPE' | translate }} *</label>
-    <div class="select-wrapper">
-      <select class="form-select" [(ngModel)]="type">
-        <option value="" disabled selected>{{ 'VEHICLES.MODAL.TYPE_PLACEHOLDER' | translate }}</option>
-        <option *ngFor="let t of vehicleTypes" [value]="t">{{ ('VEHICLE.' + t) | translate }}</option>
-      </select>
-      <mat-icon class="select-icon">expand_more</mat-icon>
-    </div>
-  </div>
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
 
-  <div class="form-row">
+    <!-- TIPO -->
     <div class="form-group">
-      <label class="form-label">{{ 'VEHICLES.MODAL.BRAND' | translate }} *</label>
-      <input type="text" class="form-input" [(ngModel)]="brand" placeholder="Mazda" />
+      <label class="form-label">{{ 'VEHICLES.MODAL.TYPE' | translate }} *</label>
+      <div class="select-wrapper">
+        <select
+          class="form-select"
+          formControlName="type"
+          [class.input-error]="f['type'].invalid && f['type'].touched">
+          <option value="" disabled>{{ 'VEHICLES.MODAL.TYPE_PLACEHOLDER' | translate }}</option>
+          <option *ngFor="let t of vehicleTypes" [value]="t">{{ ('VEHICLE.' + t) | translate }}</option>
+        </select>
+        <mat-icon class="select-icon">expand_more</mat-icon>
+      </div>
+
+      <span class="error-msg" *ngIf="f['type'].errors?.['required'] && f['type'].touched">
+        {{ 'VEHICLES.VALIDATION.TYPE_REQUIRED' | translate }}
+      </span>
     </div>
 
-    <div class="form-group">
-      <label class="form-label">{{ 'VEHICLES.MODAL.MODEL' | translate }}</label>
-      <input type="text" class="form-input" [(ngModel)]="model" placeholder="3 Sedán" />
-    </div>
-  </div>
+    <div class="form-row">
 
-  <div class="form-row">
-    <div class="form-group">
-      <label class="form-label">{{ 'VEHICLES.MODAL.PLATE' | translate }} *</label>
-      <input type="text" class="form-input" [(ngModel)]="plate" placeholder="ABC-123" />
+      <!-- MARCA -->
+      <div class="form-group">
+        <label class="form-label">{{ 'VEHICLES.MODAL.BRAND' | translate }} *</label>
+        <input
+          type="text"
+          class="form-input"
+          formControlName="brand"
+          placeholder="Mazda"
+          maxlength="30"
+          [class.input-error]="f['brand'].invalid && f['brand'].touched" />
+
+        <span class="error-msg" *ngIf="f['brand'].errors?.['required'] && f['brand'].touched">
+          {{ 'VEHICLES.VALIDATION.BRAND_REQUIRED' | translate }}
+        </span>
+        <span class="error-msg" *ngIf="f['brand'].errors?.['minlength'] && f['brand'].touched">
+          {{ 'VEHICLES.VALIDATION.BRAND_MIN' | translate }}
+        </span>
+        <span class="error-msg" *ngIf="f['brand'].errors?.['pattern'] && f['brand'].touched">
+          {{ 'VEHICLES.VALIDATION.BRAND_INVALID' | translate }}
+        </span>
+      </div>
+
+      <!-- MODELO -->
+      <div class="form-group">
+        <label class="form-label">{{ 'VEHICLES.MODAL.MODEL' | translate }}</label>
+        <input
+          type="text"
+          class="form-input"
+          formControlName="model"
+          placeholder="3 Sedán"
+          maxlength="30" />
+      </div>
+
     </div>
 
-    <div class="form-group">
-      <label class="form-label">{{ 'VEHICLES.MODAL.COLOR' | translate }}</label>
-      <input type="text" class="form-input" [(ngModel)]="color" placeholder="Gris" />
-    </div>
-  </div>
+    <div class="form-row">
 
-  <div class="modal-actions">
-    <button class="btn-cancel" (click)="cancel()">{{ 'VEHICLES.MODAL.CANCEL' | translate }}</button>
-    <button class="btn-confirm" [disabled]="!isFormValid" (click)="save()">
-      {{ 'VEHICLES.MODAL.SAVE' | translate }}
-    </button>
-  </div>
+      <!-- PLACA -->
+      <div class="form-group">
+        <label class="form-label">{{ 'VEHICLES.MODAL.PLATE' | translate }} *</label>
+        <input
+          type="text"
+          class="form-input plate-input"
+          formControlName="plate"
+          [placeholder]="isMotoSelected ? 'ABC12D' : 'ABC123'"
+          [attr.maxlength]="plateLength"
+          autocomplete="off"
+          (input)="onPlateInput()"
+          [class.input-error]="(f['plate'].invalid || form.errors?.['plateFormat'] || form.errors?.['plateTaken']) && f['plate'].touched" />
+
+        <!-- ayuda con el formato oficial según el tipo -->
+        <span class="hint-msg">
+          {{ (isMotoSelected ? 'VEHICLES.MODAL.PLATE_HINT_MOTO' : 'VEHICLES.MODAL.PLATE_HINT_CAR') | translate }}
+        </span>
+
+        <span class="error-msg" *ngIf="f['plate'].errors?.['required'] && f['plate'].touched">
+          {{ 'VEHICLES.VALIDATION.PLATE_REQUIRED' | translate }}
+        </span>
+        <span class="error-msg" *ngIf="form.errors?.['plateFormat'] && f['plate'].touched">
+          {{ (isMotoSelected ? 'VEHICLES.VALIDATION.PLATE_MOTO_INVALID' : 'VEHICLES.VALIDATION.PLATE_CAR_INVALID') | translate }}
+        </span>
+        <span class="error-msg" *ngIf="form.errors?.['plateTaken'] && f['plate'].touched">
+          {{ 'VEHICLES.VALIDATION.PLATE_TAKEN' | translate }}
+        </span>
+      </div>
+
+      <!-- COLOR -->
+      <div class="form-group">
+        <label class="form-label">{{ 'VEHICLES.MODAL.COLOR' | translate }}</label>
+        <input
+          type="text"
+          class="form-input"
+          formControlName="color"
+          placeholder="Gris"
+          maxlength="20"
+          [class.input-error]="f['color'].invalid && f['color'].touched" />
+
+        <span class="error-msg" *ngIf="f['color'].errors?.['pattern'] && f['color'].touched">
+          {{ 'VEHICLES.VALIDATION.COLOR_INVALID' | translate }}
+        </span>
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">{{ 'VEHICLES.MODAL.CANCEL' | translate }}</button>
+      <button type="submit" class="btn-confirm" [disabled]="form.invalid">
+        {{ (isEditMode ? 'VEHICLES.MODAL.EDIT_SAVE' : 'VEHICLES.MODAL.SAVE') | translate }}
+      </button>
+    </div>
+
+  </form>
 
 </div>

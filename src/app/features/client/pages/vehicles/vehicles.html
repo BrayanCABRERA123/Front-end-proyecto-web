@@ -53,9 +53,15 @@
             <p class="vehicle-subtitle">{{ ('VEHICLE.' + vehicle.type) | translate }} · {{ vehicle.color }}</p>
           </div>
 
-          <button class="btn-icon" (click)="confirmRemoveVehicle(vehicle.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
+          <div class="card-actions">
+            <button class="btn-icon edit" (click)="openEditModal(vehicle.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button class="btn-icon" (click)="confirmRemoveVehicle(vehicle.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
 
         <div class="vehicle-detail">

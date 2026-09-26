@@ -739,11 +739,33 @@
       "SERVICE": "Service",
       "TOTAL_WASHES": "Total des lavages"
     },
+    "VALIDATION": {
+      "TYPE_REQUIRED": "Sélectionnez le type de véhicule",
+      "BRAND_REQUIRED": "La marque est obligatoire",
+      "BRAND_MIN": "La marque doit comporter au moins 2 caractères",
+      "BRAND_INVALID": "La marque ne peut contenir que des lettres, chiffres, espaces et tirets",
+      "PLATE_REQUIRED": "La plaque est obligatoire",
+      "PLATE_CAR_INVALID": "Format invalide. Elle doit comporter 3 lettres et 3 chiffres (ABC123). Les plaques étrangères ou publicitaires ne sont pas autorisées.",
+      "PLATE_MOTO_INVALID": "Format invalide. Elle doit comporter 3 lettres, 2 chiffres et 1 lettre (ABC12D). Les plaques étrangères ou publicitaires ne sont pas autorisées.",
+      "PLATE_TAKEN": "Vous avez déjà un véhicule enregistré avec cette plaque",
+      "COLOR_INVALID": "La couleur ne peut contenir que des lettres"
+    },
+    "SUCCESS": {
+      "CREATED_TITLE": "Véhicule enregistré !",
+      "CREATED_MESSAGE": "Votre véhicule a été ajouté avec succès. Vous pouvez maintenant l’utiliser pour vos réservations.",
+      "UPDATED_TITLE": "Véhicule mis à jour !",
+      "UPDATED_MESSAGE": "Les informations de votre véhicule ont été enregistrées avec succès."
+    },
     "DELETE": {
       "TITLE": "Supprimer le véhicule ?",
       "MESSAGE": "{{name}} immatriculé {{plate}} sera supprimé de votre compte. Cette action est irréversible."
     },
     "MODAL": {
+      "EDIT_TITLE": "Modifier le véhicule",
+      "EDIT_SUBTITLE": "Mettez à jour les informations de votre véhicule.",
+      "EDIT_SAVE": "Enregistrer les modifications",
+      "PLATE_HINT_CAR": "Plaque officielle colombienne : 3 lettres et 3 chiffres (ABC123).",
+      "PLATE_HINT_MOTO": "Plaque officielle colombienne de moto : 3 lettres, 2 chiffres et 1 lettre (ABC12D).",
       "TITLE": "Enregistrer un nouveau véhicule",
       "SUBTITLE": "Ajoutez les informations de votre véhicule pour réserver plus vite.",
       "TYPE": "Type de véhicule",

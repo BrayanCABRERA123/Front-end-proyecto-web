@@ -8,6 +8,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 // modal de registro de vehículo
 import { RegisterVehicleModalComponent } from '../../../../shared/dialogs/register-vehicle-modal/register-vehicle-modal';
+import { RegisterVehicleModalData, VehicleFormValue } from '../../../../shared/dialogs/register-vehicle-modal/vehicle.model';
+// modal reutilizable para mostrar mensajes de éxito
+import { StatusModal } from '../../../../shared/dialogs/status-modal/status-modal';
 // modal reutilizable de confirmación para acciones peligrosas
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 
@@ -58,20 +61,69 @@ export class VehiclesComponent {
 
   // abre el modal para registrar un nuevo vehículo
   openRegisterModal() {
+    const data: RegisterVehicleModalData = {
+      takenPlates: this.vehicles.map(v => v.plate)
+    };
+
     const dialogRef = this.dialog.open(RegisterVehicleModalComponent, {
-      panelClass: 'custom-dialog'
+      panelClass: 'custom-dialog',
+      data
     });
 
-    dialogRef.afterClosed().subscribe(newVehicle => {
-      if (newVehicle) {
-        this.vehicles.push({
-          id: Date.now(),
-          ...newVehicle,
-          lastWash: '-',
-          service: '-',
-          totalWashes: 0
-        });
-      }
+    dialogRef.afterClosed().subscribe((newVehicle?: VehicleFormValue) => {
+      if (!newVehicle) return;
+
+      // TODO: integrar con el backend para registrar el vehículo
+      this.vehicles.push({
+        id: Date.now(),
+        ...newVehicle,
+        lastWash: '-',
+        service: '-',
+        totalWashes: 0
+      });
+
+      this.showSuccess('VEHICLES.SUCCESS.CREATED_TITLE', 'VEHICLES.SUCCESS.CREATED_MESSAGE');
+    });
+  }
+
+  // abre el mismo modal en modo edición con los datos del vehículo
+  openEditModal(id: number) {
+    const vehicle = this.vehicles.find(v => v.id === id);
+    if (!vehicle) return;
+
+    const data: RegisterVehicleModalData = {
+      vehicle: {
+        type: vehicle.type,
+        brand: vehicle.brand,
+        model: vehicle.model,
+        plate: vehicle.plate,
+        color: vehicle.color
+      },
+      // se excluye su propia placa para que pueda guardarla sin cambiarla
+      takenPlates: this.vehicles.filter(v => v.id !== id).map(v => v.plate)
+    };
+
+    const dialogRef = this.dialog.open(RegisterVehicleModalComponent, {
+      panelClass: 'custom-dialog',
+      data
+    });
+
+    dialogRef.afterClosed().subscribe((updated?: VehicleFormValue) => {
+      if (!updated) return;
+
+      // TODO: integrar con el backend para actualizar el vehículo
+      // se conservan los datos de lavados y solo se cambian los del formulario
+      this.vehicles = this.vehicles.map(v => v.id === id ? { ...v, ...updated } : v);
+
+      this.showSuccess('VEHICLES.SUCCESS.UPDATED_TITLE', 'VEHICLES.SUCCESS.UPDATED_MESSAGE');
+    });
+  }
+
+  // abre el modal de estado de éxito con los textos indicados
+  private showSuccess(title: string, message: string) {
+    this.dialog.open(StatusModal, {
+      panelClass: 'custom-dialog',
+      data: { title, message }
     });
   }
 
