@@ -74,8 +74,8 @@
                   <strong>{{ payee.key }}</strong>
                 </div>
                 <button type="button" class="btn-outline" (click)="copyKey()">
-                  <mat-icon>{{ copied ? 'check' : 'content_copy' }}</mat-icon>
-                  {{ (copied ? 'PAYMENT.QR.COPIED' : 'PAYMENT.QR.COPY') | translate }}
+                  <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
+                  {{ (copied() ? 'PAYMENT.QR.COPIED' : 'PAYMENT.QR.COPY') | translate }}
                 </button>
               </div>
 
@@ -216,8 +216,14 @@
           </div>
 
           <button class="btn-primary" [disabled]="!canConfirm" (click)="confirmPayment()">
-            <mat-icon>verified_user</mat-icon>
-            {{ (selectedMethod === 'CASH' ? 'PAYMENT.SUMMARY.CASH_BUTTON' : 'PAYMENT.SUMMARY.PAY_BUTTON') | translate }}
+            <!-- ya enviado: el botón queda bloqueado mostrando que está en revisión -->
+            @if (isVerifying) {
+              <mat-icon>hourglass_top</mat-icon>
+              {{ 'PAYMENT.SUMMARY.VERIFYING_BUTTON' | translate }}
+            } @else {
+              <mat-icon>verified_user</mat-icon>
+              {{ (selectedMethod === 'CASH' ? 'PAYMENT.SUMMARY.CASH_BUTTON' : 'PAYMENT.SUMMARY.PAY_BUTTON') | translate }}
+            }
           </button>
 
           <button class="btn-link" (click)="cancelReservation()">

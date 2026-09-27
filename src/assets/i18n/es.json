@@ -743,6 +743,7 @@
     "TAX": "IVA (19%) incluido",
     "PAY_BUTTON": "Ya realicé el pago",
     "CASH_BUTTON": "Confirmar reserva",
+    "VERIFYING_BUTTON": "Pago en verificación",
     "CANCEL": "Cancelar reserva",
     "SECURE": "Pago 100% seguro · Verificación inmediata por el equipo de bahía"
   },

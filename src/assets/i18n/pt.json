@@ -743,6 +743,7 @@
     "TAX": "IVA (19%) incluído",
     "PAY_BUTTON": "Já fiz o pagamento",
     "CASH_BUTTON": "Confirmar reserva",
+    "VERIFYING_BUTTON": "Pagamento em verificação",
     "CANCEL": "Cancelar reserva",
     "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box"
   },

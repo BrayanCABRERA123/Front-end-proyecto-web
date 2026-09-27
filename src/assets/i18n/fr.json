@@ -743,6 +743,7 @@
     "TAX": "TVA (19 %) incluse",
     "PAY_BUTTON": "J'ai effectué le paiement",
     "CASH_BUTTON": "Confirmer la réservation",
+    "VERIFYING_BUTTON": "Paiement en cours de vérification",
     "CANCEL": "Annuler la réservation",
     "SECURE": "Paiement 100 % sécurisé · Vérification immédiate par l'équipe de la baie"
   },

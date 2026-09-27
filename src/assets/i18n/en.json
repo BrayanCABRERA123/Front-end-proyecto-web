@@ -743,6 +743,7 @@
     "TAX": "VAT (19%) included",
     "PAY_BUTTON": "I've made the payment",
     "CASH_BUTTON": "Confirm booking",
+    "VERIFYING_BUTTON": "Payment under review",
     "CANCEL": "Cancel booking",
     "SECURE": "100% secure payment · Immediate verification by the bay team"
   },
