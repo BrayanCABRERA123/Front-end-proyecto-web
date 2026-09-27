@@ -197,6 +197,9 @@
 
 .date-sep {
   color: var(--text-muted);
+  // alineada con los inputs, no con las etiquetas "Desde/Hasta"
+  align-self: flex-end;
+  padding-bottom: 10px;
 }
 
 .filter-input {
@@ -287,30 +290,15 @@
   }
 }
 
-.btn-filter {
+.date-group {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 20px;
-  background: var(--primary);
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  font-size: $fs-body;
-  font-weight: $fw-semibold;
-  cursor: pointer;
-  transition: 0.2s;
-  box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
+  flex-direction: column;
+  gap: 4px;
+}
 
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-
-  &:hover {
-    background: var(--primary-hover);
-  }
+.date-label {
+  font-size: $fs-caption;
+  color: var(--text-muted);
 }
 
 .list {

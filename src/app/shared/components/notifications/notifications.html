@@ -65,7 +65,7 @@
         </label>
 
         <div class="select-wrapper">
-          <select class="filter-select" [(ngModel)]="statusInput">
+          <select class="filter-select" [(ngModel)]="statusFilter">
             <option value="all">{{ 'ASSIGNED_SERVICES.FILTERS.ALL' | translate }}</option>
             <option value="read">{{ 'NOTIFICATIONS.READ' | translate }}</option>
             <option value="unread">{{ 'NOTIFICATIONS.UNREAD' | translate }}</option>
@@ -78,22 +78,25 @@
           {{ 'ASSIGNED_SERVICES.FILTERS.BY_DATE' | translate }}
         </label>
 
+        <!-- Desde → Hasta: filtra al instante; "hasta" no puede ser antes de "desde" -->
         <div class="date-range">
-          <input type="date" class="filter-input" [(ngModel)]="dateFromInput">
-          <span class="date-sep">-</span>
-          <input type="date" class="filter-input" [(ngModel)]="dateToInput">
+          <div class="date-group">
+            <span class="date-label">{{ 'HISTORY.FROM' | translate }}</span>
+            <input type="date" class="filter-input" [(ngModel)]="dateFrom" [max]="dateTo">
+          </div>
+          <span class="date-sep">→</span>
+          <div class="date-group">
+            <span class="date-label">{{ 'HISTORY.TO' | translate }}</span>
+            <input type="date" class="filter-input" [(ngModel)]="dateTo" [min]="dateFrom">
+          </div>
         </div>
       </div>
 
       <div class="filter-actions">
 
+        <!-- limpia estado y fechas -->
         <button class="btn-reset" (click)="resetFilters()">
           <mat-icon>refresh</mat-icon>
-        </button>
-
-        <button class="btn-filter" (click)="applyFilters()">
-          <mat-icon>search</mat-icon>
-          {{ 'ASSIGNED_SERVICES.FILTERS.FILTER_BTN' | translate }}
         </button>
 
       </div>

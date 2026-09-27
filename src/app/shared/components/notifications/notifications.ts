@@ -55,25 +55,16 @@ export class NotificationsComponent {
     return 'others';
   }
 
-  statusInput: 'all' | 'read' | 'unread' = 'all';
-  dateFromInput = '';
-  dateToInput = '';
-
-  private appliedStatus: 'all' | 'read' | 'unread' = 'all';
-  private appliedDateFrom = '';
-  private appliedDateTo = '';
-
-  applyFilters() {
-    this.appliedStatus = this.statusInput;
-    this.appliedDateFrom = this.dateFromInput;
-    this.appliedDateTo = this.dateToInput;
-  }
+  // filtros: se aplican apenas cambian (igual que en el historial)
+  statusFilter: 'all' | 'read' | 'unread' = 'all';
+  // fechas en formato "aaaa-mm-dd" (lo que dan los inputs de fecha)
+  dateFrom = '';
+  dateTo = '';
 
   resetFilters() {
-    this.statusInput = 'all';
-    this.dateFromInput = '';
-    this.dateToInput = '';
-    this.applyFilters();
+    this.statusFilter = 'all';
+    this.dateFrom = '';
+    this.dateTo = '';
   }
 
   countUnread(tab: TabKey): number {
@@ -93,11 +84,12 @@ export class NotificationsComponent {
         return false;
       }
 
-      if (this.appliedStatus === 'read' && !n.read) return false;
-      if (this.appliedStatus === 'unread' && n.read) return false;
+      if (this.statusFilter === 'read' && !n.read) return false;
+      if (this.statusFilter === 'unread' && n.read) return false;
 
-      if (this.appliedDateFrom && n.date < this.appliedDateFrom) return false;
-      if (this.appliedDateTo && n.date > this.appliedDateTo) return false;
+      // rango de fechas (n.date también viene como "aaaa-mm-dd")
+      if (this.dateFrom && n.date < this.dateFrom) return false;
+      if (this.dateTo && n.date > this.dateTo) return false;
 
       return true;
     });
