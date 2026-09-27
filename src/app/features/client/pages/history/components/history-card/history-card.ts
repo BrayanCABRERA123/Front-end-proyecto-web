@@ -7,11 +7,13 @@ import { RatingModalComponent, RatingModalData, RatingResult } from '../../../..
 // modal reutilizable para mostrar mensajes de éxito
 import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
 import { Router } from '@angular/router';
+// formato de precio en pesos colombianos
+import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
 
 @Component({
   selector: 'app-history-card',
   standalone: true,
-  imports: [CommonModule, MatIconModule, TranslateModule, MatDialogModule],
+  imports: [CommonModule, MatIconModule, TranslateModule, MatDialogModule, CopPricePipe],
   templateUrl: './history-card.html',
   styleUrl: './history-card.scss'
 })

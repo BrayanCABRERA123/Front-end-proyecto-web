@@ -55,7 +55,7 @@
           <span class="badge-popular" *ngIf="s === mostPopularService">{{ 'RESERVE.STEP2.POPULAR' | translate }}</span>
 
           <p class="service-name">{{ ('SERVICE.' + s) | translate }}</p>
-          <p class="service-price">{{ ('SERVICE.' + s + '_PRICE') | translate }}</p>
+          <p class="service-price">{{ prices[s] | copPrice }}</p>
           <p class="service-time"><mat-icon>schedule</mat-icon> {{ ('SERVICE.' + s + '_TIME') | translate }}</p>
 
           <ul class="service-items">
@@ -151,7 +151,7 @@
 
     <div class="summary-total">
       <span><mat-icon>attach_money</mat-icon> {{ 'RESERVE.SUMMARY.TOTAL' | translate }}</span>
-      <strong>{{ serviceTotal ? ('$' + (serviceTotal | number)) : '$—' }}</strong>
+      <strong>{{ serviceTotal ? (serviceTotal | copPrice) : '$—' }}</strong>
     </div>
 
     <button class="btn-primary" [disabled]="!isFormValid" (click)="onSubmit()">

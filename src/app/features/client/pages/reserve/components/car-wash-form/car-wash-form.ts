@@ -10,11 +10,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
 // sede del lavadero: el cliente lleva su vehículo allí
 import { BUSINESS_LOCATION } from '../../../../../../core/constants/business-location';
+// precios de los servicios (en COP) y su formato
+import { SERVICE_PRICES } from '../../../../../../core/constants/service-prices';
+import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
 
 @Component({
   selector: 'app-car-wash-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, FormsModule, RouterModule, MatIconModule, TranslateModule, CopPricePipe],
   templateUrl: './car-wash-form.html',
   styleUrl: './car-wash-form.scss'
 })
@@ -30,6 +33,7 @@ export class CarWashFormComponent implements OnInit {
   // catálogo de servicios disponibles
   services = ['BASIC', 'PREMIUM', 'FULL'];
   mostPopularService = 'PREMIUM';
+  prices = SERVICE_PRICES;
 
   // selección del usuario
   selectedVehicleId: number | null = null;
@@ -85,15 +89,9 @@ export class CarWashFormComponent implements OnInit {
     return this.vehicles.find(v => v.id === this.selectedVehicleId) ?? null;
   }
 
-  // extrae el valor numérico del precio del servicio (ej. "$35.000" -> 35000)
+  // precio del servicio seleccionado (0 si aún no se elige)
   get serviceTotal(): number {
-    if (!this.selectedService) return 0;
-
-    const key = `SERVICE.${this.selectedService}_PRICE`;
-    const text: string = this.translate.instant(key);
-    const number = text.replace(/[^0-9]/g, '');
-
-    return number ? parseInt(number, 10) : 0;
+    return SERVICE_PRICES[this.selectedService] ?? 0;
   }
 
   get isFormValid(): boolean {
@@ -132,7 +130,7 @@ export class CarWashFormComponent implements OnInit {
         { label: 'RESERVE.SUMMARY.DATE', value: this.date },
         { label: 'RESERVE.SUMMARY.TIME', value: this.time },
         { label: 'RESERVE.SUMMARY.LOCATION', value: this.location.address },
-        { label: 'RESERVE.SUMMARY.TOTAL', value: this.translate.instant(`SERVICE.${this.selectedService}_PRICE`) }
+        { label: 'RESERVE.SUMMARY.TOTAL', value: new CopPricePipe().transform(this.serviceTotal) }
       ]
     };
 

@@ -51,7 +51,7 @@ export class HistoryComponent {
     assignmentType: 'MANUAL',
     operator: 'Juan',
     status: 'COMPLETED',
-    price: 35,
+    price: 35000,
     paid: true
   },
   {
@@ -63,7 +63,7 @@ export class HistoryComponent {
     assignmentType: 'AUTO',
     operator: '',
     status: 'PENDING',
-    price: 20,
+    price: 20000,
     paid: false
   }
 ];

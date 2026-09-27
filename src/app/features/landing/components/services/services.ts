@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+// precios de los servicios (en COP) y su formato
+import { SERVICE_PRICES } from '../../../../core/constants/service-prices';
+import { CopPricePipe } from '../../../../shared/pipes/cop-price.pipe';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, RouterModule, MatIconModule, TranslateModule, CopPricePipe],
   templateUrl: './services.html',
   styleUrl: './services.scss'
 })
@@ -19,7 +22,7 @@ export class ServicesComponent {
       icon: 'local_car_wash',
       nameKey: 'SERVICE.BASIC',
       descKey: 'SERVICE.BASIC_DESC',
-      priceKey: 'SERVICE.BASIC_PRICE',
+      price: SERVICE_PRICES['BASIC'],
       timeKey: 'SERVICE.BASIC_TIME',
       itemsKey: 'SERVICE.BASIC_ITEMS',
       popular: false
@@ -29,7 +32,7 @@ export class ServicesComponent {
       icon: 'workspace_premium',
       nameKey: 'SERVICE.PREMIUM',
       descKey: 'SERVICE.PREMIUM_DESC',
-      priceKey: 'SERVICE.PREMIUM_PRICE',
+      price: SERVICE_PRICES['PREMIUM'],
       timeKey: 'SERVICE.PREMIUM_TIME',
       itemsKey: 'SERVICE.PREMIUM_ITEMS',
       popular: true
@@ -39,7 +42,7 @@ export class ServicesComponent {
       icon: 'auto_awesome',
       nameKey: 'SERVICE.FULL',
       descKey: 'SERVICE.FULL_DESC',
-      priceKey: 'SERVICE.FULL_PRICE',
+      price: SERVICE_PRICES['FULL'],
       timeKey: 'SERVICE.FULL_TIME',
       itemsKey: 'SERVICE.FULL_ITEMS',
       popular: false
