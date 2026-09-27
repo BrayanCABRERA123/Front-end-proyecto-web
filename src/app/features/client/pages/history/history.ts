@@ -73,6 +73,12 @@ export class HistoryComponent {
     return extras.map(e => this.translate.instant('EXTRA.' + e));
   }
 
+  // convierte "dd/mm/aaaa" a "aaaa-mm-dd" para compararla con los inputs de fecha
+  private toIsoDate(date: string): string {
+    const [day, month, year] = date.split('/');
+    return `${year}-${month}-${day}`;
+  }
+
   // FILTRO COMPLETO
   get filteredServices() {
     return this.services.filter(service => {
@@ -80,6 +86,11 @@ export class HistoryComponent {
       // filtro por estado
       if (this.activeFilter === 'pagados' && !service.paid) return false;
       if (this.activeFilter === 'pendientes' && service.paid) return false;
+
+      // filtro por rango de fechas (los inputs dan "aaaa-mm-dd")
+      const serviceDate = this.toIsoDate(service.date);
+      if (this.dateFrom && serviceDate < this.dateFrom) return false;
+      if (this.dateTo && serviceDate > this.dateTo) return false;
 
       // filtro por texto
       if (this.search) {
