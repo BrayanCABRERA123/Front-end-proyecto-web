@@ -12,7 +12,7 @@
     "THEME": "Escolher tema",
     "THEME_DESC": "Personalize as cores do aplicativo",
     "LANGUAGE": "Idiomas",
-    "LANGUAGE_DESC": "Alterar idioma",
+    "LANGUAGE_DESC": "Alterar idioma",
     "HELP": "Ajuda",
     "HELP_CENTER": "Central de ajuda",
     "HELP_MODAL": {
@@ -62,7 +62,7 @@
     "SEARCH_PLACEHOLDER": "Digite para buscar...",
     "EMPTY": "Nenhum serviço encontrado"
   },
-  "HISTORY_CARD": {
+  "HISTORY_CARD": {
     "TYPE": "Tipo de serviço",
     "EXTRA": "Serviços extras",
     "OPERATOR": "Atribuição do operador",
@@ -77,8 +77,12 @@
   "COMMON": {
     "CLOSE": "Fechar",
     "CANCEL": "Cancelar",
-    "DELETE": "Excluir",
-    "ACCEPT": "Aceitar"
+    "DELETE": "Excluir",
+    "ACCEPT": "Aceitar",
+    "CREATE": "Criar",
+    "EDIT": "Editar",
+    "SAVE": "Salvar",
+    "VIEW": "Ver"
   },
   "SERVICE": {
     "BASIC": "Básico",
@@ -331,7 +335,7 @@
       "EMAIL_REQUIRED": "O e-mail é obrigatório",
       "EMAIL_INVALID": "Digite um e-mail válido",
       "PHONE_REQUIRED": "O telefone é obrigatório",
-      "PHONE_INVALID": "O número não é válido para o país selecionado",
+      "PHONE_INVALID": "O número não é válido para o país selecionado",
       "ADDRESS_MIN": "O endereço deve ter pelo menos 5 caracteres"
     }
   },
@@ -354,7 +358,7 @@
     "SUBTITLE": "Agende sua próxima lavagem em poucos passos",
     "DATE": "Data",
     "TIME": "Hora",
-    "SELECT_TIME": "Selecione um horário",
+    "SELECT_TIME": "Selecione um horário",
     "VEHICLE": "Tipo de veículo",
     "SERVICE": "Tipo de serviço",
     "ASSIGNMENT": "Atribuição do operador",
@@ -475,7 +479,7 @@
     "PHONE_MIN": "O número deve ter 10 dígitos",
     "PASSWORD_REQUIRED": "A senha é obrigatória",
     "CONFIRM_REQUIRED": "Você deve confirmar a senha",
-    "PASSWORDS_NOT_MATCH": "As senhas não coincidem",
+    "PASSWORDS_NOT_MATCH": "As senhas não coincidem",
     "BUTTON": "Cadastrar",
     "BUTTON_LOADING": "Cadastrando...",
     "SUCCESS_TITLE": "Cadastro realizado com sucesso!",
@@ -672,83 +676,83 @@
     "TOTAL": "Total de avaliações recebidas",
     "LAST_12_MONTHS": "Nos últimos 12 meses"
   },
-"PAYMENT": {
-  "CANCEL_CONFIRM": {
-    "TITLE": "Cancelar reserva?",
-    "MESSAGE": "A reserva {{code}} será cancelada e o horário será liberado. Esta ação não pode ser desfeita.",
-    "CONFIRM": "Sim, cancelar",
-    "BACK": "Voltar",
-    "SUCCESS_TITLE": "Reserva cancelada",
-    "SUCCESS_MESSAGE": "A reserva {{code}} foi cancelada com sucesso."
+  "PAYMENT": {
+    "CANCEL_CONFIRM": {
+      "TITLE": "Cancelar reserva?",
+      "MESSAGE": "A reserva {{code}} será cancelada e o horário será liberado. Esta ação não pode ser desfeita.",
+      "CONFIRM": "Sim, cancelar",
+      "BACK": "Voltar",
+      "SUCCESS_TITLE": "Reserva cancelada",
+      "SUCCESS_MESSAGE": "A reserva {{code}} foi cancelada com sucesso."
+    },
+    "SUCCESS_TITLE": "Pagamento enviado!",
+    "SUCCESS_MESSAGE": "Recebemos seu pagamento. Ele está em análise e avisaremos quando for aprovado.",
+    "INVALID_FILE_TITLE": "Arquivo inválido",
+    "INVALID_FILE_MESSAGE": "Apenas imagens JPG ou PNG de até 10MB são permitidas.",
+    "TITLE": "Pagamentos",
+    "SUBTITLE": "Pague seu serviço com segurança",
+    "STEP": "Passo 2 de 2 · Reserva confirmada",
+    "METHOD": {
+      "TITLE": "Selecione sua forma de pagamento",
+      "NO_FEES": "Sem taxas adicionais",
+      "NEQUI": "Nequi",
+      "NEQUI_DESC": "Escaneie e pague pelo app",
+      "DAVIPLATA": "Daviplata",
+      "DAVIPLATA_DESC": "Escaneie e pague pelo app",
+      "TRANSFER": "Transferência",
+      "TRANSFER_DESC": "Escaneie ou use os dados da conta",
+      "CASH": "Dinheiro",
+      "CASH_DESC": "Pague no local ao receber o serviço"
+    },
+    "QR": {
+      "INSTANT": "PAGAMENTO DIGITAL IMEDIATO",
+      "VIA": "Via",
+      "VALID_FOR": "O código é válido por 15 minutos",
+      "SCAN_HINT": "Pode ser escaneado na tela",
+      "VERIFIED": "Verificado",
+      "KEY": "Chave / Conta autorizada",
+      "COPY": "Copiar número",
+      "COPIED": "Copiado",
+      "ACCOUNT_TYPE": "Tipo de conta",
+      "ACCOUNT_TYPE_VALUE": "Chave / Conta poupança vinculada",
+      "AMOUNT": "Valor a pagar",
+      "HINT": "Abra seu app, escaneie o código e confirme o pagamento pelo valor exato."
+    },
+    "CASH": {
+      "TITLE": "Pagamento em dinheiro",
+      "DESC": "Você pagará diretamente no local ao retirar seu veículo. Sua reserva fica garantida."
+    },
+    "CONFIRM": {
+      "TITLE": "Confirme seu pagamento",
+      "DROP": "Arraste seu comprovante aqui ou clique para procurar",
+      "FORMATS": "Formatos permitidos: JPG ou PNG (máx. 10MB)",
+      "REFERENCE": "Referência da transação",
+      "REFERENCE_HINT": "Número de 8 a 12 caracteres emitido pelo seu banco",
+      "AMOUNT": "Valor pago",
+      "AMOUNT_HINT": "Valor definido pela reserva com desconto",
+      "INFO": "Um administrador verificará seu pagamento e você receberá uma notificação. Sua vaga ficará 100% garantida e pronta no horário reservado."
+    },
+    "SUMMARY": {
+      "TITLE": "Resumo da reserva",
+      "PREMIUM_DESC": "Exterior detalhado, enceramento cerâmico e aspiração interna profunda",
+      "VEHICLE": "Veículo atribuído",
+      "SUBTOTAL": "Subtotal",
+      "DISCOUNT": "Desconto aplicado",
+      "COUPON": "Cupom",
+      "COUPON_OK": "Aplicado com sucesso",
+      "TOTAL": "TOTAL A PAGAR",
+      "TAX": "IVA (19%) incluído",
+      "PAY_BUTTON": "Já fiz o pagamento",
+      "CASH_BUTTON": "Confirmar reserva",
+      "VERIFYING_BUTTON": "Pagamento em verificação",
+      "CANCEL": "Cancelar reserva",
+      "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box"
+    },
+    "HELP": {
+      "TITLE": "Precisa de ajuda com seu pagamento?",
+      "DESC": "Central de atendimento ao cliente:"
+    }
   },
-  "SUCCESS_TITLE": "Pagamento enviado!",
-  "SUCCESS_MESSAGE": "Recebemos seu pagamento. Ele está em análise e avisaremos quando for aprovado.",
-  "INVALID_FILE_TITLE": "Arquivo inválido",
-  "INVALID_FILE_MESSAGE": "Apenas imagens JPG ou PNG de até 10MB são permitidas.",
-  "TITLE": "Pagamentos",
-  "SUBTITLE": "Pague seu serviço com segurança",
-  "STEP": "Passo 2 de 2 · Reserva confirmada",
-  "METHOD": {
-    "TITLE": "Selecione sua forma de pagamento",
-    "NO_FEES": "Sem taxas adicionais",
-    "NEQUI": "Nequi",
-    "NEQUI_DESC": "Escaneie e pague pelo app",
-    "DAVIPLATA": "Daviplata",
-    "DAVIPLATA_DESC": "Escaneie e pague pelo app",
-    "TRANSFER": "Transferência",
-    "TRANSFER_DESC": "Escaneie ou use os dados da conta",
-    "CASH": "Dinheiro",
-    "CASH_DESC": "Pague no local ao receber o serviço"
-  },
-  "QR": {
-    "INSTANT": "PAGAMENTO DIGITAL IMEDIATO",
-    "VIA": "Via",
-    "VALID_FOR": "O código é válido por 15 minutos",
-    "SCAN_HINT": "Pode ser escaneado na tela",
-    "VERIFIED": "Verificado",
-    "KEY": "Chave / Conta autorizada",
-    "COPY": "Copiar número",
-    "COPIED": "Copiado",
-    "ACCOUNT_TYPE": "Tipo de conta",
-    "ACCOUNT_TYPE_VALUE": "Chave / Conta poupança vinculada",
-    "AMOUNT": "Valor a pagar",
-    "HINT": "Abra seu app, escaneie o código e confirme o pagamento pelo valor exato."
-  },
-  "CASH": {
-    "TITLE": "Pagamento em dinheiro",
-    "DESC": "Você pagará diretamente no local ao retirar seu veículo. Sua reserva fica garantida."
-  },
-  "CONFIRM": {
-    "TITLE": "Confirme seu pagamento",
-    "DROP": "Arraste seu comprovante aqui ou clique para procurar",
-    "FORMATS": "Formatos permitidos: JPG ou PNG (máx. 10MB)",
-    "REFERENCE": "Referência da transação",
-    "REFERENCE_HINT": "Número de 8 a 12 caracteres emitido pelo seu banco",
-    "AMOUNT": "Valor pago",
-    "AMOUNT_HINT": "Valor definido pela reserva com desconto",
-    "INFO": "Um administrador verificará seu pagamento e você receberá uma notificação. Sua vaga ficará 100% garantida e pronta no horário reservado."
-  },
-  "SUMMARY": {
-    "TITLE": "Resumo da reserva",
-    "PREMIUM_DESC": "Exterior detalhado, enceramento cerâmico e aspiração interna profunda",
-    "VEHICLE": "Veículo atribuído",
-    "SUBTOTAL": "Subtotal",
-    "DISCOUNT": "Desconto aplicado",
-    "COUPON": "Cupom",
-    "COUPON_OK": "Aplicado com sucesso",
-    "TOTAL": "TOTAL A PAGAR",
-    "TAX": "IVA (19%) incluído",
-    "PAY_BUTTON": "Já fiz o pagamento",
-    "CASH_BUTTON": "Confirmar reserva",
-    "VERIFYING_BUTTON": "Pagamento em verificação",
-    "CANCEL": "Cancelar reserva",
-    "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box"
-  },
-  "HELP": {
-    "TITLE": "Precisa de ajuda com seu pagamento?",
-    "DESC": "Central de atendimento ao cliente:"
-  }
-},
   "VEHICLES": {
     "TITLE": "Meus Veículos",
     "SUBTITLE": "Consulte seus veículos registrados e sua última lavagem",
@@ -827,7 +831,9 @@
     "CHART": {
       "TITLE": "Gráficos",
       "SERVICES": "Serviços",
-      "REVENUE": "Receita ($)"
+      "REVENUE": "Receita ($)",
+      "NO_DATA": "Sem dados para este período",
+      "SUBTITLE": "Serviços realizados e receitas do período selecionado"
     },
     "SUMMARY": {
       "DAY": "Relatório do Dia",
@@ -839,7 +845,9 @@
     "YEAR_REVENUE": "Receita Total do Ano",
     "TOP_SERVICES": {
       "TITLE": "Serviços Mais Vendidos",
-      "SALES": "vendas"
+      "SALES": "vendas",
+      "EMPTY_TITLE": "Nenhum serviço vendido",
+      "EMPTY_MESSAGE": "Quando houver reservas, o ranking de serviços aparecerá aqui."
     },
     "MODAL": {
       "TITLE": "Exportar relatório",
@@ -849,6 +857,11 @@
       "SERVICES_LABEL": "serviços",
       "EXPORT_EXCEL": "Exportar Excel",
       "EXPORT_PDF": "Exportar PDF"
+    },
+    "PERIODS": {
+      "DAY": "Dia",
+      "WEEK": "Semana",
+      "MONTH": "Mês"
     }
   },
   "FOOTER": {
@@ -1152,7 +1165,7 @@
       "STATUS": {
         "busy": "Ocupado",
         "available": "Disponível",
-        "leave": "Licença"
+        "absent": "Licença"
       }
     },
     "PENDING_PAYMENTS_CARD": {
@@ -1209,7 +1222,29 @@
       "PREVIOUS": "Anterior",
       "NEXT": "Próxima"
     },
-    "ASSIGN": "Atribuir"
+    "ASSIGN": "Atribuir",
+    "EMPTY_TITLE": "Nenhuma reserva ainda",
+    "EMPTY_MESSAGE": "Crie a primeira reserva para começar a organizar a agenda.",
+    "NO_RESULTS_TITLE": "Sem resultados",
+    "NO_RESULTS_MESSAGE": "Nenhuma reserva corresponde aos filtros.",
+    "FEEDBACK": {
+      "CREATED_TITLE": "Reserva criada",
+      "CREATED_MESSAGE": "A reserva {{code}} foi registrada.",
+      "UPDATED_TITLE": "Reserva atualizada",
+      "UPDATED_MESSAGE": "A reserva {{code}} foi atualizada.",
+      "STATUS_TITLE": "Status atualizado",
+      "STATUS_CONFIRM": "Alterar o status de {{code}}?",
+      "STATUS_CONFIRMED_MESSAGE": "A reserva {{code}} foi confirmada.",
+      "STATUS_IN_PROGRESS_MESSAGE": "A reserva {{code}} está em andamento.",
+      "STATUS_COMPLETED_TITLE": "Concluir reserva",
+      "STATUS_COMPLETED_CONFIRM": "Marcar {{code}} como concluída?",
+      "STATUS_COMPLETED_MESSAGE": "A reserva {{code}} foi concluída.",
+      "STATUS_CANCELLED_TITLE": "Cancelar reserva",
+      "STATUS_CANCELLED_CONFIRM": "Cancelar a reserva {{code}}? Esta ação não pode ser desfeita.",
+      "STATUS_CANCELLED_MESSAGE": "A reserva {{code}} foi cancelada.",
+      "ASSIGNED_TITLE": "Operador atribuído",
+      "ASSIGNED_MESSAGE": "A reserva {{code}} agora tem operador atribuído."
+    }
   },
   "ASSIGN_OPERATOR_MODAL": {
     "TITLE": "Atribuir Operador à Reserva {{code}}",
@@ -1220,7 +1255,8 @@
     "NOTES_LABEL": "Instruções ou observações para o operador (opcional):",
     "NOTES_PLACEHOLDER": "Ex. Verificar mancha na estofaria traseira direita...",
     "CANCEL": "Cancelar",
-    "CONFIRM": "Confirmar Atribuição"
+    "CONFIRM": "Confirmar Atribuição",
+    "BUSY_NOTE": "Este operador está ocupado no momento"
   },
   "ADMIN_MANAGEMENT": {
     "STATUS_LINE": "Sistema on-line · Filial principal",
@@ -1234,7 +1270,8 @@
       "FILTERS": {
         "ENABLED": "Habilitados",
         "REGISTERED": "Registrados",
-        "DISABLED": "Desabilitados"
+        "DISABLED": "Desabilitados",
+        "CLEAR": "Limpar filtros"
       },
       "SEARCH_PLACEHOLDER": "Buscar por nome, e-mail ou função...",
       "CREATE_USER": "Criar usuário",
@@ -1253,7 +1290,11 @@
       "STATUS": {
         "active": "Ativo",
         "disabled": "Desabilitado"
-      }
+      },
+      "EMPTY_TITLE": "Nenhum usuário ainda",
+      "EMPTY_MESSAGE": "Crie o primeiro usuário para começar a gerenciar a equipe.",
+      "NO_RESULTS_TITLE": "Sem resultados",
+      "NO_RESULTS_MESSAGE": "Nenhum usuário corresponde à busca."
     },
     "ROLES": {
       "CREATE_ROLE": "Criar função",
@@ -1265,7 +1306,9 @@
         "USERS": "Usuários",
         "ACTIONS": "Ações"
       },
-      "USERS_COUNT": "{{count}} usuários"
+      "USERS_COUNT": "{{count}} usuários",
+      "EMPTY_TITLE": "Nenhum perfil ainda",
+      "EMPTY_MESSAGE": "Crie o primeiro perfil para definir as permissões do sistema."
     },
     "SERVICES": {
       "CREATE_SERVICE": "Adicionar serviço",
@@ -1282,7 +1325,9 @@
         "active": "Ativo",
         "inactive": "Inativo"
       },
-      "MINUTES_SUFFIX": "min"
+      "MINUTES_SUFFIX": "min",
+      "EMPTY_TITLE": "Nenhum serviço ainda",
+      "EMPTY_MESSAGE": "Adicione o primeiro serviço ao catálogo do lava-rápido."
     },
     "PROMOTIONS": {
       "CREATE_PROMOTION": "Criar promoção",
@@ -1294,19 +1339,67 @@
       "STATUS_LABEL": "Status",
       "STATUS": {
         "active": "Ativo",
-        "featured": "Destaque"
+        "featured": "Destaque",
+        "inactive": "Inativa",
+        "scheduled": "Agendada"
       },
       "STATS": {
         "TOTAL_REDEMPTIONS": "Total de resgates",
         "CLIENT_SAVINGS": "Economia dos clientes",
         "CONVERSION": "Conversão de cupons"
-      }
+      },
+      "EMPTY_TITLE": "Nenhuma promoção ainda",
+      "EMPTY_MESSAGE": "Crie uma promoção para impulsionar as vendas do lava-rápido.",
+      "PAUSE": "Pausar",
+      "REACTIVATE": "Reativar"
     },
     "DELETE_CONFIRM": {
       "TITLE": "Excluir este registro?",
       "MESSAGE": "Esta ação não pode ser desfeita.",
       "CONFIRM": "Excluir",
       "CANCEL": "Cancelar"
+    },
+    "FEEDBACK": {
+      "DELETED_TITLE": "Excluído",
+      "USER_CREATED_TITLE": "Usuário criado",
+      "USER_CREATED_MESSAGE": "«{{name}}» foi adicionado à equipe.",
+      "USER_UPDATED_TITLE": "Usuário atualizado",
+      "USER_UPDATED_MESSAGE": "Os dados de «{{name}}» foram atualizados.",
+      "USER_STATUS_TITLE": "Status atualizado",
+      "USER_ENABLE_TITLE": "Ativar usuário",
+      "USER_ENABLE_MESSAGE": "Ativar «{{name}}»? Ele poderá entrar novamente.",
+      "USER_ENABLED_MESSAGE": "«{{name}}» foi ativado.",
+      "USER_DISABLE_TITLE": "Desativar usuário",
+      "USER_DISABLE_MESSAGE": "Desativar «{{name}}»? Ele não poderá mais entrar.",
+      "USER_DISABLED_MESSAGE": "«{{name}}» foi desativado.",
+      "USER_DELETED_MESSAGE": "«{{name}}» foi excluído permanentemente.",
+      "ROLE_CREATED_TITLE": "Perfil criado",
+      "ROLE_CREATED_MESSAGE": "O perfil «{{name}}» está disponível.",
+      "ROLE_UPDATED_TITLE": "Perfil atualizado",
+      "ROLE_UPDATED_MESSAGE": "O perfil «{{name}}» foi atualizado.",
+      "ROLE_DELETED_MESSAGE": "O perfil «{{name}}» foi excluído.",
+      "SERVICE_CREATED_TITLE": "Serviço criado",
+      "SERVICE_CREATED_MESSAGE": "O serviço «{{name}}» foi adicionado ao catálogo.",
+      "SERVICE_UPDATED_TITLE": "Serviço atualizado",
+      "SERVICE_UPDATED_MESSAGE": "O serviço «{{name}}» foi atualizado.",
+      "SERVICE_STATUS_TITLE": "Status atualizado",
+      "SERVICE_ENABLE_TITLE": "Ativar serviço",
+      "SERVICE_ENABLE_MESSAGE": "Ativar «{{name}}»? Ele ficará disponível para reserva novamente.",
+      "SERVICE_ENABLED_MESSAGE": "O serviço «{{name}}» está ativo.",
+      "SERVICE_DISABLE_TITLE": "Desativar serviço",
+      "SERVICE_DISABLE_MESSAGE": "Desativar «{{name}}»? Ele não ficará mais disponível para reserva.",
+      "SERVICE_DISABLED_MESSAGE": "O serviço «{{name}}» está inativo.",
+      "SERVICE_DELETED_MESSAGE": "O serviço «{{name}}» foi excluído.",
+      "PROMO_CREATED_TITLE": "Promoção criada",
+      "PROMO_CREATED_MESSAGE": "A promoção «{{name}}» foi agendada.",
+      "PROMO_UPDATED_TITLE": "Promoção atualizada",
+      "PROMO_UPDATED_MESSAGE": "A promoção «{{name}}» foi atualizada.",
+      "PROMO_STATUS_TITLE": "Status atualizado",
+      "PROMO_STOP_TITLE": "Pausar promoção",
+      "PROMO_STOP_MESSAGE": "Pausar «{{name}}»? Ela deixará de aparecer até ser reativada.",
+      "PROMO_STOPPED_MESSAGE": "A promoção «{{name}}» foi pausada.",
+      "PROMO_STARTED_MESSAGE": "A promoção «{{name}}» está ativa.",
+      "PROMO_DELETED_MESSAGE": "A promoção «{{name}}» foi excluída."
     }
   },
   "CREATE_ROLE_MODAL": {
@@ -1323,7 +1416,11 @@
       "DELETE": "Excluir"
     },
     "CANCEL": "Cancelar",
-    "CREATE": "Criar Função"
+    "CREATE": "Criar Função",
+    "SUBTITLE": "Crie um perfil com as permissões necessárias.",
+    "SUBTITLE_EDIT": "Atualize o nome e as permissões do perfil.",
+    "TITLE_EDIT": "Editar perfil",
+    "ERROR_NAME": "Informe o nome do perfil"
   },
   "SERVICE_MODAL": {
     "TITLE_CREATE": "Adicionar Novo Serviço",
@@ -1348,7 +1445,11 @@
     "ROLE_LABEL": "Função atribuída",
     "INVITE_LABEL": "Enviar convite por e-mail",
     "CANCEL": "Cancelar",
-    "CREATE": "Criar Usuário"
+    "CREATE": "Criar Usuário",
+    "TITLE_EDIT": "Editar usuário",
+    "SUBTITLE_EDIT": "Atualize os dados e o perfil do usuário.",
+    "ERROR_NAME": "Informe o nome completo",
+    "ERROR_EMAIL": "Informe um e-mail válido"
   },
   "ADMIN_SCHEDULE": {
     "OPEN_TODAY": "Aberto hoje",
@@ -1403,7 +1504,9 @@
         "holiday": "Feriado nacional",
         "special": "Horário especial"
       },
-      "CLOSED_ALL_DAY": "Fechado o dia todo"
+      "CLOSED_ALL_DAY": "Fechado o dia todo",
+      "EMPTY_TITLE": "Nenhuma exceção de horário",
+      "EMPTY_MESSAGE": "Agende exceções para feriados ou fechamentos."
     },
     "BAYS_SECTION": {
       "SUBTITLE": "Ative, desative ou coloque em manutenção cada baia física do local.",
@@ -1414,7 +1517,33 @@
         "inactive": "Inativa"
       },
       "CURRENT_OPERATOR": "Operador atual",
-      "NONE_ASSIGNED": "Não atribuída"
+      "NONE_ASSIGNED": "Não atribuída",
+      "EMPTY_TITLE": "Nenhuma baia ainda",
+      "EMPTY_MESSAGE": "Adicione a primeira baia para começar a operar.",
+      "NAME_LABEL": "Baia",
+      "STATUS_LABEL": "Status"
+    },
+    "FEEDBACK": {
+      "SAVED_TITLE": "Horário salvo",
+      "SAVED_MESSAGE": "O horário semanal foi atualizado.",
+      "RESET_TITLE": "Horário restaurado",
+      "RESET_MESSAGE": "O horário voltou aos valores padrão.",
+      "BAY_ADDED_TITLE": "Baia adicionada",
+      "BAY_ADDED_MESSAGE": "A baia «{{name}}» está disponível.",
+      "BAY_UPDATED_TITLE": "Baia atualizada",
+      "BAY_UPDATED_MESSAGE": "As alterações de «{{name}}» foram salvas.",
+      "BAY_DELETE_TITLE": "Excluir baia",
+      "BAY_DELETE_MESSAGE": "Excluir «{{name}}»? Ela será removida do horário.",
+      "BAY_DELETED_TITLE": "Baia excluída",
+      "BAY_DELETED_MESSAGE": "«{{name}}» foi removida do horário.",
+      "EXCEPTION_ADDED_TITLE": "Exceção adicionada",
+      "EXCEPTION_ADDED_MESSAGE": "«{{reason}}» foi agendada.",
+      "EXCEPTION_UPDATED_TITLE": "Exceção atualizada",
+      "EXCEPTION_UPDATED_MESSAGE": "«{{reason}}» foi atualizada.",
+      "EXCEPTION_DELETE_TITLE": "Excluir exceção",
+      "EXCEPTION_DELETE_MESSAGE": "Excluir a exceção «{{reason}}»?",
+      "EXCEPTION_DELETED_TITLE": "Exceção excluída",
+      "EXCEPTION_DELETED_MESSAGE": "A exceção foi removida do horário."
     }
   },
   "SCHEDULE_EXCEPTION_MODAL": {
@@ -1454,7 +1583,8 @@
       "ALL": "Todos",
       "AVAILABLE": "Disponíveis",
       "IN_SERVICE": "Em atendimento",
-      "ABSENT": "Ausentes"
+      "ABSENT": "Ausentes",
+      "CLEAR": "Limpar filtros"
     },
     "CARD": {
       "RATING": "Avaliação dos clientes",
@@ -1470,7 +1600,19 @@
       "in_service": "Em atendimento",
       "medical_leave": "Licença médica"
     },
-    "SHOWING": "Mostrando {{shown}} de {{total}} operadores registrados"
+    "SHOWING": "Mostrando {{shown}} de {{total}} operadores registrados",
+    "EMPTY_TITLE": "Nenhum operador ainda",
+    "EMPTY_MESSAGE": "Cadastre o primeiro operador e atribua-o a uma baia.",
+    "NO_RESULTS_TITLE": "Sem resultados",
+    "NO_RESULTS_MESSAGE": "Nenhum operador corresponde à busca.",
+    "FEEDBACK": {
+      "CREATED_TITLE": "Operador criado",
+      "CREATED_MESSAGE": "«{{name}}» foi adicionado à equipe.",
+      "UPDATED_TITLE": "Operador atualizado",
+      "UPDATED_MESSAGE": "Os dados de «{{name}}» foram atualizados.",
+      "SHIFT_TITLE": "Turno atribuído",
+      "SHIFT_MESSAGE": "O turno de «{{name}}» foi atualizado."
+    }
   },
   "OPERATOR_DETAIL": {
     "BACK_TO_OPERATORS": "Voltar para Operadores",
@@ -1523,7 +1665,33 @@
       "EXPORT": "Exportar ficha técnica (PDF)"
     },
     "ASSIGNED_NOTE": "Blocos e turnos atribuídos pela administração central.",
-    "VIEW_FULL_CALENDAR": "Ver calendário completo de {{name}}"
+    "VIEW_FULL_CALENDAR": "Ver calendário completo de {{name}}",
+    "NOT_FOUND_TITLE": "Operador não encontrado",
+    "NOT_FOUND_MESSAGE": "O operador que você procura não existe ou foi removido.",
+    "FEEDBACK": {
+      "ABSENCE_TITLE": "Licença registrada",
+      "ABSENCE_MESSAGE": "A licença de «{{name}}» foi registrada e o status mudou para licença médica.",
+      "AVAILABILITY_TITLE": "Disponibilidade salva",
+      "AVAILABILITY_MESSAGE": "O horário semanal de «{{name}}» foi atualizado.",
+      "SHIFT_TITLE": "Turno atribuído",
+      "SHIFT_MESSAGE": "O turno de «{{name}}» foi atualizado."
+    },
+    "SERVICE_DETAIL_TITLE": "Serviço atribuído",
+    "SERVICE_DETAIL_MESSAGE": "Informações do serviço que o operador deve atender.",
+    "SERVICE_DETAIL": {
+      "SERVICE": "Serviço",
+      "VEHICLE": "Veículo",
+      "BAY": "Baia",
+      "TIME": "Hora"
+    },
+    "EXPORT_FIELDS": {
+      "NAME": "Nome",
+      "SPECIALTY": "Especialidade",
+      "PHONE": "Telefone",
+      "EMAIL": "E-mail",
+      "RATING": "Avaliação",
+      "REVIEWS": "Avaliações"
+    }
   },
   "OPERATOR_CALENDAR": {
     "WEEK_LABEL": "Semana {{week}}: {{from}} – {{to}}",
@@ -1540,6 +1708,10 @@
       "LUNCH": "Almoço / pausa"
     },
     "TODAY": "Hoje",
+    "PREV_WEEK": "Semana anterior",
+    "NEXT_WEEK": "Próxima semana",
+    "PREV_MONTH": "Mês anterior",
+    "NEXT_MONTH": "Próximo mês",
     "ADD_SERVICE": "Agendar serviço",
     "FREE_SLOT": "Disponível"
   },
@@ -1589,6 +1761,18 @@
       "PAGE_OF": "Página {{current}} de {{total}}",
       "PREVIOUS": "Anterior",
       "NEXT": "Próxima"
+    },
+    "EMPTY_TITLE": "Nenhum pagamento registrado",
+    "EMPTY_MESSAGE": "Quando os clientes pagarem, os comprovantes aparecerão aqui.",
+    "NO_RESULTS_TITLE": "Sem resultados",
+    "NO_RESULTS_MESSAGE": "Nenhum pagamento corresponde aos filtros.",
+    "FEEDBACK": {
+      "MANUAL_TITLE": "Pagamento registrado",
+      "MANUAL_MESSAGE": "O pagamento {{code}} de {{client}} foi criado.",
+      "REVIEWED_TITLE": "Pagamento revisado",
+      "REVIEWED_MESSAGE": "O pagamento {{code}} foi marcado como revisado.",
+      "REJECTED_TITLE": "Pagamento rejeitado",
+      "REJECTED_MESSAGE": "O pagamento {{code}} foi rejeitado."
     }
   },
   "PAYMENT_REVIEW_MODAL": {
@@ -1659,14 +1843,12 @@
     },
     "FISCAL": {
       "TITLE": "Informações fiscais",
-      "SUBTITLE": "Tributação, nota fiscal eletrônica e resoluções da DIAN",
+      "SUBTITLE": "Tributação e resoluções da DIAN",
       "REGIME": "Regime fiscal",
       "CIIU": "Atividade CIIU",
       "DIAN_RESOLUTION": "Resolução DIAN",
       "PREFIX": "Prefixo autorizado",
-      "RANGE": "Faixa de faturamento",
-      "ELECTRONIC_INVOICING": "Nota fiscal eletrônica habilitada",
-      "ELECTRONIC_INVOICING_DESC": "Envio automático de notas fiscais eletrônicas exigido pela DIAN"
+      "RANGE": "Faixa de faturamento"
     },
     "CHANNELS": {
       "TITLE": "Canais oficiais",
@@ -1675,6 +1857,21 @@
       "FACEBOOK": "Página do Facebook",
       "SUPPORT_LINE": "Linha de atendimento ao cliente (nacional)",
       "SERVICE_HOURS": "Horário de atendimento"
+    },
+    "FEEDBACK": {
+      "SAVED_TITLE": "Dados salvos",
+      "SAVED_MESSAGE": "As informações do lava-rápido foram atualizadas.",
+      "DISCARDED_TITLE": "Alterações descartadas",
+      "DISCARDED_MESSAGE": "Os dados salvos foram restaurados.",
+      "INVALID_TITLE": "Revise o formulário",
+      "INVALID_MESSAGE": "Preencha os campos obrigatórios e corrija os erros."
+    },
+    "VALIDATION": {
+      "LEGAL_NAME": "Informe a razão social",
+      "TAX_ID": "Informe o NIT",
+      "PHONE": "Informe um telefone válido",
+      "EMAIL": "Informe um e-mail válido",
+      "ADDRESS": "Informe o endereço"
     }
   },
   "PAYMENT_METHODS_SECTION": {
@@ -1687,7 +1884,24 @@
     "REPLACE": "Substituir",
     "UPLOAD_QR": "Enviar QR",
     "NO_QR_NEEDED": "QR não necessário: o operador ou caixa validará o recebimento presencialmente na baia com recibo físico ou de maquininha.",
-    "HOLDER": "Titular"
+    "HOLDER": "Titular",
+    "TOGGLE_TITLE": "Alterar status",
+    "TOGGLE_ON_MESSAGE": "Ativar «{{name}}»? Os clientes poderão pagar com ele.",
+    "TOGGLE_OFF_MESSAGE": "Desativar «{{name}}»? Os clientes não o verão mais.",
+    "FEEDBACK": {
+      "TOGGLED_TITLE": "Método atualizado",
+      "TOGGLED_MESSAGE": "O status de «{{name}}» mudou.",
+      "QR_UPDATED_TITLE": "QR atualizado",
+      "QR_UPDATED_MESSAGE": "O código QR de «{{name}}» foi atualizado.",
+      "ADDED_TITLE": "Método adicionado",
+      "ADDED_MESSAGE": "«{{name}}» já está disponível para receber pagamentos.",
+      "UPDATED_TITLE": "Método atualizado",
+      "UPDATED_MESSAGE": "«{{name}}» foi atualizado.",
+      "DELETE_TITLE": "Excluir método",
+      "DELETE_MESSAGE": "Excluir «{{name}}»? Os clientes não poderão mais pagar com ele.",
+      "DELETED_TITLE": "Método excluído",
+      "DELETED_MESSAGE": "«{{name}}» foi removido dos métodos de pagamento."
+    }
   },
   "ADD_PAYMENT_METHOD_MODAL": {
     "TITLE": "Adicionar método de pagamento",
@@ -1698,7 +1912,13 @@
     "HOLDER_LABEL": "Titular da conta",
     "ACCOUNT_LABEL": "Número de celular / conta",
     "CANCEL": "Cancelar",
-    "SAVE": "Adicionar método"
+    "SAVE": "Adicionar método",
+    "TITLE_EDIT": "Editar método de pagamento",
+    "SUBTITLE": "Cadastre a conta para onde os clientes transferirão o valor do serviço e enviarão o comprovante.",
+    "SUBTITLE_EDIT": "Atualize os dados da conta e o código QR.",
+    "ERROR_NAME": "Informe o nome do método",
+    "ERROR_ACCOUNT": "Informe o número de celular ou conta",
+    "NEEDS_QR_LABEL": "Requer código QR para cobrar"
   },
   "ADMIN_SETTINGS": {
     "TABS": {
@@ -1723,5 +1943,204 @@
     "SAME_PASSWORD": "A nova senha deve ser diferente da atual",
     "NOT_MATCH": "As senhas não coincidem",
     "SAVE": "Salvar"
+  },
+  "ASSIGN_SHIFT_MODAL": {
+    "TITLE": "Atribuir turno",
+    "SUBTITLE": "Escolha o operador, o status e a baia do turno.",
+    "OPERATOR_LABEL": "Operador",
+    "STATUS_LABEL": "Status",
+    "BAY_LABEL": "Baia",
+    "NO_BAY": "Sem baia atribuída",
+    "HINT": "A baia não pode ser atribuída quando o operador está de licença médica.",
+    "ASSIGN": "Atribuir turno"
+  },
+  "AVAILABILITY_MODAL": {
+    "TITLE": "Disponibilidade semanal",
+    "SUBTITLE": "Defina os horários em que o operador atende serviços.",
+    "HINT": "Desmarque o dia para indicar que o operador não trabalha naquele dia.",
+    "ERROR_RANGE": "A hora de término deve ser posterior à de início.",
+    "TABLE": {
+      "DAY": "Dia",
+      "START": "Início",
+      "END": "Fim"
+    }
+  },
+  "BAY_MODAL": {
+    "TITLE_CREATE": "Adicionar baia",
+    "TITLE_EDIT": "Editar baia",
+    "SUBTITLE": "Cadastre uma nova baia ou atualize seu status e operador.",
+    "NAME_LABEL": "Nome da baia",
+    "NAME_PLACEHOLDER": "Ex.: Baia 5",
+    "ERROR_NAME": "Informe o nome da baia",
+    "STATUS_LABEL": "Status",
+    "OPERATOR_LABEL": "Operador atribuído",
+    "HINT_NO_OPERATOR": "Baias em manutenção ou inativas não usam operador."
+  },
+  "BOOKING_DETAIL": {
+    "CODE": "Código",
+    "CREATED": "Reserva criada",
+    "CLIENT": "Cliente",
+    "PHONE": "Telefone",
+    "EMAIL": "E-mail",
+    "VEHICLE": "Veículo",
+    "PLATE": "Placa",
+    "SERVICE": "Serviço",
+    "DATE": "Data",
+    "TIME": "Hora",
+    "DURATION": "Duração",
+    "MINUTES": "{{count}} minutos",
+    "BAY": "Baia",
+    "NO_BAY": "Sem baia",
+    "OPERATOR": "Operador",
+    "NO_OPERATOR": "Sem atribuir",
+    "ASSIGN": "Atribuir operador",
+    "EDIT": "Editar reserva",
+    "CANCEL_BOOKING": "Cancelar reserva",
+    "RESTRICTED_HINT": "As alterações de status são restritas conforme o fluxo de atendimento.",
+    "STATUS_ACTION": {
+      "in_progress": "Iniciar serviço",
+      "completed": "Concluir",
+      "cancelled": "Cancelar"
+    }
+  },
+  "BOOKING_MODAL": {
+    "TITLE_CREATE": "Nova reserva",
+    "TITLE_EDIT": "Editar reserva",
+    "SUBTITLE": "Registre um serviço na agenda do lava-rápido.",
+    "CLIENT_LABEL": "Cliente",
+    "CLIENT_PLACEHOLDER": "Nome completo do cliente",
+    "PHONE_LABEL": "Telefone",
+    "PHONE_PLACEHOLDER": "+57 300 000 0000",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "cliente@email.com",
+    "VEHICLE_LABEL": "Veículo",
+    "VEHICLE_PLACEHOLDER": "Marca e modelo",
+    "PLATE_LABEL": "Placa",
+    "PLATE_PLACEHOLDER": "ABC-123",
+    "SERVICE_LABEL": "Serviço",
+    "DATE_LABEL": "Data",
+    "TIME_LABEL": "Hora",
+    "DURATION_LABEL": "Duração",
+    "BAY_LABEL": "Baia",
+    "OPERATOR_LABEL": "Operador",
+    "STATUS_LABEL": "Status",
+    "NOTES_LABEL": "Notas",
+    "NOTES_PLACEHOLDER": "Instruções ou preferências do cliente",
+    "CREATE": "Criar reserva",
+    "ERROR_CLIENT": "Informe o nome do cliente",
+    "ERROR_PHONE": "Informe um telefone válido",
+    "ERROR_VEHICLE": "Informe o veículo",
+    "ERROR_PLATE": "Informe a placa",
+    "NO_BAY": "Sem baia",
+    "NO_OPERATOR": "Sem operador"
+  },
+  "EXPORT_DATA": {
+    "TITLE": "Exportar dados",
+    "ROWS": "registros",
+    "HINT": "Escolha o formato do arquivo para baixar.",
+    "GENERATED_AT": "Gerado em",
+    "SHEET_COUNT": "Número de registros",
+    "EXCEL": {
+      "TITLE": "Excel",
+      "DESC": "Planilha com todos os registros"
+    },
+    "PDF": {
+      "TITLE": "PDF",
+      "DESC": "Documento pronto para imprimir ou compartilhar"
+    },
+    "CSV": {
+      "TITLE": "CSV",
+      "DESC": "Arquivo compatível com Excel e outros programas"
+    }
+  },
+  "OPERATOR_ABSENCE_MODAL": {
+    "TITLE": "Registrar licença",
+    "SUBTITLE": "Registre o período em que o operador estará indisponível.",
+    "START_DATE_LABEL": "Data de início",
+    "END_DATE_LABEL": "Data de término",
+    "REASON_LABEL": "Motivo",
+    "REASON_PLACEHOLDER": "Ex.: Licença médica",
+    "ERROR_DATE_RANGE": "A data de término deve ser posterior à de início.",
+    "ERROR_REASON": "Informe o motivo da licença"
+  },
+  "OPERATOR_MODAL": {
+    "TITLE_CREATE": "Novo operador",
+    "TITLE_EDIT": "Editar operador",
+    "SUBTITLE": "Cadastre os dados do operador e sua baia de trabalho.",
+    "NAME_LABEL": "Nome completo",
+    "NAME_PLACEHOLDER": "Nome e sobrenome",
+    "ERROR_NAME": "Informe o nome do operador",
+    "SPECIALTY_LABEL": "Especialidade",
+    "SPECIALTY_PLACEHOLDER": "Ex.: Detalhamento cerâmico",
+    "ERROR_SPECIALTY": "Informe a especialidade",
+    "PHONE_LABEL": "Telefone",
+    "PHONE_PLACEHOLDER": "+57 300 000 0000",
+    "ERROR_PHONE": "Informe um telefone válido",
+    "EMAIL_LABEL": "E-mail",
+    "EMAIL_PLACEHOLDER": "operador@lavador.co",
+    "ERROR_EMAIL": "Informe um e-mail válido",
+    "STATUS_LABEL": "Status",
+    "BAY_LABEL": "Baia",
+    "NO_BAY": "Sem baia atribuída",
+    "BAY_DISABLED_HINT": "Operadores de licença médica não podem ter baia atribuída.",
+    "TAGS_LABEL": "Etiquetas",
+    "TAGS_ADD": "Adicionar etiqueta",
+    "TAGS_PLACEHOLDER": "Ex.: Cerâmico, SUV",
+    "TAGS_EMPTY": "Nenhuma etiqueta ainda."
+  },
+  "PROMOTION_MODAL": {
+    "TITLE_CREATE": "Nova promoção",
+    "TITLE_EDIT": "Editar promoção",
+    "SUBTITLE": "Crie uma oferta para atrair mais clientes ao lava-rápido.",
+    "NAME_LABEL": "Nome",
+    "NAME_PLACEHOLDER": "Ex.: Lavagem premium 2x1",
+    "ERROR_NAME": "Informe o nome da promoção",
+    "DESCRIPTION_LABEL": "Descrição",
+    "DESCRIPTION_PLACEHOLDER": "Descreva os benefícios da promoção",
+    "ERROR_DESCRIPTION": "Informe uma descrição",
+    "PRICE_LABEL": "Preço promocional",
+    "PRICE_PLACEHOLDER": "$",
+    "ERROR_PRICE": "Informe um preço maior que zero",
+    "DURATION_LABEL": "Duração",
+    "ERROR_DURATION": "Informe a duração",
+    "COUPON_LABEL": "Cupom",
+    "COUPON_PLACEHOLDER": "Ex.: PREMIUM20",
+    "ERROR_COUPON": "Informe o cupom",
+    "ICON_LABEL": "Ícone",
+    "STATUS_LABEL": "Status",
+    "START_DATE_LABEL": "Data de início",
+    "FEATURED_LABEL": "Destacar no app",
+    "FEATURES_LABEL": "Benefícios",
+    "FEATURES_ADD": "Adicionar benefício",
+    "FEATURES_PLACEHOLDER": "Ex.: Cera protetora incluída",
+    "FEATURES_EMPTY": "Nenhum benefício ainda.",
+    "STATUS_OPTIONS": {
+      "active": "Ativa",
+      "scheduled": "Agendada",
+      "inactive": "Inativa"
+    }
+  },
+  "QUICK_ACCESS": {
+    "BOOK_WASH": "Agendar lavagem",
+    "PAY_SERVICE": "Pagar serviço",
+    "MY_VEHICLES": "Meus veículos",
+    "NOTIFICATIONS": "Notificações"
+  },
+  "STATS": {
+    "ACTIVE_RESERVATIONS": "Reservas ativas",
+    "MY_VEHICLES": "Meus veículos",
+    "WASHES_DONE": "Lavagens concluídas"
+  },
+  "SCHEDULE_HISTORY": {
+    "REASON": {
+      "HOURS_UPDATED": "Horário semanal atualizado",
+      "EXCEPTION_ADDED": "Exceção adicionada",
+      "EXCEPTION_REMOVED": "Exceção removida",
+      "BAY_MAINTENANCE": "Baia em manutenção",
+      "SCHEDULE_SAVED": "Horário salvo",
+      "BAY_STATUS": "Status de baia atualizado",
+      "BAY_ADDED": "Baia adicionada",
+      "BAY_REMOVED": "Baia removida"
+    }
   }
 }
