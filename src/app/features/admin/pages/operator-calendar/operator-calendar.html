@@ -4,7 +4,18 @@
   <main class="home-content">
 
     @if (!operator) {
-      <p class="muted">Operario no encontrado.</p>
+      <div class="card">
+        <app-empty-state
+          variant="error"
+          icon="calendar_today"
+          titleKey="OPERATOR_DETAIL.NOT_FOUND_TITLE"
+          messageKey="OPERATOR_DETAIL.NOT_FOUND_MESSAGE">
+          <button class="btn-outline" (click)="goToOperatorsList()">
+            <mat-icon>arrow_back</mat-icon>
+            {{ 'OPERATOR_DETAIL.BACK_TO_OPERATORS' | translate }}
+          </button>
+        </app-empty-state>
+      </div>
     } @else {
 
       <!-- breadcrumb -->
@@ -22,14 +33,23 @@
       <!-- encabezado de semana -->
       <div class="week-header">
         <div class="week-nav">
-          <button class="nav-btn"><mat-icon>chevron_left</mat-icon></button>
-          <strong>{{ 'OPERATOR_CALENDAR.WEEK_LABEL' | translate:{ week: 43, from: '21 Oct', to: '27 Oct, 2026' } }}</strong>
-          <button class="nav-btn"><mat-icon>chevron_right</mat-icon></button>
+          <button class="nav-btn" (click)="shiftWeek(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_WEEK' | translate">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <button class="today-btn" (click)="goToCurrentWeek()">
+            {{ 'OPERATOR_CALENDAR.TODAY' | translate }}
+          </button>
+          <strong>
+            {{ 'OPERATOR_CALENDAR.WEEK_LABEL' | translate:{ week: weekLabelContent.week, from: weekLabelContent.from, to: weekLabelContent.to } }}
+          </strong>
+          <button class="nav-btn" (click)="shiftWeek(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_WEEK' | translate">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
         </div>
 
         <span class="full-day-chip">
           <mat-icon>schedule</mat-icon>
-          {{ 'OPERATOR_CALENDAR.FULL_DAY' | translate:{ from: '08:00 AM', to: '06:00 PM' } }}
+          {{ 'OPERATOR_CALENDAR.FULL_DAY' | translate:{ from: fullDayContent.from, to: fullDayContent.to } }}
         </span>
 
         <div class="view-toggle">
@@ -48,11 +68,13 @@
       </div>
 
       @if (view === 'week') {
-        <!-- grilla semanal -->
         <div class="week-grid">
           @for (dayIndex of dayIndexes; track dayIndex) {
             <div class="day-column">
-              <div class="day-column__header">{{ dayLabel(dayIndex) }}</div>
+              <div class="day-column__header">
+                <span>{{ dayLabel(dayIndex) }}</span>
+                <small>{{ dayDateLabel(dayIndex) }}</small>
+              </div>
 
               <div class="day-column__body">
                 @for (block of blocksForDay(dayIndex); track block.startTime) {
@@ -72,10 +94,70 @@
             </div>
           }
         </div>
+      } @else if (view === 'day') {
+        <div class="card day-view">
+          <div class="day-view__picker">
+            @for (dayIndex of dayIndexes; track dayIndex) {
+              <button
+                class="day-chip"
+                [class.day-chip--active]="selectedDayIndex === dayIndex"
+                (click)="selectedDayIndex = dayIndex">
+                {{ dayLabel(dayIndex) }}
+                <small>{{ dayDateLabel(dayIndex) }}</small>
+              </button>
+            }
+          </div>
+
+          <div class="day-view__column">
+            @for (block of blocksForDay(selectedDayIndex); track block.startTime) {
+              <div [class]="'block block--' + block.type">
+                <span class="block__time">{{ block.startTime }} - {{ block.endTime }}</span>
+                <span class="block__label">{{ block.label }}</span>
+                @if (block.bay) { <span class="block__bay">{{ block.bay }}</span> }
+              </div>
+            } @empty {
+              <div class="day-view__empty">
+                <mat-icon>event_available</mat-icon>
+                <p>{{ 'OPERATOR_CALENDAR.FREE_SLOT' | translate }}</p>
+              </div>
+            }
+          </div>
+        </div>
       } @else {
-        <div class="card empty-view">
-          <mat-icon>construction</mat-icon>
-          <p>{{ 'COMING_SOON.MESSAGE' | translate }}</p>
+        <div class="card month-view">
+          <div class="month-view__header">
+            <button class="nav-btn" (click)="shiftMonth(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_MONTH' | translate">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button class="today-btn" (click)="goToCurrentMonth()">
+              {{ 'OPERATOR_CALENDAR.TODAY' | translate }}
+            </button>
+            <strong>{{ monthLabel }}</strong>
+            <button class="nav-btn" (click)="shiftMonth(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_MONTH' | translate">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+
+          <div class="month-view__weekdays">
+            @for (dayIndex of dayIndexes; track dayIndex) {
+              <span>{{ dayLabel(dayIndex) }}</span>
+            }
+          </div>
+
+          <div class="month-view__grid">
+            @for (cell of monthCells; track $index) {
+              <div class="month-cell" [class.month-cell--empty]="cell.day === null">
+                @if (cell.day !== null) {
+                  <span class="month-cell__day">{{ cell.day }}</span>
+                  @if (cell.hasBlocks) {
+                    <span [title]="cell.blockCount + ' bloques'">
+                      <i class="dot dot--service"></i>
+                    </span>
+                  }
+                }
+              </div>
+            }
+          </div>
         </div>
       }
 

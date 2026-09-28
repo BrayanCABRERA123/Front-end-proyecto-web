@@ -15,11 +15,14 @@
       <p class="empty">{{ 'SCHEDULE_HISTORY_MODAL.EMPTY' | translate }}</p>
     } @else {
       <ul class="timeline">
-        @for (e of entries; track e.date + e.description) {
+        @for (e of entries; track e.date + e.reason + e.detail) {
           <li>
             <span class="dot"></span>
             <div>
-              <strong>{{ e.description }}</strong>
+              <strong>
+                {{ e.reason | translate }}
+                @if (e.detail) { <span class="detail"> · {{ e.detail }}</span> }
+              </strong>
               <span class="muted">{{ e.date }} · {{ e.author }}</span>
             </div>
           </li>

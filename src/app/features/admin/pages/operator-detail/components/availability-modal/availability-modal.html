@@ -1,0 +1,61 @@
+<div class="form-dialog form-dialog--wide">
+
+  <div class="form-dialog__header">
+    <div>
+      <h2>{{ 'AVAILABILITY_MODAL.TITLE' | translate }}</h2>
+      <p>{{ 'AVAILABILITY_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+    <button type="button" class="form-dialog__close" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="form-dialog__body">
+
+    <p class="form-hint">{{ 'AVAILABILITY_MODAL.HINT' | translate }}</p>
+
+    <div class="avail-table">
+      <div class="avail-table__head">
+        <span>{{ 'AVAILABILITY_MODAL.TABLE.DAY' | translate }}</span>
+        <span>{{ 'AVAILABILITY_MODAL.TABLE.START' | translate }}</span>
+        <span>{{ 'AVAILABILITY_MODAL.TABLE.END' | translate }}</span>
+      </div>
+
+      @for (row of rows; track row.day; let i = $index) {
+        <div class="avail-table__row"
+          [class.avail-table__row--invalid]="submitted && row.enabled && row.endTime <= row.startTime">
+
+          <label class="avail-table__day">
+            <input type="checkbox" [(ngModel)]="row.enabled">
+            {{ ('ADMIN_SCHEDULE.DAYS.' + dayKeys[i]) | translate }}
+          </label>
+
+          <input
+            type="time"
+            [(ngModel)]="row.startTime"
+            [disabled]="!row.enabled"
+            (ngModelChange)="row.enabled = true">
+
+          <input
+            type="time"
+            [(ngModel)]="row.endTime"
+            [disabled]="!row.enabled"
+            (ngModelChange)="row.enabled = true">
+        </div>
+
+        @if (submitted && row.enabled && row.endTime <= row.startTime) {
+          <p class="avail-table__error"><mat-icon>error</mat-icon>{{ 'AVAILABILITY_MODAL.ERROR_RANGE' | translate }}</p>
+        }
+      }
+    </div>
+
+  </div>
+
+  <div class="form-dialog__actions">
+    <button class="form-dialog__cancel" type="button" (click)="close()">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button class="form-dialog__submit" type="button" (click)="save()">
+      {{ 'COMMON.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>

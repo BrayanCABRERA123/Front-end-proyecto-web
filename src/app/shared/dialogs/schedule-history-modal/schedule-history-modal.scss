@@ -58,6 +58,7 @@
     &:last-child { border-bottom: none; }
 
     strong { display: block; @include body-text; color: var(--text); }
+    .detail { font-weight: $fw-regular; color: var(--text-secondary); }
     .muted { @include caption-text; color: var(--text-secondary); }
   }
 }

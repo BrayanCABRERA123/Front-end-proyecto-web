@@ -4,11 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
-export interface ScheduleHistoryEntry {
-  date: string;
-  author: string;
-  description: string;
-}
+import { ScheduleHistoryEntry } from './schedule-history.model';
+
+export type { ScheduleHistoryEntry };
 
 @Component({
   selector: 'app-schedule-history-modal',

@@ -192,12 +192,154 @@
   mat-icon { font-size: 32px; width: 32px; height: 32px; color: var(--primary); }
 }
 
+/* botón "Hoy" dentro de la barra de navegación */
+.today-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-family: $font-family-base;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
+  color: var(--text-secondary);
+  cursor: pointer;
+
+  &:hover { background: var(--item-hover); color: var(--text); }
+}
+
+/* cabecera de columna con fecha */
+.day-column__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  small { font-weight: $fw-regular; opacity: .8; }
+}
+
+/* vista día */
+.day-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__picker {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 40px 16px;
+    color: var(--text-secondary);
+    text-align: center;
+
+    mat-icon { font-size: 32px; width: 32px; height: 32px; color: var(--primary); }
+  }
+}
+
+.day-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-secondary);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-family: $font-family-base;
+  font-weight: $fw-semibold;
+  font-size: $fs-caption;
+  cursor: pointer;
+
+  small { font-weight: $fw-regular; opacity: .8; }
+
+  &:hover { background: var(--item-hover); }
+
+  &--active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #ffffff;
+
+    small { opacity: .85; }
+  }
+}
+
+/* vista mes */
+.month-view {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-x: auto;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    strong { @include subtitle; color: var(--text); font-weight: $fw-bold; }
+  }
+
+  &__weekdays {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    @include caption-text;
+    font-weight: $fw-bold;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+}
+
+.month-cell {
+  min-height: 64px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  &--empty { border-style: dashed; background: transparent; }
+
+  &__day {
+    @include body-text-bold;
+    color: var(--text);
+  }
+}
+
 /* responsive */
 @include tablet {
   .home-content { padding: 20px; }
   .week-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .month-view__weekdays,
+  .month-view__grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @include mobile {
   .week-grid { grid-template-columns: 1fr; }
+  .week-nav { flex-wrap: wrap; }
+
+  .month-view__weekdays,
+  .month-view__grid { grid-template-columns: repeat(2, 1fr); }
 }

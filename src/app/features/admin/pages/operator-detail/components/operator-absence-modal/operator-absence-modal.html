@@ -1,0 +1,47 @@
+<div class="form-dialog">
+
+  <div class="form-dialog__header">
+    <div>
+      <h2>{{ 'OPERATOR_ABSENCE_MODAL.TITLE' | translate }}</h2>
+      <p>{{ 'OPERATOR_ABSENCE_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+    <button type="button" class="form-dialog__close" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="form-dialog__body">
+
+    <div class="form-dialog__grid-2">
+      <label class="form-field">
+        <span>{{ 'OPERATOR_ABSENCE_MODAL.START_DATE_LABEL' | translate }} *</span>
+        <input type="date" [(ngModel)]="startDate" (ngModelChange)="endDate = endDate < startDate ? startDate : endDate">
+      </label>
+
+      <label class="form-field" [class.form-field--invalid]="dateInvalid">
+        <span>{{ 'OPERATOR_ABSENCE_MODAL.END_DATE_LABEL' | translate }} *</span>
+        <input type="date" [(ngModel)]="endDate">
+        @if (dateInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'OPERATOR_ABSENCE_MODAL.ERROR_DATE_RANGE' | translate }}</span>
+        }
+      </label>
+    </div>
+
+    <label class="form-field" [class.form-field--invalid]="reasonInvalid">
+      <span>{{ 'OPERATOR_ABSENCE_MODAL.REASON_LABEL' | translate }} *</span>
+      <textarea rows="2" [(ngModel)]="reason" maxlength="160" [placeholder]="'OPERATOR_ABSENCE_MODAL.REASON_PLACEHOLDER' | translate"></textarea>
+      @if (reasonInvalid) {
+        <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'OPERATOR_ABSENCE_MODAL.ERROR_REASON' | translate }}</span>
+      }
+    </label>
+
+  </div>
+
+  <div class="form-dialog__actions">
+    <button class="form-dialog__cancel" type="button" (click)="close()">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button class="form-dialog__submit" type="button" (click)="save()">
+      {{ 'COMMON.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>
