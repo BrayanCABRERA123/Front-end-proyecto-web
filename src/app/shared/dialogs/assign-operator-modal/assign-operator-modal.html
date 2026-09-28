@@ -57,7 +57,7 @@
             class="status-tag"
             [class.status-tag--available]="op.availability === 'available'"
             [class.status-tag--warning]="op.availability !== 'available'">
-            {{ op.availability === 'available' ? ('ASSIGN_OPERATOR_MODAL.AVAILABLE' | translate) : op.availabilityNote }}
+            {{ op.availability === 'available' ? ('ASSIGN_OPERATOR_MODAL.AVAILABLE' | translate) : (op.availabilityNote | translate) }}
           </span>
         </label>
       }
