@@ -192,7 +192,7 @@
     "NEW_SERVICE": "Novo serviço atribuído",
     "NEW_SERVICE_DESC": "O serviço SV-2034 foi atribuído a você às 15:00.",
     "STATUS_UPDATE": "Atualização de status",
-    "STATUS_UPDATE_DESC": "O cliente confirmou o endereço do serviço SV-1783.",
+    "STATUS_UPDATE_DESC": "O cliente confirmou sua reserva para o serviço SV-1783.",
     "CANCELLATION": "Cancelamento",
     "CANCELLATION_DESC": "O cliente cancelou o serviço SV-1690.",
     "CLIENT_MESSAGE": "Mensagem do cliente",
@@ -254,6 +254,8 @@
     "OPERATOR_MESSAGE_DESC": "\"Seu veículo está pronto, você pode vir retirá-lo.\"",
     "DELETE_TITLE": "Excluir esta notificação?",
     "DELETE_MESSAGE": "Esta ação não pode ser desfeita.",
+    "DELETED_TITLE": "Notificação excluída",
+    "DELETED_MESSAGE": "A notificação foi excluída com sucesso.",
     "ADMIN_SUBTITLE": "Aqui você pode visualizar as notificações administrativas: pagamentos a verificar, reservas sem operador, novidades da equipe e do sistema."
   },
   "PAYMENTS": {
@@ -554,7 +556,6 @@
     "TABLE": {
       "ID": "ID",
       "SERVICE_TYPE": "TIPO DE SERVIÇO",
-      "LOCATION": "LOCALIZAÇÃO",
       "DATE_TIME": "DATA E HORA",
       "VEHICLE": "VEÍCULO",
       "CLIENT": "CLIENTE",
@@ -563,11 +564,10 @@
     "DETAIL": {
       "TITLE": "Informações do serviço",
       "CLIENT": "Cliente:",
-      "ADDRESS": "Endereço:",
+      "VEHICLE": "Veículo:",
       "SERVICE_TYPE": "Tipo de serviço:",
       "SCHEDULED_TIME": "Horário agendado:",
       "PAYMENT_METHOD": "Método de pagamento:",
-      "MAP_LABEL": "Localização no mapa",
       "PROGRESS_TITLE": "Status e progresso",
       "START": "Iniciar Serviço",
       "REPORT": "Reportar progresso",
@@ -626,7 +626,6 @@
     "DETAIL": {
       "DATE": "Data e hora",
       "VEHICLE": "Veículo",
-      "ADDRESS": "Endereço",
       "PAYMENT": "Pagamento",
       "RATING": "Avaliação",
       "REASON": "Motivo"
@@ -680,7 +679,6 @@
   },
   "QUALIFICATION_CARD": {
     "DURATION": "Duração",
-    "LOCATION": "Localização",
     "ID": "ID",
     "DETAIL_TITLE": "Detalhe da avaliação",
     "DETAIL_MESSAGE": "Isto é o que o cliente achou do seu serviço.",
@@ -984,8 +982,7 @@
     "DETAIL": {
       "DATE": "Data e hora",
       "DURATION": "Duração",
-      "VEHICLE": "Veículo",
-      "ADDRESS": "Endereço"
+      "VEHICLE": "Veículo"
     }
   },
   "LEGAL": {

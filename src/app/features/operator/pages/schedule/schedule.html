@@ -111,8 +111,6 @@
                   <p class="reservation-detail">
                     <mat-icon>{{ r.vehicle === 'MOTO' ? 'two_wheeler' : (r.vehicle === 'TRUCK' || r.vehicle === 'PICKUP' ? 'local_shipping' : 'directions_car') }}</mat-icon>
                     {{ ('VEHICLE.' + r.vehicle) | translate }}
-                    <mat-icon>location_on</mat-icon>
-                    {{ r.address }}
                     <span class="reservation-duration">{{ r.durationMin }} min</span>
                     <span class="reservation-code">{{ r.code }}</span>
                   </p>

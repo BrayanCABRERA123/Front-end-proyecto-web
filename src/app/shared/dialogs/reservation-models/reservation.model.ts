@@ -8,7 +8,6 @@ export interface Reservation {
   service: string;
   client: string;
   vehicle: string;
-  address: string;
   durationMin: number;
   status: ReservationStatus;
 }

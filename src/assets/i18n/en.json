@@ -192,7 +192,7 @@
     "NEW_SERVICE": "New service assigned",
     "NEW_SERVICE_DESC": "SV-2034 has been assigned to you at 3:00 PM.",
     "STATUS_UPDATE": "Status update",
-    "STATUS_UPDATE_DESC": "The client confirmed the address for service SV-1783.",
+    "STATUS_UPDATE_DESC": "The client confirmed their booking for service SV-1783.",
     "CANCELLATION": "Cancellation",
     "CANCELLATION_DESC": "The client cancelled service SV-1690.",
     "CLIENT_MESSAGE": "Client message",
@@ -254,6 +254,8 @@
     "OPERATOR_MESSAGE_DESC": "\"Your vehicle is ready, you can come pick it up.\"",
     "DELETE_TITLE": "Delete this notification?",
     "DELETE_MESSAGE": "This action cannot be undone.",
+    "DELETED_TITLE": "Notification deleted",
+    "DELETED_MESSAGE": "The notification was deleted successfully.",
     "ADMIN_SUBTITLE": "Here you can view administrative notifications: payments to verify, unassigned bookings, team updates and system alerts."
   },
   "PAYMENTS": {
@@ -554,7 +556,6 @@
     "TABLE": {
       "ID": "ID",
       "SERVICE_TYPE": "SERVICE TYPE",
-      "LOCATION": "LOCATION",
       "DATE_TIME": "DATE & TIME",
       "VEHICLE": "VEHICLE",
       "CLIENT": "CLIENT",
@@ -563,11 +564,10 @@
     "DETAIL": {
       "TITLE": "Service information",
       "CLIENT": "Client:",
-      "ADDRESS": "Address:",
+      "VEHICLE": "Vehicle:",
       "SERVICE_TYPE": "Service type:",
       "SCHEDULED_TIME": "Scheduled time:",
       "PAYMENT_METHOD": "Payment method:",
-      "MAP_LABEL": "Location on map",
       "PROGRESS_TITLE": "Status and progress",
       "START": "Start Service",
       "REPORT": "Report progress",
@@ -626,7 +626,6 @@
     "DETAIL": {
       "DATE": "Date and time",
       "VEHICLE": "Vehicle",
-      "ADDRESS": "Address",
       "PAYMENT": "Payment",
       "RATING": "Rating",
       "REASON": "Reason"
@@ -680,7 +679,6 @@
   },
   "QUALIFICATION_CARD": {
     "DURATION": "Duration",
-    "LOCATION": "Location",
     "ID": "ID",
     "DETAIL_TITLE": "Rating details",
     "DETAIL_MESSAGE": "This is what the client said about your service.",
@@ -984,8 +982,7 @@
     "DETAIL": {
       "DATE": "Date and time",
       "DURATION": "Duration",
-      "VEHICLE": "Vehicle",
-      "ADDRESS": "Address"
+      "VEHICLE": "Vehicle"
     }
   },
   "LEGAL": {

@@ -61,15 +61,6 @@ td {
   vertical-align: middle;
 }
 
-// columna ubicación con texto cortado
-.td-location {
-  max-width: 150px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--text-secondary);
-}
-
 // badge de estado
 .status-badge {
   padding: 4px 12px;

@@ -9,7 +9,6 @@ export interface ServiceHistoryItem {
   vehicle: string;
   plate: string;
   client: string;
-  address: string;
   paymentMethod: string;
   amount: number;
   rating: number | null;

@@ -287,3 +287,12 @@ html {
 html {
   scroll-behavior: smooth;
 }
+
+// opciones de las listas desplegables nativas (<select>)
+// algunos selects usan un fondo semitransparente (--item-bg) en tema oscuro; las opciones
+// heredaban la letra blanca pero Windows las pintaba sobre fondo claro y no se veían
+// hasta pasar el cursor. Aquí se les da un fondo sólido del tema en todas las pantallas.
+select option {
+  background-color: var(--card);
+  color: var(--text);
+}

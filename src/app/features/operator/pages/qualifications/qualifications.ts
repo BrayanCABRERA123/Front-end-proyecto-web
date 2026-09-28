@@ -63,9 +63,8 @@ starOptions = [
       serviceType: 'Lavado Premium',
       date: '15/07/2024',
       rating: 4,
-      comment: '"Excelente trabajo, llegó puntual y dejó el vehículo impecable."',
+      comment: '"Excelente trabajo, me entregaron el vehículo a tiempo y quedó impecable."',
       duration: '1h 30m',
-      location: 'Miraflores',
       serviceId: 'SV-1234'
     },
     {
@@ -76,7 +75,6 @@ starOptions = [
       rating: 5,
       comment: '"Muy buen servicio, el auto quedó reluciente. Lo recomiendo totalmente."',
       duration: '1h 0m',
-      location: 'San Isidro',
       serviceId: 'SV-1233'
     },
     {
@@ -87,7 +85,6 @@ starOptions = [
       rating: 5,
       comment: '"Increíble atención al detalle, superó mis expectativas."',
       duration: '2h 0m',
-      location: 'Surco',
       serviceId: 'SV-1230'
     },
     {
@@ -96,9 +93,8 @@ starOptions = [
       serviceType: 'Lavado Premium',
       date: '10/07/2024',
       rating: 3,
-      comment: '"Buen servicio pero llegó con un poco de retraso."',
+      comment: '"Buen servicio, pero tuve que esperar un poco más de lo indicado."',
       duration: '1h 15m',
-      location: 'La Molina',
       serviceId: 'SV-1228'
     },
     {
@@ -109,7 +105,6 @@ starOptions = [
       rating: 5,
       comment: '"Rápido y eficiente. El auto quedó como nuevo."',
       duration: '45m',
-      location: 'Barranco',
       serviceId: 'SV-1225'
     },
     {
@@ -120,7 +115,6 @@ starOptions = [
       rating: 4,
       comment: '"Muy buen trabajo en general, volveré a solicitar el servicio."',
       duration: '1h 45m',
-      location: 'Magdalena',
       serviceId: 'SV-1220'
     }
   ];

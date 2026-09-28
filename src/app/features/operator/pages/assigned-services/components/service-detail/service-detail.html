@@ -20,10 +20,11 @@
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.CLIENT' | translate }}</span>
         <span class="detail-value">{{ service.client }}</span>
       </div>
+      <!-- el cliente trae el vehículo a la sede: sirve para reconocerlo al llegar -->
       <div class="detail-item">
-        <mat-icon class="detail-icon">location_on</mat-icon>
-        <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.ADDRESS' | translate }}</span>
-        <span class="detail-value bold">{{ service.fullAddress }}</span>
+        <mat-icon class="detail-icon">directions_car</mat-icon>
+        <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.VEHICLE' | translate }}</span>
+        <span class="detail-value bold">{{ service.vehicle }}</span>
       </div>
     </div>
 
@@ -44,11 +45,6 @@
       </div>
     </div>
 
-  </div>
-
-  <div class="map-placeholder">
-    <mat-icon class="map-icon">location_on</mat-icon>
-    <span class="map-label">{{ 'ASSIGNED_SERVICES.DETAIL.MAP_LABEL' | translate }}</span>
   </div>
 
   <!-- acciones según el estado: pendiente -> iniciar; en progreso -> reportar o finalizar -->

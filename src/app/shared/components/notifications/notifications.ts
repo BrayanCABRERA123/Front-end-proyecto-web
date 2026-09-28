@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,7 @@ import {
 } from '../../dialogs/notification-models/notification.model';
 import { NotificationDetailModal } from '../../dialogs/notification-detail-modal/notification-detail-modal';
 import { ConfirmModal, ConfirmModalData } from '../../dialogs/confirm-modal/confirm-modal';
+import { FeedbackService } from '../../dialogs/feedback.service';
 
 export type { AppNotification, NotificationType };
 
@@ -107,7 +108,11 @@ export class NotificationsComponent {
     this.notifications.forEach(n => n.read = true);
   }
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private feedback: FeedbackService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   viewDetail(n: AppNotification) {
     this.dialog.open(NotificationDetailModal, {
@@ -128,9 +133,13 @@ export class NotificationsComponent {
     });
 
     dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-        this.notifications = this.notifications.filter(x => x.id !== n.id);
-      }
+      if (!confirmed) return;
+
+      this.notifications = this.notifications.filter(x => x.id !== n.id);
+      // la app es zoneless: sin esto la tarjeta no desaparece hasta otro evento
+      this.cdr.markForCheck();
+
+      this.feedback.success('NOTIFICATIONS.DELETED_TITLE', 'NOTIFICATIONS.DELETED_MESSAGE');
     });
   }
 

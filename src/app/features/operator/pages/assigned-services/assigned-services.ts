@@ -49,8 +49,6 @@ export class AssignedServicesComponent {
     {
       id: 'SV-2031',
       serviceType: 'Lavado básico',
-      location: 'Calle Falsa 123, Spring...',
-      fullAddress: 'Calle Falsa 123, Springfield',
       dateTime: '15/07/2026 - 10:00 AM',
       vehicle: 'Mazda 3 - ABC123',
       client: 'Juan Pérez',
@@ -62,8 +60,6 @@ export class AssignedServicesComponent {
     {
       id: 'SV-2032',
       serviceType: 'Lavado premium',
-      location: 'Av. Siempre Viva 742, Sp...',
-      fullAddress: 'Av. Siempre Viva 742, Springfield',
       dateTime: '15/07/2026 - 11:30 AM',
       vehicle: 'Toyota Corolla - DEF456',
       client: 'María García',
@@ -75,8 +71,6 @@ export class AssignedServicesComponent {
     {
       id: 'SV-2033',
       serviceType: 'Lavado + desinfección',
-      location: 'Calle del Sol 10, Ciudad...',
-      fullAddress: 'Calle del Sol 10, Ciudad',
       dateTime: '14/07/2026 - 03:00 PM',
       vehicle: 'Ford F-150 - GHI789',
       client: 'Empresa XYZ',
@@ -88,8 +82,6 @@ export class AssignedServicesComponent {
     {
       id: 'SV-2034',
       serviceType: 'Lavado completo',
-      location: 'Blvd. Norte 456, Centro...',
-      fullAddress: 'Blvd. Norte 456, Centro',
       dateTime: '16/07/2026 - 09:00 AM',
       vehicle: 'Honda Civic - JKL012',
       client: 'Ana López',
@@ -101,8 +93,6 @@ export class AssignedServicesComponent {
     {
       id: 'SV-2035',
       serviceType: 'Lavado premium',
-      location: 'Av. Libertad 89, Col. Ref...',
-      fullAddress: 'Av. Libertad 89, Col. Reforma',
       dateTime: '16/07/2026 - 02:00 PM',
       vehicle: 'Nissan Sentra - MNO345',
       client: 'Carlos Ruiz',

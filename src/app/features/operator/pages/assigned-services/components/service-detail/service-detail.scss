@@ -101,31 +101,6 @@
   }
 }
 
-// placeholder del mapa
-.map-placeholder {
-  background-color: var(--bg-soft);
-  border-radius: 12px;
-  height: 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 1.5px dashed var(--border);
-
-  .map-icon {
-    font-size: 28px;
-    width: 28px;
-    height: 28px;
-    color: var(--text-muted);
-  }
-
-  .map-label {
-    font-size: $fs-body;
-    color: var(--text-muted);
-  }
-}
-
 // sección de acciones
 .actions-section {
   display: flex;

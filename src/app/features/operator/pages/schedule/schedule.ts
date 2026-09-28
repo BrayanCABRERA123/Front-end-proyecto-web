@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
+// modal reutilizable para avisar que la acción salió bien
+import { StatusModal } from '../../../../shared/dialogs/status-modal/status-modal';
 import { ReservationDetailModal } from '../../../../shared/dialogs/reservation-detail-modal/reservation-detail-modal';
 import {
   Reservation,
@@ -31,22 +33,22 @@ export class ScheduleComponent {
   selectedDate = this.todayAsText();
 
   reservations: Reservation[] = [
-    { id: 1, code: 'SV-2098', date: '2026-08-31', time: '09:00', service: 'BASIC', client: 'Mario Casas', vehicle: 'CAR', address: 'Chapinero', durationMin: 30, status: 'finalizado' },
-    { id: 2, code: 'SV-2099', date: '2026-08-31', time: '15:00', service: 'FULL', client: 'Diana Ríos', vehicle: 'SUV', address: 'Suba', durationMin: 60, status: 'finalizado' },
+    { id: 1, code: 'SV-2098', date: '2026-08-31', time: '09:00', service: 'BASIC', client: 'Mario Casas', vehicle: 'CAR', durationMin: 30, status: 'finalizado' },
+    { id: 2, code: 'SV-2099', date: '2026-08-31', time: '15:00', service: 'FULL', client: 'Diana Ríos', vehicle: 'SUV', durationMin: 60, status: 'finalizado' },
 
-    { id: 3, code: 'SV-2100', date: '2026-09-01', time: '11:00', service: 'PREMIUM', client: 'Felipe Cruz', vehicle: 'CAR', address: 'Usaquén', durationMin: 50, status: 'finalizado' },
+    { id: 3, code: 'SV-2100', date: '2026-09-01', time: '11:00', service: 'PREMIUM', client: 'Felipe Cruz', vehicle: 'CAR', durationMin: 50, status: 'finalizado' },
 
-    { id: 4, code: 'SV-2101', date: '2026-09-02', time: '08:00', service: 'PREMIUM', client: 'Carlos Méndez', vehicle: 'CAR', address: 'Chapinero', durationMin: 50, status: 'finalizado' },
-    { id: 5, code: 'SV-2102', date: '2026-09-02', time: '10:00', service: 'BASIC', client: 'Ana Ruiz', vehicle: 'MOTO', address: 'Usaquén', durationMin: 25, status: 'en_progreso' },
-    { id: 6, code: 'SV-2103', date: '2026-09-02', time: '13:30', service: 'FULL', client: 'Pedro López', vehicle: 'PICKUP', address: 'Suba', durationMin: 70, status: 'pendiente' },
-    { id: 7, code: 'SV-2104', date: '2026-09-02', time: '16:00', service: 'PREMIUM', client: 'Sofía Herrera', vehicle: 'CAR', address: 'Teusaquillo', durationMin: 55, status: 'pendiente' },
+    { id: 4, code: 'SV-2101', date: '2026-09-02', time: '08:00', service: 'PREMIUM', client: 'Carlos Méndez', vehicle: 'CAR', durationMin: 50, status: 'finalizado' },
+    { id: 5, code: 'SV-2102', date: '2026-09-02', time: '10:00', service: 'BASIC', client: 'Ana Ruiz', vehicle: 'MOTO', durationMin: 25, status: 'en_progreso' },
+    { id: 6, code: 'SV-2103', date: '2026-09-02', time: '13:30', service: 'FULL', client: 'Pedro López', vehicle: 'PICKUP', durationMin: 70, status: 'pendiente' },
+    { id: 7, code: 'SV-2104', date: '2026-09-02', time: '16:00', service: 'PREMIUM', client: 'Sofía Herrera', vehicle: 'CAR', durationMin: 55, status: 'pendiente' },
 
-    { id: 8, code: 'SV-2105', date: '2026-09-03', time: '09:30', service: 'BASIC', client: 'Julián Ortiz', vehicle: 'MOTO', address: 'Engativá', durationMin: 25, status: 'pendiente' },
-    { id: 9, code: 'SV-2106', date: '2026-09-03', time: '14:00', service: 'PREMIUM', client: 'Laura Peña', vehicle: 'CAR', address: 'Kennedy', durationMin: 50, status: 'pendiente' },
+    { id: 8, code: 'SV-2105', date: '2026-09-03', time: '09:30', service: 'BASIC', client: 'Julián Ortiz', vehicle: 'MOTO', durationMin: 25, status: 'pendiente' },
+    { id: 9, code: 'SV-2106', date: '2026-09-03', time: '14:00', service: 'PREMIUM', client: 'Laura Peña', vehicle: 'CAR', durationMin: 50, status: 'pendiente' },
 
-    { id: 10, code: 'SV-2107', date: '2026-09-04', time: '10:00', service: 'FULL', client: 'Ricardo Nova', vehicle: 'TRUCK', address: 'Fontibón', durationMin: 70, status: 'pendiente' },
+    { id: 10, code: 'SV-2107', date: '2026-09-04', time: '10:00', service: 'FULL', client: 'Ricardo Nova', vehicle: 'TRUCK', durationMin: 70, status: 'pendiente' },
 
-    { id: 11, code: 'SV-2108', date: '2026-09-06', time: '08:30', service: 'BASIC', client: 'Camila Torres', vehicle: 'CAR', address: 'Chapinero', durationMin: 30, status: 'pendiente' }
+    { id: 11, code: 'SV-2108', date: '2026-09-06', time: '08:30', service: 'BASIC', client: 'Camila Torres', vehicle: 'CAR', durationMin: 30, status: 'pendiente' }
   ];
 
   constructor(
@@ -160,6 +162,7 @@ export class ScheduleComponent {
       if (!confirmed) return;
       r.status = 'en_progreso';
       this.cdr.detectChanges();
+      this.showSuccess('ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE', r.code);
     });
   }
 
@@ -181,9 +184,8 @@ export class ScheduleComponent {
       if (!confirmed) return;
 
       r.status = 'finalizado';
-
-
       this.cdr.detectChanges();
+      this.showSuccess('ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE', r.code);
     });
   }
 
@@ -199,6 +201,14 @@ export class ScheduleComponent {
       } else if (action === 'finish') {
         this.requestFinish(r);
       }
+    });
+  }
+
+  // avisa que el servicio se inició o finalizó (mismo mensaje que en Servicios asignados)
+  private showSuccess(title: string, message: string, code: string) {
+    this.dialog.open(StatusModal, {
+      panelClass: 'custom-dialog',
+      data: { title, message, messageParams: { code } }
     });
   }
 

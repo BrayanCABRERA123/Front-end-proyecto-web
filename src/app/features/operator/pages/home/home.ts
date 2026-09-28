@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
+// modal reutilizable para avisar que la acción salió bien
+import { StatusModal } from '../../../../shared/dialogs/status-modal/status-modal';
 import { ReservationDetailModal } from '../../../../shared/dialogs/reservation-detail-modal/reservation-detail-modal';
 import { Reservation } from '../../../../shared/dialogs/reservation-models/reservation.model';
 
@@ -41,8 +43,8 @@ export class HomeComponent {
   averageRating = 4.3;
 
   todayReservations: Reservation[] = [
-    { id: 1, code: 'SV-2101', date: '2026-09-03', time: '14:00', service: 'PREMIUM', client: 'Juan Felipe González', vehicle: 'CAR', address: 'Calle Sur 123, Los Rosales', durationMin: 50, status: 'en_progreso' },
-    { id: 2, code: 'SV-2102', date: '2026-09-03', time: '16:30', service: 'BASIC', client: 'Esneider Sánchez', vehicle: 'TRUCK', address: 'Calle Norte 7-06, Miraflores', durationMin: 30, status: 'pendiente' }
+    { id: 1, code: 'SV-2101', date: '2026-09-03', time: '14:00', service: 'PREMIUM', client: 'Juan Felipe González', vehicle: 'CAR', durationMin: 50, status: 'en_progreso' },
+    { id: 2, code: 'SV-2102', date: '2026-09-03', time: '16:30', service: 'BASIC', client: 'Esneider Sánchez', vehicle: 'TRUCK', durationMin: 30, status: 'pendiente' }
   ];
 
   constructor(
@@ -85,8 +87,9 @@ export class HomeComponent {
     this.router.navigateByUrl(route);
   }
 
-  goToSchedule() {
-    this.router.navigateByUrl('/operator/schedule');
+  // el botón dice "Ver servicios asignados", así que lleva a esa pantalla
+  goToAssignedServices() {
+    this.router.navigateByUrl('/operator/assigned-services');
   }
 
   // pide confirmación antes de iniciar (igual que al finalizar)
@@ -111,6 +114,7 @@ export class HomeComponent {
       if (!confirmed) return;
       r.status = 'en_progreso';
       this.cdr.detectChanges();
+      this.showSuccess('ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE', r.code);
     });
   }
 
@@ -132,6 +136,7 @@ export class HomeComponent {
       if (!confirmed) return;
       r.status = 'finalizado';
       this.cdr.detectChanges();
+      this.showSuccess('ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE', r.code);
     });
   }
 
@@ -147,6 +152,14 @@ export class HomeComponent {
       } else if (action === 'finish') {
         this.requestFinish(r);
       }
+    });
+  }
+
+  // avisa que el servicio se inició o finalizó (mismo mensaje que en Servicios asignados)
+  private showSuccess(title: string, message: string, code: string) {
+    this.dialog.open(StatusModal, {
+      panelClass: 'custom-dialog',
+      data: { title, message, messageParams: { code } }
     });
   }
 }
