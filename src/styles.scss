@@ -44,7 +44,8 @@ body {
   /* TEXTOS */
   --text: #1a1a2e;
   --text-secondary: #5f6f75;  
-  --text-muted: #9aa5ab;
+  --text-muted: #6f8089;
+  --primary-text: #0e7a70;
 
   /* BORDES */
   --border: #e6eaea;
@@ -73,10 +74,12 @@ body {
 
 --success: #29AEA0;
 --success-soft: #E0EBEA;
---error: #E53935;
+--error: #D32F2F;
 --error-soft: #FFEBEE;
---warning: #F59E0B;
+--warning: #B45309;
 --warning-soft: #FEF3C7;
+--on-warning: #ffffff;
+--on-error: #ffffff;
 --neutral-badge: #67777E;
 --neutral-badge-soft: #EDF2F2;
 }
@@ -88,6 +91,7 @@ body.green-dark {
   --primary: #2ec4b6;
   --primary-rgb: 46, 196, 182;
   --primary-hover: #1fa89c;
+  --primary-text: #2ec4b6;
 
   --sidebar: #142927;
 
@@ -126,6 +130,8 @@ body.green-dark {
 --error-soft: rgba(255, 107, 107, 0.15);
 --warning: #FBBF24;
 --warning-soft: rgba(251, 191, 36, 0.18);
+--on-warning: #211a06;
+--on-error: #2a0707;
 --neutral-badge: #c2c2c2;
 --neutral-badge-soft: rgba(255, 255, 255, 0.08);
 }
@@ -146,7 +152,8 @@ body.pink {
 
   --text: #1a1a2e;
   --text-secondary: #5f6f75;
-  --text-muted: #9aa5ab;
+  --text-muted: #6f8089;
+  --primary-text: #c2185b;
 
   --border: #e6eaea;
   --primary-soft: rgba(var(--primary-rgb), 0.15);
@@ -169,12 +176,14 @@ body.pink {
 --panel-overlay: rgba(255,255,255, .50);
 --panel-image: url('/images/panelLight.png');
 
---success: #29AEA0;
---success-soft: #E0EBEA;
---error: #E53935;
+--success: #c2185b;
+--success-soft: #ffe2ec;
+--error: #D32F2F;
 --error-soft: #FFEBEE;
---warning: #F59E0B;
+--warning: #B45309;
 --warning-soft: #FEF3C7;
+--on-warning: #ffffff;
+--on-error: #ffffff;
 --neutral-badge: #67777E;
 --neutral-badge-soft: #EDF2F2;
 }
@@ -186,6 +195,7 @@ body.pink-dark {
   --primary: #ff4fa3;
   --primary-rgb: 255, 79, 163;
   --primary-hover: #e13b8c;
+  --primary-text: #ff4fa3;
 
   --sidebar: #2a1020;
 
@@ -218,12 +228,14 @@ body.pink-dark {
 --panel-overlay: rgba(15,10,14, .52);
 --panel-image: url('/images/panelDark.png');
 
---success: #2ec4b6;
---success-soft: rgba(46, 196, 182, 0.18);
+--success: #ff7ab0;
+--success-soft: rgba(255, 122, 176, 0.16);
 --error: #ff6b6b;
 --error-soft: rgba(255, 107, 107, 0.15);
 --warning: #FBBF24;
 --warning-soft: rgba(251, 191, 36, 0.18);
+--on-warning: #211a06;
+--on-error: #2a0707;
 --neutral-badge: #c2c2c2;
 --neutral-badge-soft: rgba(255, 255, 255, 0.08);
 }

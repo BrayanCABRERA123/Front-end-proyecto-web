@@ -76,6 +76,7 @@
 
   &.danger {
     background: var(--error);
+    color: var(--on-error);
   }
 
   &:hover {

@@ -11,6 +11,8 @@ app-sidebar {
 app-notifications {
   flex: 1;
   display: block;
+  // permite encoger por debajo del ancho mínimo de su contenido (barra de pestañas)
+  min-width: 0;
 }
 
 @media (max-width: 768px) {

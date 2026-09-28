@@ -423,12 +423,12 @@
 
   &.saved-mode {
     background: transparent;
-    color: var(--primary);
+    color: var(--primary-text, var(--primary));
     border: 1px solid rgba(var(--primary-rgb), 0.25);
     box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.05);
 
     mat-icon {
-      color: var(--primary);
+      color: var(--primary-text, var(--primary));
     }
 
     &:hover:not(:disabled) {
@@ -560,7 +560,7 @@
 
 .btn-danger {
   background: var(--error);
-  color: #fff;
+  color: var(--on-error);
 
   &:hover {
     transform: translateY(-2px);
