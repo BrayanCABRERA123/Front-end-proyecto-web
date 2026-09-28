@@ -159,7 +159,7 @@
   padding: 12px;
   margin-top: 12px;
 
-  mat-icon { font-size: 20px; width: 20px; height: 20px; margin-top: 1px; }
+  mat-icon { font-size: 20px; width: 20px; height: 20px; margin-top: 1px; flex-shrink: 0; }
 
   strong { display: block; @include caption-text; font-weight: $fw-bold; margin-bottom: 2px; }
   p { @include caption-text; margin: 0; }
@@ -168,14 +168,14 @@
     background: var(--success-soft);
     color: var(--success);
     mat-icon { color: var(--success); }
-    p { color: var(--success); opacity: .85; }
+    p { color: var(--success); }
   }
 
   &--fail {
     background: var(--error-soft);
     color: var(--error);
     mat-icon { color: var(--error); }
-    p { color: var(--error); opacity: .85; }
+    p { color: var(--error); }
   }
 }
 
@@ -183,7 +183,8 @@
   margin-left: auto;
   font-size: 10px;
   font-weight: $fw-bold;
-  background: rgba(255, 255, 255, .5);
+  background: var(--card);
+  border: 1px solid currentColor;
   padding: 3px 8px;
   border-radius: 999px;
   white-space: nowrap;
@@ -280,7 +281,7 @@
 .btn-approve {
   background: var(--success);
   border: none;
-  color: #ffffff;
+  color: var(--on-success);
 
   &:hover { opacity: .9; }
 }

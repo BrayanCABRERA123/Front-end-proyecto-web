@@ -24,8 +24,6 @@ interface ChartData {
   isEmpty: boolean;
 }
 
-const RANKING_COLORS = ['#2ec4b6', '#3b82f6', '#22c55e'];
-
 @Component({
   selector: 'app-reports',
   standalone: true,
@@ -201,7 +199,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
 
   // colores del tema actual (claro u oscuro) leídos de las variables CSS
   private cssVar(name: string, fallback: string): string {
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+    return getComputedStyle(document.body).getPropertyValue(name).trim() || fallback;
   }
 
   private theme() {
@@ -213,7 +211,17 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
       primarySoft: this.cssVar('--primary-soft', '#5eead4'),
       card: this.cssVar('--card', '#ffffff'),
       textStrong: this.cssVar('--text', '#1a1a2e'),
+      chartA: this.cssVar('--chart-1', '#2ec4b6'),
+      chartB: this.cssVar('--chart-2', '#1fa89c'),
+      chartC: this.cssVar('--chart-3', '#0f7a72'),
     };
+  }
+
+  // color del ranking según el tema activo (barras de servicios más vendidos)
+  private rankingColor(index: number): string {
+    const t = this.theme();
+    const colors = [t.chartA, t.chartB, t.chartC];
+    return colors[index % colors.length];
   }
 
   // crea la gráfica de barras con tooltip personalizado y animación de entrada
@@ -229,7 +237,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
           {
             label: this.translate.instant('REPORTS.CHART.SERVICES'),
             data: data.services,
-            backgroundColor: '#0f5a52',
+            backgroundColor: t.chartB,
             yAxisID: 'yServicios',
             borderRadius: 4,
             barPercentage: 0.5
@@ -321,7 +329,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
       name,
       sales,
       percentage: max ? Math.round((sales / max) * 100) : 0,
-      color: RANKING_COLORS[i % RANKING_COLORS.length],
+      color: this.rankingColor(i),
     }));
   }
 
