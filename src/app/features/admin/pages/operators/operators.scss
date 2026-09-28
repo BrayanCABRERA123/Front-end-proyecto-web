@@ -76,6 +76,7 @@
 
   &.btn-warning {
     background: var(--warning);
+    color: var(--on-warning);
 
     &:hover { background: var(--warning); opacity: .9; }
   }
@@ -163,7 +164,7 @@
   font-weight: $fw-semibold;
   cursor: pointer;
 
-  &--active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+  &--active { background: var(--primary-soft); border-color: var(--primary); color: var(--primary-text, var(--primary)); }
 }
 
 .chip-count {
@@ -190,7 +191,25 @@
   gap: 6px;
 
   &__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  &__top-actions { display: flex; align-items: center; gap: 6px; }
   &__name { @include subtitle; color: var(--text); font-weight: $fw-bold; }
+}
+
+.btn-icon {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+
+  &:hover { background: var(--item-hover); color: var(--text); }
 }
 
 .avatar-wrap { position: relative; display: inline-block; }

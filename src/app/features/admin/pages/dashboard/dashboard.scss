@@ -275,7 +275,7 @@
   white-space: nowrap;
 
   &--busy, &--available { background: var(--primary-soft); color: var(--primary); }
-  &--leave { background: var(--error-soft); color: var(--error); }
+  &--leave, &--absent { background: var(--error-soft); color: var(--error); }
 }
 
 /* filas de pagos y reservas */
@@ -309,11 +309,9 @@
   display: inline-block;
   margin-left: 6px;
 
-  // colores de marca de cada banco/billetera, se mantienen fijos
-  // porque son parte de su identidad visual, no del tema de la app
-  &--bancolombia { background: #E6EFFF; color: #2B5FD9; }
-  &--nequi { background: #F3E6FF; color: #8A2BE2; }
-  &--daviplata { background: var(--error-soft); color: var(--error); }
+  // todos los métodos se pintan con el color del tema para que nada quede
+  // azul/morado cuando el tema es, por ejemplo, rosa
+  &--bancolombia, &--nequi, &--daviplata { background: var(--primary-soft); color: var(--primary); }
   &--time { background: var(--primary-soft); color: var(--primary); margin: 0 6px 0 0; }
 }
 

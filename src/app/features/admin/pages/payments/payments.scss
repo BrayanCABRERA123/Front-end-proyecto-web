@@ -196,9 +196,7 @@ table {
   border-radius: 999px;
   text-transform: capitalize;
 
-  &--nequi { background: #F3E6FF; color: #8A2BE2; }
-  &--daviplata { background: var(--error-soft); color: var(--error); }
-  &--bancolombia { background: #E6EFFF; color: #2B5FD9; }
+  &--nequi, &--bancolombia, &--daviplata { background: var(--primary-soft); color: var(--primary); }
   &--cash { background: var(--success-soft); color: var(--success); }
 }
 

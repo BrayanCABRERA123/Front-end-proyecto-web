@@ -1,0 +1,189 @@
+@use '../../../../../../../styles/mixins' as *;
+
+.detail-dialog {
+  background: var(--card);
+  color: var(--text);
+  border-radius: 16px;
+  width: min(480px, 94vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--primary-soft);
+    color: var(--primary);
+
+    mat-icon { font-size: 20px; }
+  }
+
+  h2 { @include subtitle; color: var(--text); font-weight: $fw-bold; margin: 0 0 2px; }
+  p { @include caption-text; color: var(--text-secondary); margin: 0; }
+
+  &__close {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &:hover { color: var(--text); }
+  }
+
+  &__body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+  }
+
+  &__hint {
+    @include caption-text;
+    color: var(--text-muted);
+    margin: 0;
+    padding: 10px 12px;
+    background: var(--item-bg);
+    border-radius: 10px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: $fw-semibold;
+    font-size: $fs-caption;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+
+    &:hover { background: var(--item-hover); }
+
+    &--primary {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+
+      &:hover { background: var(--primary-hover); }
+    }
+
+    &--danger {
+      color: var(--error);
+      border-color: var(--error);
+
+      &:hover { background: var(--error-soft); }
+    }
+  }
+}
+
+/* píldora de estado: reutiliza los 4 estados de las reservas */
+.status-pill {
+  font-size: 11px;
+  font-weight: $fw-semibold;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+
+  &--confirmed { background: var(--primary-soft); color: var(--primary); }
+  &--in_progress { background: var(--success-soft); color: var(--success); }
+  &--completed { background: var(--neutral-badge-soft); color: var(--neutral-badge); }
+  &--cancelled { background: var(--error-soft); color: var(--error); }
+}
+
+.detail-pill-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bay-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: $fw-semibold;
+  color: var(--text-secondary);
+  background: var(--item-bg);
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  mat-icon { font-size: 13px; width: 13px; height: 13px; }
+}
+
+.detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+
+  &:last-child { border-bottom: none; }
+
+  span { @include caption-text; color: var(--text-secondary); flex-shrink: 0; }
+  strong { @include body-text-bold; color: var(--text); text-align: right; word-break: break-word; }
+
+  .plate {
+    font-family: monospace;
+    letter-spacing: .06em;
+    color: var(--primary);
+  }
+}
+
+.detail-notes {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  @include body-text;
+  color: var(--text-secondary);
+  background: var(--item-bg);
+  border-radius: 10px;
+  padding: 10px 12px;
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; margin-top: 2px; color: var(--primary); }
+}

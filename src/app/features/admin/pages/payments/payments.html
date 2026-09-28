@@ -14,7 +14,7 @@
       </div>
 
       <div class="page-header__actions">
-        <button class="btn-outline">
+        <button class="btn-outline" (click)="exportData()">
           <mat-icon>download</mat-icon>
           {{ 'ADMIN_PAYMENTS.EXPORT' | translate }}
         </button>
@@ -85,59 +85,90 @@
 
     <!-- tabla -->
     <div class="card table-card">
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>{{ 'ADMIN_PAYMENTS.TABLE.CLIENT' | translate }}</th>
-              <th>{{ 'ADMIN_PAYMENTS.TABLE.REFERENCE' | translate }}</th>
-              <th>{{ 'ADMIN_PAYMENTS.TABLE.METHOD' | translate }}</th>
-              <th>{{ 'ADMIN_PAYMENTS.TABLE.AMOUNT' | translate }}</th>
-              <th>{{ 'ADMIN_PAYMENTS.TABLE.DATE_TIME' | translate }}</th>
-              <th>{{ 'ADMIN_PAYMENTS.TABLE.STATUS' | translate }}</th>
-              <th>{{ 'ADMIN_PAYMENTS.TABLE.ACTIONS' | translate }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (p of filteredPayments; track p.code) {
-              <tr>
-                <td>
-                  <strong>{{ p.client }}</strong>
-                  <span class="muted">{{ p.phone }}</span>
-                </td>
-                <td>
-                  <strong>{{ p.code }}</strong>
-                  <span class="muted">{{ p.reference }}</span>
-                </td>
-                <td><span [class]="'method-chip method-chip--' + p.method">{{ p.method }}</span></td>
-                <td class="amount-cell">{{ cop(p.amount) }} <span class="muted">COP</span></td>
-                <td>
-                  <strong>{{ p.date }}, {{ p.time }}</strong>
-                  <span class="muted">{{ p.service }}</span>
-                </td>
-                <td>
-                  <span [class]="'status-pill status-pill--' + p.status">
-                    {{ ('ADMIN_PAYMENTS.STATUS.' + p.status) | translate }}
-                  </span>
-                </td>
-                <td class="actions-cell">
-                  @if (p.status === 'pending') {
-                    <button class="btn-review" (click)="openReview(p)">{{ 'ADMIN_PAYMENTS.ACTIONS.review' | translate }}</button>
-                  } @else if (p.status === 'approved') {
-                    <button class="btn-outline btn-sm" (click)="openReview(p)">{{ 'ADMIN_PAYMENTS.ACTIONS.receipt' | translate }}</button>
-                  } @else {
-                    <button class="btn-outline btn-sm btn-sm--danger" (click)="viewRejectionReason(p)">{{ 'ADMIN_PAYMENTS.ACTIONS.view_reason' | translate }}</button>
-                  }
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
 
-      <div class="pagination-line muted">
-        {{ 'ADMIN_PAYMENTS.PAGINATION.SHOWING' | translate:{ from: 1, to: filteredPayments.length, total: filteredPayments.length } }}
-      </div>
+      @if (payments.length === 0) {
+
+        <app-empty-state
+          variant="empty"
+          icon="account_balance_wallet"
+          titleKey="ADMIN_PAYMENTS.EMPTY_TITLE"
+          messageKey="ADMIN_PAYMENTS.EMPTY_MESSAGE">
+          <button class="btn-primary" (click)="openManualModal()">
+            <mat-icon>add</mat-icon>
+            {{ 'ADMIN_PAYMENTS.REGISTER_MANUAL' | translate }}
+          </button>
+        </app-empty-state>
+
+      } @else if (filteredPayments.length === 0) {
+
+        <app-empty-state
+          variant="filtered"
+          titleKey="ADMIN_PAYMENTS.NO_RESULTS_TITLE"
+          messageKey="ADMIN_PAYMENTS.NO_RESULTS_MESSAGE"
+          [params]="{ term: search }">
+          <button class="btn-outline" (click)="clearFilters()">
+            {{ 'ADMIN_PAYMENTS.FILTERS.CLEAR_FILTERS' | translate }}
+          </button>
+        </app-empty-state>
+
+      } @else {
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'ADMIN_PAYMENTS.TABLE.CLIENT' | translate }}</th>
+                <th>{{ 'ADMIN_PAYMENTS.TABLE.REFERENCE' | translate }}</th>
+                <th>{{ 'ADMIN_PAYMENTS.TABLE.METHOD' | translate }}</th>
+                <th>{{ 'ADMIN_PAYMENTS.TABLE.AMOUNT' | translate }}</th>
+                <th>{{ 'ADMIN_PAYMENTS.TABLE.DATE_TIME' | translate }}</th>
+                <th>{{ 'ADMIN_PAYMENTS.TABLE.STATUS' | translate }}</th>
+                <th>{{ 'ADMIN_PAYMENTS.TABLE.ACTIONS' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (p of filteredPayments; track p.code) {
+                <tr>
+                  <td>
+                    <strong>{{ p.client }}</strong>
+                    <span class="muted">{{ p.phone }}</span>
+                  </td>
+                  <td>
+                    <strong>{{ p.code }}</strong>
+                    <span class="muted">{{ p.reference }}</span>
+                  </td>
+                  <td><span [class]="'method-chip method-chip--' + p.method">{{ methodLabel(p.method) }}</span></td>
+                  <td class="amount-cell">{{ cop(p.amount) }} <span class="muted">COP</span></td>
+                  <td>
+                    <strong>{{ fmtDate(p.date) }}, {{ p.time }}</strong>
+                    <span class="muted">{{ p.service }}</span>
+                  </td>
+                  <td>
+                    <span [class]="'status-pill status-pill--' + p.status">
+                      {{ ('ADMIN_PAYMENTS.STATUS.' + p.status) | translate }}
+                    </span>
+                  </td>
+                  <td class="actions-cell">
+                    @if (p.status === 'pending') {
+                      <button class="btn-review" (click)="openReview(p)">{{ 'ADMIN_PAYMENTS.ACTIONS.review' | translate }}</button>
+                    } @else if (p.status === 'approved') {
+                      <button class="btn-outline btn-sm" (click)="openReview(p)">{{ 'ADMIN_PAYMENTS.ACTIONS.receipt' | translate }}</button>
+                    } @else {
+                      <button class="btn-outline btn-sm btn-sm--danger" (click)="viewRejectionReason(p)">{{ 'ADMIN_PAYMENTS.ACTIONS.view_reason' | translate }}</button>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination-line muted">
+          {{ 'ADMIN_PAYMENTS.PAGINATION.SHOWING' | translate:{ from: 1, to: filteredPayments.length, total: filteredPayments.length } }}
+        </div>
+
+      }
+
     </div>
 
   </main>

@@ -14,11 +14,11 @@
       </div>
 
       <div class="page-header__actions">
-        <button class="btn-outline">
+        <button class="btn-outline" (click)="openAssignShifts()">
           <mat-icon>event</mat-icon>
           {{ 'ADMIN_OPERATORS.ASSIGN_SHIFTS' | translate }}
         </button>
-        <button class="btn-primary">
+        <button class="btn-primary" (click)="openCreate()">
           <mat-icon>person_add</mat-icon>
           {{ 'ADMIN_OPERATORS.NEW_OPERATOR' | translate }}
         </button>
@@ -92,56 +92,94 @@
     </div>
 
     <!-- grid de operarios -->
-    <div class="operators-grid">
-      @for (o of filteredOperators; track o.id) {
-        <article class="operator-card">
+    @if (operators.length === 0) {
 
-          <div class="operator-card__top">
-            <div class="avatar-wrap">
-              <span class="avatar">{{ o.initials }}</span>
-              @if (o.featured) { <mat-icon class="featured-star">star</mat-icon> }
-            </div>
-            <span [class]="'status-pill status-pill--' + o.status">{{ ('ADMIN_OPERATORS.STATUS.' + o.status) | translate }}</span>
-          </div>
-
-          <strong class="operator-card__name">{{ o.name }}</strong>
-          <span class="muted">{{ o.specialty }}</span>
-
-          <div class="operator-card__meta">
-            <div>
-              <span class="muted">{{ 'ADMIN_OPERATORS.CARD.RATING' | translate }}</span>
-              <strong>★ {{ o.rating }} <span class="muted">({{ o.reviewsCount }})</span></strong>
-            </div>
-            <div>
-              <span class="muted">{{ 'ADMIN_OPERATORS.CARD.ASSIGNED_BAY' | translate }}</span>
-              <strong>{{ o.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) }}</strong>
-            </div>
-          </div>
-
-          <span class="services-line">
-            <mat-icon>check_circle</mat-icon>
-            {{ o.weeklyServices }} {{ 'ADMIN_OPERATORS.CARD.SERVICES_SUFFIX' | translate }}
-            {{ o.weeklyServices === 0 ? ('(' + ('ADMIN_OPERATORS.STATUS.medical_leave' | translate) + ')') : '' }}
-          </span>
-
-          <div class="tag-list">
-            @for (t of o.tags; track t) { <span class="tag">{{ t }}</span> }
-          </div>
-
-          <button
-            class="btn-primary full"
-            [class.btn-warning]="o.status === 'medical_leave'"
-            (click)="goToDetail(o)">
-            {{ (o.status === 'medical_leave' ? 'ADMIN_OPERATORS.CARD.REGISTER_RETURN' : 'ADMIN_OPERATORS.CARD.VIEW_AVAILABILITY') | translate }}
+      <div class="card">
+        <app-empty-state
+          variant="empty"
+          icon="engineering"
+          titleKey="ADMIN_OPERATORS.EMPTY_TITLE"
+          messageKey="ADMIN_OPERATORS.EMPTY_MESSAGE">
+          <button class="btn-primary" (click)="openCreate()">
+            <mat-icon>person_add</mat-icon>
+            {{ 'ADMIN_OPERATORS.NEW_OPERATOR' | translate }}
           </button>
+        </app-empty-state>
+      </div>
 
-        </article>
-      }
-    </div>
+    } @else if (filteredOperators.length === 0) {
 
-    <p class="showing-line">
-      {{ 'ADMIN_OPERATORS.SHOWING' | translate:{ shown: filteredOperators.length, total: operators.length } }}
-    </p>
+      <div class="card">
+        <app-empty-state
+          variant="filtered"
+          titleKey="ADMIN_OPERATORS.NO_RESULTS_TITLE"
+          messageKey="ADMIN_OPERATORS.NO_RESULTS_MESSAGE"
+          [params]="{ term: search }">
+          <button class="btn-outline" (click)="search = ''; statusFilter = 'all'">
+            {{ 'ADMIN_OPERATORS.FILTERS.CLEAR' | translate }}
+          </button>
+        </app-empty-state>
+      </div>
+
+    } @else {
+
+      <div class="operators-grid">
+        @for (o of filteredOperators; track o.id) {
+          <article class="operator-card">
+
+            <div class="operator-card__top">
+              <div class="avatar-wrap">
+                <span class="avatar">{{ o.initials }}</span>
+                @if (o.featured) { <mat-icon class="featured-star">star</mat-icon> }
+              </div>
+              <div class="operator-card__top-actions">
+                <span [class]="'status-pill status-pill--' + o.status">{{ ('ADMIN_OPERATORS.STATUS.' + o.status) | translate }}</span>
+                <button class="btn-icon" (click)="openEdit(o)" [attr.aria-label]="'COMMON.EDIT' | translate">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <strong class="operator-card__name">{{ o.name }}</strong>
+            <span class="muted">{{ o.specialty }}</span>
+
+            <div class="operator-card__meta">
+              <div>
+                <span class="muted">{{ 'ADMIN_OPERATORS.CARD.RATING' | translate }}</span>
+                <strong>★ {{ o.rating }} <span class="muted">({{ o.reviewsCount }})</span></strong>
+              </div>
+              <div>
+                <span class="muted">{{ 'ADMIN_OPERATORS.CARD.ASSIGNED_BAY' | translate }}</span>
+                <strong>{{ o.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) }}</strong>
+              </div>
+            </div>
+
+            <span class="services-line">
+              <mat-icon>check_circle</mat-icon>
+              {{ o.weeklyServices }} {{ 'ADMIN_OPERATORS.CARD.SERVICES_SUFFIX' | translate }}
+              {{ o.weeklyServices === 0 ? ('(' + ('ADMIN_OPERATORS.STATUS.medical_leave' | translate) + ')') : '' }}
+            </span>
+
+            <div class="tag-list">
+              @for (t of o.tags; track t) { <span class="tag">{{ t }}</span> }
+            </div>
+
+            <button
+              class="btn-primary full"
+              [class.btn-warning]="o.status === 'medical_leave'"
+              (click)="goToDetail(o)">
+              {{ (o.status === 'medical_leave' ? 'ADMIN_OPERATORS.CARD.REGISTER_RETURN' : 'ADMIN_OPERATORS.CARD.VIEW_AVAILABILITY') | translate }}
+            </button>
+
+          </article>
+        }
+      </div>
+
+      <p class="showing-line">
+        {{ 'ADMIN_OPERATORS.SHOWING' | translate:{ shown: filteredOperators.length, total: operators.length } }}
+      </p>
+
+    }
 
   </main>
 </div>

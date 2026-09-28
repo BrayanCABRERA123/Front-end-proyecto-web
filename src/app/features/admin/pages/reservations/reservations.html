@@ -14,18 +14,18 @@
       </div>
 
       <div class="page-header__actions">
-        <button class="btn-outline">
+        <button class="btn-outline" (click)="exportData()">
           <mat-icon>download</mat-icon>
           {{ 'ADMIN_RESERVATIONS.EXPORT' | translate }}
         </button>
-        <button class="btn-primary">
+        <button class="btn-primary" (click)="openCreate()">
           <mat-icon>add</mat-icon>
           {{ 'ADMIN_RESERVATIONS.NEW_BOOKING' | translate }}
         </button>
       </div>
     </div>
 
-    <!-- tarjetas de resumen -->
+    <!-- tarjetas de resumen del día -->
     <div class="stats-grid">
 
       <div class="card stat-card">
@@ -77,8 +77,8 @@
 
       <div class="date-box">
         <mat-icon>calendar_today</mat-icon>
-        <input type="date" [(ngModel)]="selectedDate">
-        <span class="today-chip">{{ 'ADMIN_RESERVATIONS.FILTERS.TODAY' | translate }}</span>
+        <input type="date" [(ngModel)]="selectedDate" (ngModelChange)="currentPage = 1">
+        <button class="today-chip" (click)="selectToday()">Hoy</button>
       </div>
 
       <select [(ngModel)]="statusFilter" (ngModelChange)="currentPage = 1">
@@ -104,93 +104,126 @@
 
     <!-- tabla -->
     <div class="card table-card">
-      <div class="table-wrapper">
-        <table class="bookings-table">
-          <thead>
-            <tr>
-              <th>{{ 'ADMIN_RESERVATIONS.TABLE.CLIENT' | translate }}</th>
-              <th>{{ 'ADMIN_RESERVATIONS.TABLE.VEHICLE_PLATE' | translate }}</th>
-              <th>{{ 'ADMIN_RESERVATIONS.TABLE.SERVICE' | translate }}</th>
-              <th>{{ 'ADMIN_RESERVATIONS.TABLE.DATE_TIME' | translate }}</th>
-              <th>{{ 'ADMIN_RESERVATIONS.TABLE.ASSIGNED_OPERATOR' | translate }}</th>
-              <th>{{ 'ADMIN_RESERVATIONS.TABLE.STATUS' | translate }}</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (b of pagedBookings; track b.code) {
+
+      @if (bookings.length === 0) {
+
+        <app-empty-state
+          variant="empty"
+          icon="event_busy"
+          titleKey="ADMIN_RESERVATIONS.EMPTY_TITLE"
+          messageKey="ADMIN_RESERVATIONS.EMPTY_MESSAGE">
+          <button class="btn-primary" (click)="openCreate()">
+            <mat-icon>add</mat-icon>
+            {{ 'ADMIN_RESERVATIONS.NEW_BOOKING' | translate }}
+          </button>
+        </app-empty-state>
+
+      } @else if (filteredBookings.length === 0) {
+
+        <app-empty-state
+          variant="filtered"
+          titleKey="ADMIN_RESERVATIONS.NO_RESULTS_TITLE"
+          messageKey="ADMIN_RESERVATIONS.NO_RESULTS_MESSAGE"
+          [params]="{ term: searchTerm }">
+          <button class="btn-outline" (click)="clearFilters()">
+            {{ 'ADMIN_RESERVATIONS.FILTERS.CLEAR' | translate }}
+          </button>
+        </app-empty-state>
+
+      } @else {
+
+        <div class="table-wrapper">
+          <table class="bookings-table">
+            <thead>
               <tr>
-                <td>
-                  <strong>{{ b.client }}</strong>
-                  <span class="muted">{{ b.phone }}</span>
-                </td>
-                <td>
-                  <strong>{{ b.vehicle }}</strong>
-                  <span class="plate-chip">{{ b.plate }}</span>
-                </td>
-                <td>
-                  <span class="service-dot"></span>{{ b.service }}
-                </td>
-                <td>
-                  <strong>{{ b.date }} · {{ b.timeRange }}</strong>
-                  <span class="muted">{{ b.relativeTime }}</span>
-                </td>
-                <td>
-                  @if (b.operator) {
-                    <span class="operator-chip">
-                      <span class="avatar">{{ b.operator.initials }}</span>
-                      {{ b.operator.name }}
-                    </span>
-                  } @else {
-                    <span class="badge badge--warning">{{ 'ADMIN_RESERVATIONS.TABLE.UNASSIGNED' | translate }}</span>
-                  }
-                </td>
-                <td>
-                  <span [class]="'status-pill status-pill--' + b.status">
-                    {{ ('ADMIN_RESERVATIONS.STATUS.' + b.status) | translate }}
-                  </span>
-                </td>
-                <td class="actions-cell">
-                  @if (!b.operator && b.status !== 'cancelled' && b.status !== 'completed') {
-                    <button class="btn-assign" (click)="openAssignModal(b)">
-                      <mat-icon>person_add</mat-icon>
-                      {{ 'ADMIN_RESERVATIONS.ASSIGN' | translate }}
-                    </button>
-                  } @else {
-                    <button class="btn-icon"><mat-icon>visibility</mat-icon></button>
-                  }
-                </td>
+                <th>{{ 'ADMIN_RESERVATIONS.TABLE.CLIENT' | translate }}</th>
+                <th>{{ 'ADMIN_RESERVATIONS.TABLE.VEHICLE_PLATE' | translate }}</th>
+                <th>{{ 'ADMIN_RESERVATIONS.TABLE.SERVICE' | translate }}</th>
+                <th>{{ 'ADMIN_RESERVATIONS.TABLE.DATE_TIME' | translate }}</th>
+                <th>{{ 'ADMIN_RESERVATIONS.TABLE.ASSIGNED_OPERATOR' | translate }}</th>
+                <th>{{ 'ADMIN_RESERVATIONS.TABLE.STATUS' | translate }}</th>
+                <th></th>
               </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-
-      <!-- paginación -->
-      <div class="pagination">
-        <span class="muted">
-          {{ 'ADMIN_RESERVATIONS.PAGINATION.SHOWING' | translate:{ from: rangeFrom, to: rangeTo, total: filteredBookings.length } }}
-        </span>
-
-        <div class="pagination__controls">
-          <button [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
-            {{ 'ADMIN_RESERVATIONS.PAGINATION.PREVIOUS' | translate }}
-          </button>
-
-          @for (page of pageNumbers; track page) {
-            <button
-              class="page-number"
-              [class.page-number--active]="currentPage === page"
-              (click)="goToPage(page)">
-              {{ page }}
-            </button>
-          }
-
-          <button [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
-            {{ 'ADMIN_RESERVATIONS.PAGINATION.NEXT' | translate }}
-          </button>
+            </thead>
+            <tbody>
+              @for (b of pagedBookings; track b.code) {
+                <tr>
+                  <td>
+                    <strong>{{ b.client }}</strong>
+                    <span class="muted">{{ b.phone }}</span>
+                  </td>
+                  <td>
+                    <strong>{{ b.vehicle }}</strong>
+                    <span class="plate-chip">{{ b.plate }}</span>
+                  </td>
+                  <td>
+                    <span class="service-dot"></span>{{ b.service }}
+                  </td>
+                  <td>
+                    <strong>{{ dayLabel(b.date) }} · {{ timeRangeLabel(b) }}</strong>
+                    <span class="muted">{{ b.code }}</span>
+                  </td>
+                  <td>
+                    @if (b.operator) {
+                      <span class="operator-chip">
+                        <span class="avatar">{{ b.operator.initials }}</span>
+                        {{ b.operator.name }}
+                      </span>
+                    } @else {
+                      <span class="badge badge--warning">{{ 'ADMIN_RESERVATIONS.TABLE.UNASSIGNED' | translate }}</span>
+                    }
+                  </td>
+                  <td>
+                    <span [class]="'status-pill status-pill--' + b.status">
+                      {{ ('ADMIN_RESERVATIONS.STATUS.' + b.status) | translate }}
+                    </span>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="actions">
+                      @if (!b.operator && b.status !== 'cancelled' && b.status !== 'completed') {
+                        <button class="btn-assign" (click)="openAssignModal(b)">
+                          <mat-icon>person_add</mat-icon>
+                          {{ 'ADMIN_RESERVATIONS.ASSIGN' | translate }}
+                        </button>
+                      }
+                      <button class="btn-icon" (click)="openDetail(b)" [attr.aria-label]="'COMMON.VIEW' | translate">
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
         </div>
-      </div>
+
+        <!-- paginación -->
+        <div class="pagination">
+          <span class="muted">
+            {{ 'ADMIN_RESERVATIONS.PAGINATION.SHOWING' | translate:{ from: rangeFrom, to: rangeTo, total: filteredBookings.length } }}
+          </span>
+
+          <div class="pagination__controls">
+            <button [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+              {{ 'ADMIN_RESERVATIONS.PAGINATION.PREVIOUS' | translate }}
+            </button>
+
+            @for (page of pageNumbers; track page) {
+              <button
+                class="page-number"
+                [class.page-number--active]="currentPage === page"
+                (click)="goToPage(page)">
+                {{ page }}
+              </button>
+            }
+
+            <button [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+              {{ 'ADMIN_RESERVATIONS.PAGINATION.NEXT' | translate }}
+            </button>
+          </div>
+        </div>
+
+      }
 
     </div>
 

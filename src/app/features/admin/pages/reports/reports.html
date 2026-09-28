@@ -28,39 +28,79 @@
         <div class="revenue-icon"><mat-icon>attach_money</mat-icon></div>
         <div>
           <p class="revenue-label">{{ 'REPORTS.YEAR_REVENUE' | translate }}</p>
-          <p class="revenue-value">${{ yearRevenue | number }}.00</p>
+          <p class="revenue-value">{{ cop(yearRevenue) }}</p>
         </div>
       </div>
 
-      <div class="card ranking-card" #rankingCard>
+      <div class="card ranking-card">
         <div class="card-title">
           <mat-icon>emoji_events</mat-icon>
           <h2>{{ 'REPORTS.TOP_SERVICES.TITLE' | translate }}</h2>
         </div>
 
-        <div class="ranking-item" *ngFor="let service of topServices; let i = index">
-          <div class="ranking-header">
-            <span class="ranking-position">{{ i + 1 }}</span>
-            <span class="ranking-name">{{ service.name }}</span>
-            <span class="ranking-sales">{{ service.sales }} {{ 'REPORTS.TOP_SERVICES.SALES' | translate }}</span>
+        @if (topServices.length === 0) {
+
+          <app-empty-state
+            variant="empty"
+            icon="emoji_events"
+            titleKey="REPORTS.TOP_SERVICES.EMPTY_TITLE"
+            messageKey="REPORTS.TOP_SERVICES.EMPTY_MESSAGE">
+          </app-empty-state>
+
+        } @else {
+
+          <div #rankingCard>
+            @for (service of topServices; track service.name; let i = $index) {
+              <div class="ranking-item">
+                <div class="ranking-header">
+                  <span class="ranking-position">{{ i + 1 }}</span>
+                  <span class="ranking-name">{{ service.name }}</span>
+                  <span class="ranking-sales">{{ service.sales }} {{ 'REPORTS.TOP_SERVICES.SALES' | translate }}</span>
+                </div>
+                <div class="ranking-bar">
+                  <div class="ranking-fill" [attr.data-target]="service.percentage" [style.background]="service.color"></div>
+                </div>
+              </div>
+            }
           </div>
-          <div class="ranking-bar">
-            <div class="ranking-fill" [attr.data-target]="service.percentage" [style.background]="service.color"></div>
-          </div>
-        </div>
+
+        }
       </div>
 
     </div>
 
     <!-- Gráfica -->
     <div class="card chart-card">
-      <div class="card-title">
-        <mat-icon>trending_up</mat-icon>
-        <h2>{{ 'REPORTS.CHART.TITLE' | translate }}</h2>
+      <div class="chart-card__head">
+        <div>
+          <div class="card-title">
+            <mat-icon>trending_up</mat-icon>
+            <h2>{{ 'REPORTS.CHART.TITLE' | translate }}</h2>
+          </div>
+          <p class="muted chart-card__subtitle">{{ 'REPORTS.CHART.SUBTITLE' | translate }}</p>
+        </div>
+
+        <div class="period-toggle">
+          @for (p of periods; track p) {
+            <button
+              class="period-toggle__btn"
+              [class.period-toggle__btn--active]="period === p"
+              (click)="changePeriod(p)">
+              {{ ('REPORTS.PERIODS.' + p.toUpperCase()) | translate }}
+            </button>
+          }
+        </div>
       </div>
 
-      <div class="chart-wrapper">
+      <div class="chart-wrapper" [class.chart-wrapper--empty]="chartData.isEmpty">
         <canvas #barCanvas></canvas>
+
+        @if (chartData.isEmpty) {
+          <div class="chart-wrapper__note">
+            <mat-icon>query_stats</mat-icon>
+            <p>{{ 'REPORTS.CHART.NO_DATA' | translate }}</p>
+          </div>
+        }
       </div>
     </div>
 
@@ -73,7 +113,7 @@
           <div class="summary-icon"><mat-icon>calendar_today</mat-icon></div>
         </div>
         <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ dayReport.services }}</strong></p>
-        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">${{ dayReport.revenue | number }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">{{ cop(dayReport.revenue) }}</strong></p>
       </div>
 
       <div class="card summary-mini-card">
@@ -82,7 +122,7 @@
           <div class="summary-icon"><mat-icon>calendar_today</mat-icon></div>
         </div>
         <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ weekReport.services }}</strong></p>
-        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">${{ weekReport.revenue | number }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">{{ cop(weekReport.revenue) }}</strong></p>
       </div>
 
       <div class="card summary-mini-card">
@@ -91,7 +131,7 @@
           <div class="summary-icon"><mat-icon>calendar_today</mat-icon></div>
         </div>
         <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ monthReport.services }}</strong></p>
-        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">${{ monthReport.revenue | number }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">{{ cop(monthReport.revenue) }}</strong></p>
       </div>
 
     </div>

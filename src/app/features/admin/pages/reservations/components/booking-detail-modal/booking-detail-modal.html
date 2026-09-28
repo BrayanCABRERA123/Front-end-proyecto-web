@@ -1,0 +1,115 @@
+<div class="detail-dialog">
+
+  <div class="detail-dialog__header">
+    <div class="detail-dialog__title">
+      <div class="detail-dialog__icon"><mat-icon>event_available</mat-icon></div>
+      <div>
+        <h2>{{ booking.code }}</h2>
+        <p>{{ 'BOOKING_DETAIL.CREATED' | translate }}</p>
+      </div>
+    </div>
+    <button type="button" class="detail-dialog__close" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="detail-dialog__body">
+
+    <div class="detail-pill-row">
+      <span [class]="'status-pill status-pill--' + booking.status">
+        {{ ('ADMIN_RESERVATIONS.STATUS.' + booking.status) | translate }}
+      </span>
+      @if (booking.bay) {
+        <span class="bay-chip"><mat-icon>directions_car</mat-icon>{{ booking.bay }}</span>
+      }
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.CLIENT' | translate }}</span>
+        <strong>{{ booking.client }}</strong>
+      </div>
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.PHONE' | translate }}</span>
+        <strong>{{ booking.phone }}</strong>
+      </div>
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.EMAIL' | translate }}</span>
+        <strong>{{ booking.email }}</strong>
+      </div>
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.VEHICLE' | translate }}</span>
+        <strong>{{ booking.vehicle }}</strong>
+      </div>
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.PLATE' | translate }}</span>
+        <strong class="plate">{{ booking.plate }}</strong>
+      </div>
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.SERVICE' | translate }}</span>
+        <strong>{{ booking.service }}</strong>
+      </div>
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.DATE' | translate }}</span>
+        <strong>{{ dateLabel }} · {{ booking.time }}</strong>
+      </div>
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.DURATION' | translate }}</span>
+        <strong>{{ 'BOOKING_DETAIL.MINUTES' | translate:{ count: booking.durationMin } }}</strong>
+      </div>
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.BAY' | translate }}</span>
+        <strong>{{ booking.bay ?? ('BOOKING_DETAIL.NO_BAY' | translate) }}</strong>
+      </div>
+      <div class="detail-row">
+        <span>{{ 'BOOKING_DETAIL.OPERATOR' | translate }}</span>
+        <strong>{{ booking.operator?.name ?? ('BOOKING_DETAIL.NO_OPERATOR' | translate) }}</strong>
+      </div>
+    </div>
+
+    @if (booking.notes) {
+      <div class="detail-notes">
+        <mat-icon>notes</mat-icon>
+        {{ booking.notes }}
+      </div>
+    }
+
+    @if (booking.status === 'cancelled' || booking.status === 'completed') {
+      <p class="detail-dialog__hint">{{ 'BOOKING_DETAIL.RESTRICTED_HINT' | translate }}</p>
+    }
+
+  </div>
+
+  <div class="detail-dialog__actions">
+
+    @if (nextStatus) {
+      <button class="detail-dialog__btn detail-dialog__btn--primary" (click)="changeStatus()">
+        <mat-icon>autorenew</mat-icon>
+        {{ nextStatusKey | translate }}
+      </button>
+    }
+
+    @if (!booking.operator && booking.status !== 'cancelled' && booking.status !== 'completed') {
+      <button class="detail-dialog__btn" (click)="assignOperator()">
+        <mat-icon>person_add</mat-icon>
+        {{ 'BOOKING_DETAIL.ASSIGN' | translate }}
+      </button>
+    }
+
+    <button class="detail-dialog__btn" (click)="edit()">
+      <mat-icon>edit</mat-icon>
+      {{ 'BOOKING_DETAIL.EDIT' | translate }}
+    </button>
+
+    @if (booking.status !== 'cancelled' && booking.status !== 'completed') {
+      <button class="detail-dialog__btn detail-dialog__btn--danger" (click)="cancel()">
+        <mat-icon>close</mat-icon>
+        {{ 'BOOKING_DETAIL.CANCEL_BOOKING' | translate }}
+      </button>
+    }
+
+    <button class="detail-dialog__btn" (click)="close()">
+      {{ 'COMMON.CLOSE' | translate }}
+    </button>
+
+  </div>
+
+</div>

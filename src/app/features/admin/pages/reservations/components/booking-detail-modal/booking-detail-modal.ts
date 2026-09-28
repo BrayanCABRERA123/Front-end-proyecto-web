@@ -1,0 +1,71 @@
+import { Component, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { Booking, BookingStatus } from '../../../../models/admin.models';
+
+// resultado de las acciones del modal: cambiar estado o abrir otra ventana
+export interface BookingDetailResult {
+  action: 'status' | 'assign' | 'edit';
+  status?: BookingStatus;
+}
+
+@Component({
+  selector: 'app-booking-detail-modal',
+  standalone: true,
+  imports: [CommonModule, MatIconModule, TranslateModule],
+  templateUrl: './booking-detail-modal.html',
+  styleUrl: './booking-detail-modal.scss',
+})
+export class BookingDetailModal {
+
+  constructor(
+    private dialogRef: MatDialogRef<BookingDetailModal>,
+    @Inject(MAT_DIALOG_DATA) public booking: Booking,
+  ) {}
+
+  /** fecha en formato d/m/aaaa para la ficha */
+  get dateLabel(): string {
+    const [y, m, d] = this.booking.date.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
+  /** la única acción de cambio de estado que aplica en cada momento */
+  get nextStatus(): 'in_progress' | 'completed' | 'cancelled' | null {
+    switch (this.booking.status) {
+      case 'confirmed': return 'in_progress';
+      case 'in_progress': return 'completed';
+      case 'completed': return null;
+      case 'cancelled': return null;
+    }
+  }
+
+  /** llave de traducción del botón de cambio de estado */
+  get nextStatusKey(): string {
+    return 'BOOKING_DETAIL.STATUS_ACTION.' + this.nextStatus;
+  }
+
+  close(): void {
+    this.dialogRef.close(null);
+  }
+
+  changeStatus(): void {
+    if (this.nextStatus) {
+      this.dialogRef.close({ action: 'status', status: this.nextStatus });
+    }
+  }
+
+  assignOperator(): void {
+    this.dialogRef.close({ action: 'assign' });
+  }
+
+  edit(): void {
+    this.dialogRef.close({ action: 'edit' });
+  }
+
+  cancel(): void {
+    this.dialogRef.close({ action: 'status', status: 'cancelled' });
+  }
+}

@@ -35,7 +35,7 @@
   }
 
   p {
-    color: #8a9aa3;
+    color: var(--text-secondary);
     margin: 4px 0 0;
   }
 }
@@ -128,7 +128,7 @@
 }
 
 .revenue-label {
-  color: #8a9aa3;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   margin: 0;
 }
@@ -144,11 +144,69 @@
 
 .chart-card {
   margin-bottom: 20px;
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  &__subtitle {
+    margin: 4px 0 0;
+  }
+}
+
+.period-toggle {
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
+  background: var(--bg);
+
+  &__btn {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: $font-family-base;
+    font-size: $fs-caption;
+    font-weight: $fw-semibold;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover { color: var(--text); }
+
+    &--active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+  }
 }
 
 .chart-wrapper {
   height: 340px;
   position: relative;
+
+  &--empty { opacity: .55; }
+
+  &__note {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    text-align: center;
+
+    mat-icon { font-size: 32px; width: 32px; height: 32px; color: var(--primary); }
+    p { margin: 0; @include caption-text; }
+  }
 }
 
 // --- Tarjetas de resumen ---
@@ -163,7 +221,7 @@
 .summary-mini-card p {
   margin: 6px 0;
   font-size: 0.9rem;
-  color: #8a9aa3;
+  color: var(--text-secondary);
 
   strong {
     color: var(--text);
@@ -244,7 +302,7 @@
 .ranking-bar {
   height: 10px;
   border-radius: 999px;
-  background: #eef2f2;
+  background: var(--item-bg);
   overflow: hidden;
 }
 

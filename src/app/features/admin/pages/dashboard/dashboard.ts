@@ -1,23 +1,43 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
+
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
+import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
+import { AssignOperatorModal } from '../../../../shared/dialogs/assign-operator-modal/assign-operator-modal';
+import { AvailableOperator, AssignOperatorModalData, AssignOperatorResult } from '../../../../shared/dialogs/assign-operator-modal/assign-operator.model';
+import { PaymentReviewModal } from '../../../../shared/dialogs/payment-review-modal/payment-review-modal';
+import { PaymentReviewData, PaymentReviewResult } from '../../../../shared/dialogs/payment-review-modal/payment-review.model';
+import { ReservationsStore, formatTimeRange } from '../../services/reservations-store';
+import { PaymentsStore, formatPaymentDate } from '../../services/payments-store';
+import { Operator, OperatorsStore } from '../../services/operators-store';
+import { ScheduleStore } from '../../services/schedule-store';
+import { Booking, Payment } from '../../models/admin.models';
 
-// un día de la gráfica de ingresos
-interface RevenueDay { day: string; amount: number; label: string; isToday?: boolean; }
+// un día de la gráfica de ingresos (los datos salen de los pagos aprobados)
+interface RevenueDay {
+  day: string;
+  amount: number;
+  label: string;
+  isToday: boolean;
+  date: string;
+}
 
-// tarjeta de operario en el resumen de estado
-interface OperatorStatus {
+// fila del resumen de estado de operarios
+interface OperatorStatusRow {
   initials: string;
   name: string;
   role: string;
-  status: 'busy' | 'available' | 'leave';
+  status: 'available' | 'busy' | 'absent';
   bay: string;
 }
 
 // pago con comprobante pendiente por verificar
-interface PendingPayment {
+interface PendingPaymentRow {
+  id: string;
   client: string;
   bank: string;
   bankClass: string;
@@ -27,15 +47,18 @@ interface PendingPayment {
 }
 
 // reserva confirmada que todavía no tiene operario asignado
-interface UnassignedBooking {
+interface UnassignedBookingRow {
+  id: string;
   time: string;
   bay: string;
   client: string;
   vehicle: string;
   service: string;
-  isUpcoming?: boolean;
+  isUpcoming: boolean;
   icon: string;
 }
+
+const SERVICE_ICONS = ['workspace_premium', 'sanitizer', 'auto_awesome', 'local_car_wash', 'spray'];
 
 @Component({
   selector: 'app-dashboard',
@@ -52,42 +75,99 @@ export class DashboardComponent {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
   });
 
-  stats = {
-    bookingsToday: 18,
-    vsYesterday: 3,
-    servicesInProgress: 4,
-    activeBays: 4,
-    pendingPayments: 5,
-    revenueToday: 680000,
-  };
+  constructor(
+    private router: Router,
+    private reservations: ReservationsStore,
+    private payments: PaymentsStore,
+    private operatorsStore: OperatorsStore,
+    private schedule: ScheduleStore,
+    private dialog: MatDialog,
+    private feedback: FeedbackService,
+  ) {}
 
-  weeklyRevenue: RevenueDay[] = [
-    { day: 'Lun', amount: 520000, label: '$520k' },
-    { day: 'Mar', amount: 610000, label: '$610k' },
-    { day: 'Mié', amount: 450000, label: '$450k' },
-    { day: 'Jue', amount: 680000, label: '$680k', isToday: true },
-    { day: 'Vie', amount: 790000, label: '$790k' },
-    { day: 'Sáb', amount: 1100000, label: '$1.1M' },
-    { day: 'Dom', amount: 670000, label: '$670k' },
-  ];
+  /* ---------- tarjetas resumen ---------- */
 
-  operators: OperatorStatus[] = [
-    { initials: 'JD', name: 'Juan Díaz', role: 'Lavador Especialista', status: 'busy', bay: 'Bahía 2' },
-    { initials: 'CR', name: 'Carlos Ruiz', role: 'Técnico Detailing', status: 'available', bay: '' },
-    { initials: 'MG', name: 'Mateo Gómez', role: 'Tapicería e Interiores', status: 'leave', bay: '' },
-  ];
+  get bookingsToday(): number {
+    return this.reservations.byDate(this.reservations.today).length;
+  }
 
-  pendingPayments: PendingPayment[] = [
-    { client: 'Andrés Morales', bank: 'Bancolombia', bankClass: 'bancolombia', service: 'Lavado Detallado + Encerado', reference: '#BC-98402', amount: 85000 },
-    { client: 'Carolina Vega', bank: 'Nequi', bankClass: 'nequi', service: 'Combo Completo SUV', reference: '#NQ-44129', amount: 120000 },
-    { client: 'Felipe Montoya', bank: 'Daviplata', bankClass: 'daviplata', service: 'Lavado Básico Sedán', reference: '#DV-11208', amount: 45000 },
-  ];
+  get bookingsYesterday(): number {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return this.reservations.byDate(yesterday.toISOString().slice(0, 10)).length;
+  }
 
-  unassignedBookings: UnassignedBooking[] = [
-    { time: '15:00', bay: 'Bahía 3', client: 'Sofía Castro', vehicle: 'Mazda CX-30', service: 'Premium Especial', isUpcoming: true, icon: 'workspace_premium' },
-    { time: '15:30', bay: 'Bahía 1', client: 'Diego Herrera', vehicle: 'Toyota Hilux', service: 'Desinfección + Tapicería', icon: 'sanitizer' },
-    { time: '16:15', bay: 'Bahía 2', client: 'Mariana Gómez', vehicle: 'Renault Duster', service: 'Lavado General + Polichado', icon: 'auto_awesome' },
-  ];
+  // diferencia frente a ayer (puede ser negativa: ↗ o ↘)
+  get vsYesterday(): number {
+    return this.bookingsToday - this.bookingsYesterday;
+  }
+
+  get vsYesterdayAbs(): number {
+    return Math.abs(this.vsYesterday);
+  }
+
+  get vsDirection(): string {
+    return this.vsYesterday >= 0 ? '↗' : '↘';
+  }
+
+  get servicesInProgress(): number {
+    return this.reservations.byDate(this.reservations.today)
+      .filter(b => b.status === 'in_progress').length;
+  }
+
+  get activeBays(): number {
+    return this.schedule.bays().filter(b => b.status === 'active').length;
+  }
+
+  get pendingPaymentsCount(): number {
+    return this.payments.pendingPayments().length;
+  }
+
+  // ingresos de hoy = pagos aprobados con fecha de hoy
+  get revenueToday(): number {
+    return this.payments.payments()
+      .filter(p => p.date === this.payments.today && p.status === 'approved')
+      .reduce((sum, p) => sum + p.amount, 0);
+  }
+
+  /* ---------- gráfica de ingresos (últimos 7 días) ---------- */
+
+  get weeklyRevenue(): RevenueDay[] {
+    const payments = this.payments.payments();
+    const rows: RevenueDay[] = [];
+
+    for (let i = -6; i <= 0; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() + i);
+      const iso = d.toISOString().slice(0, 10);
+
+      const amount = payments
+        .filter(p => p.date === iso && p.status === 'approved')
+        .reduce((sum, p) => sum + p.amount, 0);
+
+      rows.push({
+        day: d.toLocaleDateString('es-CO', { weekday: 'short' }),
+        amount,
+        label: this.shortAmount(amount),
+        isToday: iso === this.payments.today,
+        date: iso,
+      });
+    }
+
+    return rows;
+  }
+
+  // día pico de la semana, calculado (no hardcodeado)
+  get peakDay(): string {
+    const peak = this.weeklyRevenue.reduce((max, d) => (d.amount > max.amount ? d : max));
+    return peak.day;
+  }
+
+  private shortAmount(amount: number): string {
+    if (amount >= 1_000_000) return '$' + (amount / 1_000_000).toFixed(1).replace('.0', '') + 'M';
+    if (amount >= 1_000) return '$' + Math.round(amount / 1_000) + 'k';
+    return '$' + amount;
+  }
 
   get weekTotal(): number {
     return this.weeklyRevenue.reduce((sum, d) => sum + d.amount, 0);
@@ -99,7 +179,8 @@ export class DashboardComponent {
 
   // altura de cada barra en % del máximo de la semana
   barHeight(amount: number): number {
-    return Math.round((amount / this.maxRevenue) * 100);
+    if (this.maxRevenue === 0) return 0;
+    return Math.max(4, Math.round((amount / this.maxRevenue) * 100));
   }
 
   // formatea a pesos colombianos, ej: $680.000
@@ -107,7 +188,186 @@ export class DashboardComponent {
     return '$' + amount.toLocaleString('es-CO');
   }
 
-  countByStatus(status: OperatorStatus['status']): number {
+  /* ---------- operarios ---------- */
+
+  get operators(): OperatorStatusRow[] {
+    return this.operatorsStore.operators().slice(0, 5).map((o: Operator) => ({
+      initials: o.initials,
+      name: o.name,
+      role: o.specialty,
+      status: o.status === 'in_service' ? 'busy' : o.status === 'medical_leave' ? 'absent' : 'available',
+      bay: o.bay ?? '',
+    }));
+  }
+
+  countByStatus(status: OperatorStatusRow['status']): number {
     return this.operators.filter(o => o.status === status).length;
+  }
+
+  /* ---------- pagos pendientes ---------- */
+
+  get pendingPayments(): PendingPaymentRow[] {
+    return this.payments.pendingPayments().slice(0, 3).map(p => ({
+      id: p.id,
+      client: p.client,
+      bank: this.methodLabel(p.method),
+      bankClass: p.method,
+      service: p.service,
+      reference: p.reference,
+      amount: p.amount,
+    }));
+  }
+
+  // nombre comercial de cada método de pago
+  methodLabel(method: Payment['method']): string {
+    const labels: Record<Payment['method'], string> = {
+      nequi: 'Nequi',
+      daviplata: 'Daviplata',
+      bancolombia: 'Bancolombia',
+      cash: 'Efectivo',
+    };
+    return labels[method] ?? method;
+  }
+
+  /* ---------- reservas sin operario ---------- */
+
+  get unassignedBookings(): UnassignedBookingRow[] {
+    return this.reservations.bookings()
+      .filter(b => b.status === 'confirmed' && !b.operator && b.date >= this.reservations.today)
+      .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
+      .slice(0, 3)
+      .map((b, i) => ({
+        id: b.id,
+        time: formatTimeRange(b.time, b.durationMin),
+        bay: b.bay ?? '—',
+        client: b.client,
+        vehicle: b.vehicle,
+        service: b.service,
+        isUpcoming: b.date === this.reservations.today && b.time >= new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' }),
+        icon: SERVICE_ICONS[i % SERVICE_ICONS.length],
+      }));
+  }
+
+  /* ---------- navegación ---------- */
+
+  goToReservations(): void {
+    this.router.navigate(['/admin/reservations']);
+  }
+
+  goToPayments(): void {
+    this.router.navigate(['/admin/payments']);
+  }
+
+  goToReports(): void {
+    this.router.navigate(['/admin/reports']);
+  }
+
+  goToOperators(): void {
+    this.router.navigate(['/admin/operators']);
+  }
+
+  /* ---------- acciones ---------- */
+
+  // revisar un pago pendiente desde la tarjeta (mismo flujo que la pantalla de pagos)
+  reviewPayment(row: PendingPaymentRow): void {
+    const payment = this.payments.getById(row.id);
+    if (!payment) return;
+
+    const data: PaymentReviewData = {
+      code: payment.code,
+      status: payment.status,
+      client: payment.client,
+      phone: payment.phone,
+      email: payment.email,
+      bookingCode: payment.bookingCode,
+      service: payment.service,
+      vehicle: payment.vehicle,
+      plate: payment.plate,
+      scheduleLabel: payment.scheduleLabel,
+      bay: payment.bay,
+      operator: payment.operator,
+      method: payment.method,
+      transactionReference: payment.reference,
+      amountDue: payment.amount,
+      amountDeclared: payment.amountDeclared,
+      receiptDate: `${formatPaymentDate(payment.date)}, ${payment.time} COT`,
+      bankAccount: payment.bankAccount,
+      rejectionReason: payment.rejectionReason,
+    };
+
+    const dialogRef = this.dialog.open(PaymentReviewModal, { panelClass: 'custom-dialog', data });
+
+    dialogRef.afterClosed().subscribe((result: PaymentReviewResult | null) => {
+      if (!result || !result.action) return;
+
+      this.payments.review(payment.id, result.action, result.reason);
+      this.feedback.success(
+        'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_TITLE',
+        'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_MESSAGE',
+        {
+          messageParams: { code: payment.code },
+          details: result.reason
+            ? [{ label: 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL', value: result.reason }]
+            : [],
+        }
+      );
+    });
+  }
+
+  // asignar un operario a una reserva sin asignar (mismo flujo que reservas)
+  assignOperator(bookingId: string): void {
+    const booking = this.reservations.getById(bookingId);
+    if (!booking) return;
+
+    const modalData: AssignOperatorModalData = {
+      bookingCode: booking.code,
+      client: booking.client,
+      vehicle: booking.vehicle,
+      plate: booking.plate,
+      service: booking.service,
+      timeLabel: formatTimeRange(booking.time, booking.durationMin),
+      bay: booking.bay ?? '—',
+      operators: this.assignableOperators(),
+    };
+
+    const dialogRef = this.dialog.open(AssignOperatorModal, {
+      panelClass: 'custom-dialog',
+      data: modalData
+    });
+
+    dialogRef.afterClosed().subscribe((result: AssignOperatorResult | null) => {
+      if (!result) return;
+      this.reservations.assignOperator(booking.id, result.operatorId);
+      this.feedback.success(
+        'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE',
+        'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
+        { messageParams: { code: booking.code } }
+      );
+    });
+  }
+
+  // operarios disponibles para el modal de asignación, desde el store
+  private assignableOperators(): AvailableOperator[] {
+    return this.operatorsStore.availableOperators().map(o => {
+      let availability: AvailableOperator['availability'] = 'available';
+      let availabilityNote: string | undefined;
+
+      if (o.status === 'in_service') {
+        availability = 'busy';
+        availabilityNote = 'ASSIGN_OPERATOR_MODAL.BUSY_NOTE';
+      } else if (o.status === 'medical_leave') {
+        availability = 'unavailable';
+      }
+
+      return {
+        id: o.id,
+        initials: o.initials,
+        name: o.name,
+        specialty: o.specialty,
+        rating: o.rating,
+        availability,
+        availabilityNote,
+      };
+    });
   }
 }

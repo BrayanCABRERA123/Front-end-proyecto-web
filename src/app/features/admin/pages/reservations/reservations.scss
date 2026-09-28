@@ -185,6 +185,11 @@
   background: var(--primary-soft);
   padding: 2px 6px;
   border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-family: $font-family-base;
+
+  &:hover { filter: brightness(.96); }
 }
 
 select {
@@ -285,7 +290,17 @@ select {
   &--cancelled { background: var(--error-soft); color: var(--error); }
 }
 
-.actions-cell { text-align: right; }
+.actions-cell {
+  text-align: right;
+  white-space: nowrap;
+
+  .actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+}
 
 .btn-assign {
   background: var(--primary);
@@ -308,6 +323,13 @@ select {
   justify-content: center;
   cursor: pointer;
   color: var(--text-secondary);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 1;
+  }
 
   &:hover { background: var(--item-hover); }
 }
@@ -353,10 +375,15 @@ select {
 @include tablet {
   .home-content { padding: 20px; }
   .filters-card { flex-direction: column; align-items: stretch; }
+  .date-box { width: 100%; box-sizing: border-box; }
+  .date-box input[type="date"] { flex: 1; }
+  select { width: 100%; }
 }
 
 @include mobile {
   .page-header { flex-direction: column; align-items: flex-start; }
   .page-header__actions { width: 100%; }
   .btn-primary, .btn-outline { flex: 1; justify-content: center; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .search-box { min-width: 0; }
 }

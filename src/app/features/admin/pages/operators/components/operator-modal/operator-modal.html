@@ -1,0 +1,105 @@
+<div class="form-dialog form-dialog--wide">
+
+  <div class="form-dialog__header">
+    <div>
+      <h2>{{ (editing ? 'OPERATOR_MODAL.TITLE_EDIT' : 'OPERATOR_MODAL.TITLE_CREATE') | translate }}</h2>
+      <p>{{ 'OPERATOR_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+    <button type="button" class="form-dialog__close" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="form-dialog__body">
+
+    <div class="form-dialog__grid-2">
+      <label class="form-field" [class.form-field--invalid]="nameInvalid">
+        <span>{{ 'OPERATOR_MODAL.NAME_LABEL' | translate }} *</span>
+        <input type="text" [(ngModel)]="name" maxlength="60" [placeholder]="'OPERATOR_MODAL.NAME_PLACEHOLDER' | translate">
+        @if (nameInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'OPERATOR_MODAL.ERROR_NAME' | translate }}</span>
+        }
+      </label>
+
+      <label class="form-field" [class.form-field--invalid]="specialtyInvalid">
+        <span>{{ 'OPERATOR_MODAL.SPECIALTY_LABEL' | translate }} *</span>
+        <input type="text" [(ngModel)]="specialty" maxlength="80" [placeholder]="'OPERATOR_MODAL.SPECIALTY_PLACEHOLDER' | translate">
+        @if (specialtyInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'OPERATOR_MODAL.ERROR_SPECIALTY' | translate }}</span>
+        }
+      </label>
+    </div>
+
+    <div class="form-dialog__grid-2">
+      <label class="form-field" [class.form-field--invalid]="phoneInvalid">
+        <span>{{ 'OPERATOR_MODAL.PHONE_LABEL' | translate }} *</span>
+        <input type="tel" [(ngModel)]="phone" maxlength="20" [placeholder]="'OPERATOR_MODAL.PHONE_PLACEHOLDER' | translate">
+        @if (phoneInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'OPERATOR_MODAL.ERROR_PHONE' | translate }}</span>
+        }
+      </label>
+
+      <label class="form-field" [class.form-field--invalid]="emailInvalid">
+        <span>{{ 'OPERATOR_MODAL.EMAIL_LABEL' | translate }}</span>
+        <input type="email" [(ngModel)]="email" maxlength="80" [placeholder]="'OPERATOR_MODAL.EMAIL_PLACEHOLDER' | translate">
+        @if (emailInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'OPERATOR_MODAL.ERROR_EMAIL' | translate }}</span>
+        }
+      </label>
+    </div>
+
+    <div class="form-dialog__grid-2">
+      <label class="form-field">
+        <span>{{ 'OPERATOR_MODAL.STATUS_LABEL' | translate }}</span>
+        <select [(ngModel)]="status">
+          <option value="available">{{ 'ADMIN_OPERATORS.STATUS.available' | translate }}</option>
+          <option value="in_service">{{ 'ADMIN_OPERATORS.STATUS.in_service' | translate }}</option>
+          <option value="medical_leave">{{ 'ADMIN_OPERATORS.STATUS.medical_leave' | translate }}</option>
+        </select>
+      </label>
+
+      <label class="form-field">
+        <span>{{ 'OPERATOR_MODAL.BAY_LABEL' | translate }}</span>
+        <select [(ngModel)]="bay" [disabled]="bayDisabled">
+          <option [ngValue]="null">{{ 'OPERATOR_MODAL.NO_BAY' | translate }}</option>
+          @for (b of bays; track b.id) {
+            <option [ngValue]="b.name">{{ b.name }}</option>
+          }
+        </select>
+        @if (bayDisabled) {
+          <span class="form-hint">{{ 'OPERATOR_MODAL.BAY_DISABLED_HINT' | translate }}</span>
+        }
+      </label>
+    </div>
+
+    <div class="tags-editor">
+      <div class="tags-editor__head">
+        <span>{{ 'OPERATOR_MODAL.TAGS_LABEL' | translate }}</span>
+        <button type="button" class="tags-editor__add" (click)="addTag()">
+          <mat-icon>add</mat-icon>
+          {{ 'OPERATOR_MODAL.TAGS_ADD' | translate }}
+        </button>
+      </div>
+
+      @for (t of tags; track trackByIndex($index)) {
+        <div class="tags-editor__item">
+          <input type="text" [(ngModel)]="tags[$index]" maxlength="40" [placeholder]="'OPERATOR_MODAL.TAGS_PLACEHOLDER' | translate">
+          <button type="button" class="tags-editor__remove" (click)="removeTag($index)" aria-label="remove">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      } @empty {
+        <p class="tags-editor__empty">{{ 'OPERATOR_MODAL.TAGS_EMPTY' | translate }}</p>
+      }
+    </div>
+
+  </div>
+
+  <div class="form-dialog__actions">
+    <button class="form-dialog__cancel" type="button" (click)="close()">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button class="form-dialog__submit" type="button" (click)="save()">
+      {{ 'COMMON.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>

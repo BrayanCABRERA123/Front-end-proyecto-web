@@ -13,7 +13,7 @@
             <p class="muted">{{ today }} · <span class="accent">{{ 'ADMIN_DASHBOARD.SUBTITLE' | translate }}</span></p>
           </div>
         </div>
-        <button class="btn btn--primary">
+        <button class="btn btn--primary" (click)="goToReservations()">
           <mat-icon>calendar_today</mat-icon>
           {{ 'ADMIN_DASHBOARD.VIEW_TODAY_BOOKINGS' | translate }}
         </button>
@@ -24,18 +24,18 @@
         <article class="card stat">
           <div class="stat__top">
             <div class="icon-box"><mat-icon>event</mat-icon></div>
-            <span class="badge badge--success">↗ +{{ stats.vsYesterday }} {{ 'ADMIN_DASHBOARD.STATS.VS_YESTERDAY' | translate }}</span>
+            <span class="badge badge--success">{{ vsDirection }} {{ vsYesterdayAbs }} {{ 'ADMIN_DASHBOARD.STATS.VS_YESTERDAY' | translate }}</span>
           </div>
-          <strong class="stat__value">{{ stats.bookingsToday }}</strong>
+          <strong class="stat__value">{{ bookingsToday }}</strong>
           <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.BOOKINGS_TODAY' | translate }}</span>
         </article>
 
         <article class="card stat">
           <div class="stat__top">
             <div class="icon-box"><mat-icon>autorenew</mat-icon></div>
-            <span class="badge badge--success">{{ stats.activeBays }} {{ 'ADMIN_DASHBOARD.STATS.ACTIVE_BAYS' | translate }}</span>
+            <span class="badge badge--success">{{ activeBays }} {{ 'ADMIN_DASHBOARD.STATS.ACTIVE_BAYS' | translate }}</span>
           </div>
-          <strong class="stat__value">{{ stats.servicesInProgress }}</strong>
+          <strong class="stat__value">{{ servicesInProgress }}</strong>
           <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.IN_PROGRESS' | translate }}</span>
         </article>
 
@@ -44,7 +44,7 @@
             <div class="icon-box icon-box--warning"><mat-icon>fact_check</mat-icon></div>
             <span class="badge badge--warning">{{ 'ADMIN_DASHBOARD.STATS.PENDING_REVIEW' | translate }}</span>
           </div>
-          <strong class="stat__value">{{ stats.pendingPayments }}</strong>
+          <strong class="stat__value">{{ pendingPaymentsCount }}</strong>
           <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.PENDING_PAYMENTS' | translate }}</span>
         </article>
 
@@ -53,7 +53,7 @@
             <div class="icon-box"><mat-icon>payments</mat-icon></div>
             <span class="badge badge--success">COP</span>
           </div>
-          <strong class="stat__value">{{ cop(stats.revenueToday) }}</strong>
+          <strong class="stat__value">{{ cop(revenueToday) }}</strong>
           <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.REVENUE_TODAY' | translate }}</span>
         </article>
       </div>
@@ -83,8 +83,8 @@
           </div>
 
           <footer class="chart__footer">
-            <span class="muted"><i class="dot"></i> {{ 'ADMIN_DASHBOARD.REVENUE_CHART.PEAK_DAY' | translate }}: Sábado</span>
-            <a class="link">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.VIEW_REPORT' | translate }} →</a>
+            <span class="muted"><i class="dot"></i> {{ 'ADMIN_DASHBOARD.REVENUE_CHART.PEAK_DAY' | translate }}: {{ peakDay }}</span>
+            <a class="link" (click)="goToReports()">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.VIEW_REPORT' | translate }} →</a>
           </footer>
         </article>
 
@@ -97,13 +97,13 @@
           <div class="status-summary">
             <span><i class="dot dot--success"></i> {{ countByStatus('available') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.AVAILABLE_SHORT' | translate }}</span>
             <span><i class="dot dot--success"></i> {{ countByStatus('busy') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.BUSY_SHORT' | translate }}</span>
-            <span><i class="dot dot--error"></i> {{ countByStatus('leave') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.ABSENT_SHORT' | translate }}</span>
+            <span><i class="dot dot--error"></i> {{ countByStatus('absent') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.ABSENT_SHORT' | translate }}</span>
           </div>
 
           <ul class="list">
             @for (o of operators; track o.name) {
               <li class="operator-row">
-                <span class="avatar" [class.avatar--error]="o.status === 'leave'">{{ o.initials }}</span>
+                <span class="avatar" [class.avatar--error]="o.status === 'absent'">{{ o.initials }}</span>
                 <div class="operator-row__info">
                   <strong>{{ o.name }}</strong>
                   <span class="muted">{{ o.role }}</span>
@@ -115,7 +115,7 @@
             }
           </ul>
 
-          <a class="link link--center">{{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.MANAGE_SHIFTS' | translate }} →</a>
+          <a class="link link--center" (click)="goToOperators()">{{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.MANAGE_SHIFTS' | translate }} →</a>
         </article>
       </div>
 
@@ -127,7 +127,7 @@
               <h2><mat-icon class="warning">payments</mat-icon> {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.TITLE' | translate }}</h2>
               <p class="muted">{{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.SUBTITLE' | translate }}</p>
             </div>
-            <span class="badge badge--warning">{{ stats.pendingPayments }} {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.PENDING' | translate }}</span>
+            <span class="badge badge--warning">{{ pendingPaymentsCount }} {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.PENDING' | translate }}</span>
           </div>
 
           <ul class="list">
@@ -141,14 +141,14 @@
                   <p class="muted">{{ p.service }}</p>
                   <p class="muted small">Ref: {{ p.reference }} <b class="accent">{{ cop(p.amount) }} COP</b></p>
                 </div>
-                <button class="btn btn--primary btn--sm">
+                <button class="btn btn--primary btn--sm" (click)="reviewPayment(p)">
                   <mat-icon>visibility</mat-icon> {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.REVIEW' | translate }}
                 </button>
               </li>
             }
           </ul>
 
-          <a class="link link--center">{{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.VIEW_ALL' | translate:{ count: stats.pendingPayments } }} →</a>
+          <a class="link link--center" (click)="goToPayments()">{{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.VIEW_ALL' | translate:{ count: pendingPaymentsCount } }} →</a>
         </article>
 
         <article class="card">
@@ -173,14 +173,14 @@
                     <mat-icon class="tiny">{{ r.icon }}</mat-icon> {{ r.service }}
                   </p>
                 </div>
-                <button class="btn btn--primary btn--sm">
+                <button class="btn btn--primary btn--sm" (click)="assignOperator(r.id)">
                   <mat-icon>person_add</mat-icon> {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.ASSIGN' | translate }}
                 </button>
               </li>
             }
           </ul>
 
-          <a class="link link--center">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.VIEW_ALL' | translate }} →</a>
+          <a class="link link--center" (click)="goToReservations()">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.VIEW_ALL' | translate }} →</a>
         </article>
       </div>
 

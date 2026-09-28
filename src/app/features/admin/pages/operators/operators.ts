@@ -3,17 +3,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
-import { Operator, OperatorsStore, OperatorStatus } from '../../services/operators-store';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
+import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
+import { ScheduleStore } from '../../services/schedule-store';
+import { Operator, OperatorStatus, OperatorsStore } from '../../services/operators-store';
+import { OperatorModal, OperatorModalData, OperatorModalResult } from './components/operator-modal/operator-modal';
+import { AssignShiftModal, AssignShiftModalData, AssignShiftResult } from './components/assign-shift-modal/assign-shift-modal';
 
 type StatusFilter = 'all' | OperatorStatus;
 
 @Component({
   selector: 'app-admin-operators',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule, SidebarComponent],
+  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule, SidebarComponent, EmptyStateComponent],
   templateUrl: './operators.html',
   styleUrl: './operators.scss'
 })
@@ -24,11 +30,21 @@ export class OperatorsComponent {
 
   constructor(
     private router: Router,
-    private store: OperatorsStore
+    private store: OperatorsStore,
+    private schedule: ScheduleStore,
+    private dialog: MatDialog,
+    private feedback: FeedbackService,
   ) {}
 
   get operators(): Operator[] {
-    return this.store.operators;
+    return this.store.operators();
+  }
+
+  // bahías activas para poder asignar un operario nuevo o un turno
+  private get activeBays(): { id: string; name: string }[] {
+    return this.schedule.bays()
+      .filter(b => b.status === 'active')
+      .map(b => ({ id: b.id, name: b.name }));
   }
 
   get filteredOperators(): Operator[] {
@@ -50,6 +66,7 @@ export class OperatorsComponent {
   }
 
   get averageRating(): string {
+    if (this.operators.length === 0) return '0.0';
     const total = this.operators.reduce((sum, o) => sum + o.rating, 0);
     return (total / this.operators.length).toFixed(1);
   }
@@ -60,5 +77,66 @@ export class OperatorsComponent {
 
   goToDetail(operator: Operator): void {
     this.router.navigate(['/admin/operators', operator.id]);
+  }
+
+  /* ---------- nuevo operario ---------- */
+
+  openCreate(): void {
+    const data: OperatorModalData = { bays: this.activeBays };
+    const dialogRef = this.dialog.open(OperatorModal, { panelClass: 'custom-dialog', data });
+
+    dialogRef.afterClosed().subscribe((result: OperatorModalResult | null) => {
+      if (!result) return;
+      const created = this.store.addOperator(result);
+      this.feedback.success(
+        'ADMIN_OPERATORS.FEEDBACK.CREATED_TITLE',
+        'ADMIN_OPERATORS.FEEDBACK.CREATED_MESSAGE',
+        { messageParams: { name: created.name } }
+      );
+    });
+  }
+
+  openEdit(operator: Operator): void {
+    const data: OperatorModalData = { operator, bays: this.activeBays };
+    const dialogRef = this.dialog.open(OperatorModal, { panelClass: 'custom-dialog', data });
+
+    dialogRef.afterClosed().subscribe((result: OperatorModalResult | null) => {
+      if (!result) return;
+      this.store.updateOperator(operator.id, result);
+      this.feedback.success(
+        'ADMIN_OPERATORS.FEEDBACK.UPDATED_TITLE',
+        'ADMIN_OPERATORS.FEEDBACK.UPDATED_MESSAGE',
+        { messageParams: { name: result.name } }
+      );
+    });
+  }
+
+  /* ---------- asignar turnos ---------- */
+
+  openAssignShifts(): void {
+    const data: AssignShiftModalData = {
+      operators: this.operators.map(o => ({ id: o.id, name: o.name, initials: o.initials, status: o.status })),
+      bays: this.activeBays,
+    };
+
+    const dialogRef = this.dialog.open(AssignShiftModal, { panelClass: 'custom-dialog', data });
+
+    dialogRef.afterClosed().subscribe((result: AssignShiftResult | null) => {
+      if (!result) return;
+
+      this.store.setStatus(result.operatorId, result.status);
+      if (result.bay) {
+        this.store.assignBay(result.operatorId, result.bay);
+      } else if (result.status === 'medical_leave') {
+        this.store.assignBay(result.operatorId, null);
+      }
+
+      const operator = this.store.getById(result.operatorId);
+      this.feedback.success(
+        'ADMIN_OPERATORS.FEEDBACK.SHIFT_TITLE',
+        'ADMIN_OPERATORS.FEEDBACK.SHIFT_MESSAGE',
+        { messageParams: { name: operator?.name ?? '' } }
+      );
+    });
   }
 }

@@ -5,98 +5,103 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { AssignOperatorModal } from '../../../../shared/dialogs/assign-operator-modal/assign-operator-modal';
 import { AvailableOperator, AssignOperatorModalData, AssignOperatorResult } from '../../../../shared/dialogs/assign-operator-modal/assign-operator.model';
-
-type BookingStatus = 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
-
-// operario ya asignado a una reserva (resumen para la tabla)
-interface AssignedOperator { initials: string; name: string; }
-
-interface Booking {
-  code: string;
-  client: string;
-  phone: string;
-  vehicle: string;
-  plate: string;
-  service: string;
-  date: string;
-  timeRange: string;
-  relativeTime: string;
-  bay: string;
-  status: BookingStatus;
-  operator: AssignedOperator | null;
-}
-
-// pool fijo de operarios que se ofrecen en el modal de asignación
-const OPERATOR_POOL: AvailableOperator[] = [
-  { id: 'op-cr', initials: 'CR', name: 'Carlos Ruiz', specialty: 'Técnico Detailing Especializado', rating: 4.9, availability: 'available' },
-  { id: 'op-am', initials: 'AM', name: 'Andrés Mora', specialty: 'Lavado General & Encerado', rating: 4.7, availability: 'available' },
-  { id: 'op-jd', initials: 'JD', name: 'Juan Díaz', specialty: 'Lavador Especialista', rating: 4.8, availability: 'busy', availabilityNote: 'Ocupado 14:00 - 15:30 (Bahía 2)' },
-  { id: 'op-mg', initials: 'MG', name: 'Mateo Gómez', specialty: 'Tapicería e Interiores', rating: 4.6, availability: 'unavailable', availabilityNote: 'Incapacidad médica / No disponible' },
-];
+import { ExportColumn, ExportDataModal, ExportDataModalData } from '../../../../shared/dialogs/export-data-modal/export-data-modal';
+import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
+import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
+import { ReservationsStore, formatDate, formatTimeRange } from '../../services/reservations-store';
+import { OperatorsStore } from '../../services/operators-store';
+import { ScheduleStore } from '../../services/schedule-store';
+import { CatalogStore } from '../../services/catalog-store';
+import { Booking, BookingStatus } from '../../models/admin.models';
+import { BookingModal, BookingModalData, BookingModalResult } from './components/booking-modal/booking-modal';
+import { BookingDetailModal, BookingDetailResult } from './components/booking-detail-modal/booking-detail-modal';
 
 @Component({
-  selector: 'app-admin-reservations',
+  selector: 'app-reservations',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule, SidebarComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatIconModule,
+    TranslateModule,
+    SidebarComponent,
+    EmptyStateComponent,
+  ],
   templateUrl: './reservations.html',
-  styleUrl: './reservations.scss'
+  styleUrls: ['./reservations.scss']
 })
 export class ReservationsComponent {
 
-  // filtros de la barra de arriba
   searchTerm = '';
-  selectedDate = new Date().toISOString().slice(0, 10);
-  statusFilter = '';
+  statusFilter: BookingStatus | '' = '';
   operatorFilter = '';
+  selectedDate = '';
 
   currentPage = 1;
   pageSize = 6;
 
-  bookings: Booking[] = [
-    { code: '#RES-8921', client: 'Sofía Castro', phone: '+57 312 456 7890', vehicle: 'Mazda CX-30', plate: 'NQ-4412', service: 'Premium Especial', date: '19/09/2026', timeRange: '15:00 - 16:00', relativeTime: 'En 30 minutos', bay: 'Bahía 3', status: 'confirmed', operator: null },
-    { code: '#RES-8920', client: 'Juan Felipe González', phone: '+57 300 123 9988', vehicle: 'Audi A4 Sedán', plate: 'KLL-302', service: 'Premium Automóvil', date: '19/09/2026', timeRange: '15:00 - 16:00', relativeTime: 'Finaliza en 15m', bay: 'Bahía 1', status: 'in_progress', operator: { initials: 'JD', name: 'Juan Díaz' } },
-    { code: '#RES-8919', client: 'Diego Herrera', phone: '+57 318 890 1122', vehicle: 'Toyota Hilux', plate: 'THX-780', service: 'Desinfección + Tapicería', date: '19/09/2026', timeRange: '15:00 - 16:00', relativeTime: 'En 1 hora', bay: 'Bahía 2', status: 'confirmed', operator: null },
-    { code: '#RES-8918', client: 'Mariana Gómez', phone: '+57 315 223 3445', vehicle: 'Renault Duster', plate: 'FRT-911', service: 'Lavado General + Polichado', date: '19/09/2026', timeRange: '15:00 - 16:00', relativeTime: 'Turno de la tarde', bay: 'Bahía 4', status: 'confirmed', operator: { initials: 'AM', name: 'Andrés Mora' } },
-    { code: '#RES-8917', client: 'Esneider Sánchez', phone: '+57 311 987 6543', vehicle: 'Chevrolet Tracker', plate: 'MKO-119', service: 'Básico — Camioneta', date: '19/09/2026', timeRange: '14:00 - 14:45', relativeTime: 'Completado con éxito', bay: 'Bahía 1', status: 'completed', operator: { initials: 'CR', name: 'Carlos Ruiz' } },
-    { code: '#RES-8916', client: 'Carolina Vega', phone: '+57 320 776 2200', vehicle: 'Kia Sportage', plate: 'BHY-209', service: 'Combo Completo SUV', date: '19/09/2026', timeRange: '13:30 - 15:00', relativeTime: 'Cancelada por cliente', bay: '—', status: 'cancelled', operator: null },
-    { code: '#RES-8915', client: 'Laura Ramírez', phone: '+57 301 445 7788', vehicle: 'Nissan Sentra', plate: 'GHT-556', service: 'Lavado Básico', date: '19/09/2026', timeRange: '12:00 - 12:40', relativeTime: 'Completado con éxito', bay: 'Bahía 2', status: 'completed', operator: { initials: 'JD', name: 'Juan Díaz' } },
-    { code: '#RES-8914', client: 'Cristian Peña', phone: '+57 314 998 0021', vehicle: 'Ford Explorer', plate: 'YTR-330', service: 'Detallado Interior', date: '19/09/2026', timeRange: '11:30 - 13:00', relativeTime: 'Completado con éxito', bay: 'Bahía 3', status: 'completed', operator: { initials: 'MG', name: 'Mateo Gómez' } },
-    { code: '#RES-8913', client: 'Valentina Ríos', phone: '+57 302 667 4410', vehicle: 'Chevrolet Spark', plate: 'LMK-118', service: 'Encerado', date: '19/09/2026', timeRange: '17:00 - 17:40', relativeTime: 'En 2 horas', bay: 'Bahía 1', status: 'confirmed', operator: null },
-    { code: '#RES-8912', client: 'Andrés Torres', phone: '+57 317 220 6690', vehicle: 'Mazda BT-50', plate: 'PQR-902', service: 'Combo Completo Camioneta', date: '19/09/2026', timeRange: '16:30 - 18:00', relativeTime: 'En 1.5 horas', bay: 'Bahía 4', status: 'confirmed', operator: { initials: 'AM', name: 'Andrés Mora' } },
-    { code: '#RES-8911', client: 'Natalia Cárdenas', phone: '+57 313 556 8890', vehicle: 'Renault Logan', plate: 'DFT-247', service: 'Lavado Básico', date: '18/09/2026', timeRange: '10:00 - 10:40', relativeTime: 'Completado con éxito', bay: 'Bahía 2', status: 'completed', operator: { initials: 'CR', name: 'Carlos Ruiz' } },
-    { code: '#RES-8910', client: 'Camilo Reyes', phone: '+57 316 774 0091', vehicle: 'Jeep Renegade', plate: 'WQX-115', service: 'Premium Automóvil', date: '18/09/2026', timeRange: '09:00 - 10:00', relativeTime: 'Cancelada por lluvia', bay: '—', status: 'cancelled', operator: null },
-  ];
+  constructor(
+    private store: ReservationsStore,
+    private operators: OperatorsStore,
+    private schedule: ScheduleStore,
+    private catalog: CatalogStore,
+    private dialog: MatDialog,
+    private feedback: FeedbackService,
+  ) {}
 
-  constructor(private dialog: MatDialog) {}
+  /* ---------- datos ---------- */
+
+  get bookings(): Booking[] { return this.store.bookings(); }
+
+  get today(): string { return this.store.today; }
 
   // nombres para el filtro "Todos los operarios"
   get operatorNames(): string[] {
-    return OPERATOR_POOL.map(o => o.name);
+    return this.operators.operators().map(o => o.name);
   }
 
-  // aplica búsqueda + filtros de estado/operario sobre el listado completo
+  // etiqueta relativa de la fila: Hoy / Mañana / fecha
+  dayLabel(date: string): string {
+    if (date === this.today) return 'Hoy';
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    if (date === tomorrow.toISOString().slice(0, 10)) return 'Mañana';
+    return formatDate(date);
+  }
+
+  timeRangeLabel(booking: Booking): string {
+    return formatTimeRange(booking.time, booking.durationMin);
+  }
+
+  // aplica búsqueda + filtros de estado/operario/fecha sobre el listado completo
   get filteredBookings(): Booking[] {
     const term = this.searchTerm.trim().toLowerCase();
 
     return this.bookings.filter(b => {
       const matchesSearch = !term
         || b.client.toLowerCase().includes(term)
-        || b.plate.toLowerCase().includes(term);
+        || b.plate.toLowerCase().includes(term)
+        || b.code.toLowerCase().includes(term);
 
       const matchesStatus = !this.statusFilter || b.status === this.statusFilter;
       const matchesOperator = !this.operatorFilter || b.operator?.name === this.operatorFilter;
+      const matchesDate = !this.selectedDate || b.date === this.selectedDate;
 
-      return matchesSearch && matchesStatus && matchesOperator;
+      return matchesSearch && matchesStatus && matchesOperator && matchesDate;
     });
+  }
+
+  get hasActiveFilters(): boolean {
+    return !!this.searchTerm || !!this.statusFilter || !!this.operatorFilter || !!this.selectedDate;
   }
 
   get totalPages(): number {
     return Math.max(1, Math.ceil(this.filteredBookings.length / this.pageSize));
   }
 
-  // ej: totalPages = 3 -> [1, 2, 3], para pintar los botones de paginación
   get pageNumbers(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
@@ -114,13 +119,14 @@ export class ReservationsComponent {
     return Math.min(this.currentPage * this.pageSize, this.filteredBookings.length);
   }
 
-  // stats de las 4 tarjetas de arriba, calculadas sobre el listado completo del día
+  // stats de las 4 tarjetas, calculadas sobre las reservas de HOY
   get stats() {
+    const todayBookings = this.store.byDate(this.today);
     return {
-      total: this.bookings.length,
-      confirmedInProgress: this.bookings.filter(b => b.status === 'confirmed' || b.status === 'in_progress').length,
-      unassigned: this.bookings.filter(b => !b.operator && b.status !== 'cancelled' && b.status !== 'completed').length,
-      cancelled: this.bookings.filter(b => b.status === 'cancelled').length,
+      total: todayBookings.length,
+      confirmedInProgress: todayBookings.filter(b => b.status === 'confirmed' || b.status === 'in_progress').length,
+      unassigned: todayBookings.filter(b => !b.operator && b.status !== 'cancelled' && b.status !== 'completed').length,
+      cancelled: todayBookings.filter(b => b.status === 'cancelled').length,
     };
   }
 
@@ -129,14 +135,135 @@ export class ReservationsComponent {
     this.currentPage = page;
   }
 
+  selectToday(): void {
+    this.selectedDate = this.today;
+    this.currentPage = 1;
+  }
+
   clearFilters(): void {
     this.searchTerm = '';
     this.statusFilter = '';
     this.operatorFilter = '';
+    this.selectedDate = '';
     this.currentPage = 1;
   }
 
-  // abre el modal para elegir el operario de esta reserva
+  /* ---------- acciones ---------- */
+
+  openCreate(): void {
+    const data: BookingModalData = {
+      bays: this.schedule.bays()
+        .filter(b => b.status === 'active')
+        .map(b => ({ id: b.id, name: b.name })),
+      operators: this.operators.availableOperators().map(o => ({ id: o.id, name: o.name, initials: o.initials })),
+      services: this.catalog.services().map(s => ({ id: s.id, name: s.name, durationMin: s.durationMin })),
+    };
+
+    const dialogRef = this.dialog.open(BookingModal, { panelClass: 'custom-dialog', data });
+
+    dialogRef.afterClosed().subscribe((result: BookingModalResult | null) => {
+      if (!result) return;
+      const created = this.store.addBooking(result);
+      this.feedback.success(
+        'ADMIN_RESERVATIONS.FEEDBACK.CREATED_TITLE',
+        'ADMIN_RESERVATIONS.FEEDBACK.CREATED_MESSAGE',
+        { messageParams: { code: created.code } }
+      );
+    });
+  }
+
+  openEdit(booking: Booking): void {
+    const data: BookingModalData = {
+      booking,
+      bays: this.schedule.bays()
+        .filter(b => b.status === 'active')
+        .map(b => ({ id: b.id, name: b.name })),
+      operators: this.operators.availableOperators().map(o => ({ id: o.id, name: o.name, initials: o.initials })),
+      services: this.catalog.services().map(s => ({ id: s.id, name: s.name, durationMin: s.durationMin })),
+    };
+
+    const dialogRef = this.dialog.open(BookingModal, { panelClass: 'custom-dialog', data });
+
+    dialogRef.afterClosed().subscribe((result: BookingModalResult | null) => {
+      if (!result) return;
+      this.store.updateBooking(booking.id, result);
+      this.feedback.success(
+        'ADMIN_RESERVATIONS.FEEDBACK.UPDATED_TITLE',
+        'ADMIN_RESERVATIONS.FEEDBACK.UPDATED_MESSAGE',
+        { messageParams: { code: booking.code } }
+      );
+    });
+  }
+
+  openDetail(booking: Booking): void {
+    const dialogRef = this.dialog.open(BookingDetailModal, {
+      panelClass: 'custom-dialog',
+      data: booking,
+    });
+
+    dialogRef.afterClosed().subscribe((result: BookingDetailResult | null) => {
+      if (!result) return;
+
+      if (result.action === 'status' && result.status) {
+        this.changeStatus(booking, result.status);
+      } else if (result.action === 'assign') {
+        this.openAssignModal(booking);
+      } else if (result.action === 'edit') {
+        this.openEdit(booking);
+      }
+    });
+  }
+
+  // el cambio de estado importante (completar / cancelar) pide confirmación
+  changeStatus(booking: Booking, status: BookingStatus): void {
+    const finishing = status === 'completed' || status === 'cancelled';
+
+    const confirm: ConfirmModalData = {
+      title: finishing ? `ADMIN_RESERVATIONS.FEEDBACK.${status.toUpperCase()}_TITLE` : 'ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
+      message: finishing ? `ADMIN_RESERVATIONS.FEEDBACK.${status.toUpperCase()}_CONFIRM` : 'ADMIN_RESERVATIONS.FEEDBACK.STATUS_CONFIRM',
+      messageParams: { code: booking.code },
+      confirmText: 'COMMON.ACCEPT',
+      cancelText: 'COMMON.CANCEL',
+      danger: status === 'cancelled',
+    };
+
+    const confirmRef = this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data: confirm });
+    confirmRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
+      this.store.setStatus(booking.id, status);
+      this.feedback.success(
+        'ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
+        `ADMIN_RESERVATIONS.FEEDBACK.STATUS_${status.toUpperCase()}_MESSAGE`,
+        { messageParams: { code: booking.code } }
+      );
+    });
+  }
+
+  // operarios disponibles para el modal de asignación, desde el store
+  private assignableOperators(): AvailableOperator[] {
+    return this.operators.availableOperators().map(o => {
+      let availability: AvailableOperator['availability'] = 'available';
+      let availabilityNote: string | undefined;
+
+      if (o.status === 'in_service') {
+        availability = 'busy';
+        availabilityNote = 'ASSIGN_OPERATOR_MODAL.BUSY_NOTE';
+      } else if (o.status === 'medical_leave') {
+        availability = 'unavailable';
+      }
+
+      return {
+        id: o.id,
+        initials: o.initials,
+        name: o.name,
+        specialty: o.specialty,
+        rating: o.rating,
+        availability,
+        availabilityNote,
+      };
+    });
+  }
+
   openAssignModal(booking: Booking): void {
     const modalData: AssignOperatorModalData = {
       bookingCode: booking.code,
@@ -144,9 +271,9 @@ export class ReservationsComponent {
       vehicle: booking.vehicle,
       plate: booking.plate,
       service: booking.service,
-      timeLabel: `Hoy, ${booking.timeRange}`,
-      bay: booking.bay,
-      operators: OPERATOR_POOL,
+      timeLabel: `${this.dayLabel(booking.date)}, ${this.timeRangeLabel(booking)}`,
+      bay: booking.bay ?? '—',
+      operators: this.assignableOperators(),
     };
 
     const dialogRef = this.dialog.open(AssignOperatorModal, {
@@ -156,11 +283,50 @@ export class ReservationsComponent {
 
     dialogRef.afterClosed().subscribe((result: AssignOperatorResult | null) => {
       if (!result) return;
-
-      const chosen = OPERATOR_POOL.find(o => o.id === result.operatorId);
-      if (!chosen) return;
-
-      booking.operator = { initials: chosen.initials, name: chosen.name };
+      this.store.assignOperator(booking.id, result.operatorId);
+      this.feedback.success(
+        'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE',
+        'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
+        { messageParams: { code: booking.code } }
+      );
     });
+  }
+
+  // exporta la lista que el admin está viendo (con los filtros aplicados)
+  exportData(): void {
+    const columns: ExportColumn[] = [
+      { key: 'code', labelKey: 'BOOKING_DETAIL.CODE' },
+      { key: 'client', labelKey: 'ADMIN_RESERVATIONS.TABLE.CLIENT' },
+      { key: 'vehicle', labelKey: 'BOOKING_DETAIL.VEHICLE' },
+      { key: 'plate', labelKey: 'BOOKING_DETAIL.PLATE' },
+      { key: 'service', labelKey: 'BOOKING_DETAIL.SERVICE' },
+      { key: 'date', labelKey: 'BOOKING_DETAIL.DATE' },
+      { key: 'time', labelKey: 'BOOKING_DETAIL.TIME' },
+      { key: 'bay', labelKey: 'BOOKING_DETAIL.BAY' },
+      { key: 'status', labelKey: 'ADMIN_RESERVATIONS.TABLE.STATUS' },
+    ];
+
+    const rows = this.filteredBookings.map(b => ({
+      code: b.code,
+      client: b.client,
+      vehicle: b.vehicle,
+      plate: b.plate,
+      service: b.service,
+      date: formatDate(b.date),
+      time: this.timeRangeLabel(b),
+      bay: b.bay ?? '—',
+      status: b.status,
+    }));
+
+    const data: ExportDataModalData = {
+      titleKey: 'ADMIN_PAGES.RESERVATIONS.TITLE',
+      subtitleKey: 'ADMIN_RESERVATIONS.EXPORT',
+      fileName: 'reservas',
+      documentTitle: 'Reservas',
+      columns,
+      rows,
+    };
+
+    this.dialog.open(ExportDataModal, { panelClass: 'custom-dialog', data });
   }
 }
