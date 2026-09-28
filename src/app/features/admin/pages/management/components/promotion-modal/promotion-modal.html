@@ -1,0 +1,121 @@
+<div class="form-dialog form-dialog--wide">
+
+  <div class="form-dialog__header">
+    <div>
+      <h2>{{ (editing ? 'PROMOTION_MODAL.TITLE_EDIT' : 'PROMOTION_MODAL.TITLE_CREATE') | translate }}</h2>
+      <p>{{ 'PROMOTION_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+    <button type="button" class="form-dialog__close" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="form-dialog__body">
+
+    <div class="form-dialog__grid-2">
+      <label class="form-field" [class.form-field--invalid]="nameInvalid">
+        <span>{{ 'PROMOTION_MODAL.NAME_LABEL' | translate }} *</span>
+        <input type="text" [(ngModel)]="name" maxlength="50" [placeholder]="'PROMOTION_MODAL.NAME_PLACEHOLDER' | translate">
+        @if (nameInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_NAME' | translate }}</span>
+        }
+      </label>
+
+      <label class="form-field" [class.form-field--invalid]="couponInvalid">
+        <span>{{ 'PROMOTION_MODAL.COUPON_LABEL' | translate }} *</span>
+        <input type="text" [(ngModel)]="couponCode" maxlength="20" [placeholder]="'PROMOTION_MODAL.COUPON_PLACEHOLDER' | translate">
+        @if (couponInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_COUPON' | translate }}</span>
+        }
+      </label>
+    </div>
+
+    <label class="form-field" [class.form-field--invalid]="descriptionInvalid">
+      <span>{{ 'PROMOTION_MODAL.DESCRIPTION_LABEL' | translate }} *</span>
+      <textarea rows="2" [(ngModel)]="description" maxlength="160" [placeholder]="'PROMOTION_MODAL.DESCRIPTION_PLACEHOLDER' | translate"></textarea>
+      @if (descriptionInvalid) {
+        <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_DESCRIPTION' | translate }}</span>
+      }
+    </label>
+
+    <div class="form-dialog__grid-2">
+      <label class="form-field" [class.form-field--invalid]="priceInvalid">
+        <span>{{ 'PROMOTION_MODAL.PRICE_LABEL' | translate }} *</span>
+        <input type="number" min="0" [(ngModel)]="price" [placeholder]="'PROMOTION_MODAL.PRICE_PLACEHOLDER' | translate">
+        @if (priceInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_PRICE' | translate }}</span>
+        }
+      </label>
+
+      <label class="form-field" [class.form-field--invalid]="durationInvalid">
+        <span>{{ 'PROMOTION_MODAL.DURATION_LABEL' | translate }} *</span>
+        <input type="number" min="15" max="480" step="15" [(ngModel)]="durationMin">
+        @if (durationInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_DURATION' | translate }}</span>
+        }
+      </label>
+    </div>
+
+    <div class="form-dialog__grid-3">
+      <label class="form-field">
+        <span>{{ 'PROMOTION_MODAL.ICON_LABEL' | translate }}</span>
+        <select [(ngModel)]="icon">
+          @for (opt of iconOptions; track opt) {
+            <option [ngValue]="opt">{{ opt }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="form-field">
+        <span>{{ 'PROMOTION_MODAL.STATUS_LABEL' | translate }}</span>
+        <select [(ngModel)]="status">
+          <option value="active">{{ 'PROMOTION_MODAL.STATUS_OPTIONS.active' | translate }}</option>
+          <option value="scheduled">{{ 'PROMOTION_MODAL.STATUS_OPTIONS.scheduled' | translate }}</option>
+          <option value="inactive">{{ 'PROMOTION_MODAL.STATUS_OPTIONS.inactive' | translate }}</option>
+        </select>
+      </label>
+
+      <label class="form-field">
+        <span>{{ 'PROMOTION_MODAL.START_DATE_LABEL' | translate }}</span>
+        <input type="date" [(ngModel)]="startDate">
+      </label>
+    </div>
+
+    <div class="promo-option">
+      <label class="promo-option__row">
+        <input type="checkbox" [(ngModel)]="featured">
+        <span>{{ 'PROMOTION_MODAL.FEATURED_LABEL' | translate }}</span>
+      </label>
+    </div>
+
+    <div class="features-editor">
+      <div class="features-editor__head">
+        <span>{{ 'PROMOTION_MODAL.FEATURES_LABEL' | translate }}</span>
+        <button type="button" class="features-editor__add" (click)="addFeature()">
+          <mat-icon>add</mat-icon>
+          {{ 'PROMOTION_MODAL.FEATURES_ADD' | translate }}
+        </button>
+      </div>
+
+      @for (f of features; track trackByIndex($index)) {
+        <div class="features-editor__item">
+          <input type="text" [(ngModel)]="features[$index]" maxlength="80" [placeholder]="'PROMOTION_MODAL.FEATURES_PLACEHOLDER' | translate">
+          <button type="button" class="features-editor__remove" (click)="removeFeature($index)" aria-label="remove">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      } @empty {
+        <p class="features-editor__empty">{{ 'PROMOTION_MODAL.FEATURES_EMPTY' | translate }}</p>
+      }
+    </div>
+
+  </div>
+
+  <div class="form-dialog__actions">
+    <button class="form-dialog__cancel" type="button" (click)="close()">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button class="form-dialog__submit" type="button" (click)="save()">
+      {{ 'COMMON.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>

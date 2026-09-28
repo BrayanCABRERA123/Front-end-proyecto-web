@@ -1,0 +1,89 @@
+@use '../../../../../../../styles/mixins' as *;
+@use '../../../../../../shared/dialogs/dialog-base';
+
+.promo-option {
+  &__row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    @include body-text;
+    color: var(--text);
+
+    input[type="checkbox"] {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.features-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span { color: var(--text-secondary); }
+  }
+
+  &__add {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: $fw-semibold;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    mat-icon { font-size: 14px; width: 14px; height: 14px; }
+
+    &:hover { background: var(--primary-soft); }
+  }
+
+  &__item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    input {
+      flex: 1;
+      font-family: $font-family-base;
+      font-size: $fs-body;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 12px;
+
+      &:focus { outline: 2px solid var(--primary-soft); border-color: var(--primary); }
+    }
+  }
+
+  &__remove {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--error);
+    cursor: pointer;
+
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+
+    &:hover { background: var(--error-soft); }
+  }
+
+  &__empty { @include caption-text; color: var(--text-muted); margin: 0; }
+}
