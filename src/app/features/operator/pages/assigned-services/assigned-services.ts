@@ -54,6 +54,7 @@ export class AssignedServicesComponent {
       dateTime: '15/07/2026 - 10:00 AM',
       vehicle: 'Mazda 3 - ABC123',
       client: 'Juan Pérez',
+      phone: '+57 310 456 7812',
       status: 'Pendiente',
       statusColor: 'pending',
       paymentMethod: 'Efectivo'
@@ -66,6 +67,7 @@ export class AssignedServicesComponent {
       dateTime: '15/07/2026 - 11:30 AM',
       vehicle: 'Toyota Corolla - DEF456',
       client: 'María García',
+      phone: '+57 315 208 3391',
       status: 'En progreso',
       statusColor: 'progress',
       paymentMethod: 'Tarjeta'
@@ -78,6 +80,7 @@ export class AssignedServicesComponent {
       dateTime: '14/07/2026 - 03:00 PM',
       vehicle: 'Ford F-150 - GHI789',
       client: 'Empresa XYZ',
+      phone: '+57 301 774 1250',
       status: 'Finalizado',
       statusColor: 'completed',
       paymentMethod: 'PSE'
@@ -90,6 +93,7 @@ export class AssignedServicesComponent {
       dateTime: '16/07/2026 - 09:00 AM',
       vehicle: 'Honda Civic - JKL012',
       client: 'Ana López',
+      phone: '+57 320 569 0487',
       status: 'Pendiente',
       statusColor: 'pending',
       paymentMethod: 'Nequi'
@@ -102,6 +106,7 @@ export class AssignedServicesComponent {
       dateTime: '16/07/2026 - 02:00 PM',
       vehicle: 'Nissan Sentra - MNO345',
       client: 'Carlos Ruiz',
+      phone: '+57 318 932 6614',
       status: 'En progreso',
       statusColor: 'progress',
       paymentMethod: 'Efectivo'

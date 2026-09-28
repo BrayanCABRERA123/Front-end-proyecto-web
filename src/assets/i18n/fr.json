@@ -573,7 +573,20 @@
       "REPORT": "Signaler la progression",
       "FINISH": "Terminer le service",
       "EXTRA_TITLE": "Options supplémentaires",
-      "CONTACT": "Contacter le client"
+      "CONTACT": "Contacter le client",
+      "START_TITLE": "Démarrer ce service ?",
+      "START_MESSAGE": "Le service {{code}} passera en cours.",
+      "START_CONFIRM": "Démarrer",
+      "STARTED_TITLE": "Service démarré !",
+      "STARTED_MESSAGE": "Le service {{code}} est maintenant en cours.",
+      "REPORT_TITLE": "Signaler la progression ?",
+      "REPORT_MESSAGE": "Le client recevra une mise à jour du service {{code}}.",
+      "REPORT_CONFIRM": "Envoyer",
+      "REPORTED_TITLE": "Progression signalée !",
+      "REPORTED_MESSAGE": "Le client recevra la mise à jour du service {{code}}.",
+      "FINISHED_TITLE": "Service terminé !",
+      "FINISHED_MESSAGE": "Le service {{code}} a été marqué comme terminé.",
+      "CONTACT_MESSAGE": "Contactez le client par l'un de ces moyens."
     }
   },
   "OPERATOR_HOME": {
@@ -668,7 +681,10 @@
   "QUALIFICATION_CARD": {
     "DURATION": "Durée",
     "LOCATION": "Emplacement",
-    "ID": "ID"
+    "ID": "ID",
+    "DETAIL_TITLE": "Détail de l'évaluation",
+    "DETAIL_MESSAGE": "Voici ce que le client a pensé de votre service.",
+    "COMMENT": "Commentaire"
   },
   "QUALIFICATION_STATS": {
     "AVG_RATING": "Note moyenne",

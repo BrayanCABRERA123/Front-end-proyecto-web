@@ -17,10 +17,6 @@
 
     <div class="detail-col">
       <div class="detail-item">
-        <span class="detail-label">ID</span>
-        <span class="detail-value">{{ service.id }}</span>
-      </div>
-      <div class="detail-item">
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.CLIENT' | translate }}</span>
         <span class="detail-value">{{ service.client }}</span>
       </div>
@@ -42,7 +38,7 @@
         <span class="detail-value bold">{{ service.dateTime }}</span>
       </div>
       <div class="detail-item">
-        <mat-icon class="detail-icon">calendar_today</mat-icon>
+        <mat-icon class="detail-icon">payments</mat-icon>
         <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.PAYMENT_METHOD' | translate }}</span>
         <span class="detail-value bold">{{ service.paymentMethod }}</span>
       </div>
@@ -55,27 +51,34 @@
     <span class="map-label">{{ 'ASSIGNED_SERVICES.DETAIL.MAP_LABEL' | translate }}</span>
   </div>
 
-  <div class="actions-section">
-    <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.PROGRESS_TITLE' | translate }}</p>
-    <div class="action-buttons">
-      <button class="btn-start">
-        <mat-icon>play_circle_outline</mat-icon>
-        {{ 'ASSIGNED_SERVICES.DETAIL.START' | translate }}
-      </button>
-      <button class="btn-report">
-        <mat-icon>refresh</mat-icon>
-        {{ 'ASSIGNED_SERVICES.DETAIL.REPORT' | translate }}
-      </button>
-      <button class="btn-finish">
-        <mat-icon>flag</mat-icon>
-        {{ 'ASSIGNED_SERVICES.DETAIL.FINISH' | translate }}
-      </button>
+  <!-- acciones según el estado: pendiente -> iniciar; en progreso -> reportar o finalizar -->
+  @if (service.statusColor !== 'completed') {
+    <div class="actions-section">
+      <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.PROGRESS_TITLE' | translate }}</p>
+      <div class="action-buttons">
+        @if (service.statusColor === 'pending') {
+          <button class="btn-start" (click)="startService()">
+            <mat-icon>play_circle_outline</mat-icon>
+            {{ 'ASSIGNED_SERVICES.DETAIL.START' | translate }}
+          </button>
+        }
+        @if (service.statusColor === 'progress') {
+          <button class="btn-report" (click)="reportProgress()">
+            <mat-icon>refresh</mat-icon>
+            {{ 'ASSIGNED_SERVICES.DETAIL.REPORT' | translate }}
+          </button>
+          <button class="btn-finish" (click)="finishService()">
+            <mat-icon>flag</mat-icon>
+            {{ 'ASSIGNED_SERVICES.DETAIL.FINISH' | translate }}
+          </button>
+        }
+      </div>
     </div>
-  </div>
+  }
 
   <div class="extra-section">
     <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.EXTRA_TITLE' | translate }}</p>
-    <button class="btn-contact">
+    <button class="btn-contact" (click)="contactClient()">
       <mat-icon>phone</mat-icon>
       {{ 'ASSIGNED_SERVICES.DETAIL.CONTACT' | translate }}
     </button>

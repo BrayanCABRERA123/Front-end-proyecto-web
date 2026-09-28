@@ -61,12 +61,6 @@ td {
   vertical-align: middle;
 }
 
-// columna ID en negrita
-.td-id {
-  font-weight: $fw-bold;
-  color: var(--text);
-}
-
 // columna ubicación con texto cortado
 .td-location {
   max-width: 150px;

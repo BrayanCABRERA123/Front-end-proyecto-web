@@ -89,9 +89,29 @@ export class HomeComponent {
     this.router.navigateByUrl('/operator/schedule');
   }
 
+  // pide confirmación antes de iniciar (igual que al finalizar)
   startService(r: Reservation) {
     if (r.status !== 'pendiente') return;
-    r.status = 'en_progreso';
+
+    const data: ConfirmModalData = {
+      title: 'ASSIGNED_SERVICES.DETAIL.START_TITLE',
+      message: 'ASSIGNED_SERVICES.DETAIL.START_MESSAGE',
+      messageParams: { code: r.code },
+      confirmText: 'ASSIGNED_SERVICES.DETAIL.START_CONFIRM',
+      cancelText: 'COMMON.CANCEL',
+      danger: false
+    };
+
+    const dialogRef = this.dialog.open(ConfirmModal, {
+      panelClass: 'custom-dialog',
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
+      r.status = 'en_progreso';
+      this.cdr.detectChanges();
+    });
   }
 
   requestFinish(r: Reservation) {
@@ -124,7 +144,6 @@ export class HomeComponent {
     dialogRef.afterClosed().subscribe(action => {
       if (action === 'start') {
         this.startService(r);
-        this.cdr.detectChanges();
       } else if (action === 'finish') {
         this.requestFinish(r);
       }

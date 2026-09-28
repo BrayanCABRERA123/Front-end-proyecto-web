@@ -573,7 +573,20 @@
       "REPORT": "Report progress",
       "FINISH": "Finish Service",
       "EXTRA_TITLE": "Additional options",
-      "CONTACT": "Contact client"
+      "CONTACT": "Contact client",
+      "START_TITLE": "Start this service?",
+      "START_MESSAGE": "Service {{code}} will be marked as in progress.",
+      "START_CONFIRM": "Start",
+      "STARTED_TITLE": "Service started!",
+      "STARTED_MESSAGE": "Service {{code}} is now in progress.",
+      "REPORT_TITLE": "Report progress?",
+      "REPORT_MESSAGE": "The client will receive an update about service {{code}}.",
+      "REPORT_CONFIRM": "Send",
+      "REPORTED_TITLE": "Progress reported!",
+      "REPORTED_MESSAGE": "The client will receive the update about service {{code}}.",
+      "FINISHED_TITLE": "Service finished!",
+      "FINISHED_MESSAGE": "Service {{code}} was marked as completed.",
+      "CONTACT_MESSAGE": "Reach the client through any of these channels."
     }
   },
   "OPERATOR_HOME": {
@@ -668,7 +681,10 @@
   "QUALIFICATION_CARD": {
     "DURATION": "Duration",
     "LOCATION": "Location",
-    "ID": "ID"
+    "ID": "ID",
+    "DETAIL_TITLE": "Rating details",
+    "DETAIL_MESSAGE": "This is what the client said about your service.",
+    "COMMENT": "Comment"
   },
   "QUALIFICATION_STATS": {
     "AVG_RATING": "Average rating",

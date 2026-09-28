@@ -562,7 +562,7 @@
     },
     "DETAIL": {
       "TITLE": "Información del servicio",
-      "CLIENT": "Client:",
+      "CLIENT": "Cliente:",
       "ADDRESS": "Dirección:",
       "SERVICE_TYPE": "Tipo de servicio:",
       "SCHEDULED_TIME": "Hora programada:",
@@ -573,7 +573,20 @@
       "REPORT": "Reportar progreso",
       "FINISH": "Finalizar Servicio",
       "EXTRA_TITLE": "Opciones adicionales",
-      "CONTACT": "Contactar al client"
+      "CONTACT": "Contactar al cliente",
+      "START_TITLE": "¿Iniciar este servicio?",
+      "START_MESSAGE": "El servicio {{code}} pasará a estar en progreso.",
+      "START_CONFIRM": "Iniciar",
+      "STARTED_TITLE": "¡Servicio iniciado!",
+      "STARTED_MESSAGE": "El servicio {{code}} ya está en progreso.",
+      "REPORT_TITLE": "¿Reportar progreso?",
+      "REPORT_MESSAGE": "Se le enviará al cliente una actualización del servicio {{code}}.",
+      "REPORT_CONFIRM": "Enviar",
+      "REPORTED_TITLE": "¡Progreso reportado!",
+      "REPORTED_MESSAGE": "El cliente recibirá la actualización del servicio {{code}}.",
+      "FINISHED_TITLE": "¡Servicio finalizado!",
+      "FINISHED_MESSAGE": "El servicio {{code}} quedó marcado como completado.",
+      "CONTACT_MESSAGE": "Comunícate con el cliente por cualquiera de estos medios."
     }
   },
   "OPERATOR_HOME": {
@@ -668,7 +681,10 @@
   "QUALIFICATION_CARD": {
     "DURATION": "Duración",
     "LOCATION": "Ubicación",
-    "ID": "ID"
+    "ID": "ID",
+    "DETAIL_TITLE": "Detalle de la calificación",
+    "DETAIL_MESSAGE": "Esto es lo que opinó el cliente sobre tu servicio.",
+    "COMMENT": "Comentario"
   },
   "QUALIFICATION_STATS": {
     "AVG_RATING": "Calificación promedio",
