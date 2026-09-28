@@ -4,34 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
-// info fiscal/corporativa del negocio (mockup img 1).
-// datos de ejemplo: reemplazar por los reales de la empresa antes de producción
-interface BusinessData {
-  legalName: string;
-  taxId: string;
-  businessType: string;
-  foundationDate: string;
-  legalRep: string;
-  legalRepDoc: string;
+import { BusinessStore } from '../../../../services/business-store';
+import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
+import { BusinessData } from '../../../../models/admin.models';
 
-  address: string;
-  phone: string;
-  whatsapp: string;
-  email: string;
-  website: string;
+// campos obligatorios del formulario; cada uno tiene su mensaje de error
+const REQUIRED_FIELDS: Record<keyof Pick<BusinessData, 'legalName' | 'taxId' | 'address' | 'phone'>, string> = {
+  legalName: 'BUSINESS_DATA.VALIDATION.LEGAL_NAME',
+  taxId: 'BUSINESS_DATA.VALIDATION.TAX_ID',
+  address: 'BUSINESS_DATA.VALIDATION.ADDRESS',
+  phone: 'BUSINESS_DATA.VALIDATION.PHONE',
+};
 
-  taxRegime: string;
-  ciiuActivity: string;
-  dianResolution: string;
-  invoicePrefix: string;
-  invoiceRange: string;
-  electronicInvoicing: boolean;
-
-  instagram: string;
-  facebook: string;
-  supportLine: string;
-  serviceHours: string;
-}
+// los correos y teléfonos se revisan con una regla sencilla de leer
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_RE = /^\+?[\d\s()-]{7,20}$/;
 
 @Component({
   selector: 'app-business-data',
@@ -42,41 +29,68 @@ interface BusinessData {
 })
 export class BusinessDataComponent {
 
-  data: BusinessData = {
-    legalName: 'Express Car Wash S.A.S.',
-    taxId: '901.482.930-1',
-    businessType: 'Lavado y Detailing Automotriz',
-    foundationDate: '2019-03-15',
-    legalRep: 'Laura Méndez Ríos',
-    legalRepDoc: 'CC 1.032.456.789',
+  private saved: BusinessData;
 
-    address: 'Calle 127 #19A-48, Bogotá, Colombia',
-    phone: '+57 312 490 8821',
-    whatsapp: '+57 312 490 8821',
-    email: 'contacto@expresscarwash.co',
-    website: 'www.expresscarwash.co',
+  // los campos mutan una copia; solo se confirman al guardar
+  data: BusinessData;
 
-    taxRegime: 'Responsable de IVA 19% · Régimen Ordinario Común',
-    ciiuActivity: '4520 - Mantenimiento y reparación de vehículos',
-    dianResolution: 'No. 18764002345678',
-    invoicePrefix: 'LV',
-    invoiceRange: '4500-5500',
-    electronicInvoicing: true,
+  submitted = false;
 
-    instagram: '@expresscarwash_oficial',
-    facebook: 'Express Car Wash S.A.S.',
-    supportLine: '018000-123-456',
-    serviceHours: 'Lunes a sábado 7:00 AM - 6:30 PM'
-  };
+  constructor(
+    private store: BusinessStore,
+    private feedback: FeedbackService,
+  ) {
+    this.saved = this.store.business();
+    this.data = { ...this.saved };
+  }
 
-  // snapshot para poder "Descartar" y volver a como estaba
-  private savedData: BusinessData = { ...this.data };
+  isInvalid(key: keyof BusinessData): boolean {
+    return this.submitted && this.errorFor(key) !== '';
+  }
+
+  errorFor(key: keyof BusinessData): string {
+    if (!this.submitted) return '';
+
+    const value = String(this.data[key] ?? '').trim();
+
+    if (key === 'legalName' || key === 'taxId' || key === 'address' || key === 'phone') {
+      if (!value) return REQUIRED_FIELDS[key];
+    }
+    if (key === 'email' && value && !EMAIL_RE.test(value)) return 'BUSINESS_DATA.VALIDATION.EMAIL';
+    if (key === 'phone' && value && !PHONE_RE.test(value)) return 'BUSINESS_DATA.VALIDATION.PHONE';
+
+    return '';
+  }
+
+  /** el guardado se habilita solo cuando lo obligatorio está completo y bien escrito */
+  get canSave(): boolean {
+    const requiredOk = (Object.keys(REQUIRED_FIELDS) as (keyof BusinessData)[]).every(
+      k => String(this.data[k] ?? '').trim().length > 0
+    );
+    const emailOk = !this.data.email || EMAIL_RE.test(this.data.email);
+    const phoneOk = PHONE_RE.test(this.data.phone);
+    return requiredOk && emailOk && phoneOk;
+  }
 
   discard(): void {
-    this.data = { ...this.savedData };
+    this.data = { ...this.store.business() };
+    this.submitted = false;
+    this.feedback.info('BUSINESS_DATA.FEEDBACK.DISCARDED_TITLE', 'BUSINESS_DATA.FEEDBACK.DISCARDED_MESSAGE');
   }
 
   save(): void {
-    this.savedData = { ...this.data };
+    this.submitted = true;
+    if (!this.canSave) {
+      this.feedback.error('BUSINESS_DATA.FEEDBACK.INVALID_TITLE', 'BUSINESS_DATA.FEEDBACK.INVALID_MESSAGE');
+      return;
+    }
+
+    this.store.updateBusiness(this.data);
+    this.saved = { ...this.data };
+    this.feedback.success(
+      'BUSINESS_DATA.FEEDBACK.SAVED_TITLE',
+      'BUSINESS_DATA.FEEDBACK.SAVED_MESSAGE',
+      { details: [{ label: 'BUSINESS_DATA.GENERAL.LEGAL_NAME', value: this.data.legalName }] }
+    );
   }
 }

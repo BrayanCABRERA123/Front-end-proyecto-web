@@ -39,7 +39,7 @@
   &:hover { color: var(--text); }
 
   &--active {
-    color: var(--primary);
+    color: var(--primary-text, var(--primary));
     border-bottom-color: var(--primary);
   }
 }

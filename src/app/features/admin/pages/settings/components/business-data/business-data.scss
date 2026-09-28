@@ -129,24 +129,18 @@
 
     &:focus { outline: none; border-color: var(--primary); }
   }
-}
 
-.toggle-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-top: 4px;
+  &--invalid input { border-color: var(--error); }
 
-  strong { display: block; @include caption-text; color: var(--text); font-weight: $fw-semibold; }
-  .muted { display: block; margin-top: 2px; }
-}
+  &__error {
+    @include caption-text;
+    color: var(--error);
+    display: flex;
+    align-items: center;
+    gap: 4px;
 
-.switch-input {
-  width: 36px;
-  height: 20px;
-  accent-color: var(--primary);
-  cursor: pointer;
+    mat-icon { font-size: 14px; width: 14px; height: 14px; }
+  }
 }
 
 /* responsive */

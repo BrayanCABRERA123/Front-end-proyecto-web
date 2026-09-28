@@ -69,6 +69,15 @@
           </div>
         }
 
+        <div class="method-card__actions">
+          <button class="btn-icon" (click)="openEditMethod(m)" [attr.aria-label]="'COMMON.EDIT' | translate">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button class="btn-icon btn-icon--danger" (click)="deleteMethod(m)" [attr.aria-label]="'COMMON.DELETE' | translate">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
       </div>
     }
   </div>

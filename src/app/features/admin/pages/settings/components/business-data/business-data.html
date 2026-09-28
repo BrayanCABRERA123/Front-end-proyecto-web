@@ -30,14 +30,20 @@
         </div>
       </div>
 
-      <label class="field">
+      <label class="field" [class.field--invalid]="isInvalid('legalName')">
         <span>{{ 'BUSINESS_DATA.GENERAL.LEGAL_NAME' | translate }} *</span>
         <input type="text" [(ngModel)]="data.legalName">
+        @if (isInvalid('legalName')) {
+          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('legalName') | translate }}</span>
+        }
       </label>
 
-      <label class="field">
+      <label class="field" [class.field--invalid]="isInvalid('taxId')">
         <span>{{ 'BUSINESS_DATA.GENERAL.TAX_ID' | translate }} *</span>
         <input type="text" [(ngModel)]="data.taxId">
+        @if (isInvalid('taxId')) {
+          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('taxId') | translate }}</span>
+        }
       </label>
 
       <label class="field">
@@ -72,14 +78,20 @@
         </div>
       </div>
 
-      <label class="field">
+      <label class="field" [class.field--invalid]="isInvalid('address')">
         <span>{{ 'BUSINESS_DATA.CONTACT.ADDRESS' | translate }} *</span>
         <input type="text" [(ngModel)]="data.address">
+        @if (isInvalid('address')) {
+          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('address') | translate }}</span>
+        }
       </label>
 
-      <label class="field">
+      <label class="field" [class.field--invalid]="isInvalid('phone')">
         <span>{{ 'BUSINESS_DATA.CONTACT.PHONE' | translate }} *</span>
         <input type="text" [(ngModel)]="data.phone">
+        @if (isInvalid('phone')) {
+          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('phone') | translate }}</span>
+        }
       </label>
 
       <label class="field">
@@ -87,9 +99,12 @@
         <input type="text" [(ngModel)]="data.whatsapp">
       </label>
 
-      <label class="field">
+      <label class="field" [class.field--invalid]="isInvalid('email')">
         <span>{{ 'BUSINESS_DATA.CONTACT.EMAIL' | translate }}</span>
         <input type="email" [(ngModel)]="data.email">
+        @if (isInvalid('email')) {
+          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('email') | translate }}</span>
+        }
       </label>
 
       <label class="field">
@@ -133,14 +148,6 @@
           <input type="text" [(ngModel)]="data.invoiceRange">
         </label>
       </div>
-
-      <label class="toggle-row">
-        <div>
-          <strong>{{ 'BUSINESS_DATA.FISCAL.ELECTRONIC_INVOICING' | translate }}</strong>
-          <span class="muted">{{ 'BUSINESS_DATA.FISCAL.ELECTRONIC_INVOICING_DESC' | translate }}</span>
-        </div>
-        <input type="checkbox" [(ngModel)]="data.electronicInvoicing" class="switch-input">
-      </label>
     </div>
 
     <!-- canales oficiales -->

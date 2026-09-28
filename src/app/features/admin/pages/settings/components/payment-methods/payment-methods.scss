@@ -88,9 +88,9 @@
   background: var(--primary-soft);
   color: var(--primary);
 
-  &--nequi { background: #F3E6FF; color: #8A2BE2; }
-  &--daviplata { background: var(--error-soft); color: var(--error); }
-  &--bancolombia { background: #E6EFFF; color: #2B5FD9; }
+  // todos los medios se pintan con el color del tema (nada de azul/verde
+  // de identidad de marca cuando el tema es, por ejemplo, rosa)
+  &--nequi, &--bancolombia, &--daviplata { background: var(--primary-soft); color: var(--primary); }
   &--cash { background: var(--success-soft); color: var(--success); }
 }
 
@@ -207,6 +207,32 @@
   color: var(--text-secondary);
 
   mat-icon { font-size: 16px; width: 16px; height: 16px; margin-top: 1px; color: var(--primary); }
+}
+
+/* acciones de edición y borrado de un medio de pago */
+.method-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.btn-icon {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+
+  &:hover { background: var(--item-hover); color: var(--text); }
+  &--danger:hover { color: var(--error); border-color: var(--error); }
 }
 
 /* responsive */
