@@ -196,6 +196,16 @@
 
   label { @include caption-text; color: var(--text-secondary); }
 
+  &__readonly {
+    @include body-text;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--error);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin: 0;
+  }
+
   textarea {
     font-family: $font-family-base;
     font-size: $fs-body;

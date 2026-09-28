@@ -74,6 +74,16 @@
   }
 
   textarea { resize: vertical; }
+
+  &--invalid input { border-color: var(--error); }
+
+  &__error {
+    @include caption-text;
+    color: var(--error);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
 }
 
 .field-label {

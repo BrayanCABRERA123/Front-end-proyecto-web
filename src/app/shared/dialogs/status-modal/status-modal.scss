@@ -30,6 +30,13 @@
     color: var(--error);
   }
 
+  // los avisos informativos usan el gris de texto secundario para que no se
+  // confundan con una operación exitosa
+  &.info {
+    background: var(--item-bg);
+    color: var(--text-secondary);
+  }
+
   mat-icon {
     font-size: 36px;
     width: 36px;

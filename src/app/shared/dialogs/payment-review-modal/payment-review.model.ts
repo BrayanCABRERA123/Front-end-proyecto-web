@@ -20,6 +20,8 @@ export interface PaymentReviewData {
   amountDeclared: number;
   receiptDate: string; // "Hoy, 14:48 COT"
   bankAccount: string; // NIT/celular que aparece en el comprobante
+  /** motivo ya registrado, se muestra en modo lectura cuando el pago fue rechazado */
+  rejectionReason?: string;
 }
 
 export type PaymentReviewAction = 'approved' | 'rejected';

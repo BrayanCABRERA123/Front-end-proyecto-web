@@ -1,0 +1,50 @@
+<div class="export-dialog">
+
+  <div class="export-dialog__header">
+    <div>
+      <h2>{{ 'EXPORT_DATA.TITLE' | translate }}</h2>
+      <p>{{ data.titleKey | translate }} · {{ data.rows.length }} {{ 'EXPORT_DATA.ROWS' | translate }}</p>
+    </div>
+    <button type="button" class="export-dialog__close" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="export-dialog__body">
+    <p class="export-dialog__hint">
+      {{ 'EXPORT_DATA.HINT' | translate }}
+    </p>
+
+    <div class="export-options">
+      <button class="export-option" (click)="exportExcel()">
+        <mat-icon class="export-option__icon export-option__icon--excel">table_chart</mat-icon>
+        <div>
+          <strong>{{ 'EXPORT_DATA.EXCEL.TITLE' | translate }}</strong>
+          <span>{{ 'EXPORT_DATA.EXCEL.DESC' | translate }}</span>
+        </div>
+        <mat-icon class="export-option__arrow">chevron_right</mat-icon>
+      </button>
+
+      <button class="export-option" (click)="exportPdf()">
+        <mat-icon class="export-option__icon export-option__icon--pdf">picture_as_pdf</mat-icon>
+        <div>
+          <strong>{{ 'EXPORT_DATA.PDF.TITLE' | translate }}</strong>
+          <span>{{ 'EXPORT_DATA.PDF.DESC' | translate }}</span>
+        </div>
+        <mat-icon class="export-option__arrow">chevron_right</mat-icon>
+      </button>
+
+      <button class="export-option" (click)="exportCsv()">
+        <mat-icon class="export-option__icon export-option__icon--csv">table_rows</mat-icon>
+        <div>
+          <strong>{{ 'EXPORT_DATA.CSV.TITLE' | translate }}</strong>
+          <span>{{ 'EXPORT_DATA.CSV.DESC' | translate }}</span>
+        </div>
+        <mat-icon class="export-option__arrow">chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="export-dialog__actions">
+    <button type="button" (click)="close()">{{ 'COMMON.CLOSE' | translate }}</button>
+  </div>
+
+</div>

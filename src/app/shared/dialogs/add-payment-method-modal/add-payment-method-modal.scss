@@ -72,6 +72,27 @@
     &:focus { outline: none; border-color: var(--primary); }
     &::placeholder { color: var(--text-muted); }
   }
+
+  &--invalid input { border-color: var(--error); }
+
+  &__error {
+    @include caption-text;
+    color: var(--error);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  @include body-text;
+  color: var(--text);
+  cursor: pointer;
+
+  input[type="checkbox"] { accent-color: var(--primary); width: 16px; height: 16px; }
 }
 
 .btn-cancel {

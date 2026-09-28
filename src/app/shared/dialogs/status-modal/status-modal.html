@@ -1,7 +1,7 @@
 <div class="dialog-container">
 
   <!-- ICONO DE ESTADO (verde para éxito, rojo para error) -->
-  <div class="icon-circle" [class.error]="type === 'error'">
+  <div class="icon-circle" [class.error]="type === 'error'" [class.info]="type === 'info'">
     <mat-icon>{{ icon }}</mat-icon>
   </div>
 

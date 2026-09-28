@@ -21,7 +21,7 @@ export interface StatusModalData {
   title: string;
   message: string;
   // valores opcionales para interpolar en el mensaje (ej. {{ code }})
-  messageParams?: Record<string, string>;
+  messageParams?: Record<string, string | number>;
   buttonText?: string;
   type?: StatusModalType;
   // ícono de Material opcional; si no se envía se usa el del tipo
@@ -48,7 +48,7 @@ export class StatusModal {
 
   title: string;
   message: string;
-  messageParams: Record<string, string>;
+  messageParams: Record<string, string | number>;
   buttonText: string;
   type: StatusModalType;
   details: StatusModalDetail[];

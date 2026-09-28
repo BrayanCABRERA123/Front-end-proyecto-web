@@ -134,6 +134,13 @@
           </div>
         }
 
+        @if (data.status === 'rejected' && data.rejectionReason) {
+          <div class="reject-reason">
+            <label>{{ 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL' | translate }}</label>
+            <p class="reject-reason__readonly">{{ data.rejectionReason }}</p>
+          </div>
+        }
+
       </div>
 
     </div>
@@ -153,15 +160,17 @@
         </button>
       } @else {
         <button class="btn-outline" type="button" (click)="close()">
-          {{ 'PAYMENT_REVIEW_MODAL.CANCEL' | translate }}
+          {{ 'COMMON.CLOSE' | translate }}
         </button>
-        <button class="btn-reject" type="button" (click)="startReject()">
-          {{ 'PAYMENT_REVIEW_MODAL.REJECT' | translate }}
-        </button>
-        <button class="btn-approve" type="button" (click)="approve()">
-          <mat-icon>check</mat-icon>
-          {{ 'PAYMENT_REVIEW_MODAL.APPROVE' | translate }}
-        </button>
+        @if (data.status === 'pending') {
+          <button class="btn-reject" type="button" (click)="startReject()">
+            {{ 'PAYMENT_REVIEW_MODAL.REJECT' | translate }}
+          </button>
+          <button class="btn-approve" type="button" (click)="approve()">
+            <mat-icon>check</mat-icon>
+            {{ 'PAYMENT_REVIEW_MODAL.APPROVE' | translate }}
+          </button>
+        }
       }
     </div>
   </div>
