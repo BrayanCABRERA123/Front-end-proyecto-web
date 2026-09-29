@@ -457,7 +457,9 @@
     "BUTTON": "Iniciar Sesión",
     "NO_ACCOUNT": "¿No tienes cuenta?",
     "REGISTER": "Regístrate",
-    "INVALID_CREDENTIALS": "Correo o contraseña incorrectos"
+    "INVALID_CREDENTIALS": "Correo o contraseña incorrectos",
+    "LOADING": "Ingresando...",
+    "SESSION_EXPIRED": "Tu sesión expiró. Inicia sesión de nuevo."
   },
   "REGISTER": {
     "TITLE": "Crear Cuenta",
@@ -494,7 +496,17 @@
     "TERMS_LINK": "Términos y Condiciones",
     "AND": "y la",
     "PRIVACY_LINK": "Política de Tratamiento de Datos Personales",
-    "TERMS_REQUIRED": "Debes aceptar los Términos y la Política de Datos para continuar"
+    "TERMS_REQUIRED": "Debes aceptar los Términos y la Política de Datos para continuar",
+    "DOCUMENT": "Número de Documento",
+    "DOCUMENT_PLACEHOLDER": "1023456789",
+    "DOCUMENT_REQUIRED": "El documento es obligatorio",
+    "DOCUMENT_INVALID": "Debe tener entre 5 y 20 dígitos",
+    "FIRST_NAMES": "Nombres",
+    "FIRST_NAMES_PLACEHOLDER": "Juan Carlos",
+    "LAST_NAMES": "Apellidos",
+    "LAST_NAMES_PLACEHOLDER": "Pérez Gómez",
+    "LAST_NAMES_REQUIRED": "Los apellidos son obligatorios",
+    "LAST_NAMES_MIN": "Debe tener mínimo 2 caracteres"
   },
   "FORGOT": {
     "BACK_LOGIN": "Volver a Iniciar Sesión",
@@ -510,7 +522,8 @@
       "TITLE": "Verificación",
       "DESCRIPTION": "Ingresa el código de 6 dígitos enviado a",
       "RESEND": "¿No recibiste el código? Reenviar",
-      "BUTTON": "Verificar Código"
+      "BUTTON": "Verificar Código",
+      "RESENT": "Te enviamos un código nuevo. El anterior ya no sirve."
     },
     "NEW_PASSWORD": {
       "TITLE": "Nueva Contraseña",
@@ -523,7 +536,10 @@
       "SUCCESS_TITLE": "¡Contraseña actualizada!",
       "SUCCESS_MESSAGE": "Tu contraseña se cambió correctamente. Ya puedes iniciar sesión con tu nueva contraseña.",
       "SUCCESS_BUTTON": "Ir a iniciar sesión"
-    }
+    },
+    "SENDING": "Enviando...",
+    "VERIFYING": "Verificando...",
+    "SAVING": "Guardando..."
   },
   "AUTH_PANEL": {
     "TITLE": "Tu vehículo merece el mejor cuidado",
@@ -2155,5 +2171,26 @@
       "BAY_ADDED": "Bahía agregada",
       "BAY_REMOVED": "Bahía eliminada"
     }
+  },
+  "API_ERRORS": {
+    "INVALID_CREDENTIALS": "Correo o contraseña incorrectos",
+    "ACCOUNT_DISABLED": "Tu cuenta está desactivada. Contacta al administrador.",
+    "EMAIL_ALREADY_REGISTERED": "Ya existe una cuenta con este correo",
+    "DOCUMENT_ALREADY_REGISTERED": "Ya existe una cuenta con este número de documento",
+    "WEAK_PASSWORD": "La contraseña no cumple los requisitos de seguridad",
+    "INVALID_RESET_CODE": "El código es incorrecto, ya se usó o expiró. Solicita uno nuevo.",
+    "INCORRECT_CURRENT_PASSWORD": "La contraseña actual es incorrecta",
+    "SAME_PASSWORD": "La nueva contraseña debe ser distinta a la actual",
+    "INVALID_EMAIL": "El correo no es válido",
+    "INVALID_DOCUMENT": "El número de documento no es válido",
+    "INVALID_PHONE": "El teléfono no es válido",
+    "INVALID_NAME": "El nombre no es válido",
+    "VALIDATION_ERROR": "Revisa los datos del formulario",
+    "UNAUTHORIZED": "Tu sesión expiró. Inicia sesión de nuevo.",
+    "FORBIDDEN": "No tienes permiso para realizar esta acción",
+    "USER_NOT_FOUND": "No encontramos la cuenta",
+    "CONFLICT": "Los datos entran en conflicto con un registro existente",
+    "NETWORK_ERROR": "No hay conexión con el servidor. Intenta de nuevo en un momento.",
+    "UNEXPECTED": "Ocurrió un error inesperado. Intenta de nuevo."
   }
 }

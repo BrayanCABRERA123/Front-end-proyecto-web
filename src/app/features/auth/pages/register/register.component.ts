@@ -1,35 +1,27 @@
-// definimos el componente
-import { Component } from '@angular/core';
-
-// sirve para usar cosas basicas de HTML
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { BackButtonComponent } from '../../../../shared/components/back-button/back-button';
-
-import { AuthSidePanelComponent } from '../../../../shared/components/auth-side-panel/auth-side-panel';
-
-// lista reutilizable de requisitos de la contraseña
-import { PasswordRequirementsComponent } from '../../../../shared/components/password-requirements/password-requirements';
-
-// nos sirve para crear el formulario y sus validaciones
 import {
   FormBuilder,
   FormGroup,
   Validators,
   ReactiveFormsModule
 } from '@angular/forms';
-
-// para navegar entre pantallas
 import { Router, RouterModule } from '@angular/router';
-
 import { TranslateModule } from '@ngx-translate/core';
-
-// modal reutilizable para mostrar Términos y Condiciones / Política de Datos
 import { MatDialog } from '@angular/material/dialog';
-import { LegalDocumentModal, LegalDocumentType } from '../../../../shared/dialogs/legal-document-modal/legal-document-modal';
 
+import { BackButtonComponent } from '../../../../shared/components/back-button/back-button';
+import { AuthSidePanelComponent } from '../../../../shared/components/auth-side-panel/auth-side-panel';
+// lista reutilizable de requisitos de la contraseña
+import { PasswordRequirementsComponent } from '../../../../shared/components/password-requirements/password-requirements';
+// modal reutilizable para mostrar Términos y Condiciones / Política de Datos
+import { LegalDocumentModal, LegalDocumentType } from '../../../../shared/dialogs/legal-document-modal/legal-document-modal';
 // modal reutilizable para mostrar el mensaje de registro exitoso
 import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
+
+// registro real contra el security-service
+import { AuthService } from '../../../../core/services/auth';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 
 
 @Component({
@@ -47,16 +39,18 @@ import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-
-
 export class RegisterComponent {
 
   registerForm: FormGroup;
 
-  mostrarContrasena: boolean = false;
-  mostrarConfirmar: boolean = false;
-  cargando: boolean = false;
-  loginError: boolean = false;
+  showPassword = false;
+  showConfirmPassword = false;
+
+  // signals: la app es zoneless y estos cambian dentro de la respuesta HTTP
+  loading = signal(false);
+  errorKey = signal<string | null>(null);
+
+  private readonly auth = inject(AuthService);
 
 
   constructor(
@@ -67,7 +61,16 @@ export class RegisterComponent {
 
     this.registerForm = this.fb.group({
 
-      nombre: [
+      // cédula: la tabla security.person la exige y no puede repetirse
+      documentNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]{5,20}$')
+        ]
+      ],
+
+      firstName: [
         '',
         [
           Validators.required,
@@ -75,7 +78,15 @@ export class RegisterComponent {
         ]
       ],
 
-      correo: [
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2)
+        ]
+      ],
+
+      email: [
         '',
         [
           Validators.required,
@@ -83,7 +94,7 @@ export class RegisterComponent {
         ]
       ],
 
-      telefono: [
+      phone: [
         '',
         [
           Validators.required,
@@ -93,17 +104,16 @@ export class RegisterComponent {
         ]
       ],
 
-
-
-      contrasena: [
+      password: [
         '',
         [
           Validators.required,
-          Validators.pattern('^(?=.*[A-Z])(?=.*[0-9]).{8,}$')
+          // mismas 4 reglas que muestra la lista de requisitos y que valida el backend
+          Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/)
         ]
       ],
 
-      confirmar: [
+      confirmPassword: [
         '',
         [
           Validators.required
@@ -112,31 +122,30 @@ export class RegisterComponent {
 
       // el usuario debe aceptar explícitamente ambos documentos legales
       // (Ley 1581 de 2012 - Habeas Data: autorización previa, expresa e informada)
-      aceptaTerminos: [false, Validators.requiredTrue],
-      aceptaPoliticaDatos: [false, Validators.requiredTrue]
+      acceptTerms: [false, Validators.requiredTrue],
+      acceptDataPolicy: [false, Validators.requiredTrue]
 
     });
 
   }
 
 
-  // abre el modal con el documento legal solicitado.
-  // si el usuario da "Aceptar" dentro del modal, marcamos la casilla
-  // correspondiente automáticamente (evita que tenga que aceptar dos veces).
-  verDocumentoLegal(tipo: LegalDocumentType, event?: Event) {
+  // abre el modal con el documento legal solicitado. Si el usuario da "Aceptar" dentro del modal,
+  // marcamos la casilla correspondiente automáticamente (evita que tenga que aceptar dos veces).
+  openLegalDocument(type: LegalDocumentType, event?: Event) {
 
     event?.preventDefault();
 
     const dialogRef = this.dialog.open(LegalDocumentModal, {
       panelClass: 'custom-dialog',
-      data: { type: tipo, mode: 'accept' }
+      data: { type, mode: 'accept' }
     });
 
-    dialogRef.afterClosed().subscribe((aceptado: boolean) => {
+    dialogRef.afterClosed().subscribe((accepted: boolean) => {
 
-      if (!aceptado) return;
+      if (!accepted) return;
 
-      const control = tipo === 'terms' ? 'aceptaTerminos' : 'aceptaPoliticaDatos';
+      const control = type === 'terms' ? 'acceptTerms' : 'acceptDataPolicy';
 
       this.registerForm.get(control)?.setValue(true);
       this.registerForm.get(control)?.markAsTouched();
@@ -144,22 +153,21 @@ export class RegisterComponent {
   }
 
 
-  //Funcion para limpiar los espacios si el usuario pega correo.
+  // limpia los espacios si el usuario pega el correo
+  stripEmailSpaces() {
 
-  limpiarEspaciosCorreo() {
+    const email = this.registerForm.get('email')?.value;
 
-    const correo = this.registerForm.get('correo')?.value;
-
-    if (!correo) return;
+    if (!email) return;
 
     this.registerForm
-      .get('correo')
-      ?.setValue(correo.replace(/\s/g, ''), { emitEvent: false });
+      .get('email')
+      ?.setValue(email.replace(/\s/g, ''), { emitEvent: false });
 
   }
 
-  // Funcion para que no se permita ingresar espacios en el correo
-  bloquearEspacios(event: KeyboardEvent) {
+  // no permite escribir espacios en el correo
+  blockSpaces(event: KeyboardEvent) {
 
     if (event.key === ' ') {
       event.preventDefault();
@@ -167,26 +175,39 @@ export class RegisterComponent {
 
   }
 
-  limpiarTelefono() {
+  sanitizePhone() {
 
-    let telefono = this.registerForm.get('telefono')?.value;
+    let phone = this.registerForm.get('phone')?.value;
 
-    if (!telefono) return;
+    if (!phone) return;
 
     // elimina letras o símbolos
-    telefono = telefono.replace(/\D/g, '');
+    phone = phone.replace(/\D/g, '');
 
-    // obliga que empiece en 3
-    if (telefono.length > 0 && telefono[0] !== '3') {
-      telefono = telefono.substring(1);
+    // obliga que empiece en 3 (celular colombiano)
+    if (phone.length > 0 && phone[0] !== '3') {
+      phone = phone.substring(1);
     }
 
     // limita a 10 números
-    telefono = telefono.substring(0, 10);
+    phone = phone.substring(0, 10);
 
     this.registerForm
-      .get('telefono')
-      ?.setValue(telefono, { emitEvent: false });
+      .get('phone')
+      ?.setValue(phone, { emitEvent: false });
+
+  }
+
+  // la cédula solo admite dígitos (quita puntos, espacios y letras si la pegan)
+  sanitizeDocument() {
+
+    const documentNumber = this.registerForm.get('documentNumber')?.value;
+
+    if (!documentNumber) return;
+
+    this.registerForm
+      .get('documentNumber')
+      ?.setValue(documentNumber.replace(/\D/g, '').substring(0, 20), { emitEvent: false });
 
   }
 
@@ -198,49 +219,60 @@ export class RegisterComponent {
 
   // contraseña actual para la lista de requisitos (app-password-requirements)
   get password(): string {
-    return this.registerForm.get('contrasena')?.value || '';
+    return this.registerForm.get('password')?.value || '';
   }
 
 
-  // validar que las contraseñas coincidan
-  validarContrasenas() {
+  validatePasswordsMatch() {
 
-    const pass = this.registerForm.get('contrasena')?.value;
-    const confirm = this.registerForm.get('confirmar')?.value;
+    const password = this.registerForm.get('password')?.value;
+    const confirm = this.registerForm.get('confirmPassword')?.value;
 
-    if (pass !== confirm) {
+    if (password !== confirm) {
 
       this.registerForm
-        .get('confirmar')
-        ?.setErrors({ noCoincide: true });
+        .get('confirmPassword')
+        ?.setErrors({ notMatch: true });
 
     }
 
   }
 
 
-  // se ejecuta cuando el usuario hace clic en "Registrarse"
   onSubmit() {
 
-    this.validarContrasenas();
+    this.validatePasswordsMatch();
 
-    if (this.registerForm.invalid) return;
+    if (this.registerForm.invalid || this.loading()) return;
 
-    this.cargando = true;
+    const value = this.registerForm.value;
 
-    setTimeout(() => {
+    this.loading.set(true);
+    this.errorKey.set(null);
 
-      this.cargando = false;
-
-      this.mostrarRegistroExitoso();
-
-    }, 1500);
+    this.auth.register({
+      documentNumber: value.documentNumber,
+      firstName: value.firstName.trim(),
+      lastName: value.lastName.trim(),
+      email: value.email,
+      phone: value.phone || null,
+      password: value.password
+    }).subscribe({
+      next: () => {
+        this.loading.set(false);
+        this.showRegisterSuccess();
+      },
+      error: (error: unknown) => {
+        this.loading.set(false);
+        this.errorKey.set(apiErrorKey(error));
+      }
+    });
 
   }
 
 
   // muestra el modal de registro exitoso y, al cerrarlo, redirige al login
-  mostrarRegistroExitoso() {
+  showRegisterSuccess() {
 
     const data: StatusModalData = {
       title: 'REGISTER.SUCCESS_TITLE',
@@ -257,29 +289,20 @@ export class RegisterComponent {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      // redirigir al login después del registro
-      // (el login está en la ruta vacía del módulo auth, es decir "/auth")
+      // el login está en la ruta vacía del módulo auth, es decir "/auth"
       this.router.navigate(['/auth']);
     });
 
   }
 
 
-  // mostrar / ocultar contraseña
-  toggleContrasena() {
-
-    this.mostrarContrasena =
-      !this.mostrarContrasena;
-
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
 
-  // mostrar / ocultar confirmar contraseña
-  toggleConfirmar() {
-
-    this.mostrarConfirmar =
-      !this.mostrarConfirmar;
-
+  toggleConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
 }

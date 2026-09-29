@@ -1,10 +1,13 @@
-import { Component, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 // lista reutilizable de requisitos de la contraseña
 import { PasswordRequirementsComponent } from '../../../../../../shared/components/password-requirements/password-requirements';
+
+import { AuthService } from '../../../../../../core/services/auth';
+import { apiErrorKey } from '../../../../../../core/utils/api-error';
 
 @Component({
   selector: 'app-new-password-step',
@@ -16,7 +19,16 @@ import { PasswordRequirementsComponent } from '../../../../../../shared/componen
 })
 export class NewPasswordStepComponent {
 
+  // correo y código confirmados en los pasos 1 y 2
+  @Input() email: string = '';
+  @Input() code: string = '';
+
   @Output() passwordUpdated = new EventEmitter<void>();
+
+  saving = signal(false);
+  errorKey = signal<string | null>(null);
+
+  private readonly auth = inject(AuthService);
 
   newPassword: string = '';
   confirmPassword: string = '';
@@ -42,8 +54,20 @@ export class NewPasswordStepComponent {
   toggleConfirmPassword(): void { this.showConfirmPassword = !this.showConfirmPassword; }
 
   onSubmit(): void {
-    if (this.isPasswordValid && this.passwordsMatch) {
-      this.passwordUpdated.emit();
-    }
+    if (!this.isPasswordValid || !this.passwordsMatch || this.saving()) return;
+
+    this.saving.set(true);
+    this.errorKey.set(null);
+
+    this.auth.resetPassword(this.email, this.code, this.newPassword).subscribe({
+      next: () => {
+        this.saving.set(false);
+        this.passwordUpdated.emit();
+      },
+      error: (error: unknown) => {
+        this.saving.set(false);
+        this.errorKey.set(apiErrorKey(error));
+      }
+    });
   }
 }

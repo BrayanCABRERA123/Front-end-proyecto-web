@@ -457,7 +457,9 @@
     "BUTTON": "Entrar",
     "NO_ACCOUNT": "Não tem uma conta?",
     "REGISTER": "Cadastre-se",
-    "INVALID_CREDENTIALS": "E-mail ou senha incorretos"
+    "INVALID_CREDENTIALS": "E-mail ou senha incorretos",
+    "LOADING": "Entrando...",
+    "SESSION_EXPIRED": "Sua sessão expirou. Entre novamente."
   },
   "REGISTER": {
     "TITLE": "Criar Conta",
@@ -494,7 +496,17 @@
     "TERMS_LINK": "Termos e Condições",
     "AND": "e a",
     "PRIVACY_LINK": "Política de Tratamento de Dados Pessoais",
-    "TERMS_REQUIRED": "Você deve aceitar os Termos e a Política de Dados para continuar"
+    "TERMS_REQUIRED": "Você deve aceitar os Termos e a Política de Dados para continuar",
+    "DOCUMENT": "Número do Documento",
+    "DOCUMENT_PLACEHOLDER": "1023456789",
+    "DOCUMENT_REQUIRED": "O documento é obrigatório",
+    "DOCUMENT_INVALID": "Deve ter entre 5 e 20 dígitos",
+    "FIRST_NAMES": "Nomes",
+    "FIRST_NAMES_PLACEHOLDER": "João Carlos",
+    "LAST_NAMES": "Sobrenomes",
+    "LAST_NAMES_PLACEHOLDER": "Silva Souza",
+    "LAST_NAMES_REQUIRED": "Os sobrenomes são obrigatórios",
+    "LAST_NAMES_MIN": "Deve ter pelo menos 2 caracteres"
   },
   "FORGOT": {
     "BACK_LOGIN": "Voltar ao Login",
@@ -510,7 +522,8 @@
       "TITLE": "Verificação",
       "DESCRIPTION": "Digite o código de 6 dígitos enviado para",
       "RESEND": "Não recebeu o código? Reenviar",
-      "BUTTON": "Verificar Código"
+      "BUTTON": "Verificar Código",
+      "RESENT": "Enviamos um novo código. O anterior não funciona mais."
     },
     "NEW_PASSWORD": {
       "TITLE": "Nova Senha",
@@ -523,7 +536,10 @@
       "SUCCESS_TITLE": "Senha atualizada!",
       "SUCCESS_MESSAGE": "Sua senha foi alterada com sucesso. Agora você pode entrar com sua nova senha.",
       "SUCCESS_BUTTON": "Ir para o login"
-    }
+    },
+    "SENDING": "Enviando...",
+    "VERIFYING": "Verificando...",
+    "SAVING": "Salvando..."
   },
   "AUTH_PANEL": {
     "TITLE": "Seu veículo merece o melhor cuidado",
@@ -2155,5 +2171,26 @@
       "BAY_ADDED": "Baia adicionada",
       "BAY_REMOVED": "Baia removida"
     }
+  },
+  "API_ERRORS": {
+    "INVALID_CREDENTIALS": "E-mail ou senha incorretos",
+    "ACCOUNT_DISABLED": "Sua conta está desativada. Contate o administrador.",
+    "EMAIL_ALREADY_REGISTERED": "Já existe uma conta com este e-mail",
+    "DOCUMENT_ALREADY_REGISTERED": "Já existe uma conta com este número de documento",
+    "WEAK_PASSWORD": "A senha não atende aos requisitos de segurança",
+    "INVALID_RESET_CODE": "O código está incorreto, já foi usado ou expirou. Solicite um novo.",
+    "INCORRECT_CURRENT_PASSWORD": "A senha atual está incorreta",
+    "SAME_PASSWORD": "A nova senha deve ser diferente da atual",
+    "INVALID_EMAIL": "O e-mail não é válido",
+    "INVALID_DOCUMENT": "O número do documento não é válido",
+    "INVALID_PHONE": "O telefone não é válido",
+    "INVALID_NAME": "O nome não é válido",
+    "VALIDATION_ERROR": "Verifique os campos do formulário",
+    "UNAUTHORIZED": "Sua sessão expirou. Entre novamente.",
+    "FORBIDDEN": "Você não tem permissão para realizar esta ação",
+    "USER_NOT_FOUND": "Conta não encontrada",
+    "CONFLICT": "Os dados conflitam com um registro existente",
+    "NETWORK_ERROR": "Não foi possível conectar ao servidor. Tente novamente em instantes.",
+    "UNEXPECTED": "Ocorreu um erro inesperado. Tente novamente."
   }
 }

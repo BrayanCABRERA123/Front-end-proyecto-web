@@ -62,15 +62,15 @@
         required
         pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
 
-        (keypress)="bloquearEspacios($event)"
-        (input)="limpiarEspaciosCorreo()"
+        (keypress)="blockSpaces($event)"
+        (input)="stripEmailSpaces()"
 
-        [class.input-error]="emailInvalido"
+        [class.input-error]="isEmailInvalid"
       >
 
     </div>
 
-    <span class="error-msg" *ngIf="emailInvalido">
+    <span class="error-msg" *ngIf="isEmailInvalid">
 
       {{ 'FORGOT.EMAIL.INVALID' | translate }}
 
@@ -78,12 +78,16 @@
 
   </div>
 
+  <span class="error-msg" role="alert" *ngIf="errorKey()">
+    {{ errorKey()! | translate }}
+  </span>
+
   <button
     class="btn-primary"
     (click)="onSubmit()"
-    [disabled]="!email || emailInvalido"
+    [disabled]="!email || isEmailInvalid || sending()"
   >
-    {{ 'FORGOT.EMAIL.BUTTON' | translate }}
+    {{ (sending() ? 'FORGOT.SENDING' : 'FORGOT.EMAIL.BUTTON') | translate }}
   </button>
 
   <a class="back-link" routerLink="/auth">

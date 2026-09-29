@@ -1,8 +1,11 @@
-import { Component, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Output, EventEmitter, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+
+import { AuthService } from '../../../../../../core/services/auth';
+import { apiErrorKey } from '../../../../../../core/utils/api-error';
 
 
 @Component({
@@ -17,21 +20,42 @@ export class EmailStepComponent {
 
   email: string = '';
 
+  sending = signal(false);
+  errorKey = signal<string | null>(null);
+
+  private readonly auth = inject(AuthService);
+
   @Output() emailSent = new EventEmitter<string>();
 
+  // el servidor responde igual exista o no la cuenta (no revela correos registrados),
+  // así que siempre avanzamos al paso 2 si la petición llegó bien
   onSubmit(): void {
-    if (this.email.trim()) {
-      this.emailSent.emit(this.email);
-    }
+    const email = this.email.trim();
+
+    if (!email || this.isEmailInvalid || this.sending()) return;
+
+    this.sending.set(true);
+    this.errorKey.set(null);
+
+    this.auth.requestPasswordReset(email).subscribe({
+      next: () => {
+        this.sending.set(false);
+        this.emailSent.emit(email);
+      },
+      error: (error: unknown) => {
+        this.sending.set(false);
+        this.errorKey.set(apiErrorKey(error));
+      }
+    });
   }
 
-  get emailInvalido(): boolean {
-    if(!this.email) return false;
+  get isEmailInvalid(): boolean {
+    if (!this.email) return false;
 
     return !/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(this.email);
   }
 
-  limpiarEspaciosCorreo() {
+  stripEmailSpaces() {
 
     if (!this.email) return;
 
@@ -39,9 +63,9 @@ export class EmailStepComponent {
 
   }
 
-  bloquearEspacios(event: KeyboardEvent){
-      if ( event.key === ' '){
-        event.preventDefault();
-      }
+  blockSpaces(event: KeyboardEvent) {
+    if (event.key === ' ') {
+      event.preventDefault();
+    }
   }
 }

@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmLogoutDialogComponent } from '../../../shared/dialogs/confirm-logout/confirm-logout';
 // usuario de la sesión: el mismo que se edita en el perfil
 import { UserSession } from '../../../core/services/user-session';
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-sidebar',
@@ -100,7 +101,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private session: UserSession
+    private session: UserSession,
+    private auth: AuthService
   ) {}
 
   // abre o cierra el sidebar en mobile
@@ -120,11 +122,9 @@ export class SidebarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(confirmed => {
 
+      // cierra la sesión en el servidor, limpia el navegador y vuelve al login
       if (confirmed) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-
-      this.router.navigateByUrl('/');
+        this.auth.logout();
       }
     });
   }

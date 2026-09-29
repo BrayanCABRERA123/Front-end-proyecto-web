@@ -457,7 +457,9 @@
     "BUTTON": "Login",
     "NO_ACCOUNT": "Don't have an account?",
     "REGISTER": "Sign up",
-    "INVALID_CREDENTIALS": "Incorrect email or password"
+    "INVALID_CREDENTIALS": "Incorrect email or password",
+    "LOADING": "Signing in...",
+    "SESSION_EXPIRED": "Your session expired. Please sign in again."
   },
   "REGISTER": {
     "TITLE": "Create Account",
@@ -494,7 +496,17 @@
     "TERMS_LINK": "Terms and Conditions",
     "AND": "and the",
     "PRIVACY_LINK": "Personal Data Processing Policy",
-    "TERMS_REQUIRED": "You must accept the Terms and the Data Policy to continue"
+    "TERMS_REQUIRED": "You must accept the Terms and the Data Policy to continue",
+    "DOCUMENT": "ID Number",
+    "DOCUMENT_PLACEHOLDER": "1023456789",
+    "DOCUMENT_REQUIRED": "ID number is required",
+    "DOCUMENT_INVALID": "Must have between 5 and 20 digits",
+    "FIRST_NAMES": "First Names",
+    "FIRST_NAMES_PLACEHOLDER": "John Charles",
+    "LAST_NAMES": "Last Names",
+    "LAST_NAMES_PLACEHOLDER": "Smith Brown",
+    "LAST_NAMES_REQUIRED": "Last names are required",
+    "LAST_NAMES_MIN": "Must have at least 2 characters"
   },
   "FORGOT": {
     "BACK_LOGIN": "Back to Login",
@@ -510,7 +522,8 @@
       "TITLE": "Verification",
       "DESCRIPTION": "Enter the 6-digit code sent to",
       "RESEND": "Didn't receive the code? Resend",
-      "BUTTON": "Verify Code"
+      "BUTTON": "Verify Code",
+      "RESENT": "We sent you a new code. The previous one no longer works."
     },
     "NEW_PASSWORD": {
       "TITLE": "New Password",
@@ -523,7 +536,10 @@
       "SUCCESS_TITLE": "Password updated!",
       "SUCCESS_MESSAGE": "Your password was changed successfully. You can now log in with your new password.",
       "SUCCESS_BUTTON": "Go to login"
-    }
+    },
+    "SENDING": "Sending...",
+    "VERIFYING": "Verifying...",
+    "SAVING": "Saving..."
   },
   "AUTH_PANEL": {
     "TITLE": "Your vehicle deserves the best care",
@@ -2155,5 +2171,26 @@
       "BAY_ADDED": "Bay added",
       "BAY_REMOVED": "Bay removed"
     }
+  },
+  "API_ERRORS": {
+    "INVALID_CREDENTIALS": "Incorrect email or password",
+    "ACCOUNT_DISABLED": "Your account is disabled. Contact the administrator.",
+    "EMAIL_ALREADY_REGISTERED": "An account with this email already exists",
+    "DOCUMENT_ALREADY_REGISTERED": "An account with this ID number already exists",
+    "WEAK_PASSWORD": "The password does not meet the security requirements",
+    "INVALID_RESET_CODE": "The code is wrong, already used or expired. Request a new one.",
+    "INCORRECT_CURRENT_PASSWORD": "The current password is incorrect",
+    "SAME_PASSWORD": "The new password must be different from the current one",
+    "INVALID_EMAIL": "The email is not valid",
+    "INVALID_DOCUMENT": "The ID number is not valid",
+    "INVALID_PHONE": "The phone number is not valid",
+    "INVALID_NAME": "The name is not valid",
+    "VALIDATION_ERROR": "Please check the form fields",
+    "UNAUTHORIZED": "Your session expired. Please sign in again.",
+    "FORBIDDEN": "You do not have permission to perform this action",
+    "USER_NOT_FOUND": "Account not found",
+    "CONFLICT": "The data conflicts with an existing record",
+    "NETWORK_ERROR": "Cannot reach the server. Please try again in a moment.",
+    "UNEXPECTED": "An unexpected error occurred. Please try again."
   }
 }

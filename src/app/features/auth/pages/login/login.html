@@ -16,6 +16,10 @@
                     {{ 'LOGIN.SUBTITLE' | translate }}
                 </p>
 
+                <p class="error-msg" role="status" *ngIf="sessionExpired && !errorKey()">
+                    {{ 'LOGIN.SESSION_EXPIRED' | translate }}
+                </p>
+
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
 
                     <label>
@@ -24,13 +28,13 @@
 
                     <input
                         type="email"
-                        formControlName="correo"
+                        formControlName="email"
                         [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
-                        (input)="correoSinEspacios()">
+                        (input)="stripEmailSpaces()">
 
                     <span
                         class="error-msg"
-                        *ngIf="f['correo'].errors?.['required'] && f['correo'].touched">
+                        *ngIf="f['email'].errors?.['required'] && f['email'].touched">
 
                         {{ 'LOGIN.EMAIL_REQUIRED' | translate }}
 
@@ -38,7 +42,7 @@
 
                     <span
                         class="error-msg"
-                        *ngIf="f['correo'].errors?.['pattern'] && f['correo'].touched">
+                        *ngIf="f['email'].errors?.['pattern'] && f['email'].touched">
 
                         {{ 'LOGIN.EMAIL_INVALID' | translate }}
 
@@ -50,12 +54,12 @@
 
                     <input
                         type="password"
-                        formControlName="contrasena"
+                        formControlName="password"
                         [placeholder]="'LOGIN.PASSWORD_PLACEHOLDER' | translate">
 
                     <span
                         class="error-msg"
-                        *ngIf="f['contrasena'].errors?.['required'] && f['contrasena'].touched">
+                        *ngIf="f['password'].errors?.['required'] && f['password'].touched">
 
                         {{ 'LOGIN.PASSWORD_REQUIRED' | translate }}
 
@@ -65,11 +69,16 @@
                         {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
                     </a>
 
+                    <!-- error devuelto por el servidor (credenciales, cuenta desactivada, sin conexión...) -->
+                    <span class="error-msg" role="alert" *ngIf="errorKey()">
+                        {{ errorKey()! | translate }}
+                    </span>
+
                     <button
                         type="submit"
-                        [disabled]="loginForm.invalid">
+                        [disabled]="loginForm.invalid || loading()">
 
-                        {{ 'LOGIN.BUTTON' | translate }}
+                        {{ (loading() ? 'LOGIN.LOADING' : 'LOGIN.BUTTON') | translate }}
 
                     </button>
 
