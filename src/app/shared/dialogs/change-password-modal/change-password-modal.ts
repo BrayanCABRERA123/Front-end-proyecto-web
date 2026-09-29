@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,8 @@ import {
 } from '@angular/forms';
 
 import { PasswordRequirementsComponent } from '../../components/password-requirements/password-requirements';
+import { AuthService } from '../../../core/services/auth';
+import { apiErrorKey } from '../../../core/utils/api-error';
 
 // campos de contraseña que se pueden mostrar / ocultar
 type PasswordField = 'currentPassword' | 'newPassword' | 'confirmPassword';
@@ -36,6 +38,11 @@ export class ChangePasswordModal {
     newPassword: false,
     confirmPassword: false
   };
+
+  saving = signal(false);
+  errorKey = signal<string | null>(null);
+
+  private readonly auth = inject(AuthService);
 
   constructor(
     private fb: FormBuilder,
@@ -89,15 +96,31 @@ export class ChangePasswordModal {
     this.visibleFields[field] = !this.visibleFields[field];
   }
 
-  // guarda y cierra el modal devolviendo true para que el perfil muestre el éxito
+  // el servidor valida la contraseña actual y guarda la nueva;
+  // cierra el modal devolviendo true para que el perfil muestre el éxito
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
-    // TODO: integrar con el backend (validar contraseña actual y actualizarla)
-    this.dialogRef.close(true);
+    if (this.saving()) return;
+
+    const { currentPassword, newPassword } = this.form.value;
+
+    this.saving.set(true);
+    this.errorKey.set(null);
+
+    this.auth.changePassword(currentPassword, newPassword).subscribe({
+      next: () => {
+        this.saving.set(false);
+        this.dialogRef.close(true);
+      },
+      error: (error: unknown) => {
+        this.saving.set(false);
+        this.errorKey.set(apiErrorKey(error));
+      }
+    });
   }
 
   close(): void {

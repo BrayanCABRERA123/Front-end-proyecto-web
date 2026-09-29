@@ -57,12 +57,28 @@
     }
   </div>
 
-  <a class="resend-link" href="#">
+  <a class="resend-link" href="#" (click)="onResend($event)">
     {{ 'FORGOT.VERIFICATION.RESEND' | translate }}
   </a>
 
-  <button class="btn-primary" (click)="onVerify()">
-    {{ 'FORGOT.VERIFICATION.BUTTON' | translate }}
+  @if (codeResent()) {
+    <p class="step-description" role="status">
+      {{ 'FORGOT.VERIFICATION.RESENT' | translate }}
+    </p>
+  }
+
+  @if (errorKey()) {
+    <p class="error-msg" role="alert">
+      {{ errorKey()! | translate }}
+    </p>
+  }
+
+  <button
+    class="btn-primary"
+    (click)="onVerify()"
+    [disabled]="verifying()"
+  >
+    {{ (verifying() ? 'FORGOT.VERIFYING' : 'FORGOT.VERIFICATION.BUTTON') | translate }}
   </button>
 
   <a class="back-link" routerLink="/auth">

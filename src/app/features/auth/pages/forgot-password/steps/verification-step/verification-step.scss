@@ -137,3 +137,11 @@
     font-size: 18px;
   }
 }
+// error devuelto por el servidor (código inválido, contraseña rechazada, sin conexión)
+.error-msg {
+  display: block;
+  margin: 8px 0;
+  color: #ef5350;
+  font-size: 12px;
+  text-align: center;
+}

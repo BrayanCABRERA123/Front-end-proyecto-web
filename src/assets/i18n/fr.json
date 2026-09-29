@@ -457,7 +457,9 @@
     "BUTTON": "Se connecter",
     "NO_ACCOUNT": "Vous n'avez pas de compte ?",
     "REGISTER": "S'inscrire",
-    "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect"
+    "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect",
+    "LOADING": "Connexion...",
+    "SESSION_EXPIRED": "Votre session a expiré. Veuillez vous reconnecter."
   },
   "REGISTER": {
     "TITLE": "Créer un Compte",
@@ -494,7 +496,17 @@
     "TERMS_LINK": "Conditions Générales",
     "AND": "et la",
     "PRIVACY_LINK": "Politique de Traitement des Données Personnelles",
-    "TERMS_REQUIRED": "Vous devez accepter les Conditions et la Politique de Données pour continuer"
+    "TERMS_REQUIRED": "Vous devez accepter les Conditions et la Politique de Données pour continuer",
+    "DOCUMENT": "Numéro d'identité",
+    "DOCUMENT_PLACEHOLDER": "1023456789",
+    "DOCUMENT_REQUIRED": "Le numéro d'identité est obligatoire",
+    "DOCUMENT_INVALID": "Doit contenir entre 5 et 20 chiffres",
+    "FIRST_NAMES": "Prénoms",
+    "FIRST_NAMES_PLACEHOLDER": "Jean Charles",
+    "LAST_NAMES": "Noms",
+    "LAST_NAMES_PLACEHOLDER": "Dupont Martin",
+    "LAST_NAMES_REQUIRED": "Les noms sont obligatoires",
+    "LAST_NAMES_MIN": "Doit contenir au moins 2 caractères"
   },
   "FORGOT": {
     "BACK_LOGIN": "Retour à la Connexion",
@@ -510,7 +522,8 @@
       "TITLE": "Vérification",
       "DESCRIPTION": "Entrez le code à 6 chiffres envoyé à",
       "RESEND": "Vous n'avez pas reçu le code ? Renvoyer",
-      "BUTTON": "Vérifier le Code"
+      "BUTTON": "Vérifier le Code",
+      "RESENT": "Nous vous avons envoyé un nouveau code. L'ancien ne fonctionne plus."
     },
     "NEW_PASSWORD": {
       "TITLE": "Nouveau Mot de Passe",
@@ -523,7 +536,10 @@
       "SUCCESS_TITLE": "Mot de passe mis à jour !",
       "SUCCESS_MESSAGE": "Votre mot de passe a été modifié avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
       "SUCCESS_BUTTON": "Aller à la connexion"
-    }
+    },
+    "SENDING": "Envoi...",
+    "VERIFYING": "Vérification...",
+    "SAVING": "Enregistrement..."
   },
   "AUTH_PANEL": {
     "TITLE": "Votre véhicule mérite le meilleur entretien",
@@ -2160,5 +2176,26 @@
       "BAY_ADDED": "Baie ajoutée",
       "BAY_REMOVED": "Baie supprimée"
     }
+  },
+  "API_ERRORS": {
+    "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect",
+    "ACCOUNT_DISABLED": "Votre compte est désactivé. Contactez l'administrateur.",
+    "EMAIL_ALREADY_REGISTERED": "Un compte avec cet e-mail existe déjà",
+    "DOCUMENT_ALREADY_REGISTERED": "Un compte avec ce numéro d'identité existe déjà",
+    "WEAK_PASSWORD": "Le mot de passe ne respecte pas les exigences de sécurité",
+    "INVALID_RESET_CODE": "Le code est incorrect, déjà utilisé ou expiré. Demandez-en un nouveau.",
+    "INCORRECT_CURRENT_PASSWORD": "Le mot de passe actuel est incorrect",
+    "SAME_PASSWORD": "Le nouveau mot de passe doit être différent de l'actuel",
+    "INVALID_EMAIL": "L'e-mail n'est pas valide",
+    "INVALID_DOCUMENT": "Le numéro d'identité n'est pas valide",
+    "INVALID_PHONE": "Le numéro de téléphone n'est pas valide",
+    "INVALID_NAME": "Le nom n'est pas valide",
+    "VALIDATION_ERROR": "Vérifiez les champs du formulaire",
+    "UNAUTHORIZED": "Votre session a expiré. Veuillez vous reconnecter.",
+    "FORBIDDEN": "Vous n'avez pas l'autorisation d'effectuer cette action",
+    "USER_NOT_FOUND": "Compte introuvable",
+    "CONFLICT": "Les données entrent en conflit avec un enregistrement existant",
+    "NETWORK_ERROR": "Impossible de joindre le serveur. Réessayez dans un instant.",
+    "UNEXPECTED": "Une erreur inattendue est survenue. Réessayez."
   }
 }

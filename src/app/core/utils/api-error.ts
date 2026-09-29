@@ -1,0 +1,46 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { ApiProblem } from '../models/auth.models';
+
+// códigos de error que tienen traducción en API_ERRORS.* (assets/i18n).
+// cualquier otro (un código nuevo del backend, un error del framework) cae en UNEXPECTED
+// para que el usuario nunca vea una llave de traducción sin traducir.
+const TRANSLATED_CODES = new Set([
+  'INVALID_CREDENTIALS',
+  'ACCOUNT_DISABLED',
+  'EMAIL_ALREADY_REGISTERED',
+  'DOCUMENT_ALREADY_REGISTERED',
+  'WEAK_PASSWORD',
+  'INVALID_RESET_CODE',
+  'INCORRECT_CURRENT_PASSWORD',
+  'SAME_PASSWORD',
+  'INVALID_EMAIL',
+  'INVALID_DOCUMENT',
+  'INVALID_PHONE',
+  'INVALID_NAME',
+  'VALIDATION_ERROR',
+  'UNAUTHORIZED',
+  'FORBIDDEN',
+  'USER_NOT_FOUND',
+  'CONFLICT',
+  'NETWORK_ERROR'
+]);
+
+// convierte cualquier error HTTP en su llave de traducción API_ERRORS.<CODE>.
+// el backend manda un "code" estable (ej. EMAIL_ALREADY_REGISTERED) en cada error.
+export function apiErrorKey(error: unknown): string {
+  return `API_ERRORS.${apiErrorCode(error)}`;
+}
+
+export function apiErrorCode(error: unknown): string {
+  if (!(error instanceof HttpErrorResponse)) {
+    return 'UNEXPECTED';
+  }
+
+  // status 0: el navegador no pudo llegar al servidor (apagado, sin red, CORS)
+  if (error.status === 0) {
+    return 'NETWORK_ERROR';
+  }
+
+  const code = (error.error as ApiProblem | null)?.code;
+  return code && TRANSLATED_CODES.has(code) ? code : 'UNEXPECTED';
+}

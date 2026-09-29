@@ -24,11 +24,66 @@
           <!-- FORMULARIO -->
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
 
-            <!-- NOMBRE -->
+            <!-- DOCUMENTO (security.person.document_number) -->
             <div class="form-group">
 
               <label>
-                {{ 'REGISTER.FULL_NAME' | translate }}
+                {{ 'REGISTER.DOCUMENT' | translate }}
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon material-icons">
+                  badge
+                </span>
+
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  formControlName="documentNumber"
+                  maxlength="20"
+                  (input)="sanitizeDocument()"
+
+                  [placeholder]="
+                    'REGISTER.DOCUMENT_PLACEHOLDER'
+                    | translate
+                  "
+
+                  [class.input-error]="
+                    f['documentNumber'].invalid &&
+                    f['documentNumber'].touched
+                  "
+                >
+
+              </div>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  f['documentNumber'].errors?.['required'] &&
+                  f['documentNumber'].touched
+                "
+              >
+                {{ 'REGISTER.DOCUMENT_REQUIRED' | translate }}
+              </span>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  f['documentNumber'].errors?.['pattern'] &&
+                  f['documentNumber'].touched
+                "
+              >
+                {{ 'REGISTER.DOCUMENT_INVALID' | translate }}
+              </span>
+
+            </div>
+
+            <!-- NOMBRES -->
+            <div class="form-group">
+
+              <label>
+                {{ 'REGISTER.FIRST_NAMES' | translate }}
               </label>
 
               <div class="input-wrapper">
@@ -39,16 +94,17 @@
 
                 <input
                   type="text"
-                  formControlName="nombre"
+                  formControlName="firstName"
+                  maxlength="60"
 
                   [placeholder]="
-                    'REGISTER.FULL_NAME_PLACEHOLDER'
+                    'REGISTER.FIRST_NAMES_PLACEHOLDER'
                     | translate
                   "
 
                   [class.input-error]="
-                    f['nombre'].invalid &&
-                    f['nombre'].touched
+                    f['firstName'].invalid &&
+                    f['firstName'].touched
                   "
                 >
 
@@ -57,8 +113,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['nombre'].errors?.['required'] &&
-                  f['nombre'].touched
+                  f['firstName'].errors?.['required'] &&
+                  f['firstName'].touched
                 "
               >
                 {{ 'REGISTER.NAME_REQUIRED' | translate }}
@@ -67,11 +123,64 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['nombre'].errors?.['minlength'] &&
-                  f['nombre'].touched
+                  f['firstName'].errors?.['minlength'] &&
+                  f['firstName'].touched
                 "
               >
                 {{ 'REGISTER.NAME_MIN' | translate }}
+              </span>
+
+            </div>
+
+            <!-- APELLIDOS -->
+            <div class="form-group">
+
+              <label>
+                {{ 'REGISTER.LAST_NAMES' | translate }}
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon material-icons">
+                  person
+                </span>
+
+                <input
+                  type="text"
+                  formControlName="lastName"
+                  maxlength="60"
+
+                  [placeholder]="
+                    'REGISTER.LAST_NAMES_PLACEHOLDER'
+                    | translate
+                  "
+
+                  [class.input-error]="
+                    f['lastName'].invalid &&
+                    f['lastName'].touched
+                  "
+                >
+
+              </div>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  f['lastName'].errors?.['required'] &&
+                  f['lastName'].touched
+                "
+              >
+                {{ 'REGISTER.LAST_NAMES_REQUIRED' | translate }}
+              </span>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  f['lastName'].errors?.['minlength'] &&
+                  f['lastName'].touched
+                "
+              >
+                {{ 'REGISTER.LAST_NAMES_MIN' | translate }}
               </span>
 
             </div>
@@ -91,19 +200,19 @@
 
                 <input
                   type="email"
-                  formControlName="correo"
+                  formControlName="email"
 
                   [placeholder]="
                     'REGISTER.EMAIL_PLACEHOLDER'
                     | translate
                   "
 
-                  (keypress)="bloquearEspacios($event)"
-                  (input)="limpiarEspaciosCorreo()"
+                  (keypress)="blockSpaces($event)"
+                  (input)="stripEmailSpaces()"
 
                   [class.input-error]="
-                    f['correo'].invalid &&
-                    f['correo'].touched
+                    f['email'].invalid &&
+                    f['email'].touched
                   "
                 >
 
@@ -112,8 +221,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['correo'].errors?.['required'] &&
-                  f['correo'].touched
+                  f['email'].errors?.['required'] &&
+                  f['email'].touched
                 "
               >
                 {{ 'REGISTER.EMAIL_REQUIRED' | translate }}
@@ -122,8 +231,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['correo'].errors?.['pattern'] &&
-                  f['correo'].touched
+                  f['email'].errors?.['pattern'] &&
+                  f['email'].touched
                 "
               >
                 {{ 'REGISTER.EMAIL_INVALID' | translate }}
@@ -146,7 +255,7 @@
 
                 <input
                   type="text"
-                  formControlName="telefono"
+                  formControlName="phone"
 
                   [placeholder]="
                     'REGISTER.PHONE_PLACEHOLDER'
@@ -157,11 +266,11 @@
                   inputmode="numeric"
                   autocomplete="off"
 
-                  (input)="limpiarTelefono()"
+                  (input)="sanitizePhone()"
 
                   [class.input-error]="
-                    f['telefono'].invalid &&
-                    f['telefono'].touched
+                    f['phone'].invalid &&
+                    f['phone'].touched
                   "
                 >
 
@@ -170,8 +279,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['telefono'].errors?.['required'] &&
-                  f['telefono'].touched
+                  f['phone'].errors?.['required'] &&
+                  f['phone'].touched
                 "
               >
                 {{ 'REGISTER.PHONE_REQUIRED' | translate }}
@@ -180,8 +289,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['telefono'].errors?.['pattern'] &&
-                  f['telefono'].touched
+                  f['phone'].errors?.['pattern'] &&
+                  f['phone'].touched
                 "
               >
                 {{ 'REGISTER.PHONE_INVALID' | translate }}
@@ -190,8 +299,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['telefono'].errors?.['minlength'] &&
-                  f['telefono'].touched
+                  f['phone'].errors?.['minlength'] &&
+                  f['phone'].touched
                 "
               >
                 {{ 'REGISTER.PHONE_MIN' | translate }}
@@ -213,8 +322,8 @@
                 </span>
 
                 <input
-                  [type]="mostrarContrasena ? 'text' : 'password'"
-                  formControlName="contrasena"
+                  [type]="showPassword ? 'text' : 'password'"
+                  formControlName="password"
 
                   [placeholder]="
                     'REGISTER.PASSWORD_PLACEHOLDER'
@@ -222,27 +331,27 @@
                   "
 
                   [class.input-error]="
-                    f['contrasena'].invalid &&
-                    f['contrasena'].touched
+                    f['password'].invalid &&
+                    f['password'].touched
                   "
                 >
 
                 <button
                   type="button"
                   class="toggle-btn"
-                  (click)="toggleContrasena()"
+                  (click)="togglePassword()"
                 >
 
                   <span
                     class="material-icons"
-                    *ngIf="!mostrarContrasena"
+                    *ngIf="!showPassword"
                   >
                     visibility
                   </span>
 
                   <span
                     class="material-icons"
-                    *ngIf="mostrarContrasena"
+                    *ngIf="showPassword"
                   >
                     visibility_off
                   </span>
@@ -260,8 +369,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['contrasena'].errors?.['required'] &&
-                  f['contrasena'].touched
+                  f['password'].errors?.['required'] &&
+                  f['password'].touched
                 "
               >
                 {{ 'REGISTER.PASSWORD_REQUIRED' | translate }}
@@ -283,8 +392,8 @@
                 </span>
 
                 <input
-                  [type]="mostrarConfirmar ? 'text' : 'password'"
-                  formControlName="confirmar"
+                  [type]="showConfirmPassword ? 'text' : 'password'"
+                  formControlName="confirmPassword"
 
                   [placeholder]="
                     'REGISTER.CONFIRM_PASSWORD_PLACEHOLDER'
@@ -292,27 +401,27 @@
                   "
 
                   [class.input-error]="
-                    f['confirmar'].errors?.['noCoincide'] &&
-                    f['confirmar'].touched
+                    f['confirmPassword'].errors?.['notMatch'] &&
+                    f['confirmPassword'].touched
                   "
                 >
 
                 <button
                   type="button"
                   class="toggle-btn"
-                  (click)="toggleConfirmar()"
+                  (click)="toggleConfirmPassword()"
                 >
 
                   <span
                     class="material-icons"
-                    *ngIf="!mostrarConfirmar"
+                    *ngIf="!showConfirmPassword"
                   >
                     visibility
                   </span>
 
                   <span
                     class="material-icons"
-                    *ngIf="mostrarConfirmar"
+                    *ngIf="showConfirmPassword"
                   >
                     visibility_off
                   </span>
@@ -324,8 +433,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['confirmar'].errors?.['required'] &&
-                  f['confirmar'].touched
+                  f['confirmPassword'].errors?.['required'] &&
+                  f['confirmPassword'].touched
                 "
               >
                 {{ 'REGISTER.CONFIRM_REQUIRED' | translate }}
@@ -334,8 +443,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  f['confirmar'].errors?.['noCoincide'] &&
-                  f['confirmar'].touched
+                  f['confirmPassword'].errors?.['notMatch'] &&
+                  f['confirmPassword'].touched
                 "
               >
                 {{ 'REGISTER.PASSWORDS_NOT_MATCH' | translate }}
@@ -347,21 +456,21 @@
             <div class="form-group legal-consent">
 
               <label class="checkbox-row">
-                <input type="checkbox" formControlName="aceptaTerminos">
+                <input type="checkbox" formControlName="acceptTerms">
                 <span>
                   {{ 'REGISTER.ACCEPT_TERMS' | translate }}
-                  <a href="#" (click)="verDocumentoLegal('terms', $event)">
+                  <a href="#" (click)="openLegalDocument('terms', $event)">
                     {{ 'REGISTER.TERMS_LINK' | translate }}
                   </a>
                 </span>
               </label>
 
               <label class="checkbox-row">
-                <input type="checkbox" formControlName="aceptaPoliticaDatos">
+                <input type="checkbox" formControlName="acceptDataPolicy">
                 <span>
                   {{ 'REGISTER.ACCEPT_TERMS' | translate }}
                   {{ 'REGISTER.AND' | translate }}
-                  <a href="#" (click)="verDocumentoLegal('privacy', $event)">
+                  <a href="#" (click)="openLegalDocument('privacy', $event)">
                     {{ 'REGISTER.PRIVACY_LINK' | translate }}
                   </a>
                 </span>
@@ -370,8 +479,8 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  (f['aceptaTerminos'].invalid && f['aceptaTerminos'].touched) ||
-                  (f['aceptaPoliticaDatos'].invalid && f['aceptaPoliticaDatos'].touched)
+                  (f['acceptTerms'].invalid && f['acceptTerms'].touched) ||
+                  (f['acceptDataPolicy'].invalid && f['acceptDataPolicy'].touched)
                 "
               >
                 {{ 'REGISTER.TERMS_REQUIRED' | translate }}
@@ -379,17 +488,22 @@
 
             </div>
 
+            <!-- error devuelto por el servidor (correo ya registrado, cédula duplicada, sin conexión...) -->
+            <p class="error-msg" role="alert" *ngIf="errorKey()">
+              {{ errorKey()! | translate }}
+            </p>
+
             <button
               type="submit"
               class="btn-register"
-              [disabled]="registerForm.invalid || cargando"
+              [disabled]="registerForm.invalid || loading()"
             >
 
-              <span *ngIf="!cargando">
+              <span *ngIf="!loading()">
                 {{ 'REGISTER.BUTTON' | translate }}
               </span>
 
-              <span *ngIf="cargando">
+              <span *ngIf="loading()">
                 {{ 'REGISTER.BUTTON_LOADING' | translate }}
               </span>
 
