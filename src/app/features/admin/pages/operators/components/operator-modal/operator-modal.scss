@@ -70,3 +70,33 @@
 
   &__empty { @include caption-text; color: var(--text-muted); margin: 0; }
 }
+
+// contraseña temporal con botón para mostrar / ocultar
+.password-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  input { flex: 1; min-width: 0; }
+}
+
+.password-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+// error que devuelve el servidor, arriba de los botones
+.form-dialog__server-error {
+  padding: 0 24px;
+  margin: 0 0 8px;
+}

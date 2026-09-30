@@ -220,6 +220,13 @@
   color: var(--error);
 }
 
+// aviso informativo (ej. "el correo no se puede cambiar")
+.hint-msg {
+  margin: 6px 0 0;
+  font-size: $fs-caption;
+  color: var(--text-muted);
+}
+
 // fila del teléfono: selector de país + input de número
 .phone-row {
   display: flex;

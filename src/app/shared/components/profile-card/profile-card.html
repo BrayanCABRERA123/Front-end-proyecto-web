@@ -6,11 +6,12 @@
 
   <!-- Resumen del usuario -->
   <div class="card summary-card">
-    <div class="avatar">{{ user.initials }}</div>
+    <div class="avatar">{{ displayInitials }}</div>
 
     <div class="summary-info">
-      <h2 class="user-name">{{ user.name }}</h2>
-      <p class="subtitle">{{ 'PROFILE.MEMBER_SINCE' | translate:{date: user.memberSince} }}</p>
+      <h2 class="user-name">{{ displayName }}</h2>
+      <!-- rol real de la cuenta (viene del backend); la fecha de registro aún no se guarda -->
+      <p class="subtitle">{{ roleLabelKey | translate }}</p>
     </div>
 
     <div class="edit-status" [class.editing]="editing" [class.saved]="!editing">
@@ -26,42 +27,46 @@
 
     <div class="fields-grid">
 
-      <!-- nombre -->
-      <div class="field-card" [class.field-error]="form.get('name')?.invalid && form.get('name')?.touched">
-        <div class="field-icon"><mat-icon>person</mat-icon></div>
-        <div class="field-body">
-          <label>{{ 'PROFILE.NAME' | translate }}</label>
-          <input type="text" formControlName="name"/>
+      <!-- nombres y apellidos por separado: así los guarda security.person -->
+      @for (field of ['firstName', 'lastName']; track field) {
+        <div class="field-card" [class.field-error]="form.get(field)?.invalid && form.get(field)?.touched">
+          <div class="field-icon"><mat-icon>person</mat-icon></div>
+          <div class="field-body">
+            <label>{{ (field === 'firstName' ? 'PROFILE.FIRST_NAMES' : 'PROFILE.LAST_NAMES') | translate }}</label>
+            <input type="text" [formControlName]="field" maxlength="60"/>
 
-          @if (form.get('name')?.invalid && form.get('name')?.touched) {
-            <p class="error-msg">
-              @if (form.get('name')?.hasError('required')) {
-                {{ 'PROFILE.VALIDATION.NAME_REQUIRED' | translate }}
-              } @else if (form.get('name')?.hasError('minlength')) {
-                {{ 'PROFILE.VALIDATION.NAME_MIN' | translate }}
-              } @else if (form.get('name')?.hasError('pattern')) {
-                {{ 'PROFILE.VALIDATION.NAME_INVALID' | translate }}
-              }
-            </p>
-          }
+            @if (form.get(field)?.invalid && form.get(field)?.touched) {
+              <p class="error-msg">
+                @if (form.get(field)?.hasError('required')) {
+                  {{ 'PROFILE.VALIDATION.NAME_REQUIRED' | translate }}
+                } @else if (form.get(field)?.hasError('minlength')) {
+                  {{ 'PROFILE.VALIDATION.NAME_MIN' | translate }}
+                } @else if (form.get(field)?.hasError('pattern')) {
+                  {{ 'PROFILE.VALIDATION.NAME_INVALID' | translate }}
+                }
+              </p>
+            }
+          </div>
         </div>
-      </div>
+      }
 
-      <!-- correo -->
+      <!-- correo: es el usuario de login; si se cambia, se pide la contraseña actual -->
       <div class="field-card" [class.field-error]="form.get('email')?.invalid && form.get('email')?.touched">
         <div class="field-icon"><mat-icon>email</mat-icon></div>
         <div class="field-body">
           <label>{{ 'PROFILE.EMAIL' | translate }}</label>
-          <input type="email" formControlName="email"/>
+          <input type="email" formControlName="email" maxlength="60"/>
 
           @if (form.get('email')?.invalid && form.get('email')?.touched) {
             <p class="error-msg">
               @if (form.get('email')?.hasError('required')) {
                 {{ 'PROFILE.VALIDATION.EMAIL_REQUIRED' | translate }}
-              } @else if (form.get('email')?.hasError('pattern')) {
+              } @else {
                 {{ 'PROFILE.VALIDATION.EMAIL_INVALID' | translate }}
               }
             </p>
+          } @else if (editing) {
+            <p class="hint-msg">{{ 'PROFILE.EMAIL_CHANGE_HINT' | translate }}</p>
           }
         </div>
       </div>
@@ -139,12 +144,17 @@
 
     </div>
 
+    <!-- error devuelto por el servidor al guardar (teléfono inválido, sin conexión...) -->
+    @if (errorKey()) {
+      <p class="error-msg" role="alert">{{ errorKey()! | translate }}</p>
+    }
+
     <div class="edit-container">
       <button
         type="button"
         class="btn-edit"
         [class.saved-mode]="!editing"
-        [disabled]="editing && form.invalid"
+        [disabled]="(editing && form.invalid) || saving()"
         (click)="toggleEdit()">
 
         <mat-icon>{{ editing ? 'save' : 'edit' }}</mat-icon>

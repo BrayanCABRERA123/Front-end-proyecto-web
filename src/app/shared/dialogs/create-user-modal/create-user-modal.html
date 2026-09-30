@@ -2,43 +2,77 @@
 
   <div class="role-dialog__header">
     <div>
-      <h2>{{ (editing ? 'CREATE_USER_MODAL.TITLE_EDIT' : 'CREATE_USER_MODAL.TITLE') | translate }}</h2>
-      <p>{{ (editing ? 'CREATE_USER_MODAL.SUBTITLE_EDIT' : 'CREATE_USER_MODAL.SUBTITLE') | translate }}</p>
+      <h2>{{ 'CREATE_USER_MODAL.TITLE' | translate }}</h2>
+      <p>{{ 'CREATE_USER_MODAL.ACCOUNT_SUBTITLE' | translate }}</p>
     </div>
     <button type="button" class="close-x" (click)="close()" aria-label="close">×</button>
   </div>
 
   <div class="role-dialog__body">
 
-    <label class="field" [class.field--invalid]="nameInvalid">
-      <span>{{ 'CREATE_USER_MODAL.NAME_LABEL' | translate }}</span>
-      <input type="text" [(ngModel)]="name" [placeholder]="'CREATE_USER_MODAL.NAME_PLACEHOLDER' | translate" maxlength="60">
-      @if (nameInvalid) {
+    <label class="field" [class.field--invalid]="firstNameInvalid">
+      <span>{{ 'OPERATOR_MODAL.FIRST_NAMES_LABEL' | translate }} *</span>
+      <input type="text" [(ngModel)]="firstName" maxlength="60">
+      @if (firstNameInvalid) {
         <span class="field__error">{{ 'CREATE_USER_MODAL.ERROR_NAME' | translate }}</span>
       }
     </label>
 
+    <label class="field" [class.field--invalid]="lastNameInvalid">
+      <span>{{ 'OPERATOR_MODAL.LAST_NAMES_LABEL' | translate }} *</span>
+      <input type="text" [(ngModel)]="lastName" maxlength="60">
+      @if (lastNameInvalid) {
+        <span class="field__error">{{ 'CREATE_USER_MODAL.ERROR_NAME' | translate }}</span>
+      }
+    </label>
+
+    <label class="field" [class.field--invalid]="documentInvalid">
+      <span>{{ 'OPERATOR_MODAL.DOCUMENT_LABEL' | translate }} *</span>
+      <input type="text" inputmode="numeric" [(ngModel)]="documentNumber" (input)="sanitizeDocument()" maxlength="20">
+      @if (documentInvalid) {
+        <span class="field__error">{{ 'OPERATOR_MODAL.ERROR_DOCUMENT' | translate }}</span>
+      }
+    </label>
+
     <label class="field" [class.field--invalid]="emailInvalid">
-      <span>{{ 'CREATE_USER_MODAL.EMAIL_LABEL' | translate }}</span>
-      <input type="email" [(ngModel)]="email" [placeholder]="'CREATE_USER_MODAL.EMAIL_PLACEHOLDER' | translate" maxlength="80">
+      <span>{{ 'CREATE_USER_MODAL.EMAIL_LABEL' | translate }} *</span>
+      <input type="email" [(ngModel)]="email" [placeholder]="'CREATE_USER_MODAL.EMAIL_PLACEHOLDER' | translate" maxlength="60">
       @if (emailInvalid) {
         <span class="field__error">{{ 'CREATE_USER_MODAL.ERROR_EMAIL' | translate }}</span>
       }
     </label>
 
     <label class="field">
+      <span>{{ 'OPERATOR_MODAL.PHONE_LABEL' | translate }}</span>
+      <input type="tel" [(ngModel)]="phone" maxlength="20">
+    </label>
+
+    <label class="field">
       <span>{{ 'CREATE_USER_MODAL.ROLE_LABEL' | translate }}</span>
       <select [(ngModel)]="role">
-        @for (r of roleOptions; track r) {
-          <option [value]="r">{{ r }}</option>
+        @for (r of roleOptions; track r.value) {
+          <option [ngValue]="r.value">{{ r.labelKey | translate }}</option>
         }
       </select>
     </label>
 
-    <label class="checkbox-row">
-      <input type="checkbox" [(ngModel)]="invite">
-      {{ 'CREATE_USER_MODAL.INVITE_LABEL' | translate }}
+    <label class="field" [class.field--invalid]="passwordInvalid">
+      <span>{{ 'OPERATOR_MODAL.PASSWORD_LABEL' | translate }} *</span>
+      <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" maxlength="72" autocomplete="new-password">
+      @if (passwordInvalid) {
+        <span class="field__error">{{ 'OPERATOR_MODAL.ERROR_PASSWORD' | translate }}</span>
+      }
     </label>
+
+    <label class="checkbox-row">
+      <input type="checkbox" [(ngModel)]="showPassword">
+      {{ 'CREATE_USER_MODAL.SHOW_PASSWORD' | translate }}
+    </label>
+
+    <!-- error devuelto por el servidor (correo o cédula ya registrados, sin conexión...) -->
+    @if (errorKey()) {
+      <span class="field__error" role="alert">{{ errorKey()! | translate }}</span>
+    }
 
   </div>
 
@@ -46,8 +80,8 @@
     <button class="btn-cancel" type="button" (click)="close()">
       {{ 'CREATE_USER_MODAL.CANCEL' | translate }}
     </button>
-    <button class="btn-confirm" type="button" (click)="create()">
-      {{ (editing ? 'COMMON.SAVE' : 'CREATE_USER_MODAL.CREATE') | translate }}
+    <button class="btn-confirm" type="button" (click)="create()" [disabled]="saving()">
+      {{ (saving() ? 'OPERATOR_MODAL.SAVING' : 'CREATE_USER_MODAL.CREATE') | translate }}
     </button>
   </div>
 
