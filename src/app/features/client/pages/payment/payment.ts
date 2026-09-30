@@ -172,6 +172,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private saveState() {
+    if (!this.selectedMethod) return;
     const state: SavedPaymentState = {
       qrExpiresAt: this.qrExpiresAt,
       flowStep: this.flowStep,
@@ -201,6 +202,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   copyKey() {
+    if (!this.payee) return;
     navigator.clipboard?.writeText(this.payee.key.replace(/\s/g, ''));
     this.copied.set(true);
     setTimeout(() => this.copied.set(false), 2000);
@@ -283,6 +285,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   // pide confirmación antes de cancelar la reserva (acción irreversible)
   cancelReservation() {
+    if (!this.reservationCode) return;
     const data: ConfirmModalData = {
       title: 'PAYMENT.CANCEL_CONFIRM.TITLE',
       message: 'PAYMENT.CANCEL_CONFIRM.MESSAGE',
@@ -305,6 +308,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   // avisa que la reserva se canceló y, al cerrar, vuelve al inicio del cliente
   private onReservationCancelled() {
+    if (!this.reservationCode) return;
     // TODO: integrar cancelación real con el backend
     this.clearState();
     const dialogRef = this.showStatusModal({
