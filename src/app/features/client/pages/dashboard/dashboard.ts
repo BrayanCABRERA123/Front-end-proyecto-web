@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
 // importamos el sidebar
@@ -13,6 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
 // sede del lavadero: el cliente lleva su vehículo allí (no es a domicilio)
 import { BUSINESS_LOCATION } from '../../../../core/constants/business-location';
+// servicios reales del backend
+import { VehiclesService } from '../../../../core/services/vehicles';
+import { UserSession } from '../../../../core/services/user-session';
+import { VehicleResponse } from '../../../../core/models/vehicle.models';
 
 // avance del servicio según su estado (Confirmado → En lavado → Listo → Finalizado)
 const PROGRESS_BY_STATUS: Record<string, number> = {
@@ -29,12 +33,13 @@ const PROGRESS_BY_STATUS: Record<string, number> = {
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
-  // datos del usuario
-  user = {
-    name: 'Juan'
-  };
+  private readonly vehiclesService = inject(VehiclesService);
+  private readonly userSession = inject(UserSession);
+
+  // datos del usuario (vienen del login real)
+  userName = '';
 
   // notificaciones
   notifications = [
@@ -42,10 +47,11 @@ export class DashboardComponent {
   ];
 
   // estadísticas rápidas del cliente
+  // vehículos: real del backend. reservas y lavados: vienen de booking-service (pendiente)
   stats = [
-    { icon: 'calendar_today', value: 2, label: 'STATS.ACTIVE_RESERVATIONS' },
-    { icon: 'directions_car', value: 3, label: 'STATS.MY_VEHICLES' },
-    { icon: 'water_drop', value: 14, label: 'STATS.WASHES_DONE' }
+    { icon: 'calendar_today', value: 0, label: 'STATS.ACTIVE_RESERVATIONS' },
+    { icon: 'directions_car', value: 0, label: 'STATS.MY_VEHICLES' },
+    { icon: 'water_drop', value: 0, label: 'STATS.WASHES_DONE' }
   ];
 
   // próximo servicio programado
@@ -107,6 +113,24 @@ export class DashboardComponent {
     private dialog: MatDialog,
     private translate: TranslateService
   ) {}
+
+  ngOnInit(): void {
+    this.userName = this.userSession.user().name;
+    this.loadVehicles();
+  }
+
+  private loadVehicles(): void {
+    this.vehiclesService.list().subscribe({
+      next: (vehicles) => {
+        // actualiza el stat de vehículos con el número real
+        const stat = this.stats.find(s => s.label === 'STATS.MY_VEHICLES');
+        if (stat) stat.value = vehicles.length;
+      },
+      error: () => {
+        // si no hay perfil o hay error, queda en 0
+      }
+    });
+  }
 
   // METODO
   goTo(route: string | null | undefined) {
