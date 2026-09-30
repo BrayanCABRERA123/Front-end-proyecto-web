@@ -7,12 +7,10 @@
   <main class="home-content">
 
     <div class="payment-header">
-      @if (reservationCode) {
-        <span class="step-pill">
-          <mat-icon>check_circle</mat-icon>
-          {{ 'PAYMENT.STEP' | translate }} · #{{ reservationCode }}
-        </span>
-      }
+      <span class="step-pill">
+        <mat-icon>check_circle</mat-icon>
+        {{ 'PAYMENT.STEP' | translate }} · #{{ reservationCode }}
+      </span>
       <h1>{{ 'PAYMENT.TITLE' | translate }}</h1>
       <p>{{ 'PAYMENT.SUBTITLE' | translate }}</p>
     </div>
@@ -21,13 +19,6 @@
 
       <!-- ================= Columna izquierda ================= -->
       <div class="payment-main">
-
-        @if (!reservationCode || !serviceSummary) {
-          <div class="empty-state">
-            <mat-icon>receipt_long</mat-icon>
-            <p>{{ 'PAYMENT.EMPTY' | translate }}</p>
-          </div>
-        } @else {
 
         <!-- Método de pago -->
         <section class="card">
@@ -73,14 +64,14 @@
 
             <div class="qr-info">
               <p class="payee">
-                {{ payee?.name }}
+                {{ payee.name }}
                 <span class="verified"><mat-icon>verified</mat-icon> {{ 'PAYMENT.QR.VERIFIED' | translate }}</span>
               </p>
 
               <div class="key-box">
                 <div>
                   <small>{{ 'PAYMENT.QR.KEY' | translate }}</small>
-                  <strong>{{ payee?.key }}</strong>
+                  <strong>{{ payee.key }}</strong>
                 </div>
                 <button type="button" class="btn-outline" (click)="copyKey()">
                   <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
@@ -91,7 +82,7 @@
               <div class="amount-row">
                 <div>
                   <small>{{ 'PAYMENT.QR.ACCOUNT_TYPE' | translate }}</small>
-                  <p>{{ payee?.accountType | translate }}</p>
+                  <p>{{ payee.accountType | translate }}</p>
                 </div>
                 <div class="amount">
                   <small>{{ 'PAYMENT.QR.AMOUNT' | translate }}</small>
@@ -166,7 +157,6 @@
           </div>
         </section>
 
-        }
 
       </div>
 
@@ -185,8 +175,8 @@
           <div class="service-box">
             <mat-icon>local_car_wash</mat-icon>
             <div>
-              <strong>{{ serviceSummary?.serviceName }}</strong>
-              <p>{{ serviceSummary?.serviceDesc | translate }}</p>
+              <strong>{{ serviceSummary.serviceName }}</strong>
+              <p>{{ serviceSummary.serviceDesc | translate }}</p>
             </div>
           </div>
 
@@ -194,26 +184,26 @@
             <mat-icon>directions_car</mat-icon>
             <div>
               <small>{{ 'PAYMENT.SUMMARY.VEHICLE' | translate }}</small>
-              <strong>{{ serviceSummary?.vehicleModel }}</strong>
+              <strong>{{ serviceSummary.vehicleModel }}</strong>
             </div>
-            <span class="plate">{{ serviceSummary?.plate }}</span>
+            <span class="plate">{{ serviceSummary.plate }}</span>
           </div>
 
           <p class="schedule">
-            <mat-icon>event</mat-icon> {{ serviceSummary?.schedule }}
+            <mat-icon>event</mat-icon> {{ serviceSummary.schedule }}
           </p>
 
           <div class="summary-row">
             <span>{{ 'PAYMENT.SUMMARY.SUBTOTAL' | translate }}</span>
-            <strong>${{ serviceSummary?.subtotal | number }} COP</strong>
+            <strong>${{ serviceSummary.subtotal | number }} COP</strong>
           </div>
           <div class="summary-row discount">
             <span>{{ 'PAYMENT.SUMMARY.DISCOUNT' | translate }}</span>
-            <span class="pct">-{{ serviceSummary?.discountPercent }}%</span>
+            <span class="pct">-{{ serviceSummary.discountPercent }}%</span>
             <strong>-${{ discountAmount | number }} COP</strong>
           </div>
           <div class="coupon-row">
-            <span>{{ 'PAYMENT.SUMMARY.COUPON' | translate }}: {{ serviceSummary?.coupon }}</span>
+            <span>{{ 'PAYMENT.SUMMARY.COUPON' | translate }}: {{ serviceSummary.coupon }}</span>
             <span class="ok-text">{{ 'PAYMENT.SUMMARY.COUPON_OK' | translate }}</span>
           </div>
 

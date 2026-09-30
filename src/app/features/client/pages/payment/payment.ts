@@ -48,38 +48,45 @@ export class PaymentComponent implements OnInit, OnDestroy {
   // estado del pago: pendiente de confirmación o en verificación
   flowStep: FlowStep = 'PENDING';
 
-  // código de la reserva (viene de booking-service, pendiente)
-  reservationCode: string | null = null;
+  // código de la reserva
+  reservationCode = 'RES-9420';
 
-  // métodos de pago disponibles (vienen de configuración del negocio, pendiente)
-  paymentMethods: PaymentMethod[] = [];
+  // métodos de pago disponibles
+  paymentMethods: PaymentMethod[] = [
+    { id: 'NEQUI', icon: 'smartphone', label: 'PAYMENT.METHOD.NEQUI', desc: 'PAYMENT.METHOD.NEQUI_DESC' },
+    { id: 'DAVIPLATA', icon: 'account_balance', label: 'PAYMENT.METHOD.DAVIPLATA', desc: 'PAYMENT.METHOD.DAVIPLATA_DESC' },
+    { id: 'TRANSFER', icon: 'receipt_long', label: 'PAYMENT.METHOD.TRANSFER', desc: 'PAYMENT.METHOD.TRANSFER_DESC' },
+    { id: 'CASH', icon: 'payments', label: 'PAYMENT.METHOD.CASH', desc: 'PAYMENT.METHOD.CASH_DESC' }
+  ];
 
   // método seleccionado por el usuario
-  selectedMethod: PaymentMethodId | null = null;
+  selectedMethod: PaymentMethodId = 'NEQUI';
 
-  // datos de la cuenta que recibe el pago (vienen de configuración del negocio, pendiente)
-  payee: { name: string; key: string; accountType: string } | null = null;
+  // datos de la cuenta que recibe el pago
+  payee = {
+    name: 'Lavado Vehicular S.A.S.',
+    key: '318 450 9988',
+    accountType: 'PAYMENT.QR.ACCOUNT_TYPE_VALUE'
+  };
 
-  // resumen de la reserva (viene de booking-service, pendiente)
-  serviceSummary: {
-    service: string;
-    serviceName: string;
-    serviceDesc: string;
-    vehicleModel: string;
-    plate: string;
-    schedule: string;
-    subtotal: number;
-    discountPercent: number;
-    coupon: string;
-  } | null = null;
+  // resumen de la reserva
+  serviceSummary = {
+    service: 'PREMIUM',
+    serviceName: 'Lavado Premium Automóvil',
+    serviceDesc: 'PAYMENT.SUMMARY.PREMIUM_DESC',
+    vehicleModel: 'Mazda CX-30',
+    plate: 'KLL-302',
+    schedule: 'Hoy, 24 Octubre 2024 · 14:00 - 15:15',
+    subtotal: 60000,
+    discountPercent: 15,
+    coupon: 'BIENVENIDO15'
+  };
 
   get discountAmount(): number {
-    if (!this.serviceSummary) return 0;
     return Math.round(this.serviceSummary.subtotal * this.serviceSummary.discountPercent / 100);
   }
 
   get totalToPay(): number {
-    if (!this.serviceSummary) return 0;
     return this.serviceSummary.subtotal - this.discountAmount;
   }
 
@@ -172,7 +179,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private saveState() {
-    if (!this.selectedMethod) return;
     const state: SavedPaymentState = {
       qrExpiresAt: this.qrExpiresAt,
       flowStep: this.flowStep,
@@ -202,7 +208,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   copyKey() {
-    if (!this.payee) return;
     navigator.clipboard?.writeText(this.payee.key.replace(/\s/g, ''));
     this.copied.set(true);
     setTimeout(() => this.copied.set(false), 2000);
@@ -285,7 +290,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   // pide confirmación antes de cancelar la reserva (acción irreversible)
   cancelReservation() {
-    if (!this.reservationCode) return;
     const data: ConfirmModalData = {
       title: 'PAYMENT.CANCEL_CONFIRM.TITLE',
       message: 'PAYMENT.CANCEL_CONFIRM.MESSAGE',
@@ -308,7 +312,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   // avisa que la reserva se canceló y, al cerrar, vuelve al inicio del cliente
   private onReservationCancelled() {
-    if (!this.reservationCode) return;
     // TODO: integrar cancelación real con el backend
     this.clearState();
     const dialogRef = this.showStatusModal({

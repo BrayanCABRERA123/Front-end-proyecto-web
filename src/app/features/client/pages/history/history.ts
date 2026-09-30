@@ -40,19 +40,33 @@ export class HistoryComponent {
     this.showRatingModal = true;
   }
 
-  // SERVICIOS (vienen de booking-service, pendiente)
-  services: {
-    id: number;
-    title: string;
-    date: string;
-    serviceType: string;
-    extras: string[];
-    assignmentType: string;
-    operator: string;
-    status: string;
-    price: number;
-    paid: boolean;
-  }[] = [];
+  // SERVICIOS
+  services = [
+  {
+    id: 1,
+    title: 'PREMIUM',
+    date: '28/03/2026',
+    serviceType: 'PREMIUM',
+    extras: ['WAX', 'VACUUM'],
+    assignmentType: 'MANUAL',
+    operator: 'Juan',
+    status: 'COMPLETED',
+    price: 35000,
+    paid: true
+  },
+  {
+    id: 2,
+    title: 'BASIC',
+    date: '16/12/2025',
+    serviceType: 'BASIC',
+    extras: ['WAX'],
+    assignmentType: 'AUTO',
+    operator: '',
+    status: 'PENDING',
+    price: 20000,
+    paid: false
+  }
+];
 
   // TRADUCIR EXTRAS
   getTranslatedExtras(extras: string[]): string[] {
