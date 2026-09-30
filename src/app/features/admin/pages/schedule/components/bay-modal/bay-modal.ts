@@ -7,19 +7,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { BayStatus, WashBay } from '../../../../models/admin.models';
 
-// operarios que se pueden asignar a una bahía activa
-export interface BayOperatorOption {
-  id: string;
-  name: string;
-}
-
 // si se mandan datos estamos editando; si no, creando
-export type WashBayModalData = WashBay & { operators: BayOperatorOption[] };
+export type WashBayModalData = WashBay;
 
 export interface WashBayModalResult {
   name: string;
   status: BayStatus;
-  currentOperator: string | null;
 }
 
 @Component({
@@ -40,13 +33,11 @@ export class WashBayModal {
 
   name = '';
   status: BayStatus = 'active';
-  operatorName: string | null = null;
 
   isEditing = false;
   nameTouched = false;
   submitted = false;
 
-  operators: BayOperatorOption[] = [];
   /** la bahía no se puede dejar sin nombre */
   readonly maxLength = 40;
 
@@ -58,14 +49,7 @@ export class WashBayModal {
       this.isEditing = true;
       this.name = data.name;
       this.status = data.status;
-      this.operatorName = data.currentOperator;
     }
-    this.operators = data?.operators ?? [];
-  }
-
-  // solo las bahías activas pueden tener operario asignado
-  get canAssignOperator(): boolean {
-    return this.status === 'active';
   }
 
   get nameError(): boolean {
@@ -91,7 +75,6 @@ export class WashBayModal {
     const result: WashBayModalResult = {
       name: this.name.trim(),
       status: this.status,
-      currentOperator: this.status === 'active' ? this.operatorName : null,
     };
 
     this.dialogRef.close(result);

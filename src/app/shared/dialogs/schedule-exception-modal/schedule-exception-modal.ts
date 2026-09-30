@@ -8,7 +8,6 @@ export type ExceptionType = 'holiday' | 'special';
 
 export interface ScheduleExceptionData {
   date: string;
-  type: ExceptionType;
   closedAllDay: boolean;
   openTime: string;
   closeTime: string;
@@ -29,7 +28,6 @@ export class ScheduleExceptionModal {
   isEditing = false;
 
   date = '';
-  type: ExceptionType = 'holiday';
   closedAllDay = true;
   openTime = '09:00';
   closeTime = '14:00';
@@ -42,7 +40,6 @@ export class ScheduleExceptionModal {
     if (data) {
       this.isEditing = true;
       this.date = data.date;
-      this.type = data.type;
       this.closedAllDay = data.closedAllDay;
       this.openTime = data.openTime;
       this.closeTime = data.closeTime;
@@ -63,7 +60,6 @@ export class ScheduleExceptionModal {
 
     const result: ScheduleExceptionResult = {
       date: this.date,
-      type: this.type,
       closedAllDay: this.closedAllDay,
       openTime: this.openTime,
       closeTime: this.closeTime,

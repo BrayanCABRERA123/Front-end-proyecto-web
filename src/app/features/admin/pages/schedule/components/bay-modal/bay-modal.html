@@ -37,18 +37,7 @@
       </select>
     </label>
 
-    <label class="form-field">
-      <span>{{ 'BAY_MODAL.OPERATOR_LABEL' | translate }}</span>
-      <select [(ngModel)]="operatorName" [disabled]="!canAssignOperator">
-        <option [ngValue]="null">{{ 'ADMIN_SCHEDULE.BAYS_SECTION.NONE_ASSIGNED' | translate }}</option>
-        @for (op of operators; track op.id) {
-          <option [ngValue]="op.name">{{ op.name }}</option>
-        }
-      </select>
-      @if (!canAssignOperator) {
-        <span class="form-hint">{{ 'BAY_MODAL.HINT_NO_OPERATOR' | translate }}</span>
-      }
-    </label>
+    
 
   </div>
 

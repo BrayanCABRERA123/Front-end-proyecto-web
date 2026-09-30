@@ -1,7 +1,15 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { Observable, forkJoin, map, tap } from 'rxjs';
 
-import { readStorage, writeStorage } from '../../../core/services/local-storage';
-import { ScheduleHistoryEntry } from '../../../shared/dialogs/schedule-history-modal/schedule-history.model';
+import { BookingApiService } from '../../../core/services/booking-api';
+import {
+  BayResponse,
+  BayStatusCode,
+  BusinessHourDto,
+  HoursExceptionRequest,
+  HoursExceptionResponse,
+} from '../../../core/models/booking.models';
+import { apiErrorKey } from '../../../core/utils/api-error';
 import {
   BayStatus,
   DayKey,
@@ -10,15 +18,7 @@ import {
   WashBay,
 } from '../models/admin.models';
 
-const STORAGE_KEY = 'adminSchedule';
-
-interface PersistedSchedule {
-  weeklySchedule: DaySchedule[];
-  exceptions: ScheduleException[];
-  bays: WashBay[];
-  history: ScheduleHistoryEntry[];
-}
-
+// el backend numera los días 1 = lunes ... 7 = domingo
 const DAY_ORDER: DayKey[] = [
   'monday',
   'tuesday',
@@ -29,197 +29,215 @@ const DAY_ORDER: DayKey[] = [
   'sunday',
 ];
 
-/** Estado inicial de la semana, con los mismos valores que ya traía la pantalla. */
-const DEFAULT_WEEK: DaySchedule[] = [
-  { key: 'monday', isWorking: true, openTime: '07:30', closeTime: '18:30', pause: 'none' },
-  { key: 'tuesday', isWorking: true, openTime: '07:30', closeTime: '18:30', pause: 'none' },
-  { key: 'wednesday', isWorking: true, openTime: '07:30', closeTime: '18:30', pause: 'none' },
-  { key: 'thursday', isWorking: true, openTime: '07:30', closeTime: '18:30', pause: 'none' },
-  { key: 'friday', isWorking: true, openTime: '07:30', closeTime: '19:00', pause: 'none' },
-  { key: 'saturday', isWorking: true, openTime: '08:00', closeTime: '18:00', pause: 'none' },
-  { key: 'sunday', isWorking: false, openTime: '08:00', closeTime: '14:00', pause: 'none' },
-];
-
-const DEFAULT_EXCEPTIONS: ScheduleException[] = [
-  { id: 'ex1', date: '2026-11-11', type: 'holiday', closedAllDay: true, openTime: '', closeTime: '', reason: 'Día de la Independencia de Cartagena' },
-  { id: 'ex2', date: '2026-12-08', type: 'special', closedAllDay: false, openTime: '09:00', closeTime: '14:00', reason: 'Inmaculada Concepción · Jornada corta' },
-  { id: 'ex3', date: '2026-12-25', type: 'holiday', closedAllDay: true, openTime: '', closeTime: '', reason: 'Navidad - No laboral obligatorio' },
-];
-
-const DEFAULT_BAYS: WashBay[] = [
-  { id: 'b1', name: 'Bahía 1', status: 'active', currentOperator: 'Juan Díaz' },
-  { id: 'b2', name: 'Bahía 2', status: 'active', currentOperator: 'Carlos Ruiz' },
-  { id: 'b3', name: 'Bahía 3', status: 'active', currentOperator: null },
-  { id: 'b4', name: 'Bahía 4', status: 'maintenance', currentOperator: null },
-];
-
-const DEFAULT_HISTORY: ScheduleHistoryEntry[] = [
-  { date: '15/09/2026', author: 'Laura Méndez', reason: 'SCHEDULE_HISTORY.REASON.HOURS_UPDATED' },
-  { date: '02/09/2026', author: 'Laura Méndez', reason: 'SCHEDULE_HISTORY.REASON.EXCEPTION_ADDED', detail: 'Navidad' },
-  { date: '20/08/2026', author: 'Laura Méndez', reason: 'SCHEDULE_HISTORY.REASON.BAY_MAINTENANCE', detail: 'Bahía 4' },
-];
+// pausa que se propone al activar "con pausa" en un día (el admin la puede cambiar)
+const DEFAULT_BREAK = { start: '12:00', end: '13:00' };
 
 /**
- * Fuente única de datos de "Horarios y bahías".
+ * Fuente única de "Horarios y bahías", con los datos del booking-service.
  *
- * Concentra el horario semanal, las excepciones, las bahías y el historial de
- * cambios para que la pantalla solo tenga lógica de presentación. Al conectar el
- * backend basta con reemplazar el cuerpo de los métodos por llamadas HTTP
- * conservando las firmas.
+ * El horario semanal se edita en memoria y se guarda completo con "Guardar cambios"
+ * (saveSchedule). Las excepciones y las bahías se guardan una por una; cada método devuelve
+ * el Observable para que la pantalla muestre el aviso cuando el backend confirma.
+ * El dashboard y la pantalla de operarios leen las bahías de aquí.
  */
 @Injectable({ providedIn: 'root' })
 export class ScheduleStore {
 
-  private readonly state = signal<PersistedSchedule>(this.load());
+  private readonly api = inject(BookingApiService);
 
-  readonly weeklySchedule = computed(() => this.state().weeklySchedule);
-  readonly exceptions = computed(() => this.state().exceptions);
-  readonly bays = computed(() => this.state().bays);
-  readonly history = computed(() => this.state().history);
+  private readonly week = signal<DaySchedule[]>([]);
+  private readonly exceptionList = signal<ScheduleException[]>([]);
+  private readonly bayList = signal<WashBay[]>([]);
+
+  readonly loading = signal(false);
+  // llave de traducción del error de carga (null = sin error)
+  readonly loadError = signal<string | null>(null);
+
+  readonly weeklySchedule = computed(() => this.week());
+  readonly exceptions = computed(() => this.exceptionList());
+  readonly bays = computed(() => this.bayList());
 
   /** horario siempre en el orden lunes → domingo, para pintar la tabla */
   readonly orderedSchedule = computed(() =>
-    DAY_ORDER.map(key => this.state().weeklySchedule.find(d => d.key === key)!).filter(Boolean)
+    DAY_ORDER.map(key => this.week().find(d => d.key === key)).filter((d): d is DaySchedule => !!d)
   );
 
-  readonly activeBaysCount = computed(() => this.state().bays.filter(b => b.status === 'active').length);
+  readonly activeBaysCount = computed(() => this.bayList().filter(b => b.status === 'active').length);
 
-  /** día de la semana en que la bahía está abierta, o null si está cerrada */
+  constructor() {
+    this.load();
+  }
+
+  /** pide horario, excepciones y bahías al backend */
+  load(): void {
+    this.loading.set(true);
+    this.loadError.set(null);
+    forkJoin({
+      hours: this.api.businessHours(),
+      exceptions: this.api.exceptions(),
+      bays: this.api.bays(),
+    }).subscribe({
+      next: ({ hours, exceptions, bays }) => {
+        this.week.set(hours.map(toDay));
+        this.exceptionList.set(exceptions.map(toException));
+        this.bayList.set(bays.map(toBay));
+        this.loading.set(false);
+      },
+      error: (error) => {
+        this.loadError.set(apiErrorKey(error));
+        this.loading.set(false);
+      }
+    });
+  }
+
+  /** horario de hoy (null si no hay datos) */
   getTodaySchedule(): DaySchedule | undefined {
     const order: DayKey[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    return this.state().weeklySchedule.find(d => d.key === order[new Date().getDay()]);
+    return this.week().find(d => d.key === order[new Date().getDay()]);
   }
 
-  /* ---------- horario semanal ---------- */
+  /* ---------- horario semanal (se edita en memoria hasta guardar) ---------- */
 
   toggleDay(key: DayKey): void {
-    // sin pasar el key, patchSchedule aplicaba el cambio a todos los días a la vez
-    this.patchSchedule({ isWorking: !this.findDay(key)?.isWorking }, key);
+    this.patchDay(key, day => ({ isWorking: !day.isWorking }));
   }
 
-  setDayField<K extends 'openTime' | 'closeTime' | 'pause'>(key: DayKey, field: K, value: DaySchedule[K]): void {
-    this.patchSchedule({ [field]: value } as Partial<DaySchedule>, key);
+  setDayField<K extends 'openTime' | 'closeTime' | 'breakStart' | 'breakEnd'>(key: DayKey, field: K, value: DaySchedule[K]): void {
+    this.patchDay(key, () => ({ [field]: value } as Partial<DaySchedule>));
   }
 
-  /** vuelve el horario a la última versión guardada con "Guardar cambios" */
+  /** activa o quita la pausa del día; al activarla propone 12:00 - 13:00 */
+  setDayPause(key: DayKey, withBreak: boolean): void {
+    this.patchDay(key, () => withBreak
+      ? { pause: 'lunch', breakStart: DEFAULT_BREAK.start, breakEnd: DEFAULT_BREAK.end }
+      : { pause: 'none', breakStart: null, breakEnd: null });
+  }
+
+  /** vuelve el horario a la última versión guardada */
   resetSchedule(saved: DaySchedule[]): void {
-    this.update({ weeklySchedule: saved.map(d => ({ ...d })) });
+    this.week.set(saved.map(d => ({ ...d })));
   }
 
-  saveSchedule(): DaySchedule[] {
-    const snapshot = this.state().weeklySchedule.map(d => ({ ...d }));
-    this.addHistory('SCHEDULE_HISTORY.REASON.SCHEDULE_SAVED');
-    return snapshot;
+  /** guarda la semana completa; el backend valida (pausa dentro del horario, cierre > apertura) */
+  saveSchedule(): Observable<DaySchedule[]> {
+    const body: BusinessHourDto[] = this.orderedSchedule().map(day => ({
+      dayOfWeek: DAY_ORDER.indexOf(day.key) + 1,
+      working: day.isWorking,
+      opensAt: day.openTime,
+      closesAt: day.closeTime,
+      breakStartsAt: day.pause === 'lunch' ? day.breakStart : null,
+      breakEndsAt: day.pause === 'lunch' ? day.breakEnd : null,
+    }));
+    return this.api.saveBusinessHours(body).pipe(
+      map(hours => hours.map(toDay)),
+      tap(week => this.week.set(week)),
+      map(week => week.map(d => ({ ...d })))
+    );
   }
 
   /* ---------- bahías ---------- */
 
-  /** único punto de cambio de estado: lo usan el select, el alta y la edición */
-  setBayStatus(id: string, status: BayStatus): void {
-    const bays = this.state().bays.map(b =>
-      b.id === id
-        // una bahía que no está activa no puede tener operario asignado
-        ? { ...b, status, currentOperator: status === 'active' ? b.currentOperator : null }
-        : b
+  setBayStatus(id: string, status: BayStatus): Observable<WashBay> {
+    const bay = this.bayList().find(b => b.id === id);
+    return this.updateBay(id, { name: bay?.name ?? '', status });
+  }
+
+  addBay(name: string, status: BayStatus): Observable<WashBay> {
+    return this.api.createBay(name, toBayStatusCode(status)).pipe(
+      map(toBay),
+      tap(created => this.bayList.update(list => [...list, created]))
     );
-
-    const bay = this.state().bays.find(b => b.id === id);
-    this.update({ bays });
-    if (bay) this.addHistory('SCHEDULE_HISTORY.REASON.BAY_STATUS', bay.name);
   }
 
-  addBay(name: string, status: BayStatus, currentOperator: string | null): WashBay {
-    const bay: WashBay = {
-      id: 'b' + (this.state().bays.length + 1) + '-' + Date.now(),
-      name,
-      status,
-      currentOperator: status === 'active' ? currentOperator : null,
-    };
-    this.update({ bays: [...this.state().bays, bay] });
-    this.addHistory('SCHEDULE_HISTORY.REASON.BAY_ADDED', bay.name);
-    return bay;
+  updateBay(id: string, changes: { name: string; status: BayStatus }): Observable<WashBay> {
+    return this.api.updateBay(Number(id), changes.name, toBayStatusCode(changes.status)).pipe(
+      map(toBay),
+      tap(updated => this.bayList.update(list => list.map(b => (b.id === updated.id ? updated : b))))
+    );
   }
 
-  updateBay(id: string, changes: Partial<Omit<WashBay, 'id'>>): void {
-    this.update({
-      bays: this.state().bays.map(b =>
-        b.id === id
-          ? { ...b, ...changes, currentOperator: (changes.status ?? b.status) === 'active' ? changes.currentOperator ?? b.currentOperator : null }
-          : b
-      ),
-    });
-  }
-
-  removeBay(id: string): void {
-    const bay = this.state().bays.find(b => b.id === id);
-    this.update({ bays: this.state().bays.filter(b => b.id !== id) });
-    if (bay) this.addHistory('SCHEDULE_HISTORY.REASON.BAY_REMOVED', bay.name);
-  }
-
-  /** siguiente número libre de bahía, para sugerir un nombre al crear */
-  nextBayName(): string {
-    return 'Bahía ' + (this.state().bays.length + 1);
+  /** el backend no deja borrar una bahía con reservas por delante (BAY_HAS_BOOKINGS) */
+  removeBay(id: string): Observable<void> {
+    return this.api.deleteBay(Number(id)).pipe(
+      tap(() => this.bayList.update(list => list.filter(b => b.id !== id)))
+    );
   }
 
   /* ---------- excepciones ---------- */
 
-  addException(exception: Omit<ScheduleException, 'id'>): ScheduleException {
-    const created: ScheduleException = { id: 'ex' + Date.now(), ...exception };
-    this.update({
-      exceptions: [...this.state().exceptions, created].sort((a, b) => a.date.localeCompare(b.date)),
-    });
-    this.addHistory('SCHEDULE_HISTORY.REASON.EXCEPTION_ADDED', created.reason);
-    return created;
+  addException(exception: Omit<ScheduleException, 'id' | 'type'>): Observable<ScheduleException> {
+    return this.api.createException(toExceptionRequest(exception)).pipe(
+      map(toException),
+      tap(created => this.exceptionList.update(list => sortByDate([...list, created])))
+    );
   }
 
-  updateException(id: string, changes: Omit<ScheduleException, 'id'>): void {
-    this.update({
-      exceptions: this.state()
-        .exceptions.map(e => (e.id === id ? { id, ...changes } : e))
-        .sort((a, b) => a.date.localeCompare(b.date)),
-    });
+  updateException(id: string, changes: Omit<ScheduleException, 'id' | 'type'>): Observable<ScheduleException> {
+    return this.api.updateException(Number(id), toExceptionRequest(changes)).pipe(
+      map(toException),
+      tap(updated => this.exceptionList.update(list => sortByDate(list.map(e => (e.id === id ? updated : e)))))
+    );
   }
 
-  removeException(id: string): void {
-    const exception = this.state().exceptions.find(e => e.id === id);
-    this.update({ exceptions: this.state().exceptions.filter(e => e.id !== id) });
-    if (exception) this.addHistory('SCHEDULE_HISTORY.REASON.EXCEPTION_REMOVED', exception.reason);
-  }
-
-  /* ---------- historial ---------- */
-
-  private addHistory(reason: string, detail?: string): void {
-    const today = new Date().toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    const entry: ScheduleHistoryEntry = { date: today, author: 'Laura Méndez', reason, detail };
-    this.update({ history: [entry, ...this.state().history].slice(0, 20) });
+  removeException(id: string): Observable<void> {
+    return this.api.deleteException(Number(id)).pipe(
+      tap(() => this.exceptionList.update(list => list.filter(e => e.id !== id)))
+    );
   }
 
   /* ---------- internos ---------- */
 
-  private findDay(key: DayKey): DaySchedule | undefined {
-    return this.state().weeklySchedule.find(d => d.key === key);
+  private patchDay(key: DayKey, changes: (day: DaySchedule) => Partial<DaySchedule>): void {
+    this.week.update(week => week.map(d => (d.key === key ? { ...d, ...changes(d) } : d)));
   }
+}
 
-  private patchSchedule(changes: Partial<DaySchedule>, key?: DayKey): void {
-    this.update({
-      weeklySchedule: this.state().weeklySchedule.map(d =>
-        d.key === (key ?? d.key) ? { ...d, ...changes } : d
-      ),
-    });
-  }
+/* ---------- traducción entre el backend y la pantalla ---------- */
 
-  private update(changes: Partial<PersistedSchedule>): void {
-    const next = { ...this.state(), ...changes };
-    this.state.set(next);
-    writeStorage(STORAGE_KEY, next);
-  }
+function toDay(hour: BusinessHourDto): DaySchedule {
+  const hasBreak = !!hour.breakStartsAt && !!hour.breakEndsAt;
+  return {
+    key: DAY_ORDER[hour.dayOfWeek - 1],
+    isWorking: hour.working,
+    openTime: hour.opensAt,
+    closeTime: hour.closesAt,
+    pause: hasBreak ? 'lunch' : 'none',
+    breakStart: hour.breakStartsAt,
+    breakEnd: hour.breakEndsAt,
+  };
+}
 
-  private load(): PersistedSchedule {
-    return readStorage<PersistedSchedule>(STORAGE_KEY, {
-      weeklySchedule: DEFAULT_WEEK,
-      exceptions: DEFAULT_EXCEPTIONS,
-      bays: DEFAULT_BAYS,
-      history: DEFAULT_HISTORY,
-    });
-  }
+// festivo = cerrado todo el día; jornada especial = abre con otro horario
+function toException(exception: HoursExceptionResponse): ScheduleException {
+  return {
+    id: String(exception.id),
+    date: exception.date,
+    type: exception.closed ? 'holiday' : 'special',
+    closedAllDay: exception.closed,
+    openTime: exception.opensAt ?? '',
+    closeTime: exception.closesAt ?? '',
+    reason: exception.reason,
+  };
+}
+
+function toExceptionRequest(exception: Omit<ScheduleException, 'id' | 'type'>): HoursExceptionRequest {
+  return {
+    date: exception.date,
+    closed: exception.closedAllDay,
+    opensAt: exception.closedAllDay ? null : exception.openTime,
+    closesAt: exception.closedAllDay ? null : exception.closeTime,
+    reason: exception.reason,
+  };
+}
+
+function toBay(bay: BayResponse): WashBay {
+  return { id: String(bay.id), code: bay.code, name: bay.name, status: bay.status.toLowerCase() as BayStatus };
+}
+
+function toBayStatusCode(status: BayStatus): BayStatusCode {
+  return status.toUpperCase() as BayStatusCode;
+}
+
+function sortByDate(list: ScheduleException[]): ScheduleException[] {
+  return [...list].sort((a, b) => a.date.localeCompare(b.date));
 }
