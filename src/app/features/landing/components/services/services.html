@@ -19,7 +19,7 @@
         <p class="service-desc">{{ plan.descKey | translate }}</p>
 
         <div class="service-price">
-          {{ plan.price | copPrice }}
+          {{ plan.price !== null ? (plan.price | copPrice) : '—' }}
           <span class="service-time">· {{ plan.timeKey | translate }}</span>
         </div>
 

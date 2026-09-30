@@ -237,7 +237,13 @@
           </button>
         </div>
 
-        @if (services.length === 0) {
+        @if (servicesLoading()) {
+          <p class="muted">{{ 'COMMON.LOADING' | translate }}</p>
+        } @else if (servicesErrorKey()) {
+          <app-empty-state variant="empty" icon="error" titleKey="COMMON.ERROR" [messageKey]="servicesErrorKey()!">
+            <button class="btn-outline" (click)="loadServices()">{{ 'NOTIFICATIONS.RETRY' | translate }}</button>
+          </app-empty-state>
+        } @else if (services.length === 0) {
 
           <app-empty-state
             variant="empty"
@@ -268,12 +274,15 @@
                 @for (s of services; track s.id) {
                   <tr>
                     <td><strong>{{ s.name }}</strong></td>
-                    <td class="accent">{{ cop(s.price) }}</td>
-                    <td>{{ s.durationMin }} {{ 'ADMIN_MANAGEMENT.SERVICES.MINUTES_SUFFIX' | translate }}</td>
-                    <td><span class="type-chip">{{ s.category }}</span></td>
+                    <td class="accent">
+                      {{ referencePrice(s) ? cop(referencePrice(s)!.price) : '—' }}
+                      <span class="muted">{{ 'ADMIN_MANAGEMENT.SERVICES.PRICES_COUNT' | translate:{ count: s.prices.length } }}</span>
+                    </td>
+                    <td>{{ referencePrice(s)?.estimatedMinutes ?? '—' }} {{ 'ADMIN_MANAGEMENT.SERVICES.MINUTES_SUFFIX' | translate }}</td>
+                    <td><span class="type-chip">{{ s.category?.name ?? '—' }}</span></td>
                     <td>
-                      <span [class]="'status-pill status-pill--' + (s.status === 'active' ? 'active' : 'inactive')">
-                        {{ ('ADMIN_MANAGEMENT.SERVICES.STATUS.' + s.status) | translate }}
+                      <span [class]="'status-pill status-pill--' + (s.active ? 'active' : 'inactive')">
+                        {{ ('ADMIN_MANAGEMENT.SERVICES.STATUS.' + (s.active ? 'active' : 'inactive')) | translate }}
                       </span>
                     </td>
                     <td class="actions-cell">
@@ -281,7 +290,7 @@
                         <mat-icon>edit</mat-icon>
                       </button>
                       <button class="btn-icon" (click)="toggleServiceStatus(s)" [attr.aria-label]="'COMMON.VIEW' | translate">
-                        <mat-icon>{{ s.status === 'active' ? 'pause_circle' : 'play_circle' }}</mat-icon>
+                        <mat-icon>{{ s.active ? 'pause_circle' : 'play_circle' }}</mat-icon>
                       </button>
                       <button class="btn-icon btn-icon--danger" (click)="deleteService(s)" [attr.aria-label]="'COMMON.DELETE' | translate">
                         <mat-icon>delete</mat-icon>

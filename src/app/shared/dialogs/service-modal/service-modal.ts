@@ -1,29 +1,39 @@
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
-export interface ServiceCategory { value: string; label: string; }
+import {
+  CatalogServiceRequest,
+  CatalogServiceResponse,
+  ServiceCategoryResponse,
+} from '../../../core/models/booking.models';
+import { VehicleTypeResponse } from '../../../core/models/vehicle.models';
 
-// datos que se le pasan al modal cuando se abre para EDITAR un servicio existente
-// si se abre para crear uno nuevo, simplemente no se manda data
+// datos del modal: categorías y tipos de vehículo reales; service llega solo al EDITAR
 export interface ServiceModalData {
-  name: string;
-  price: number;
-  description: string;
-  durationMin: number;
-  category: string;
+  service?: CatalogServiceResponse;
+  categories: ServiceCategoryResponse[];
+  vehicleTypes: VehicleTypeResponse[];
 }
 
-export interface ServiceModalResult {
-  name: string;
-  price: number;
-  description: string;
-  durationMin: number;
-  category: string;
+// lo que devuelve el modal es justo el cuerpo que espera el booking-service
+export type ServiceModalResult = CatalogServiceRequest;
+
+// una fila de la tabla de tarifas: precio y minutos para un tipo de vehículo
+interface PriceRow {
+  vehicleTypeId: number;
+  vehicleTypeName: string;
+  price: number | null;
+  minutes: number | null;
 }
 
+/**
+ * Alta y edición de un servicio del catálogo. El precio depende del tipo de vehículo
+ * (catalog.service_price, ADR-010), así que hay una fila por tipo. Una fila vacía significa
+ * que el servicio no se ofrece para ese tipo de vehículo.
+ */
 @Component({
   selector: 'app-service-modal',
   standalone: true,
@@ -33,38 +43,52 @@ export interface ServiceModalResult {
 })
 export class ServiceModal {
 
-  // categorías del catálogo (mismas del mockup: Lavado, Brillado)
-  categories: ServiceCategory[] = [
-    { value: 'lavado', label: 'Lavado' },
-    { value: 'brillado', label: 'Brillado' },
-    { value: 'detailing', label: 'Detailing' },
-  ];
+  categories: ServiceCategoryResponse[];
+  rows: PriceRow[];
 
   name = '';
-  price: number | null = null;
   description = '';
-  durationMin = 30;
-  category = 'lavado';
+  categoryId: number | null = null;
 
   // true cuando venimos de "editar" un servicio ya existente
   isEditing = false;
 
   constructor(
     private dialogRef: MatDialogRef<ServiceModal>,
-    @Optional() @Inject(MAT_DIALOG_DATA) data: ServiceModalData | null
+    @Inject(MAT_DIALOG_DATA) data: ServiceModalData
   ) {
-    if (data) {
-      this.isEditing = true;
-      this.name = data.name;
-      this.price = data.price;
-      this.description = data.description;
-      this.durationMin = data.durationMin;
-      this.category = data.category;
-    }
+    this.categories = data.categories;
+    const service = data.service;
+    this.isEditing = !!service;
+    this.name = service?.name ?? '';
+    this.description = service?.description ?? '';
+    this.categoryId = service?.category?.id ?? data.categories[0]?.id ?? null;
+    this.rows = data.vehicleTypes.map(type => {
+      const current = service?.prices.find(p => p.vehicleTypeId === type.id);
+      return {
+        vehicleTypeId: type.id,
+        vehicleTypeName: type.name,
+        price: current?.price ?? null,
+        minutes: current?.estimatedMinutes ?? null,
+      };
+    });
+  }
+
+  // filas completas (precio y minutos); las vacías no se envían
+  private get filledRows(): PriceRow[] {
+    return this.rows.filter(row => row.price !== null && row.minutes !== null);
+  }
+
+  // una fila a medias (solo precio o solo minutos) no es válida
+  get hasHalfRow(): boolean {
+    return this.rows.some(row => (row.price === null) !== (row.minutes === null));
   }
 
   get canSave(): boolean {
-    return this.name.trim().length > 0 && !!this.price && this.price > 0;
+    return this.name.trim().length > 0
+      && this.categoryId !== null
+      && this.filledRows.length > 0
+      && !this.hasHalfRow;
   }
 
   close(): void {
@@ -72,14 +96,17 @@ export class ServiceModal {
   }
 
   save(): void {
-    if (!this.canSave) return;
+    if (!this.canSave || this.categoryId === null) return;
 
     const result: ServiceModalResult = {
       name: this.name.trim(),
-      price: this.price ?? 0,
-      description: this.description.trim(),
-      durationMin: this.durationMin,
-      category: this.category
+      description: this.description.trim() || null,
+      categoryId: this.categoryId,
+      prices: this.filledRows.map(row => ({
+        vehicleTypeId: row.vehicleTypeId,
+        price: row.price ?? 0,
+        estimatedMinutes: row.minutes ?? 0,
+      })),
     };
 
     this.dialogRef.close(result);

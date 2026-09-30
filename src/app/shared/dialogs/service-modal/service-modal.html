@@ -13,12 +13,16 @@
     <div class="row-2">
       <label class="field">
         <span>{{ 'SERVICE_MODAL.NAME_LABEL' | translate }}</span>
-        <input type="text" [(ngModel)]="name" [placeholder]="'SERVICE_MODAL.NAME_PLACEHOLDER' | translate">
+        <input type="text" maxlength="100" [(ngModel)]="name" [placeholder]="'SERVICE_MODAL.NAME_PLACEHOLDER' | translate">
       </label>
 
       <label class="field">
-        <span>{{ 'SERVICE_MODAL.PRICE_LABEL' | translate }}</span>
-        <input type="number" min="0" [(ngModel)]="price" placeholder="45.000">
+        <span>{{ 'SERVICE_MODAL.CATEGORY_LABEL' | translate }}</span>
+        <select [(ngModel)]="categoryId">
+          @for (c of categories; track c.id) {
+            <option [ngValue]="c.id">{{ c.name }}</option>
+          }
+        </select>
       </label>
     </div>
 
@@ -31,27 +35,31 @@
       </textarea>
     </label>
 
-    <div class="row-2">
-      <label class="field">
-        <span>{{ 'SERVICE_MODAL.DURATION_LABEL' | translate }}</span>
-        <select [(ngModel)]="durationMin">
-          <option [ngValue]="15">15 min</option>
-          <option [ngValue]="30">30 min</option>
-          <option [ngValue]="45">45 min</option>
-          <option [ngValue]="60">60 min</option>
-          <option [ngValue]="90">90 min</option>
-          <option [ngValue]="120">120 min</option>
-        </select>
-      </label>
-
-      <label class="field">
-        <span>{{ 'SERVICE_MODAL.CATEGORY_LABEL' | translate }}</span>
-        <select [(ngModel)]="category">
-          @for (c of categories; track c.value) {
-            <option [value]="c.value">{{ c.label }}</option>
+    <!-- tarifa por tipo de vehículo (ADR-010): la fila vacía = no se ofrece para ese tipo -->
+    <div class="field">
+      <span>{{ 'SERVICE_MODAL.PRICES_LABEL' | translate }}</span>
+      <p class="hint">{{ 'SERVICE_MODAL.PRICES_HINT' | translate }}</p>
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>{{ 'SERVICE_MODAL.VEHICLE_TYPE' | translate }}</th>
+            <th>{{ 'SERVICE_MODAL.PRICE_LABEL' | translate }}</th>
+            <th>{{ 'SERVICE_MODAL.DURATION_LABEL' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.vehicleTypeId) {
+            <tr>
+              <td>{{ row.vehicleTypeName }}</td>
+              <td><input type="number" min="0" step="1000" [(ngModel)]="row.price" placeholder="45000"></td>
+              <td><input type="number" min="1" max="600" step="5" [(ngModel)]="row.minutes" placeholder="45"></td>
+            </tr>
           }
-        </select>
-      </label>
+        </tbody>
+      </table>
+      @if (hasHalfRow) {
+        <p class="error">{{ 'SERVICE_MODAL.HALF_ROW_ERROR' | translate }}</p>
+      }
     </div>
 
   </div>

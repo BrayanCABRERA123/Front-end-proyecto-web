@@ -1,14 +1,13 @@
 import { Injectable, computed, signal } from '@angular/core';
 
 import { readStorage, writeStorage } from '../../../core/services/local-storage';
-import { AdminUser, CatalogService, Promotion, UserRole } from '../models/admin.models';
+import { AdminUser, Promotion, UserRole } from '../models/admin.models';
 
 const STORAGE_KEY = 'adminCatalog';
 
 interface CatalogState {
   users: AdminUser[];
   roles: UserRole[];
-  services: CatalogService[];
   promotions: Promotion[];
 }
 
@@ -22,12 +21,6 @@ const DEFAULT_STATE: CatalogState = {
     { id: 'r1', name: 'Administrador', description: 'Acceso total a todos los paneles y operaciones del negocio.', permissions: ['view_panels', 'create_records', 'edit_data', 'delete'], usersCount: 3 },
     { id: 'r2', name: 'Supervisor de Bahía', description: 'Gestiona turnos, asignaciones y disponibilidad de operarios.', permissions: ['view_panels', 'create_records', 'edit_data'], usersCount: 0 },
     { id: 'r3', name: 'Soporte', description: 'Consulta reservas y pagos para atender solicitudes de clientes.', permissions: ['view_panels'], usersCount: 0 },
-  ],
-  services: [
-    { id: 's1', name: 'Encerado', price: 150000, durationMin: 45, category: 'brillado', status: 'active' },
-    { id: 's2', name: 'Lavado básico', price: 80000, durationMin: 30, category: 'lavado', status: 'active' },
-    { id: 's3', name: 'Lavado completo', price: 250000, durationMin: 60, category: 'lavado', status: 'inactive' },
-    { id: 's4', name: 'Pulido premium', price: 320000, durationMin: 90, category: 'brillado', status: 'active' },
   ],
   promotions: [
     {
@@ -52,7 +45,8 @@ const DEFAULT_STATE: CatalogState = {
 };
 
 /**
- * Catálogo de la sección "Gestión": usuarios, roles, servicios y promociones.
+ * Datos locales de la sección "Gestión": roles y promociones. Los servicios ya vienen del
+ * booking-service (pestaña Servicios) y los usuarios del security-service.
  *
  * Todas las pestañas de la pantalla leen de aquí para que un cambio (activar un
  * usuario, editar un rol, pausar un servicio, activar una promoción) se refleje
@@ -66,7 +60,6 @@ export class CatalogStore {
 
   readonly users = computed(() => this.state().users);
   readonly roles = computed(() => this.state().roles);
-  readonly services = computed(() => this.state().services);
   readonly promotions = computed(() => this.state().promotions);
 
   readonly activePromotionsCount = computed(() =>
@@ -128,34 +121,6 @@ export class CatalogStore {
 
   removeRole(id: string): void {
     this.update({ roles: this.state().roles.filter(r => r.id !== id) });
-  }
-
-  /* ---------- servicios ---------- */
-
-  addService(value: { name: string; price: number; durationMin: number; category: string }): CatalogService {
-    const service: CatalogService = {
-      id: this.nextId(this.state().services, 's'),
-      ...value,
-      status: 'active',
-    };
-    this.update({ services: [...this.state().services, service] });
-    return service;
-  }
-
-  updateService(id: string, changes: Partial<Omit<CatalogService, 'id'>>): void {
-    this.update({ services: this.state().services.map(s => (s.id === id ? { ...s, ...changes, id } : s)) });
-  }
-
-  toggleServiceStatus(id: string): void {
-    this.update({
-      services: this.state().services.map(s =>
-        s.id === id ? { ...s, status: s.status === 'active' ? 'inactive' : 'active' } : s
-      ),
-    });
-  }
-
-  removeService(id: string): void {
-    this.update({ services: this.state().services.filter(s => s.id !== id) });
   }
 
   /* ---------- promociones ---------- */

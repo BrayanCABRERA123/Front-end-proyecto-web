@@ -13,12 +13,22 @@ import { ServiceModal, ServiceModalData, ServiceModalResult } from '../../../../
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { CatalogStore } from '../../services/catalog-store';
-import { AdminUser, CatalogService, Promotion, UserRole } from '../../models/admin.models';
+import { AdminUser, Promotion, UserRole } from '../../models/admin.models';
+// catálogo real (booking-service) y tipos de vehículo (customer-service)
+import { forkJoin } from 'rxjs';
+import { BookingApiService } from '../../../../core/services/booking-api';
+import { VehiclesService } from '../../../../core/services/vehicles';
+import {
+  CatalogServiceResponse,
+  ServiceCategoryResponse,
+  ServicePriceResponse,
+} from '../../../../core/models/booking.models';
+import { VehicleTypeResponse } from '../../../../core/models/vehicle.models';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 import { PromotionModal, PromotionModalData, PromotionModalResult } from './components/promotion-modal/promotion-modal';
 // cuentas reales del security-service
 import { UserAdminService } from '../../../../core/services/user-admin';
 import { AuthUser } from '../../../../core/models/auth.models';
-import { apiErrorKey } from '../../../../core/utils/api-error';
 
 type ManagementTab = 'users' | 'roles' | 'services' | 'promotions';
 
@@ -52,6 +62,8 @@ export class ManagementComponent implements OnInit {
   usersErrorKey = signal<string | null>(null);
 
   private readonly userAdmin = inject(UserAdminService);
+  private readonly bookingApi = inject(BookingApiService);
+  private readonly vehiclesApi = inject(VehiclesService);
 
   constructor(
     private store: CatalogStore,
@@ -61,6 +73,7 @@ export class ManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUsers();
+    this.loadServices();
   }
 
   loadUsers(): void {
@@ -103,7 +116,7 @@ export class ManagementComponent implements OnInit {
 
   get users(): AdminUser[] { return this.accounts(); }
   get roles(): UserRole[] { return this.store.roles(); }
-  get services(): CatalogService[] { return this.store.services(); }
+  get services(): CatalogServiceResponse[] { return this.catalogServices(); }
   get promotions(): Promotion[] { return this.store.promotions(); }
 
   // --- USUARIOS ---
@@ -222,51 +235,83 @@ export class ManagementComponent implements OnInit {
     });
   }
 
-  // --- SERVICIOS ---
+  // --- SERVICIOS (booking-service) ---
 
-  openCreateService(): void {
-    const dialogRef = this.dialog.open(ServiceModal, { panelClass: 'custom-dialog' });
+  // catálogo real con las tarifas vigentes de cada tipo de vehículo
+  private readonly catalogServices = signal<CatalogServiceResponse[]>([]);
+  private categories: ServiceCategoryResponse[] = [];
+  private vehicleTypes: VehicleTypeResponse[] = [];
+  servicesLoading = signal(true);
+  servicesErrorKey = signal<string | null>(null);
 
-    dialogRef.afterClosed().subscribe((result: ServiceModalResult | null) => {
-      if (!result) return;
-      const created = this.store.addService(result);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_CREATED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_CREATED_MESSAGE',
-        { messageParams: { name: created.name } }
-      );
+  loadServices(): void {
+    this.servicesLoading.set(true);
+    this.servicesErrorKey.set(null);
+    forkJoin({
+      services: this.bookingApi.adminServices(),
+      categories: this.bookingApi.categories(),
+      vehicleTypes: this.vehiclesApi.listVehicleTypes(),
+    }).subscribe({
+      next: ({ services, categories, vehicleTypes }) => {
+        this.catalogServices.set(services);
+        this.categories = categories;
+        this.vehicleTypes = vehicleTypes;
+        this.servicesLoading.set(false);
+      },
+      error: (error) => {
+        this.servicesErrorKey.set(apiErrorKey(error));
+        this.servicesLoading.set(false);
+      }
     });
   }
 
-  openEditService(service: CatalogService): void {
-    const data: ServiceModalData = {
-      name: service.name,
-      price: service.price,
-      description: service.category,
-      durationMin: service.durationMin,
-      category: service.category
-    };
+  // tarifa que se muestra en la tabla: la del automóvil (tipo 1) o, si no tiene, la primera
+  referencePrice(service: CatalogServiceResponse): ServicePriceResponse | null {
+    return service.prices.find(p => p.vehicleTypeId === 1) ?? service.prices[0] ?? null;
+  }
 
+  openCreateService(): void {
+    const data: ServiceModalData = { categories: this.categories, vehicleTypes: this.vehicleTypes };
     const dialogRef = this.dialog.open(ServiceModal, { panelClass: 'custom-dialog', data });
 
     dialogRef.afterClosed().subscribe((result: ServiceModalResult | null) => {
       if (!result) return;
-      this.store.updateService(service.id, {
-        name: result.name,
-        price: result.price,
-        durationMin: result.durationMin,
-        category: result.category,
+      this.bookingApi.createService(result).subscribe({
+        next: (created) => {
+          this.catalogServices.update(list => [...list, created]);
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_CREATED_TITLE',
+            'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_CREATED_MESSAGE',
+            { messageParams: { name: created.name } }
+          );
+        },
+        error: (error) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
       });
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_UPDATED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_UPDATED_MESSAGE',
-        { messageParams: { name: result.name } }
-      );
     });
   }
 
-  toggleServiceStatus(service: CatalogService): void {
-    const activating = service.status === 'inactive';
+  openEditService(service: CatalogServiceResponse): void {
+    const data: ServiceModalData = { service, categories: this.categories, vehicleTypes: this.vehicleTypes };
+    const dialogRef = this.dialog.open(ServiceModal, { panelClass: 'custom-dialog', data });
+
+    dialogRef.afterClosed().subscribe((result: ServiceModalResult | null) => {
+      if (!result) return;
+      this.bookingApi.updateService(service.id, result).subscribe({
+        next: (updated) => {
+          this.replaceService(updated);
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_UPDATED_TITLE',
+            'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_UPDATED_MESSAGE',
+            { messageParams: { name: updated.name } }
+          );
+        },
+        error: (error) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+      });
+    });
+  }
+
+  toggleServiceStatus(service: CatalogServiceResponse): void {
+    const activating = !service.active;
     const data: ConfirmModalData = {
       title: activating ? 'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_ENABLE_TITLE' : 'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_DISABLE_TITLE',
       message: activating ? 'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_ENABLE_MESSAGE' : 'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_DISABLE_MESSAGE',
@@ -279,24 +324,39 @@ export class ManagementComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data });
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      this.store.toggleServiceStatus(service.id);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_STATUS_TITLE',
-        activating ? 'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_ENABLED_MESSAGE' : 'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_DISABLED_MESSAGE',
-        { messageParams: { name: service.name } }
-      );
+      this.bookingApi.setServiceActive(service.id, activating).subscribe({
+        next: (updated) => {
+          this.replaceService(updated);
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_STATUS_TITLE',
+            activating ? 'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_ENABLED_MESSAGE' : 'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_DISABLED_MESSAGE',
+            { messageParams: { name: service.name } }
+          );
+        },
+        error: (error) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+      });
     });
   }
 
-  deleteService(service: CatalogService): void {
+  // borrado lógico en el backend: las reservas que ya lo usan conservan su precio
+  deleteService(service: CatalogServiceResponse): void {
     this.confirmDelete(() => {
-      this.store.removeService(service.id);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.DELETED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_DELETED_MESSAGE',
-        { messageParams: { name: service.name } }
-      );
+      this.bookingApi.deleteService(service.id).subscribe({
+        next: () => {
+          this.catalogServices.update(list => list.filter(s => s.id !== service.id));
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.DELETED_TITLE',
+            'ADMIN_MANAGEMENT.FEEDBACK.SERVICE_DELETED_MESSAGE',
+            { messageParams: { name: service.name } }
+          );
+        },
+        error: (error) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+      });
     });
+  }
+
+  private replaceService(updated: CatalogServiceResponse): void {
+    this.catalogServices.update(list => list.map(s => (s.id === updated.id ? updated : s)));
   }
 
   // --- PROMOCIONES ---
