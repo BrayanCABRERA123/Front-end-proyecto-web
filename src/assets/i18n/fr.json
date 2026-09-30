@@ -79,6 +79,7 @@
     "CANCEL": "Annuler",
     "DELETE": "Supprimer",
     "ACCEPT": "Accepter",
+    "ERROR": "Erreur",
     "CREATE": "Créer",
     "EDIT": "Modifier",
     "SAVE": "Enregistrer",
@@ -818,6 +819,10 @@
     "DELETE": {
       "TITLE": "Supprimer le véhicule ?",
       "MESSAGE": "{{name}} immatriculé {{plate}} sera supprimé de votre compte. Cette action est irréversible."
+    },
+    "EMPTY": {
+      "TITLE": "Vous n'avez encore aucun véhicule enregistré",
+      "SUBTITLE": "Enregistrez votre premier véhicule pour réserver des lavages plus rapidement."
     },
     "MODAL": {
       "EDIT_TITLE": "Modifier le véhicule",
@@ -2195,6 +2200,11 @@
     "FORBIDDEN": "Vous n'avez pas l'autorisation d'effectuer cette action",
     "USER_NOT_FOUND": "Compte introuvable",
     "CONFLICT": "Les données entrent en conflit avec un enregistrement existant",
+    "PLATE_ALREADY_REGISTERED": "Un véhicule est déjà enregistré avec cette plaque",
+    "CUSTOMER_NOT_PROVISIONED": "Votre profil client n'est pas encore prêt. Réessayez dans quelques minutes.",
+    "VEHICLE_NOT_FOUND": "Le véhicule n'existe pas ou a déjà été supprimé",
+    "INVALID_PLATE": "Le format de la plaque ne correspond pas au type de véhicule",
+    "INVALID_VEHICLE_TYPE": "Le type de véhicule n'est pas valide",
     "NETWORK_ERROR": "Impossible de joindre le serveur. Réessayez dans un instant.",
     "UNEXPECTED": "Une erreur inattendue est survenue. Réessayez."
   }

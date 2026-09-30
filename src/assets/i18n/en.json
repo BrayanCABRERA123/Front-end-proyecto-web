@@ -79,6 +79,7 @@
     "CANCEL": "Cancel",
     "DELETE": "Delete",
     "ACCEPT": "Accept",
+    "ERROR": "Error",
     "CREATE": "Create",
     "EDIT": "Edit",
     "SAVE": "Save",
@@ -818,6 +819,10 @@
     "DELETE": {
       "TITLE": "Delete vehicle?",
       "MESSAGE": "{{name}} with plate {{plate}} will be removed from your account. This action cannot be undone."
+    },
+    "EMPTY": {
+      "TITLE": "You have no registered vehicles yet",
+      "SUBTITLE": "Register your first vehicle to book washes faster."
     },
     "MODAL": {
       "EDIT_TITLE": "Edit vehicle",
@@ -2195,6 +2200,11 @@
     "FORBIDDEN": "You do not have permission to perform this action",
     "USER_NOT_FOUND": "Account not found",
     "CONFLICT": "The data conflicts with an existing record",
+    "PLATE_ALREADY_REGISTERED": "A vehicle is already registered with this plate",
+    "CUSTOMER_NOT_PROVISIONED": "Your customer profile is not ready yet. Please try again in a few minutes.",
+    "VEHICLE_NOT_FOUND": "The vehicle does not exist or was already removed",
+    "INVALID_PLATE": "The plate format does not match the vehicle type",
+    "INVALID_VEHICLE_TYPE": "The vehicle type is not valid",
     "NETWORK_ERROR": "Cannot reach the server. Please try again in a moment.",
     "UNEXPECTED": "An unexpected error occurred. Please try again."
   }

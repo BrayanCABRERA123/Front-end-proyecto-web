@@ -1,5 +1,5 @@
 // definimos el componente
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // importamos el sidebar del layout
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
@@ -8,11 +8,26 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 // modal de registro de vehículo
 import { RegisterVehicleModalComponent } from '../../../../shared/dialogs/register-vehicle-modal/register-vehicle-modal';
-import { RegisterVehicleModalData, VehicleFormValue } from '../../../../shared/dialogs/register-vehicle-modal/vehicle.model';
-// modal reutilizable para mostrar mensajes de éxito
+import { RegisterVehicleModalData, VehicleFormValue, normalizePlate } from '../../../../shared/dialogs/register-vehicle-modal/vehicle.model';
+// modal reutilizable para mostrar mensajes de éxito o error
 import { StatusModal } from '../../../../shared/dialogs/status-modal/status-modal';
 // modal reutilizable de confirmación para acciones peligrosas
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
+// servicio que habla con el customer-service
+import { VehiclesService } from '../../../../core/services/vehicles';
+import { VehicleRequest, VehicleResponse } from '../../../../core/models/vehicle.models';
+// convierte un error del backend en la llave de traducción API_ERRORS.<code>
+import { apiErrorKey } from '../../../../core/utils/api-error';
+
+// lo único que necesita la tarjeta de cada vehículo, armado desde la respuesta del backend
+interface VehicleCard {
+  id: number;
+  type: string;   // código del tipo, p. ej. SEDAN
+  brand: string;
+  model: string;
+  plate: string;  // placa con guion para mostrar (ABC-123)
+  color: string;
+}
 
 // íconos según el tipo de vehículo
 const ICON_BY_TYPE: Record<string, string> = {
@@ -31,31 +46,70 @@ const ICON_BY_TYPE: Record<string, string> = {
   templateUrl: './vehicles.html',
   styleUrls: ['./vehicles.scss']
 })
-export class VehiclesComponent {
+export class VehiclesComponent implements OnInit {
 
-  // vehículos registrados por el cliente
-  vehicles = [
-    { id: 1, type: 'SEDAN', brand: 'Mazda', model: '3 Sedán', plate: 'ABC-123', color: 'Gris', lastWash: '10 Ago 2026', service: 'PREMIUM', totalWashes: 8 },
-    { id: 2, type: 'MOTO', brand: 'Yamaha', model: 'FZ 2.0', plate: 'XYZ-98D', color: 'Azul', lastWash: '02 Ago 2026', service: 'BASIC', totalWashes: 4 },
-    { id: 3, type: 'TRUCK', brand: 'Toyota', model: 'Prado', plate: 'JKL-457', color: 'Blanco', lastWash: '24 Jul 2026', service: 'FULL', totalWashes: 2 }
-  ];
+  // vehículos registrados por el cliente (se llenan al entrar a la pantalla)
+  vehicles: VehicleCard[] = [];
 
+  constructor(
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef,
+    private vehiclesService: VehiclesService
+  ) {}
+
+  // al abrir la pantalla pedimos los vehículos del cliente
+  ngOnInit(): void {
+    this.reload();
+  }
+
+  // número de vehículos que se muestra en la tarjeta de estadísticas
   get totalVehicles(): number {
     return this.vehicles.length;
   }
 
+  // total y fecha del último lavado los entrega booking-service, que es el siguiente
+  // microservicio del proyecto. mientras no exista, no hay lavados reales que mostrar.
   get totalWashes(): number {
-    return this.vehicles.reduce((sum, v) => sum + v.totalWashes, 0);
+    return 0;
   }
 
   get lastWashOverall(): string {
-    return this.vehicles[0]?.lastWash ?? '-';
+    return '—';
   }
 
-  constructor(
-    private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
-  ) {}
+  // pide los vehículos al backend y los deja listos para la pantalla
+  reload(): void {
+    this.vehiclesService.list().subscribe({
+      next: (list) => {
+        this.vehicles = list.map(this.toCard);
+        this.refreshView();
+      },
+      error: (error) => this.showError(error)
+    });
+  }
+
+  // convierte la respuesta del backend en lo que usa la tarjeta
+  private toCard(vehicle: VehicleResponse): VehicleCard {
+    return {
+      id: vehicle.id,
+      type: vehicle.vehicleType,
+      brand: vehicle.brand,
+      model: vehicle.model,
+      plate: vehicle.licensePlateFormatted,
+      color: vehicle.color
+    };
+  }
+
+  // convierte el formulario del modal en el cuerpo que espera POST/PUT
+  private toRequest(vehicle: VehicleFormValue): VehicleRequest {
+    return {
+      licensePlate: normalizePlate(vehicle.plate),
+      vehicleType: vehicle.type,
+      brand: vehicle.brand,
+      model: vehicle.model,
+      color: vehicle.color
+    };
+  }
 
   // ícono correspondiente al tipo de vehículo
   iconFor(type: string): string {
@@ -76,17 +130,13 @@ export class VehiclesComponent {
     dialogRef.afterClosed().subscribe((newVehicle?: VehicleFormValue) => {
       if (!newVehicle) return;
 
-      // TODO: integrar con el backend para registrar el vehículo
-      this.vehicles.push({
-        id: Date.now(),
-        ...newVehicle,
-        lastWash: '-',
-        service: '-',
-        totalWashes: 0
+      this.vehiclesService.register(this.toRequest(newVehicle)).subscribe({
+        next: () => {
+          this.reload();
+          this.showSuccess('VEHICLES.SUCCESS.CREATED_TITLE', 'VEHICLES.SUCCESS.CREATED_MESSAGE');
+        },
+        error: (error) => this.showError(error)
       });
-      this.refreshView();
-
-      this.showSuccess('VEHICLES.SUCCESS.CREATED_TITLE', 'VEHICLES.SUCCESS.CREATED_MESSAGE');
     });
   }
 
@@ -115,12 +165,13 @@ export class VehiclesComponent {
     dialogRef.afterClosed().subscribe((updated?: VehicleFormValue) => {
       if (!updated) return;
 
-      // TODO: integrar con el backend para actualizar el vehículo
-      // se conservan los datos de lavados y solo se cambian los del formulario
-      this.vehicles = this.vehicles.map(v => v.id === id ? { ...v, ...updated } : v);
-      this.refreshView();
-
-      this.showSuccess('VEHICLES.SUCCESS.UPDATED_TITLE', 'VEHICLES.SUCCESS.UPDATED_MESSAGE');
+      this.vehiclesService.update(id, this.toRequest(updated)).subscribe({
+        next: () => {
+          this.reload();
+          this.showSuccess('VEHICLES.SUCCESS.UPDATED_TITLE', 'VEHICLES.SUCCESS.UPDATED_MESSAGE');
+        },
+        error: (error) => this.showError(error)
+      });
     });
   }
 
@@ -129,6 +180,14 @@ export class VehiclesComponent {
     this.dialog.open(StatusModal, {
       panelClass: 'custom-dialog',
       data: { title, message }
+    });
+  }
+
+  // abre el modal de error: el mensaje es la traducción del code que manda el backend
+  private showError(error: unknown) {
+    this.dialog.open(StatusModal, {
+      panelClass: 'custom-dialog',
+      data: { title: 'COMMON.ERROR', message: apiErrorKey(error), type: 'error' }
     });
   }
 
@@ -157,11 +216,15 @@ export class VehiclesComponent {
     });
   }
 
-  // elimina un vehículo registrado
+  // elimina el vehículo en el backend y vuelve a pedir la lista
   private removeVehicle(id: number) {
-    // TODO: integrar con el backend para eliminar el vehículo
-    this.vehicles = this.vehicles.filter(v => v.id !== id);
-    this.refreshView();
+    this.vehiclesService.remove(id).subscribe({
+      next: () => {
+        this.reload();
+        this.refreshView();
+      },
+      error: (error) => this.showError(error)
+    });
   }
 
   // la app es zoneless: los cambios hechos dentro de afterClosed() no se pintan solos,

@@ -39,6 +39,13 @@
       </div>
     </div>
 
+    <!-- Cuando aún no hay vehículos registrados -->
+    <div class="empty-state" *ngIf="vehicles.length === 0">
+      <div class="empty-state-icon"><mat-icon>directions_car</mat-icon></div>
+      <p class="empty-state-title">{{ 'VEHICLES.EMPTY.TITLE' | translate }}</p>
+      <p class="empty-state-subtitle">{{ 'VEHICLES.EMPTY.SUBTITLE' | translate }}</p>
+    </div>
+
     <!-- Grid de vehículos -->
     <div class="vehicles-grid">
       <div class="vehicle-card" *ngFor="let vehicle of vehicles">
@@ -68,18 +75,6 @@
           <div class="vehicle-detail-row">
             <span>{{ 'VEHICLES.CARD.PLATE' | translate }}</span>
             <strong>{{ vehicle.plate }}</strong>
-          </div>
-          <div class="vehicle-detail-row">
-            <span>{{ 'VEHICLES.CARD.LAST_WASH' | translate }}</span>
-            <strong>{{ vehicle.lastWash }}</strong>
-          </div>
-          <div class="vehicle-detail-row">
-            <span>{{ 'VEHICLES.CARD.SERVICE' | translate }}</span>
-            <strong>{{ vehicle.service === '-' ? '-' : (('SERVICE.' + vehicle.service) | translate) }}</strong>
-          </div>
-          <div class="vehicle-detail-row">
-            <span>{{ 'VEHICLES.CARD.TOTAL_WASHES' | translate }}</span>
-            <strong>{{ vehicle.totalWashes }}</strong>
           </div>
         </div>
 

@@ -79,6 +79,7 @@
     "CANCEL": "Cancelar",
     "DELETE": "Excluir",
     "ACCEPT": "Aceitar",
+    "ERROR": "Erro",
     "CREATE": "Criar",
     "EDIT": "Editar",
     "SAVE": "Salvar",
@@ -818,6 +819,10 @@
     "DELETE": {
       "TITLE": "Excluir veículo?",
       "MESSAGE": "{{name}} com placa {{plate}} será removido da sua conta. Esta ação não pode ser desfeita."
+    },
+    "EMPTY": {
+      "TITLE": "Você ainda não tem veículos cadastrados",
+      "SUBTITLE": "Cadastre seu primeiro veículo para reservar lavagens mais rápido."
     },
     "MODAL": {
       "EDIT_TITLE": "Editar veículo",
@@ -2195,6 +2200,11 @@
     "FORBIDDEN": "Você não tem permissão para realizar esta ação",
     "USER_NOT_FOUND": "Conta não encontrada",
     "CONFLICT": "Os dados conflitam com um registro existente",
+    "PLATE_ALREADY_REGISTERED": "Já existe um veículo cadastrado com esta placa",
+    "CUSTOMER_NOT_PROVISIONED": "Seu perfil de cliente ainda não está pronto. Tente novamente em alguns minutos.",
+    "VEHICLE_NOT_FOUND": "O veículo não existe ou já foi removido",
+    "INVALID_PLATE": "O formato da placa não corresponde ao tipo de veículo",
+    "INVALID_VEHICLE_TYPE": "O tipo de veículo não é válido",
     "NETWORK_ERROR": "Não foi possível conectar ao servidor. Tente novamente em instantes.",
     "UNEXPECTED": "Ocorreu um erro inesperado. Tente novamente."
   }
