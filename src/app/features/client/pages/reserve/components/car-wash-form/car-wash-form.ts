@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -13,6 +13,9 @@ import { BUSINESS_LOCATION } from '../../../../../../core/constants/business-loc
 // precios de los servicios (en COP) y su formato
 import { SERVICE_PRICES } from '../../../../../../core/constants/service-prices';
 import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
+// servicio real de vehículos del cliente
+import { VehiclesService } from '../../../../../../core/services/vehicles';
+import { VehicleResponse } from '../../../../../../core/models/vehicle.models';
 
 @Component({
   selector: 'app-car-wash-form',
@@ -23,12 +26,11 @@ import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
 })
 export class CarWashFormComponent implements OnInit {
 
-  // vehículos registrados del cliente (mismo mock que en Mis Vehículos)
-  vehicles = [
-    { id: 1, type: 'SEDAN', brand: 'Mazda', model: '3 Sedán', plate: 'ABC-123' },
-    { id: 2, type: 'MOTO', brand: 'Yamaha', model: 'FZ 2.0', plate: 'XYZ-98D' },
-    { id: 3, type: 'TRUCK', brand: 'Toyota', model: 'Prado', plate: 'JKL-457' }
-  ];
+  private readonly vehiclesService = inject(VehiclesService);
+
+  // vehículos registrados del cliente (reales del backend)
+  vehicles: VehicleResponse[] = [];
+  vehiclesLoading = false;
 
   // catálogo de servicios disponibles
   services = ['BASIC', 'PREMIUM', 'FULL'];
@@ -64,6 +66,21 @@ export class CarWashFormComponent implements OnInit {
     this.maxDate = max.toISOString().split('T')[0];
 
     this.generateTimes();
+    this.loadVehicles();
+  }
+
+  private loadVehicles(): void {
+    this.vehiclesLoading = true;
+    this.vehiclesService.list().subscribe({
+      next: (vehicles) => {
+        this.vehicles = vehicles;
+        this.vehiclesLoading = false;
+      },
+      error: () => {
+        this.vehicles = [];
+        this.vehiclesLoading = false;
+      }
+    });
   }
 
   generateTimes(): void {
