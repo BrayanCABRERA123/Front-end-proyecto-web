@@ -32,14 +32,20 @@ export class BookingDetailModal {
     return `${d}/${m}/${y}`;
   }
 
-  /** la única acción de cambio de estado que aplica en cada momento */
-  get nextStatus(): 'in_progress' | 'completed' | 'cancelled' | null {
-    switch (this.booking.status) {
-      case 'confirmed': return 'in_progress';
-      case 'in_progress': return 'completed';
-      case 'completed': return null;
-      case 'cancelled': return null;
-    }
+  /** la única acción de avance que aplica en cada momento (el backend valida la transición) */
+  get nextStatus(): 'in_progress' | 'completed' | null {
+    if (this.booking.status === 'confirmed') return 'in_progress';
+    if (this.booking.status === 'in_progress') return 'completed';
+    return null;
+  }
+
+  /** "no asistió" solo aplica a una reserva confirmada que no empezó */
+  get canMarkNoShow(): boolean {
+    return this.booking.status === 'confirmed';
+  }
+
+  markNoShow(): void {
+    this.dialogRef.close({ action: 'status', status: 'no_show' });
   }
 
   /** llave de traducción del botón de cambio de estado */

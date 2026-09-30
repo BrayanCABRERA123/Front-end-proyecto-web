@@ -89,6 +89,9 @@ export interface DaySchedule {
   openTime: string;
   closeTime: string;
   pause: PauseType;
+  /** pausa del día ("HH:mm"); null si no tiene (ADR-010) */
+  breakStart: string | null;
+  breakEnd: string | null;
 }
 
 export type ScheduleExceptionType = 'holiday' | 'special';
@@ -106,16 +109,18 @@ export interface ScheduleException {
 /** Estados permitidos para una bahía. Son los únicos tres que ofrece el select. */
 export type BayStatus = 'active' | 'maintenance' | 'inactive';
 
+/** el operario no va fijo en una bahía: se escoge por servicio (ADR-010) */
 export interface WashBay {
   id: string;
+  code: string;
   name: string;
   status: BayStatus;
-  currentOperator: string | null;
 }
 
 /* ================= RESERVAS ================= */
 
-export type BookingStatus = 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
+// estados del booking-service (ADR-010) en minúscula, como los usan los estilos
+export type BookingStatus = 'scheduled' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'no_show';
 
 export interface AssignedOperator {
   id: string;
@@ -132,6 +137,13 @@ export interface Booking {
   vehicle: string;
   plate: string;
   service: string;
+  /** ids del catálogo, para reprogramar con los mismos servicios */
+  serviceIds: number[];
+  /** vehículo en customer-service */
+  vehicleId: number | null;
+  /** true si todavía se puede cambiar o cancelar (lo decide el backend, RF-007) */
+  changeable: boolean;
+  cancellationReason: string | null;
   /** fecha en formato ISO (yyyy-MM-dd) para poder filtrar de verdad */
   date: string;
   /** hora de inicio en formato 24h (HH:mm) */
@@ -146,21 +158,6 @@ export interface Booking {
   amount: number;
 }
 
-export interface BookingFormValue {
-  client: string;
-  phone: string;
-  email: string;
-  vehicle: string;
-  plate: string;
-  service: string;
-  date: string;
-  time: string;
-  durationMin: number;
-  bay: string | null;
-  status: BookingStatus;
-  operatorId: string | null;
-  notes: string;
-}
 
 /* ================= PAGOS ================= */
 
@@ -212,15 +209,6 @@ export interface UserRole {
   /** llaves de permisos: 'view_panels' | 'create_records' | 'edit_data' | 'delete' */
   permissions: string[];
   usersCount: number;
-}
-
-export interface CatalogService {
-  id: string;
-  name: string;
-  price: number;
-  durationMin: number;
-  category: string;
-  status: 'active' | 'inactive';
 }
 
 export interface Promotion {

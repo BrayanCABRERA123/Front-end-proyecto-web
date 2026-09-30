@@ -83,7 +83,8 @@
     "CREATE": "Crear",
     "EDIT": "Editar",
     "SAVE": "Guardar",
-    "VIEW": "Ver"
+    "VIEW": "Ver",
+    "LOADING": "Cargando..."
   },
   "SERVICE": {
     "BASIC": "Básico",
@@ -1277,7 +1278,9 @@
       "confirmed": "Confirmada",
       "in_progress": "En progreso",
       "completed": "Completada",
-      "cancelled": "Cancelada"
+      "cancelled": "Cancelada",
+      "scheduled": "Agendada",
+      "no_show": "No asistió"
     },
     "PAGINATION": {
       "SHOWING": "Mostrando {{from}} a {{to}} de {{total}} reservas totales",
@@ -1305,7 +1308,11 @@
       "STATUS_CANCELLED_CONFIRM": "¿Cancelar la reserva {{code}}? Esta acción no se puede deshacer.",
       "STATUS_CANCELLED_MESSAGE": "La reserva {{code}} fue cancelada.",
       "ASSIGNED_TITLE": "Operario asignado",
-      "ASSIGNED_MESSAGE": "La reserva {{code}} tiene operario asignado."
+      "ASSIGNED_MESSAGE": "La reserva {{code}} tiene operario asignado.",
+      "NO_SHOW_TITLE": "Marcar como no asistió",
+      "NO_SHOW_CONFIRM": "¿El cliente de la reserva {{code}} no llegó?",
+      "STATUS_NO_SHOW_MESSAGE": "La reserva {{code}} quedó como no asistió.",
+      "STATUS_SCHEDULED_MESSAGE": "La reserva {{code}} quedó agendada."
     }
   },
   "ASSIGN_OPERATOR_MODAL": {
@@ -1394,7 +1401,8 @@
       },
       "MINUTES_SUFFIX": "min",
       "EMPTY_TITLE": "No hay servicios todavía",
-      "EMPTY_MESSAGE": "Agrega el primer servicio al catálogo del lavadero."
+      "EMPTY_MESSAGE": "Agrega el primer servicio al catálogo del lavadero.",
+      "PRICES_COUNT": "({{count}} tarifas)"
     },
     "PROMOTIONS": {
       "CREATE_PROMOTION": "Crear promoción",
@@ -1501,7 +1509,11 @@
     "DESCRIPTION_PLACEHOLDER": "Describe los detalles del servicio...",
     "DURATION_LABEL": "Duración estimada",
     "CATEGORY_LABEL": "Categoría",
-    "SAVE": "Guardar Servicio"
+    "SAVE": "Guardar Servicio",
+    "PRICES_LABEL": "Precio y duración por tipo de vehículo",
+    "PRICES_HINT": "Deja la fila vacía si el servicio no se ofrece para ese tipo.",
+    "VEHICLE_TYPE": "Tipo de vehículo",
+    "HALF_ROW_ERROR": "Cada fila necesita precio y duración, o quedar vacía."
   },
   "CREATE_USER_MODAL": {
     "TITLE": "Crear Usuario",
@@ -2075,8 +2087,10 @@
     "STATUS_ACTION": {
       "in_progress": "Iniciar servicio",
       "completed": "Completar",
-      "cancelled": "Cancelar"
-    }
+      "cancelled": "Cancelar",
+      "no_show": "No asistió"
+    },
+    "CANCEL_REASON": "Motivo de cancelación"
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nueva reserva",
@@ -2107,7 +2121,10 @@
     "ERROR_VEHICLE": "Ingresa el vehículo",
     "ERROR_PLATE": "Ingresa la placa",
     "NO_BAY": "Sin bahía",
-    "NO_OPERATOR": "Sin operario"
+    "NO_OPERATOR": "Sin operario",
+    "SEARCH": "Buscar",
+    "VEHICLE_NOT_FOUND": "No hay ningún vehículo registrado con esa placa.",
+    "BAY_AUTO_HINT": "La bahía la asigna el sistema al guardar, según la disponibilidad."
   },
   "EXPORT_DATA": {
     "TITLE": "Exportar datos",

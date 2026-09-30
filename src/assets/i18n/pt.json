@@ -83,7 +83,8 @@
     "CREATE": "Criar",
     "EDIT": "Editar",
     "SAVE": "Salvar",
-    "VIEW": "Ver"
+    "VIEW": "Ver",
+    "LOADING": "Carregando..."
   },
   "SERVICE": {
     "BASIC": "Básico",
@@ -1277,7 +1278,9 @@
       "confirmed": "Confirmada",
       "in_progress": "Em andamento",
       "completed": "Concluída",
-      "cancelled": "Cancelada"
+      "cancelled": "Cancelada",
+      "scheduled": "Agendada",
+      "no_show": "Não compareceu"
     },
     "PAGINATION": {
       "SHOWING": "Mostrando {{from}} a {{to}} de {{total}} reservas",
@@ -1305,7 +1308,11 @@
       "STATUS_CANCELLED_CONFIRM": "Cancelar a reserva {{code}}? Esta ação não pode ser desfeita.",
       "STATUS_CANCELLED_MESSAGE": "A reserva {{code}} foi cancelada.",
       "ASSIGNED_TITLE": "Operador atribuído",
-      "ASSIGNED_MESSAGE": "A reserva {{code}} agora tem operador atribuído."
+      "ASSIGNED_MESSAGE": "A reserva {{code}} agora tem operador atribuído.",
+      "NO_SHOW_TITLE": "Marcar como não compareceu",
+      "NO_SHOW_CONFIRM": "O cliente da reserva {{code}} não chegou?",
+      "STATUS_NO_SHOW_MESSAGE": "A reserva {{code}} ficou como não compareceu.",
+      "STATUS_SCHEDULED_MESSAGE": "A reserva {{code}} ficou agendada."
     }
   },
   "ASSIGN_OPERATOR_MODAL": {
@@ -1394,7 +1401,8 @@
       },
       "MINUTES_SUFFIX": "min",
       "EMPTY_TITLE": "Nenhum serviço ainda",
-      "EMPTY_MESSAGE": "Adicione o primeiro serviço ao catálogo do lava-rápido."
+      "EMPTY_MESSAGE": "Adicione o primeiro serviço ao catálogo do lava-rápido.",
+      "PRICES_COUNT": "({{count}} tarifas)"
     },
     "PROMOTIONS": {
       "CREATE_PROMOTION": "Criar promoção",
@@ -1501,7 +1509,11 @@
     "DESCRIPTION_PLACEHOLDER": "Descreva os detalhes do serviço...",
     "DURATION_LABEL": "Duração estimada",
     "CATEGORY_LABEL": "Categoria",
-    "SAVE": "Salvar Serviço"
+    "SAVE": "Salvar Serviço",
+    "PRICES_LABEL": "Preço e duração por tipo de veículo",
+    "PRICES_HINT": "Deixe a linha vazia se o serviço não for oferecido para esse tipo.",
+    "VEHICLE_TYPE": "Tipo de veículo",
+    "HALF_ROW_ERROR": "Cada linha precisa de preço e duração, ou deve ficar vazia."
   },
   "CREATE_USER_MODAL": {
     "TITLE": "Criar Usuário",
@@ -2075,8 +2087,10 @@
     "STATUS_ACTION": {
       "in_progress": "Iniciar serviço",
       "completed": "Concluir",
-      "cancelled": "Cancelar"
-    }
+      "cancelled": "Cancelar",
+      "no_show": "Não compareceu"
+    },
+    "CANCEL_REASON": "Motivo do cancelamento"
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nova reserva",
@@ -2107,7 +2121,10 @@
     "ERROR_VEHICLE": "Informe o veículo",
     "ERROR_PLATE": "Informe a placa",
     "NO_BAY": "Sem baia",
-    "NO_OPERATOR": "Sem operador"
+    "NO_OPERATOR": "Sem operador",
+    "SEARCH": "Buscar",
+    "VEHICLE_NOT_FOUND": "Nenhum veículo cadastrado com essa placa.",
+    "BAY_AUTO_HINT": "O sistema atribui o box ao salvar, conforme a disponibilidade."
   },
   "EXPORT_DATA": {
     "TITLE": "Exportar dados",

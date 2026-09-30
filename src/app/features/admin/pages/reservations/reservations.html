@@ -87,6 +87,7 @@
         <option value="in_progress">{{ 'ADMIN_RESERVATIONS.STATUS.in_progress' | translate }}</option>
         <option value="completed">{{ 'ADMIN_RESERVATIONS.STATUS.completed' | translate }}</option>
         <option value="cancelled">{{ 'ADMIN_RESERVATIONS.STATUS.cancelled' | translate }}</option>
+        <option value="no_show">{{ 'ADMIN_RESERVATIONS.STATUS.no_show' | translate }}</option>
       </select>
 
       <select [(ngModel)]="operatorFilter" (ngModelChange)="currentPage = 1">
@@ -105,7 +106,13 @@
     <!-- tabla -->
     <div class="card table-card">
 
-      @if (bookings.length === 0) {
+      @if (loading) {
+        <p class="muted">{{ 'COMMON.LOADING' | translate }}</p>
+      } @else if (loadError) {
+        <app-empty-state variant="empty" icon="error" titleKey="COMMON.ERROR" [messageKey]="loadError">
+          <button class="btn-outline" (click)="reload()">{{ 'NOTIFICATIONS.RETRY' | translate }}</button>
+        </app-empty-state>
+      } @else if (bookings.length === 0) {
 
         <app-empty-state
           variant="empty"
@@ -180,7 +187,7 @@
                   </td>
                   <td class="actions-cell">
                     <div class="actions">
-                      @if (!b.operator && b.status !== 'cancelled' && b.status !== 'completed') {
+                      @if (!b.operator && b.changeable) {
                         <button class="btn-assign" (click)="openAssignModal(b)">
                           <mat-icon>person_add</mat-icon>
                           {{ 'ADMIN_RESERVATIONS.ASSIGN' | translate }}

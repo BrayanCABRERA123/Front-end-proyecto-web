@@ -1,16 +1,36 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { Observable, forkJoin, map, of, catchError, tap } from 'rxjs';
 
 import { readStorage, writeStorage } from '../../../core/services/local-storage';
-import { Booking, BookingFormValue, BookingStatus } from '../models/admin.models';
+import { BookingApiService } from '../../../core/services/booking-api';
+import { UserAdminService } from '../../../core/services/user-admin';
+import { AuthUser } from '../../../core/models/auth.models';
+import {
+  BookingResponse,
+  BookingStatusCode,
+  CreateBookingRequest,
+  RescheduleBookingRequest,
+} from '../../../core/models/booking.models';
+import { apiErrorKey } from '../../../core/utils/api-error';
+import { Booking, BookingStatus } from '../models/admin.models';
 import { OperatorsStore } from './operators-store';
 
-const STORAGE_KEY = 'adminBookings';
+/**
+ * La asignación de operario todavía no tiene backend (operations-service no existe): se guarda
+ * solo en este navegador. Cuando exista, esto se reemplaza por su API.
+ */
+const OPERATOR_KEY = 'adminBookingOperators';
 
-/** fecha ISO (yyyy-MM-dd) con la cantidad de días indicada respecto a hoy */
+// ventana de reservas que se carga: 30 días atrás y 31 adelante (el backend acepta hasta 62)
+const DAYS_BACK = 30;
+const DAYS_AHEAD = 31;
+
+/** fecha ISO (yyyy-MM-dd) en la hora local, con la cantidad de días indicada respecto a hoy */
 function isoDate(offsetDays = 0): string {
   const d = new Date();
   d.setDate(d.getDate() + offsetDays);
-  return d.toISOString().slice(0, 10);
+  const pad = (value: number) => String(value).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
 function minutesToTime(total: number): string {
@@ -40,40 +60,72 @@ export function scheduleLabel(date: string, time: string, durationMin: number): 
   return `${formatDate(date)} · ${formatTimeRange(time, durationMin)}`;
 }
 
-const SEED: Omit<Booking, 'id' | 'email' | 'notes' | 'createdAt'>[] = [
-  { code: '#RES-8921', client: 'Sofía Castro', phone: '+57 312 456 7890', vehicle: 'Mazda CX-30', plate: 'NQ-4412', service: 'Premium Especial', date: isoDate(), time: '15:00', durationMin: 60, bay: 'Bahía 3', status: 'confirmed', operator: null, amount: 95000 },
-  { code: '#RES-8920', client: 'Juan Felipe González', phone: '+57 300 123 9988', vehicle: 'Audi A4 Sedán', plate: 'KLL-302', service: 'Premium Automóvil', date: isoDate(), time: '15:00', durationMin: 60, bay: 'Bahía 1', status: 'in_progress', operator: { id: 'OP-7310', initials: 'JD', name: 'Juan Díaz' }, amount: 120000 },
-  { code: '#RES-8919', client: 'Diego Herrera', phone: '+57 318 890 1122', vehicle: 'Toyota Hilux', plate: 'THX-780', service: 'Desinfección + Tapicería', date: isoDate(), time: '15:00', durationMin: 60, bay: 'Bahía 2', status: 'confirmed', operator: null, amount: 140000 },
-  { code: '#RES-8918', client: 'Mariana Gómez', phone: '+57 315 223 3445', vehicle: 'Renault Duster', plate: 'FRT-911', service: 'Lavado General + Polichado', date: isoDate(), time: '15:00', durationMin: 60, bay: 'Bahía 4', status: 'confirmed', operator: { id: 'OP-6120', initials: 'AM', name: 'Andrés Mora' }, amount: 175000 },
-  { code: '#RES-8917', client: 'Esneider Sánchez', phone: '+57 311 987 6543', vehicle: 'Chevrolet Tracker', plate: 'MKO-119', service: 'Básico — Camioneta', date: isoDate(), time: '14:00', durationMin: 45, bay: 'Bahía 1', status: 'completed', operator: { id: 'OP-8492', initials: 'CR', name: 'Carlos Ruiz' }, amount: 70000 },
-  { code: '#RES-8916', client: 'Carolina Vega', phone: '+57 320 776 2200', vehicle: 'Kia Sportage', plate: 'BHY-209', service: 'Combo Completo SUV', date: isoDate(), time: '13:30', durationMin: 90, bay: null, status: 'cancelled', operator: null, amount: 210000 },
-  { code: '#RES-8915', client: 'Laura Ramírez', phone: '+57 301 445 7788', vehicle: 'Nissan Sentra', plate: 'GHT-556', service: 'Lavado Básico', date: isoDate(), time: '12:00', durationMin: 40, bay: 'Bahía 2', status: 'completed', operator: { id: 'OP-7310', initials: 'JD', name: 'Juan Díaz' }, amount: 45000 },
-  { code: '#RES-8914', client: 'Cristian Peña', phone: '+57 314 998 0021', vehicle: 'Ford Explorer', plate: 'YTR-330', service: 'Detallado Interior', date: isoDate(), time: '11:30', durationMin: 90, bay: 'Bahía 3', status: 'completed', operator: { id: 'OP-5088', initials: 'MG', name: 'Mateo Gómez' }, amount: 185000 },
-  { code: '#RES-8913', client: 'Valentina Ríos', phone: '+57 302 667 4410', vehicle: 'Chevrolet Spark', plate: 'LMK-118', service: 'Encerado', date: isoDate(), time: '17:00', durationMin: 40, bay: 'Bahía 1', status: 'confirmed', operator: null, amount: 85000 },
-  { code: '#RES-8912', client: 'Andrés Torres', phone: '+57 317 220 6690', vehicle: 'Mazda BT-50', plate: 'PQR-902', service: 'Combo Completo Camioneta', date: isoDate(), time: '16:30', durationMin: 90, bay: 'Bahía 4', status: 'confirmed', operator: { id: 'OP-6120', initials: 'AM', name: 'Andrés Mora' }, amount: 195000 },
-  { code: '#RES-8911', client: 'Natalia Cárdenas', phone: '+57 313 556 8890', vehicle: 'Renault Logan', plate: 'DFT-247', service: 'Lavado Básico', date: isoDate(-1), time: '10:00', durationMin: 40, bay: 'Bahía 2', status: 'completed', operator: { id: 'OP-8492', initials: 'CR', name: 'Carlos Ruiz' }, amount: 45000 },
-  { code: '#RES-8910', client: 'Camilo Reyes', phone: '+57 316 774 0091', vehicle: 'Jeep Renegade', plate: 'WQX-115', service: 'Premium Automóvil', date: isoDate(-1), time: '09:00', durationMin: 60, bay: null, status: 'cancelled', operator: null, amount: 120000 },
-  { code: '#RES-8909', client: 'Sara Ospina', phone: '+57 305 771 3344', vehicle: 'Toyota Corolla', plate: 'JHK-402', service: 'Lavado Básico', date: isoDate(1), time: '09:30', durationMin: 40, bay: 'Bahía 1', status: 'confirmed', operator: null, amount: 45000 },
-  { code: '#RES-8908', client: 'Óscar Rueda', phone: '+57 321 998 1100', vehicle: 'Hyundai Tucson', plate: 'LPP-778', service: 'Lavado General + Encerado', date: isoDate(1), time: '11:00', durationMin: 120, bay: 'Bahía 3', status: 'confirmed', operator: null, amount: 165000 },
-];
+// estado del backend (ADR-010) -> estado que usan las pantallas y sus estilos
+const STATUS_BY_CODE: Record<BookingStatusCode, BookingStatus> = {
+  SCHEDULED: 'scheduled',
+  CONFIRMED: 'confirmed',
+  IN_PROGRESS: 'in_progress',
+  COMPLETED: 'completed',
+  CANCELLED: 'cancelled',
+  NO_SHOW: 'no_show',
+};
+
+export function statusCode(status: BookingStatus): BookingStatusCode {
+  return status.toUpperCase() as BookingStatusCode;
+}
 
 /**
- * Fuente única de datos de las reservas del administrador.
+ * Fuente única de las reservas del administrador, con los datos del booking-service.
  *
- * El dashboard, la pantalla de reservas y el calendario de operarios leen de
- * aquí, así que un cambio de estado o una asignación se refleja en todas las
- * vistas sin recargar.
+ * El dashboard, la pantalla de reservas y los reportes leen de aquí. Cada reserva trae el
+ * vehículo y el user_id del dueño; el nombre, teléfono y correo se completan con las cuentas
+ * de security-service (solo para mostrarlos).
  */
 @Injectable({ providedIn: 'root' })
 export class ReservationsStore {
 
-  constructor(private operators: OperatorsStore) {}
+  private readonly api = inject(BookingApiService);
+  private readonly userAdmin = inject(UserAdminService);
+  private readonly operators = inject(OperatorsStore);
 
-  private readonly state = signal<Booking[]>(this.load());
+  private readonly state = signal<Booking[]>([]);
+  private clients = new Map<number, AuthUser>();
+  private operatorByBooking: Record<string, string> = readStorage(OPERATOR_KEY, {});
+
+  readonly loading = signal(false);
+  readonly loadError = signal<string | null>(null);
 
   readonly bookings = computed(() =>
     [...this.state()].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
   );
+
+  constructor() {
+    this.load();
+  }
+
+  /** carga las reservas de la ventana y las cuentas de los clientes */
+  load(): void {
+    this.loading.set(true);
+    this.loadError.set(null);
+    forkJoin({
+      bookings: this.api.adminBookings(isoDate(-DAYS_BACK), isoDate(DAYS_AHEAD)),
+      // si falla la lista de clientes, las reservas igual se muestran (sin nombre)
+      clients: this.userAdmin.listAccounts(0, 100, 'CLIENT').pipe(
+        map(page => page.items),
+        catchError(() => of([] as AuthUser[]))
+      ),
+    }).subscribe({
+      next: ({ bookings, clients }) => {
+        this.clients = new Map(clients.map(client => [client.id, client]));
+        this.state.set(bookings.map(b => this.toBooking(b)));
+        this.loading.set(false);
+      },
+      error: (error) => {
+        this.loadError.set(apiErrorKey(error));
+        this.loading.set(false);
+      }
+    });
+  }
 
   /** reservas de un día concreto, en formato yyyy-MM-dd */
   byDate(date: string): Booking[] {
@@ -88,111 +140,78 @@ export class ReservationsStore {
     return this.state().find(b => b.id === id);
   }
 
-  getByCode(code: string): Booking | undefined {
-    return this.state().find(b => b.code === code);
-  }
+  /* ---------- cambios (el backend valida y responde la reserva actualizada) ---------- */
 
-  addBooking(value: BookingFormValue): Booking {
-    const operator = value.operatorId ? this.operatorRef(value.operatorId) : null;
-
-    const booking: Booking = {
-      id: 'b-' + Date.now(),
-      code: this.nextCode(),
-      client: value.client,
-      phone: value.phone,
-      email: value.email,
-      vehicle: value.vehicle,
-      plate: value.plate,
-      service: value.service,
-      date: value.date,
-      time: value.time,
-      durationMin: value.durationMin,
-      bay: value.bay,
-      status: value.status,
-      operator,
-      notes: value.notes,
-      createdAt: new Date().toISOString(),
-      amount: 0,
-    };
-
-    this.commit([...this.state(), booking]);
-    return booking;
-  }
-
-  updateBooking(id: string, value: BookingFormValue): void {
-    this.commit(
-      this.state().map(b => {
-        if (b.id !== id) return b;
-        return {
-          ...b,
-          ...value,
-          operator: value.operatorId ? this.operatorRef(value.operatorId) : null,
-        };
-      })
+  create(request: CreateBookingRequest): Observable<Booking> {
+    return this.api.adminCreateBooking(request).pipe(
+      map(response => this.toBooking(response)),
+      tap(created => this.state.update(list => [...list, created]))
     );
   }
 
-  setStatus(id: string, status: BookingStatus): void {
-    this.commit(
-      this.state().map(b => {
-        if (b.id !== id) return b;
-        // una reserva cancelada o completada no puede quedar con operario
-        if (status === 'cancelled' || status === 'completed') return { ...b, status, operator: null };
-        return { ...b, status };
-      })
+  reschedule(id: string, request: RescheduleBookingRequest): Observable<Booking> {
+    return this.api.adminReschedule(Number(id), request).pipe(
+      map(response => this.toBooking(response)),
+      tap(updated => this.replace(updated))
     );
   }
 
+  setStatus(id: string, status: BookingStatus, reasonCode?: string): Observable<Booking> {
+    return this.api.adminChangeStatus(Number(id), statusCode(status), reasonCode).pipe(
+      map(response => this.toBooking(response)),
+      tap(updated => this.replace(updated))
+    );
+  }
+
+  /** temporal: la asignación vive en este navegador hasta que exista operations-service */
   assignOperator(id: string, operatorId: string | null): void {
-    this.commit(
-      this.state().map(b => (b.id === id ? { ...b, operator: operatorId ? this.operatorRef(operatorId) : null } : b))
-    );
+    if (operatorId) {
+      this.operatorByBooking[id] = operatorId;
+    } else {
+      delete this.operatorByBooking[id];
+    }
+    writeStorage(OPERATOR_KEY, this.operatorByBooking);
+    this.state.update(list => list.map(b => (b.id === id ? { ...b, operator: this.operatorRef(id) } : b)));
   }
 
-  removeBooking(id: string): void {
-    this.commit(this.state().filter(b => b.id !== id));
+  /* ---------- internos ---------- */
+
+  private replace(updated: Booking): void {
+    this.state.update(list => list.map(b => (b.id === updated.id ? updated : b)));
   }
 
-  /** siguiente código libre del tipo #RES-#### */
-  nextCode(): string {
-    const numbers = this.state()
-      .map(b => Number(b.code.replace(/\D/g, '')))
-      .filter(n => !Number.isNaN(n));
-    return '#RES-' + (numbers.length ? Math.max(...numbers) + 1 : 8900);
-  }
-
-  /** referencia corta del operario, taken desde el store de operarios */
-  private operatorRef(operatorId: string): Booking['operator'] {
-    const operator = this.operators.getById(operatorId);
+  private operatorRef(bookingId: string): Booking['operator'] {
+    const operatorId = this.operatorByBooking[bookingId];
+    const operator = operatorId ? this.operators.getById(operatorId) : undefined;
     return operator ? { id: operator.id, initials: operator.initials, name: operator.name } : null;
   }
 
-  private commit(bookings: Booking[]): void {
-    this.state.set(bookings);
-    writeStorage(STORAGE_KEY, bookings);
+  private toBooking(response: BookingResponse): Booking {
+    const id = String(response.id);
+    const owner = response.ownerUserId !== null ? this.clients.get(response.ownerUserId) : undefined;
+    const vehicle = response.vehicle;
+    return {
+      id,
+      code: response.code,
+      client: owner ? `${owner.firstName} ${owner.lastName}` : '—',
+      phone: owner?.phone ?? '',
+      email: owner?.email ?? '',
+      vehicle: vehicle ? `${vehicle.brand ?? ''} ${vehicle.model ?? ''}`.trim() || vehicle.vehicleTypeName : '—',
+      plate: vehicle?.licensePlateFormatted ?? '—',
+      service: response.services.map(s => s.name).join(', '),
+      serviceIds: response.services.map(s => s.serviceId),
+      vehicleId: vehicle?.id ?? null,
+      date: response.date,
+      time: response.startTime,
+      durationMin: response.durationMinutes,
+      bay: response.bay?.name ?? null,
+      status: STATUS_BY_CODE[response.status],
+      changeable: response.changeable,
+      cancellationReason: response.cancellationReason?.name ?? null,
+      operator: this.operatorRef(id),
+      notes: response.notes ?? '',
+      createdAt: response.createdAt ?? '',
+      amount: response.total,
+    };
   }
-
-  private load(): Booking[] {
-    const stored = readStorage<Booking[] | null>(STORAGE_KEY, null);
-    if (stored?.length) return stored;
-
-    return SEED.map(b => ({
-      ...b,
-      id: 'b-' + b.code.replace(/\D/g, ''),
-      email: `${slug(b.client)}@email.com`,
-      notes: '',
-      createdAt: new Date().toISOString(),
-    }));
-  }
-}
-
-/** nombre en minúsculas sin tildes ni espacios, para armar el correo de ejemplo */
-function slug(name: string): string {
-  return name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .split(/\s+/)
-    .slice(0, 2)
-    .join('.');
 }

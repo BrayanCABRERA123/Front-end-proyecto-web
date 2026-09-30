@@ -72,7 +72,11 @@
       </div>
     }
 
-    @if (booking.status === 'cancelled' || booking.status === 'completed') {
+    @if (booking.cancellationReason) {
+      <p class="detail-dialog__hint">{{ 'BOOKING_DETAIL.CANCEL_REASON' | translate }}: {{ booking.cancellationReason }}</p>
+    }
+
+    @if (!booking.changeable) {
       <p class="detail-dialog__hint">{{ 'BOOKING_DETAIL.RESTRICTED_HINT' | translate }}</p>
     }
 
@@ -87,19 +91,28 @@
       </button>
     }
 
-    @if (!booking.operator && booking.status !== 'cancelled' && booking.status !== 'completed') {
+    @if (canMarkNoShow) {
+      <button class="detail-dialog__btn" (click)="markNoShow()">
+        <mat-icon>person_off</mat-icon>
+        {{ 'BOOKING_DETAIL.STATUS_ACTION.no_show' | translate }}
+      </button>
+    }
+
+    @if (!booking.operator && booking.changeable) {
       <button class="detail-dialog__btn" (click)="assignOperator()">
         <mat-icon>person_add</mat-icon>
         {{ 'BOOKING_DETAIL.ASSIGN' | translate }}
       </button>
     }
 
-    <button class="detail-dialog__btn" (click)="edit()">
-      <mat-icon>edit</mat-icon>
-      {{ 'BOOKING_DETAIL.EDIT' | translate }}
-    </button>
+    @if (booking.changeable) {
+      <button class="detail-dialog__btn" (click)="edit()">
+        <mat-icon>edit</mat-icon>
+        {{ 'BOOKING_DETAIL.EDIT' | translate }}
+      </button>
+    }
 
-    @if (booking.status !== 'cancelled' && booking.status !== 'completed') {
+    @if (booking.changeable) {
       <button class="detail-dialog__btn detail-dialog__btn--danger" (click)="cancel()">
         <mat-icon>close</mat-icon>
         {{ 'BOOKING_DETAIL.CANCEL_BOOKING' | translate }}

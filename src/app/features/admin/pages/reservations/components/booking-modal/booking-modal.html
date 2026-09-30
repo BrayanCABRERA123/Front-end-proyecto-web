@@ -10,113 +10,80 @@
 
   <div class="form-dialog__body">
 
+    <!-- 1. vehículo: se busca por placa en customer-service -->
     <div class="form-dialog__grid-2">
-      <label class="form-field" [class.form-field--invalid]="clientInvalid">
-        <span>{{ 'BOOKING_MODAL.CLIENT_LABEL' | translate }} *</span>
-        <input type="text" [(ngModel)]="client" maxlength="60" [placeholder]="'BOOKING_MODAL.CLIENT_PLACEHOLDER' | translate">
-        @if (clientInvalid) {
-          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'BOOKING_MODAL.ERROR_CLIENT' | translate }}</span>
+      <label class="form-field" [class.form-field--invalid]="!!searchErrorKey">
+        <span>{{ 'BOOKING_MODAL.PLATE_LABEL' | translate }} *</span>
+        <input
+          type="text"
+          [(ngModel)]="plate"
+          maxlength="10"
+          [disabled]="editing"
+          [placeholder]="'BOOKING_MODAL.PLATE_PLACEHOLDER' | translate"
+          (input)="plate = plate.toUpperCase()"
+          (keyup.enter)="searchVehicle()">
+        @if (searchErrorKey) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ searchErrorKey | translate }}</span>
         }
       </label>
 
-      <label class="form-field" [class.form-field--invalid]="phoneInvalid">
-        <span>{{ 'BOOKING_MODAL.PHONE_LABEL' | translate }} *</span>
-        <input type="tel" [(ngModel)]="phone" maxlength="20" [placeholder]="'BOOKING_MODAL.PHONE_PLACEHOLDER' | translate">
-        @if (phoneInvalid) {
-          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'BOOKING_MODAL.ERROR_PHONE' | translate }}</span>
+      @if (!editing) {
+        <div class="form-field">
+          <span>&nbsp;</span>
+          <button type="button" class="form-dialog__cancel" (click)="searchVehicle()" [disabled]="searching || !plate.trim()">
+            <mat-icon>search</mat-icon> {{ 'BOOKING_MODAL.SEARCH' | translate }}
+          </button>
+        </div>
+      }
+    </div>
+
+    @if (vehicle) {
+      <p class="form-hint">
+        <mat-icon>directions_car</mat-icon>
+        {{ vehicle.brand }} {{ vehicle.model }} · {{ vehicle.vehicleTypeName }} · {{ vehicle.licensePlateFormatted }}
+      </p>
+
+      <!-- 2. servicios con el precio del tipo de este vehículo -->
+      <div class="form-field">
+        <span>{{ 'BOOKING_MODAL.SERVICE_LABEL' | translate }} *</span>
+        @for (s of services; track s.id) {
+          <label class="check-row">
+            <input type="checkbox" [checked]="selectedServiceIds.has(s.id)" (change)="toggleService(s.id)">
+            {{ s.name }} · {{ priceOf(s) | copPrice }} · {{ 'RESERVE.MINUTES' | translate:{ count: minutesOf(s) } }}
+          </label>
         }
-      </label>
-
-      <label class="form-field">
-        <span>{{ 'BOOKING_MODAL.EMAIL_LABEL' | translate }}</span>
-        <input type="email" [(ngModel)]="email" maxlength="80" [placeholder]="'BOOKING_MODAL.EMAIL_PLACEHOLDER' | translate">
-      </label>
-
-      <div class="form-dialog__grid-2">
-        <label class="form-field" [class.form-field--invalid]="vehicleInvalid">
-          <span>{{ 'BOOKING_MODAL.VEHICLE_LABEL' | translate }} *</span>
-          <input type="text" [(ngModel)]="vehicle" maxlength="40" [placeholder]="'BOOKING_MODAL.VEHICLE_PLACEHOLDER' | translate">
-          @if (vehicleInvalid) {
-            <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'BOOKING_MODAL.ERROR_VEHICLE' | translate }}</span>
-          }
-        </label>
-
-        <label class="form-field" [class.form-field--invalid]="plateInvalid">
-          <span>{{ 'BOOKING_MODAL.PLATE_LABEL' | translate }} *</span>
-          <input
-            type="text"
-            [(ngModel)]="plate"
-            maxlength="10"
-            [placeholder]="'BOOKING_MODAL.PLATE_PLACEHOLDER' | translate"
-            (input)="plate = plate.toUpperCase()">
-          @if (plateInvalid) {
-            <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'BOOKING_MODAL.ERROR_PLATE' | translate }}</span>
-          }
-        </label>
       </div>
 
-      <label class="form-field">
-        <span>{{ 'BOOKING_MODAL.SERVICE_LABEL' | translate }} *</span>
-        <select [(ngModel)]="service" (ngModelChange)="onServiceChange()">
-          @for (s of services; track s.name) {
-            <option [ngValue]="s.name">{{ s.name }}</option>
-          }
-        </select>
-      </label>
-
+      <!-- 3. fecha y hora libre -->
       <div class="form-dialog__grid-2">
         <label class="form-field">
           <span>{{ 'BOOKING_MODAL.DATE_LABEL' | translate }} *</span>
-          <input type="date" [(ngModel)]="date">
+          <input type="date" [(ngModel)]="date" (ngModelChange)="onDateChange()">
         </label>
 
-        <div class="form-dialog__grid-2">
-          <label class="form-field">
-            <span>{{ 'BOOKING_MODAL.TIME_LABEL' | translate }} *</span>
-            <input type="time" [(ngModel)]="time">
-          </label>
-
-          <label class="form-field">
-            <span>{{ 'BOOKING_MODAL.DURATION_LABEL' | translate }}</span>
-            <input type="number" min="15" max="480" step="15" [(ngModel)]="durationMin">
-          </label>
-        </div>
+        <label class="form-field">
+          <span>{{ 'BOOKING_MODAL.TIME_LABEL' | translate }} *</span>
+          <select [(ngModel)]="time" [disabled]="timesLoading || !times.length">
+            <option value="" disabled>
+              {{ (timesLoading ? 'RESERVE.LOADING_TIMES' : (dayClosed ? 'RESERVE.DAY_CLOSED' : (selectedServiceIds.size && !times.length ? 'RESERVE.NO_TIMES' : 'RESERVE.SELECT_TIME'))) | translate }}
+            </option>
+            @for (t of times; track t) {
+              <option [value]="t">{{ t }}</option>
+            }
+          </select>
+        </label>
       </div>
 
       <label class="form-field">
-        <span>{{ 'BOOKING_MODAL.BAY_LABEL' | translate }}</span>
-        <select [(ngModel)]="bayId">
-          <option [ngValue]="null">{{ 'BOOKING_MODAL.NO_BAY' | translate }}</option>
-          @for (b of bays; track b.id) {
-            <option [ngValue]="b.id">{{ b.name }}</option>
-          }
-        </select>
-      </label>
-
-      <label class="form-field">
-        <span>{{ 'BOOKING_MODAL.OPERATOR_LABEL' | translate }}</span>
-        <select [(ngModel)]="operatorId">
-          <option [ngValue]="null">{{ 'BOOKING_MODAL.NO_OPERATOR' | translate }}</option>
-          @for (o of operators; track o.id) {
-            <option [ngValue]="o.id">{{ o.name }}</option>
-          }
-        </select>
-      </label>
-
-      <label class="form-field">
-        <span>{{ 'BOOKING_MODAL.STATUS_LABEL' | translate }}</span>
-        <select [(ngModel)]="status">
-          @for (s of statuses; track s.value) {
-            <option [ngValue]="s.value">{{ s.labelKey | translate }}</option>
-          }
-        </select>
-      </label>
-
-      <label class="form-field">
         <span>{{ 'BOOKING_MODAL.NOTES_LABEL' | translate }}</span>
-        <textarea rows="2" [(ngModel)]="notes" maxlength="200" [placeholder]="'BOOKING_MODAL.NOTES_PLACEHOLDER' | translate"></textarea>
+        <textarea rows="2" [(ngModel)]="notes" maxlength="300" [placeholder]="'BOOKING_MODAL.NOTES_PLACEHOLDER' | translate"></textarea>
       </label>
-    </div>
+
+      <p class="form-hint">{{ 'BOOKING_MODAL.BAY_AUTO_HINT' | translate }}</p>
+      @if (saveErrorKey) {
+        <span class="form-field__error"><mat-icon>error</mat-icon>{{ saveErrorKey | translate }}</span>
+      }
+    }
 
   </div>
 
@@ -124,7 +91,7 @@
     <button class="form-dialog__cancel" type="button" (click)="close()">
       {{ 'COMMON.CANCEL' | translate }}
     </button>
-    <button class="form-dialog__submit" type="button" (click)="save()">
+    <button class="form-dialog__submit" type="button" [disabled]="!canSave || saving" (click)="save()">
       {{ (editing ? 'COMMON.SAVE' : 'BOOKING_MODAL.CREATE') | translate }}
     </button>
   </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,10 +13,9 @@ import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confi
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { ReservationsStore, formatDate, formatTimeRange } from '../../services/reservations-store';
 import { OperatorsStore } from '../../services/operators-store';
-import { ScheduleStore } from '../../services/schedule-store';
-import { CatalogStore } from '../../services/catalog-store';
 import { Booking, BookingStatus } from '../../models/admin.models';
-import { BookingModal, BookingModalData, BookingModalResult } from './components/booking-modal/booking-modal';
+import { BookingModal, BookingModalData } from './components/booking-modal/booking-modal';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 import { BookingDetailModal, BookingDetailResult } from './components/booking-detail-modal/booking-detail-modal';
 
 @Component({
@@ -33,7 +32,7 @@ import { BookingDetailModal, BookingDetailResult } from './components/booking-de
   templateUrl: './reservations.html',
   styleUrls: ['./reservations.scss']
 })
-export class ReservationsComponent {
+export class ReservationsComponent implements OnInit {
 
   searchTerm = '';
   statusFilter: BookingStatus | '' = '';
@@ -46,11 +45,21 @@ export class ReservationsComponent {
   constructor(
     private store: ReservationsStore,
     private operators: OperatorsStore,
-    private schedule: ScheduleStore,
-    private catalog: CatalogStore,
     private dialog: MatDialog,
     private feedback: FeedbackService,
   ) {}
+
+  // se recarga al entrar para ver las reservas que llegaron desde la app del cliente
+  ngOnInit(): void {
+    this.store.load();
+  }
+
+  get loading(): boolean { return this.store.loading(); }
+  get loadError(): string | null { return this.store.loadError(); }
+
+  reload(): void {
+    this.store.load();
+  }
 
   /* ---------- datos ---------- */
 
@@ -150,20 +159,12 @@ export class ReservationsComponent {
 
   /* ---------- acciones ---------- */
 
+  // el modal guarda en el backend y se cierra con la reserva ya confirmada
   openCreate(): void {
-    const data: BookingModalData = {
-      bays: this.schedule.bays()
-        .filter(b => b.status === 'active')
-        .map(b => ({ id: b.id, name: b.name })),
-      operators: this.operators.availableOperators().map(o => ({ id: o.id, name: o.name, initials: o.initials })),
-      services: this.catalog.services().map(s => ({ id: s.id, name: s.name, durationMin: s.durationMin })),
-    };
+    const dialogRef = this.dialog.open(BookingModal, { panelClass: 'custom-dialog', data: {} as BookingModalData });
 
-    const dialogRef = this.dialog.open(BookingModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((result: BookingModalResult | null) => {
-      if (!result) return;
-      const created = this.store.addBooking(result);
+    dialogRef.afterClosed().subscribe((created: Booking | null) => {
+      if (!created) return;
       this.feedback.success(
         'ADMIN_RESERVATIONS.FEEDBACK.CREATED_TITLE',
         'ADMIN_RESERVATIONS.FEEDBACK.CREATED_MESSAGE',
@@ -172,21 +173,13 @@ export class ReservationsComponent {
     });
   }
 
+  // reprogramar: fecha, hora y servicios (el vehículo no cambia)
   openEdit(booking: Booking): void {
-    const data: BookingModalData = {
-      booking,
-      bays: this.schedule.bays()
-        .filter(b => b.status === 'active')
-        .map(b => ({ id: b.id, name: b.name })),
-      operators: this.operators.availableOperators().map(o => ({ id: o.id, name: o.name, initials: o.initials })),
-      services: this.catalog.services().map(s => ({ id: s.id, name: s.name, durationMin: s.durationMin })),
-    };
-
+    const data: BookingModalData = { booking };
     const dialogRef = this.dialog.open(BookingModal, { panelClass: 'custom-dialog', data });
 
-    dialogRef.afterClosed().subscribe((result: BookingModalResult | null) => {
-      if (!result) return;
-      this.store.updateBooking(booking.id, result);
+    dialogRef.afterClosed().subscribe((updated: Booking | null) => {
+      if (!updated) return;
       this.feedback.success(
         'ADMIN_RESERVATIONS.FEEDBACK.UPDATED_TITLE',
         'ADMIN_RESERVATIONS.FEEDBACK.UPDATED_MESSAGE',
@@ -216,7 +209,7 @@ export class ReservationsComponent {
 
   // el cambio de estado importante (completar / cancelar) pide confirmación
   changeStatus(booking: Booking, status: BookingStatus): void {
-    const finishing = status === 'completed' || status === 'cancelled';
+    const finishing = status === 'completed' || status === 'cancelled' || status === 'no_show';
 
     const confirm: ConfirmModalData = {
       title: finishing ? `ADMIN_RESERVATIONS.FEEDBACK.${status.toUpperCase()}_TITLE` : 'ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
@@ -230,12 +223,16 @@ export class ReservationsComponent {
     const confirmRef = this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data: confirm });
     confirmRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      this.store.setStatus(booking.id, status);
-      this.feedback.success(
-        'ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
-        `ADMIN_RESERVATIONS.FEEDBACK.STATUS_${status.toUpperCase()}_MESSAGE`,
-        { messageParams: { code: booking.code } }
-      );
+      // el admin cancela con el motivo OTHER (catálogo booking.cancellation_reason)
+      const reason = status === 'cancelled' ? 'OTHER' : undefined;
+      this.store.setStatus(booking.id, status, reason).subscribe({
+        next: () => this.feedback.success(
+          'ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
+          `ADMIN_RESERVATIONS.FEEDBACK.STATUS_${status.toUpperCase()}_MESSAGE`,
+          { messageParams: { code: booking.code } }
+        ),
+        error: (error) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+      });
     });
   }
 

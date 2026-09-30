@@ -83,7 +83,8 @@
     "CREATE": "Create",
     "EDIT": "Edit",
     "SAVE": "Save",
-    "VIEW": "View"
+    "VIEW": "View",
+    "LOADING": "Loading..."
   },
   "SERVICE": {
     "BASIC": "Basic",
@@ -1277,7 +1278,9 @@
       "confirmed": "Confirmed",
       "in_progress": "In progress",
       "completed": "Completed",
-      "cancelled": "Cancelled"
+      "cancelled": "Cancelled",
+      "scheduled": "Scheduled",
+      "no_show": "No show"
     },
     "PAGINATION": {
       "SHOWING": "Showing {{from}} to {{to}} of {{total}} bookings",
@@ -1305,7 +1308,11 @@
       "STATUS_CANCELLED_CONFIRM": "Cancel booking {{code}}? This action cannot be undone.",
       "STATUS_CANCELLED_MESSAGE": "Booking {{code}} was cancelled.",
       "ASSIGNED_TITLE": "Operator assigned",
-      "ASSIGNED_MESSAGE": "Booking {{code}} now has an assigned operator."
+      "ASSIGNED_MESSAGE": "Booking {{code}} now has an assigned operator.",
+      "NO_SHOW_TITLE": "Mark as no show",
+      "NO_SHOW_CONFIRM": "Did the customer of booking {{code}} not arrive?",
+      "STATUS_NO_SHOW_MESSAGE": "Booking {{code}} was marked as no show.",
+      "STATUS_SCHEDULED_MESSAGE": "Booking {{code}} is scheduled."
     }
   },
   "ASSIGN_OPERATOR_MODAL": {
@@ -1394,7 +1401,8 @@
       },
       "MINUTES_SUFFIX": "min",
       "EMPTY_TITLE": "No services yet",
-      "EMPTY_MESSAGE": "Add the first service to the car wash catalog."
+      "EMPTY_MESSAGE": "Add the first service to the car wash catalog.",
+      "PRICES_COUNT": "({{count}} rates)"
     },
     "PROMOTIONS": {
       "CREATE_PROMOTION": "Create promotion",
@@ -1501,7 +1509,11 @@
     "DESCRIPTION_PLACEHOLDER": "Describe the service details...",
     "DURATION_LABEL": "Estimated duration",
     "CATEGORY_LABEL": "Category",
-    "SAVE": "Save Service"
+    "SAVE": "Save Service",
+    "PRICES_LABEL": "Price and duration by vehicle type",
+    "PRICES_HINT": "Leave the row empty if the service is not offered for that type.",
+    "VEHICLE_TYPE": "Vehicle type",
+    "HALF_ROW_ERROR": "Each row needs price and duration, or must stay empty."
   },
   "CREATE_USER_MODAL": {
     "TITLE": "Create User",
@@ -2075,8 +2087,10 @@
     "STATUS_ACTION": {
       "in_progress": "Start service",
       "completed": "Complete",
-      "cancelled": "Cancel"
-    }
+      "cancelled": "Cancel",
+      "no_show": "No show"
+    },
+    "CANCEL_REASON": "Cancellation reason"
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "New booking",
@@ -2107,7 +2121,10 @@
     "ERROR_VEHICLE": "Enter the vehicle",
     "ERROR_PLATE": "Enter the plate",
     "NO_BAY": "No bay",
-    "NO_OPERATOR": "No operator"
+    "NO_OPERATOR": "No operator",
+    "SEARCH": "Search",
+    "VEHICLE_NOT_FOUND": "No vehicle is registered with that plate.",
+    "BAY_AUTO_HINT": "The system assigns the bay when saving, based on availability."
   },
   "EXPORT_DATA": {
     "TITLE": "Export data",
