@@ -153,7 +153,8 @@
       "DETAIL_MESSAGE": "Estes são os dados da sua próxima lavagem.",
       "STATUS": "Status",
       "OPERATOR_ASSIGNED": "Operador designado",
-      "PROGRESS": "Progresso do serviço"
+      "PROGRESS": "Progresso do serviço",
+      "EMPTY": "Nenhum serviço agendado"
     },
     "QUICK_ACCESS": {
       "TITLE": "Acessos rápidos",
@@ -169,7 +170,8 @@
     },
     "BENEFITS": {
       "TITLE": "Seus benefícios e promoções",
-      "LOYALTY_PROGRESS": "Progresso de fidelidade"
+      "LOYALTY_PROGRESS": "Progresso de fidelidade",
+      "LOYALTY_EMPTY": "Ainda não há dados de fidelidade"
     },
     "SERVICES_HISTORY": {
       "TITLE": "Meu histórico de serviços",
@@ -388,7 +390,8 @@
       "TITLE": "Escolha seu veículo",
       "SUBTITLE": "Selecione um dos seus veículos registrados",
       "NO_VEHICLE": "Seu veículo não está listado? Registre-o primeiro em",
-      "NO_VEHICLE_LINK": "Meus Veículos"
+      "NO_VEHICLE_LINK": "Meus Veículos",
+      "LOADING": "Carregando veículos..."
     },
     "STEP2": {
       "TITLE": "Tipo de serviço",
@@ -719,6 +722,7 @@
     "LAST_12_MONTHS": "Nos últimos 12 meses"
   },
   "PAYMENT": {
+    "EMPTY": "Nenhum pagamento pendente",
     "CANCEL_CONFIRM": {
       "TITLE": "Cancelar reserva?",
       "MESSAGE": "A reserva {{code}} será cancelada e o horário será liberado. Esta ação não pode ser desfeita.",

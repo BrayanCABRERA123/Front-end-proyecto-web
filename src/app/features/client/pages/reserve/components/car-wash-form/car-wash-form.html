@@ -14,19 +14,24 @@
       </div>
 
       <div class="vehicle-options">
-        <button
-          class="vehicle-option"
-          *ngFor="let v of vehicles"
-          [class.selected]="selectedVehicleId === v.id"
-          (click)="selectVehicle(v.id)">
-          <div class="vehicle-icon">
-            <mat-icon>{{ v.type === 'MOTO' ? 'two_wheeler' : (v.type === 'TRUCK' ? 'local_shipping' : 'directions_car') }}</mat-icon>
-          </div>
-          <div class="vehicle-info">
-            <p class="vehicle-name">{{ v.brand }} {{ v.model }}</p>
-            <p class="vehicle-detail">{{ ('VEHICLE.' + v.type) | translate }} · {{ v.plate }}</p>
-          </div>
-        </button>
+        @if (vehiclesLoading) {
+          <p class="vehicle-loading">{{ 'RESERVE.STEP1.LOADING' | translate }}</p>
+        } @else {
+          @for (v of vehicles; track v.id) {
+            <button
+              class="vehicle-option"
+              [class.selected]="selectedVehicleId === v.id"
+              (click)="selectVehicle(v.id)">
+              <div class="vehicle-icon">
+                <mat-icon>{{ v.vehicleType === 'MOTO' ? 'two_wheeler' : (v.vehicleType === 'TRUCK' ? 'local_shipping' : 'directions_car') }}</mat-icon>
+              </div>
+              <div class="vehicle-info">
+                <p class="vehicle-name">{{ v.brand }} {{ v.model }}</p>
+                <p class="vehicle-detail">{{ ('VEHICLE.' + v.vehicleType) | translate }} · {{ v.licensePlateFormatted }}</p>
+              </div>
+            </button>
+          }
+        }
       </div>
 
       <p class="no-vehicle-note">

@@ -153,7 +153,8 @@
       "DETAIL_MESSAGE": "Voici les détails de votre prochain lavage.",
       "STATUS": "Statut",
       "OPERATOR_ASSIGNED": "Opérateur assigné",
-      "PROGRESS": "Avancement du service"
+      "PROGRESS": "Avancement du service",
+      "EMPTY": "Aucun service programmé"
     },
     "QUICK_ACCESS": {
       "TITLE": "Accès rapides",
@@ -169,7 +170,8 @@
     },
     "BENEFITS": {
       "TITLE": "Vos avantages et promotions",
-      "LOYALTY_PROGRESS": "Progression de fidélité"
+      "LOYALTY_PROGRESS": "Progression de fidélité",
+      "LOYALTY_EMPTY": "Aucune donnée de fidélité pour le moment"
     },
     "SERVICES_HISTORY": {
       "TITLE": "Mon historique de services",
@@ -388,7 +390,8 @@
       "TITLE": "Choisissez votre véhicule",
       "SUBTITLE": "Sélectionnez un de vos véhicules enregistrés",
       "NO_VEHICLE": "Votre véhicule n'est pas listé ? Enregistrez-le d'abord dans",
-      "NO_VEHICLE_LINK": "Mes Véhicules"
+      "NO_VEHICLE_LINK": "Mes Véhicules",
+      "LOADING": "Chargement des véhicules..."
     },
     "STEP2": {
       "TITLE": "Type de service",
@@ -719,6 +722,7 @@
     "LAST_12_MONTHS": "Au cours des 12 derniers mois"
   },
   "PAYMENT": {
+    "EMPTY": "Aucun paiement en attente",
     "CANCEL_CONFIRM": {
       "TITLE": "Annuler la réservation ?",
       "MESSAGE": "La réservation {{code}} sera annulée et le créneau sera libéré. Cette action est irréversible.",

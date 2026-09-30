@@ -48,45 +48,38 @@ export class PaymentComponent implements OnInit, OnDestroy {
   // estado del pago: pendiente de confirmación o en verificación
   flowStep: FlowStep = 'PENDING';
 
-  // código de la reserva
-  reservationCode = 'RES-9420';
+  // código de la reserva (viene de booking-service, pendiente)
+  reservationCode: string | null = null;
 
-  // métodos de pago disponibles
-  paymentMethods: PaymentMethod[] = [
-    { id: 'NEQUI', icon: 'smartphone', label: 'PAYMENT.METHOD.NEQUI', desc: 'PAYMENT.METHOD.NEQUI_DESC' },
-    { id: 'DAVIPLATA', icon: 'account_balance', label: 'PAYMENT.METHOD.DAVIPLATA', desc: 'PAYMENT.METHOD.DAVIPLATA_DESC' },
-    { id: 'TRANSFER', icon: 'receipt_long', label: 'PAYMENT.METHOD.TRANSFER', desc: 'PAYMENT.METHOD.TRANSFER_DESC' },
-    { id: 'CASH', icon: 'payments', label: 'PAYMENT.METHOD.CASH', desc: 'PAYMENT.METHOD.CASH_DESC' }
-  ];
+  // métodos de pago disponibles (vienen de configuración del negocio, pendiente)
+  paymentMethods: PaymentMethod[] = [];
 
   // método seleccionado por el usuario
-  selectedMethod: PaymentMethodId = 'NEQUI';
+  selectedMethod: PaymentMethodId | null = null;
 
-  // datos de la cuenta que recibe el pago
-  payee = {
-    name: 'Lavado Vehicular S.A.S.',
-    key: '318 450 9988',
-    accountType: 'PAYMENT.QR.ACCOUNT_TYPE_VALUE'
-  };
+  // datos de la cuenta que recibe el pago (vienen de configuración del negocio, pendiente)
+  payee: { name: string; key: string; accountType: string } | null = null;
 
-  // resumen de la reserva
-  serviceSummary = {
-    service: 'PREMIUM',
-    serviceName: 'Lavado Premium Automóvil',
-    serviceDesc: 'PAYMENT.SUMMARY.PREMIUM_DESC',
-    vehicleModel: 'Mazda CX-30',
-    plate: 'KLL-302',
-    schedule: 'Hoy, 24 Octubre 2024 · 14:00 - 15:15',
-    subtotal: 60000,
-    discountPercent: 15,
-    coupon: 'BIENVENIDO15'
-  };
+  // resumen de la reserva (viene de booking-service, pendiente)
+  serviceSummary: {
+    service: string;
+    serviceName: string;
+    serviceDesc: string;
+    vehicleModel: string;
+    plate: string;
+    schedule: string;
+    subtotal: number;
+    discountPercent: number;
+    coupon: string;
+  } | null = null;
 
   get discountAmount(): number {
+    if (!this.serviceSummary) return 0;
     return Math.round(this.serviceSummary.subtotal * this.serviceSummary.discountPercent / 100);
   }
 
   get totalToPay(): number {
+    if (!this.serviceSummary) return 0;
     return this.serviceSummary.subtotal - this.discountAmount;
   }
 

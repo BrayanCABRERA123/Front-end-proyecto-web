@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
 // importamos el sidebar
@@ -13,6 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
 // sede del lavadero: el cliente lleva su vehículo allí (no es a domicilio)
 import { BUSINESS_LOCATION } from '../../../../core/constants/business-location';
+// servicios reales del backend
+import { VehiclesService } from '../../../../core/services/vehicles';
+import { UserSession } from '../../../../core/services/user-session';
+import { VehicleResponse } from '../../../../core/models/vehicle.models';
 
 // avance del servicio según su estado (Confirmado → En lavado → Listo → Finalizado)
 const PROGRESS_BY_STATUS: Record<string, number> = {
@@ -29,12 +33,13 @@ const PROGRESS_BY_STATUS: Record<string, number> = {
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
-  // datos del usuario
-  user = {
-    name: 'Juan'
-  };
+  private readonly vehiclesService = inject(VehiclesService);
+  private readonly userSession = inject(UserSession);
+
+  // datos del usuario (vienen del login real)
+  userName = '';
 
   // notificaciones
   notifications = [
@@ -42,28 +47,76 @@ export class DashboardComponent {
   ];
 
   // estadísticas rápidas del cliente
+  // vehículos: real del backend. reservas y lavados: vienen de booking-service (pendiente)
   stats = [
-    { icon: 'calendar_today', value: 2, label: 'STATS.ACTIVE_RESERVATIONS' },
-    { icon: 'directions_car', value: 3, label: 'STATS.MY_VEHICLES' },
-    { icon: 'water_drop', value: 14, label: 'STATS.WASHES_DONE' }
+    { icon: 'calendar_today', value: 0, label: 'STATS.ACTIVE_RESERVATIONS' },
+    { icon: 'directions_car', value: 0, label: 'STATS.MY_VEHICLES' },
+    { icon: 'water_drop', value: 0, label: 'STATS.WASHES_DONE' }
   ];
 
-  // próximo servicio programado
-  nextService = {
-    type: 'PREMIUM',
-    vehicle: 'CAR',
-    plate: 'ABC-123',
-    date: '25/02/2026 10:00 AM',
-    operator: 'Laura Gómez',
-    status: 'CONFIRMED'
-  };
+  // próximo servicio programado (viene de booking-service, pendiente)
+  nextService: {
+    type: string;
+    vehicle: string;
+    plate: string;
+    date: string;
+    operator: string;
+    status: string;
+  } | null = null;
 
   // lugar del servicio (sede única del lavadero)
   location = BUSINESS_LOCATION;
 
+  // vehículos registrados por el cliente (reales del backend)
+  vehicles: VehicleResponse[] = [];
+
+  // beneficios y promociones (vienen de booking-service, pendiente)
+  benefits: { title: string; description: string }[] = [];
+
+  // progreso del programa de fidelidad (viene de customer-service, pendiente)
+  loyalty: { current: number; goal: number; percentage: number } | null = null;
+
+  // vista previa del historial de servicios (viene de booking-service, pendiente)
+  serviceHistory: {
+    code: string;
+    type: string;
+    vehicle: string;
+    date: string;
+    operator: string;
+    price: number;
+    status: string;
+  }[] = [];
+
+  //CONSTRUCTOR
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private translate: TranslateService
+  ) {}
+
+  ngOnInit(): void {
+    this.userName = this.userSession.user().name;
+    this.loadVehicles();
+  }
+
+  private loadVehicles(): void {
+    this.vehiclesService.list().subscribe({
+      next: (vehicles) => {
+        this.vehicles = vehicles;
+        // actualiza el stat de vehículos con el número real
+        const stat = this.stats.find(s => s.label === 'STATS.MY_VEHICLES');
+        if (stat) stat.value = vehicles.length;
+      },
+      error: () => {
+        // si no hay perfil o hay error, queda en 0
+        this.vehicles = [];
+      }
+    });
+  }
+
   // porcentaje de avance calculado a partir del estado del servicio
   get nextServiceProgress(): number {
-    return PROGRESS_BY_STATUS[this.nextService.status] ?? 0;
+    return this.nextService ? (PROGRESS_BY_STATUS[this.nextService.status] ?? 0) : 0;
   }
 
   // accesos rápidos
@@ -74,40 +127,6 @@ export class DashboardComponent {
     { icon: 'notifications', label: 'QUICK_ACCESS.NOTIFICATIONS', route: 'notifications' }
   ];
 
-  // vehículos registrados por el cliente
-  vehicles = [
-    { type: 'CAR', plate: 'ABC-123', lastWash: '10 Ago 2026' },
-    { type: 'MOTO', plate: 'XYZ-98D', lastWash: '02 Ago 2026' },
-    { type: 'TRUCK', plate: 'JKL-457', lastWash: '24 Jul 2026' }
-  ];
-
-  // beneficios y promociones (contenido comercial, vendrá del backend)
-  benefits = [
-    { title: '20% OFF en tu 5° lavado', description: 'Te faltan 1 servicio para desbloquearlo' },
-    { title: 'Lavado Premium a precio Básico', description: 'Válido hasta el 30 de septiembre' }
-  ];
-
-  // progreso del programa de fidelidad
-  loyalty = {
-    current: 4,
-    goal: 5,
-    percentage: 80
-  };
-
-  // vista previa del historial de servicios
-  serviceHistory = [
-    { code: 'SV-1042', type: 'PREMIUM', vehicle: 'CAR', date: '10 Ago 2026', operator: 'Laura Gómez', price: 45000, status: 'COMPLETED' },
-    { code: 'SV-1031', type: 'BASIC', vehicle: 'MOTO', date: '02 Ago 2026', operator: 'Miguel Rojas', price: 18000, status: 'COMPLETED' },
-    { code: 'SV-1020', type: 'FULL', vehicle: 'TRUCK', date: '24 Jul 2026', operator: 'Juan Díaz', price: 0, status: 'CANCELED' }
-  ];
-
-  //CONSTRUCTOR
-  constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    private translate: TranslateService
-  ) {}
-
   // METODO
   goTo(route: string | null | undefined) {
     if (route) {
@@ -117,6 +136,7 @@ export class DashboardComponent {
 
   // muestra el detalle del próximo servicio en el modal de estado (tipo info)
   viewNextServiceDetail() {
+    if (!this.nextService) return;
     const service = this.nextService;
     const t = (key: string) => this.translate.instant(key);
 

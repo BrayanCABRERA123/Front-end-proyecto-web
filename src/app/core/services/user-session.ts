@@ -1,6 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 
-// datos del usuario que tiene la sesión abierta
+// datos del usuario que tiene la sesión abierta (vienen del login real)
 export interface UserProfile {
   name: string;
   email: string;
@@ -9,22 +9,22 @@ export interface UserProfile {
   memberSince: string;
 }
 
+// usuario vacío mientras no hay sesión (nada de datos de prueba)
+const EMPTY_USER: UserProfile = {
+  name: '',
+  email: '',
+  phone: '',
+  address: '',
+  memberSince: ''
+};
+
 // misma llave que borra el cierre de sesión (sidebar y eliminar cuenta)
 const STORAGE_KEY = 'user';
 
-// usuario de prueba mientras no hay backend
-const DEFAULT_USER: UserProfile = {
-  name: 'Juan Díaz',
-  email: 'juan@email.com',
-  phone: '+57 3001234567',
-  address: 'Calle Principal #123',
-  memberSince: 'Enero 2026'
-};
-
-// guarda el usuario en un solo lugar para que perfil y sidebar muestren lo mismo
-// TODO: reemplazar localStorage por el backend cuando esté conectado
+// guarda el usuario en un solo lugar para que perfil y sidebar muestren lo mismo.
+// los datos reales llegan del login (AuthService.store) y se pueden actualizar con PATCH /users/me
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserSession {
 
@@ -55,13 +55,13 @@ export class UserSession {
     }
   }
 
-  // lee el usuario guardado o usa el de prueba si no hay nada
+  // lee el usuario guardado o usa el vacío si no hay nada
   private load(): UserProfile {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? { ...DEFAULT_USER, ...JSON.parse(saved) } : DEFAULT_USER;
+      return saved ? { ...EMPTY_USER, ...JSON.parse(saved) } : EMPTY_USER;
     } catch {
-      return DEFAULT_USER;
+      return EMPTY_USER;
     }
   }
 }

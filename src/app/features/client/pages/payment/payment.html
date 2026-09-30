@@ -7,10 +7,12 @@
   <main class="home-content">
 
     <div class="payment-header">
-      <span class="step-pill">
-        <mat-icon>check_circle</mat-icon>
-        {{ 'PAYMENT.STEP' | translate }} · #{{ reservationCode }}
-      </span>
+      @if (reservationCode) {
+        <span class="step-pill">
+          <mat-icon>check_circle</mat-icon>
+          {{ 'PAYMENT.STEP' | translate }} · #{{ reservationCode }}
+        </span>
+      }
       <h1>{{ 'PAYMENT.TITLE' | translate }}</h1>
       <p>{{ 'PAYMENT.SUBTITLE' | translate }}</p>
     </div>
@@ -19,6 +21,13 @@
 
       <!-- ================= Columna izquierda ================= -->
       <div class="payment-main">
+
+        @if (!reservationCode || !serviceSummary) {
+          <div class="empty-state">
+            <mat-icon>receipt_long</mat-icon>
+            <p>{{ 'PAYMENT.EMPTY' | translate }}</p>
+          </div>
+        } @else {
 
         <!-- Método de pago -->
         <section class="card">
@@ -157,6 +166,7 @@
           </div>
         </section>
 
+        }
 
       </div>
 

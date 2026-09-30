@@ -153,7 +153,8 @@
       "DETAIL_MESSAGE": "Here are the details of your next wash.",
       "STATUS": "Status",
       "OPERATOR_ASSIGNED": "Assigned operator",
-      "PROGRESS": "Service progress"
+      "PROGRESS": "Service progress",
+      "EMPTY": "No scheduled services"
     },
     "QUICK_ACCESS": {
       "TITLE": "Quick access",
@@ -169,7 +170,8 @@
     },
     "BENEFITS": {
       "TITLE": "Your benefits and promotions",
-      "LOYALTY_PROGRESS": "Loyalty progress"
+      "LOYALTY_PROGRESS": "Loyalty progress",
+      "LOYALTY_EMPTY": "No loyalty data yet"
     },
     "SERVICES_HISTORY": {
       "TITLE": "My service history",
@@ -388,7 +390,8 @@
       "TITLE": "Choose your vehicle",
       "SUBTITLE": "Select one of your registered vehicles",
       "NO_VEHICLE": "Vehicle not listed? Register it first in",
-      "NO_VEHICLE_LINK": "My Vehicles"
+      "NO_VEHICLE_LINK": "My Vehicles",
+      "LOADING": "Loading vehicles..."
     },
     "STEP2": {
       "TITLE": "Service type",
@@ -719,6 +722,7 @@
     "LAST_12_MONTHS": "In the last 12 months"
   },
   "PAYMENT": {
+    "EMPTY": "No pending payments",
     "CANCEL_CONFIRM": {
       "TITLE": "Cancel booking?",
       "MESSAGE": "Booking {{code}} will be cancelled and the time slot will be released. This action cannot be undone.",
