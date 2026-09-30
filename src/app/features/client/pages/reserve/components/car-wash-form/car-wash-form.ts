@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -8,15 +8,24 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 // modal reutilizable para mostrar el mensaje de reserva exitosa
 import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
-// sede del lavadero: el cliente lleva su vehículo allí
-import { BUSINESS_LOCATION } from '../../../../../../core/constants/business-location';
-// precios de los servicios (en COP) y su formato
-import { SERVICE_PRICES } from '../../../../../../core/constants/service-prices';
+import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
 import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
-// servicio real de vehículos del cliente
+// servicios reales: vehículos (customer-service) y catálogo/reservas (booking-service)
 import { VehiclesService } from '../../../../../../core/services/vehicles';
 import { VehicleResponse } from '../../../../../../core/models/vehicle.models';
+import { BookingApiService, slotAlternatives } from '../../../../../../core/services/booking-api';
+import {
+  BookingResponse,
+  CatalogServiceResponse,
+  EstablishmentResponse,
+} from '../../../../../../core/models/booking.models';
+import { apiErrorKey } from '../../../../../../core/utils/api-error';
 
+/**
+ * Formulario de reserva del cliente. Todo lo que es regla sale del backend:
+ * el precio y la duración dependen del tipo de vehículo (catalog.service_price), las horas
+ * libres las calcula el booking-service (RF-006) y la reserva queda confirmada con bahía.
+ */
 @Component({
   selector: 'app-car-wash-form',
   standalone: true,
@@ -27,46 +36,56 @@ import { VehicleResponse } from '../../../../../../core/models/vehicle.models';
 export class CarWashFormComponent implements OnInit {
 
   private readonly vehiclesService = inject(VehiclesService);
+  private readonly bookingApi = inject(BookingApiService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   // vehículos registrados del cliente (reales del backend)
   vehicles: VehicleResponse[] = [];
   vehiclesLoading = false;
 
-  // catálogo de servicios disponibles
-  services = ['BASIC', 'PREMIUM', 'FULL'];
-  mostPopularService = 'PREMIUM';
-  prices = SERVICE_PRICES;
+  // servicios con el precio del tipo de vehículo elegido
+  services: CatalogServiceResponse[] = [];
+  servicesLoading = false;
 
   // selección del usuario
   selectedVehicleId: number | null = null;
-  selectedService: string = '';
-  date: string = '';
-  time: string = '';
+  selectedServiceId: number | null = null;
+  date = '';
+  time = '';
 
-  // lugar donde se presta el servicio (sede única, no es a domicilio)
-  location = BUSINESS_LOCATION;
-
-  // rango de fechas permitido
-  minDate: string = '';
-  maxDate: string = '';
+  // horas que devuelve el backend para ese día (solo las libres se pueden escoger)
   availableTimes: string[] = [];
+  dayClosed = false;
+  timesLoading = false;
+
+  // sede del lavadero (booking.establishment): el cliente lleva su vehículo allí
+  location: EstablishmentResponse | null = null;
+
+  submitting = false;
+
+  // rango de fechas permitido (el backend también lo valida)
+  minDate = '';
+  maxDate = '';
 
   constructor(
     private translate: TranslateService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private feedback: FeedbackService
   ) {}
 
   ngOnInit(): void {
     const today = new Date();
-    this.minDate = today.toISOString().split('T')[0];
-
+    this.minDate = this.isoDate(today);
     const max = new Date();
     max.setDate(today.getDate() + 60);
-    this.maxDate = max.toISOString().split('T')[0];
+    this.maxDate = this.isoDate(max);
 
-    this.generateTimes();
     this.loadVehicles();
+    this.bookingApi.establishment().subscribe({
+      next: (location) => { this.location = location; this.cdr.markForCheck(); },
+      error: () => { this.location = null; }
+    });
   }
 
   private loadVehicles(): void {
@@ -75,79 +94,153 @@ export class CarWashFormComponent implements OnInit {
       next: (vehicles) => {
         this.vehicles = vehicles;
         this.vehiclesLoading = false;
+        this.cdr.markForCheck();
       },
-      error: () => {
+      error: (error) => {
         this.vehicles = [];
         this.vehiclesLoading = false;
+        this.feedback.error('COMMON.ERROR', apiErrorKey(error));
+        this.cdr.markForCheck();
       }
     });
   }
 
-  generateTimes(): void {
-    this.availableTimes = [];
-
-    for (let h = 8; h <= 12; h++) {
-      this.availableTimes.push(h.toString().padStart(2, '0') + ':00');
-    }
-    for (let h = 13; h <= 18; h++) {
-      this.availableTimes.push(h.toString().padStart(2, '0') + ':00');
-    }
-  }
-
+  // al cambiar de vehículo cambian los precios: se piden los de su tipo
   selectVehicle(id: number) {
     this.selectedVehicleId = id;
+    this.selectedServiceId = null;
+    this.services = [];
+    this.clearTimes();
+    const vehicle = this.vehicle;
+    if (!vehicle) return;
+
+    this.servicesLoading = true;
+    this.bookingApi.services(vehicle.vehicleTypeId).subscribe({
+      next: (services) => {
+        this.services = services;
+        this.servicesLoading = false;
+        this.cdr.markForCheck();
+      },
+      error: (error) => {
+        this.servicesLoading = false;
+        this.feedback.error('COMMON.ERROR', apiErrorKey(error));
+        this.cdr.markForCheck();
+      }
+    });
   }
 
-  selectService(service: string) {
-    this.selectedService = service;
+  selectService(id: number) {
+    this.selectedServiceId = id;
+    this.loadTimes();
   }
 
-  get vehicle() {
+  onDateChange(): void {
+    this.loadTimes();
+  }
+
+  // horas libres del día para ese servicio y ese tipo de vehículo
+  private loadTimes(): void {
+    this.clearTimes();
+    const vehicle = this.vehicle;
+    if (!vehicle || !this.selectedServiceId || !this.date) return;
+
+    this.timesLoading = true;
+    this.bookingApi.availability(this.date, vehicle.vehicleTypeId, [this.selectedServiceId]).subscribe({
+      next: (availability) => {
+        this.dayClosed = !availability.open;
+        this.availableTimes = availability.slots.filter(slot => slot.available).map(slot => slot.time);
+        this.timesLoading = false;
+        this.cdr.markForCheck();
+      },
+      error: (error) => {
+        this.timesLoading = false;
+        this.feedback.error('COMMON.ERROR', apiErrorKey(error));
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  private clearTimes(): void {
+    this.time = '';
+    this.availableTimes = [];
+    this.dayClosed = false;
+  }
+
+  get vehicle(): VehicleResponse | null {
     return this.vehicles.find(v => v.id === this.selectedVehicleId) ?? null;
   }
 
-  // precio del servicio seleccionado (0 si aún no se elige)
+  get service(): CatalogServiceResponse | null {
+    return this.services.find(s => s.id === this.selectedServiceId) ?? null;
+  }
+
+  // precio y duración del servicio para el tipo del vehículo (vienen del backend)
+  priceOf(service: CatalogServiceResponse): number {
+    return service.prices[0]?.price ?? 0;
+  }
+
+  minutesOf(service: CatalogServiceResponse): number {
+    return service.prices[0]?.estimatedMinutes ?? 0;
+  }
+
   get serviceTotal(): number {
-    return SERVICE_PRICES[this.selectedService] ?? 0;
+    return this.service ? this.priceOf(this.service) : 0;
   }
 
   get isFormValid(): boolean {
-    return !!this.selectedVehicleId && !!this.selectedService && !!this.date && !!this.time;
+    return !!this.selectedVehicleId && !!this.selectedServiceId && !!this.date && !!this.time && !this.submitting;
   }
 
   // se ejecuta al hacer clic en "Reservar Ahora"
   onSubmit(): void {
-    if (!this.isFormValid) return;
+    if (!this.isFormValid || !this.selectedVehicleId || !this.selectedServiceId) return;
 
-    // TODO: integrar con el backend de reservas
-    console.log('Reserva enviada', {
-      vehicle: this.vehicle,
-      service: this.selectedService,
+    this.submitting = true;
+    this.bookingApi.createBooking({
+      vehicleId: this.selectedVehicleId,
+      serviceIds: [this.selectedServiceId],
       date: this.date,
-      time: this.time,
-      total: this.serviceTotal
+      time: this.time
+    }).subscribe({
+      next: (booking) => {
+        this.submitting = false;
+        this.showReservationSuccess(booking);
+        this.cdr.markForCheck();
+      },
+      error: (error) => {
+        this.submitting = false;
+        const alternatives = slotAlternatives(error);
+        if (alternatives) {
+          // RF-006: la hora se ocupó; se muestran las horas libres que propone el backend
+          this.time = '';
+          this.availableTimes = alternatives;
+          this.feedback.error('RESERVE.SLOT_TAKEN_TITLE', 'RESERVE.SLOT_TAKEN_MESSAGE');
+        } else {
+          this.feedback.error('COMMON.ERROR', apiErrorKey(error));
+        }
+        this.cdr.markForCheck();
+      }
     });
-
-    this.showReservationSuccess();
   }
 
-  // muestra el modal de reserva exitosa con el resumen y, al cerrarlo, lleva al pago
-  private showReservationSuccess(): void {
-    const vehicle = this.vehicle;
+  // muestra el modal de reserva exitosa con lo que guardó el backend y, al cerrarlo, lleva al pago
+  private showReservationSuccess(booking: BookingResponse): void {
+    const vehicle = booking.vehicle;
 
     const data: StatusModalData = {
       title: 'RESERVE.SUCCESS_TITLE',
       message: 'RESERVE.SUCCESS_MESSAGE',
       buttonText: 'RESERVE.SUCCESS_BUTTON',
-      // mismo resumen que se ve en la tarjeta lateral del formulario
       details: [
-        { label: 'RESERVE.SUMMARY.VEHICLE', value: `${vehicle?.brand} ${vehicle?.model}` },
+        { label: 'RESERVE.SUMMARY.CODE', value: booking.code },
+        { label: 'RESERVE.SUMMARY.VEHICLE', value: `${vehicle?.brand ?? ''} ${vehicle?.model ?? ''}`.trim() },
         { label: 'RESERVE.SUMMARY.PLATE', value: vehicle?.licensePlateFormatted ?? '' },
-        { label: 'RESERVE.SUMMARY.SERVICE', value: this.translate.instant(`SERVICE.${this.selectedService}`) },
-        { label: 'RESERVE.SUMMARY.DATE', value: this.date },
-        { label: 'RESERVE.SUMMARY.TIME', value: this.time },
-        { label: 'RESERVE.SUMMARY.LOCATION', value: this.location.address },
-        { label: 'RESERVE.SUMMARY.TOTAL', value: new CopPricePipe().transform(this.serviceTotal) }
+        { label: 'RESERVE.SUMMARY.SERVICE', value: booking.services.map(s => s.name).join(', ') },
+        { label: 'RESERVE.SUMMARY.DATE', value: booking.date },
+        { label: 'RESERVE.SUMMARY.TIME', value: `${booking.startTime} - ${booking.endTime}` },
+        { label: 'RESERVE.SUMMARY.BAY', value: booking.bay?.name ?? '' },
+        { label: 'RESERVE.SUMMARY.LOCATION', value: this.location?.address ?? '' },
+        { label: 'RESERVE.SUMMARY.TOTAL', value: new CopPricePipe().transform(booking.total) }
       ]
     };
 
@@ -165,4 +258,8 @@ export class CarWashFormComponent implements OnInit {
     });
   }
 
+  private isoDate(date: Date): string {
+    const pad = (value: number) => String(value).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+  }
 }

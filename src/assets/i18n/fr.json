@@ -259,7 +259,10 @@
     "DELETE_MESSAGE": "Cette action est irréversible.",
     "DELETED_TITLE": "Notification supprimée",
     "DELETED_MESSAGE": "La notification a été supprimée avec succès.",
-    "ADMIN_SUBTITLE": "Vous pouvez consulter ici les notifications administratives : paiements à vérifier, réservations sans opérateur, nouveautés de l'équipe et du système."
+    "ADMIN_SUBTITLE": "Vous pouvez consulter ici les notifications administratives : paiements à vérifier, réservations sans opérateur, nouveautés de l'équipe et du système.",
+    "LOAD_ERROR": "Impossible de charger vos notifications.",
+    "LOADING": "Chargement des notifications...",
+    "RETRY": "Réessayer"
   },
   "PAYMENTS": {
     "TITLE": "Gestion des Paiements",
@@ -396,7 +399,9 @@
     "STEP2": {
       "TITLE": "Type de service",
       "SUBTITLE": "Choisissez le niveau de nettoyage souhaité",
-      "POPULAR": "Le plus populaire"
+      "POPULAR": "Le plus populaire",
+      "CHOOSE_VEHICLE_FIRST": "Choisissez d'abord votre véhicule : le prix dépend de son type.",
+      "LOADING": "Chargement des services..."
     },
     "STEP3": {
       "TITLE": "Date et heure",
@@ -413,8 +418,16 @@
       "LOCATION": "Lieu",
       "TOTAL": "Total",
       "SUBMIT": "Réserver maintenant",
-      "NOTE": "Nous vous attendons dans notre station. Arrivez quelques minutes en avance. Vous pouvez payer en ligne ou sur place."
-    }
+      "NOTE": "Nous vous attendons dans notre station. Arrivez quelques minutes en avance. Vous pouvez payer en ligne ou sur place.",
+      "CODE": "Code",
+      "BAY": "Baie"
+    },
+    "MINUTES": "{{count}} min",
+    "LOADING_TIMES": "Recherche des horaires libres...",
+    "DAY_CLOSED": "Le lavage est fermé ce jour-là",
+    "NO_TIMES": "Aucun horaire libre ce jour-là",
+    "SLOT_TAKEN_TITLE": "Cet horaire vient d’être pris",
+    "SLOT_TAKEN_MESSAGE": "Voici les horaires libres les plus proches de ce jour."
   },
   "APP": {
     "TITLE": "Lavage de Véhicules"
@@ -2239,7 +2252,14 @@
     "INVALID_VEHICLE_TYPE": "Le type de véhicule n'est pas valide",
     "NETWORK_ERROR": "Impossible de joindre le serveur. Réessayez dans un instant.",
     "UNEXPECTED": "Une erreur inattendue est survenue. Réessayez.",
-    "CANNOT_DISABLE_OWN_ACCOUNT": "Vous ne pouvez pas désactiver votre propre compte"
+    "CANNOT_DISABLE_OWN_ACCOUNT": "Vous ne pouvez pas désactiver votre propre compte",
+    "NOTIFICATION_NOT_FOUND": "La notification n'existe plus.",
+    "SLOT_UNAVAILABLE": "Cet horaire n'est plus disponible.",
+    "VEHICLE_ALREADY_BOOKED": "Ce véhicule a déjà une réservation à cette heure.",
+    "SERVICE_NOT_AVAILABLE_FOR_VEHICLE": "Ce service n'est pas disponible pour votre type de véhicule.",
+    "INVALID_DATE": "Cette date ne peut pas être réservée.",
+    "CUSTOMER_SERVICE_UNAVAILABLE": "Nous n'avons pas pu valider votre véhicule. Réessayez dans un instant.",
+    "BOOKING_NOT_CHANGEABLE": "Cette réservation ne peut plus être modifiée."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",

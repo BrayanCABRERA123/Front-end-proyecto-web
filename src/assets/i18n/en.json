@@ -259,7 +259,10 @@
     "DELETE_MESSAGE": "This action cannot be undone.",
     "DELETED_TITLE": "Notification deleted",
     "DELETED_MESSAGE": "The notification was deleted successfully.",
-    "ADMIN_SUBTITLE": "Here you can view administrative notifications: payments to verify, unassigned bookings, team updates and system alerts."
+    "ADMIN_SUBTITLE": "Here you can view administrative notifications: payments to verify, unassigned bookings, team updates and system alerts.",
+    "LOAD_ERROR": "Your notifications could not be loaded.",
+    "LOADING": "Loading notifications...",
+    "RETRY": "Retry"
   },
   "PAYMENTS": {
     "TITLE": "Payment Management",
@@ -396,7 +399,9 @@
     "STEP2": {
       "TITLE": "Service type",
       "SUBTITLE": "Choose the cleaning level you prefer",
-      "POPULAR": "Most popular"
+      "POPULAR": "Most popular",
+      "CHOOSE_VEHICLE_FIRST": "Choose your vehicle first: the price depends on its type.",
+      "LOADING": "Loading services..."
     },
     "STEP3": {
       "TITLE": "Date and time",
@@ -413,8 +418,16 @@
       "LOCATION": "Location",
       "TOTAL": "Total",
       "SUBMIT": "Book Now",
-      "NOTE": "We will be waiting for you at our location. Please arrive a few minutes early. You can pay online or at the car wash."
-    }
+      "NOTE": "We will be waiting for you at our location. Please arrive a few minutes early. You can pay online or at the car wash.",
+      "CODE": "Code",
+      "BAY": "Bay"
+    },
+    "MINUTES": "{{count}} min",
+    "LOADING_TIMES": "Looking for free times...",
+    "DAY_CLOSED": "The car wash is closed that day",
+    "NO_TIMES": "No free times that day",
+    "SLOT_TAKEN_TITLE": "That time was just taken",
+    "SLOT_TAKEN_MESSAGE": "Here are the closest free times of that day."
   },
   "APP": {
     "TITLE": "Car Wash Service"
@@ -2239,7 +2252,14 @@
     "INVALID_VEHICLE_TYPE": "The vehicle type is not valid",
     "NETWORK_ERROR": "Cannot reach the server. Please try again in a moment.",
     "UNEXPECTED": "An unexpected error occurred. Please try again.",
-    "CANNOT_DISABLE_OWN_ACCOUNT": "You cannot disable your own account"
+    "CANNOT_DISABLE_OWN_ACCOUNT": "You cannot disable your own account",
+    "NOTIFICATION_NOT_FOUND": "The notification no longer exists.",
+    "SLOT_UNAVAILABLE": "That time is no longer available.",
+    "VEHICLE_ALREADY_BOOKED": "That vehicle already has a booking at that time.",
+    "SERVICE_NOT_AVAILABLE_FOR_VEHICLE": "That service is not available for your vehicle type.",
+    "INVALID_DATE": "That date cannot be booked.",
+    "CUSTOMER_SERVICE_UNAVAILABLE": "We could not validate your vehicle. Try again in a moment.",
+    "BOOKING_NOT_CHANGEABLE": "This booking can no longer be changed."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",

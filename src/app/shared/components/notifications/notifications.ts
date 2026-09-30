@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -8,16 +8,26 @@ import {
   AppNotification,
   NotificationType,
   notificationTypeClass,
-  notificationTypeLabel
+  notificationTypeLabel,
+  toAppNotification
 } from '../../dialogs/notification-models/notification.model';
 import { NotificationDetailModal } from '../../dialogs/notification-detail-modal/notification-detail-modal';
 import { ConfirmModal, ConfirmModalData } from '../../dialogs/confirm-modal/confirm-modal';
 import { FeedbackService } from '../../dialogs/feedback.service';
+// servicio que habla con el notification-service
+import { NotificationsService } from '../../../core/services/notifications';
+// convierte un error del backend en la llave de traducción API_ERRORS.<code>
+import { apiErrorKey } from '../../../core/utils/api-error';
 
 export type { AppNotification, NotificationType };
 
 type TabKey = 'all' | 'recordatorio' | 'promocion' | 'confirmacion' | 'others';
 
+/**
+ * Centro de notificaciones de cliente, operario y administrador con los datos reales del
+ * notification-service: cada acción (marcar, borrar) se guarda en el backend y la lista se
+ * actualiza con lo que él responde.
+ */
 @Component({
   selector: 'app-notifications',
   standalone: true,
@@ -30,10 +40,15 @@ type TabKey = 'all' | 'recordatorio' | 'promocion' | 'confirmacion' | 'others';
   templateUrl: './notifications.html',
   styleUrls: ['./notifications.scss']
 })
-export class NotificationsComponent {
+export class NotificationsComponent implements OnInit {
 
   @Input() rol: 'CLIENT' | 'OPERATOR' | 'ADMIN' = 'CLIENT';
-  @Input() notifications: AppNotification[] = [];
+
+  // se llenan al entrar a la pantalla
+  notifications: AppNotification[] = [];
+  loading = true;
+  // llave de traducción del error de carga (null = sin error)
+  loadError: string | null = null;
 
   activeTab: TabKey = 'all';
 
@@ -45,6 +60,41 @@ export class NotificationsComponent {
     { key: 'others',        icon: 'notifications',  label: 'NOTIFICATIONS.TABS.OTHERS' }
   ];
 
+  // filtros: se aplican apenas cambian (igual que en el historial)
+  statusFilter: 'all' | 'read' | 'unread' = 'all';
+  // fechas en formato "aaaa-mm-dd" (lo que dan los inputs de fecha)
+  dateFrom = '';
+  dateTo = '';
+
+  constructor(
+    private dialog: MatDialog,
+    private feedback: FeedbackService,
+    private cdr: ChangeDetectorRef,
+    private notificationsService: NotificationsService
+  ) {}
+
+  ngOnInit(): void {
+    this.reload();
+  }
+
+  // pide la bandeja al backend
+  reload(): void {
+    this.loading = true;
+    this.loadError = null;
+    this.notificationsService.list().subscribe({
+      next: (items) => {
+        this.notifications = items.map(toAppNotification);
+        this.loading = false;
+        this.refreshView();
+      },
+      error: (error) => {
+        this.loadError = apiErrorKey(error);
+        this.loading = false;
+        this.refreshView();
+      }
+    });
+  }
+
   changeTab(tab: TabKey) {
     this.activeTab = tab;
   }
@@ -55,12 +105,6 @@ export class NotificationsComponent {
     if (type === 'confirmacion') return 'confirmacion';
     return 'others';
   }
-
-  // filtros: se aplican apenas cambian (igual que en el historial)
-  statusFilter: 'all' | 'read' | 'unread' = 'all';
-  // fechas en formato "aaaa-mm-dd" (lo que dan los inputs de fecha)
-  dateFrom = '';
-  dateTo = '';
 
   resetFilters() {
     this.statusFilter = 'all';
@@ -78,46 +122,49 @@ export class NotificationsComponent {
     return this.countUnread('all');
   }
 
+  // filtros de lo que se ve (el orden, más recientes primero, ya viene del backend)
   get filteredNotifications(): AppNotification[] {
     return this.notifications.filter(n => {
-
       if (this.activeTab !== 'all' && this.tabForType(n.type) !== this.activeTab) {
         return false;
       }
-
       if (this.statusFilter === 'read' && !n.read) return false;
       if (this.statusFilter === 'unread' && n.read) return false;
-
       // rango de fechas (n.date también viene como "aaaa-mm-dd")
       if (this.dateFrom && n.date < this.dateFrom) return false;
       if (this.dateTo && n.date > this.dateTo) return false;
-
       return true;
     });
   }
 
   markAsRead(n: AppNotification) {
-    n.read = true;
+    this.notificationsService.markRead(n.id).subscribe({
+      next: (updated) => this.replace(toAppNotification(updated)),
+      error: (error) => this.showError(error)
+    });
   }
 
   markAsUnread(n: AppNotification) {
-    n.read = false;
+    this.notificationsService.markUnread(n.id).subscribe({
+      next: (updated) => this.replace(toAppNotification(updated)),
+      error: (error) => this.showError(error)
+    });
   }
 
+  // el backend marca todas; se recarga para mostrar exactamente su estado
   markAllAsRead() {
-    this.notifications.forEach(n => n.read = true);
+    this.notificationsService.markAllRead().subscribe({
+      next: () => this.reload(),
+      error: (error) => this.showError(error)
+    });
   }
 
-  constructor(
-    private dialog: MatDialog,
-    private feedback: FeedbackService,
-    private cdr: ChangeDetectorRef
-  ) {}
-
+  // al abrir el detalle la notificación queda leída
   viewDetail(n: AppNotification) {
+    if (!n.read) this.markAsRead(n);
     this.dialog.open(NotificationDetailModal, {
       panelClass: 'custom-dialog',
-      data: n
+      data: { ...n, read: true }
     });
   }
 
@@ -135,14 +182,32 @@ export class NotificationsComponent {
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
 
-      this.notifications = this.notifications.filter(x => x.id !== n.id);
-      // la app es zoneless: sin esto la tarjeta no desaparece hasta otro evento
-      this.cdr.markForCheck();
-
-      this.feedback.success('NOTIFICATIONS.DELETED_TITLE', 'NOTIFICATIONS.DELETED_MESSAGE');
+      this.notificationsService.remove(n.id).subscribe({
+        next: () => {
+          this.notifications = this.notifications.filter(x => x.id !== n.id);
+          this.refreshView();
+          this.feedback.success('NOTIFICATIONS.DELETED_TITLE', 'NOTIFICATIONS.DELETED_MESSAGE');
+        },
+        error: (error) => this.showError(error)
+      });
     });
   }
 
   typeClass = notificationTypeClass;
   typeLabel = notificationTypeLabel;
+
+  // reemplaza la notificación con la versión que devolvió el backend
+  private replace(updated: AppNotification) {
+    this.notifications = this.notifications.map(n => n.id === updated.id ? updated : n);
+    this.refreshView();
+  }
+
+  private showError(error: unknown) {
+    this.feedback.error('COMMON.ERROR', apiErrorKey(error));
+  }
+
+  // la app es zoneless: los cambios que llegan del backend no se pintan solos
+  private refreshView() {
+    this.cdr.markForCheck();
+  }
 }

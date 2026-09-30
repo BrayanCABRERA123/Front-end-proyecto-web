@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
 // importamos el sidebar
@@ -12,7 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 // modal reutilizable que también muestra una lista de detalles
 import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
 // sede del lavadero: el cliente lleva su vehículo allí (no es a domicilio)
-import { BUSINESS_LOCATION } from '../../../../core/constants/business-location';
+// sede del lavadero (booking-service)
+import { BookingApiService } from '../../../../core/services/booking-api';
+import { EstablishmentResponse } from '../../../../core/models/booking.models';
 // servicios reales del backend
 import { VehiclesService } from '../../../../core/services/vehicles';
 import { UserSession } from '../../../../core/services/user-session';
@@ -65,7 +67,10 @@ export class DashboardComponent implements OnInit {
   } | null = null;
 
   // lugar del servicio (sede única del lavadero)
-  location = BUSINESS_LOCATION;
+  // sede del lavadero, leída del booking-service
+  location: EstablishmentResponse | null = null;
+  private readonly bookingApi = inject(BookingApiService);
+  private readonly changes = inject(ChangeDetectorRef);
 
   // vehículos registrados por el cliente (reales del backend)
   vehicles: VehicleResponse[] = [];
@@ -100,6 +105,13 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.userName = this.userSession.user().name;
     this.loadVehicles();
+    this.bookingApi.establishment().subscribe({
+      next: (location) => {
+        this.location = location;
+        this.changes.markForCheck();
+      },
+      error: () => { this.location = null; }
+    });
   }
 
   private loadVehicles(): void {
@@ -153,7 +165,7 @@ export class DashboardComponent implements OnInit {
         { label: 'RESERVE.SUMMARY.SERVICE', value: t(`SERVICE.${service.type}`) },
         { label: 'RESERVE.SUMMARY.VEHICLE', value: `${t(`VEHICLE.${service.vehicle}`)} · ${service.plate}` },
         { label: 'RESERVE.SUMMARY.DATE', value: service.date },
-        { label: 'RESERVE.SUMMARY.LOCATION', value: this.location.address },
+        { label: 'RESERVE.SUMMARY.LOCATION', value: this.location?.address ?? '' },
         { label: 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED', value: service.operator },
         { label: 'DASHBOARD.NEXT_SERVICE.STATUS', value: t(`STATUS.${service.status}`) },
         { label: 'DASHBOARD.NEXT_SERVICE.PROGRESS', value: `${this.nextServiceProgress}%` }

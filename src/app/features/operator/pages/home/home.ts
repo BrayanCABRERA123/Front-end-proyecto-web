@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
@@ -12,6 +12,8 @@ import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confi
 import { StatusModal } from '../../../../shared/dialogs/status-modal/status-modal';
 import { ReservationDetailModal } from '../../../../shared/dialogs/reservation-detail-modal/reservation-detail-modal';
 import { Reservation } from '../../../../shared/dialogs/reservation-models/reservation.model';
+// número real de notificaciones sin leer (notification-service)
+import { NotificationsService } from '../../../../core/services/notifications';
 
 interface Stat {
   icon: string;
@@ -35,11 +37,12 @@ interface Stat {
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   operatorName = 'Camilo';
 
-  unreadNotifications = 2;
+  // no leídas reales; 0 mientras carga o si el servicio no responde
+  unreadNotifications = 0;
   averageRating = 4.3;
 
   todayReservations: Reservation[] = [
@@ -50,8 +53,22 @@ export class HomeComponent {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private notificationsService: NotificationsService
   ) {}
+
+  ngOnInit(): void {
+    this.notificationsService.unreadCount().subscribe({
+      next: (count) => {
+        this.unreadNotifications = count;
+        // la app es zoneless: avisamos que redibuje la tarjeta
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        // sin el servicio de notificaciones la tarjeta muestra 0
+      }
+    });
+  }
 
   get totalToday(): number {
     return this.todayReservations.length;

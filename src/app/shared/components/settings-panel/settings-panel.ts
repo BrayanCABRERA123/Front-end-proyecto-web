@@ -14,7 +14,8 @@ import { LegalDocumentModal, LegalDocumentType } from '../../dialogs/legal-docum
 import { StatusModal, StatusModalData } from '../../dialogs/status-modal/status-modal';
 // datos de contacto y sede del lavadero
 import { BUSINESS_CONTACT } from '../../../core/constants/business-contact';
-import { BUSINESS_LOCATION } from '../../../core/constants/business-location';
+// la dirección de la sede sale del booking-service
+import { BookingApiService } from '../../../core/services/booking-api';
 
 // llave donde se guardan las preferencias de notificaciones (igual que 'theme' y 'lang')
 const NOTIFICATIONS_KEY = 'notificationSettings';
@@ -46,7 +47,8 @@ export class SettingsPanelComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private bookingApi: BookingApiService
   ) {
     this.translate.addLangs(['es', 'en', 'fr', 'pt']);
     this.translate.setDefaultLang('es');
@@ -63,6 +65,13 @@ export class SettingsPanelComponent implements OnInit {
 
   // abre el Centro de ayuda con los canales de atención del lavadero
   openHelpCenter(): void {
+    this.bookingApi.establishment().subscribe({
+      next: (location) => this.showHelpCenter(location.address),
+      error: () => this.showHelpCenter('—')
+    });
+  }
+
+  private showHelpCenter(address: string): void {
     const data: StatusModalData = {
       type: 'info',
       icon: 'support_agent',
@@ -74,7 +83,7 @@ export class SettingsPanelComponent implements OnInit {
         { label: 'CONFIG.HELP_MODAL.SUPPORT_LINE', value: BUSINESS_CONTACT.supportLine },
         { label: 'CONFIG.HELP_MODAL.EMAIL', value: BUSINESS_CONTACT.email },
         { label: 'CONFIG.HELP_MODAL.HOURS', value: this.translate.instant('CONFIG.HELP_MODAL.HOURS_VALUE') },
-        { label: 'CONFIG.HELP_MODAL.ADDRESS', value: BUSINESS_LOCATION.address }
+        { label: 'CONFIG.HELP_MODAL.ADDRESS', value: address }
       ]
     };
 

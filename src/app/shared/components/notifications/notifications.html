@@ -122,14 +122,15 @@
                 <span class="dot"></span>
               }
 
-              <p class="title">{{ n.title | translate }}</p>
+              <!-- texto escrito por el backend: no es una llave de traducción -->
+              <p class="title">{{ n.title }}</p>
 
               <span class="type-badge" [ngClass]="typeClass(n.type)">
                 {{ typeLabel(n.type) | translate }}
               </span>
             </div>
 
-            <p class="desc">{{ n.desc | translate }}</p>
+            <p class="desc">{{ n.desc }}</p>
 
           </div>
 
@@ -164,9 +165,23 @@
 
     } @empty {
 
+      <!-- cargando, error del backend o bandeja vacía -->
       <div class="empty-state">
-        <mat-icon>mark_email_read</mat-icon>
-        <p>{{ 'NOTIFICATIONS.EMPTY' | translate }}</p>
+        @if (loading) {
+          <mat-icon>hourglass_empty</mat-icon>
+          <p>{{ 'NOTIFICATIONS.LOADING' | translate }}</p>
+        } @else if (loadError) {
+          <mat-icon>cloud_off</mat-icon>
+          <p>{{ 'NOTIFICATIONS.LOAD_ERROR' | translate }}</p>
+          <p>{{ loadError | translate }}</p>
+          <button class="btn-mark-all" (click)="reload()">
+            <mat-icon>refresh</mat-icon>
+            {{ 'NOTIFICATIONS.RETRY' | translate }}
+          </button>
+        } @else {
+          <mat-icon>mark_email_read</mat-icon>
+          <p>{{ 'NOTIFICATIONS.EMPTY' | translate }}</p>
+        }
       </div>
 
     }
