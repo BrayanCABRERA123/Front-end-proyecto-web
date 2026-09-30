@@ -4,7 +4,14 @@ import { Router } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
 
 import { API_BASE_URL } from '../constants/api';
-import { AuthUser, LoginResponse, RegisterRequest, StoredSession, UserRole } from '../models/auth.models';
+import {
+  AuthUser,
+  LoginResponse,
+  RegisterRequest,
+  StoredSession,
+  UpdateProfileRequest,
+  UserRole
+} from '../models/auth.models';
 import { UserSession } from './user-session';
 
 const STORAGE_KEY = 'auth_session';
@@ -108,6 +115,41 @@ export class AuthService {
 
   changePassword(currentPassword: string, newPassword: string): Observable<void> {
     return this.http.put<void>(`${API_BASE_URL}/users/me/password`, { currentPassword, newPassword });
+  }
+
+  // perfil del usuario con sesión, leído del backend (datos reales, no los del navegador)
+  getProfile(): Observable<AuthUser> {
+    return this.http
+      .get<AuthUser>(`${API_BASE_URL}/users/me`)
+      .pipe(tap(user => this.refreshUser(user)));
+  }
+
+  // guarda nombres y teléfono en el backend. El correo no se cambia: es el usuario de login (ADR-010)
+  updateProfile(changes: UpdateProfileRequest): Observable<AuthUser> {
+    return this.http
+      .patch<AuthUser>(`${API_BASE_URL}/users/me`, changes)
+      .pipe(tap(user => this.refreshUser(user)));
+  }
+
+  // cambia el correo de login (pide la contraseña actual). Desde ahí se entra con el correo nuevo
+  changeEmail(newEmail: string, currentPassword: string): Observable<AuthUser> {
+    return this.http
+      .put<AuthUser>(`${API_BASE_URL}/users/me/email`, { newEmail, currentPassword })
+      .pipe(tap(user => this.refreshUser(user)));
+  }
+
+  // "eliminar cuenta": el backend la desactiva y cierra todas sus sesiones; aquí se limpia el navegador
+  deactivateAccount(currentPassword: string): Observable<void> {
+    return this.http
+      .post<void>(`${API_BASE_URL}/users/me/deactivate`, { currentPassword })
+      .pipe(tap(() => this.clear()));
+  }
+
+  // actualiza el usuario guardado en la sesión sin tocar el token
+  private refreshUser(user: AuthUser): void {
+    const session = this.sessionSignal();
+    if (!session) return;
+    this.store({ ...session, user });
   }
 
   private store(session: StoredSession): void {

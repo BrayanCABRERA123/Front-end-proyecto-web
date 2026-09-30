@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
-import { CreateUserModal, CreateUserData, CreateUserResult } from '../../../../shared/dialogs/create-user-modal/create-user-modal';
+import { CreateUserModal, CreateUserResult } from '../../../../shared/dialogs/create-user-modal/create-user-modal';
 import { CreateRoleModal, CreateRoleData, CreateRoleResult } from '../../../../shared/dialogs/create-role-modal/create-role-modal';
 import { ServiceModal, ServiceModalData, ServiceModalResult } from '../../../../shared/dialogs/service-modal/service-modal';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
@@ -15,6 +15,10 @@ import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { CatalogStore } from '../../services/catalog-store';
 import { AdminUser, CatalogService, Promotion, UserRole } from '../../models/admin.models';
 import { PromotionModal, PromotionModalData, PromotionModalResult } from './components/promotion-modal/promotion-modal';
+// cuentas reales del security-service
+import { UserAdminService } from '../../../../core/services/user-admin';
+import { AuthUser } from '../../../../core/models/auth.models';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 
 type ManagementTab = 'users' | 'roles' | 'services' | 'promotions';
 
@@ -25,7 +29,7 @@ type ManagementTab = 'users' | 'roles' | 'services' | 'promotions';
   templateUrl: './management.html',
   styleUrl: './management.scss'
 })
-export class ManagementComponent {
+export class ManagementComponent implements OnInit {
 
   activeTab: ManagementTab = 'users';
 
@@ -42,11 +46,54 @@ export class ManagementComponent {
   // conversión estimada de cupones (vendrá de analítica cuando exista el backend)
   private readonly PROMO_CONVERSION = 31.2;
 
+  // cuentas reales (security-service); los demás tabs siguen con datos de prueba
+  private readonly accounts = signal<AdminUser[]>([]);
+  usersLoading = signal(true);
+  usersErrorKey = signal<string | null>(null);
+
+  private readonly userAdmin = inject(UserAdminService);
+
   constructor(
     private store: CatalogStore,
     private dialog: MatDialog,
     private feedback: FeedbackService,
   ) {}
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.usersLoading.set(true);
+    this.usersErrorKey.set(null);
+
+    this.userAdmin.listAccounts().subscribe({
+      next: page => {
+        this.accounts.set(page.items.map(user => this.toAdminUser(user)));
+        this.usersLoading.set(false);
+      },
+      error: (error: unknown) => {
+        this.usersErrorKey.set(apiErrorKey(error));
+        this.usersLoading.set(false);
+      }
+    });
+  }
+
+  // convierte la cuenta del backend al formato que usa la tabla
+  private toAdminUser(user: AuthUser): AdminUser {
+    const role = user.roles.includes('ADMIN') ? 'ADMIN' : user.roles.includes('OPERATOR') ? 'OPERATOR' : 'CLIENT';
+    return {
+      id: String(user.id),
+      name: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+      // llave de traducción del rol: la tabla la traduce
+      userType: `PROFILE.ROLE.${role}`,
+      // la base todavía no guarda la fecha de registro: se muestra el último ingreso
+      dateAdded: user.lastLogin ? user.lastLogin.slice(0, 10) : '—',
+      invited: false,
+      status: user.active ? 'active' : 'disabled'
+    };
+  }
 
   setTab(tab: ManagementTab): void {
     this.activeTab = tab;
@@ -54,7 +101,7 @@ export class ManagementComponent {
 
   // --- datos desde el store ---
 
-  get users(): AdminUser[] { return this.store.users(); }
+  get users(): AdminUser[] { return this.accounts(); }
   get roles(): UserRole[] { return this.store.roles(); }
   get services(): CatalogService[] { return this.store.services(); }
   get promotions(): Promotion[] { return this.store.promotions(); }
@@ -80,40 +127,13 @@ export class ManagementComponent {
   openCreateUser(): void {
     const dialogRef = this.dialog.open(CreateUserModal, { panelClass: 'custom-dialog' });
 
-    dialogRef.afterClosed().subscribe((result: CreateUserResult | null) => {
-      if (!result) return;
-      const created = this.store.addUser(result);
+    dialogRef.afterClosed().subscribe((created: CreateUserResult | null) => {
+      if (!created) return;
+      this.loadUsers();
       this.feedback.success(
         'ADMIN_MANAGEMENT.FEEDBACK.USER_CREATED_TITLE',
         'ADMIN_MANAGEMENT.FEEDBACK.USER_CREATED_MESSAGE',
-        { messageParams: { name: created.name } }
-      );
-    });
-  }
-
-  openEditUser(user: AdminUser): void {
-    const data: CreateUserData = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.userType,
-      invite: user.invited,
-    };
-
-    const dialogRef = this.dialog.open(CreateUserModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((result: CreateUserResult | null) => {
-      if (!result) return;
-      this.store.updateUser(user.id, {
-        name: result.name,
-        email: result.email,
-        userType: result.role,
-        invited: result.invite,
-      });
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.USER_UPDATED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.USER_UPDATED_MESSAGE',
-        { messageParams: { name: result.name } }
+        { messageParams: { name: `${created.firstName} ${created.lastName}` } }
       );
     });
   }
@@ -132,23 +152,21 @@ export class ManagementComponent {
     const dialogRef = this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data });
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      this.store.toggleUserStatus(user.id);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.USER_STATUS_TITLE',
-        disabling ? 'ADMIN_MANAGEMENT.FEEDBACK.USER_DISABLED_MESSAGE' : 'ADMIN_MANAGEMENT.FEEDBACK.USER_ENABLED_MESSAGE',
-        { messageParams: { name: user.name } }
-      );
-    });
-  }
 
-  deleteUser(user: AdminUser): void {
-    this.confirmDelete(() => {
-      this.store.removeUser(user.id);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.DELETED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.USER_DELETED_MESSAGE',
-        { messageParams: { name: user.name } }
-      );
+      // el backend desactiva la cuenta y cierra sus sesiones: ya no puede iniciar sesión
+      this.userAdmin.setActive(Number(user.id), !disabling).subscribe({
+        next: updated => {
+          this.accounts.update(list => list.map(u => (u.id === user.id ? this.toAdminUser(updated) : u)));
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.USER_STATUS_TITLE',
+            disabling ? 'ADMIN_MANAGEMENT.FEEDBACK.USER_DISABLED_MESSAGE' : 'ADMIN_MANAGEMENT.FEEDBACK.USER_ENABLED_MESSAGE',
+            { messageParams: { name: user.name } }
+          );
+        },
+        error: (error: unknown) => {
+          this.feedback.error('ADMIN_MANAGEMENT.FEEDBACK.USER_STATUS_ERROR_TITLE', apiErrorKey(error));
+        }
+      });
     });
   }
 

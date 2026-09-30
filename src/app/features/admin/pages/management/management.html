@@ -57,7 +57,23 @@
           </div>
         </div>
 
-        @if (users.length === 0) {
+        @if (usersLoading()) {
+
+          <p class="loading-text">{{ 'ADMIN_MANAGEMENT.USERS.LOADING' | translate }}</p>
+
+        } @else if (usersErrorKey()) {
+
+          <app-empty-state
+            variant="empty"
+            icon="cloud_off"
+            titleKey="ADMIN_MANAGEMENT.USERS.LOAD_ERROR_TITLE"
+            [messageKey]="usersErrorKey()!">
+            <button class="btn-outline" (click)="loadUsers()">
+              {{ 'ADMIN_MANAGEMENT.USERS.RETRY' | translate }}
+            </button>
+          </app-empty-state>
+
+        } @else if (users.length === 0) {
 
           <app-empty-state
             variant="empty"
@@ -105,7 +121,7 @@
                       {{ u.name }}
                     </td>
                     <td>{{ u.email }}</td>
-                    <td><span class="type-chip">{{ u.userType }}</span></td>
+                    <td><span class="type-chip">{{ u.userType | translate }}</span></td>
                     <td>{{ u.dateAdded }}</td>
                     <td>{{ (u.invited ? 'ADMIN_MANAGEMENT.USERS.YES' : 'ADMIN_MANAGEMENT.USERS.NO') | translate }}</td>
                     <td>
@@ -114,14 +130,14 @@
                       </span>
                     </td>
                     <td class="actions-cell">
-                      <button class="btn-icon" (click)="openEditUser(u)" [attr.aria-label]="'COMMON.EDIT' | translate">
-                        <mat-icon>edit</mat-icon>
-                      </button>
-                      <button class="btn-icon" (click)="toggleUserStatus(u)" [attr.aria-label]="'COMMON.VIEW' | translate">
+                      <!-- desactivar reemplaza a editar/eliminar: la cuenta no se borra (ADR-010) -->
+                      <button
+                        class="btn-icon"
+                        [class.btn-icon--danger]="u.status === 'active'"
+                        (click)="toggleUserStatus(u)"
+                        [attr.aria-label]="(u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE') | translate"
+                        [title]="(u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE') | translate">
                         <mat-icon>{{ u.status === 'active' ? 'block' : 'check_circle' }}</mat-icon>
-                      </button>
-                      <button class="btn-icon btn-icon--danger" (click)="deleteUser(u)" [attr.aria-label]="'COMMON.DELETE' | translate">
-                        <mat-icon>delete</mat-icon>
                       </button>
                     </td>
                   </tr>

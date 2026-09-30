@@ -79,6 +79,7 @@
     "CANCEL": "Annuler",
     "DELETE": "Supprimer",
     "ACCEPT": "Accepter",
+    "ERROR": "Erreur",
     "CREATE": "Créer",
     "EDIT": "Modifier",
     "SAVE": "Enregistrer",
@@ -152,7 +153,8 @@
       "DETAIL_MESSAGE": "Voici les détails de votre prochain lavage.",
       "STATUS": "Statut",
       "OPERATOR_ASSIGNED": "Opérateur assigné",
-      "PROGRESS": "Avancement du service"
+      "PROGRESS": "Avancement du service",
+      "EMPTY": "Aucun service programmé"
     },
     "QUICK_ACCESS": {
       "TITLE": "Accès rapides",
@@ -168,7 +170,8 @@
     },
     "BENEFITS": {
       "TITLE": "Vos avantages et promotions",
-      "LOYALTY_PROGRESS": "Progression de fidélité"
+      "LOYALTY_PROGRESS": "Progression de fidélité",
+      "LOYALTY_EMPTY": "Aucune donnée de fidélité pour le moment"
     },
     "SERVICES_HISTORY": {
       "TITLE": "Mon historique de services",
@@ -317,10 +320,10 @@
     "PASSWORD_SUCCESS_TITLE": "Mot de passe mis à jour !",
     "PASSWORD_SUCCESS_MESSAGE": "Votre mot de passe a été modifié avec succès.",
     "DELETE_CONFIRM_TITLE": "Supprimer votre compte ?",
-    "DELETE_CONFIRM_MESSAGE": "Cette action est définitive. Votre compte, vos véhicules, réservations et historique seront supprimés et ne pourront pas être récupérés.",
+    "DELETE_CONFIRM_MESSAGE": "Votre compte sera désactivé et vous ne pourrez plus vous connecter. L'historique de vos réservations et paiements est conservé. Saisissez votre mot de passe pour confirmer.",
     "DELETE_CONFIRM_BUTTON": "Oui, supprimer",
     "DELETE_SUCCESS_TITLE": "Compte supprimé",
-    "DELETE_SUCCESS_MESSAGE": "Votre compte a été supprimé avec succès. Merci d’avoir utilisé notre service.",
+    "DELETE_SUCCESS_MESSAGE": "Votre compte a été supprimé et vous avez été déconnecté de tous vos appareils. Merci d'avoir utilisé notre service.",
     "PASSWORD": "Mot de passe",
     "CHANGE_PASSWORD": "Changer le mot de passe",
     "PASSWORD_DESC": "Un mot de passe sécurisé est recommandé",
@@ -339,6 +342,17 @@
       "PHONE_REQUIRED": "Le numéro de téléphone est requis",
       "PHONE_INVALID": "Le numéro n'est pas valide pour le pays sélectionné",
       "ADDRESS_MIN": "L'adresse doit contenir au moins 5 caractères"
+    },
+    "FIRST_NAMES": "Prénoms",
+    "LAST_NAMES": "Noms",
+    "EMAIL_READONLY_HINT": "L'e-mail est votre identifiant de connexion et ne peut pas être modifié.",
+    "CHANGE_EMAIL_TITLE": "Confirmez le changement d'e-mail",
+    "CHANGE_EMAIL_MESSAGE": "Saisissez votre mot de passe actuel. Vous vous connecterez désormais avec le nouvel e-mail.",
+    "EMAIL_CHANGE_HINT": "C'est votre identifiant de connexion. Si vous le changez, nous vous demanderons votre mot de passe.",
+    "ROLE": {
+      "ADMIN": "Administrateur",
+      "OPERATOR": "Opérateur",
+      "CLIENT": "Client"
     }
   },
   "RATINGS": {
@@ -376,7 +390,8 @@
       "TITLE": "Choisissez votre véhicule",
       "SUBTITLE": "Sélectionnez un de vos véhicules enregistrés",
       "NO_VEHICLE": "Votre véhicule n'est pas listé ? Enregistrez-le d'abord dans",
-      "NO_VEHICLE_LINK": "Mes Véhicules"
+      "NO_VEHICLE_LINK": "Mes Véhicules",
+      "LOADING": "Chargement des véhicules..."
     },
     "STEP2": {
       "TITLE": "Type de service",
@@ -707,6 +722,7 @@
     "LAST_12_MONTHS": "Au cours des 12 derniers mois"
   },
   "PAYMENT": {
+    "EMPTY": "Aucun paiement en attente",
     "CANCEL_CONFIRM": {
       "TITLE": "Annuler la réservation ?",
       "MESSAGE": "La réservation {{code}} sera annulée et le créneau sera libéré. Cette action est irréversible.",
@@ -818,6 +834,10 @@
     "DELETE": {
       "TITLE": "Supprimer le véhicule ?",
       "MESSAGE": "{{name}} immatriculé {{plate}} sera supprimé de votre compte. Cette action est irréversible."
+    },
+    "EMPTY": {
+      "TITLE": "Vous n'avez encore aucun véhicule enregistré",
+      "SUBTITLE": "Enregistrez votre premier véhicule pour réserver des lavages plus rapidement."
     },
     "MODAL": {
       "EDIT_TITLE": "Modifier le véhicule",
@@ -1309,7 +1329,7 @@
         "NAME": "Noms",
         "EMAIL": "E-mail",
         "USER_TYPE": "Type d'utilisateur",
-        "DATE_ADDED": "Date d'ajout",
+        "DATE_ADDED": "Dernière connexion",
         "INVITED": "Invité",
         "STATUS": "Statut",
         "ACTIONS": "Actions"
@@ -1323,7 +1343,12 @@
       "EMPTY_TITLE": "Aucun utilisateur pour l’instant",
       "EMPTY_MESSAGE": "Créez le premier utilisateur pour commencer à gérer l’équipe.",
       "NO_RESULTS_TITLE": "Aucun résultat",
-      "NO_RESULTS_MESSAGE": "Aucun utilisateur ne correspond à votre recherche."
+      "NO_RESULTS_MESSAGE": "Aucun utilisateur ne correspond à votre recherche.",
+      "DISABLE": "Désactiver le compte",
+      "ENABLE": "Activer le compte",
+      "LOADING": "Chargement des utilisateurs...",
+      "LOAD_ERROR_TITLE": "Impossible de charger les utilisateurs",
+      "RETRY": "Réessayer"
     },
     "ROLES": {
       "CREATE_ROLE": "Créer un rôle",
@@ -1428,7 +1453,8 @@
       "PROMO_STOP_MESSAGE": "Mettre «{{name}}» en pause ? Elle cessera de s’afficher jusqu’à sa réactivation.",
       "PROMO_STOPPED_MESSAGE": "La promotion «{{name}}» est maintenant en pause.",
       "PROMO_STARTED_MESSAGE": "La promotion «{{name}}» est maintenant active.",
-      "PROMO_DELETED_MESSAGE": "La promotion «{{name}}» a été supprimée."
+      "PROMO_DELETED_MESSAGE": "La promotion «{{name}}» a été supprimée.",
+      "USER_STATUS_ERROR_TITLE": "Impossible de changer l'état"
     }
   },
   "CREATE_ROLE_MODAL": {
@@ -1478,7 +1504,9 @@
     "TITLE_EDIT": "Modifier l’utilisateur",
     "SUBTITLE_EDIT": "Mettez à jour les informations et le rôle de l’utilisateur.",
     "ERROR_NAME": "Saisissez le nom complet",
-    "ERROR_EMAIL": "Saisissez un e-mail valide"
+    "ERROR_EMAIL": "Saisissez un e-mail valide",
+    "ACCOUNT_SUBTITLE": "La personne se connectera avec cet e-mail et le mot de passe temporaire. Elle pourra le changer dans son profil.",
+    "SHOW_PASSWORD": "Afficher le mot de passe"
   },
   "ADMIN_SCHEDULE": {
     "OPEN_TODAY": "Ouvert aujourd'hui",
@@ -2120,7 +2148,16 @@
     "TAGS_LABEL": "Étiquettes",
     "TAGS_ADD": "Ajouter une étiquette",
     "TAGS_PLACEHOLDER": "Ex. Céramique, SUV",
-    "TAGS_EMPTY": "Aucune étiquette pour l’instant."
+    "TAGS_EMPTY": "Aucune étiquette pour l’instant.",
+    "ACCOUNT_HINT": "Cela crée le compte avec lequel l'opérateur se connecte. Donnez-lui l'e-mail et le mot de passe temporaire.",
+    "FIRST_NAMES_LABEL": "Prénoms",
+    "LAST_NAMES_LABEL": "Noms",
+    "DOCUMENT_LABEL": "Numéro d'identité",
+    "PASSWORD_LABEL": "Mot de passe temporaire",
+    "PASSWORD_HINT": "Au moins 8 caractères, une majuscule, un chiffre et un caractère spécial. L'opérateur peut le changer dans son profil.",
+    "ERROR_DOCUMENT": "Doit contenir entre 5 et 20 chiffres",
+    "ERROR_PASSWORD": "Au moins 8 caractères, une majuscule, un chiffre et un caractère spécial",
+    "SAVING": "Création du compte..."
   },
   "PROMOTION_MODAL": {
     "TITLE_CREATE": "Nouvelle promotion",
@@ -2195,7 +2232,17 @@
     "FORBIDDEN": "Vous n'avez pas l'autorisation d'effectuer cette action",
     "USER_NOT_FOUND": "Compte introuvable",
     "CONFLICT": "Les données entrent en conflit avec un enregistrement existant",
+    "PLATE_ALREADY_REGISTERED": "Un véhicule est déjà enregistré avec cette plaque",
+    "CUSTOMER_NOT_PROVISIONED": "Votre profil client n'est pas encore prêt. Réessayez dans quelques minutes.",
+    "VEHICLE_NOT_FOUND": "Le véhicule n'existe pas ou a déjà été supprimé",
+    "INVALID_PLATE": "Le format de la plaque ne correspond pas au type de véhicule",
+    "INVALID_VEHICLE_TYPE": "Le type de véhicule n'est pas valide",
     "NETWORK_ERROR": "Impossible de joindre le serveur. Réessayez dans un instant.",
-    "UNEXPECTED": "Une erreur inattendue est survenue. Réessayez."
+    "UNEXPECTED": "Une erreur inattendue est survenue. Réessayez.",
+    "CANNOT_DISABLE_OWN_ACCOUNT": "Vous ne pouvez pas désactiver votre propre compte"
+  },
+  "PASSWORD_CONFIRM_MODAL": {
+    "LABEL": "Mot de passe actuel",
+    "PROCESSING": "Traitement..."
   }
 }

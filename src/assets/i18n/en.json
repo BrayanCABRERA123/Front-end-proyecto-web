@@ -79,6 +79,7 @@
     "CANCEL": "Cancel",
     "DELETE": "Delete",
     "ACCEPT": "Accept",
+    "ERROR": "Error",
     "CREATE": "Create",
     "EDIT": "Edit",
     "SAVE": "Save",
@@ -152,7 +153,8 @@
       "DETAIL_MESSAGE": "Here are the details of your next wash.",
       "STATUS": "Status",
       "OPERATOR_ASSIGNED": "Assigned operator",
-      "PROGRESS": "Service progress"
+      "PROGRESS": "Service progress",
+      "EMPTY": "No scheduled services"
     },
     "QUICK_ACCESS": {
       "TITLE": "Quick access",
@@ -168,7 +170,8 @@
     },
     "BENEFITS": {
       "TITLE": "Your benefits and promotions",
-      "LOYALTY_PROGRESS": "Loyalty progress"
+      "LOYALTY_PROGRESS": "Loyalty progress",
+      "LOYALTY_EMPTY": "No loyalty data yet"
     },
     "SERVICES_HISTORY": {
       "TITLE": "My service history",
@@ -317,10 +320,10 @@
     "PASSWORD_SUCCESS_TITLE": "Password updated!",
     "PASSWORD_SUCCESS_MESSAGE": "Your password was changed successfully.",
     "DELETE_CONFIRM_TITLE": "Delete your account?",
-    "DELETE_CONFIRM_MESSAGE": "This action is permanent. Your account, vehicles, bookings and history will be deleted and cannot be recovered.",
+    "DELETE_CONFIRM_MESSAGE": "Your account will be deactivated and you will no longer be able to sign in. Your booking and payment history is kept. Enter your password to confirm.",
     "DELETE_CONFIRM_BUTTON": "Yes, delete",
     "DELETE_SUCCESS_TITLE": "Account deleted",
-    "DELETE_SUCCESS_MESSAGE": "Your account was deleted successfully. Thank you for using our service.",
+    "DELETE_SUCCESS_MESSAGE": "Your account was deleted and you were signed out on all your devices. Thank you for using our service.",
     "PASSWORD": "Password",
     "CHANGE_PASSWORD": "Change password",
     "PASSWORD_DESC": "A strong password is recommended",
@@ -339,6 +342,17 @@
       "PHONE_REQUIRED": "Phone number is required",
       "PHONE_INVALID": "The number is not valid for the selected country",
       "ADDRESS_MIN": "Address must be at least 5 characters"
+    },
+    "FIRST_NAMES": "First names",
+    "LAST_NAMES": "Last names",
+    "EMAIL_READONLY_HINT": "Your email is your sign-in username and cannot be changed.",
+    "CHANGE_EMAIL_TITLE": "Confirm the email change",
+    "CHANGE_EMAIL_MESSAGE": "Enter your current password. From now on you will sign in with the new email.",
+    "EMAIL_CHANGE_HINT": "This is your sign-in username. If you change it, we will ask for your password.",
+    "ROLE": {
+      "ADMIN": "Administrator",
+      "OPERATOR": "Operator",
+      "CLIENT": "Customer"
     }
   },
   "RATINGS": {
@@ -376,7 +390,8 @@
       "TITLE": "Choose your vehicle",
       "SUBTITLE": "Select one of your registered vehicles",
       "NO_VEHICLE": "Vehicle not listed? Register it first in",
-      "NO_VEHICLE_LINK": "My Vehicles"
+      "NO_VEHICLE_LINK": "My Vehicles",
+      "LOADING": "Loading vehicles..."
     },
     "STEP2": {
       "TITLE": "Service type",
@@ -707,6 +722,7 @@
     "LAST_12_MONTHS": "In the last 12 months"
   },
   "PAYMENT": {
+    "EMPTY": "No pending payments",
     "CANCEL_CONFIRM": {
       "TITLE": "Cancel booking?",
       "MESSAGE": "Booking {{code}} will be cancelled and the time slot will be released. This action cannot be undone.",
@@ -818,6 +834,10 @@
     "DELETE": {
       "TITLE": "Delete vehicle?",
       "MESSAGE": "{{name}} with plate {{plate}} will be removed from your account. This action cannot be undone."
+    },
+    "EMPTY": {
+      "TITLE": "You have no registered vehicles yet",
+      "SUBTITLE": "Register your first vehicle to book washes faster."
     },
     "MODAL": {
       "EDIT_TITLE": "Edit vehicle",
@@ -1309,7 +1329,7 @@
         "NAME": "Name",
         "EMAIL": "Email",
         "USER_TYPE": "User type",
-        "DATE_ADDED": "Date added",
+        "DATE_ADDED": "Last sign-in",
         "INVITED": "Invited",
         "STATUS": "Status",
         "ACTIONS": "Actions"
@@ -1323,7 +1343,12 @@
       "EMPTY_TITLE": "No users yet",
       "EMPTY_MESSAGE": "Create the first user to start managing the team.",
       "NO_RESULTS_TITLE": "No results",
-      "NO_RESULTS_MESSAGE": "No users match your search."
+      "NO_RESULTS_MESSAGE": "No users match your search.",
+      "DISABLE": "Disable account",
+      "ENABLE": "Enable account",
+      "LOADING": "Loading users...",
+      "LOAD_ERROR_TITLE": "Users could not be loaded",
+      "RETRY": "Retry"
     },
     "ROLES": {
       "CREATE_ROLE": "Create role",
@@ -1428,7 +1453,8 @@
       "PROMO_STOP_MESSAGE": "Pause «{{name}}»? It will stop showing until reactivated.",
       "PROMO_STOPPED_MESSAGE": "The promotion «{{name}}» is now paused.",
       "PROMO_STARTED_MESSAGE": "The promotion «{{name}}» is now active.",
-      "PROMO_DELETED_MESSAGE": "The promotion «{{name}}» was deleted."
+      "PROMO_DELETED_MESSAGE": "The promotion «{{name}}» was deleted.",
+      "USER_STATUS_ERROR_TITLE": "The status could not be changed"
     }
   },
   "CREATE_ROLE_MODAL": {
@@ -1478,7 +1504,9 @@
     "TITLE_EDIT": "Edit user",
     "SUBTITLE_EDIT": "Update the user’s details and role.",
     "ERROR_NAME": "Enter the full name",
-    "ERROR_EMAIL": "Enter a valid email"
+    "ERROR_EMAIL": "Enter a valid email",
+    "ACCOUNT_SUBTITLE": "The person will sign in with this email and the temporary password. They can change it in their profile.",
+    "SHOW_PASSWORD": "Show password"
   },
   "ADMIN_SCHEDULE": {
     "OPEN_TODAY": "Open today",
@@ -2120,7 +2148,16 @@
     "TAGS_LABEL": "Tags",
     "TAGS_ADD": "Add tag",
     "TAGS_PLACEHOLDER": "e.g. Ceramic, SUV",
-    "TAGS_EMPTY": "No tags yet."
+    "TAGS_EMPTY": "No tags yet.",
+    "ACCOUNT_HINT": "This creates the account the operator signs in with. Give them the email and the temporary password.",
+    "FIRST_NAMES_LABEL": "First names",
+    "LAST_NAMES_LABEL": "Last names",
+    "DOCUMENT_LABEL": "ID number",
+    "PASSWORD_LABEL": "Temporary password",
+    "PASSWORD_HINT": "At least 8 characters, one uppercase letter, one number and one special character. The operator can change it in their profile.",
+    "ERROR_DOCUMENT": "Must have between 5 and 20 digits",
+    "ERROR_PASSWORD": "At least 8 characters, one uppercase letter, one number and one special character",
+    "SAVING": "Creating account..."
   },
   "PROMOTION_MODAL": {
     "TITLE_CREATE": "New promotion",
@@ -2195,7 +2232,17 @@
     "FORBIDDEN": "You do not have permission to perform this action",
     "USER_NOT_FOUND": "Account not found",
     "CONFLICT": "The data conflicts with an existing record",
+    "PLATE_ALREADY_REGISTERED": "A vehicle is already registered with this plate",
+    "CUSTOMER_NOT_PROVISIONED": "Your customer profile is not ready yet. Please try again in a few minutes.",
+    "VEHICLE_NOT_FOUND": "The vehicle does not exist or was already removed",
+    "INVALID_PLATE": "The plate format does not match the vehicle type",
+    "INVALID_VEHICLE_TYPE": "The vehicle type is not valid",
     "NETWORK_ERROR": "Cannot reach the server. Please try again in a moment.",
-    "UNEXPECTED": "An unexpected error occurred. Please try again."
+    "UNEXPECTED": "An unexpected error occurred. Please try again.",
+    "CANNOT_DISABLE_OWN_ACCOUNT": "You cannot disable your own account"
+  },
+  "PASSWORD_CONFIRM_MODAL": {
+    "LABEL": "Current password",
+    "PROCESSING": "Processing..."
   }
 }

@@ -31,6 +31,33 @@ export interface RegisterRequest {
   password: string;
 }
 
+// lo que el usuario puede cambiar de su propio perfil (PATCH /users/me)
+export interface UpdateProfileRequest {
+  firstName: string;
+  lastName: string;
+  phone: string | null;
+}
+
+// cuenta que crea el administrador con roles explícitos (POST /admin/users)
+export interface CreateUserAccountRequest {
+  documentNumber: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string | null;
+  password: string;
+  roles: UserRole[];
+}
+
+// una página de resultados del backend (listados paginados)
+export interface PageResponse<T> {
+  items: T[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+}
+
 // lo que se guarda en el navegador mientras la sesión está abierta
 export interface StoredSession {
   accessToken: string;

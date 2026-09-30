@@ -79,6 +79,7 @@
     "CANCEL": "Cancelar",
     "DELETE": "Excluir",
     "ACCEPT": "Aceitar",
+    "ERROR": "Erro",
     "CREATE": "Criar",
     "EDIT": "Editar",
     "SAVE": "Salvar",
@@ -152,7 +153,8 @@
       "DETAIL_MESSAGE": "Estes são os dados da sua próxima lavagem.",
       "STATUS": "Status",
       "OPERATOR_ASSIGNED": "Operador designado",
-      "PROGRESS": "Progresso do serviço"
+      "PROGRESS": "Progresso do serviço",
+      "EMPTY": "Nenhum serviço agendado"
     },
     "QUICK_ACCESS": {
       "TITLE": "Acessos rápidos",
@@ -168,7 +170,8 @@
     },
     "BENEFITS": {
       "TITLE": "Seus benefícios e promoções",
-      "LOYALTY_PROGRESS": "Progresso de fidelidade"
+      "LOYALTY_PROGRESS": "Progresso de fidelidade",
+      "LOYALTY_EMPTY": "Ainda não há dados de fidelidade"
     },
     "SERVICES_HISTORY": {
       "TITLE": "Meu histórico de serviços",
@@ -317,10 +320,10 @@
     "PASSWORD_SUCCESS_TITLE": "Senha atualizada!",
     "PASSWORD_SUCCESS_MESSAGE": "Sua senha foi alterada com sucesso.",
     "DELETE_CONFIRM_TITLE": "Excluir sua conta?",
-    "DELETE_CONFIRM_MESSAGE": "Esta ação é permanente. Sua conta, veículos, reservas e histórico serão excluídos e não poderão ser recuperados.",
+    "DELETE_CONFIRM_MESSAGE": "Sua conta será desativada e você não poderá mais entrar. Seu histórico de reservas e pagamentos é mantido. Digite sua senha para confirmar.",
     "DELETE_CONFIRM_BUTTON": "Sim, excluir",
     "DELETE_SUCCESS_TITLE": "Conta excluída",
-    "DELETE_SUCCESS_MESSAGE": "Sua conta foi excluída com sucesso. Obrigado por usar nosso serviço.",
+    "DELETE_SUCCESS_MESSAGE": "Sua conta foi excluída e a sessão foi encerrada em todos os seus dispositivos. Obrigado por usar nosso serviço.",
     "PASSWORD": "Senha",
     "CHANGE_PASSWORD": "Alterar senha",
     "PASSWORD_DESC": "Recomenda-se uma senha segura",
@@ -339,6 +342,17 @@
       "PHONE_REQUIRED": "O telefone é obrigatório",
       "PHONE_INVALID": "O número não é válido para o país selecionado",
       "ADDRESS_MIN": "O endereço deve ter pelo menos 5 caracteres"
+    },
+    "FIRST_NAMES": "Nomes",
+    "LAST_NAMES": "Sobrenomes",
+    "EMAIL_READONLY_HINT": "O e-mail é o seu usuário de acesso e não pode ser alterado.",
+    "CHANGE_EMAIL_TITLE": "Confirme a troca de e-mail",
+    "CHANGE_EMAIL_MESSAGE": "Digite sua senha atual. A partir de agora você entrará com o novo e-mail.",
+    "EMAIL_CHANGE_HINT": "É o seu usuário de acesso. Se você mudar, pediremos sua senha.",
+    "ROLE": {
+      "ADMIN": "Administrador",
+      "OPERATOR": "Operador",
+      "CLIENT": "Cliente"
     }
   },
   "RATINGS": {
@@ -376,7 +390,8 @@
       "TITLE": "Escolha seu veículo",
       "SUBTITLE": "Selecione um dos seus veículos registrados",
       "NO_VEHICLE": "Seu veículo não está listado? Registre-o primeiro em",
-      "NO_VEHICLE_LINK": "Meus Veículos"
+      "NO_VEHICLE_LINK": "Meus Veículos",
+      "LOADING": "Carregando veículos..."
     },
     "STEP2": {
       "TITLE": "Tipo de serviço",
@@ -707,6 +722,7 @@
     "LAST_12_MONTHS": "Nos últimos 12 meses"
   },
   "PAYMENT": {
+    "EMPTY": "Nenhum pagamento pendente",
     "CANCEL_CONFIRM": {
       "TITLE": "Cancelar reserva?",
       "MESSAGE": "A reserva {{code}} será cancelada e o horário será liberado. Esta ação não pode ser desfeita.",
@@ -818,6 +834,10 @@
     "DELETE": {
       "TITLE": "Excluir veículo?",
       "MESSAGE": "{{name}} com placa {{plate}} será removido da sua conta. Esta ação não pode ser desfeita."
+    },
+    "EMPTY": {
+      "TITLE": "Você ainda não tem veículos cadastrados",
+      "SUBTITLE": "Cadastre seu primeiro veículo para reservar lavagens mais rápido."
     },
     "MODAL": {
       "EDIT_TITLE": "Editar veículo",
@@ -1309,7 +1329,7 @@
         "NAME": "Nomes",
         "EMAIL": "E-mail",
         "USER_TYPE": "Tipo de usuário",
-        "DATE_ADDED": "Data de cadastro",
+        "DATE_ADDED": "Último acesso",
         "INVITED": "Convidado",
         "STATUS": "Status",
         "ACTIONS": "Ações"
@@ -1323,7 +1343,12 @@
       "EMPTY_TITLE": "Nenhum usuário ainda",
       "EMPTY_MESSAGE": "Crie o primeiro usuário para começar a gerenciar a equipe.",
       "NO_RESULTS_TITLE": "Sem resultados",
-      "NO_RESULTS_MESSAGE": "Nenhum usuário corresponde à busca."
+      "NO_RESULTS_MESSAGE": "Nenhum usuário corresponde à busca.",
+      "DISABLE": "Desativar conta",
+      "ENABLE": "Ativar conta",
+      "LOADING": "Carregando usuários...",
+      "LOAD_ERROR_TITLE": "Não foi possível carregar os usuários",
+      "RETRY": "Tentar novamente"
     },
     "ROLES": {
       "CREATE_ROLE": "Criar função",
@@ -1428,7 +1453,8 @@
       "PROMO_STOP_MESSAGE": "Pausar «{{name}}»? Ela deixará de aparecer até ser reativada.",
       "PROMO_STOPPED_MESSAGE": "A promoção «{{name}}» foi pausada.",
       "PROMO_STARTED_MESSAGE": "A promoção «{{name}}» está ativa.",
-      "PROMO_DELETED_MESSAGE": "A promoção «{{name}}» foi excluída."
+      "PROMO_DELETED_MESSAGE": "A promoção «{{name}}» foi excluída.",
+      "USER_STATUS_ERROR_TITLE": "Não foi possível mudar o status"
     }
   },
   "CREATE_ROLE_MODAL": {
@@ -1478,7 +1504,9 @@
     "TITLE_EDIT": "Editar usuário",
     "SUBTITLE_EDIT": "Atualize os dados e o perfil do usuário.",
     "ERROR_NAME": "Informe o nome completo",
-    "ERROR_EMAIL": "Informe um e-mail válido"
+    "ERROR_EMAIL": "Informe um e-mail válido",
+    "ACCOUNT_SUBTITLE": "A pessoa entrará com este e-mail e a senha temporária. Poderá alterá-la no perfil.",
+    "SHOW_PASSWORD": "Mostrar senha"
   },
   "ADMIN_SCHEDULE": {
     "OPEN_TODAY": "Aberto hoje",
@@ -2120,7 +2148,16 @@
     "TAGS_LABEL": "Etiquetas",
     "TAGS_ADD": "Adicionar etiqueta",
     "TAGS_PLACEHOLDER": "Ex.: Cerâmico, SUV",
-    "TAGS_EMPTY": "Nenhuma etiqueta ainda."
+    "TAGS_EMPTY": "Nenhuma etiqueta ainda.",
+    "ACCOUNT_HINT": "Isto cria a conta com a qual o operador entra. Entregue a ele o e-mail e a senha temporária.",
+    "FIRST_NAMES_LABEL": "Nomes",
+    "LAST_NAMES_LABEL": "Sobrenomes",
+    "DOCUMENT_LABEL": "Número do documento",
+    "PASSWORD_LABEL": "Senha temporária",
+    "PASSWORD_HINT": "Mínimo de 8 caracteres, uma maiúscula, um número e um caractere especial. O operador pode alterá-la no perfil.",
+    "ERROR_DOCUMENT": "Deve ter entre 5 e 20 dígitos",
+    "ERROR_PASSWORD": "Mínimo de 8 caracteres, uma maiúscula, um número e um caractere especial",
+    "SAVING": "Criando conta..."
   },
   "PROMOTION_MODAL": {
     "TITLE_CREATE": "Nova promoção",
@@ -2195,7 +2232,17 @@
     "FORBIDDEN": "Você não tem permissão para realizar esta ação",
     "USER_NOT_FOUND": "Conta não encontrada",
     "CONFLICT": "Os dados conflitam com um registro existente",
+    "PLATE_ALREADY_REGISTERED": "Já existe um veículo cadastrado com esta placa",
+    "CUSTOMER_NOT_PROVISIONED": "Seu perfil de cliente ainda não está pronto. Tente novamente em alguns minutos.",
+    "VEHICLE_NOT_FOUND": "O veículo não existe ou já foi removido",
+    "INVALID_PLATE": "O formato da placa não corresponde ao tipo de veículo",
+    "INVALID_VEHICLE_TYPE": "O tipo de veículo não é válido",
     "NETWORK_ERROR": "Não foi possível conectar ao servidor. Tente novamente em instantes.",
-    "UNEXPECTED": "Ocorreu um erro inesperado. Tente novamente."
+    "UNEXPECTED": "Ocorreu um erro inesperado. Tente novamente.",
+    "CANNOT_DISABLE_OWN_ACCOUNT": "Você não pode desativar sua própria conta"
+  },
+  "PASSWORD_CONFIRM_MODAL": {
+    "LABEL": "Senha atual",
+    "PROCESSING": "Processando..."
   }
 }

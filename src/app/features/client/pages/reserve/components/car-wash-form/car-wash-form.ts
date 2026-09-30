@@ -142,7 +142,7 @@ export class CarWashFormComponent implements OnInit {
       // mismo resumen que se ve en la tarjeta lateral del formulario
       details: [
         { label: 'RESERVE.SUMMARY.VEHICLE', value: `${vehicle?.brand} ${vehicle?.model}` },
-        { label: 'RESERVE.SUMMARY.PLATE', value: vehicle?.plate ?? '' },
+        { label: 'RESERVE.SUMMARY.PLATE', value: vehicle?.licensePlateFormatted ?? '' },
         { label: 'RESERVE.SUMMARY.SERVICE', value: this.translate.instant(`SERVICE.${this.selectedService}`) },
         { label: 'RESERVE.SUMMARY.DATE', value: this.date },
         { label: 'RESERVE.SUMMARY.TIME', value: this.time },

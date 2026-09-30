@@ -1,28 +1,24 @@
-import { Component, Inject, Optional } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
-// si llegan datos, el modal está en modo edición y arranca con esos valores
-export interface CreateUserData {
-  id?: string;
-  name: string;
-  email: string;
-  role: string;
-  invite: boolean;
-}
+// la cuenta se crea de verdad en el security-service
+import { UserAdminService } from '../../../core/services/user-admin';
+import { AuthUser, UserRole } from '../../../core/models/auth.models';
+import { apiErrorKey } from '../../../core/utils/api-error';
 
-export interface CreateUserResult {
-  id?: string;
-  name: string;
-  email: string;
-  role: string;
-  invite: boolean;
-}
+// lo que devuelve el modal: la cuenta ya creada en el backend
+export type CreateUserResult = AuthUser;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const DOCUMENT_RE = /^[0-9]{5,20}$/;
+// mismas 4 reglas que el backend: 8+ caracteres, mayúscula, número y carácter especial
+const PASSWORD_RE = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])\S{8,72}$/;
 
+// el administrador crea una cuenta con uno de los 3 roles fijos (ADR-010)
+// y una contraseña temporal que el usuario puede cambiar desde su perfil
 @Component({
   selector: 'app-create-user-modal',
   standalone: true,
@@ -32,32 +28,43 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 })
 export class CreateUserModal {
 
-  // roles disponibles para asignar (coinciden con los que ya existen en Roles)
-  roleOptions = ['Administrador', 'Supervisor de Bahía', 'Soporte'];
+  // los 3 roles del sistema (security.role)
+  readonly roleOptions: { value: UserRole; labelKey: string }[] = [
+    { value: 'ADMIN', labelKey: 'PROFILE.ROLE.ADMIN' },
+    { value: 'OPERATOR', labelKey: 'PROFILE.ROLE.OPERATOR' },
+    { value: 'CLIENT', labelKey: 'PROFILE.ROLE.CLIENT' }
+  ];
 
-  name = '';
+  documentNumber = '';
+  firstName = '';
+  lastName = '';
   email = '';
-  role = 'Administrador';
-  invite = true;
+  phone = '';
+  password = '';
+  role: UserRole = 'OPERATOR';
+  showPassword = false;
 
-  editing = false;
   submitted = false;
 
-  constructor(
-    private dialogRef: MatDialogRef<CreateUserModal>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private data: CreateUserData | null,
-  ) {
-    if (data) {
-      this.editing = true;
-      this.name = data.name;
-      this.email = data.email;
-      this.role = data.role;
-      this.invite = data.invite;
-    }
+  // signals: la app es zoneless y estos cambian dentro de la respuesta HTTP
+  saving = signal(false);
+  errorKey = signal<string | null>(null);
+
+  private readonly userAdmin = inject(UserAdminService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  constructor(private dialogRef: MatDialogRef<CreateUserModal>) {}
+
+  get documentInvalid(): boolean {
+    return this.submitted && !DOCUMENT_RE.test(this.documentNumber.trim());
   }
 
-  get nameInvalid(): boolean {
-    return this.submitted && this.name.trim().length < 3;
+  get firstNameInvalid(): boolean {
+    return this.submitted && this.firstName.trim().length < 2;
+  }
+
+  get lastNameInvalid(): boolean {
+    return this.submitted && this.lastName.trim().length < 2;
   }
 
   // la validación tiene que ser razonable y entendible por cualquier persona
@@ -65,8 +72,21 @@ export class CreateUserModal {
     return this.submitted && !EMAIL_RE.test(this.email.trim());
   }
 
+  get passwordInvalid(): boolean {
+    return this.submitted && !PASSWORD_RE.test(this.password);
+  }
+
   get canCreate(): boolean {
-    return this.name.trim().length >= 3 && EMAIL_RE.test(this.email.trim());
+    return DOCUMENT_RE.test(this.documentNumber.trim())
+      && this.firstName.trim().length >= 2
+      && this.lastName.trim().length >= 2
+      && EMAIL_RE.test(this.email.trim())
+      && PASSWORD_RE.test(this.password);
+  }
+
+  // la cédula solo admite dígitos (quita puntos y espacios si la pegan)
+  sanitizeDocument(): void {
+    this.documentNumber = this.documentNumber.replace(/\D/g, '').substring(0, 20);
   }
 
   close(): void {
@@ -75,16 +95,29 @@ export class CreateUserModal {
 
   create(): void {
     this.submitted = true;
-    if (!this.canCreate) return;
+    if (!this.canCreate || this.saving()) return;
 
-    const result: CreateUserResult = {
-      id: this.data?.id,
-      name: this.name.trim(),
+    this.saving.set(true);
+    this.errorKey.set(null);
+
+    this.userAdmin.createAccount({
+      documentNumber: this.documentNumber.trim(),
+      firstName: this.firstName.trim(),
+      lastName: this.lastName.trim(),
       email: this.email.trim(),
-      role: this.role,
-      invite: this.invite
-    };
-
-    this.dialogRef.close(result);
+      phone: this.phone.trim() || null,
+      password: this.password,
+      roles: [this.role]
+    }).subscribe({
+      next: user => {
+        this.saving.set(false);
+        this.dialogRef.close(user);
+      },
+      error: (error: unknown) => {
+        this.saving.set(false);
+        this.errorKey.set(apiErrorKey(error));
+        this.cdr.markForCheck();
+      }
+    });
   }
 }

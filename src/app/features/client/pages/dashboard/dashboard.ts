@@ -54,38 +54,21 @@ export class DashboardComponent implements OnInit {
     { icon: 'water_drop', value: 0, label: 'STATS.WASHES_DONE' }
   ];
 
-  // próximo servicio programado
-  nextService = {
-    type: 'PREMIUM',
-    vehicle: 'CAR',
-    plate: 'ABC-123',
-    date: '25/02/2026 10:00 AM',
-    operator: 'Laura Gómez',
-    status: 'CONFIRMED'
-  };
+  // próximo servicio programado (viene de booking-service, pendiente)
+  nextService: {
+    type: string;
+    vehicle: string;
+    plate: string;
+    date: string;
+    operator: string;
+    status: string;
+  } | null = null;
 
   // lugar del servicio (sede única del lavadero)
   location = BUSINESS_LOCATION;
 
-  // porcentaje de avance calculado a partir del estado del servicio
-  get nextServiceProgress(): number {
-    return PROGRESS_BY_STATUS[this.nextService.status] ?? 0;
-  }
-
-  // accesos rápidos
-  quickAccess = [
-    { icon: 'calendar_today', label: 'QUICK_ACCESS.BOOK_WASH', route: 'reserve' },
-    { icon: 'credit_card', label: 'QUICK_ACCESS.PAY_SERVICE', route: 'history' },
-    { icon: 'directions_car', label: 'QUICK_ACCESS.MY_VEHICLES', route: 'vehicles' },
-    { icon: 'notifications', label: 'QUICK_ACCESS.NOTIFICATIONS', route: 'notifications' }
-  ];
-
-  // vehículos registrados por el cliente
-  vehicles = [
-    { type: 'CAR', plate: 'ABC-123', lastWash: '10 Ago 2026' },
-    { type: 'MOTO', plate: 'XYZ-98D', lastWash: '02 Ago 2026' },
-    { type: 'TRUCK', plate: 'JKL-457', lastWash: '24 Jul 2026' }
-  ];
+  // vehículos registrados por el cliente (reales del backend)
+  vehicles: VehicleResponse[] = [];
 
   // beneficios y promociones (contenido comercial, vendrá del backend)
   benefits = [
@@ -122,15 +105,30 @@ export class DashboardComponent implements OnInit {
   private loadVehicles(): void {
     this.vehiclesService.list().subscribe({
       next: (vehicles) => {
+        this.vehicles = vehicles;
         // actualiza el stat de vehículos con el número real
         const stat = this.stats.find(s => s.label === 'STATS.MY_VEHICLES');
         if (stat) stat.value = vehicles.length;
       },
       error: () => {
         // si no hay perfil o hay error, queda en 0
+        this.vehicles = [];
       }
     });
   }
+
+  // porcentaje de avance calculado a partir del estado del servicio
+  get nextServiceProgress(): number {
+    return this.nextService ? (PROGRESS_BY_STATUS[this.nextService.status] ?? 0) : 0;
+  }
+
+  // accesos rápidos
+  quickAccess = [
+    { icon: 'calendar_today', label: 'QUICK_ACCESS.BOOK_WASH', route: 'reserve' },
+    { icon: 'credit_card', label: 'QUICK_ACCESS.PAY_SERVICE', route: 'history' },
+    { icon: 'directions_car', label: 'QUICK_ACCESS.MY_VEHICLES', route: 'vehicles' },
+    { icon: 'notifications', label: 'QUICK_ACCESS.NOTIFICATIONS', route: 'notifications' }
+  ];
 
   // METODO
   goTo(route: string | null | undefined) {
@@ -141,6 +139,7 @@ export class DashboardComponent implements OnInit {
 
   // muestra el detalle del próximo servicio en el modal de estado (tipo info)
   viewNextServiceDetail() {
+    if (!this.nextService) return;
     const service = this.nextService;
     const t = (key: string) => this.translate.instant(key);
 
