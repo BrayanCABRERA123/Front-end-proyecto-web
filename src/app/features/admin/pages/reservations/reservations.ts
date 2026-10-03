@@ -226,11 +226,15 @@ export class ReservationsComponent implements OnInit {
       // el admin cancela con el motivo OTHER (catálogo booking.cancellation_reason)
       const reason = status === 'cancelled' ? 'OTHER' : undefined;
       this.store.setStatus(booking.id, status, reason).subscribe({
-        next: () => this.feedback.success(
-          'ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
-          `ADMIN_RESERVATIONS.FEEDBACK.STATUS_${status.toUpperCase()}_MESSAGE`,
-          { messageParams: { code: booking.code } }
-        ),
+        next: () => {
+          // refresca la lista para que la tabla muestre el estado nuevo sin recargar la página
+          this.reload();
+          this.feedback.success(
+            'ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
+            `ADMIN_RESERVATIONS.FEEDBACK.STATUS_${status.toUpperCase()}_MESSAGE`,
+            { messageParams: { code: booking.code } }
+          );
+        },
         error: (error) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
       });
     });
