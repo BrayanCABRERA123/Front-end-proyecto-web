@@ -9,11 +9,6 @@ export const routes: Routes = [
       .then(c => c.LandingComponent)
   },
   {
-    path: '',
-    redirectTo: 'auth',
-    pathMatch: 'full'
-  },
-  {
     path: 'auth',
     canActivate: [guestGuard],
     loadChildren: () =>
