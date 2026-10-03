@@ -17,17 +17,21 @@
           {{ 'HISTORY.FILTERS' | translate }}
         </span>
         <div class="radio-group">
-          <label class="radio-filter" [class.active]="activeFilter === 'todos'">
-            <input type="radio" name="filtro" value="todos" [(ngModel)]="activeFilter" />
+          <label class="radio-filter" [class.active]="activeFilter === 'todas'">
+            <input type="radio" name="filtro" value="todas" [(ngModel)]="activeFilter" />
             {{ 'HISTORY.ALL' | translate }}
           </label>
-          <label class="radio-filter" [class.active]="activeFilter === 'pagados'">
-            <input type="radio" name="filtro" value="pagados" [(ngModel)]="activeFilter" />
-            {{ 'HISTORY.PAID' | translate }}
+          <label class="radio-filter" [class.active]="activeFilter === 'activas'">
+            <input type="radio" name="filtro" value="activas" [(ngModel)]="activeFilter" />
+            {{ 'HISTORY.ACTIVE' | translate }}
           </label>
-          <label class="radio-filter" [class.active]="activeFilter === 'pendientes'">
-            <input type="radio" name="filtro" value="pendientes" [(ngModel)]="activeFilter" />
-            {{ 'HISTORY.PENDING' | translate }}
+          <label class="radio-filter" [class.active]="activeFilter === 'completadas'">
+            <input type="radio" name="filtro" value="completadas" [(ngModel)]="activeFilter" />
+            {{ 'HISTORY.COMPLETED' | translate }}
+          </label>
+          <label class="radio-filter" [class.active]="activeFilter === 'canceladas'">
+            <input type="radio" name="filtro" value="canceladas" [(ngModel)]="activeFilter" />
+            {{ 'HISTORY.CANCELLED' | translate }}
           </label>
         </div>
       </div>
@@ -78,16 +82,30 @@
     <!-- Lista -->
     <div class="history-list">
 
-      @for (service of filteredServices; track service.id) {
-      <app-history-card [service]="service"></app-history-card>
+      @if (loading) {
+      <div class="empty-state">
+        <mat-icon>hourglass_top</mat-icon>
+        <p>{{ 'COMMON.LOADING' | translate }}</p>
+      </div>
+      } @else if (loadError) {
+      <div class="empty-state">
+        <mat-icon>error_outline</mat-icon>
+        <p>{{ loadError | translate }}</p>
+      </div>
+      } @else {
+
+      @for (item of filteredBookings; track item.id) {
+      <app-history-card [booking]="item" (cancel)="cancelBooking($event)"></app-history-card>
       }
 
       <!-- Vacío -->
-      @if (filteredServices.length === 0) {
+      @if (filteredBookings.length === 0) {
       <div class="empty-state">
         <mat-icon>search_off</mat-icon>
         <p>{{ 'HISTORY.EMPTY' | translate }}</p>
       </div>
+      }
+
       }
 
     </div>

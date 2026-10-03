@@ -35,8 +35,9 @@
   font-size: 24px;
   width: 24px;
   height: 24px;
-  &.paid { color: var(--primary); }
-  &.pending { color: #ff4d4d; }
+  &.done { color: var(--primary); }
+  &.active { color: var(--warning); }
+  &.cancelled { color: var(--error); }
 }
 
 .card-title-group {
@@ -155,6 +156,25 @@
   &:hover { background-color: var(--primary); color: #ffffff; }
 }
 
+// botón para cancelar una reserva activa
+.btn-cancel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: var(--error);
+  border: 1.5px solid var(--error);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: $fw-medium;
+  cursor: pointer;
+  font-family: $font-family-base;
+  transition: all 0.2s ease;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  &:hover { background-color: var(--error); color: #ffffff; }
+}
+
 // reemplaza a "Calificar" cuando ya se calificó; al hacer clic permite editar
 .rated-badge {
   display: flex;
@@ -183,7 +203,7 @@
   .history-card { margin: 0; padding: 16px; border-radius: 12px; }
   .card-body { flex-direction: column; align-items: flex-start; }
   .card-actions { width: 100%; align-items: stretch; }
-  .pay-badge, .btn-pay, .btn-rate, .rated-badge { width: 100%; justify-content: center; padding: 12px; }
+  .pay-badge, .btn-pay, .btn-rate, .btn-cancel, .rated-badge { width: 100%; justify-content: center; padding: 12px; }
   .card-title { font-size: $fs-body; }
   .card-price { font-size: $fs-subtitle; }
 }

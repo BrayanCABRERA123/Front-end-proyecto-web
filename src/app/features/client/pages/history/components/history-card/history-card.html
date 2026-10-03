@@ -1,4 +1,4 @@
-<!-- Tarjeta de cada servicio del historial -->
+<!-- Tarjeta de cada reserva del historial -->
 <div class="history-card">
 
   <!-- Header -->
@@ -6,25 +6,20 @@
     <div class="card-header-left">
 
       <!-- Estado -->
-      <mat-icon
-        class="status-icon"
-        [class.paid]="service.paid"
-        [class.pending]="!service.paid">
-        check_circle
+      <mat-icon class="status-icon" [ngClass]="statusClass">
+        {{ statusIcon }}
       </mat-icon>
 
-      <!-- Título dinámico traducido -->
+      <!-- Código y fecha -->
       <div class="card-title-group">
-        <span class="card-title">
-          {{ ('SERVICE.' + service.title) | translate }}
-        </span>
-        <span class="card-date">{{ service.date }}</span>
+        <span class="card-title">{{ booking.code }}</span>
+        <span class="card-date">{{ booking.displayDate }} · {{ booking.timeRange }}</span>
       </div>
 
     </div>
 
     <!-- Precio -->
-    <span class="card-price">{{ service.price | copPrice }}</span>
+    <span class="card-price">{{ booking.total | copPrice }}</span>
   </div>
 
   <!-- Body -->
@@ -32,32 +27,21 @@
 
     <div class="card-details">
 
-      <!-- Tipo de servicio -->
+      <!-- Servicios -->
       <p class="detail-item">
         <span class="detail-label">
           {{ 'HISTORY_CARD.TYPE' | translate }}:
         </span>
-        {{ ('SERVICE.' + service.serviceType) | translate }}
+        {{ booking.services.join(' / ') }}
       </p>
 
-      <!-- Servicios extra -->
+      <!-- Vehículo -->
       <p class="detail-item">
         <span class="detail-label">
-          {{ 'HISTORY_CARD.EXTRA' | translate }}:
+          {{ 'HISTORY_CARD.VEHICLE' | translate }}:
         </span>
-        {{ getTranslatedExtras(service.extras).join(' / ') }}
-      </p>
-
-      <!-- Operario -->
-      <p class="detail-item">
-        <span class="detail-label">
-          {{ 'HISTORY_CARD.OPERATOR' | translate }}:
-        </span>
-        {{ ('ASSIGNMENT.' + service.assignmentType) | translate }}
-
-        <span *ngIf="service.operator">
-          ({{ service.operator }})
-        </span>
+        {{ booking.vehicle || '—' }}
+        <span *ngIf="booking.plate">· {{ booking.plate }}</span>
       </p>
 
       <!-- Estado -->
@@ -65,7 +49,7 @@
         <span class="detail-label">
           {{ 'HISTORY_CARD.STATUS' | translate }}:
         </span>
-        {{ ('STATUS.' + service.status) | translate }}
+        {{ ('STATUS.' + booking.status) | translate }}
       </p>
 
     </div>
@@ -73,44 +57,38 @@
     <!-- Acciones -->
     <div class="card-actions">
 
-      <!-- Estado del pago: etiqueta informativa (no es un botón) -->
-      @if (service.paid) {
-        <span class="pay-badge paid">
-          {{ 'HISTORY_CARD.PAID' | translate }}
-          <mat-icon>check</mat-icon>
-        </span>
-      } @else {
-        <span class="pay-badge pending">
-          {{ 'HISTORY_CARD.PENDING' | translate }}
-          <mat-icon>schedule</mat-icon>
-        </span>
-
-        <!-- Acción: ir a pagar el servicio pendiente -->
-        <button class="btn-pay" (click)="goToPayment()">
-          {{ 'HISTORY_CARD.PAY_NOW' | translate }}
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
+      <!-- Ir a pagar las reservas todavía activas -->
+      @if (booking.canPay) {
+      <button class="btn-pay" (click)="goToPayment()">
+        {{ 'HISTORY_CARD.PAY_NOW' | translate }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
       }
 
-      <!-- Calificar (solo si está pagado y aún no se ha calificado) -->
-      @if (service.paid && !service.rating) {
-        <button class="btn-rate" (click)="openRating(service)">
-          {{ 'HISTORY_CARD.RATE' | translate }}
-          <mat-icon>star_outline</mat-icon>
-        </button>
+      <!-- Cancelar la reserva (solo si el backend la deja cambiar) -->
+      @if (booking.canCancel) {
+      <button class="btn-cancel" (click)="requestCancel()">
+        {{ 'HISTORY_CARD.CANCEL' | translate }}
+        <mat-icon>cancel</mat-icon>
+      </button>
+      }
+
+      <!-- Calificar (solo si el lavado terminó y aún no se ha calificado) -->
+      @if (booking.canRate && !booking.rating) {
+      <button class="btn-rate" (click)="openRating(booking)">
+        {{ 'HISTORY_CARD.RATE' | translate }}
+        <mat-icon>star_outline</mat-icon>
+      </button>
       }
 
       <!-- Ya calificado: al hacer clic se puede editar la calificación -->
-      @if (service.rating) {
-        <button
-          class="rated-badge"
-          [attr.title]="'HISTORY_CARD.EDIT_RATING' | translate"
-          (click)="openRating(service)">
-          {{ 'HISTORY_CARD.RATED' | translate }}
-          <mat-icon>star</mat-icon>
-          {{ service.rating }}
-          <mat-icon class="edit-icon">edit</mat-icon>
-        </button>
+      @if (booking.rating) {
+      <button class="rated-badge" [attr.title]="'HISTORY_CARD.EDIT_RATING' | translate" (click)="openRating(booking)">
+        {{ 'HISTORY_CARD.RATED' | translate }}
+        <mat-icon>star</mat-icon>
+        {{ booking.rating }}
+        <mat-icon class="edit-icon">edit</mat-icon>
+      </button>
       }
 
     </div>
