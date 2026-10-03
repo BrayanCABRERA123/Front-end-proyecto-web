@@ -53,17 +53,32 @@
   "HISTORY": {
     "FILTERS": "Filters",
     "ALL": "All",
+    "ACTIVE": "Active",
+    "COMPLETED": "Completed",
+    "CANCELLED": "Cancelled",
     "DATE": "Date",
     "FROM": "From",
     "TO": "To",
-    "SEARCH_LABEL": "Search by service or operator",
+    "SEARCH_LABEL": "Search by service, vehicle or code",
     "SEARCH_PLACEHOLDER": "Type to search...",
-    "EMPTY": "No services found"
+    "EMPTY": "No services found",
+    "CANCEL_CONFIRM": {
+      "TITLE": "Cancel booking?",
+      "MESSAGE": "Booking {{code}} will be cancelled and the slot released. This action cannot be undone.",
+      "CONFIRM": "Yes, cancel",
+      "BACK": "Back"
+    },
+    "CANCEL_SUCCESS": {
+      "TITLE": "Booking cancelled",
+      "MESSAGE": "Booking {{code}} was cancelled successfully."
+    }
   },
   "HISTORY_CARD": {
     "TYPE": "Service type",
+    "VEHICLE": "Vehicle",
     "STATUS": "Status",
     "PAY_NOW": "Pay now",
+    "CANCEL": "Cancel booking",
     "RATED": "Rated",
     "EDIT_RATING": "Edit rating",
     "RATE": "Rate Service"
@@ -118,7 +133,11 @@
     "IN_WASH": "Washing",
     "READY": "Ready for pickup",
     "PAID": "Paid",
-    "REFUNDED": "Refunded"
+    "REFUNDED": "Refunded",
+    "CANCELLED": "Canceled",
+    "SCHEDULED": "Scheduled",
+    "IN_PROGRESS": "In progress",
+    "NO_SHOW": "No show"
   },
   "ASSIGNMENT": {
     "MANUAL": "Manual",

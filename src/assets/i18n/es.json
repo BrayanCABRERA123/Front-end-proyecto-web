@@ -53,17 +53,32 @@
   "HISTORY": {
     "FILTERS": "Filtros",
     "ALL": "Todos",
+    "ACTIVE": "Activas",
+    "COMPLETED": "Completadas",
+    "CANCELLED": "Canceladas",
     "DATE": "Fecha",
     "FROM": "Desde",
     "TO": "Hasta",
-    "SEARCH_LABEL": "Buscar por servicio u operario",
+    "SEARCH_LABEL": "Buscar por servicio, vehículo o código",
     "SEARCH_PLACEHOLDER": "Escribe para buscar...",
-    "EMPTY": "No se encontraron servicios"
+    "EMPTY": "No se encontraron servicios",
+    "CANCEL_CONFIRM": {
+      "TITLE": "¿Cancelar reserva?",
+      "MESSAGE": "Se cancelará la reserva {{code}} y se liberará el horario. Esta acción no se puede deshacer.",
+      "CONFIRM": "Sí, cancelar",
+      "BACK": "Volver"
+    },
+    "CANCEL_SUCCESS": {
+      "TITLE": "Reserva cancelada",
+      "MESSAGE": "La reserva {{code}} fue cancelada correctamente."
+    }
   },
   "HISTORY_CARD": {
     "TYPE": "Tipo de servicio",
+    "VEHICLE": "Vehículo",
     "STATUS": "Estado",
     "PAY_NOW": "Pagar ahora",
+    "CANCEL": "Cancelar reserva",
     "RATED": "Calificado",
     "EDIT_RATING": "Editar calificación",
     "RATE": "Calificar Servicio"
@@ -118,7 +133,11 @@
     "IN_WASH": "En lavado",
     "READY": "Listo para recoger",
     "PAID": "Pagado",
-    "REFUNDED": "Reembolsado"
+    "REFUNDED": "Reembolsado",
+    "CANCELLED": "Cancelado",
+    "SCHEDULED": "Programado",
+    "IN_PROGRESS": "En progreso",
+    "NO_SHOW": "No asistió"
   },
   "ASSIGNMENT": {
     "MANUAL": "Manual",

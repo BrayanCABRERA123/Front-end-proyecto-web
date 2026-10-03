@@ -53,17 +53,32 @@
   "HISTORY": {
     "FILTERS": "Filtres",
     "ALL": "Tous",
+    "ACTIVE": "Actives",
+    "COMPLETED": "Terminées",
+    "CANCELLED": "Annulées",
     "DATE": "Date",
     "FROM": "De",
     "TO": "À",
-    "SEARCH_LABEL": "Rechercher par service ou opérateur",
+    "SEARCH_LABEL": "Rechercher par service, véhicule ou code",
     "SEARCH_PLACEHOLDER": "Tapez pour rechercher...",
-    "EMPTY": "Aucun service trouvé"
+    "EMPTY": "Aucun service trouvé",
+    "CANCEL_CONFIRM": {
+      "TITLE": "Annuler la réservation ?",
+      "MESSAGE": "La réservation {{code}} sera annulée et le créneau libéré. Cette action est irréversible.",
+      "CONFIRM": "Oui, annuler",
+      "BACK": "Retour"
+    },
+    "CANCEL_SUCCESS": {
+      "TITLE": "Réservation annulée",
+      "MESSAGE": "La réservation {{code}} a bien été annulée."
+    }
   },
   "HISTORY_CARD": {
     "TYPE": "Type de service",
+    "VEHICLE": "Véhicule",
     "STATUS": "Statut",
     "PAY_NOW": "Payer maintenant",
+    "CANCEL": "Annuler la réservation",
     "RATED": "Évalué",
     "EDIT_RATING": "Modifier l’évaluation",
     "RATE": "Évaluer le service"
@@ -118,7 +133,11 @@
     "IN_WASH": "En lavage",
     "READY": "Prêt à récupérer",
     "PAID": "Payé",
-    "REFUNDED": "Remboursé"
+    "REFUNDED": "Remboursé",
+    "CANCELLED": "Annulé",
+    "SCHEDULED": "Programmé",
+    "IN_PROGRESS": "En cours",
+    "NO_SHOW": "Absent"
   },
   "ASSIGNMENT": {
     "MANUAL": "Manuel",
