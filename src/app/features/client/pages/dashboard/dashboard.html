@@ -53,14 +53,14 @@
         <div class="next-service-body" *ngIf="nextService; else noNextService">
           <div class="next-service-info">
             <p class="next-service-name">
-              {{ ('SERVICE.' + nextService.type) | translate }} —
-              {{ ('VEHICLE.' + nextService.vehicle) | translate }} · {{ nextService.plate }}
+              {{ nextService.serviceName }} —
+              {{ nextService.vehicle }} · {{ nextService.plate }}
             </p>
             <p class="next-service-date">{{ nextService.date }}</p>
 
             <div class="next-service-meta">
               <span><mat-icon>storefront</mat-icon> {{ location?.tradeName ?? '—' }} · {{ location?.address ?? '' }}</span>
-              <span><mat-icon>person</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ nextService.operator }}</span>
+              <span><mat-icon>person</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ nextService.operator || '—' }}</span>
             </div>
           </div>
 

@@ -14,17 +14,18 @@ import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-
 // sede del lavadero: el cliente lleva su vehículo allí (no es a domicilio)
 // sede del lavadero (booking-service)
 import { BookingApiService } from '../../../../core/services/booking-api';
-import { EstablishmentResponse } from '../../../../core/models/booking.models';
+import { BookingResponse, EstablishmentResponse } from '../../../../core/models/booking.models';
+import { isActiveStatus, isFinishedStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../../core/utils/booking-display';
 // servicios reales del backend
 import { VehiclesService } from '../../../../core/services/vehicles';
 import { UserSession } from '../../../../core/services/user-session';
 import { VehicleResponse } from '../../../../core/models/vehicle.models';
 
-// avance del servicio según su estado (Confirmado → En lavado → Listo → Finalizado)
+// avance del servicio según su estado (Programado → Confirmado → En progreso → Finalizado)
 const PROGRESS_BY_STATUS: Record<string, number> = {
+  SCHEDULED: 10,
   CONFIRMED: 25,
-  IN_WASH: 50,
-  READY: 75,
+  IN_PROGRESS: 50,
   COMPLETED: 100
 };
 
@@ -48,17 +49,16 @@ export class DashboardComponent implements OnInit {
     { icon: 'notifications', route: 'notifications' },
   ];
 
-  // estadísticas rápidas del cliente
-  // vehículos: real del backend. reservas y lavados: vienen de booking-service (pendiente)
+  // estadísticas rápidas del cliente (vehículos, reservas y lavados reales del backend)
   stats = [
     { icon: 'calendar_today', value: 0, label: 'STATS.ACTIVE_RESERVATIONS' },
     { icon: 'directions_car', value: 0, label: 'STATS.MY_VEHICLES' },
     { icon: 'water_drop', value: 0, label: 'STATS.WASHES_DONE' }
   ];
 
-  // próximo servicio programado (viene de booking-service, pendiente)
+  // próximo servicio programado (la primera reserva activa del booking-service)
   nextService: {
-    type: string;
+    serviceName: string;
     vehicle: string;
     plate: string;
     date: string;
@@ -88,13 +88,6 @@ export class DashboardComponent implements OnInit {
     percentage: 80
   };
 
-  // vista previa del historial de servicios
-  serviceHistory = [
-    { code: 'SV-1042', type: 'PREMIUM', vehicle: 'CAR', date: '10 Ago 2026', operator: 'Laura Gómez', price: 45000, status: 'COMPLETED' },
-    { code: 'SV-1031', type: 'BASIC', vehicle: 'MOTO', date: '02 Ago 2026', operator: 'Miguel Rojas', price: 18000, status: 'COMPLETED' },
-    { code: 'SV-1020', type: 'FULL', vehicle: 'TRUCK', date: '24 Jul 2026', operator: 'Juan Díaz', price: 0, status: 'CANCELED' }
-  ];
-
   //CONSTRUCTOR
   constructor(
     private router: Router,
@@ -105,6 +98,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.userName = this.userSession.user().name;
     this.loadVehicles();
+    this.loadBookings();
     this.bookingApi.establishment().subscribe({
       next: (location) => {
         this.location = location;
@@ -127,6 +121,55 @@ export class DashboardComponent implements OnInit {
         this.vehicles = [];
       }
     });
+  }
+
+  // reservas reales del cliente: alimentan los contadores y el "próximo servicio"
+  private loadBookings(): void {
+    this.bookingApi.myBookings().subscribe({
+      next: (bookings) => {
+        this.applyBookings(bookings);
+        this.changes.markForCheck();
+      },
+      error: () => {
+        // sin reservas (o backend caído) los contadores quedan en 0 y no hay próximo servicio
+        this.nextService = null;
+        this.changes.markForCheck();
+      }
+    });
+  }
+
+  private applyBookings(bookings: BookingResponse[]): void {
+    const active = bookings.filter(booking => isActiveStatus(booking.status));
+    const finished = bookings.filter(booking => isFinishedStatus(booking.status));
+
+    this.setStat('STATS.ACTIVE_RESERVATIONS', active.length);
+    this.setStat('STATS.WASHES_DONE', finished.length);
+
+    // la próxima: la reserva activa con fecha y hora más cercanas desde hoy
+    const today = this.isoDate(new Date());
+    const upcoming = active
+      .filter(booking => booking.date >= today)
+      .sort((a, b) => `${a.date} ${a.startTime}`.localeCompare(`${b.date} ${b.startTime}`));
+
+    const next = upcoming[0];
+    this.nextService = next ? {
+      serviceName: servicesLabel(next),
+      vehicle: vehicleLabel(next.vehicle),
+      plate: next.vehicle?.licensePlateFormatted ?? '',
+      date: `${isoToDisplayDate(next.date)} · ${next.startTime} - ${next.endTime}`,
+      operator: '',
+      status: next.status
+    } : null;
+  }
+
+  private setStat(label: string, value: number): void {
+    const stat = this.stats.find(s => s.label === label);
+    if (stat) stat.value = value;
+  }
+
+  private isoDate(date: Date): string {
+    const pad = (value: number) => String(value).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
   }
 
   // porcentaje de avance calculado a partir del estado del servicio
@@ -162,11 +205,11 @@ export class DashboardComponent implements OnInit {
       message: 'DASHBOARD.NEXT_SERVICE.DETAIL_MESSAGE',
       buttonText: 'COMMON.CLOSE',
       details: [
-        { label: 'RESERVE.SUMMARY.SERVICE', value: t(`SERVICE.${service.type}`) },
-        { label: 'RESERVE.SUMMARY.VEHICLE', value: `${t(`VEHICLE.${service.vehicle}`)} · ${service.plate}` },
+        { label: 'RESERVE.SUMMARY.SERVICE', value: service.serviceName },
+        { label: 'RESERVE.SUMMARY.VEHICLE', value: `${service.vehicle} · ${service.plate}`.trim() },
         { label: 'RESERVE.SUMMARY.DATE', value: service.date },
         { label: 'RESERVE.SUMMARY.LOCATION', value: this.location?.address ?? '' },
-        { label: 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED', value: service.operator },
+        { label: 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED', value: service.operator || '—' },
         { label: 'DASHBOARD.NEXT_SERVICE.STATUS', value: t(`STATUS.${service.status}`) },
         { label: 'DASHBOARD.NEXT_SERVICE.PROGRESS', value: `${this.nextServiceProgress}%` }
       ]
