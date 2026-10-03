@@ -15,7 +15,7 @@
       <p>{{ 'PAYMENT.SUBTITLE' | translate }}</p>
     </div>
 
-    <div class="payment-layout">
+    <div class="payment-layout" *ngIf="!loading && !notFound && !loadError; else paymentState">
 
       <!-- ================= Columna izquierda ================= -->
       <div class="payment-main">
@@ -176,7 +176,6 @@
             <mat-icon>local_car_wash</mat-icon>
             <div>
               <strong>{{ serviceSummary.serviceName }}</strong>
-              <p>{{ serviceSummary.serviceDesc | translate }}</p>
             </div>
           </div>
 
@@ -197,14 +196,9 @@
             <span>{{ 'PAYMENT.SUMMARY.SUBTOTAL' | translate }}</span>
             <strong>${{ serviceSummary.subtotal | number }} COP</strong>
           </div>
-          <div class="summary-row discount">
+          <div class="summary-row discount" *ngIf="serviceSummary.pointsDiscount > 0">
             <span>{{ 'PAYMENT.SUMMARY.DISCOUNT' | translate }}</span>
-            <span class="pct">-{{ serviceSummary.discountPercent }}%</span>
-            <strong>-${{ discountAmount | number }} COP</strong>
-          </div>
-          <div class="coupon-row">
-            <span>{{ 'PAYMENT.SUMMARY.COUPON' | translate }}: {{ serviceSummary.coupon }}</span>
-            <span class="ok-text">{{ 'PAYMENT.SUMMARY.COUPON_OK' | translate }}</span>
+            <strong>-${{ serviceSummary.pointsDiscount | number }} COP</strong>
           </div>
 
           <div class="summary-total">
@@ -247,5 +241,15 @@
       </aside>
 
     </div>
+
+    <!-- Cargando / sin reserva / error -->
+    <ng-template #paymentState>
+      <div class="payment-state">
+        <mat-icon>{{ loading ? 'hourglass_top' : (loadError ? 'error_outline' : 'receipt_long') }}</mat-icon>
+        <p *ngIf="loading">{{ 'COMMON.LOADING' | translate }}</p>
+        <p *ngIf="loadError">{{ loadError | translate }}</p>
+        <p *ngIf="notFound">{{ 'PAYMENT.EMPTY' | translate }}</p>
+      </div>
+    </ng-template>
   </main>
 </div>

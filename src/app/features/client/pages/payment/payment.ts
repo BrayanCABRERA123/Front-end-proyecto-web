@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
 // importamos el sidebar
@@ -8,12 +8,17 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 // modal reutilizable para mostrar mensajes de éxito o error
 import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
 // modal reutilizable de confirmación para acciones peligrosas
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
-import { Router } from '@angular/router';
+// datos reales de la reserva (booking-service)
+import { BookingApiService } from '../../../../core/services/booking-api';
+import { BookingResponse } from '../../../../core/models/booking.models';
+import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../../core/utils/booking-display';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 
 // tipos para que el código sea más claro
 type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
@@ -36,6 +41,10 @@ interface SavedPaymentState {
 // vigencia del QR
 const QR_DURATION_MS = 15 * 60 * 1000;
 
+// datos de la cuenta que recibe el pago. La llave todavía no existe en el backend:
+// queda como constante hasta que el "Datos del negocio" del admin la exponga.
+const PAYEE_KEY = '318 450 9988';
+
 @Component({
   selector: 'app-payment',
   standalone: true,
@@ -45,11 +54,22 @@ const QR_DURATION_MS = 15 * 60 * 1000;
 })
 export class PaymentComponent implements OnInit, OnDestroy {
 
+  private readonly bookingApi = inject(BookingApiService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly changes = inject(ChangeDetectorRef);
+
+  // reserva que se está pagando (viene de booking-service)
+  booking: BookingResponse | null = null;
+  loading = false;
+  notFound = false;
+  loadError: string | null = null;
+  private bookingId: number | null = null;
+
   // estado del pago: pendiente de confirmación o en verificación
   flowStep: FlowStep = 'PENDING';
 
-  // código de la reserva
-  reservationCode = 'RES-9420';
+  // código de la reserva (lo llena el backend)
+  reservationCode = '';
 
   // métodos de pago disponibles
   paymentMethods: PaymentMethod[] = [
@@ -65,29 +85,23 @@ export class PaymentComponent implements OnInit, OnDestroy {
   // datos de la cuenta que recibe el pago
   payee = {
     name: 'Lavado Vehicular S.A.S.',
-    key: '318 450 9988',
+    key: PAYEE_KEY,
     accountType: 'PAYMENT.QR.ACCOUNT_TYPE_VALUE'
   };
 
-  // resumen de la reserva
+  // resumen real de la reserva (se llena en applyBooking)
   serviceSummary = {
-    service: 'PREMIUM',
-    serviceName: 'Lavado Premium Automóvil',
-    serviceDesc: 'PAYMENT.SUMMARY.PREMIUM_DESC',
-    vehicleModel: 'Mazda CX-30',
-    plate: 'KLL-302',
-    schedule: 'Hoy, 24 Octubre 2024 · 14:00 - 15:15',
-    subtotal: 60000,
-    discountPercent: 15,
-    coupon: 'BIENVENIDO15'
+    serviceName: '',
+    vehicleModel: '',
+    plate: '',
+    schedule: '',
+    subtotal: 0,
+    // descuento por puntos redimidos (booking.pointsDiscountAmount)
+    pointsDiscount: 0
   };
 
-  get discountAmount(): number {
-    return Math.round(this.serviceSummary.subtotal * this.serviceSummary.discountPercent / 100);
-  }
-
   get totalToPay(): number {
-    return this.serviceSummary.subtotal - this.discountAmount;
+    return Math.max(0, this.serviceSummary.subtotal - this.serviceSummary.pointsDiscount);
   }
 
   // temporizador del QR (15 minutos)
@@ -134,17 +148,81 @@ export class PaymentComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.restoreState();
-    this.updateQrSecondsLeft();
+    this.bookingId = Number(this.route.snapshot.queryParamMap.get('booking')) || null;
 
-    this.timerId = setInterval(() => {
-      this.updateQrSecondsLeft();
-      if (this.qrSecondsLeft() === 0) clearInterval(this.timerId);
-    }, 1000);
+    // nombre del negocio para la cuenta que recibe el pago
+    this.bookingApi.establishment().subscribe({
+      next: (establishment) => {
+        this.payee.name = establishment.tradeName;
+        this.changes.markForCheck();
+      },
+      error: () => { /* si falla, queda el nombre por defecto */ }
+    });
+
+    this.loadBooking();
   }
 
   ngOnDestroy(): void {
     if (this.timerId) clearInterval(this.timerId);
+  }
+
+  // trae las reservas del cliente y elige la que se va a pagar
+  private loadBooking(): void {
+    this.loading = true;
+    this.loadError = null;
+    this.bookingApi.myBookings().subscribe({
+      next: (bookings) => {
+        this.loading = false;
+        const booking = this.pickBooking(bookings);
+        if (!booking) {
+          this.notFound = true;
+          this.changes.markForCheck();
+          return;
+        }
+        this.booking = booking;
+        this.applyBooking(booking);
+        this.startQrTimer();
+        this.changes.markForCheck();
+      },
+      error: (error) => {
+        this.loading = false;
+        this.loadError = apiErrorKey(error);
+        this.changes.markForCheck();
+      }
+    });
+  }
+
+  // con id en la URL se paga esa reserva; sin id, la primera activa (o la más reciente)
+  private pickBooking(bookings: BookingResponse[]): BookingResponse | null {
+    if (this.bookingId) {
+      return bookings.find(booking => booking.id === this.bookingId) ?? null;
+    }
+    const bySchedule = (a: BookingResponse, b: BookingResponse) =>
+      `${a.date} ${a.startTime}`.localeCompare(`${b.date} ${b.startTime}`);
+    const active = [...bookings].filter(booking => isActiveStatus(booking.status)).sort(bySchedule);
+    return active[0] ?? [...bookings].sort(bySchedule).reverse()[0] ?? null;
+  }
+
+  private applyBooking(booking: BookingResponse): void {
+    this.reservationCode = booking.code;
+    this.serviceSummary = {
+      serviceName: servicesLabel(booking),
+      vehicleModel: vehicleLabel(booking.vehicle),
+      plate: booking.vehicle?.licensePlateFormatted ?? '',
+      schedule: `${isoToDisplayDate(booking.date)} · ${booking.startTime} - ${booking.endTime}`,
+      subtotal: booking.subtotal,
+      pointsDiscount: booking.pointsDiscountAmount
+    };
+
+    this.restoreState();
+    this.updateQrSecondsLeft();
+  }
+
+  private startQrTimer(): void {
+    this.timerId = setInterval(() => {
+      this.updateQrSecondsLeft();
+      if (this.qrSecondsLeft() === 0) clearInterval(this.timerId);
+    }, 1000);
   }
 
   // calcula los segundos que faltan a partir de la hora de vencimiento
@@ -290,10 +368,12 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   // pide confirmación antes de cancelar la reserva (acción irreversible)
   cancelReservation() {
+    if (!this.booking) return;
+
     const data: ConfirmModalData = {
       title: 'PAYMENT.CANCEL_CONFIRM.TITLE',
       message: 'PAYMENT.CANCEL_CONFIRM.MESSAGE',
-      messageParams: { code: this.reservationCode },
+      messageParams: { code: this.booking.code },
       confirmText: 'PAYMENT.CANCEL_CONFIRM.CONFIRM',
       // "Volver" en vez de "Cancelar" para no confundir con "cancelar reserva"
       cancelText: 'PAYMENT.CANCEL_CONFIRM.BACK',
@@ -310,18 +390,32 @@ export class PaymentComponent implements OnInit, OnDestroy {
     });
   }
 
-  // avisa que la reserva se canceló y, al cerrar, vuelve al inicio del cliente
+  // cancela de verdad en booking-service y, al cerrar el aviso, vuelve al inicio
   private onReservationCancelled() {
-    // TODO: integrar cancelación real con el backend
-    this.clearState();
-    const dialogRef = this.showStatusModal({
-      title: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_TITLE',
-      message: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_MESSAGE',
-      messageParams: { code: this.reservationCode }
-    }, true);
+    if (!this.booking) return;
+    const code = this.booking.code;
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['/client']);
+    this.bookingApi.cancelMyBooking(this.booking.id).subscribe({
+      next: () => {
+        this.clearState();
+        const dialogRef = this.showStatusModal({
+          title: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_TITLE',
+          message: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_MESSAGE',
+          messageParams: { code }
+        }, true);
+
+        dialogRef.afterClosed().subscribe(() => {
+          this.router.navigate(['/client']);
+        });
+      },
+      error: (error) => {
+        this.showStatusModal({
+          type: 'error',
+          title: 'COMMON.ERROR',
+          message: apiErrorKey(error)
+        });
+        this.changes.markForCheck();
+      }
     });
   }
 
