@@ -1332,7 +1332,14 @@
     "NOTES_PLACEHOLDER": "Ex. Verificar mancha na estofaria traseira direita...",
     "CANCEL": "Cancelar",
     "CONFIRM": "Confirmar Atribuição",
-    "BUSY_NOTE": "Este operador está ocupado no momento"
+    "BUSY_NOTE": "Este operador está ocupado no momento",
+    "NO_OPERATORS": "Não há operadores cadastrados.",
+    "REASONS": {
+      "OPERATOR_INACTIVE": "Inativo",
+      "OPERATOR_NOT_ON_SHIFT": "Sem turno nesse horário",
+      "OPERATOR_ABSENT": "Ausente",
+      "OPERATOR_BUSY": "Ocupado nesse horário"
+    }
   },
   "ADMIN_MANAGEMENT": {
     "STATUS_LINE": "Sistema on-line · Filial principal",

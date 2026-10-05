@@ -244,32 +244,16 @@ export class ReservationsComponent implements OnInit {
     });
   }
 
-  // operarios disponibles para el modal de asignación, desde el store
-  private assignableOperators(): AvailableOperator[] {
-    return this.operators.availableOperators().map(o => {
-      let availability: AvailableOperator['availability'] = 'available';
-      let availabilityNote: string | undefined;
 
-      if (o.status === 'in_service') {
-        availability = 'busy';
-        availabilityNote = 'ASSIGN_OPERATOR_MODAL.BUSY_NOTE';
-      } else if (o.status === 'medical_leave') {
-        availability = 'unavailable';
-      }
-
-      return {
-        id: o.id,
-        initials: o.initials,
-        name: o.name,
-        specialty: o.specialty,
-        rating: o.rating,
-        availability,
-        availabilityNote,
-      };
+  // primero pide a operations quién está disponible para esa reserva y luego abre el modal
+  openAssignModal(booking: Booking): void {
+    this.operators.candidatesFor(booking.id).subscribe({
+      next: operators => this.showAssignModal(booking, operators),
+      error: error => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
     });
   }
 
-  openAssignModal(booking: Booking): void {
+  private showAssignModal(booking: Booking, operators: AvailableOperator[]): void {
     const modalData: AssignOperatorModalData = {
       bookingCode: booking.code,
       client: booking.client,
@@ -278,7 +262,7 @@ export class ReservationsComponent implements OnInit {
       service: booking.service,
       timeLabel: `${this.dayLabel(booking.date)}, ${this.timeRangeLabel(booking)}`,
       bay: booking.bay ?? '—',
-      operators: this.assignableOperators(),
+      operators,
     };
 
     const dialogRef = this.dialog.open(AssignOperatorModal, {

@@ -16,6 +16,7 @@ import { PaymentsStore, formatPaymentDate } from '../../services/payments-store'
 import { Operator, OperatorsStore } from '../../services/operators-store';
 import { ScheduleStore } from '../../services/schedule-store';
 import { Booking, Payment } from '../../models/admin.models';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 
 // un día de la gráfica de ingresos (los datos salen de los pagos aprobados)
 interface RevenueDay {
@@ -318,7 +319,14 @@ export class DashboardComponent {
   assignOperator(bookingId: string): void {
     const booking = this.reservations.getById(bookingId);
     if (!booking) return;
+    // primero pide a operations quién está disponible para esa reserva y luego abre el modal
+    this.operatorsStore.candidatesFor(booking.id).subscribe({
+      next: operators => this.showAssignModal(booking, operators),
+      error: error => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+    });
+  }
 
+  private showAssignModal(booking: Booking, operators: AvailableOperator[]): void {
     const modalData: AssignOperatorModalData = {
       bookingCode: booking.code,
       client: booking.client,
@@ -327,7 +335,7 @@ export class DashboardComponent {
       service: booking.service,
       timeLabel: formatTimeRange(booking.time, booking.durationMin),
       bay: booking.bay ?? '—',
-      operators: this.assignableOperators(),
+      operators,
     };
 
     const dialogRef = this.dialog.open(AssignOperatorModal, {
@@ -348,28 +356,4 @@ export class DashboardComponent {
     });
   }
 
-  // operarios disponibles para el modal de asignación, desde el store
-  private assignableOperators(): AvailableOperator[] {
-    return this.operatorsStore.availableOperators().map(o => {
-      let availability: AvailableOperator['availability'] = 'available';
-      let availabilityNote: string | undefined;
-
-      if (o.status === 'in_service') {
-        availability = 'busy';
-        availabilityNote = 'ASSIGN_OPERATOR_MODAL.BUSY_NOTE';
-      } else if (o.status === 'medical_leave') {
-        availability = 'unavailable';
-      }
-
-      return {
-        id: o.id,
-        initials: o.initials,
-        name: o.name,
-        specialty: o.specialty,
-        rating: o.rating,
-        availability,
-        availabilityNote,
-      };
-    });
-  }
 }

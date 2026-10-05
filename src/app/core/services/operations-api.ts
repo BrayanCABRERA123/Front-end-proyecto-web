@@ -42,6 +42,17 @@ export interface AssignmentResponse {
   status: ExecutionStatusCode;
 }
 
+/** operario candidato para una reserva: available false trae el código del motivo */
+export interface CandidateResponse {
+  operatorId: number;
+  fullName: string;
+  averageRating: number | null;
+  ratingsCount: number;
+  assigned: boolean;
+  available: boolean;
+  unavailableReason: 'OPERATOR_INACTIVE' | 'OPERATOR_NOT_ON_SHIFT' | 'OPERATOR_ABSENT' | 'OPERATOR_BUSY' | null;
+}
+
 export interface OperatorServiceResponse {
   bookingId: number;
   code: string;
@@ -112,6 +123,11 @@ export class OperationsApiService {
 
   assign(bookingId: number, operatorId: number): Observable<AssignmentResponse> {
     return this.http.put<AssignmentResponse>(`${this.api}/admin/assignments/${bookingId}`, { operatorId });
+  }
+
+  // quién se puede asignar a esa reserva (turno, ausencias, cruces y estado los calcula el backend)
+  candidates(bookingId: number): Observable<CandidateResponse[]> {
+    return this.http.get<CandidateResponse[]>(`${this.api}/admin/assignments/${bookingId}/candidates`);
   }
 
   assignments(from: string, to: string): Observable<AssignmentResponse[]> {

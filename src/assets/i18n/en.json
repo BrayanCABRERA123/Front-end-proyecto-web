@@ -1332,7 +1332,14 @@
     "NOTES_PLACEHOLDER": "E.g. Check stain on rear right upholstery...",
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm Assignment",
-    "BUSY_NOTE": "This operator is currently busy"
+    "BUSY_NOTE": "This operator is currently busy",
+    "NO_OPERATORS": "There are no operators.",
+    "REASONS": {
+      "OPERATOR_INACTIVE": "Inactive",
+      "OPERATOR_NOT_ON_SHIFT": "No shift at that time",
+      "OPERATOR_ABSENT": "Absent",
+      "OPERATOR_BUSY": "Busy at that time"
+    }
   },
   "ADMIN_MANAGEMENT": {
     "STATUS_LINE": "System online · Main branch",

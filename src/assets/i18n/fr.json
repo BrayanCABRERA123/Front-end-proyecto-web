@@ -1332,7 +1332,14 @@
     "NOTES_PLACEHOLDER": "Ex. Vérifier une tache sur la sellerie arrière droite...",
     "CANCEL": "Annuler",
     "CONFIRM": "Confirmer l'assignation",
-    "BUSY_NOTE": "Cet opérateur est actuellement occupé"
+    "BUSY_NOTE": "Cet opérateur est actuellement occupé",
+    "NO_OPERATORS": "Aucun opérateur n'est enregistré.",
+    "REASONS": {
+      "OPERATOR_INACTIVE": "Inactif",
+      "OPERATOR_NOT_ON_SHIFT": "Pas de créneau à cette heure",
+      "OPERATOR_ABSENT": "Absent",
+      "OPERATOR_BUSY": "Occupé à cette heure"
+    }
   },
   "ADMIN_MANAGEMENT": {
     "STATUS_LINE": "Système en ligne · Succursale principale",

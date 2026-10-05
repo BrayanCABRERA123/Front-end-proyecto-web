@@ -32,6 +32,9 @@
 
     <!-- lista de operarios -->
     <div class="operator-list">
+      @if (data.operators.length === 0) {
+        <p class="muted">{{ 'ASSIGN_OPERATOR_MODAL.NO_OPERATORS' | translate }}</p>
+      }
       @for (op of data.operators; track op.id) {
         <label
           class="operator-option"

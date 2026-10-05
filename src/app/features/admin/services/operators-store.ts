@@ -1,6 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { forkJoin, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { AvailableOperator } from '../../../shared/dialogs/assign-operator-modal/assign-operator.model';
 
 import {
   Absence,
@@ -134,6 +135,24 @@ export class OperatorsStore {
 
   removeAbsence(id: string, absenceId: string): void {
     this.api.removeAbsence(Number(id), Number(absenceId)).subscribe({ next: () => this.refresh() });
+  }
+
+  /**
+   * operarios para el modal de asignar una reserva, con la disponibilidad que calcula
+   * operations-service (la misma regla con la que después valida la asignación)
+   */
+  candidatesFor(bookingId: string): Observable<AvailableOperator[]> {
+    return this.api.candidates(Number(bookingId)).pipe(
+      map(list => list.map(c => ({
+        id: String(c.operatorId),
+        initials: c.fullName.split(/\s+/).slice(0, 2).map(w => w.charAt(0).toUpperCase()).join(''),
+        name: c.fullName,
+        specialty: '',
+        rating: c.averageRating ?? 0,
+        availability: c.available ? 'available' : 'unavailable',
+        availabilityNote: c.unavailableReason ? 'ASSIGN_OPERATOR_MODAL.REASONS.' + c.unavailableReason : undefined,
+      } as AvailableOperator)))
+    );
   }
 
   /** horas estándar que debería cubrir el operario según su disponibilidad */

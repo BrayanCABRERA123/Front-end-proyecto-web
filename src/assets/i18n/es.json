@@ -1332,7 +1332,14 @@
     "NOTES_PLACEHOLDER": "Ej. Revisar mancha en tapicería trasera derecha...",
     "CANCEL": "Cancelar",
     "CONFIRM": "Confirmar Asignación",
-    "BUSY_NOTE": "Este operario está ocupado en este momento"
+    "BUSY_NOTE": "Este operario está ocupado en este momento",
+    "NO_OPERATORS": "No hay operarios registrados.",
+    "REASONS": {
+      "OPERATOR_INACTIVE": "Inactivo",
+      "OPERATOR_NOT_ON_SHIFT": "Sin turno a esa hora",
+      "OPERATOR_ABSENT": "Ausente",
+      "OPERATOR_BUSY": "Ocupado a esa hora"
+    }
   },
   "ADMIN_MANAGEMENT": {
     "STATUS_LINE": "Sistema en línea · Sucursal Central",
