@@ -66,7 +66,7 @@
                   {{ 'SCHEDULE.NEXT.IN_MINUTES' | translate: { min: minutesToNext } }}
                 </p>
                 <p class="next-title">
-                  {{ ('SERVICE.' + nextService.service) | translate }} — {{ nextService.client }}
+                  {{ nextService.service }} — {{ nextService.client }}
                 </p>
               </div>
             </div>
@@ -106,11 +106,11 @@
 
                 <div class="reservation-info">
                   <p class="reservation-title">
-                    {{ ('SERVICE.' + r.service) | translate }} — {{ r.client }}
+                    {{ r.service }} — {{ r.client }}
                   </p>
                   <p class="reservation-detail">
                     <mat-icon>{{ r.vehicle === 'MOTO' ? 'two_wheeler' : (r.vehicle === 'TRUCK' || r.vehicle === 'PICKUP' ? 'local_shipping' : 'directions_car') }}</mat-icon>
-                    {{ ('VEHICLE.' + r.vehicle) | translate }}
+                    {{ r.vehicle }}
                     <span class="reservation-duration">{{ r.durationMin }} min</span>
                     <span class="reservation-code">{{ r.code }}</span>
                   </p>

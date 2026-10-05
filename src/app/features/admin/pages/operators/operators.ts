@@ -81,34 +81,14 @@ export class OperatorsComponent {
 
   /* ---------- nuevo operario ---------- */
 
+  // un operario es una cuenta con rol Operario: se crea y se edita en Gestión → Usuarios
+  // (security-service) y aparece aquí solo (operations-service la toma)
   openCreate(): void {
-    const data: OperatorModalData = { bays: this.activeBays };
-    const dialogRef = this.dialog.open(OperatorModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((result: OperatorModalResult | null) => {
-      if (!result) return;
-      const created = this.store.addOperator(result);
-      this.feedback.success(
-        'ADMIN_OPERATORS.FEEDBACK.CREATED_TITLE',
-        'ADMIN_OPERATORS.FEEDBACK.CREATED_MESSAGE',
-        { messageParams: { name: created.name } }
-      );
-    });
+    this.router.navigate(['/admin/management']);
   }
 
-  openEdit(operator: Operator): void {
-    const data: OperatorModalData = { operator, bays: this.activeBays };
-    const dialogRef = this.dialog.open(OperatorModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((result: OperatorModalResult | null) => {
-      if (!result) return;
-      this.store.updateOperator(operator.id, result);
-      this.feedback.success(
-        'ADMIN_OPERATORS.FEEDBACK.UPDATED_TITLE',
-        'ADMIN_OPERATORS.FEEDBACK.UPDATED_MESSAGE',
-        { messageParams: { name: result.name } }
-      );
-    });
+  openEdit(_operator: Operator): void {
+    this.router.navigate(['/admin/management']);
   }
 
   /* ---------- asignar turnos ---------- */
@@ -125,11 +105,7 @@ export class OperatorsComponent {
       if (!result) return;
 
       this.store.setStatus(result.operatorId, result.status);
-      if (result.bay) {
-        this.store.assignBay(result.operatorId, result.bay);
-      } else if (result.status === 'medical_leave') {
-        this.store.assignBay(result.operatorId, null);
-      }
+      // los operarios ya no quedan atados a una bahía (ADR-010): la bahía se elige por reserva
 
       const operator = this.store.getById(result.operatorId);
       this.feedback.success(

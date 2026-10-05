@@ -26,7 +26,7 @@
         <div class="filter-group">
           <label class="filter-label">{{ 'ASSIGNED_SERVICES.FILTERS.BY_DATE' | translate }}</label>
           <div class="date-input-wrapper">
-            <input type="date" class="filter-input" [(ngModel)]="dateFilter" />
+            <input type="date" class="filter-input" [(ngModel)]="dateFilter" (change)="load()" />
           </div>
         </div>
 
@@ -56,10 +56,10 @@
         </div>
 
         <div class="filter-actions">
-          <button class="btn-reset">
+          <button class="btn-reset" (click)="resetFilters()">
             <mat-icon>refresh</mat-icon>
           </button>
-          <button class="btn-filter">
+          <button class="btn-filter" (click)="load()">
             <mat-icon>search</mat-icon>
             {{ 'ASSIGNED_SERVICES.FILTERS.FILTER_BTN' | translate }}
           </button>
@@ -75,7 +75,7 @@
     </app-service-table>
 
     @if (selectedService) {
-      <app-service-detail [service]="selectedService">
+      <app-service-detail [service]="selectedService" (advance)="onAdvance($event)">
       </app-service-detail>
     }
 

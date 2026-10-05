@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,13 +19,16 @@ export class ServiceDetailComponent {
   // recibe el servicio seleccionado del padre
   @Input() service: any;
 
+  // el padre llama a booking-service; aquí solo se confirma con el operario
+  @Output() advance = new EventEmitter<'IN_PROGRESS' | 'COMPLETED'>();
+
   constructor(private dialog: MatDialog) {}
 
-  // TODO: cuando haya backend, estas acciones cambiarán el estado real del servicio
   startService(): void {
     this.confirmThenNotify(
       { title: 'ASSIGNED_SERVICES.DETAIL.START_TITLE', message: 'ASSIGNED_SERVICES.DETAIL.START_MESSAGE', confirmText: 'ASSIGNED_SERVICES.DETAIL.START_CONFIRM' },
-      { title: 'ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', message: 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE' }
+      { title: 'ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', message: 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE' },
+      () => this.advance.emit('IN_PROGRESS')
     );
   }
 
@@ -40,7 +43,8 @@ export class ServiceDetailComponent {
   finishService(): void {
     this.confirmThenNotify(
       { title: 'SCHEDULE.FINISH_TITLE', message: 'SCHEDULE.FINISH_MESSAGE', confirmText: 'SCHEDULE.FINISH_CONFIRM' },
-      { title: 'ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', message: 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE' }
+      { title: 'ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', message: 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE' },
+      () => this.advance.emit('COMPLETED')
     );
   }
 
@@ -65,7 +69,8 @@ export class ServiceDetailComponent {
   // pide confirmación y, si el operario acepta, muestra el mensaje de éxito
   private confirmThenNotify(
     confirm: Pick<ConfirmModalData, 'title' | 'message' | 'confirmText'>,
-    success: Pick<StatusModalData, 'title' | 'message'>
+    success: Pick<StatusModalData, 'title' | 'message'>,
+    onConfirm?: () => void
   ): void {
     const messageParams = { code: this.service.id };
 
@@ -76,6 +81,7 @@ export class ServiceDetailComponent {
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (!confirmed) return;
+      onConfirm?.();
 
       this.dialog.open(StatusModal, {
         panelClass: 'custom-dialog',

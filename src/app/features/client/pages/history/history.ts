@@ -12,6 +12,9 @@ import { BookingApiService } from '../../../../core/services/booking-api';
 import { ClientBookingItem, toClientBookingItem } from '../../../../core/models/booking-view.models';
 import { isActiveStatus } from '../../../../core/utils/booking-display';
 import { apiErrorKey } from '../../../../core/utils/api-error';
+// calificaciones que el cliente ya dejó (operations-service)
+import { OperationsApiService } from '../../../../core/services/operations-api';
+import { catchError, forkJoin, of } from 'rxjs';
 
 type HistoryFilter = 'todas' | 'activas' | 'completadas' | 'canceladas';
 
@@ -36,6 +39,7 @@ export class HistoryComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
   private readonly feedback = inject(FeedbackService);
   private readonly translate = inject(TranslateService);
+  private readonly operations = inject(OperationsApiService);
 
   // reservas reales del cliente (booking-service)
   bookings: ClientBookingItem[] = [];
@@ -55,9 +59,22 @@ export class HistoryComponent implements OnInit {
   load(): void {
     this.loading = true;
     this.loadError = null;
-    this.bookingApi.myBookings().subscribe({
-      next: (bookings) => {
-        this.bookings = bookings.map(toClientBookingItem);
+    // si operations-service no responde, las reservas se muestran igual (sin calificaciones)
+    forkJoin({
+      bookings: this.bookingApi.myBookings(),
+      ratings: this.operations.givenRatings().pipe(catchError(() => of([])))
+    }).subscribe({
+      next: ({ bookings, ratings }) => {
+        const byBooking = new Map(ratings.map(r => [r.bookingId, r]));
+        this.bookings = bookings.map(b => {
+          const item = toClientBookingItem(b);
+          const given = byBooking.get(item.id);
+          if (given) {
+            item.rating = given.rating;
+            item.ratingComment = given.comment ?? undefined;
+          }
+          return item;
+        });
         this.loading = false;
         this.changes.markForCheck();
       },

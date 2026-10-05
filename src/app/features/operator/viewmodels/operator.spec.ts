@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Operator } from './operator';
+import { Operator } from './operator.viewmodel';
 
 describe('Operator', () => {
   let component: Operator;

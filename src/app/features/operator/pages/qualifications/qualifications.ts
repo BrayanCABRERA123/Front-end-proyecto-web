@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // importamos el sidebar
@@ -8,6 +8,21 @@ import { QualificationStatsComponent } from './components/qualification-stats/qu
 import { QualificationCardComponent } from './components/qualification-card/qualification-card';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+// calificaciones reales que dejaron los clientes (operations-service)
+import { OperationsApiService, RatingResponse } from '../../../../core/services/operations-api';
+import { isoToDisplayDate } from '../../../../core/utils/booking-display';
+
+interface RatingCard {
+  id: number;
+  client: string;
+  serviceType: string;
+  date: string;
+  isoDate: string;
+  rating: number;
+  comment: string;
+  duration: string;
+  serviceId: string;
+}
 
 
 @Component({
@@ -25,20 +40,21 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './qualifications.html',
   styleUrl: './qualifications.scss'
 })
-export class QualificationsComponent {
+export class QualificationsComponent implements OnInit {
+
+  private readonly operations = inject(OperationsApiService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   // filtros de búsqueda
   dateFilter: string = '';
   serviceTypeFilter: string = '';
   starsFilter: string = '';
 
-  // opciones de los selects
-  serviceTypes = [
-  { value: '', label: 'QUALIFICATIONS.TYPE_ALL' },
-  { value: 'basico',   label: 'QUALIFICATIONS.TYPE_BASIC' },
-  { value: 'premium',  label: 'QUALIFICATIONS.TYPE_PREMIUM' },
-  { value: 'completo', label: 'QUALIFICATIONS.TYPE_FULL' }
-];
+  // opciones de los selects: los servicios que aparecen en sus calificaciones
+  get serviceTypes(): { value: string; label: string }[] {
+    const names = [...new Set(this.ratings.map(r => r.serviceType))];
+    return [{ value: '', label: 'QUALIFICATIONS.TYPE_ALL' }, ...names.map(n => ({ value: n, label: n }))];
+  }
 
 starOptions = [
   { value: '', label: 'QUALIFICATIONS.STARS_ALL' },
@@ -49,81 +65,46 @@ starOptions = [
   { value: '1', label: 'QUALIFICATIONS.STARS_1' }
 ];
 
-  // estadísticas generales
-  averageRating: number = 4.3;
-  satisfactionLevel: string = 'Muy alto';
-  satisfactionPercentage: number = 86;
-  totalRatings: number = 6;
-
   // lista de calificaciones recibidas
-  ratings = [
-    {
-      id: 1,
-      client: 'Carlos H.',
-      serviceType: 'Lavado Premium',
-      date: '15/07/2024',
-      rating: 4,
-      comment: '"Excelente trabajo, me entregaron el vehículo a tiempo y quedó impecable."',
-      duration: '1h 30m',
-      serviceId: 'SV-1234'
-    },
-    {
-      id: 2,
-      client: 'Ana M.',
-      serviceType: 'Lavado Básico',
-      date: '14/07/2024',
-      rating: 5,
-      comment: '"Muy buen servicio, el auto quedó reluciente. Lo recomiendo totalmente."',
-      duration: '1h 0m',
-      serviceId: 'SV-1233'
-    },
-    {
-      id: 3,
-      client: 'Pedro L.',
-      serviceType: 'Lavado Completo',
-      date: '12/07/2024',
-      rating: 5,
-      comment: '"Increíble atención al detalle, superó mis expectativas."',
-      duration: '2h 0m',
-      serviceId: 'SV-1230'
-    },
-    {
-      id: 4,
-      client: 'María G.',
-      serviceType: 'Lavado Premium',
-      date: '10/07/2024',
-      rating: 3,
-      comment: '"Buen servicio, pero tuve que esperar un poco más de lo indicado."',
-      duration: '1h 15m',
-      serviceId: 'SV-1228'
-    },
-    {
-      id: 5,
-      client: 'Jorge D.',
-      serviceType: 'Lavado Básico',
-      date: '08/07/2024',
-      rating: 5,
-      comment: '"Rápido y eficiente. El auto quedó como nuevo."',
-      duration: '45m',
-      serviceId: 'SV-1225'
-    },
-    {
-      id: 6,
-      client: 'Sofía R.',
-      serviceType: 'Lavado Completo',
-      date: '05/07/2024',
-      rating: 4,
-      comment: '"Muy buen trabajo en general, volveré a solicitar el servicio."',
-      duration: '1h 45m',
-      serviceId: 'SV-1220'
-    }
-  ];
+  ratings: RatingCard[] = [];
+
+  ngOnInit(): void {
+    this.operations.myRatings().subscribe({
+      next: list => {
+        this.ratings = list.map(r => this.toCard(r));
+        this.cdr.markForCheck();
+      },
+      error: () => undefined
+    });
+  }
+
+  // estadísticas generales (se calculan de la lista real)
+  get totalRatings(): number {
+    return this.ratings.length;
+  }
+
+  get averageRating(): number {
+    if (this.ratings.length === 0) return 0;
+    const avg = this.ratings.reduce((sum, r) => sum + r.rating, 0) / this.ratings.length;
+    return Math.round(avg * 10) / 10;
+  }
+
+  // porcentaje de calificaciones de 4 o 5 estrellas
+  get satisfactionPercentage(): number {
+    if (this.ratings.length === 0) return 0;
+    return Math.round((this.ratings.filter(r => r.rating >= 4).length / this.ratings.length) * 100);
+  }
+
+  get satisfactionLevel(): string {
+    return this.ratings.length === 0 ? '—' : `${this.satisfactionPercentage}%`;
+  }
 
   // filtra las calificaciones según los filtros activos
   get filteredRatings() {
     return this.ratings.filter(c => {
       if (this.starsFilter && c.rating !== parseInt(this.starsFilter)) return false;
-      if (this.serviceTypeFilter && c.serviceType.toLowerCase().includes(this.serviceTypeFilter) === false) return false;
+      if (this.dateFilter && c.isoDate !== this.dateFilter) return false;
+      if (this.serviceTypeFilter && c.serviceType !== this.serviceTypeFilter) return false;
       return true;
     });
   }
@@ -131,5 +112,19 @@ starOptions = [
   // genera un arreglo de estrellas para mostrar en el template
   getStars(count: number): number[] {
     return Array(5).fill(0).map((_, i) => i < count ? 1 : 0);
+  }
+
+  private toCard(r: RatingResponse): RatingCard {
+    return {
+      id: r.bookingId,
+      client: r.plate,
+      serviceType: r.services,
+      date: isoToDisplayDate(r.date),
+      isoDate: r.date,
+      rating: r.rating,
+      comment: r.comment ?? '',
+      duration: '',
+      serviceId: r.bookingCode
+    };
   }
 }

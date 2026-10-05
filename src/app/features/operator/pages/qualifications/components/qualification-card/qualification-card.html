@@ -24,10 +24,12 @@
   <p class="card-comment">{{ rating.comment }}</p>
 
   <div class="card-details">
-    <span class="detail-item">
-      {{ 'QUALIFICATION_CARD.DURATION' | translate }}: {{ rating.duration }}
-    </span>
-    <span class="detail-separator">·</span>
+    @if (rating.duration) {
+      <span class="detail-item">
+        {{ 'QUALIFICATION_CARD.DURATION' | translate }}: {{ rating.duration }}
+      </span>
+      <span class="detail-separator">·</span>
+    }
     <span class="detail-item">
       {{ 'QUALIFICATION_CARD.ID' | translate }}: {{ rating.serviceId }}
     </span>

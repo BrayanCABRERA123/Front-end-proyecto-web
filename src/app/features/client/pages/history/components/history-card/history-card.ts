@@ -10,6 +10,10 @@ import { Router } from '@angular/router';
 // formato de precio en pesos colombianos
 import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
 import { ClientBookingItem } from '../../../../../../core/models/booking-view.models';
+// la calificación se guarda en operations-service
+import { OperationsApiService } from '../../../../../../core/services/operations-api';
+import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
+import { apiErrorKey } from '../../../../../../core/utils/api-error';
 
 @Component({
   selector: 'app-history-card',
@@ -31,7 +35,9 @@ export class HistoryCardComponent {
     private translate: TranslateService,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private operations: OperationsApiService,
+    private feedback: FeedbackService
   ) { }
 
   // estado del servicio para el color del ícono
@@ -58,10 +64,9 @@ export class HistoryCardComponent {
     this.cancel.emit(this.booking);
   }
 
-  // abre el modal para calificar o, si ya se calificó, para editar la calificación
+  // abre el modal para calificar; el backend valida que esté finalizada y que sea la primera vez
   openRating(booking: ClientBookingItem): void {
-
-    const isEdit = !!booking.rating;
+    if (booking.rating) return;
 
     const data: RatingModalData = {
       rating: booking.rating,
@@ -76,19 +81,21 @@ export class HistoryCardComponent {
     dialogRef.afterClosed().subscribe((result?: RatingResult) => {
       if (!result) return;
 
-      booking.rating = result.rating;
-      booking.ratingComment = result.comment;
+      this.operations.rate(booking.id, result.rating, result.comment || null).subscribe({
+        next: saved => {
+          booking.rating = saved.rating;
+          booking.ratingComment = saved.comment ?? undefined;
 
-      // la app es zoneless: avisamos a Angular que redibuje la tarjeta
-      this.cdr.markForCheck();
+          // la app es zoneless: avisamos a Angular que redibuje la tarjeta
+          this.cdr.markForCheck();
 
-      const status: StatusModalData = isEdit
-        ? { title: 'RATINGS.UPDATED_TITLE', message: 'RATINGS.UPDATED_MESSAGE' }
-        : { title: 'RATINGS.SUCCESS_TITLE', message: 'RATINGS.SUCCESS_MESSAGE' };
-
-      this.dialog.open(StatusModal, {
-        panelClass: 'custom-dialog',
-        data: status
+          const status: StatusModalData = { title: 'RATINGS.SUCCESS_TITLE', message: 'RATINGS.SUCCESS_MESSAGE' };
+          this.dialog.open(StatusModal, {
+            panelClass: 'custom-dialog',
+            data: status
+          });
+        },
+        error: error => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
       });
     });
 

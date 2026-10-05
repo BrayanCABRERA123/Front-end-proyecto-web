@@ -13,7 +13,7 @@
   </div>
 
   <h2 class="dialog-title">
-    {{ ('SERVICE.' + reservation.service) | translate }} — {{ reservation.client }}
+    {{ reservation.service }} — {{ reservation.client }}
   </h2>
 
   <div class="detail-grid">
@@ -38,7 +38,7 @@
       <mat-icon>{{ vehicleIcon(reservation.vehicle) }}</mat-icon>
       <div>
         <span class="detail-label">{{ 'SCHEDULE.DETAIL.VEHICLE' | translate }}</span>
-        <span class="detail-value">{{ ('VEHICLE.' + reservation.vehicle) | translate }}</span>
+        <span class="detail-value">{{ reservation.vehicle }}</span>
       </div>
     </div>
 

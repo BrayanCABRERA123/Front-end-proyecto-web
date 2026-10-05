@@ -4,7 +4,7 @@
 
     <div class="service-info">
       <p class="service-title">
-        {{ ('SERVICE.' + reservation.service) | translate }} — {{ ('VEHICLE.' + reservation.vehicle) | translate }}
+        {{ reservation.service }} — {{ reservation.vehicle }}
       </p>
       <p class="service-date">{{ reservation.date | date: 'dd/MM/yyyy' }} · {{ reservation.time }}</p>
       <p class="service-detail">

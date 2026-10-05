@@ -14,6 +14,10 @@ import { ReservationDetailModal } from '../../../../shared/dialogs/reservation-d
 import { Reservation } from '../../../../shared/dialogs/reservation-models/reservation.model';
 // número real de notificaciones sin leer (notification-service)
 import { NotificationsService } from '../../../../core/services/notifications';
+// servicios asignados al operario (operations-service)
+import { OperationsApiService } from '../../../../core/services/operations-api';
+import { toWorkReservation } from '../../../../core/utils/operator-work';
+import { UserSession } from '../../../../core/services/user-session';
 
 interface Stat {
   icon: string;
@@ -39,25 +43,30 @@ interface Stat {
 })
 export class HomeComponent implements OnInit {
 
-  operatorName = 'Camilo';
+  operatorName = '';
 
   // no leídas reales; 0 mientras carga o si el servicio no responde
   unreadNotifications = 0;
-  averageRating = 4.3;
+  // promedio real de sus calificaciones (operations-service); '—' si aún no tiene
+  averageRating: number | string = '—';
 
-  todayReservations: Reservation[] = [
-    { id: 1, code: 'SV-2101', date: '2026-09-03', time: '14:00', service: 'PREMIUM', client: 'Juan Felipe González', vehicle: 'CAR', durationMin: 50, status: 'en_progreso' },
-    { id: 2, code: 'SV-2102', date: '2026-09-03', time: '16:30', service: 'BASIC', client: 'Esneider Sánchez', vehicle: 'TRUCK', durationMin: 30, status: 'pendiente' }
-  ];
+  // sus servicios asignados para hoy
+  todayReservations: Reservation[] = [];
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private operations: OperationsApiService,
+    private session: UserSession
   ) {}
 
   ngOnInit(): void {
+    // primer nombre del usuario que inició sesión
+    this.operatorName = this.session.user().name.trim().split(/\s+/)[0] ?? '';
+    this.loadToday();
+
     this.notificationsService.unreadCount().subscribe({
       next: (count) => {
         this.unreadNotifications = count;
@@ -100,6 +109,28 @@ export class HomeComponent implements OnInit {
     ];
   }
 
+  // sus servicios de hoy y el promedio de sus calificaciones
+  private loadToday(): void {
+    this.operations.myServices().subscribe({
+      next: services => {
+        this.todayReservations = services.map(toWorkReservation);
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        // sin operations-service la lista queda vacía
+      }
+    });
+    this.operations.myRatings().subscribe({
+      next: ratings => {
+        if (ratings.length === 0) return;
+        const avg = ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length;
+        this.averageRating = Math.round(avg * 10) / 10;
+        this.cdr.markForCheck();
+      },
+      error: () => undefined
+    });
+  }
+
   goTo(route: string) {
     this.router.navigateByUrl(route);
   }
@@ -129,9 +160,10 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      r.status = 'en_progreso';
-      this.cdr.detectChanges();
-      this.showSuccess('ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE', r.code);
+      this.operations.start(r.id).subscribe(() => {
+        this.loadToday();
+        this.showSuccess('ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE', r.code);
+      });
     });
   }
 
@@ -151,9 +183,10 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      r.status = 'finalizado';
-      this.cdr.detectChanges();
-      this.showSuccess('ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE', r.code);
+      this.operations.finish(r.id).subscribe(() => {
+        this.loadToday();
+        this.showSuccess('ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE', r.code);
+      });
     });
   }
 

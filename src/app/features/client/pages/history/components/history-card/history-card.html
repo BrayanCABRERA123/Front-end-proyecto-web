@@ -81,14 +81,13 @@
       </button>
       }
 
-      <!-- Ya calificado: al hacer clic se puede editar la calificación -->
+      <!-- Ya calificado: la calificación es una sola vez (regla de operations-service) -->
       @if (booking.rating) {
-      <button class="rated-badge" [attr.title]="'HISTORY_CARD.EDIT_RATING' | translate" (click)="openRating(booking)">
+      <span class="rated-badge" [attr.title]="booking.ratingComment || null">
         {{ 'HISTORY_CARD.RATED' | translate }}
         <mat-icon>star</mat-icon>
         {{ booking.rating }}
-        <mat-icon class="edit-icon">edit</mat-icon>
-      </button>
+      </span>
       }
 
     </div>

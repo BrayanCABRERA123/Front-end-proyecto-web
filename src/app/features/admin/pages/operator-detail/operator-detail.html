@@ -118,10 +118,10 @@
               <h2>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TITLE' | translate }}</h2>
               <p>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.SUBTITLE' | translate:{ bay: operator.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) } }}</p>
             </div>
-            <span class="count-chip">{{ 'OPERATOR_DETAIL.TODAY_HISTORY.COUNT' | translate:{ count: operator.todayServices.length } }}</span>
+            <span class="count-chip">{{ 'OPERATOR_DETAIL.TODAY_HISTORY.COUNT' | translate:{ count: todayServices.length } }}</span>
           </div>
 
-          @if (operator.todayServices.length === 0) {
+          @if (todayServices.length === 0) {
             <p class="muted">—</p>
           } @else {
             <div class="table-wrapper">
@@ -136,7 +136,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @for (s of operator.todayServices; track s.code) {
+                  @for (s of todayServices; track s.code) {
                     <tr>
                       <td>
                         <strong>{{ s.code }} · {{ s.vehicle }}</strong>

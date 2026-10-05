@@ -1,7 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, forkJoin, map, of, catchError, tap } from 'rxjs';
 
-import { readStorage, writeStorage } from '../../../core/services/local-storage';
 import { BookingApiService } from '../../../core/services/booking-api';
 import { UserAdminService } from '../../../core/services/user-admin';
 import { AuthUser } from '../../../core/models/auth.models';
@@ -13,13 +12,10 @@ import {
 } from '../../../core/models/booking.models';
 import { apiErrorKey } from '../../../core/utils/api-error';
 import { Booking, BookingStatus } from '../models/admin.models';
-import { OperatorsStore } from './operators-store';
+// quién tiene cada reserva (operations-service)
+import { AssignmentResponse, OperationsApiService } from '../../../core/services/operations-api';
+import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 
-/**
- * La asignación de operario todavía no tiene backend (operations-service no existe): se guarda
- * solo en este navegador. Cuando exista, esto se reemplaza por su API.
- */
-const OPERATOR_KEY = 'adminBookingOperators';
 
 // ventana de reservas que se carga: 30 días atrás y 31 adelante (el backend acepta hasta 62)
 const DAYS_BACK = 30;
@@ -86,11 +82,12 @@ export class ReservationsStore {
 
   private readonly api = inject(BookingApiService);
   private readonly userAdmin = inject(UserAdminService);
-  private readonly operators = inject(OperatorsStore);
+  private readonly operations = inject(OperationsApiService);
+  private readonly feedback = inject(FeedbackService);
 
   private readonly state = signal<Booking[]>([]);
   private clients = new Map<number, AuthUser>();
-  private operatorByBooking: Record<string, string> = readStorage(OPERATOR_KEY, {});
+  private assignments = new Map<string, AssignmentResponse>();
 
   readonly loading = signal(false);
   readonly loadError = signal<string | null>(null);
@@ -114,9 +111,14 @@ export class ReservationsStore {
         map(page => page.items),
         catchError(() => of([] as AuthUser[]))
       ),
+      // si operations no responde, las reservas igual se muestran (sin operario)
+      assignments: this.operations.assignments(isoDate(-DAYS_BACK), isoDate(DAYS_AHEAD)).pipe(
+        catchError(() => of([] as AssignmentResponse[]))
+      ),
     }).subscribe({
-      next: ({ bookings, clients }) => {
+      next: ({ bookings, clients, assignments }) => {
         this.clients = new Map(clients.map(client => [client.id, client]));
+        this.assignments = new Map(assignments.map(a => [String(a.bookingId), a]));
         this.state.set(bookings.map(b => this.toBooking(b)));
         this.loading.set(false);
       },
@@ -163,15 +165,21 @@ export class ReservationsStore {
     );
   }
 
-  /** temporal: la asignación vive en este navegador hasta que exista operations-service */
-  assignOperator(id: string, operatorId: string | null): void {
-    if (operatorId) {
-      this.operatorByBooking[id] = operatorId;
-    } else {
-      delete this.operatorByBooking[id];
-    }
-    writeStorage(OPERATOR_KEY, this.operatorByBooking);
-    this.state.update(list => list.map(b => (b.id === id ? { ...b, operator: this.operatorRef(id) } : b)));
+  /**
+   * Asigna (o cambia) el operario en operations-service. El backend valida turno, ausencias y
+   * cruces; si lo rechaza, se muestra el error aquí mismo.
+   */
+  // onAssigned solo corre si operations aceptó (turno, ausencias y cruces los valida el backend)
+  assignOperator(id: string, operatorId: string | null, onAssigned?: () => void): void {
+    if (!operatorId) return; // operations no tiene "quitar operario": se cambia por otro
+    this.operations.assign(Number(id), Number(operatorId)).subscribe({
+      next: assignment => {
+        this.assignments.set(id, assignment);
+        this.state.update(list => list.map(b => (b.id === id ? { ...b, operator: this.operatorRef(id) } : b)));
+        onAssigned?.();
+      },
+      error: err => this.feedback.error('COMMON.ERROR', apiErrorKey(err))
+    });
   }
 
   /* ---------- internos ---------- */
@@ -181,9 +189,11 @@ export class ReservationsStore {
   }
 
   private operatorRef(bookingId: string): Booking['operator'] {
-    const operatorId = this.operatorByBooking[bookingId];
-    const operator = operatorId ? this.operators.getById(operatorId) : undefined;
-    return operator ? { id: operator.id, initials: operator.initials, name: operator.name } : null;
+    const assignment = this.assignments.get(bookingId);
+    if (!assignment) return null;
+    const name = assignment.operatorName || 'Operario';
+    const initials = name.split(/\s+/).slice(0, 2).map(w => w.charAt(0).toUpperCase()).join('');
+    return { id: String(assignment.operatorId), initials, name };
   }
 
   private toBooking(response: BookingResponse): Booking {

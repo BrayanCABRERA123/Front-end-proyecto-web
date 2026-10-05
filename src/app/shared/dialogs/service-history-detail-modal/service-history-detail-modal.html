@@ -13,7 +13,7 @@
   </div>
 
   <h2 class="dialog-title">
-    {{ ('SERVICE.' + service.service) | translate }} — {{ service.client }}
+    {{ service.service }} — {{ service.client }}
   </h2>
 
   <div class="detail-grid">
@@ -30,7 +30,7 @@
       <mat-icon>directions_car</mat-icon>
       <div>
         <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.VEHICLE' | translate }}</span>
-        <span class="detail-value">{{ ('VEHICLE.' + service.vehicle) | translate }} · {{ service.plate }}</span>
+        <span class="detail-value">{{ service.vehicle }} · {{ service.plate }}</span>
       </div>
     </div>
 
@@ -38,7 +38,7 @@
       <mat-icon>payments</mat-icon>
       <div>
         <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.PAYMENT' | translate }}</span>
-        <span class="detail-value">{{ ('SERVICE_HISTORY.METHODS.' + service.paymentMethod) | translate }} · ${{ service.amount | number }}</span>
+        <span class="detail-value">{{ service.paymentMethod ? (('SERVICE_HISTORY.METHODS.' + service.paymentMethod) | translate) + ' · ' : '' }}${{ service.amount | number }}</span>
       </div>
     </div>
 

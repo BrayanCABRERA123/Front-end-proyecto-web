@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
@@ -9,6 +9,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceHistoryDetailModal } from '../../../../shared/dialogs/service-history-detail-modal/service-history-detail-modal';
 import { ServiceHistoryItem } from '../../../../shared/dialogs/history-models/service-history.model';
+// servicios que ya hizo (operations-service)
+import { OperationsApiService, localIsoDate } from '../../../../core/services/operations-api';
 
 // estos 3 valores coinciden con HistoryStatus (shared/dialogs/history-models), no se traducen aquí
 type Tab = 'todos' | 'finalizado' | 'cancelado' | 'reasignado';
@@ -35,25 +37,51 @@ export class ServiceHistoryComponent implements OnInit {
   dateFilter = '';
   serviceFilter = '';
 
-  serviceTypes = ['BASIC', 'PREMIUM', 'FULL'];
+  // nombres de servicio que aparecen en su historial (salen de los datos)
+  get serviceTypes(): string[] {
+    return [...new Set(this.services.map(s => s.service))];
+  }
 
   animatedPercentage = 0;
 
-  services: ServiceHistoryItem[] = [
-    { id: 1, code: 'SV-1840', date: '2026-02-20', time: '09:00', service: 'PREMIUM', vehicle: 'CAR', plate: 'ABC-123', client: 'Laura Gómez', paymentMethod: 'CARD', amount: 45000, rating: 5, comment: 'Excelente servicio, me entregaron el carro a tiempo.', status: 'finalizado', reason: null },
-    { id: 2, code: 'SV-1841', date: '2026-02-18', time: '14:30', service: 'BASIC', vehicle: 'MOTO', plate: 'XYZ-98D', client: 'Miguel Rojas', paymentMethod: 'PSE', amount: 18000, rating: 4, comment: null, status: 'finalizado', reason: null },
-    { id: 3, code: 'SV-1842', date: '2026-02-15', time: '10:30', service: 'FULL', vehicle: 'TRUCK', plate: 'JKL-457', client: 'Andrea Salas', paymentMethod: 'CASH', amount: 38000, rating: 5, comment: 'Todo perfecto.', status: 'finalizado', reason: null },
-    { id: 4, code: 'SV-1843', date: '2026-02-14', time: '11:15', service: 'PREMIUM', vehicle: 'CAR', plate: 'MNO-741', client: 'Juan Díaz', paymentMethod: 'CARD', amount: 45000, rating: null, comment: null, status: 'cancelado', reason: 'El cliente canceló por lluvia.' },
-    { id: 5, code: 'SV-1844', date: '2026-02-10', time: '12:00', service: 'BASIC', vehicle: 'TRUCK', plate: 'PQR-369', client: 'Camila Torres', paymentMethod: 'NEQUI', amount: 22000, rating: null, comment: null, status: 'reasignado', reason: 'Reasignado a otro operario por sobrecupo.' },
-    { id: 6, code: 'SV-1845', date: '2026-02-08', time: '08:45', service: 'FULL', vehicle: 'CAR', plate: 'STU-852', client: 'Ricardo Nova', paymentMethod: 'CARD', amount: 38000, rating: 5, comment: 'Volveré a traer mi carro.', status: 'finalizado', reason: null },
-    { id: 7, code: 'SV-1846', date: '2026-02-05', time: '16:00', service: 'PREMIUM', vehicle: 'MOTO', plate: 'VWX-159', client: 'Sofía Herrera', paymentMethod: 'PSE', amount: 45000, rating: null, comment: null, status: 'cancelado', reason: 'El cliente no llegó a la sede a la hora reservada.' },
-    { id: 8, code: 'SV-1847', date: '2026-02-02', time: '10:00', service: 'BASIC', vehicle: 'CAR', plate: 'YZA-753', client: 'Pedro López', paymentMethod: 'CASH', amount: 18000, rating: 4, comment: null, status: 'finalizado', reason: null }
-  ];
+  services: ServiceHistoryItem[] = [];
 
-  constructor(private translate: TranslateService, private dialog: MatDialog) {}
+  constructor(
+    private translate: TranslateService,
+    private dialog: MatDialog,
+    private operations: OperationsApiService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
+  // servicios terminados de los últimos 60 días, con la calificación que dio el cliente
   ngOnInit(): void {
-    setTimeout(() => this.animatedPercentage = this.completionRate, 150);
+    const from = new Date();
+    from.setDate(from.getDate() - 60);
+    this.operations.myServices(localIsoDate(from), localIsoDate(new Date())).subscribe({
+      next: list => {
+        this.services = list
+          .filter(s => s.status === 'COMPLETED')
+          .map((s, i) => ({
+            id: s.bookingId ?? i,
+            code: s.code,
+            date: s.date,
+            time: s.startTime.slice(0, 5),
+            service: s.services,
+            vehicle: s.vehicle,
+            plate: s.plate,
+            client: s.plate,
+            paymentMethod: '',
+            amount: s.total,
+            rating: s.rating,
+            comment: s.comment,
+            status: 'finalizado',
+            reason: null
+          } as ServiceHistoryItem));
+        this.animatedPercentage = this.completionRate;
+        this.cdr.markForCheck();
+      },
+      error: () => undefined
+    });
   }
 
   get completed(): number {
@@ -107,14 +135,13 @@ export class ServiceHistoryComponent implements OnInit {
       if (this.serviceFilter && s.service !== this.serviceFilter) return false;
 
       if (text) {
-        const translatedVehicle = this.translate.instant('VEHICLE.' + s.vehicle).toLowerCase();
-        const translatedService = this.translate.instant('SERVICE.' + s.service).toLowerCase();
+        // vehículo y servicio ya vienen con su nombre real desde el backend
         const matches =
           s.code.toLowerCase().includes(text) ||
           s.plate.toLowerCase().includes(text) ||
           s.client.toLowerCase().includes(text) ||
-          translatedVehicle.includes(text) ||
-          translatedService.includes(text);
+          (s.vehicle ?? '').toLowerCase().includes(text) ||
+          (s.service ?? '').toLowerCase().includes(text);
         if (!matches) return false;
       }
 

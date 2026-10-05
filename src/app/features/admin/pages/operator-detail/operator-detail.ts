@@ -11,6 +11,8 @@ import { ExportColumn, ExportDataModal, ExportDataModalData } from '../../../../
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { OperatorsStore } from '../../services/operators-store';
 import { ScheduleStore } from '../../services/schedule-store';
+// reservas del día con su operario asignado (booking + operations)
+import { ReservationsStore, formatTimeRange } from '../../services/reservations-store';
 import { Operator, TodayService } from '../../models/admin.models';
 import { OperatorAbsenceModal, AbsenceModalResult } from './components/operator-absence-modal/operator-absence-modal';
 import { AvailabilityModal, AvailabilityModalData } from './components/availability-modal/availability-modal';
@@ -34,7 +36,24 @@ export class OperatorDetailComponent implements OnInit {
     private schedule: ScheduleStore,
     private dialog: MatDialog,
     private feedback: FeedbackService,
+    private reservations: ReservationsStore,
   ) {}
+
+  // servicios de hoy asignados a este operario
+  get todayServices(): TodayService[] {
+    if (!this.operator) return [];
+    const id = this.operator.id;
+    return this.reservations.byDate(this.reservations.today)
+      .filter(b => b.operator?.id === id && b.status !== 'cancelled' && b.status !== 'no_show')
+      .map((b): TodayService => ({
+        code: b.code,
+        vehicle: [b.vehicle, b.plate].filter(Boolean).join(' · '),
+        service: b.service,
+        bay: b.bay ?? '—',
+        time: formatTimeRange(b.time, b.durationMin),
+        status: b.status === 'completed' ? 'completed' : b.status === 'in_progress' ? 'in_progress' : 'scheduled'
+      }));
+  }
 
   ngOnInit(): void {
     // reactivo: al navegar de una ficha a otra cambia el id sin recargar la página
@@ -125,11 +144,7 @@ export class OperatorDetailComponent implements OnInit {
       if (!result) return;
 
       this.store.setStatus(result.operatorId, result.status);
-      if (result.bay) {
-        this.store.assignBay(result.operatorId, result.bay);
-      } else if (result.status === 'medical_leave') {
-        this.store.assignBay(result.operatorId, null);
-      }
+      // los operarios ya no quedan atados a una bahía (ADR-010): la bahía se elige por reserva
 
       this.feedback.success(
         'OPERATOR_DETAIL.FEEDBACK.SHIFT_TITLE',

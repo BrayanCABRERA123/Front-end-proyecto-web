@@ -37,7 +37,7 @@ export class QualificationCardComponent {
         { label: 'SERVICE_HISTORY.DETAIL.RATING', value: '★'.repeat(this.rating.rating) + '☆'.repeat(5 - this.rating.rating) },
         { label: 'QUALIFICATION_CARD.COMMENT', value: this.rating.comment },
         { label: 'QUALIFICATION_CARD.DURATION', value: this.rating.duration }
-      ]
+      ].filter(d => !!d.value)
     };
 
     this.dialog.open(StatusModal, { panelClass: 'custom-dialog', data });

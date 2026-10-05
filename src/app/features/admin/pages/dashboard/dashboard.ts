@@ -337,11 +337,13 @@ export class DashboardComponent {
 
     dialogRef.afterClosed().subscribe((result: AssignOperatorResult | null) => {
       if (!result) return;
-      this.reservations.assignOperator(booking.id, result.operatorId);
-      this.feedback.success(
-        'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE',
-        'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
-        { messageParams: { code: booking.code } }
+      // el aviso de éxito sale solo si el backend aceptó la asignación
+      this.reservations.assignOperator(booking.id, result.operatorId, () =>
+        this.feedback.success(
+          'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE',
+          'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
+          { messageParams: { code: booking.code } }
+        )
       );
     });
   }

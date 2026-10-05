@@ -23,18 +23,18 @@
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.SERVICE' | translate">
-            <span class="service-badge">{{ ('SERVICE.' + s.service) | translate }}</span>
+            <span class="service-badge">{{ s.service }}</span>
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.VEHICLE' | translate">
             <div class="vehicle-cell">
-              <span>{{ ('VEHICLE.' + s.vehicle) | translate }}</span>
+              <span>{{ s.vehicle }}</span>
               <span class="plate">{{ s.plate }}</span>
             </div>
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.PAYMENT' | translate">
-            {{ ('SERVICE_HISTORY.METHODS.' + s.paymentMethod) | translate }}
+            {{ s.paymentMethod ? (('SERVICE_HISTORY.METHODS.' + s.paymentMethod) | translate) : '—' }}
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.AMOUNT' | translate">

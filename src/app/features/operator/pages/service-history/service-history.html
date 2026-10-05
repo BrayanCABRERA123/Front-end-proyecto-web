@@ -51,7 +51,7 @@
             <select class="filter-select" [(ngModel)]="serviceFilter">
               <option value="">{{ 'SERVICE_HISTORY.ALL_SERVICES' | translate }}</option>
               @for (type of serviceTypes; track type) {
-                <option [value]="type">{{ ('SERVICE.' + type) | translate }}</option>
+                <option [value]="type">{{ type }}</option>
               }
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
