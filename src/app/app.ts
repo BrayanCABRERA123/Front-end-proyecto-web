@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from './core/services/auth';
+import { PreferencesService } from './core/services/preferences';
 
 @Component({
   selector: 'app-root',
@@ -10,18 +12,20 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class App {
 
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService,
+    private auth: AuthService,
+    private preferences: PreferencesService
+  ) {
     this.initApp();
   }
 
   initApp() {
-    //idioma guardado, español va por defecto
-    const lang = localStorage.getItem('lang') || 'es';
     this.translate.setDefaultLang('es');
-    this.translate.use(lang);
-
-    //tema guardado
-    const theme = localStorage.getItem('theme') || 'light';
-    document.body.className = theme;
+    // primero lo último usado en este navegador; con sesión, lo de la cuenta (RF-019/020)
+    this.preferences.applyLocal();
+    if (this.auth.isAuthenticated()) {
+      this.preferences.loadForUser();
+    }
   }
 }

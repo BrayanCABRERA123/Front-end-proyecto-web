@@ -16,6 +16,8 @@ import { StatusModal, StatusModalData } from '../../dialogs/status-modal/status-
 import { BUSINESS_CONTACT } from '../../../core/constants/business-contact';
 // la dirección de la sede sale del booking-service
 import { BookingApiService } from '../../../core/services/booking-api';
+// tema e idioma se guardan en la cuenta (security-service), no solo en el navegador
+import { PreferencesService } from '../../../core/services/preferences';
 
 // llave donde se guardan las preferencias de notificaciones (igual que 'theme' y 'lang')
 const NOTIFICATIONS_KEY = 'notificationSettings';
@@ -48,7 +50,8 @@ export class SettingsPanelComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private dialog: MatDialog,
-    private bookingApi: BookingApiService
+    private bookingApi: BookingApiService,
+    private preferences: PreferencesService
   ) {
     this.translate.addLangs(['es', 'en', 'fr', 'pt']);
     this.translate.setDefaultLang('es');
@@ -134,8 +137,7 @@ export class SettingsPanelComponent implements OnInit {
 
   changeTheme(theme: string): void {
     this.selectedTheme = theme;
-    localStorage.setItem('theme', theme);
-    this.applyTheme(theme);
+    this.preferences.change(theme, this.selectedLanguage || this.preferences.currentLanguage(), true);
   }
 
   applyTheme(theme: string): void {
@@ -155,10 +157,7 @@ export class SettingsPanelComponent implements OnInit {
   changeLanguage(lang: string): void {
 
     this.selectedLanguage = lang;
-
-    this.translate.use(lang);
-
-    localStorage.setItem('lang', lang);
+    this.preferences.change(this.selectedTheme || this.preferences.currentTheme(), lang, true);
   }
 
 }

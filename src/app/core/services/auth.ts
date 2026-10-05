@@ -13,6 +13,7 @@ import {
   UserRole
 } from '../models/auth.models';
 import { UserSession } from './user-session';
+import { PreferencesService } from './preferences';
 
 const STORAGE_KEY = 'auth_session';
 
@@ -34,6 +35,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly userSession = inject(UserSession);
+  private readonly preferences = inject(PreferencesService);
 
   private readonly sessionSignal = signal<StoredSession | null>(this.load());
 
@@ -74,6 +76,8 @@ export class AuthService {
           expiresAt: response.expiresAt,
           user: response.user
         })),
+        // cada cuenta trae su propio tema e idioma
+        tap(() => this.preferences.loadForUser()),
         map(response => response.user)
       );
   }
