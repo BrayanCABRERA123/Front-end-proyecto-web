@@ -6,7 +6,7 @@ import { ServiceTableComponent } from './components/service-table/service-table'
 import { ServiceDetailComponent } from './components/service-detail/service-detail';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { OperationsApiService, OperatorServiceResponse } from '../../../../core/services/operations-api';
+import { OperationsApiService, OperatorServiceResponse, localIsoDate } from '../../../../core/services/operations-api';
 import { isoToDisplayDate } from '../../../../core/utils/booking-display';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { apiErrorKey } from '../../../../core/utils/api-error';
@@ -80,10 +80,17 @@ export class AssignedServicesComponent implements OnInit {
     this.load();
   }
 
-  // carga las reservas del día elegido (hoy si no hay fecha)
+  // carga las del día elegido; sin fecha, las de hoy y los próximos 30 días (lo asignado para mañana también se ve)
   load(): void {
-    const day = this.dateFilter || undefined;
-    this.operations.myServices(day, day).subscribe({
+    let from = this.dateFilter;
+    let to = this.dateFilter;
+    if (!from) {
+      const end = new Date();
+      end.setDate(end.getDate() + 30);
+      from = localIsoDate(new Date());
+      to = localIsoDate(end);
+    }
+    this.operations.myServices(from, to).subscribe({
       next: bookings => {
         const rows = bookings.map(b => this.toRow(b));
         this.rows.set(rows);
