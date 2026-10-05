@@ -264,4 +264,8 @@ export interface PaymentMethodConfig {
   active: boolean;
   needsQr: boolean;
   qrFileName?: string;
+  /** imagen del QR (data URL) guardada en payment-service */
+  qrImage?: string | null;
+  /** código del medio en payment-service: NEQUI, DAVIPLATA, TRANSFERENCIA, EFECTIVO */
+  methodCode?: string;
 }

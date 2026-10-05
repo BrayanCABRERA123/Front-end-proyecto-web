@@ -4,7 +4,8 @@
   background: var(--card);
   color: var(--text);
   border-radius: 16px;
-  width: min(420px, 90vw);
+  width: min(520px, 92vw);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 
@@ -57,14 +58,23 @@
 
 .row-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
+}
+
+// texto de ayuda bajo el selector de reserva (servicios de la reserva elegida)
+.hint {
+  @include caption-text;
+  color: var(--text-secondary);
+  margin: -6px 0 0;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  // sin esto el select crece con su opción más larga y se sale de la tarjeta
+  min-width: 0;
 
   span { @include caption-text; color: var(--text-secondary); }
 
@@ -76,6 +86,10 @@
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 10px 12px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
 
     &:focus { outline: none; border-color: var(--primary); }
     &::placeholder { color: var(--text-muted); }

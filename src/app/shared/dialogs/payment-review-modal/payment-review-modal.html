@@ -19,10 +19,13 @@
 
     <div class="review-columns">
 
-      <!-- comprobante (representación visual, no es una imagen real) -->
+      <!-- comprobante: la imagen real que subió el cliente; si no hay, la representación visual -->
       <div class="receipt-column">
         <span class="eyebrow">{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_ATTACHED' | translate }}</span>
 
+        @if (data.receiptImage) {
+          <img class="receipt-image" [src]="data.receiptImage" alt="" style="width:100%;max-height:420px;object-fit:contain;border-radius:12px" />
+        } @else {
         <div class="receipt-mock" [attr.data-method]="data.method">
 
           @switch (data.method) {
@@ -36,7 +39,7 @@
           <span class="receipt-mock__amount">{{ cop(data.amountDeclared) }},00</span>
 
           <div class="receipt-mock__details">
-            <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_PAYEE' | translate }}</span><strong>Express Car Wash S.A.S.</strong></div>
+            <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_PAYEE' | translate }}</span><strong>{{ data.payee || '—' }}</strong></div>
             <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_ACCOUNT' | translate }}</span><strong>{{ data.bankAccount }}</strong></div>
             <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_REFERENCE' | translate }}</span><strong>{{ data.transactionReference }}</strong></div>
             <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_DATE' | translate }}</span><strong>{{ data.receiptDate }}</strong></div>
@@ -44,6 +47,7 @@
 
           <div class="receipt-mock__barcode"></div>
         </div>
+        }
       </div>
 
       <!-- info del cliente / cita / conciliación -->

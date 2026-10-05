@@ -22,6 +22,10 @@ export interface PaymentReviewData {
   bankAccount: string; // NIT/celular que aparece en el comprobante
   /** motivo ya registrado, se muestra en modo lectura cuando el pago fue rechazado */
   rejectionReason?: string;
+  /** imagen del comprobante que subió el cliente (payment-service) */
+  receiptImage?: string | null;
+  /** titular de la cuenta que recibió el pago */
+  payee?: string;
 }
 
 export type PaymentReviewAction = 'approved' | 'rejected';

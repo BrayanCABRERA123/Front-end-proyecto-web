@@ -10,27 +10,32 @@
 
   <div class="manual-dialog__body">
 
-    <label class="field">
-      <span>{{ 'MANUAL_PAYMENT_MODAL.CLIENT_LABEL' | translate }}</span>
-      <input type="text" [(ngModel)]="client" [placeholder]="'MANUAL_PAYMENT_MODAL.CLIENT_PLACEHOLDER' | translate">
-    </label>
-
+    <!-- reserva real (booking-service): el monto sale de ella -->
     <label class="field">
       <span>{{ 'MANUAL_PAYMENT_MODAL.SERVICE_LABEL' | translate }}</span>
-      <input type="text" [(ngModel)]="service" [placeholder]="'MANUAL_PAYMENT_MODAL.SERVICE_PLACEHOLDER' | translate">
+      <select [(ngModel)]="bookingId">
+        <option [ngValue]="null">—</option>
+        @for (b of bookings; track b.id) {
+          <option [ngValue]="b.id">{{ b.label }}</option>
+        }
+      </select>
     </label>
+    @if (selectedServices) {
+      <p class="hint">{{ selectedServices }}</p>
+    }
 
     <div class="row-2">
       <label class="field">
         <span>{{ 'MANUAL_PAYMENT_MODAL.AMOUNT_LABEL' | translate }}</span>
-        <input type="number" min="0" [(ngModel)]="amount" placeholder="45.000">
+        <input type="text" [value]="amountLabel" readonly>
       </label>
 
+      <!-- cuentas del lavadero (payment-service), efectivo incluido -->
       <label class="field">
         <span>{{ 'MANUAL_PAYMENT_MODAL.METHOD_LABEL' | translate }}</span>
-        <select [(ngModel)]="method">
-          @for (m of methods; track m.value) {
-            <option [value]="m.value">{{ m.label }}</option>
+        <select [(ngModel)]="accountId">
+          @for (a of accounts; track a.id) {
+            <option [ngValue]="a.id">{{ a.methodName }} · {{ a.accountHolder }}</option>
           }
         </select>
       </label>

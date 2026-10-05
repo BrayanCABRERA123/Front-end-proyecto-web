@@ -19,6 +19,8 @@ import { BookingApiService } from '../../../../core/services/booking-api';
 import { BookingResponse } from '../../../../core/models/booking.models';
 import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../../core/utils/booking-display';
 import { apiErrorKey } from '../../../../core/utils/api-error';
+// cuentas del lavadero y reporte del pago (payment-service)
+import { PaymentAccountResponse, PaymentsApiService, readImageAsDataUrl } from '../../../../core/services/payments-api';
 
 // tipos para que el código sea más claro
 type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
@@ -38,12 +40,27 @@ interface SavedPaymentState {
   method: PaymentMethodId;
 }
 
+// efectivo siempre está: se paga en el lavadero
+const CASH_METHOD: PaymentMethod = { id: 'CASH', icon: 'payments', label: 'PAYMENT.METHOD.CASH', desc: 'PAYMENT.METHOD.CASH_DESC' };
+
+/** medio de la pantalla para el código de payment-service */
+function methodIdOf(code: string): PaymentMethodId {
+  if (code === 'NEQUI') return 'NEQUI';
+  if (code === 'DAVIPLATA') return 'DAVIPLATA';
+  if (code === 'EFECTIVO') return 'CASH';
+  return 'TRANSFER';
+}
+
+function methodOptionOf(account: PaymentAccountResponse): PaymentMethod | null {
+  const id = methodIdOf(account.methodCode);
+  if (id === 'CASH') return null;
+  const icon = id === 'NEQUI' ? 'smartphone' : id === 'DAVIPLATA' ? 'account_balance' : 'receipt_long';
+  return { id, icon, label: 'PAYMENT.METHOD.' + id, desc: 'PAYMENT.METHOD.' + id + '_DESC' };
+}
+
 // vigencia del QR
 const QR_DURATION_MS = 15 * 60 * 1000;
 
-// datos de la cuenta que recibe el pago. La llave todavía no existe en el backend:
-// queda como constante hasta que el "Datos del negocio" del admin la exponga.
-const PAYEE_KEY = '318 450 9988';
 
 @Component({
   selector: 'app-payment',
@@ -55,6 +72,10 @@ const PAYEE_KEY = '318 450 9988';
 export class PaymentComponent implements OnInit, OnDestroy {
 
   private readonly bookingApi = inject(BookingApiService);
+  private readonly paymentsApi = inject(PaymentsApiService);
+
+  // cuentas activas del lavadero (payment-service); cada medio tiene su titular, número y QR
+  private accounts: PaymentAccountResponse[] = [];
   private readonly route = inject(ActivatedRoute);
   private readonly changes = inject(ChangeDetectorRef);
 
@@ -71,23 +92,26 @@ export class PaymentComponent implements OnInit, OnDestroy {
   // código de la reserva (lo llena el backend)
   reservationCode = '';
 
-  // métodos de pago disponibles
-  paymentMethods: PaymentMethod[] = [
-    { id: 'NEQUI', icon: 'smartphone', label: 'PAYMENT.METHOD.NEQUI', desc: 'PAYMENT.METHOD.NEQUI_DESC' },
-    { id: 'DAVIPLATA', icon: 'account_balance', label: 'PAYMENT.METHOD.DAVIPLATA', desc: 'PAYMENT.METHOD.DAVIPLATA_DESC' },
-    { id: 'TRANSFER', icon: 'receipt_long', label: 'PAYMENT.METHOD.TRANSFER', desc: 'PAYMENT.METHOD.TRANSFER_DESC' },
-    { id: 'CASH', icon: 'payments', label: 'PAYMENT.METHOD.CASH', desc: 'PAYMENT.METHOD.CASH_DESC' }
-  ];
+  // medios disponibles: los que el admin tiene activos, más efectivo en el lavadero
+  paymentMethods: PaymentMethod[] = [CASH_METHOD];
 
   // método seleccionado por el usuario
-  selectedMethod: PaymentMethodId = 'NEQUI';
+  selectedMethod: PaymentMethodId = 'CASH';
+
+  // cuenta del medio elegido (su QR es el que se muestra)
+  get selectedAccount(): PaymentAccountResponse | null {
+    return this.accounts.find(a => methodIdOf(a.methodCode) === this.selectedMethod) ?? null;
+  }
 
   // datos de la cuenta que recibe el pago
-  payee = {
-    name: 'Lavado Vehicular S.A.S.',
-    key: PAYEE_KEY,
-    accountType: 'PAYMENT.QR.ACCOUNT_TYPE_VALUE'
-  };
+  get payee() {
+    const account = this.selectedAccount;
+    return {
+      name: account?.accountHolder ?? '',
+      key: account?.accountNumber ?? '',
+      accountType: 'PAYMENT.QR.ACCOUNT_TYPE_VALUE'
+    };
+  }
 
   // resumen real de la reserva (se llena en applyBooking)
   serviceSummary = {
@@ -150,13 +174,16 @@ export class PaymentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.bookingId = Number(this.route.snapshot.queryParamMap.get('booking')) || null;
 
-    // nombre del negocio para la cuenta que recibe el pago
-    this.bookingApi.establishment().subscribe({
-      next: (establishment) => {
-        this.payee.name = establishment.tradeName;
+    // cuentas reales del lavadero (con su QR)
+    this.paymentsApi.accounts().subscribe({
+      next: (accounts) => {
+        this.accounts = accounts;
+        const digital = accounts.map(a => methodOptionOf(a)).filter((m): m is PaymentMethod => !!m);
+        this.paymentMethods = [...digital, CASH_METHOD];
+        if (!this.isVerifying) this.selectedMethod = this.paymentMethods[0].id;
         this.changes.markForCheck();
       },
-      error: () => { /* si falla, queda el nombre por defecto */ }
+      error: () => { /* sin payment-service solo queda efectivo */ }
     });
 
     this.loadBooking();
@@ -182,6 +209,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         this.booking = booking;
         this.applyBooking(booking);
         this.startQrTimer();
+        this.loadPaymentState(booking.id);
         this.changes.markForCheck();
       },
       error: (error) => {
@@ -216,6 +244,20 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
     this.restoreState();
     this.updateQrSecondsLeft();
+  }
+
+  // si ya hay un pago reportado para esta reserva, la pantalla queda en revisión
+  private loadPaymentState(bookingId: number): void {
+    this.paymentsApi.mine().subscribe({
+      next: (payments) => {
+        const current = payments.find(p => p.booking?.id === bookingId);
+        const open = !!current && ['PENDING', 'IN_REVIEW', 'APPROVED'].includes(current.status);
+        this.flowStep = open ? 'VERIFYING' : 'PENDING';
+        this.saveState();
+        this.changes.markForCheck();
+      },
+      error: () => { /* sin payment-service se queda el estado local */ }
+    });
   }
 
   private startQrTimer(): void {
@@ -337,23 +379,30 @@ export class PaymentComponent implements OnInit, OnDestroy {
     return (this.receiptFile.size / (1024 * 1024)).toFixed(1) + 'MB';
   }
 
-  confirmPayment() {
-    if (!this.canConfirm) return;
-    // TODO: integrar con el backend de pagos (Commercial service)
-    console.log('Confirmando pago', {
-      reserva: this.reservationCode,
-      metodo: this.selectedMethod,
-      referencia: this.transactionRef,
-      monto: this.totalToPay,
-      comprobante: this.receiptFile?.name
-    });
-    this.flowStep = 'VERIFYING';
-    this.saveState();
+  async confirmPayment() {
+    if (!this.canConfirm || !this.booking) return;
 
-    // avisamos al usuario que su pago quedó enviado y en revisión
-    this.showStatusModal({
-      title: 'PAYMENT.SUCCESS_TITLE',
-      message: 'PAYMENT.SUCCESS_MESSAGE'
+    // efectivo: se paga en el lavadero, no hay comprobante que reportar
+    if (this.selectedMethod === 'CASH' || !this.selectedAccount || !this.receiptFile) {
+      this.flowStep = 'VERIFYING';
+      this.saveState();
+      this.showStatusModal({ title: 'PAYMENT.SUCCESS_TITLE', message: 'PAYMENT.SUCCESS_MESSAGE' });
+      return;
+    }
+
+    // el monto lo pone payment-service con el total de la reserva
+    const receipt = await readImageAsDataUrl(this.receiptFile);
+    this.paymentsApi.report(this.booking.id, this.selectedAccount.id, this.transactionRef, receipt).subscribe({
+      next: () => {
+        this.flowStep = 'VERIFYING';
+        this.saveState();
+        this.changes.markForCheck();
+        this.showStatusModal({ title: 'PAYMENT.SUCCESS_TITLE', message: 'PAYMENT.SUCCESS_MESSAGE' });
+      },
+      error: (error) => {
+        this.showStatusModal({ type: 'error', title: 'COMMON.ERROR', message: apiErrorKey(error) });
+        this.changes.markForCheck();
+      }
     });
   }
 

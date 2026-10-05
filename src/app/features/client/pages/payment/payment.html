@@ -56,8 +56,13 @@
           <div class="qr-layout">
             <div class="qr-box">
               <div class="qr-code">
-                <mat-icon class="qr-img">qr_code_2</mat-icon>
-                <span class="qr-center"><mat-icon>water_drop</mat-icon></span>
+                <!-- QR real de la cuenta del lavadero (lo sube el admin en Configuración) -->
+                @if (selectedAccount?.qrImageUrl) {
+                  <img [src]="selectedAccount!.qrImageUrl" alt="QR" style="width:100%;height:100%;object-fit:contain;background:#fff;border-radius:8px" />
+                } @else {
+                  <mat-icon class="qr-img">qr_code_2</mat-icon>
+                  <span class="qr-center"><mat-icon>water_drop</mat-icon></span>
+                }
               </div>
               <small><mat-icon>qr_code_scanner</mat-icon> {{ 'PAYMENT.QR.SCAN_HINT' | translate }}</small>
             </div>

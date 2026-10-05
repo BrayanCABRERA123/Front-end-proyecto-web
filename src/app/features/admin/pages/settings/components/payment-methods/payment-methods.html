@@ -46,17 +46,21 @@
 
             @if (m.needsQr) {
               <div class="qr-box">
-                <mat-icon>qr_code_2</mat-icon>
+                @if (m.qrImage) {
+                  <img [src]="m.qrImage" alt="QR" style="width:72px;height:72px;object-fit:contain;border-radius:8px;background:#fff" />
+                } @else {
+                  <mat-icon>qr_code_2</mat-icon>
+                }
                 <div>
-                  @if (m.qrFileName) {
-                    <strong>{{ m.qrFileName }}</strong>
+                  @if (m.qrImage) {
+                    <strong>QR</strong>
                     <span class="muted">{{ 'PAYMENT_METHODS_SECTION.QR_ACTIVE' | translate }}</span>
                   } @else {
                     <span class="muted">—</span>
                   }
                 </div>
                 <label class="btn-outline btn-sm">
-                  {{ (m.qrFileName ? 'PAYMENT_METHODS_SECTION.REPLACE' : 'PAYMENT_METHODS_SECTION.UPLOAD_QR') | translate }}
+                  {{ (m.qrImage ? 'PAYMENT_METHODS_SECTION.REPLACE' : 'PAYMENT_METHODS_SECTION.UPLOAD_QR') | translate }}
                   <input type="file" accept="image/*" hidden (change)="onQrSelected(m, $event)">
                 </label>
               </div>

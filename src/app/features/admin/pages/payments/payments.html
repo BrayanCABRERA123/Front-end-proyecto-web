@@ -93,10 +93,6 @@
           icon="account_balance_wallet"
           titleKey="ADMIN_PAYMENTS.EMPTY_TITLE"
           messageKey="ADMIN_PAYMENTS.EMPTY_MESSAGE">
-          <button class="btn-primary" (click)="openManualModal()">
-            <mat-icon>add</mat-icon>
-            {{ 'ADMIN_PAYMENTS.REGISTER_MANUAL' | translate }}
-          </button>
         </app-empty-state>
 
       } @else if (filteredPayments.length === 0) {

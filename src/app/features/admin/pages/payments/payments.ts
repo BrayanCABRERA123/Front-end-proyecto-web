@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,12 +8,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaymentModalComponent, ManualPaymentResult } from './components/payment-modal/payment-modal';
+import { PaymentsApiService } from '../../../../core/services/payments-api';
 import { PaymentReviewModal } from '../../../../shared/dialogs/payment-review-modal/payment-review-modal';
 import { PaymentReviewData, PaymentReviewResult } from '../../../../shared/dialogs/payment-review-modal/payment-review.model';
 import { ExportColumn, ExportDataModal, ExportDataModalData } from '../../../../shared/dialogs/export-data-modal/export-data-modal';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { PaymentsStore, formatPaymentDate } from '../../services/payments-store';
 import { Payment, PaymentStatus } from '../../models/admin.models';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 
 @Component({
   selector: 'app-payments',
@@ -22,7 +24,7 @@ import { Payment, PaymentStatus } from '../../models/admin.models';
   templateUrl: './payments.html',
   styleUrls: ['./payments.scss']
 })
-export class PaymentsComponent {
+export class PaymentsComponent implements OnInit {
 
   search = '';
   methodFilter = '';
@@ -32,7 +34,13 @@ export class PaymentsComponent {
     private store: PaymentsStore,
     private dialog: MatDialog,
     private feedback: FeedbackService,
+    private paymentsApi: PaymentsApiService,
   ) {}
+
+  // pagos reales de payment-service
+  ngOnInit(): void {
+    this.store.refresh();
+  }
 
   get payments(): Payment[] { return this.store.payments(); }
 
@@ -91,21 +99,21 @@ export class PaymentsComponent {
     return labels[method] ?? method;
   }
 
-  // --- registro manual ---
+  // --- registro manual: pago recibido en el lavadero para una reserva real ---
 
   openManualModal(): void {
-    const dialogRef = this.dialog.open(PaymentModalComponent, { panelClass: 'custom-dialog' });
-
-    dialogRef.afterClosed().subscribe((result: ManualPaymentResult | null) => {
-      if (!result) return;
-
-      const created = this.store.addManualPayment(result);
-      this.feedback.success(
-        'ADMIN_PAYMENTS.FEEDBACK.MANUAL_TITLE',
-        'ADMIN_PAYMENTS.FEEDBACK.MANUAL_MESSAGE',
-        { messageParams: { code: created.code, client: created.client } }
-      );
-    });
+    this.dialog.open(PaymentModalComponent, { panelClass: 'custom-dialog' }).afterClosed()
+      .subscribe((result: ManualPaymentResult | null) => {
+        if (!result) return;
+        this.paymentsApi.registerManual(result.bookingId, result.paymentAccountId).subscribe({
+          next: created => {
+            this.store.refresh();
+            this.feedback.success('ADMIN_PAYMENTS.FEEDBACK.MANUAL_TITLE', 'ADMIN_PAYMENTS.FEEDBACK.MANUAL_MESSAGE',
+              { messageParams: { code: '#PAG-' + created.id, client: created.booking?.code ?? '' } });
+          },
+          error: err => this.feedback.error('COMMON.ERROR', apiErrorKey(err))
+        });
+      });
   }
 
   // --- revisión de pago pendiente / recibo / motivo de rechazo ---
@@ -131,6 +139,8 @@ export class PaymentsComponent {
       receiptDate: `${formatPaymentDate(payment.date)}, ${payment.time} COT`,
       bankAccount: payment.bankAccount,
       rejectionReason: payment.rejectionReason,
+      receiptImage: this.store.receiptOf(payment.id),
+      payee: this.store.payeeOf(payment.id),
     };
 
     const dialogRef = this.dialog.open(PaymentReviewModal, { panelClass: 'custom-dialog', data });
@@ -138,7 +148,8 @@ export class PaymentsComponent {
     dialogRef.afterClosed().subscribe((result: PaymentReviewResult | null) => {
       if (!result || !result.action) return;
 
-      this.store.review(payment.id, result.action, result.reason);
+      this.store.review(payment.id, result.action, result.reason,
+        err => this.feedback.error('COMMON.ERROR', apiErrorKey(err)));
       this.feedback.success(
         'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_TITLE',
         'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_MESSAGE',
