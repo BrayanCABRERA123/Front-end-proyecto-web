@@ -2097,7 +2097,8 @@
       "cancelled": "Annuler",
       "no_show": "Absent"
     },
-    "CANCEL_REASON": "Motif d'annulation"
+    "CANCEL_REASON": "Motif d'annulation",
+    "INSPECTION": "Rapport d'inspection"
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nouvelle réservation",
@@ -2283,10 +2284,116 @@
     "SERVICE_NOT_AVAILABLE_FOR_VEHICLE": "Ce service n'est pas disponible pour votre type de véhicule.",
     "INVALID_DATE": "Cette date ne peut pas être réservée.",
     "CUSTOMER_SERVICE_UNAVAILABLE": "Nous n'avons pas pu valider votre véhicule. Réessayez dans un instant.",
-    "BOOKING_NOT_CHANGEABLE": "Cette réservation ne peut plus être modifiée."
+    "BOOKING_NOT_CHANGEABLE": "Cette réservation ne peut plus être modifiée.",
+    "OPERATOR_NOT_ON_SHIFT": "L'opérateur n'a pas de créneau à cette heure. Vérifiez son horaire hebdomadaire dans Opérateurs.",
+    "OPERATOR_INACTIVE": "L'opérateur est inactif.",
+    "OPERATOR_ABSENT": "L'opérateur a une absence enregistrée à cette heure.",
+    "OPERATOR_BUSY": "L'opérateur a déjà un autre service à cette heure.",
+    "BOOKING_NOT_ASSIGNABLE": "Cette réservation ne peut plus être attribuée (en cours, terminée ou annulée).",
+    "BOOKING_STATE_CONFLICT": "La réservation a changé de statut. Rechargez la page.",
+    "EXECUTION_ALREADY_STARTED": "Ce service a déjà commencé.",
+    "EXECUTION_NOT_STARTED": "Vous devez d'abord démarrer le service.",
+    "SERVICE_NOT_COMPLETED": "Seul un service terminé peut être évalué.",
+    "ALREADY_RATED": "Ce service a déjà été évalué.",
+    "ABSENCE_OVERLAP": "Une absence existe déjà à ces dates.",
+    "OPERATOR_NOT_FOUND": "Opérateur introuvable.",
+    "BOOKING_NOT_FOUND": "Réservation introuvable.",
+    "BOOKING_SERVICE_UNAVAILABLE": "Le service de réservations ne répond pas. Réessayez dans un instant."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",
     "PROCESSING": "Traitement..."
+  },
+  "INSPECTION": {
+    "TITLE": "Rapport d'inspection",
+    "SUBTITLE": "Enregistrez l'état du véhicule par étape avec photos et notes",
+    "BACK": "Retour aux réservations",
+    "VIEW_AS_CLIENT": "Voir comme le client",
+    "SHARE_WHATSAPP": "Envoyer par WhatsApp",
+    "PUBLISH": "Publier et copier le lien",
+    "COPY_LINK": "Copier le lien",
+    "LINK": "Lien pour le client",
+    "NOT_FOUND_TITLE": "Réservation introuvable",
+    "NOT_FOUND_MESSAGE": "La réservation n'existe pas ou est hors de la période chargée.",
+    "START_TITLE": "Aucun rapport pour cette réservation",
+    "START_MESSAGE": "Démarrez le rapport à l'arrivée du véhicule. Vous pourrez noter des constats avec photos à chaque étape et partager l'avancement avec le client.",
+    "START": "Démarrer le rapport",
+    "UNAVAILABLE_TITLE": "Rapport indisponible",
+    "UNAVAILABLE_SHORT": "Le rapport d'inspection ne s'applique qu'aux services de {{min}} minutes ou plus.",
+    "UNAVAILABLE_CLOSED": "La réservation n'est plus à la station, le rapport ne peut pas être démarré.",
+    "STATS": {
+      "PHASES": "Étapes terminées",
+      "FINDINGS": "Constats",
+      "MAJOR": "Dommages importants"
+    },
+    "NOT_PUBLISHED_HINT": "Le rapport n'est pas encore publié : le client ne peut pas le voir avant sa publication.",
+    "READ_ONLY_HINT": "La réservation n'est plus en cours ; le rapport est en lecture seule.",
+    "STARTED_AT": "Commencée {{time}}",
+    "FINISHED_AT": "Terminée {{time}}",
+    "NO_FINDINGS": "Rien à signaler pour cette étape",
+    "ADD_FINDING": "Ajouter un constat",
+    "START_PHASE": "Démarrer l'étape",
+    "FINISH_PHASE": "Terminer l'étape",
+    "REOPEN_PHASE": "Rouvrir",
+    "PHASES": {
+      "RECEPTION": "Réception",
+      "EXTERIOR": "Extérieur",
+      "INTERIOR": "Intérieur",
+      "ENGINE": "Moteur",
+      "DELIVERY": "Livraison"
+    },
+    "PHASE_STATUS": {
+      "PENDING": "En attente",
+      "IN_PROGRESS": "En cours",
+      "DONE": "Terminée"
+    },
+    "SEVERITY": {
+      "INFO": "Observation",
+      "MINOR": "Dommage léger",
+      "MAJOR": "Dommage important"
+    },
+    "AREAS": {
+      "FRONT_BUMPER": "Pare-chocs avant",
+      "REAR_BUMPER": "Pare-chocs arrière",
+      "DOOR": "Portière",
+      "HOOD": "Capot",
+      "ROOF": "Toit",
+      "FRONT_SEAT": "Siège avant",
+      "REAR_SEAT": "Siège arrière",
+      "DASHBOARD": "Tableau de bord",
+      "WHEELS": "Pneus et jantes",
+      "WINDOWS": "Vitres"
+    },
+    "FINDING_MODAL": {
+      "TITLE": "Nouveau constat",
+      "AREA": "Partie du véhicule",
+      "AREA_PLACEHOLDER": "Ex. portière arrière droite",
+      "SEVERITY": "Type",
+      "NOTE": "Note",
+      "NOTE_PLACEHOLDER": "Décrivez ce que vous avez trouvé",
+      "PHOTOS": "Photos ({{count}}/{{max}})",
+      "ADD_PHOTO": "Prendre une photo",
+      "PHOTOS_HINT": "JPG ou PNG jusqu'à 10 Mo. Elles sont réduites automatiquement avant l'enregistrement.",
+      "INVALID_FILE": "Seules les images JPG ou PNG jusqu'à 10 Mo sont autorisées.",
+      "MAX_PHOTOS": "Vous pouvez joindre jusqu'à 5 photos par constat."
+    },
+    "FEEDBACK": {
+      "PUBLISHED_TITLE": "Lien prêt",
+      "PUBLISHED_MESSAGE": "Le rapport est publié et le lien a été copié. Partagez-le avec le client.",
+      "DELETE_TITLE": "Supprimer le constat",
+      "DELETE_CONFIRM": "Supprimer le constat « {{area}} » et ses photos ?",
+      "SAVE_ERROR": "Le constat n'a pas pu être enregistré. Réessayez."
+    },
+    "WHATSAPP_TEXT": "Bonjour, voici le rapport d'inspection de votre véhicule (réservation {{code}}) : {{link}}",
+    "NO_BOOKING_HINT": "La réservation n'a pas pu être chargée ; le rapport est affiché en lecture seule."
+  },
+  "PUBLIC_REPORT": {
+    "TITLE": "Rapport de votre véhicule",
+    "SUBTITLE": "Où en est le service de votre véhicule à la station",
+    "PROGRESS": "{{done}} étapes sur {{total}} terminées",
+    "UPDATED": "Mis à jour : {{date}}",
+    "NOT_AVAILABLE_TITLE": "Ce rapport n'est pas disponible",
+    "NOT_AVAILABLE_MESSAGE": "Le lien n'est pas valide ou le rapport n'a pas encore été publié. Contactez la station si vous pensez qu'il s'agit d'une erreur.",
+    "DISCLAIMER": "Les photos et notes sont enregistrées par la station lors de l'inspection de votre véhicule à chaque étape du service."
   }
 }

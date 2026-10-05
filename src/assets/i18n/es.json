@@ -2097,7 +2097,8 @@
       "cancelled": "Cancelar",
       "no_show": "No asistió"
     },
-    "CANCEL_REASON": "Motivo de cancelación"
+    "CANCEL_REASON": "Motivo de cancelación",
+    "INSPECTION": "Reporte de inspección"
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nueva reserva",
@@ -2283,10 +2284,116 @@
     "SERVICE_NOT_AVAILABLE_FOR_VEHICLE": "Ese servicio no está disponible para tu tipo de vehículo.",
     "INVALID_DATE": "La fecha no es válida para reservar.",
     "CUSTOMER_SERVICE_UNAVAILABLE": "No pudimos validar tu vehículo. Intenta de nuevo en un momento.",
-    "BOOKING_NOT_CHANGEABLE": "Esta reserva ya no se puede cambiar."
+    "BOOKING_NOT_CHANGEABLE": "Esta reserva ya no se puede cambiar.",
+    "OPERATOR_NOT_ON_SHIFT": "El operario no tiene turno en ese horario. Revisa su turno semanal en Operarios.",
+    "OPERATOR_INACTIVE": "El operario está inactivo.",
+    "OPERATOR_ABSENT": "El operario tiene una ausencia registrada en ese horario.",
+    "OPERATOR_BUSY": "El operario ya tiene otro servicio en ese horario.",
+    "BOOKING_NOT_ASSIGNABLE": "Esta reserva ya no se puede asignar (está en curso, finalizada o cancelada).",
+    "BOOKING_STATE_CONFLICT": "La reserva cambió de estado. Recarga la página.",
+    "EXECUTION_ALREADY_STARTED": "Este servicio ya fue iniciado.",
+    "EXECUTION_NOT_STARTED": "Primero debes iniciar el servicio.",
+    "SERVICE_NOT_COMPLETED": "Solo puedes calificar un servicio finalizado.",
+    "ALREADY_RATED": "Este servicio ya fue calificado.",
+    "ABSENCE_OVERLAP": "Ya existe una ausencia en esas fechas.",
+    "OPERATOR_NOT_FOUND": "No se encontró el operario.",
+    "BOOKING_NOT_FOUND": "No se encontró la reserva.",
+    "BOOKING_SERVICE_UNAVAILABLE": "El servicio de reservas no responde. Intenta de nuevo en un momento."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Contraseña actual",
     "PROCESSING": "Procesando..."
+  },
+  "INSPECTION": {
+    "TITLE": "Reporte de inspección",
+    "SUBTITLE": "Registra por fases el estado del vehículo con fotos y notas",
+    "BACK": "Volver a reservas",
+    "VIEW_AS_CLIENT": "Ver como cliente",
+    "SHARE_WHATSAPP": "Enviar por WhatsApp",
+    "PUBLISH": "Publicar y copiar enlace",
+    "COPY_LINK": "Copiar enlace",
+    "LINK": "Enlace para el cliente",
+    "NOT_FOUND_TITLE": "Reserva no encontrada",
+    "NOT_FOUND_MESSAGE": "La reserva no existe o está fuera del rango cargado.",
+    "START_TITLE": "Aún no hay reporte para esta reserva",
+    "START_MESSAGE": "Inicia el reporte al recibir el vehículo. Podrás registrar hallazgos con fotos en cada fase y compartir el avance con el cliente.",
+    "START": "Iniciar reporte",
+    "UNAVAILABLE_TITLE": "Reporte no disponible",
+    "UNAVAILABLE_SHORT": "El reporte de inspección solo aplica a servicios de {{min}} minutos o más.",
+    "UNAVAILABLE_CLOSED": "La reserva ya no está en el lavadero, por eso no se puede iniciar un reporte.",
+    "STATS": {
+      "PHASES": "Fases terminadas",
+      "FINDINGS": "Hallazgos",
+      "MAJOR": "Daños importantes"
+    },
+    "NOT_PUBLISHED_HINT": "El reporte aún no está publicado: el cliente no puede verlo hasta que lo publiques.",
+    "READ_ONLY_HINT": "La reserva ya no está en curso; el reporte queda en solo lectura.",
+    "STARTED_AT": "Inició {{time}}",
+    "FINISHED_AT": "Terminó {{time}}",
+    "NO_FINDINGS": "Sin novedades en esta fase",
+    "ADD_FINDING": "Agregar hallazgo",
+    "START_PHASE": "Iniciar fase",
+    "FINISH_PHASE": "Terminar fase",
+    "REOPEN_PHASE": "Reabrir",
+    "PHASES": {
+      "RECEPTION": "Recepción",
+      "EXTERIOR": "Exterior",
+      "INTERIOR": "Interior",
+      "ENGINE": "Motor",
+      "DELIVERY": "Entrega"
+    },
+    "PHASE_STATUS": {
+      "PENDING": "Pendiente",
+      "IN_PROGRESS": "En curso",
+      "DONE": "Terminada"
+    },
+    "SEVERITY": {
+      "INFO": "Observación",
+      "MINOR": "Daño leve",
+      "MAJOR": "Daño importante"
+    },
+    "AREAS": {
+      "FRONT_BUMPER": "Bómper delantero",
+      "REAR_BUMPER": "Bómper trasero",
+      "DOOR": "Puerta",
+      "HOOD": "Capó",
+      "ROOF": "Techo",
+      "FRONT_SEAT": "Asiento delantero",
+      "REAR_SEAT": "Asiento trasero",
+      "DASHBOARD": "Tablero",
+      "WHEELS": "Llantas y rines",
+      "WINDOWS": "Vidrios"
+    },
+    "FINDING_MODAL": {
+      "TITLE": "Nuevo hallazgo",
+      "AREA": "Parte del vehículo",
+      "AREA_PLACEHOLDER": "Ej. puerta trasera derecha",
+      "SEVERITY": "Tipo",
+      "NOTE": "Nota",
+      "NOTE_PLACEHOLDER": "Describe lo que encontraste",
+      "PHOTOS": "Fotos ({{count}}/{{max}})",
+      "ADD_PHOTO": "Tomar foto",
+      "PHOTOS_HINT": "JPG o PNG de hasta 10 MB. Se reducen automáticamente antes de guardarse.",
+      "INVALID_FILE": "Solo se permiten imágenes JPG o PNG de hasta 10 MB.",
+      "MAX_PHOTOS": "Puedes adjuntar máximo 5 fotos por hallazgo."
+    },
+    "FEEDBACK": {
+      "PUBLISHED_TITLE": "Enlace listo",
+      "PUBLISHED_MESSAGE": "El reporte está publicado y el enlace se copió. Compártelo con el cliente.",
+      "DELETE_TITLE": "Eliminar hallazgo",
+      "DELETE_CONFIRM": "¿Eliminar el hallazgo \"{{area}}\" y sus fotos?",
+      "SAVE_ERROR": "No se pudo guardar el hallazgo. Intenta de nuevo."
+    },
+    "WHATSAPP_TEXT": "Hola, este es el reporte de inspección de tu vehículo (reserva {{code}}): {{link}}",
+    "NO_BOOKING_HINT": "No se pudo cargar la reserva; el reporte se muestra en solo lectura."
+  },
+  "PUBLIC_REPORT": {
+    "TITLE": "Reporte de tu vehículo",
+    "SUBTITLE": "Así va el servicio de tu vehículo en el lavadero",
+    "PROGRESS": "{{done}} de {{total}} fases terminadas",
+    "UPDATED": "Actualizado: {{date}}",
+    "NOT_AVAILABLE_TITLE": "Este reporte no está disponible",
+    "NOT_AVAILABLE_MESSAGE": "El enlace no es válido o el reporte todavía no se ha publicado. Comunícate con el lavadero si crees que es un error.",
+    "DISCLAIMER": "Las fotos y notas las registra el lavadero al revisar tu vehículo en cada fase del servicio."
   }
 }

@@ -2097,7 +2097,8 @@
       "cancelled": "Cancel",
       "no_show": "No show"
     },
-    "CANCEL_REASON": "Cancellation reason"
+    "CANCEL_REASON": "Cancellation reason",
+    "INSPECTION": "Inspection report"
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "New booking",
@@ -2283,10 +2284,116 @@
     "SERVICE_NOT_AVAILABLE_FOR_VEHICLE": "That service is not available for your vehicle type.",
     "INVALID_DATE": "That date cannot be booked.",
     "CUSTOMER_SERVICE_UNAVAILABLE": "We could not validate your vehicle. Try again in a moment.",
-    "BOOKING_NOT_CHANGEABLE": "This booking can no longer be changed."
+    "BOOKING_NOT_CHANGEABLE": "This booking can no longer be changed.",
+    "OPERATOR_NOT_ON_SHIFT": "The operator has no shift at that time. Check their weekly shift in Operators.",
+    "OPERATOR_INACTIVE": "The operator is inactive.",
+    "OPERATOR_ABSENT": "The operator has an absence registered at that time.",
+    "OPERATOR_BUSY": "The operator already has another service at that time.",
+    "BOOKING_NOT_ASSIGNABLE": "This booking can no longer be assigned (in progress, completed or cancelled).",
+    "BOOKING_STATE_CONFLICT": "The booking changed status. Reload the page.",
+    "EXECUTION_ALREADY_STARTED": "This service was already started.",
+    "EXECUTION_NOT_STARTED": "You must start the service first.",
+    "SERVICE_NOT_COMPLETED": "Only a completed service can be rated.",
+    "ALREADY_RATED": "This service was already rated.",
+    "ABSENCE_OVERLAP": "There is already an absence on those dates.",
+    "OPERATOR_NOT_FOUND": "Operator not found.",
+    "BOOKING_NOT_FOUND": "Booking not found.",
+    "BOOKING_SERVICE_UNAVAILABLE": "The booking service is not responding. Try again in a moment."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",
     "PROCESSING": "Processing..."
+  },
+  "INSPECTION": {
+    "TITLE": "Inspection report",
+    "SUBTITLE": "Record the vehicle condition by phase with photos and notes",
+    "BACK": "Back to bookings",
+    "VIEW_AS_CLIENT": "View as customer",
+    "SHARE_WHATSAPP": "Send via WhatsApp",
+    "PUBLISH": "Publish and copy link",
+    "COPY_LINK": "Copy link",
+    "LINK": "Customer link",
+    "NOT_FOUND_TITLE": "Booking not found",
+    "NOT_FOUND_MESSAGE": "The booking does not exist or is outside the loaded range.",
+    "START_TITLE": "There is no report for this booking yet",
+    "START_MESSAGE": "Start the report when the vehicle arrives. You can record findings with photos in each phase and share progress with the customer.",
+    "START": "Start report",
+    "UNAVAILABLE_TITLE": "Report not available",
+    "UNAVAILABLE_SHORT": "The inspection report only applies to services of {{min}} minutes or more.",
+    "UNAVAILABLE_CLOSED": "The booking is no longer at the shop, so a report cannot be started.",
+    "STATS": {
+      "PHASES": "Phases completed",
+      "FINDINGS": "Findings",
+      "MAJOR": "Major damage"
+    },
+    "NOT_PUBLISHED_HINT": "The report is not published yet: the customer cannot see it until you publish it.",
+    "READ_ONLY_HINT": "The booking is no longer in progress; the report is read-only.",
+    "STARTED_AT": "Started {{time}}",
+    "FINISHED_AT": "Finished {{time}}",
+    "NO_FINDINGS": "Nothing to report in this phase",
+    "ADD_FINDING": "Add finding",
+    "START_PHASE": "Start phase",
+    "FINISH_PHASE": "Finish phase",
+    "REOPEN_PHASE": "Reopen",
+    "PHASES": {
+      "RECEPTION": "Reception",
+      "EXTERIOR": "Exterior",
+      "INTERIOR": "Interior",
+      "ENGINE": "Engine",
+      "DELIVERY": "Delivery"
+    },
+    "PHASE_STATUS": {
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In progress",
+      "DONE": "Done"
+    },
+    "SEVERITY": {
+      "INFO": "Note",
+      "MINOR": "Minor damage",
+      "MAJOR": "Major damage"
+    },
+    "AREAS": {
+      "FRONT_BUMPER": "Front bumper",
+      "REAR_BUMPER": "Rear bumper",
+      "DOOR": "Door",
+      "HOOD": "Hood",
+      "ROOF": "Roof",
+      "FRONT_SEAT": "Front seat",
+      "REAR_SEAT": "Rear seat",
+      "DASHBOARD": "Dashboard",
+      "WHEELS": "Tires and rims",
+      "WINDOWS": "Windows"
+    },
+    "FINDING_MODAL": {
+      "TITLE": "New finding",
+      "AREA": "Vehicle part",
+      "AREA_PLACEHOLDER": "E.g. rear right door",
+      "SEVERITY": "Type",
+      "NOTE": "Note",
+      "NOTE_PLACEHOLDER": "Describe what you found",
+      "PHOTOS": "Photos ({{count}}/{{max}})",
+      "ADD_PHOTO": "Take photo",
+      "PHOTOS_HINT": "JPG or PNG up to 10 MB. They are resized automatically before saving.",
+      "INVALID_FILE": "Only JPG or PNG images up to 10 MB are allowed.",
+      "MAX_PHOTOS": "You can attach up to 5 photos per finding."
+    },
+    "FEEDBACK": {
+      "PUBLISHED_TITLE": "Link ready",
+      "PUBLISHED_MESSAGE": "The report is published and the link was copied. Share it with the customer.",
+      "DELETE_TITLE": "Delete finding",
+      "DELETE_CONFIRM": "Delete the finding \"{{area}}\" and its photos?",
+      "SAVE_ERROR": "The finding could not be saved. Please try again."
+    },
+    "WHATSAPP_TEXT": "Hi, here is the inspection report for your vehicle (booking {{code}}): {{link}}",
+    "NO_BOOKING_HINT": "The booking could not be loaded; the report is shown read-only."
+  },
+  "PUBLIC_REPORT": {
+    "TITLE": "Your vehicle report",
+    "SUBTITLE": "How your vehicle service is going at the car wash",
+    "PROGRESS": "{{done}} of {{total}} phases completed",
+    "UPDATED": "Updated: {{date}}",
+    "NOT_AVAILABLE_TITLE": "This report is not available",
+    "NOT_AVAILABLE_MESSAGE": "The link is invalid or the report has not been published yet. Contact the car wash if you think this is a mistake.",
+    "DISCLAIMER": "Photos and notes are recorded by the car wash while checking your vehicle in each phase of the service."
   }
 }
