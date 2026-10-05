@@ -5,10 +5,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { Booking, BookingStatus } from '../../../../models/admin.models';
+import { supportsInspection } from '../../../inspection/inspection';
 
 // resultado de las acciones del modal: cambiar estado o abrir otra ventana
 export interface BookingDetailResult {
-  action: 'status' | 'assign' | 'edit';
+  action: 'status' | 'assign' | 'edit' | 'inspection';
   status?: BookingStatus;
 }
 
@@ -42,6 +43,15 @@ export class BookingDetailModal {
   /** "no asistió" solo aplica a una reserva confirmada que no empezó */
   get canMarkNoShow(): boolean {
     return this.booking.status === 'confirmed';
+  }
+
+  /** reporte de inspección por fases: solo en servicios largos (RF-027) */
+  get canInspect(): boolean {
+    return supportsInspection(this.booking);
+  }
+
+  openInspection(): void {
+    this.dialogRef.close({ action: 'inspection' });
   }
 
   markNoShow(): void {

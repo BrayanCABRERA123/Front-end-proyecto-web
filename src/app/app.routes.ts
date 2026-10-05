@@ -24,6 +24,13 @@ export const routes: Routes = [
       import('./features/client/client-module')
         .then(m => m.ClientModule)
   },
+  // reporte de inspección que el admin comparte con el cliente: público y de solo lectura
+  {
+    path: 'report/:token',
+    loadComponent: () =>
+      import('./features/public-report/public-report')
+        .then(c => c.PublicReportComponent)
+  },
   {
     path: 'admin',
     canActivate: [authGuard],

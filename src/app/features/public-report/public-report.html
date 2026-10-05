@@ -1,0 +1,116 @@
+<div class="report-page">
+
+  <header class="report-brand">
+    <img src="images/logo.svg" alt="" width="32" height="32">
+    <span>{{ 'APP.TITLE' | translate }}</span>
+  </header>
+
+  <main class="report-content">
+
+    @if (loading()) {
+      <div class="card state-card">
+        <span class="spinner"></span>
+      </div>
+    } @else if (!report()) {
+      <div class="card state-card">
+        <div class="state-card__icon"><mat-icon>link_off</mat-icon></div>
+        <h2>{{ 'PUBLIC_REPORT.NOT_AVAILABLE_TITLE' | translate }}</h2>
+        <p>{{ 'PUBLIC_REPORT.NOT_AVAILABLE_MESSAGE' | translate }}</p>
+      </div>
+    } @else {
+      @let r = report()!;
+
+      <!-- encabezado del reporte -->
+      <section class="card hero-card">
+        <div class="hero-card__top">
+          <div class="hero-card__icon"><mat-icon>fact_check</mat-icon></div>
+          <div>
+            <h1>{{ 'PUBLIC_REPORT.TITLE' | translate }}</h1>
+            <p>{{ 'PUBLIC_REPORT.SUBTITLE' | translate }}</p>
+          </div>
+        </div>
+
+        <div class="hero-card__vehicle">
+          <span class="plate">{{ maskedPlate(r.booking.plate) }}</span>
+          <div>
+            <strong>{{ r.booking.vehicle }}</strong>
+            <span class="muted">{{ r.booking.service }} · {{ dateLabel(r.booking.date) }}, {{ r.booking.time }}</span>
+          </div>
+        </div>
+
+        <div class="progress">
+          <div class="progress__label">
+            <span>{{ 'PUBLIC_REPORT.PROGRESS' | translate:{ done: summary().done, total: summary().total } }}</span>
+            <strong>{{ progress() }}%</strong>
+          </div>
+          <div class="progress__bar"><div class="progress__fill" [style.width.%]="progress()"></div></div>
+        </div>
+
+        <span class="muted">{{ 'PUBLIC_REPORT.UPDATED' | translate:{ date: updatedLabel(r) } }}</span>
+      </section>
+
+      <!-- fases -->
+      <ol class="timeline">
+        @for (entry of r.phases; track entry.phase) {
+          <li [class]="'timeline__item timeline__item--' + entry.status">
+            <div class="timeline__marker"><mat-icon>{{ phaseIcons[entry.phase] }}</mat-icon></div>
+
+            <div class="card phase-card">
+              <div class="phase-card__header">
+                <div>
+                  <h3>{{ ('INSPECTION.PHASES.' + entry.phase) | translate }}</h3>
+                  @if (entry.finishedAt) {
+                    <span class="muted">{{ 'INSPECTION.FINISHED_AT' | translate:{ time: time(entry.finishedAt) } }}</span>
+                  } @else if (entry.startedAt) {
+                    <span class="muted">{{ 'INSPECTION.STARTED_AT' | translate:{ time: time(entry.startedAt) } }}</span>
+                  }
+                </div>
+                <span [class]="'phase-pill phase-pill--' + entry.status">
+                  {{ ('INSPECTION.PHASE_STATUS.' + entry.status) | translate }}
+                </span>
+              </div>
+
+              @for (finding of entry.findings; track finding.id) {
+                <div class="finding">
+                  <div class="finding__header">
+                    <span [class]="'severity-pill severity-pill--' + finding.severity">
+                      {{ ('INSPECTION.SEVERITY.' + finding.severity) | translate }}
+                    </span>
+                    <strong>{{ finding.area }}</strong>
+                    <span class="muted finding__time">{{ findingTime(finding) }}</span>
+                  </div>
+                  @if (finding.note) {
+                    <p class="finding__note">{{ finding.note }}</p>
+                  }
+                  @if (finding.photoIds.length) {
+                    <div class="finding__photos">
+                      @for (photoId of finding.photoIds; track photoId) {
+                        <app-inspection-photo [photoId]="photoId" (open)="preview.set($event)"></app-inspection-photo>
+                      }
+                    </div>
+                  }
+                </div>
+              } @empty {
+                @if (entry.status === 'DONE') {
+                  <p class="phase-card__empty"><mat-icon>check</mat-icon>{{ 'INSPECTION.NO_FINDINGS' | translate }}</p>
+                }
+              }
+            </div>
+          </li>
+        }
+      </ol>
+
+      <p class="disclaimer"><mat-icon>info</mat-icon>{{ 'PUBLIC_REPORT.DISCLAIMER' | translate }}</p>
+    }
+
+  </main>
+</div>
+
+@if (preview()) {
+  <div class="lightbox" (click)="preview.set(null)">
+    <button type="button" class="lightbox__close" (click)="preview.set(null)" aria-label="close">
+      <mat-icon>close</mat-icon>
+    </button>
+    <img [src]="preview()" alt="" (click)="$event.stopPropagation()">
+  </div>
+}

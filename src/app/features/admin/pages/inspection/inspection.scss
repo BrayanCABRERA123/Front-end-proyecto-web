@@ -1,0 +1,460 @@
+@use '../../../../../styles/mixins' as *;
+
+// misma base visual de la pantalla de reservas (layout, encabezado, botones, tarjetas)
+
+.home-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.home-content {
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.muted { @include caption-text; color: var(--text-secondary); display: block; }
+
+/* encabezado */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  &__left { display: flex; align-items: center; gap: 14px; }
+
+  &__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  h1 { @include heading-2; color: var(--text); margin: 0; }
+  p { @include body-text; color: var(--text-secondary); margin: 2px 0 0; }
+}
+
+.header-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: $border-radius-sm;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+
+  &:hover { background: var(--item-hover); }
+
+  &--danger {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border: none;
+    background: transparent;
+    color: var(--error);
+
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+    &:hover { background: var(--error-soft); }
+  }
+}
+
+/* botones */
+.btn-primary, .btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: $border-radius-sm;
+  padding: 10px 16px;
+  font-family: $font-family-base;
+  font-weight: $fw-semibold;
+  font-size: $fs-body;
+  cursor: pointer;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+
+  &:hover { background: var(--primary-hover); }
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+
+  &:hover { background: var(--item-hover); }
+}
+
+/* tarjetas */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: $border-radius;
+  padding: 18px 20px;
+}
+
+/* reserva */
+.booking-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+
+    strong { @include body-text-bold; color: var(--text); display: block; }
+    .status-pill { margin-left: auto; }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+
+    span { @include caption-text; color: var(--text-secondary); display: block; }
+    strong { @include body-text-bold; color: var(--text); }
+  }
+}
+
+.plate {
+  font-family: monospace;
+  font-size: $fs-subtitle;
+  font-weight: $fw-bold;
+  letter-spacing: .08em;
+  color: var(--primary);
+  background: var(--primary-soft);
+  padding: 8px 12px;
+  border-radius: $border-radius-sm;
+}
+
+.status-pill {
+  font-size: 11px;
+  font-weight: $fw-semibold;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+
+  &--confirmed { background: var(--primary-soft); color: var(--primary); }
+  &--in_progress { background: var(--success-soft); color: var(--success); }
+  &--completed { background: var(--neutral-badge-soft); color: var(--neutral-badge); }
+  &--cancelled { background: var(--error-soft); color: var(--error); }
+}
+
+/* sin reporte */
+.start-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 36px 20px;
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: var(--primary-soft);
+    color: var(--primary);
+
+    mat-icon { font-size: 28px; width: 28px; height: 28px; }
+  }
+
+  h3 { @include heading-3; color: var(--text); margin: 4px 0 0; }
+  p { @include body-text; color: var(--text-secondary); margin: 0 0 6px; max-width: 520px; }
+}
+
+/* stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.stat-label { @include caption-text; color: var(--text-secondary); margin: 0 0 6px; }
+.stat-value { @include heading-1; color: var(--text); margin: 0; }
+.stat-value--muted { color: var(--text-secondary); }
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--primary-soft);
+  color: var(--primary);
+
+  &--neutral { background: var(--neutral-badge-soft); color: var(--neutral-badge); }
+  &--error { background: var(--error-soft); color: var(--error); }
+}
+
+/* enlace público */
+.link-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+
+  > mat-icon { color: var(--primary); }
+
+  &__text {
+    flex: 1;
+    min-width: 0;
+
+    span { @include caption-text; color: var(--text-secondary); display: block; margin-bottom: 4px; }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      font-family: monospace;
+      font-size: $fs-caption;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+
+      &:focus { outline: none; border-color: var(--primary); }
+    }
+  }
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  @include caption-text;
+  color: var(--text-muted);
+  margin: 0;
+  padding: 10px 12px;
+  background: var(--item-bg);
+  border-radius: $border-radius-sm;
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; }
+}
+
+/* línea de tiempo de fases */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__item {
+    position: relative;
+    display: flex;
+    gap: 16px;
+
+    // línea vertical que une los marcadores
+    &:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 21px;
+      top: 44px;
+      bottom: -16px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    &--DONE:not(:last-child)::before { background: var(--primary); }
+  }
+
+  &__marker {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--card);
+    border: 2px solid var(--border);
+    color: var(--text-muted);
+    z-index: 1;
+
+    mat-icon { font-size: 20px; width: 20px; height: 20px; }
+  }
+
+  &__item--IN_PROGRESS &__marker { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+  &__item--DONE &__marker { border-color: var(--primary); background: var(--primary); color: #ffffff; }
+}
+
+.phase-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+
+    h3 { @include subtitle; color: var(--text); font-weight: $fw-bold; margin: 0; }
+  }
+
+  &__empty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    @include caption-text;
+    color: var(--text-muted);
+    margin: 0;
+
+    mat-icon { font-size: 16px; width: 16px; height: 16px; color: var(--success); }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+.phase-pill, .severity-pill {
+  font-size: 11px;
+  font-weight: $fw-semibold;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.phase-pill {
+  &--PENDING { background: var(--neutral-badge-soft); color: var(--neutral-badge); }
+  &--IN_PROGRESS { background: var(--primary-soft); color: var(--primary); }
+  &--DONE { background: var(--success-soft); color: var(--success); }
+}
+
+.severity-pill {
+  &--INFO { background: var(--neutral-badge-soft); color: var(--neutral-badge); }
+  &--MINOR { background: var(--warning-soft); color: var(--warning); }
+  &--MAJOR { background: var(--error-soft); color: var(--error); }
+}
+
+.findings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.finding {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: $border-radius-sm;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    strong { @include body-text-bold; color: var(--text); }
+  }
+
+  &__time { margin-left: auto; }
+
+  &__note { @include body-text; color: var(--text-secondary); margin: 0; }
+
+  &__photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: 8px;
+    max-width: 520px;
+  }
+}
+
+/* foto ampliada */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--overlay-dark);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  cursor: zoom-out;
+
+  img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: $border-radius-sm;
+    cursor: default;
+  }
+
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    display: grid;
+    place-items: center;
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+  }
+}
+
+@include tablet {
+  .home-content { padding: 20px; }
+}
+
+@include mobile {
+  .page-header { flex-direction: column; align-items: flex-start; }
+  .page-header__actions { width: 100%; }
+  .btn-primary, .btn-outline { flex: 1; justify-content: center; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+
+  // en celular el marcador se hace pequeño para dar espacio a la tarjeta
+  .timeline__item { gap: 10px; }
+  .timeline__item:not(:last-child)::before { left: 15px; top: 32px; }
+  .timeline__marker { width: 32px; height: 32px; min-width: 32px; }
+  .timeline__marker mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  .phase-card { padding: 14px; }
+  .booking-card__main .status-pill { margin-left: 0; }
+}

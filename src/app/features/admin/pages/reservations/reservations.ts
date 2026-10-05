@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
@@ -47,6 +48,7 @@ export class ReservationsComponent implements OnInit {
     private operators: OperatorsStore,
     private dialog: MatDialog,
     private feedback: FeedbackService,
+    private router: Router,
   ) {}
 
   // se recarga al entrar para ver las reservas que llegaron desde la app del cliente
@@ -203,6 +205,8 @@ export class ReservationsComponent implements OnInit {
         this.openAssignModal(booking);
       } else if (result.action === 'edit') {
         this.openEdit(booking);
+      } else if (result.action === 'inspection') {
+        this.router.navigate(['/admin/reservations', booking.id, 'inspection']);
       }
     });
   }
@@ -284,11 +288,13 @@ export class ReservationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: AssignOperatorResult | null) => {
       if (!result) return;
-      this.store.assignOperator(booking.id, result.operatorId);
-      this.feedback.success(
-        'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE',
-        'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
-        { messageParams: { code: booking.code } }
+      // el aviso de éxito sale solo si el backend aceptó la asignación
+      this.store.assignOperator(booking.id, result.operatorId, () =>
+        this.feedback.success(
+          'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE',
+          'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
+          { messageParams: { code: booking.code } }
+        )
       );
     });
   }

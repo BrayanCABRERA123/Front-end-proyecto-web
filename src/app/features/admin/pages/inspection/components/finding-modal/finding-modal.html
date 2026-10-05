@@ -1,0 +1,92 @@
+<div class="form-dialog form-dialog--wide">
+
+  <div class="form-dialog__header">
+    <div class="finding-title">
+      <div class="finding-title__icon"><mat-icon>add_a_photo</mat-icon></div>
+      <div>
+        <h2>{{ 'INSPECTION.FINDING_MODAL.TITLE' | translate }}</h2>
+        <p>{{ ('INSPECTION.PHASES.' + data.phase) | translate }}</p>
+      </div>
+    </div>
+    <button type="button" class="form-dialog__close" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="form-dialog__body">
+
+    <label class="form-field">
+      <span>{{ 'INSPECTION.FINDING_MODAL.AREA' | translate }} *</span>
+      <input type="text" [(ngModel)]="area" list="inspection-areas" maxlength="80"
+             [placeholder]="'INSPECTION.FINDING_MODAL.AREA_PLACEHOLDER' | translate">
+      <datalist id="inspection-areas">
+        @for (key of areaSuggestions; track key) {
+          <option [value]="key | translate"></option>
+        }
+      </datalist>
+    </label>
+
+    <div class="form-field">
+      <span>{{ 'INSPECTION.FINDING_MODAL.SEVERITY' | translate }}</span>
+      <div class="severity-options">
+        @for (option of severities; track option) {
+          <button type="button"
+                  [class]="'severity-option severity-option--' + option"
+                  [class.severity-option--active]="severity === option"
+                  (click)="severity = option">
+            {{ ('INSPECTION.SEVERITY.' + option) | translate }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <label class="form-field">
+      <span>{{ 'INSPECTION.FINDING_MODAL.NOTE' | translate }}</span>
+      <textarea rows="3" [(ngModel)]="note" maxlength="500"
+                [placeholder]="'INSPECTION.FINDING_MODAL.NOTE_PLACEHOLDER' | translate"></textarea>
+    </label>
+
+    <div class="form-field">
+      <span>{{ 'INSPECTION.FINDING_MODAL.PHOTOS' | translate:{ count: photos().length, max: maxPhotos } }}</span>
+
+      <div class="photo-grid">
+        @for (photo of photos(); track photo.preview; let i = $index) {
+          <div class="photo-thumb">
+            <img [src]="photo.preview" alt="">
+            <button type="button" class="photo-thumb__remove" (click)="removePhoto(i)" aria-label="remove">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        }
+
+        @if (photos().length < maxPhotos) {
+          <!-- capture="environment" abre la cámara trasera directamente en el celular -->
+          <label class="photo-add" [class.photo-add--busy]="processing()">
+            @if (processing()) {
+              <span class="photo-add__spinner"></span>
+            } @else {
+              <mat-icon>photo_camera</mat-icon>
+              <small>{{ 'INSPECTION.FINDING_MODAL.ADD_PHOTO' | translate }}</small>
+            }
+            <input type="file" accept="image/jpeg,image/png" capture="environment" multiple
+                   [disabled]="processing()" (change)="onFilesSelected($event)">
+          </label>
+        }
+      </div>
+
+      <p class="form-hint">{{ 'INSPECTION.FINDING_MODAL.PHOTOS_HINT' | translate }}</p>
+
+      @if (photoError()) {
+        <span class="form-field__error"><mat-icon>error_outline</mat-icon>{{ photoError()! | translate }}</span>
+      }
+    </div>
+
+  </div>
+
+  <div class="form-dialog__actions">
+    <button type="button" class="form-dialog__cancel" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button type="button" class="form-dialog__submit" [disabled]="!canSave" (click)="save()">
+      <mat-icon>save</mat-icon>
+      {{ 'COMMON.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>

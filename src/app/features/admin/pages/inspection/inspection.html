@@ -1,0 +1,241 @@
+<div class="home-layout">
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <main class="home-content">
+
+    <!-- encabezado -->
+    <div class="page-header">
+      <div class="page-header__left">
+        <button type="button" class="icon-btn" (click)="back()" [attr.aria-label]="'INSPECTION.BACK' | translate">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="header-icon"><mat-icon>fact_check</mat-icon></div>
+        <div>
+          <h1>{{ 'INSPECTION.TITLE' | translate }}</h1>
+          <p>{{ 'INSPECTION.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      @if (report(); as r) {
+        <div class="page-header__actions">
+          @if (r.published) {
+            <button class="btn-outline" (click)="openPublicView()">
+              <mat-icon>visibility</mat-icon>
+              {{ 'INSPECTION.VIEW_AS_CLIENT' | translate }}
+            </button>
+            <button class="btn-outline" (click)="shareWhatsApp()">
+              <mat-icon>chat</mat-icon>
+              {{ 'INSPECTION.SHARE_WHATSAPP' | translate }}
+            </button>
+          }
+          <button class="btn-primary" (click)="publishAndCopy()">
+            <mat-icon>{{ r.published ? 'content_copy' : 'publish' }}</mat-icon>
+            {{ (r.published ? 'INSPECTION.COPY_LINK' : 'INSPECTION.PUBLISH') | translate }}
+          </button>
+        </div>
+      }
+    </div>
+
+    @if (!booking() && !report()) {
+      <div class="card">
+        @if (loadingBooking()) {
+          <app-empty-state variant="loading"></app-empty-state>
+        } @else {
+          <app-empty-state variant="error" icon="search_off"
+                           titleKey="INSPECTION.NOT_FOUND_TITLE" messageKey="INSPECTION.NOT_FOUND_MESSAGE">
+            <button class="btn-outline" (click)="back()">
+              <mat-icon>arrow_back</mat-icon>
+              {{ 'INSPECTION.BACK' | translate }}
+            </button>
+          </app-empty-state>
+        }
+      </div>
+    } @else {
+
+      <!-- datos de la reserva -->
+      <div class="card booking-card">
+        <div class="booking-card__main">
+          <span class="plate">{{ booking()?.plate ?? report()?.booking?.plate }}</span>
+          <div>
+            <strong>{{ booking()?.vehicle ?? report()?.booking?.vehicle }}</strong>
+            <span class="muted">{{ booking()?.code ?? report()?.booking?.code }}</span>
+          </div>
+          @if (booking(); as b) {
+            <span [class]="'status-pill status-pill--' + b.status">
+              {{ ('ADMIN_RESERVATIONS.STATUS.' + b.status) | translate }}
+            </span>
+          }
+        </div>
+
+        @if (booking(); as b) {
+          <div class="booking-card__grid">
+            <div><span>{{ 'BOOKING_DETAIL.CLIENT' | translate }}</span><strong>{{ b.client }}</strong></div>
+            <div><span>{{ 'BOOKING_DETAIL.SERVICE' | translate }}</span><strong>{{ b.service }}</strong></div>
+            <div><span>{{ 'BOOKING_DETAIL.DATE' | translate }}</span><strong>{{ dateLabel(b) }}</strong></div>
+            <div><span>{{ 'BOOKING_DETAIL.DURATION' | translate }}</span><strong>{{ 'BOOKING_DETAIL.MINUTES' | translate:{ count: b.durationMin } }}</strong></div>
+          </div>
+        }
+      </div>
+
+      @if (!report()) {
+
+        <!-- todavía no hay reporte -->
+        <div class="card start-card">
+          <div class="start-card__icon"><mat-icon>add_a_photo</mat-icon></div>
+          @if (editable()) {
+            <h3>{{ 'INSPECTION.START_TITLE' | translate }}</h3>
+            <p>{{ 'INSPECTION.START_MESSAGE' | translate }}</p>
+            <button class="btn-primary" (click)="startReport()">
+              <mat-icon>play_arrow</mat-icon>
+              {{ 'INSPECTION.START' | translate }}
+            </button>
+          } @else {
+            <h3>{{ 'INSPECTION.UNAVAILABLE_TITLE' | translate }}</h3>
+            <p>{{ (supported() ? 'INSPECTION.UNAVAILABLE_CLOSED' : 'INSPECTION.UNAVAILABLE_SHORT') | translate:{ min: minMinutes } }}</p>
+          }
+        </div>
+
+      } @else {
+
+        <!-- resumen -->
+        <div class="stats-grid">
+          <div class="card stat-card">
+            <div>
+              <p class="stat-label">{{ 'INSPECTION.STATS.PHASES' | translate }}</p>
+              <p class="stat-value">{{ summary().done }}/{{ summary().total }}</p>
+            </div>
+            <div class="stat-icon"><mat-icon>timeline</mat-icon></div>
+          </div>
+          <div class="card stat-card">
+            <div>
+              <p class="stat-label">{{ 'INSPECTION.STATS.FINDINGS' | translate }}</p>
+              <p class="stat-value">{{ summary().findings }}</p>
+            </div>
+            <div class="stat-icon stat-icon--neutral"><mat-icon>photo_library</mat-icon></div>
+          </div>
+          <div class="card stat-card">
+            <div>
+              <p class="stat-label">{{ 'INSPECTION.STATS.MAJOR' | translate }}</p>
+              <p class="stat-value" [class.stat-value--muted]="!summary().major">{{ summary().major }}</p>
+            </div>
+            <div class="stat-icon stat-icon--error"><mat-icon>report</mat-icon></div>
+          </div>
+        </div>
+
+        @if (report()!.published) {
+          <div class="card link-card">
+            <mat-icon>link</mat-icon>
+            <div class="link-card__text">
+              <span>{{ 'INSPECTION.LINK' | translate }}</span>
+              <input type="text" readonly [value]="publicLink()" (focus)="$any($event.target).select()">
+            </div>
+          </div>
+        } @else {
+          <p class="hint"><mat-icon>info</mat-icon>{{ 'INSPECTION.NOT_PUBLISHED_HINT' | translate }}</p>
+        }
+
+        @if (!editable()) {
+          <!-- sin la reserva (no cargó o salió de la ventana de fechas) solo se puede consultar -->
+          <p class="hint"><mat-icon>lock</mat-icon>{{ (booking() ? 'INSPECTION.READ_ONLY_HINT' : 'INSPECTION.NO_BOOKING_HINT') | translate }}</p>
+        }
+
+        <!-- fases -->
+        <ol class="timeline">
+          @for (entry of report()!.phases; track entry.phase) {
+            <li [class]="'timeline__item timeline__item--' + entry.status">
+
+              <div class="timeline__marker"><mat-icon>{{ phaseIcons[entry.phase] }}</mat-icon></div>
+
+              <div class="card phase-card">
+                <div class="phase-card__header">
+                  <div>
+                    <h3>{{ ('INSPECTION.PHASES.' + entry.phase) | translate }}</h3>
+                    <span class="muted">
+                      @if (entry.startedAt) { {{ 'INSPECTION.STARTED_AT' | translate:{ time: phaseTime(entry.startedAt) } }} }
+                      @if (entry.finishedAt) { · {{ 'INSPECTION.FINISHED_AT' | translate:{ time: phaseTime(entry.finishedAt) } }} }
+                    </span>
+                  </div>
+                  <span [class]="'phase-pill phase-pill--' + entry.status">
+                    {{ ('INSPECTION.PHASE_STATUS.' + entry.status) | translate }}
+                  </span>
+                </div>
+
+                @if (entry.findings.length) {
+                  <div class="findings">
+                    @for (finding of entry.findings; track finding.id) {
+                      <div class="finding">
+                        <div class="finding__header">
+                          <span [class]="'severity-pill severity-pill--' + finding.severity">
+                            {{ ('INSPECTION.SEVERITY.' + finding.severity) | translate }}
+                          </span>
+                          <strong>{{ finding.area }}</strong>
+                          <span class="muted finding__time">{{ findingTime(finding) }}</span>
+                          @if (editable()) {
+                            <button type="button" class="icon-btn icon-btn--danger" (click)="removeFinding(finding)"
+                                    [attr.aria-label]="'COMMON.DELETE' | translate">
+                              <mat-icon>delete_outline</mat-icon>
+                            </button>
+                          }
+                        </div>
+                        @if (finding.note) {
+                          <p class="finding__note">{{ finding.note }}</p>
+                        }
+                        @if (finding.photoIds.length) {
+                          <div class="finding__photos">
+                            @for (photoId of finding.photoIds; track photoId) {
+                              <app-inspection-photo [photoId]="photoId" (open)="openPreview($event)"></app-inspection-photo>
+                            }
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                } @else if (entry.status === 'DONE') {
+                  <p class="phase-card__empty"><mat-icon>check</mat-icon>{{ 'INSPECTION.NO_FINDINGS' | translate }}</p>
+                }
+
+                @if (editable()) {
+                  <div class="phase-card__actions">
+                    @if (entry.status !== 'DONE') {
+                      <button class="btn-outline" (click)="addFinding(entry)">
+                        <mat-icon>add_a_photo</mat-icon>
+                        {{ 'INSPECTION.ADD_FINDING' | translate }}
+                      </button>
+                    }
+                    @if (entry.status === 'PENDING') {
+                      <button class="btn-primary" (click)="setPhaseStatus(entry, 'IN_PROGRESS')">
+                        <mat-icon>play_arrow</mat-icon>
+                        {{ 'INSPECTION.START_PHASE' | translate }}
+                      </button>
+                    } @else if (entry.status === 'IN_PROGRESS') {
+                      <button class="btn-primary" (click)="setPhaseStatus(entry, 'DONE')">
+                        <mat-icon>check</mat-icon>
+                        {{ 'INSPECTION.FINISH_PHASE' | translate }}
+                      </button>
+                    } @else {
+                      <button class="btn-outline" (click)="setPhaseStatus(entry, 'IN_PROGRESS')">
+                        <mat-icon>undo</mat-icon>
+                        {{ 'INSPECTION.REOPEN_PHASE' | translate }}
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
+            </li>
+          }
+        </ol>
+      }
+    }
+
+  </main>
+</div>
+
+<!-- foto ampliada -->
+@if (preview()) {
+  <div class="lightbox" (click)="closePreview()">
+    <button type="button" class="lightbox__close" (click)="closePreview()" aria-label="close">
+      <mat-icon>close</mat-icon>
+    </button>
+    <img [src]="preview()" alt="" (click)="$event.stopPropagation()">
+  </div>
+}

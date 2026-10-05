@@ -12,10 +12,12 @@ import { OperatorCalendarComponent } from './pages/operator-calendar/operator-ca
 import { AdminNotificationsComponent } from './pages/notifications/notifications';
 import { AdminProfileComponent } from './pages/profile/profile';
 import { AdminSettingsComponent } from './pages/settings/settings';
+import { InspectionComponent } from './pages/inspection/inspection';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'reservations', component: ReservationsComponent },
+  { path: 'reservations/:id/inspection', component: InspectionComponent },
   { path: 'payments', component: PaymentsComponent },
   { path: 'management', component: ManagementComponent },
   { path: 'schedule', component: ScheduleComponent },

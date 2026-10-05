@@ -91,6 +91,13 @@
       </button>
     }
 
+    @if (canInspect) {
+      <button class="detail-dialog__btn" (click)="openInspection()">
+        <mat-icon>fact_check</mat-icon>
+        {{ 'BOOKING_DETAIL.INSPECTION' | translate }}
+      </button>
+    }
+
     @if (canMarkNoShow) {
       <button class="detail-dialog__btn" (click)="markNoShow()">
         <mat-icon>person_off</mat-icon>
