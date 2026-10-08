@@ -60,7 +60,7 @@
 
   span { @include caption-text; color: var(--text-secondary); }
 
-  input, textarea {
+  input, textarea, select {
     font-family: $font-family-base;
     font-size: $fs-body;
     color: var(--text);
@@ -95,6 +95,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+}
+
+.role-dialog__empty {
+  @include caption-text;
+  color: var(--text-muted);
+  margin: 0;
 }
 
 .checkbox-row {

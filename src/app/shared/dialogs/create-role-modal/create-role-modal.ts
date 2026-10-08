@@ -1,24 +1,25 @@
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
-// si llegan datos, el modal está en modo edición y arranca con esos valores
+import { PermissionView, RoleCode, RolePermissionsView } from '../../../core/services/role-permissions-api';
+
+// ADR-015: los 3 roles son fijos (ya no se puede escribir un nombre ni crear/borrar un rol);
+// lo único que este modal edita son los permisos de uno de los tres, elegido con un desplegable.
 export interface CreateRoleData {
-  id?: string;
-  name: string;
-  description: string;
-  permissions: string[];
+  roles: RolePermissionsView[];
+  permissions: PermissionView[];
+  initialRole: RoleCode;
 }
 
-// lo que devuelve el modal cuando el admin confirma
 export interface CreateRoleResult {
-  id?: string;
-  name: string;
-  description: string;
-  permissions: string[];
+  role: RoleCode;
+  permissionIds: number[];
 }
+
+const ROLE_OPTIONS: RoleCode[] = ['ADMIN', 'OPERATOR', 'CLIENT'];
 
 @Component({
   selector: 'app-create-role-modal',
@@ -29,68 +30,49 @@ export interface CreateRoleResult {
 })
 export class CreateRoleModal {
 
-  name = '';
-  description = '';
-
-  // arrancan igual que en el mockup: ver paneles y crear registros marcados de una
-  permissions = {
-    viewPanels: true,
-    createRecords: true,
-    editData: false,
-    delete: false
-  };
-
-  editing = false;
-  submitted = false;
+  roleOptions = ROLE_OPTIONS;
+  permissionsCatalog: PermissionView[];
+  role: RoleCode;
+  selectedIds = new Set<number>();
 
   constructor(
     private dialogRef: MatDialogRef<CreateRoleModal>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private data: CreateRoleData | null,
+    @Inject(MAT_DIALOG_DATA) private data: CreateRoleData,
   ) {
-    if (data) {
-      this.editing = true;
-      this.name = data.name;
-      this.description = data.description;
-      this.permissions.viewPanels = this.has('view_panels');
-      this.permissions.createRecords = this.has('create_records');
-      this.permissions.editData = this.has('edit_data');
-      this.permissions.delete = this.has('delete');
-    }
+    this.permissionsCatalog = data.permissions;
+    this.role = data.initialRole;
+    this.applyRole(this.role);
   }
 
-  get nameInvalid(): boolean {
-    return this.submitted && this.name.trim().length < 3;
+  // al cambiar el rol en el desplegable, se cargan los permisos que ya tiene ese rol
+  onRoleChange(role: RoleCode): void {
+    this.role = role;
+    this.applyRole(role);
   }
 
-  get canCreate(): boolean {
-    return this.name.trim().length >= 3;
+  private applyRole(role: RoleCode): void {
+    const current = this.data.roles.find(r => r.role === role);
+    this.selectedIds = new Set(current?.permissionIds ?? []);
+  }
+
+  isChecked(permissionId: number): boolean {
+    return this.selectedIds.has(permissionId);
+  }
+
+  toggle(permissionId: number): void {
+    if (this.selectedIds.has(permissionId)) this.selectedIds.delete(permissionId);
+    else this.selectedIds.add(permissionId);
   }
 
   close(): void {
     this.dialogRef.close(null);
   }
 
-  create(): void {
-    this.submitted = true;
-    if (!this.canCreate) return;
-
-    const selected: string[] = [];
-    if (this.permissions.viewPanels) selected.push('view_panels');
-    if (this.permissions.createRecords) selected.push('create_records');
-    if (this.permissions.editData) selected.push('edit_data');
-    if (this.permissions.delete) selected.push('delete');
-
+  save(): void {
     const result: CreateRoleResult = {
-      id: this.data?.id,
-      name: this.name.trim(),
-      description: this.description.trim(),
-      permissions: selected
+      role: this.role,
+      permissionIds: [...this.selectedIds],
     };
-
     this.dialogRef.close(result);
-  }
-
-  private has(permission: string): boolean {
-    return (this.data?.permissions ?? []).includes(permission);
   }
 }

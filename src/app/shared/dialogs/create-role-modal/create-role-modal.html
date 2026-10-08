@@ -2,68 +2,45 @@
 
   <div class="role-dialog__header">
     <div>
-      <h2>{{ (editing ? 'CREATE_ROLE_MODAL.TITLE_EDIT' : 'CREATE_ROLE_MODAL.TITLE') | translate }}</h2>
-      <p>{{ (editing ? 'CREATE_ROLE_MODAL.SUBTITLE_EDIT' : 'CREATE_ROLE_MODAL.SUBTITLE') | translate }}</p>
+      <h2>{{ 'CREATE_ROLE_MODAL.TITLE_EDIT' | translate }}</h2>
+      <p>{{ 'CREATE_ROLE_MODAL.SUBTITLE_EDIT' | translate }}</p>
     </div>
     <button type="button" class="close-x" (click)="close()" aria-label="close">×</button>
   </div>
 
   <div class="role-dialog__body">
 
-    <label class="field" [class.field--invalid]="nameInvalid">
-      <span>{{ 'CREATE_ROLE_MODAL.ROLE_NAME_LABEL' | translate }}</span>
-      <input
-        type="text"
-        [(ngModel)]="name"
-        maxlength="40"
-        [placeholder]="'CREATE_ROLE_MODAL.ROLE_NAME_PLACEHOLDER' | translate">
-      @if (nameInvalid) {
-        <span class="field__error">{{ 'CREATE_ROLE_MODAL.ERROR_NAME' | translate }}</span>
-      }
-    </label>
-
+    <!-- los 3 roles son fijos (ADR-015): se elige uno, no se escribe un nombre -->
     <label class="field">
-      <span>{{ 'CREATE_ROLE_MODAL.DESCRIPTION_LABEL' | translate }}</span>
-      <textarea
-        rows="2"
-        [(ngModel)]="description"
-        maxlength="140"
-        [placeholder]="'CREATE_ROLE_MODAL.DESCRIPTION_PLACEHOLDER' | translate">
-      </textarea>
+      <span>{{ 'CREATE_ROLE_MODAL.ROLE_SELECT_LABEL' | translate }}</span>
+      <select [ngModel]="role" (ngModelChange)="onRoleChange($event)">
+        @for (opt of roleOptions; track opt) {
+          <option [ngValue]="opt">{{ ('PROFILE.ROLE.' + opt) | translate }}</option>
+        }
+      </select>
     </label>
 
     <span class="field-label">{{ 'CREATE_ROLE_MODAL.PERMISSIONS_LABEL' | translate }}</span>
 
     <div class="permissions-grid">
-      <label class="checkbox-row">
-        <input type="checkbox" [(ngModel)]="permissions.viewPanels">
-        {{ 'CREATE_ROLE_MODAL.PERMISSIONS.VIEW_PANELS' | translate }}
-      </label>
-
-      <label class="checkbox-row">
-        <input type="checkbox" [(ngModel)]="permissions.createRecords">
-        {{ 'CREATE_ROLE_MODAL.PERMISSIONS.CREATE_RECORDS' | translate }}
-      </label>
-
-      <label class="checkbox-row">
-        <input type="checkbox" [(ngModel)]="permissions.editData">
-        {{ 'CREATE_ROLE_MODAL.PERMISSIONS.EDIT_DATA' | translate }}
-      </label>
-
-      <label class="checkbox-row">
-        <input type="checkbox" [(ngModel)]="permissions.delete">
-        {{ 'CREATE_ROLE_MODAL.PERMISSIONS.DELETE' | translate }}
-      </label>
+      @for (permission of permissionsCatalog; track permission.id) {
+        <label class="checkbox-row">
+          <input type="checkbox" [checked]="isChecked(permission.id)" (change)="toggle(permission.id)">
+          {{ permission.name }}
+        </label>
+      } @empty {
+        <p class="role-dialog__empty">{{ 'CREATE_ROLE_MODAL.NO_PERMISSIONS' | translate }}</p>
+      }
     </div>
 
   </div>
 
   <div class="role-dialog__actions">
     <button class="btn-cancel" type="button" (click)="close()">
-      {{ (editing ? 'COMMON.CANCEL' : 'CREATE_ROLE_MODAL.CANCEL') | translate }}
+      {{ 'COMMON.CANCEL' | translate }}
     </button>
-    <button class="btn-confirm" type="button" (click)="create()">
-      {{ (editing ? 'COMMON.SAVE' : 'CREATE_ROLE_MODAL.CREATE') | translate }}
+    <button class="btn-confirm" type="button" (click)="save()">
+      {{ 'COMMON.SAVE' | translate }}
     </button>
   </div>
 
