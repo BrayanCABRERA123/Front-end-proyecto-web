@@ -67,7 +67,7 @@ export class RatingModalComponent {
   submit(): void {
     if (!this.canSubmit) return;
 
-    // TODO: integrar con el backend para guardar la calificación
+    // el modal solo arma el resultado; quien lo abre (history-card) es quien llama al backend
     const result: RatingResult = {
       rating: this.rating,
       comment: this.comment.trim()
