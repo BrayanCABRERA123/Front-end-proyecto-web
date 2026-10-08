@@ -1405,7 +1405,8 @@
       "USERS_COUNT": "{{count}} usuários",
       "EMPTY_TITLE": "Nenhum perfil ainda",
       "EMPTY_MESSAGE": "Crie o primeiro perfil para definir as permissões do sistema.",
-      "NO_PERMISSIONS": "Sem permissões"
+      "NO_PERMISSIONS": "Sem permissões",
+      "USERS_COUNT_ONE": "1 usuário"
     },
     "SERVICES": {
       "CREATE_SERVICE": "Adicionar serviço",
@@ -1499,6 +1500,12 @@
       "PROMO_STARTED_MESSAGE": "A promoção «{{name}}» está ativa.",
       "PROMO_DELETED_MESSAGE": "A promoção «{{name}}» foi excluída.",
       "USER_STATUS_ERROR_TITLE": "Não foi possível mudar o status"
+    },
+    "PERMISSION_NAMES": {
+      "VIEW_PANELS": "Ver painéis",
+      "CREATE_RECORDS": "Criar registros",
+      "EDIT_DATA": "Editar dados",
+      "DELETE": "Excluir"
     }
   },
   "CREATE_ROLE_MODAL": {
@@ -2307,7 +2314,8 @@
     "BOOKING_SERVICE_UNAVAILABLE": "O serviço de reservas não responde. Tente novamente em instantes.",
     "PROMOTION_NOT_FOUND": "Esse cupom não existe.",
     "PROMOTION_NOT_REDEEMABLE": "Esse cupom não está vigente ou você ainda não tem os pontos necessários.",
-    "PROMOTION_ALREADY_REDEEMED": "Você já resgatou esse cupom nesta reserva."
+    "PROMOTION_ALREADY_REDEEMED": "Você já resgatou esse cupom nesta reserva.",
+    "UNKNOWN_PERMISSION": "Uma das permissões escolhidas não existe mais. Recarregue a página e tente novamente."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Senha atual",

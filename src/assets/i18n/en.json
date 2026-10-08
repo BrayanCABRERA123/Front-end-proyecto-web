@@ -1405,7 +1405,8 @@
       "USERS_COUNT": "{{count}} users",
       "EMPTY_TITLE": "No roles yet",
       "EMPTY_MESSAGE": "Create the first role to define system permissions.",
-      "NO_PERMISSIONS": "No permissions"
+      "NO_PERMISSIONS": "No permissions",
+      "USERS_COUNT_ONE": "1 user"
     },
     "SERVICES": {
       "CREATE_SERVICE": "Add service",
@@ -1499,6 +1500,12 @@
       "PROMO_STARTED_MESSAGE": "The promotion «{{name}}» is now active.",
       "PROMO_DELETED_MESSAGE": "The promotion «{{name}}» was deleted.",
       "USER_STATUS_ERROR_TITLE": "The status could not be changed"
+    },
+    "PERMISSION_NAMES": {
+      "VIEW_PANELS": "View panels",
+      "CREATE_RECORDS": "Create records",
+      "EDIT_DATA": "Edit data",
+      "DELETE": "Delete"
     }
   },
   "CREATE_ROLE_MODAL": {
@@ -2307,7 +2314,8 @@
     "BOOKING_SERVICE_UNAVAILABLE": "The booking service is not responding. Try again in a moment.",
     "PROMOTION_NOT_FOUND": "That coupon doesn't exist.",
     "PROMOTION_NOT_REDEEMABLE": "That coupon isn't active, or you haven't reached the points it needs yet.",
-    "PROMOTION_ALREADY_REDEEMED": "You already redeemed this coupon on this booking."
+    "PROMOTION_ALREADY_REDEEMED": "You already redeemed this coupon on this booking.",
+    "UNKNOWN_PERMISSION": "One of the selected permissions no longer exists. Reload the page and try again."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",
