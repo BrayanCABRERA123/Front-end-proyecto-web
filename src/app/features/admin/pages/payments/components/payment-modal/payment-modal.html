@@ -13,7 +13,7 @@
     <!-- reserva real (booking-service): el monto sale de ella -->
     <label class="field">
       <span>{{ 'MANUAL_PAYMENT_MODAL.SERVICE_LABEL' | translate }}</span>
-      <select [(ngModel)]="bookingId">
+      <select [ngModel]="bookingId" (ngModelChange)="selectBooking($event)">
         <option [ngValue]="null">—</option>
         @for (b of bookings; track b.id) {
           <option [ngValue]="b.id">{{ b.label }}</option>
@@ -40,6 +40,11 @@
         </select>
       </label>
     </div>
+
+    <label class="field">
+      <span>{{ 'PAYMENT.CONFIRM.REFERENCE' | translate }}</span>
+      <input type="text" [(ngModel)]="transactionReference" maxlength="100">
+    </label>
 
   </div>
 

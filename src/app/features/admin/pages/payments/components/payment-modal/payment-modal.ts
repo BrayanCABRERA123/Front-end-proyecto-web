@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -8,10 +9,12 @@ import { BookingApiService } from '../../../../../../core/services/booking-api';
 import { PaymentAccountResponse, PaymentsApiService } from '../../../../../../core/services/payments-api';
 import { servicesLabel } from '../../../../../../core/utils/booking-display';
 
-// lo que devuelve el modal: la reserva y la cuenta; el monto lo pone payment-service
+// lo que devuelve el modal: la reserva, la cuenta y (si es transferencia) su referencia;
+// el monto lo pone payment-service
 export interface ManualPaymentResult {
   bookingId: number;
   paymentAccountId: number;
+  transactionReference: string | null;
 }
 
 interface BookingOption {
@@ -19,7 +22,6 @@ interface BookingOption {
   code: string;
   label: string;
   services: string;
-  total: number;
 }
 
 /** Pago recibido en el lavadero (efectivo o transferencia ya verificada) para una reserva real. */
@@ -40,6 +42,12 @@ export class PaymentModalComponent implements OnInit {
   accounts: PaymentAccountResponse[] = [];
   bookingId: number | null = null;
   accountId: number | null = null;
+  // lo que se va a cobrar según payment-service (total menos cupones canjeados); null mientras carga
+  amountDue: number | null = null;
+  amountFailed = false;
+  private amountRequest?: Subscription;
+  // opcional: payment-service la usa para no aceptar la misma transferencia en dos reservas
+  transactionReference = '';
 
   constructor(private dialogRef: MatDialogRef<PaymentModalComponent>) {}
 
@@ -56,7 +64,6 @@ export class PaymentModalComponent implements OnInit {
         .map(b => ({
           id: b.id,
           code: b.code,
-          total: b.total,
           // corto para que quepa en la tarjeta; los servicios se ven debajo al elegir
           label: `${b.code} · ${b.vehicle?.licensePlateFormatted ?? ''} · ${b.date.slice(8, 10)}/${b.date.slice(5, 7)}`,
           services: servicesLabel(b)
@@ -76,8 +83,28 @@ export class PaymentModalComponent implements OnInit {
   }
 
   get amountLabel(): string {
-    const booking = this.bookings.find(b => b.id === this.bookingId);
-    return booking ? `$ ${booking.total.toLocaleString('es-CO')}` : '—';
+    if (this.bookingId === null || this.amountFailed) return '—';
+    return this.amountDue === null ? '…' : `$ ${this.amountDue.toLocaleString('es-CO')}`;
+  }
+
+  // el monto no es el total de la reserva: payment-service le resta los cupones ya canjeados
+  selectBooking(bookingId: number | null): void {
+    this.bookingId = bookingId;
+    this.amountDue = null;
+    this.amountFailed = false;
+    this.amountRequest?.unsubscribe();
+    if (bookingId === null) return;
+    this.amountRequest = this.paymentsApi.amountDue(bookingId).subscribe({
+      next: due => {
+        this.amountDue = due.amountDue;
+        this.cdr.markForCheck();
+      },
+      // sin respuesta no se adivina la cifra (el total no descuenta cupones); el backend cobra la correcta igual
+      error: () => {
+        this.amountFailed = true;
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   get canRegister(): boolean {
@@ -90,6 +117,11 @@ export class PaymentModalComponent implements OnInit {
 
   register(): void {
     if (!this.canRegister) return;
-    this.dialogRef.close({ bookingId: this.bookingId!, paymentAccountId: this.accountId! } as ManualPaymentResult);
+    const result: ManualPaymentResult = {
+      bookingId: this.bookingId!,
+      paymentAccountId: this.accountId!,
+      transactionReference: this.transactionReference.trim() || null
+    };
+    this.dialogRef.close(result);
   }
 }
