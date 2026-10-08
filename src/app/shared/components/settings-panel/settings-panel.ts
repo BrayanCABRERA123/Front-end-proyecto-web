@@ -12,9 +12,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LegalDocumentModal, LegalDocumentType } from '../../dialogs/legal-document-modal/legal-document-modal';
 // modal reutilizable que también muestra una lista de detalles (se usa como Centro de ayuda)
 import { StatusModal, StatusModalData } from '../../dialogs/status-modal/status-modal';
-// datos de contacto y sede del lavadero
-import { BUSINESS_CONTACT } from '../../../core/constants/business-contact';
-// la dirección de la sede sale del booking-service
+// dirección, teléfono y correo de la sede salen del booking-service (tabla booking.establishment,
+// la edita el admin desde "Datos del negocio")
 import { BookingApiService } from '../../../core/services/booking-api';
 // tema e idioma se guardan en la cuenta (security-service), no solo en el navegador
 import { PreferencesService } from '../../../core/services/preferences';
@@ -69,12 +68,14 @@ export class SettingsPanelComponent implements OnInit {
   // abre el Centro de ayuda con los canales de atención del lavadero
   openHelpCenter(): void {
     this.bookingApi.establishment().subscribe({
-      next: (location) => this.showHelpCenter(location.address),
-      error: () => this.showHelpCenter('—')
+      next: (location) => this.showHelpCenter(location.address, location.phone, location.email),
+      error: () => this.showHelpCenter('—', null, null)
     });
   }
 
-  private showHelpCenter(address: string): void {
+  private showHelpCenter(address: string, phone: string | null, email: string | null): void {
+    // el negocio solo tiene un teléfono en la base: lo mostramos como WhatsApp y como línea de
+    // atención, porque son el mismo número en la vida real
     const data: StatusModalData = {
       type: 'info',
       icon: 'support_agent',
@@ -82,9 +83,9 @@ export class SettingsPanelComponent implements OnInit {
       message: 'CONFIG.HELP_MODAL.MESSAGE',
       buttonText: 'COMMON.CLOSE',
       details: [
-        { label: 'CONFIG.HELP_MODAL.WHATSAPP', value: BUSINESS_CONTACT.whatsapp },
-        { label: 'CONFIG.HELP_MODAL.SUPPORT_LINE', value: BUSINESS_CONTACT.supportLine },
-        { label: 'CONFIG.HELP_MODAL.EMAIL', value: BUSINESS_CONTACT.email },
+        { label: 'CONFIG.HELP_MODAL.WHATSAPP', value: phone ?? '—' },
+        { label: 'CONFIG.HELP_MODAL.SUPPORT_LINE', value: phone ?? '—' },
+        { label: 'CONFIG.HELP_MODAL.EMAIL', value: email ?? '—' },
         { label: 'CONFIG.HELP_MODAL.HOURS', value: this.translate.instant('CONFIG.HELP_MODAL.HOURS_VALUE') },
         { label: 'CONFIG.HELP_MODAL.ADDRESS', value: address }
       ]
