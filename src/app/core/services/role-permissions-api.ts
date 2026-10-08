@@ -24,6 +24,12 @@ export interface RolePermissionsMatrix {
   roles: RolePermissionsView[];
 }
 
+// llave de traducción de un permiso por su code (VIEW_PANELS, CREATE_RECORDS...): el name que
+// guarda security.permission está solo en español
+export function permissionLabelKey(code: string): string {
+  return `ADMIN_MANAGEMENT.PERMISSION_NAMES.${code}`;
+}
+
 // permisos de los 3 roles fijos (admin, Gestión > Roles) contra el security-service
 // (/admin/roles-permissions). ADR-015: los roles son fijos (ADMIN/OPERATOR/CLIENT), solo sus
 // permisos se editan; no hay crear ni borrar rol.

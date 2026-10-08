@@ -1,15 +1,21 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { CreateUserModal, CreateUserResult } from '../../../../shared/dialogs/create-user-modal/create-user-modal';
 import { CreateRoleModal, CreateRoleData, CreateRoleResult } from '../../../../shared/dialogs/create-role-modal/create-role-modal';
-import { PermissionView, RoleCode, RolePermissionsApiService, RolePermissionsMatrix } from '../../../../core/services/role-permissions-api';
+import {
+  PermissionView,
+  RoleCode,
+  RolePermissionsApiService,
+  RolePermissionsMatrix,
+  permissionLabelKey,
+} from '../../../../core/services/role-permissions-api';
 import { ServiceModal, ServiceModalData, ServiceModalResult } from '../../../../shared/dialogs/service-modal/service-modal';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
@@ -64,15 +70,21 @@ export class ManagementComponent implements OnInit {
   private readonly promotionsList = signal<Promotion[]>([]);
   private readonly promotionMetrics = signal({ redemptions: 0, savings: 0, conversion: 0 });
 
-  // permisos de los 3 roles fijos, reales (security-service, ADR-015)
-  private readonly rolesList = signal<UserRole[]>([]);
-  private roleMatrix: RolePermissionsMatrix = { permissions: [], roles: [] };
+  // permisos de los 3 roles fijos, reales (security-service, ADR-015). La tabla se arma en
+  // computed() para que el número de usuarios se actualice cuando lleguen las cuentas, sin
+  // importar cuál de las dos peticiones responde primero
+  private readonly roleMatrix = signal<RolePermissionsMatrix>({ permissions: [], roles: [] });
+  private readonly rolesList = computed(() => {
+    const matrix = this.roleMatrix();
+    return matrix.roles.map(r => this.toUserRole(r, matrix.permissions, this.accounts()));
+  });
 
   private readonly userAdmin = inject(UserAdminService);
   private readonly bookingApi = inject(BookingApiService);
   private readonly vehiclesApi = inject(VehiclesService);
   private readonly promotionsApi = inject(PromotionsApiService);
   private readonly rolesApi = inject(RolePermissionsApiService);
+  private readonly translate = inject(TranslateService);
 
   constructor(
     private dialog: MatDialog,
@@ -88,24 +100,26 @@ export class ManagementComponent implements OnInit {
 
   loadRoles(): void {
     this.rolesApi.matrix().subscribe({
-      next: matrix => {
-        this.roleMatrix = matrix;
-        this.rolesList.set(matrix.roles.map(r => this.toUserRole(r, matrix.permissions)));
-      },
+      next: matrix => this.roleMatrix.set(matrix),
       error: () => { /* la pantalla se queda con lo que ya tenía */ },
     });
   }
 
-  // permisos de un rol fijo (security-service) -> lo que pinta la tabla. usersCount sale de las
-  // cuentas ya cargadas (toAdminUser guarda el rol como llave de traducción PROFILE.ROLE.<code>)
-  private toUserRole(r: { role: RoleCode; permissionIds: number[] }, catalog: PermissionView[]): UserRole {
-    const byId = new Map(catalog.map(p => [p.id, p.name]));
+  // permisos de un rol fijo (security-service) -> lo que pinta la tabla. Los permisos van como
+  // llave de traducción por su code (el name de la base está solo en español). usersCount sale de
+  // las cuentas ya cargadas (toAdminUser guarda el rol como llave PROFILE.ROLE.<code>)
+  private toUserRole(r: { role: RoleCode; permissionIds: number[] }, catalog: PermissionView[],
+                     accounts: AdminUser[]): UserRole {
+    const byId = new Map(catalog.map(p => [p.id, p]));
     return {
       id: r.role,
       name: `PROFILE.ROLE.${r.role}`,
       description: '',
-      permissions: r.permissionIds.map(id => byId.get(id) ?? String(id)),
-      usersCount: this.accounts().filter(a => a.userType === `PROFILE.ROLE.${r.role}`).length,
+      permissions: r.permissionIds.map(id => {
+        const permission = byId.get(id);
+        return permission ? permissionLabelKey(permission.code) : String(id);
+      }),
+      usersCount: accounts.filter(a => a.userType === `PROFILE.ROLE.${r.role}`).length,
     };
   }
 
@@ -270,8 +284,8 @@ export class ManagementComponent implements OnInit {
 
   openEditRole(role: UserRole): void {
     const data: CreateRoleData = {
-      roles: this.roleMatrix.roles,
-      permissions: this.roleMatrix.permissions,
+      roles: this.roleMatrix().roles,
+      permissions: this.roleMatrix().permissions,
       initialRole: role.id as RoleCode,
     };
 
@@ -285,7 +299,7 @@ export class ManagementComponent implements OnInit {
           this.feedback.success(
             'ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_TITLE',
             'ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_MESSAGE',
-            { messageParams: { name: result.role } }
+            { messageParams: { name: this.translate.instant(`PROFILE.ROLE.${result.role}`) } }
           );
         },
         error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error)),

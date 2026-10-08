@@ -1405,7 +1405,8 @@
       "USERS_COUNT": "{{count}} usuarios",
       "EMPTY_TITLE": "No hay roles todavía",
       "EMPTY_MESSAGE": "Crea el primer rol para definir los permisos del sistema.",
-      "NO_PERMISSIONS": "Sin permisos"
+      "NO_PERMISSIONS": "Sin permisos",
+      "USERS_COUNT_ONE": "1 usuario"
     },
     "SERVICES": {
       "CREATE_SERVICE": "Agregar servicio",
@@ -1499,6 +1500,12 @@
       "PROMO_STARTED_MESSAGE": "La promoción «{{name}}» quedó activa.",
       "PROMO_DELETED_MESSAGE": "La promoción «{{name}}» se eliminó.",
       "USER_STATUS_ERROR_TITLE": "No se pudo cambiar el estado"
+    },
+    "PERMISSION_NAMES": {
+      "VIEW_PANELS": "Ver paneles",
+      "CREATE_RECORDS": "Crear registros",
+      "EDIT_DATA": "Editar datos",
+      "DELETE": "Eliminar"
     }
   },
   "CREATE_ROLE_MODAL": {
@@ -2307,7 +2314,8 @@
     "BOOKING_SERVICE_UNAVAILABLE": "El servicio de reservas no responde. Intenta de nuevo en un momento.",
     "PROMOTION_NOT_FOUND": "Ese cupón no existe.",
     "PROMOTION_NOT_REDEEMABLE": "Ese cupón no está vigente o todavía no acumulas los puntos necesarios.",
-    "PROMOTION_ALREADY_REDEEMED": "Ya canjeaste este cupón en esta reserva."
+    "PROMOTION_ALREADY_REDEEMED": "Ya canjeaste este cupón en esta reserva.",
+    "UNKNOWN_PERMISSION": "Uno de los permisos elegidos ya no existe. Recarga la página e inténtalo de nuevo."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Contraseña actual",

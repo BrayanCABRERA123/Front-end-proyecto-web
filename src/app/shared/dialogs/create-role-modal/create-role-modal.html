@@ -26,7 +26,7 @@
       @for (permission of permissionsCatalog; track permission.id) {
         <label class="checkbox-row">
           <input type="checkbox" [checked]="isChecked(permission.id)" (change)="toggle(permission.id)">
-          {{ permission.name }}
+          {{ labelKey(permission.code) | translate }}
         </label>
       } @empty {
         <p class="role-dialog__empty">{{ 'CREATE_ROLE_MODAL.NO_PERMISSIONS' | translate }}</p>

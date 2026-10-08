@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { PermissionView, RoleCode, RolePermissionsView } from '../../../core/services/role-permissions-api';
+import { PermissionView, RoleCode, RolePermissionsView, permissionLabelKey } from '../../../core/services/role-permissions-api';
 
 // ADR-015: los 3 roles son fijos (ya no se puede escribir un nombre ni crear/borrar un rol);
 // lo único que este modal edita son los permisos de uno de los tres, elegido con un desplegable.
@@ -31,6 +31,7 @@ const ROLE_OPTIONS: RoleCode[] = ['ADMIN', 'OPERATOR', 'CLIENT'];
 export class CreateRoleModal {
 
   roleOptions = ROLE_OPTIONS;
+  readonly labelKey = permissionLabelKey;
   permissionsCatalog: PermissionView[];
   role: RoleCode;
   selectedIds = new Set<number>();

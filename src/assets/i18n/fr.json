@@ -1405,7 +1405,8 @@
       "USERS_COUNT": "{{count}} utilisateurs",
       "EMPTY_TITLE": "Aucun rôle pour l’instant",
       "EMPTY_MESSAGE": "Créez le premier rôle pour définir les permissions du système.",
-      "NO_PERMISSIONS": "Aucune permission"
+      "NO_PERMISSIONS": "Aucune permission",
+      "USERS_COUNT_ONE": "1 utilisateur"
     },
     "SERVICES": {
       "CREATE_SERVICE": "Ajouter un service",
@@ -1499,6 +1500,12 @@
       "PROMO_STARTED_MESSAGE": "La promotion «{{name}}» est maintenant active.",
       "PROMO_DELETED_MESSAGE": "La promotion «{{name}}» a été supprimée.",
       "USER_STATUS_ERROR_TITLE": "Impossible de changer l'état"
+    },
+    "PERMISSION_NAMES": {
+      "VIEW_PANELS": "Voir les panneaux",
+      "CREATE_RECORDS": "Créer des registres",
+      "EDIT_DATA": "Modifier les données",
+      "DELETE": "Supprimer"
     }
   },
   "CREATE_ROLE_MODAL": {
@@ -2307,7 +2314,8 @@
     "BOOKING_SERVICE_UNAVAILABLE": "Le service de réservations ne répond pas. Réessayez dans un instant.",
     "PROMOTION_NOT_FOUND": "Ce coupon n'existe pas.",
     "PROMOTION_NOT_REDEEMABLE": "Ce coupon n'est pas valide, ou vous n'avez pas encore assez de points.",
-    "PROMOTION_ALREADY_REDEEMED": "Vous avez déjà utilisé ce coupon sur cette réservation."
+    "PROMOTION_ALREADY_REDEEMED": "Vous avez déjà utilisé ce coupon sur cette réservation.",
+    "UNKNOWN_PERMISSION": "L’une des autorisations choisies n’existe plus. Rechargez la page et réessayez."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",
