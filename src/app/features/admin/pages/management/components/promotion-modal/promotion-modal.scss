@@ -1,6 +1,37 @@
 @use '../../../../../../../styles/mixins' as *;
 @use '../../../../../../shared/dialogs/dialog-base';
 
+// selector de icono visual: antes era un <select> que solo mostraba el nombre del icono como
+// texto; ahora se ve cada opción como el icono real, en una fila de botones.
+.icon-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  &__option {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+
+    mat-icon { font-size: 20px; width: 20px; height: 20px; }
+
+    &:hover { background: var(--item-hover); }
+
+    &--selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+  }
+}
+
 .promo-option {
   &__row {
     display: inline-flex;
