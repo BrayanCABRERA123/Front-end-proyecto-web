@@ -265,6 +265,22 @@ select {
   font-weight: $fw-semibold;
 }
 
+.operator-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bay-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  color: var(--text-secondary);
+
+  mat-icon { font-size: 13px; width: 13px; height: 13px; }
+}
+
 .avatar {
   width: 26px;
   height: 26px;

@@ -172,10 +172,19 @@
                   </td>
                   <td>
                     @if (b.operator) {
-                      <span class="operator-chip">
-                        <span class="avatar">{{ b.operator.initials }}</span>
-                        {{ b.operator.name }}
-                      </span>
+                      <div class="operator-cell">
+                        <span class="operator-chip">
+                          <span class="avatar">{{ b.operator.initials }}</span>
+                          {{ b.operator.name }}
+                        </span>
+                        <!-- bahía de esta reserva (ADR-015): el par operario-bahía es por
+                             reserva, no un turno fijo -->
+                        @if (b.bay) {
+                          <span class="bay-chip">
+                            <mat-icon>garage</mat-icon>{{ b.bay }}
+                          </span>
+                        }
+                      </div>
                     } @else {
                       <span class="badge badge--warning">{{ 'ADMIN_RESERVATIONS.TABLE.UNASSIGNED' | translate }}</span>
                     }
