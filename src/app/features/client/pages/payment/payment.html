@@ -20,6 +20,17 @@
       <!-- ================= Columna izquierda ================= -->
       <div class="payment-main">
 
+        <!-- el último pago de esta reserva fue rechazado: se explica por qué antes de reportar otro -->
+        @if (lastRejectionReason && !isVerifying) {
+          <section class="card rejected-card">
+            <mat-icon>error_outline</mat-icon>
+            <div>
+              <h2>{{ 'ADMIN_PAYMENTS.FEEDBACK.REJECTED_TITLE' | translate }}</h2>
+              <p>{{ 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL' | translate }}: {{ lastRejectionReason }}</p>
+            </div>
+          </section>
+        }
+
         <!-- Método de pago -->
         <section class="card">
           <div class="card-header">
@@ -149,8 +160,9 @@
             <div class="form-field">
               <label>{{ 'PAYMENT.CONFIRM.AMOUNT' | translate }} <span class="req">*</span></label>
               <div class="input-icon">
-                <input type="text" [value]="'$' + (totalToPay | number)" disabled />
-                <mat-icon>lock</mat-icon>
+                <input type="number" min="1" step="1" name="paidAmount" [disabled]="isVerifying"
+                       [ngModel]="paidAmount" (ngModelChange)="paidAmountInput = $event" />
+                <mat-icon *ngIf="isPaidAmountValid" class="ok">check_circle</mat-icon>
               </div>
               <small>{{ 'PAYMENT.CONFIRM.AMOUNT_HINT' | translate }}</small>
             </div>

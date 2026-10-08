@@ -441,6 +441,30 @@
   }
 }
 
+// aviso del último pago rechazado (mismo esquema que la tarjeta de efectivo, en rojo)
+.rejected-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--error-soft);
+
+  >mat-icon {
+    @include icon-size(2rem);
+    color: var(--error);
+  }
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 1.05rem;
+    color: var(--error);
+  }
+
+  p {
+    margin: 0;
+    color: var(--text);
+  }
+}
+
 /* ---------- Confirmar pago ---------- */
 .dropzone {
   display: flex;

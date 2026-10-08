@@ -20,7 +20,7 @@ import { BookingResponse } from '../../../../core/models/booking.models';
 import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../../core/utils/booking-display';
 import { apiErrorKey } from '../../../../core/utils/api-error';
 // cuentas del lavadero y reporte del pago (payment-service)
-import { PaymentAccountResponse, PaymentsApiService, readImageAsDataUrl } from '../../../../core/services/payments-api';
+import { ALLOWED_IMAGE_TYPES, PaymentAccountResponse, PaymentsApiService, readImageAsDataUrl } from '../../../../core/services/payments-api';
 // canje de cupón de fidelización (payment-service, ADR-015)
 import { LoyaltyApiService, RedeemPromotionResult } from '../../../../core/services/loyalty-api';
 
@@ -183,12 +183,24 @@ export class PaymentComponent implements OnInit, OnDestroy {
   receiptFile: File | null = null;
   isDragging = false;
   transactionRef = '';
+  // monto que el cliente pagó según su comprobante; mientras no lo cambie, se asume el total
+  paidAmountInput: number | null = null;
+  // motivo del último pago rechazado de esta reserva (para que el cliente sepa qué corregir)
+  lastRejectionReason: string | null = null;
   // signal para que el setTimeout de copyKey() repinte el botón (zoneless)
   copied = signal(false);
 
   // la referencia debe tener entre 8 y 12 caracteres alfanuméricos
   get isRefValid(): boolean {
     return /^[A-Za-z0-9]{8,12}$/.test(this.transactionRef);
+  }
+
+  get paidAmount(): number {
+    return this.paidAmountInput ?? this.totalToPay;
+  }
+
+  get isPaidAmountValid(): boolean {
+    return Number.isFinite(this.paidAmount) && this.paidAmount > 0;
   }
 
   // el pago ya se envió y está en revisión
@@ -200,7 +212,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     // evita enviar el mismo pago dos veces
     if (this.isVerifying) return false;
     if (this.selectedMethod === 'CASH') return true;
-    return !!this.receiptFile && this.isRefValid;
+    return !!this.receiptFile && this.isRefValid && this.isPaidAmountValid;
   }
 
 
@@ -288,9 +300,11 @@ export class PaymentComponent implements OnInit, OnDestroy {
   private loadPaymentState(bookingId: number): void {
     this.paymentsApi.mine().subscribe({
       next: (payments) => {
+        // payment-service los devuelve del más reciente al más antiguo: el primero es el vigente
         const current = payments.find(p => p.booking?.id === bookingId);
         const open = !!current && ['PENDING', 'IN_REVIEW', 'APPROVED'].includes(current.status);
         this.flowStep = open ? 'VERIFYING' : 'PENDING';
+        this.lastRejectionReason = current?.status === 'REJECTED' ? (current.rejectionReason ?? '—') : null;
         this.saveState();
         this.changes.markForCheck();
       },
@@ -396,7 +410,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   private setReceipt(file: File) {
-    const validType = ['image/jpeg', 'image/png'].includes(file.type);
+    const validType = ALLOWED_IMAGE_TYPES.includes(file.type);
     const validSize = file.size <= 10 * 1024 * 1024;
     if (!validType || !validSize) {
       // mostramos el error en el modal de estado (en rojo) en lugar de alert()
@@ -430,11 +444,12 @@ export class PaymentComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // el monto lo pone payment-service con el total de la reserva
+    // el monto a cobrar lo pone payment-service; paidAmount es lo que el cliente dice haber pagado
     const receipt = await readImageAsDataUrl(this.receiptFile);
-    this.paymentsApi.report(this.booking.id, this.selectedAccount.id, this.transactionRef, receipt).subscribe({
+    this.paymentsApi.report(this.booking.id, this.selectedAccount.id, this.transactionRef, receipt, this.paidAmount).subscribe({
       next: () => {
         this.flowStep = 'VERIFYING';
+        this.lastRejectionReason = null;
         this.saveState();
         this.changes.markForCheck();
         this.showStatusModal({ title: 'PAYMENT.SUCCESS_TITLE', message: 'PAYMENT.SUCCESS_MESSAGE' });
