@@ -179,12 +179,12 @@
                   <td><strong>{{ r.name | translate }}</strong></td>
                   <td>
                     @for (p of r.permissions; track p) {
-                      <span class="permission-chip">{{ p }}</span>
+                      <span class="permission-chip">{{ p | translate }}</span>
                     } @empty {
                       <span class="muted">{{ 'ADMIN_MANAGEMENT.ROLES.NO_PERMISSIONS' | translate }}</span>
                     }
                   </td>
-                  <td>{{ 'ADMIN_MANAGEMENT.ROLES.USERS_COUNT' | translate:{ count: r.usersCount } }}</td>
+                  <td>{{ (r.usersCount === 1 ? 'ADMIN_MANAGEMENT.ROLES.USERS_COUNT_ONE' : 'ADMIN_MANAGEMENT.ROLES.USERS_COUNT') | translate:{ count: r.usersCount } }}</td>
                   <td class="actions-cell">
                     <button class="btn-icon" (click)="openEditRole(r)" [attr.aria-label]="'COMMON.EDIT' | translate">
                       <mat-icon>edit</mat-icon>
