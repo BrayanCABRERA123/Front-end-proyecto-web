@@ -10,6 +10,7 @@ import { ConfirmModal, ConfirmModalData } from '../../../../../../shared/dialogs
 import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
 import { PaymentMethodConfig } from '../../../../models/admin.models';
 import {
+  ALLOWED_IMAGE_TYPES,
   PaymentAccountResponse,
   PaymentsApiService,
   SavePaymentAccountRequest,
@@ -83,6 +84,12 @@ export class PaymentMethodsComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+    // payment-service no acepta SVG ni otros formatos: solo PNG o JPG
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      input.value = '';
+      this.feedback.error('PAYMENT.INVALID_FILE_TITLE', 'PAYMENT.INVALID_FILE_MESSAGE');
+      return;
+    }
     const qrImageUrl = await readImageAsDataUrl(file);
     this.save(method.id, { qrImageUrl }, 'PAYMENT_METHODS_SECTION.FEEDBACK.QR_UPDATED_TITLE',
       'PAYMENT_METHODS_SECTION.FEEDBACK.QR_UPDATED_MESSAGE', method.name);

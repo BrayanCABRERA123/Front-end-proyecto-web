@@ -61,7 +61,7 @@
                 </div>
                 <label class="btn-outline btn-sm">
                   {{ (m.qrImage ? 'PAYMENT_METHODS_SECTION.REPLACE' : 'PAYMENT_METHODS_SECTION.UPLOAD_QR') | translate }}
-                  <input type="file" accept="image/*" hidden (change)="onQrSelected(m, $event)">
+                  <input type="file" accept="image/png, image/jpeg" hidden (change)="onQrSelected(m, $event)">
                 </label>
               </div>
             }
