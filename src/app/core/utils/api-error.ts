@@ -51,6 +51,8 @@ const TRANSLATED_CODES = new Set([
   'OPERATOR_NOT_FOUND',
   'BOOKING_NOT_FOUND',
   'BOOKING_SERVICE_UNAVAILABLE',
+  // permiso que no está en el catálogo al editar un rol (security-service)
+  'UNKNOWN_PERMISSION',
   // códigos del canje de cupones de fidelización (payment-service, ADR-015)
   'PROMOTION_NOT_FOUND',
   'PROMOTION_NOT_REDEEMABLE',
