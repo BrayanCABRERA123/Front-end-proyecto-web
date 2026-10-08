@@ -206,6 +206,37 @@
             <strong>-${{ serviceSummary.pointsDiscount | number }} COP</strong>
           </div>
 
+          <!-- canjear un cupón de fidelización (ADR-015): puntos acumulados desbloquean la
+               promoción, se aplica un % de descuento real sobre el total -->
+          <div class="coupon-box">
+            @if (!couponResult) {
+              <label class="coupon-box__row">
+                <input type="text" [(ngModel)]="couponCode" maxlength="20" [disabled]="isVerifying"
+                       [placeholder]="'PAYMENT.COUPON.PLACEHOLDER' | translate"
+                       (keyup.enter)="redeemCoupon()">
+                <button type="button" class="coupon-box__apply" [disabled]="!canRedeemCoupon" (click)="redeemCoupon()">
+                  @if (redeemingCoupon) {
+                    <mat-icon>hourglass_top</mat-icon>
+                  } @else {
+                    {{ 'PAYMENT.COUPON.APPLY' | translate }}
+                  }
+                </button>
+              </label>
+              @if (couponError) {
+                <p class="coupon-box__error"><mat-icon>error</mat-icon>{{ couponError | translate }}</p>
+              }
+            } @else {
+              <div class="coupon-box__applied">
+                <mat-icon>local_offer</mat-icon>
+                <span>{{ 'PAYMENT.COUPON.APPLIED' | translate:{ name: couponResult.promotionName } }}</span>
+                <strong>-${{ couponResult.discountAmount | number }} COP</strong>
+                <button type="button" class="coupon-box__remove" [disabled]="isVerifying" (click)="removeCoupon()" aria-label="remove">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            }
+          </div>
+
           <div class="summary-total">
             <div>
               <span>{{ 'PAYMENT.SUMMARY.TOTAL' | translate }}</span>

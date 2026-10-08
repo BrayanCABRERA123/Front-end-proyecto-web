@@ -21,6 +21,8 @@ import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '.
 import { apiErrorKey } from '../../../../core/utils/api-error';
 // cuentas del lavadero y reporte del pago (payment-service)
 import { PaymentAccountResponse, PaymentsApiService, readImageAsDataUrl } from '../../../../core/services/payments-api';
+// canje de cupón de fidelización (payment-service, ADR-015)
+import { LoyaltyApiService, RedeemPromotionResult } from '../../../../core/services/loyalty-api';
 
 // tipos para que el código sea más claro
 type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
@@ -73,6 +75,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   private readonly bookingApi = inject(BookingApiService);
   private readonly paymentsApi = inject(PaymentsApiService);
+  private readonly loyaltyApi = inject(LoyaltyApiService);
 
   // cuentas activas del lavadero (payment-service); cada medio tiene su titular, número y QR
   private accounts: PaymentAccountResponse[] = [];
@@ -125,7 +128,42 @@ export class PaymentComponent implements OnInit, OnDestroy {
   };
 
   get totalToPay(): number {
-    return Math.max(0, this.serviceSummary.subtotal - this.serviceSummary.pointsDiscount);
+    const couponDiscount = this.couponResult?.discountAmount ?? 0;
+    return Math.max(0, this.serviceSummary.subtotal - this.serviceSummary.pointsDiscount - couponDiscount);
+  }
+
+  // --- canje de cupón de fidelización (payment-service, ADR-015) ---
+  couponCode = '';
+  couponResult: RedeemPromotionResult | null = null;
+  couponError: string | null = null;
+  redeemingCoupon = false;
+
+  get canRedeemCoupon(): boolean {
+    return !this.isVerifying && !this.couponResult && !this.redeemingCoupon && this.couponCode.trim().length >= 3;
+  }
+
+  redeemCoupon(): void {
+    if (!this.canRedeemCoupon || !this.booking) return;
+    this.redeemingCoupon = true;
+    this.couponError = null;
+    this.loyaltyApi.redeem(this.booking.id, this.couponCode.trim().toUpperCase()).subscribe({
+      next: (result) => {
+        this.couponResult = result;
+        this.redeemingCoupon = false;
+        this.changes.markForCheck();
+      },
+      error: (error) => {
+        this.couponError = apiErrorKey(error);
+        this.redeemingCoupon = false;
+        this.changes.markForCheck();
+      }
+    });
+  }
+
+  removeCoupon(): void {
+    this.couponResult = null;
+    this.couponCode = '';
+    this.couponError = null;
   }
 
   // temporizador del QR (15 minutos)
@@ -274,7 +312,9 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   // --- estado guardado del pago ---
-  // TODO: reemplazar localStorage por el estado real de la reserva cuando haya backend
+  // el estado real (si el pago ya se reportó) lo manda loadPaymentState() desde payment-service y
+  // pisa lo que haya aquí; local solo queda el cronómetro del QR y el método elegido, que no
+  // tienen dónde vivir en el backend (son de la sesión, no de la reserva)
   private get storageKey(): string {
     return `payment-${this.reservationCode}`;
   }
