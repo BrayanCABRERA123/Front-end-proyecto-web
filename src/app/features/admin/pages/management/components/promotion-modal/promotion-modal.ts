@@ -26,6 +26,11 @@ export interface PromotionModalResult {
   features: string[];
   status: PromotionStatus;
   startDate: string;
+  // cupón real (ADR-015): descuento % que se aplica al canjear, y puntos de fidelización
+  // necesarios para que se desbloquee; price/durationMin/icon/featured/features son solo
+  // la tarjeta de marketing, no afectan el descuento
+  discountPercent: number;
+  requiredPoints: number;
 }
 
 // íconos coherentes con el catálogo de servicios (los mismos de las tarjetas)
@@ -53,6 +58,8 @@ export class PromotionModal {
   status: PromotionStatus = 'active';
   startDate = new Date().toISOString().slice(0, 10);
   features: string[] = [];
+  discountPercent: number | null = 100;
+  requiredPoints = 0;
 
   editing = false;
   submitted = false;
@@ -75,6 +82,8 @@ export class PromotionModal {
       this.status = p.status;
       this.startDate = p.startDate;
       this.features = [...p.features];
+      this.discountPercent = p.discountPercent;
+      this.requiredPoints = p.requiredPoints;
     }
   }
 
@@ -100,12 +109,22 @@ export class PromotionModal {
     return this.submitted && this.couponCode.trim().length < 3;
   }
 
+  get discountPercentInvalid(): boolean {
+    return this.submitted && (!this.discountPercent || this.discountPercent < 1 || this.discountPercent > 100);
+  }
+
+  get requiredPointsInvalid(): boolean {
+    return this.submitted && this.requiredPoints < 0;
+  }
+
   get canSave(): boolean {
     return this.name.trim().length >= 3
       && this.description.trim().length >= 3
       && !!this.price && this.price > 0
       && !!this.durationMin && this.durationMin > 0
-      && this.couponCode.trim().length >= 3;
+      && this.couponCode.trim().length >= 3
+      && !!this.discountPercent && this.discountPercent >= 1 && this.discountPercent <= 100
+      && this.requiredPoints >= 0;
   }
 
   /* ---------- lista de características ---------- */
@@ -142,6 +161,8 @@ export class PromotionModal {
       features: this.features.map(f => f.trim()).filter(f => f.length > 0),
       status: this.status,
       startDate: this.startDate,
+      discountPercent: this.discountPercent ?? 100,
+      requiredPoints: this.requiredPoints,
     };
 
     this.dialogRef.close(result);
