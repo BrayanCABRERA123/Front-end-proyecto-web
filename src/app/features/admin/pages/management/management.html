@@ -160,64 +160,41 @@
             <h1>{{ 'ADMIN_MANAGEMENT.TABS.ROLES' | translate }}</h1>
             <p>{{ 'ADMIN_MANAGEMENT.ROLES.SUBTITLE' | translate }}</p>
           </div>
-          <button class="btn-primary" (click)="openCreateRole()">
-            <mat-icon>add</mat-icon>
-            {{ 'ADMIN_MANAGEMENT.ROLES.CREATE_ROLE' | translate }}
-          </button>
         </div>
 
-        @if (roles.length === 0) {
-
-          <app-empty-state
-            variant="empty"
-            icon="verified_user"
-            titleKey="ADMIN_MANAGEMENT.ROLES.EMPTY_TITLE"
-            messageKey="ADMIN_MANAGEMENT.ROLES.EMPTY_MESSAGE">
-            <button class="btn-primary" (click)="openCreateRole()">
-              <mat-icon>add</mat-icon>
-              {{ 'ADMIN_MANAGEMENT.ROLES.CREATE_ROLE' | translate }}
-            </button>
-          </app-empty-state>
-
-        } @else {
-
-          <div class="table-wrapper">
-            <table>
-              <thead>
+        <!-- los 3 roles son fijos (ADR-015): no se crean ni se borran, solo se editan sus permisos -->
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.NAME' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.PERMISSIONS' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.USERS' | translate }}</th>
+                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.ACTIONS' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (r of roles; track r.id) {
                 <tr>
-                  <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.NAME' | translate }}</th>
-                  <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.DESCRIPTION' | translate }}</th>
-                  <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.PERMISSIONS' | translate }}</th>
-                  <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.USERS' | translate }}</th>
-                  <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.ACTIONS' | translate }}</th>
+                  <td><strong>{{ r.name | translate }}</strong></td>
+                  <td>
+                    @for (p of r.permissions; track p) {
+                      <span class="permission-chip">{{ p }}</span>
+                    } @empty {
+                      <span class="muted">{{ 'ADMIN_MANAGEMENT.ROLES.NO_PERMISSIONS' | translate }}</span>
+                    }
+                  </td>
+                  <td>{{ 'ADMIN_MANAGEMENT.ROLES.USERS_COUNT' | translate:{ count: r.usersCount } }}</td>
+                  <td class="actions-cell">
+                    <button class="btn-icon" (click)="openEditRole(r)" [attr.aria-label]="'COMMON.EDIT' | translate">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                @for (r of roles; track r.id) {
-                  <tr>
-                    <td><strong>{{ r.name }}</strong></td>
-                    <td class="description-cell">{{ r.description }}</td>
-                    <td>
-                      @for (p of r.permissions; track p) {
-                        <span class="permission-chip">{{ p }}</span>
-                      }
-                    </td>
-                    <td>{{ 'ADMIN_MANAGEMENT.ROLES.USERS_COUNT' | translate:{ count: r.usersCount } }}</td>
-                    <td class="actions-cell">
-                      <button class="btn-icon" (click)="openEditRole(r)" [attr.aria-label]="'COMMON.EDIT' | translate">
-                        <mat-icon>edit</mat-icon>
-                      </button>
-                      <button class="btn-icon btn-icon--danger" (click)="deleteRole(r)" [attr.aria-label]="'COMMON.DELETE' | translate">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
-
-        }
+              }
+            </tbody>
+          </table>
+        </div>
 
       </div>
     }

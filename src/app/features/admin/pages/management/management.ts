@@ -9,10 +9,10 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { CreateUserModal, CreateUserResult } from '../../../../shared/dialogs/create-user-modal/create-user-modal';
 import { CreateRoleModal, CreateRoleData, CreateRoleResult } from '../../../../shared/dialogs/create-role-modal/create-role-modal';
+import { PermissionView, RoleCode, RolePermissionsApiService, RolePermissionsMatrix } from '../../../../core/services/role-permissions-api';
 import { ServiceModal, ServiceModalData, ServiceModalResult } from '../../../../shared/dialogs/service-modal/service-modal';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
-import { CatalogStore } from '../../services/catalog-store';
 import { AdminUser, Promotion, UserRole } from '../../models/admin.models';
 // catálogo real (booking-service) y tipos de vehículo (customer-service)
 import { forkJoin } from 'rxjs';
@@ -29,6 +29,8 @@ import { PromotionModal, PromotionModalData, PromotionModalResult } from './comp
 // cuentas reales del security-service
 import { UserAdminService } from '../../../../core/services/user-admin';
 import { AuthUser } from '../../../../core/models/auth.models';
+// promociones reales del payment-service
+import { PromotionView, PromotionsApiService } from '../../../../core/services/promotions-api';
 
 type ManagementTab = 'users' | 'roles' | 'services' | 'promotions';
 
@@ -53,20 +55,26 @@ export class ManagementComponent implements OnInit {
   userFilter: 'enabled' | 'registered' | 'disabled' = 'enabled';
   usersSearch = '';
 
-  // conversión estimada de cupones (vendrá de analítica cuando exista el backend)
-  private readonly PROMO_CONVERSION = 31.2;
-
-  // cuentas reales (security-service); los demás tabs siguen con datos de prueba
+  // cuentas reales (security-service)
   private readonly accounts = signal<AdminUser[]>([]);
   usersLoading = signal(true);
   usersErrorKey = signal<string | null>(null);
 
+  // promociones reales (payment-service)
+  private readonly promotionsList = signal<Promotion[]>([]);
+  private readonly promotionMetrics = signal({ redemptions: 0, savings: 0, conversion: 0 });
+
+  // permisos de los 3 roles fijos, reales (security-service, ADR-015)
+  private readonly rolesList = signal<UserRole[]>([]);
+  private roleMatrix: RolePermissionsMatrix = { permissions: [], roles: [] };
+
   private readonly userAdmin = inject(UserAdminService);
   private readonly bookingApi = inject(BookingApiService);
   private readonly vehiclesApi = inject(VehiclesService);
+  private readonly promotionsApi = inject(PromotionsApiService);
+  private readonly rolesApi = inject(RolePermissionsApiService);
 
   constructor(
-    private store: CatalogStore,
     private dialog: MatDialog,
     private feedback: FeedbackService,
   ) {}
@@ -74,6 +82,81 @@ export class ManagementComponent implements OnInit {
   ngOnInit(): void {
     this.loadUsers();
     this.loadServices();
+    this.loadPromotions();
+    this.loadRoles();
+  }
+
+  loadRoles(): void {
+    this.rolesApi.matrix().subscribe({
+      next: matrix => {
+        this.roleMatrix = matrix;
+        this.rolesList.set(matrix.roles.map(r => this.toUserRole(r, matrix.permissions)));
+      },
+      error: () => { /* la pantalla se queda con lo que ya tenía */ },
+    });
+  }
+
+  // permisos de un rol fijo (security-service) -> lo que pinta la tabla. usersCount sale de las
+  // cuentas ya cargadas (toAdminUser guarda el rol como llave de traducción PROFILE.ROLE.<code>)
+  private toUserRole(r: { role: RoleCode; permissionIds: number[] }, catalog: PermissionView[]): UserRole {
+    const byId = new Map(catalog.map(p => [p.id, p.name]));
+    return {
+      id: r.role,
+      name: `PROFILE.ROLE.${r.role}`,
+      description: '',
+      permissions: r.permissionIds.map(id => byId.get(id) ?? String(id)),
+      usersCount: this.accounts().filter(a => a.userType === `PROFILE.ROLE.${r.role}`).length,
+    };
+  }
+
+  loadPromotions(): void {
+    this.promotionsApi.list().subscribe({
+      next: list => this.promotionsList.set(list.map(p => this.toPromotion(p))),
+      error: () => { /* la pantalla se queda con lo que ya tenía */ },
+    });
+    this.promotionsApi.metrics().subscribe({
+      next: metrics => this.promotionMetrics.set(metrics),
+      error: () => undefined,
+    });
+  }
+
+  // promoción del payment-service -> la que pinta la tabla. status "paused" del backend se
+  // muestra como "inactive" (mismo significado, nombre distinto en este modelo)
+  private toPromotion(p: PromotionView): Promotion {
+    return {
+      id: String(p.id),
+      name: p.name,
+      description: p.description ?? '',
+      price: p.price,
+      durationMin: p.durationMinutes,
+      couponCode: p.code,
+      redemptions: p.redemptions,
+      featured: p.featured,
+      icon: p.icon ?? 'local_offer',
+      features: p.benefits,
+      status: p.status === 'paused' ? 'inactive' : p.status,
+      startDate: p.validFrom,
+      discountPercent: p.discountPercent,
+      requiredPoints: p.requiredPoints,
+    };
+  }
+
+  // la pantalla no pide fecha de fin (solo activa/pausa): se guarda "sin vencimiento"
+  private toSaveRequest(result: PromotionModalResult) {
+    return {
+      code: result.couponCode,
+      name: result.name,
+      description: result.description.trim() || null,
+      price: result.price,
+      durationMinutes: result.durationMin,
+      icon: result.icon,
+      featured: result.featured,
+      benefits: result.features,
+      validFrom: result.startDate,
+      validTo: '9999-12-31',
+      discountPercent: result.discountPercent,
+      requiredPoints: result.requiredPoints,
+    };
   }
 
   loadUsers(): void {
@@ -115,9 +198,9 @@ export class ManagementComponent implements OnInit {
   // --- datos desde el store ---
 
   get users(): AdminUser[] { return this.accounts(); }
-  get roles(): UserRole[] { return this.store.roles(); }
+  get roles(): UserRole[] { return this.rolesList(); }
   get services(): CatalogServiceResponse[] { return this.catalogServices(); }
-  get promotions(): Promotion[] { return this.store.promotions(); }
+  get promotions(): Promotion[] { return this.promotionsList(); }
 
   // --- USUARIOS ---
 
@@ -183,55 +266,30 @@ export class ManagementComponent implements OnInit {
     });
   }
 
-  // --- ROLES ---
-
-  openCreateRole(): void {
-    const dialogRef = this.dialog.open(CreateRoleModal, { panelClass: 'custom-dialog' });
-
-    dialogRef.afterClosed().subscribe((result: CreateRoleResult | null) => {
-      if (!result) return;
-      const created = this.store.addRole(result);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.ROLE_CREATED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.ROLE_CREATED_MESSAGE',
-        { messageParams: { name: created.name } }
-      );
-    });
-  }
+  // --- ROLES (ADR-015: los 3 roles son fijos, solo se editan sus permisos) ---
 
   openEditRole(role: UserRole): void {
     const data: CreateRoleData = {
-      id: role.id,
-      name: role.name,
-      description: role.description,
-      permissions: role.permissions,
+      roles: this.roleMatrix.roles,
+      permissions: this.roleMatrix.permissions,
+      initialRole: role.id as RoleCode,
     };
 
     const dialogRef = this.dialog.open(CreateRoleModal, { panelClass: 'custom-dialog', data });
 
     dialogRef.afterClosed().subscribe((result: CreateRoleResult | null) => {
       if (!result) return;
-      this.store.updateRole(role.id, {
-        name: result.name,
-        description: result.description,
-        permissions: result.permissions,
+      this.rolesApi.update(result.role, result.permissionIds).subscribe({
+        next: () => {
+          this.loadRoles();
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_TITLE',
+            'ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_MESSAGE',
+            { messageParams: { name: result.role } }
+          );
+        },
+        error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error)),
       });
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_MESSAGE',
-        { messageParams: { name: result.name } }
-      );
-    });
-  }
-
-  deleteRole(role: UserRole): void {
-    this.confirmDelete(() => {
-      this.store.removeRole(role.id);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.DELETED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.ROLE_DELETED_MESSAGE',
-        { messageParams: { name: role.name } }
-      );
     });
   }
 
@@ -361,28 +419,30 @@ export class ManagementComponent implements OnInit {
 
   // --- PROMOCIONES ---
 
-  get totalRedemptions(): number { return this.store.totalRedemptions(); }
+  get totalRedemptions(): number { return this.promotionMetrics().redemptions; }
 
-  // los cupones se modelan con un descuento promedio del 20% sobre su tarifa
-  get clientSavings(): number {
-    return this.promotions.reduce((sum, p) => sum + p.redemptions * p.price * 0.2, 0);
-  }
+  get clientSavings(): number { return this.promotionMetrics().savings; }
 
-  get conversion(): number {
-    return this.PROMO_CONVERSION;
-  }
+  // no hay forma de contar cuántas veces se mostró/ofreció una promoción todavía, así que la
+  // conversión real no se puede calcular (ver PromotionApplicationService en payment-service)
+  get conversion(): number { return this.promotionMetrics().conversion; }
 
   openCreatePromotion(): void {
     const dialogRef = this.dialog.open(PromotionModal, { panelClass: 'custom-dialog' });
 
     dialogRef.afterClosed().subscribe((result: PromotionModalResult | null) => {
       if (!result) return;
-      const created = this.store.addPromotion(result);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.PROMO_CREATED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.PROMO_CREATED_MESSAGE',
-        { messageParams: { name: created.name } }
-      );
+      this.promotionsApi.create(this.toSaveRequest(result)).subscribe({
+        next: created => {
+          this.loadPromotions();
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.PROMO_CREATED_TITLE',
+            'ADMIN_MANAGEMENT.FEEDBACK.PROMO_CREATED_MESSAGE',
+            { messageParams: { name: created.name } }
+          );
+        },
+        error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error)),
+      });
     });
   }
 
@@ -393,27 +453,36 @@ export class ManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: PromotionModalResult | null) => {
       if (!result) return;
-      this.store.updatePromotion(promotion.id, result);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.PROMO_UPDATED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.PROMO_UPDATED_MESSAGE',
-        { messageParams: { name: result.name } }
-      );
+      this.promotionsApi.update(Number(promotion.id), this.toSaveRequest(result)).subscribe({
+        next: () => {
+          this.loadPromotions();
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.PROMO_UPDATED_TITLE',
+            'ADMIN_MANAGEMENT.FEEDBACK.PROMO_UPDATED_MESSAGE',
+            { messageParams: { name: result.name } }
+          );
+        },
+        error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error)),
+      });
     });
   }
 
   // "Comenzar ahora" / "Pausar": alterna el estado operativo de la promoción
   togglePromotion(promotion: Promotion): void {
-    const active = promotion.status === 'active' || promotion.status === 'scheduled';
     const stopping = promotion.status === 'active';
 
     if (!stopping) {
-      this.store.setPromotionActive(promotion.id, true);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.PROMO_STATUS_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.PROMO_STARTED_MESSAGE',
-        { messageParams: { name: promotion.name } }
-      );
+      this.promotionsApi.setActive(Number(promotion.id), true).subscribe({
+        next: () => {
+          this.loadPromotions();
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.PROMO_STATUS_TITLE',
+            'ADMIN_MANAGEMENT.FEEDBACK.PROMO_STARTED_MESSAGE',
+            { messageParams: { name: promotion.name } }
+          );
+        },
+        error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error)),
+      });
       return;
     }
 
@@ -429,23 +498,33 @@ export class ManagementComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data });
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      this.store.setPromotionActive(promotion.id, false);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.PROMO_STATUS_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.PROMO_STOPPED_MESSAGE',
-        { messageParams: { name: promotion.name } }
-      );
+      this.promotionsApi.setActive(Number(promotion.id), false).subscribe({
+        next: () => {
+          this.loadPromotions();
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.PROMO_STATUS_TITLE',
+            'ADMIN_MANAGEMENT.FEEDBACK.PROMO_STOPPED_MESSAGE',
+            { messageParams: { name: promotion.name } }
+          );
+        },
+        error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error)),
+      });
     });
   }
 
   deletePromotion(promotion: Promotion): void {
     this.confirmDelete(() => {
-      this.store.removePromotion(promotion.id);
-      this.feedback.success(
-        'ADMIN_MANAGEMENT.FEEDBACK.DELETED_TITLE',
-        'ADMIN_MANAGEMENT.FEEDBACK.PROMO_DELETED_MESSAGE',
-        { messageParams: { name: promotion.name } }
-      );
+      this.promotionsApi.remove(Number(promotion.id)).subscribe({
+        next: () => {
+          this.loadPromotions();
+          this.feedback.success(
+            'ADMIN_MANAGEMENT.FEEDBACK.DELETED_TITLE',
+            'ADMIN_MANAGEMENT.FEEDBACK.PROMO_DELETED_MESSAGE',
+            { messageParams: { name: promotion.name } }
+          );
+        },
+        error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error)),
+      });
     });
   }
 
