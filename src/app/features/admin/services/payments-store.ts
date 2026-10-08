@@ -55,10 +55,19 @@ export class PaymentsStore {
     return this.state().find(p => p.id === id);
   }
 
-  /** resultado de la revisión hecha en el modal: aprobar o rechazar (lo valida el backend) */
-  review(id: string, status: 'approved' | 'rejected', reason?: string, onError?: (err: unknown) => void): void {
+  /**
+   * Resultado de la revisión hecha en el modal: aprobar o rechazar (lo valida el backend).
+   * onDone solo se llama si payment-service aceptó el cambio, para no anunciar algo que falló.
+   */
+  review(id: string, status: 'approved' | 'rejected', reason?: string,
+         onError?: (err: unknown) => void, onDone?: () => void): void {
     const call = status === 'approved' ? this.api.approve(Number(id)) : this.api.reject(Number(id), reason ?? '');
-    call.subscribe({ next: () => this.refresh(), error: err => onError?.(err) });
+    call.subscribe({ next: () => { this.refresh(); onDone?.(); }, error: err => { this.refresh(); onError?.(err); } });
+  }
+
+  /** devuelve un pago aprobado; payment-service revierte los puntos de la reserva */
+  refund(id: string, onDone: () => void, onError: (err: unknown) => void): void {
+    this.api.refund(Number(id)).subscribe({ next: () => { this.refresh(); onDone(); }, error: err => { this.refresh(); onError(err); } });
   }
 
   /** imagen del comprobante del pago, para el modal de revisión */
@@ -82,7 +91,8 @@ function methodOf(code: string | undefined): Payment['method'] {
 
 function statusOf(code: string): PaymentStatus {
   if (code === 'APPROVED') return 'approved';
-  if (code === 'REJECTED' || code === 'REFUNDED') return 'rejected';
+  if (code === 'REJECTED') return 'rejected';
+  if (code === 'REFUNDED') return 'refunded';
   return 'pending';
 }
 
@@ -112,6 +122,6 @@ function toPayment(p: PaymentResponse): Payment {
     operator: '—',
     email: '—',
     bankAccount: p.account?.accountNumber ?? '—',
-    amountDeclared: p.amount,
+    amountDeclared: p.reportedAmount,
   };
 }

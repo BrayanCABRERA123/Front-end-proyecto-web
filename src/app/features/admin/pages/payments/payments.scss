@@ -212,6 +212,7 @@ table {
   &--pending { background: var(--warning-soft); color: var(--warning); }
   &--approved { background: var(--success-soft); color: var(--success); }
   &--rejected { background: var(--error-soft); color: var(--error); }
+  &--refunded { background: var(--neutral-badge-soft); color: var(--neutral-badge); }
 }
 
 .actions-cell { text-align: right; white-space: nowrap; }

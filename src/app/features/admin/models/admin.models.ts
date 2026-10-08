@@ -161,7 +161,8 @@ export interface Booking {
 
 /* ================= PAGOS ================= */
 
-export type PaymentStatus = 'pending' | 'approved' | 'rejected';
+// pending agrupa PENDING e IN_REVIEW de payment-service (los dos esperan decisión del admin)
+export type PaymentStatus = 'pending' | 'approved' | 'rejected' | 'refunded';
 
 export interface Payment {
   id: string;
@@ -187,7 +188,8 @@ export interface Payment {
   operator: string;
   email: string;
   bankAccount: string;
-  amountDeclared: number;
+  /** lo que el cliente dice que pagó según su comprobante; null si no lo indicó */
+  amountDeclared: number | null;
 }
 
 /* ================= GESTIÓN ================= */

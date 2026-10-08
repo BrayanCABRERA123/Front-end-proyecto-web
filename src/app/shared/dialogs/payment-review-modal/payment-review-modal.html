@@ -5,7 +5,7 @@
       <div class="title-row">
         <h2>{{ 'PAYMENT_REVIEW_MODAL.TITLE' | translate:{ code: data.code } }}</h2>
         <span [class]="'status-pill status-pill--' + data.status">
-          {{ ('ADMIN_PAYMENTS.STATUS.' + data.status) | translate }}
+          {{ data.status === 'refunded' ? texts.STATUS_REFUNDED : (('ADMIN_PAYMENTS.STATUS.' + data.status) | translate) }}
         </span>
       </div>
       <p>{{ 'PAYMENT_REVIEW_MODAL.SUBTITLE' | translate }}</p>
@@ -36,7 +36,7 @@
           }
 
           <mat-icon class="receipt-mock__check">check_circle</mat-icon>
-          <span class="receipt-mock__amount">{{ cop(data.amountDeclared) }},00</span>
+          <span class="receipt-mock__amount">{{ cop(data.amountDeclared ?? data.amountDue) }},00</span>
 
           <div class="receipt-mock__details">
             <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_PAYEE' | translate }}</span><strong>{{ data.payee || '—' }}</strong></div>
@@ -102,11 +102,23 @@
             </div>
             <div>
               <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.AMOUNT_DECLARED' | translate }}</span>
-              <strong>{{ cop(data.amountDeclared) }} COP</strong>
+              @if (hasDeclared) {
+                <strong>{{ cop(data.amountDeclared!) }} COP</strong>
+              } @else {
+                <strong>{{ texts.NOT_DECLARED }}</strong>
+              }
             </div>
           </div>
 
-          @if (amountsMatch) {
+          @if (!hasDeclared) {
+            <div class="match-box">
+              <mat-icon>info</mat-icon>
+              <div>
+                <strong>{{ texts.NOT_DECLARED_TITLE }}</strong>
+                <p>{{ texts.NOT_DECLARED_TEXT }}</p>
+              </div>
+            </div>
+          } @else if (amountsMatch) {
             <div class="match-box match-box--ok">
               <mat-icon>check_circle</mat-icon>
               <div>
@@ -173,6 +185,12 @@
           <button class="btn-approve" type="button" (click)="approve()">
             <mat-icon>check</mat-icon>
             {{ 'PAYMENT_REVIEW_MODAL.APPROVE' | translate }}
+          </button>
+        }
+        @if (data.status === 'approved') {
+          <button class="btn-reject" type="button" (click)="refund()">
+            <mat-icon>undo</mat-icon>
+            {{ texts.REFUND }}
           </button>
         }
       }

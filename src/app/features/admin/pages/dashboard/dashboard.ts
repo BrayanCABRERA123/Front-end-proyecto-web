@@ -294,24 +294,29 @@ export class DashboardComponent {
       receiptDate: `${formatPaymentDate(payment.date)}, ${payment.time} COT`,
       bankAccount: payment.bankAccount,
       rejectionReason: payment.rejectionReason,
+      receiptImage: this.payments.receiptOf(payment.id),
+      payee: this.payments.payeeOf(payment.id),
     };
 
     const dialogRef = this.dialog.open(PaymentReviewModal, { panelClass: 'custom-dialog', data });
 
     dialogRef.afterClosed().subscribe((result: PaymentReviewResult | null) => {
-      if (!result || !result.action) return;
+      // desde el dashboard solo llegan pagos pendientes: aprobar o rechazar
+      if (!result || (result.action !== 'approved' && result.action !== 'rejected')) return;
 
-      this.payments.review(payment.id, result.action, result.reason);
-      this.feedback.success(
-        'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_TITLE',
-        'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_MESSAGE',
-        {
-          messageParams: { code: payment.code },
-          details: result.reason
-            ? [{ label: 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL', value: result.reason }]
-            : [],
-        }
-      );
+      // el aviso de éxito sale solo cuando payment-service aceptó la decisión
+      this.payments.review(payment.id, result.action, result.reason,
+        err => this.feedback.error('COMMON.ERROR', apiErrorKey(err)),
+        () => this.feedback.success(
+          'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_TITLE',
+          'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_MESSAGE',
+          {
+            messageParams: { code: payment.code },
+            details: result.reason
+              ? [{ label: 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL', value: result.reason }]
+              : [],
+          }
+        ));
     });
   }
 

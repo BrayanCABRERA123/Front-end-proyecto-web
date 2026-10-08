@@ -12,10 +12,12 @@ import { PaymentsApiService } from '../../../../core/services/payments-api';
 import { PaymentReviewModal } from '../../../../shared/dialogs/payment-review-modal/payment-review-modal';
 import { PaymentReviewData, PaymentReviewResult } from '../../../../shared/dialogs/payment-review-modal/payment-review.model';
 import { ExportColumn, ExportDataModal, ExportDataModalData } from '../../../../shared/dialogs/export-data-modal/export-data-modal';
+import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { PaymentsStore, formatPaymentDate } from '../../services/payments-store';
 import { Payment, PaymentStatus } from '../../models/admin.models';
 import { apiErrorKey } from '../../../../core/utils/api-error';
+import { PAYMENT_TEXTS } from '../../../../core/constants/payment-texts';
 
 @Component({
   selector: 'app-payments',
@@ -25,6 +27,8 @@ import { apiErrorKey } from '../../../../core/utils/api-error';
   styleUrls: ['./payments.scss']
 })
 export class PaymentsComponent implements OnInit {
+
+  readonly texts = PAYMENT_TEXTS;
 
   search = '';
   methodFilter = '';
@@ -105,7 +109,7 @@ export class PaymentsComponent implements OnInit {
     this.dialog.open(PaymentModalComponent, { panelClass: 'custom-dialog' }).afterClosed()
       .subscribe((result: ManualPaymentResult | null) => {
         if (!result) return;
-        this.paymentsApi.registerManual(result.bookingId, result.paymentAccountId).subscribe({
+        this.paymentsApi.registerManual(result.bookingId, result.paymentAccountId, result.transactionReference).subscribe({
           next: created => {
             this.store.refresh();
             this.feedback.success('ADMIN_PAYMENTS.FEEDBACK.MANUAL_TITLE', 'ADMIN_PAYMENTS.FEEDBACK.MANUAL_MESSAGE',
@@ -147,20 +151,44 @@ export class PaymentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: PaymentReviewResult | null) => {
       if (!result || !result.action) return;
+      if (result.action === 'refunded') {
+        this.confirmRefund(payment);
+        return;
+      }
 
+      // el aviso de éxito sale solo cuando payment-service aceptó la decisión
       this.store.review(payment.id, result.action, result.reason,
-        err => this.feedback.error('COMMON.ERROR', apiErrorKey(err)));
-      this.feedback.success(
-        'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_TITLE',
-        'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_MESSAGE',
-        {
-          messageParams: { code: payment.code },
-          details: result.reason
-            ? [{ label: 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL', value: result.reason }]
-            : [],
-        }
-      );
+        err => this.feedback.error('COMMON.ERROR', apiErrorKey(err)),
+        () => this.feedback.success(
+          'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_TITLE',
+          'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_MESSAGE',
+          {
+            messageParams: { code: payment.code },
+            details: result.reason
+              ? [{ label: 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL', value: result.reason }]
+              : [],
+          }
+        ));
     });
+  }
+
+  // reembolsar es irreversible (revierte los puntos de la reserva): se confirma antes
+  confirmRefund(payment: Payment): void {
+    const data: ConfirmModalData = {
+      title: PAYMENT_TEXTS.REFUND_CONFIRM_TITLE,
+      message: PAYMENT_TEXTS.REFUND_CONFIRM_MESSAGE(payment.code),
+      confirmText: PAYMENT_TEXTS.REFUND_CONFIRM,
+      cancelText: 'COMMON.CANCEL',
+      danger: true
+    };
+
+    this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data }).afterClosed()
+      .subscribe((confirmed: boolean) => {
+        if (!confirmed) return;
+        this.store.refund(payment.id,
+          () => this.feedback.success(PAYMENT_TEXTS.REFUNDED_TITLE, PAYMENT_TEXTS.REFUNDED_MESSAGE(payment.code)),
+          err => this.feedback.error('COMMON.ERROR', apiErrorKey(err)));
+      });
   }
 
   // un pago rechazado se explica en un modal de estado con el motivo

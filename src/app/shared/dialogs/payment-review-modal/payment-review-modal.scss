@@ -158,6 +158,9 @@
   border-radius: 10px;
   padding: 12px;
   margin-top: 12px;
+  // sin modificador: el cliente no indicó el monto, no hay comparación (aviso neutro)
+  background: var(--neutral-badge-soft);
+  color: var(--neutral-badge);
 
   mat-icon { font-size: 20px; width: 20px; height: 20px; margin-top: 1px; flex-shrink: 0; }
 
@@ -233,6 +236,7 @@
   &--pending { background: var(--warning-soft); color: var(--warning); }
   &--approved { background: var(--success-soft); color: var(--success); }
   &--rejected { background: var(--error-soft); color: var(--error); }
+  &--refunded { background: var(--neutral-badge-soft); color: var(--neutral-badge); }
 }
 
 /* pie con las acciones */

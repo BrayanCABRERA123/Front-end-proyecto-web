@@ -6,6 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { PaymentReviewData, PaymentReviewResult } from './payment-review.model';
+import { PAYMENT_TEXTS } from '../../../core/constants/payment-texts';
 
 @Component({
   selector: 'app-payment-review-modal',
@@ -16,6 +17,8 @@ import { PaymentReviewData, PaymentReviewResult } from './payment-review.model';
 })
 export class PaymentReviewModal {
 
+  readonly texts = PAYMENT_TEXTS;
+
   // true cuando el admin le dio "Rechazar" y ahora toca pedirle el motivo
   askingRejectReason = false;
   rejectReason = '';
@@ -25,12 +28,17 @@ export class PaymentReviewModal {
     @Inject(MAT_DIALOG_DATA) public data: PaymentReviewData
   ) {}
 
+  // el cliente indicó cuánto pagó (si no, no hay nada que comparar)
+  get hasDeclared(): boolean {
+    return this.data.amountDeclared !== null;
+  }
+
   get amountsMatch(): boolean {
     return this.data.amountDue === this.data.amountDeclared;
   }
 
   get differencePercent(): number {
-    if (this.data.amountDue === 0) return 0;
+    if (this.data.amountDue === 0 || this.data.amountDeclared === null) return 0;
     const diff = Math.abs(this.data.amountDue - this.data.amountDeclared);
     return Math.round((diff / this.data.amountDue) * 100);
   }
@@ -46,6 +54,11 @@ export class PaymentReviewModal {
 
   approve(): void {
     const result: PaymentReviewResult = { action: 'approved' };
+    this.dialogRef.close(result);
+  }
+
+  refund(): void {
+    const result: PaymentReviewResult = { action: 'refunded' };
     this.dialogRef.close(result);
   }
 
