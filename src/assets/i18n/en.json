@@ -185,7 +185,10 @@
     "BENEFITS": {
       "TITLE": "Your benefits and promotions",
       "LOYALTY_PROGRESS": "Loyalty progress",
-      "LOYALTY_EMPTY": "No loyalty data yet"
+      "LOYALTY_EMPTY": "No loyalty data yet",
+      "POINTS_OF": "{{current}} of {{goal}} points",
+      "UNLOCKED": "Unlocked! Redeem it when you pay.",
+      "LOCKED": "{{points}} points to go to unlock it"
     },
     "SERVICES_HISTORY": {
       "TITLE": "My service history",
@@ -819,6 +822,11 @@
       "CANCEL": "Cancel booking",
       "SECURE": "100% secure payment · Immediate verification by the bay team"
     },
+    "COUPON": {
+      "PLACEHOLDER": "Coupon code",
+      "APPLY": "Apply",
+      "APPLIED": "Coupon applied: {{name}}"
+    },
     "HELP": {
       "TITLE": "Need help with your payment?",
       "DESC": "Customer service hotline:"
@@ -1396,7 +1404,8 @@
       },
       "USERS_COUNT": "{{count}} users",
       "EMPTY_TITLE": "No roles yet",
-      "EMPTY_MESSAGE": "Create the first role to define system permissions."
+      "EMPTY_MESSAGE": "Create the first role to define system permissions.",
+      "NO_PERMISSIONS": "No permissions"
     },
     "SERVICES": {
       "CREATE_SERVICE": "Add service",
@@ -1493,24 +1502,11 @@
     }
   },
   "CREATE_ROLE_MODAL": {
-    "TITLE": "Create User Role",
-    "ROLE_NAME_LABEL": "Role Name",
-    "ROLE_NAME_PLACEHOLDER": "E.g. Bay Supervisor",
-    "DESCRIPTION_LABEL": "Description",
-    "DESCRIPTION_PLACEHOLDER": "Main responsibilities of the role...",
-    "PERMISSIONS_LABEL": "Enabled Permissions",
-    "PERMISSIONS": {
-      "VIEW_PANELS": "View panels",
-      "CREATE_RECORDS": "Create records",
-      "EDIT_DATA": "Edit data",
-      "DELETE": "Delete"
-    },
-    "CANCEL": "Cancel",
-    "CREATE": "Create Role",
-    "SUBTITLE": "Create a role with the permissions it needs.",
-    "SUBTITLE_EDIT": "Update the role name and permissions.",
-    "TITLE_EDIT": "Edit role",
-    "ERROR_NAME": "Enter the role name"
+    "TITLE_EDIT": "Role permissions",
+    "SUBTITLE_EDIT": "The 3 roles are fixed: pick one and check its permissions.",
+    "ROLE_SELECT_LABEL": "Role",
+    "PERMISSIONS_LABEL": "Enabled permissions",
+    "NO_PERMISSIONS": "No permissions in the catalog."
   },
   "SERVICE_MODAL": {
     "TITLE_CREATE": "Add New Service",
@@ -2225,6 +2221,9 @@
     "ICON_LABEL": "Icon",
     "STATUS_LABEL": "Status",
     "START_DATE_LABEL": "Start date",
+    "DISCOUNT_PERCENT_LABEL": "Discount on redemption (%)",
+    "ERROR_DISCOUNT_PERCENT": "Enter a discount between 1 and 100",
+    "REQUIRED_POINTS_LABEL": "Loyalty points required",
     "FEATURED_LABEL": "Feature in the app",
     "FEATURES_LABEL": "Benefits",
     "FEATURES_ADD": "Add benefit",
@@ -2305,7 +2304,10 @@
     "ABSENCE_OVERLAP": "There is already an absence on those dates.",
     "OPERATOR_NOT_FOUND": "Operator not found.",
     "BOOKING_NOT_FOUND": "Booking not found.",
-    "BOOKING_SERVICE_UNAVAILABLE": "The booking service is not responding. Try again in a moment."
+    "BOOKING_SERVICE_UNAVAILABLE": "The booking service is not responding. Try again in a moment.",
+    "PROMOTION_NOT_FOUND": "That coupon doesn't exist.",
+    "PROMOTION_NOT_REDEEMABLE": "That coupon isn't active, or you haven't reached the points it needs yet.",
+    "PROMOTION_ALREADY_REDEEMED": "You already redeemed this coupon on this booking."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",

@@ -185,7 +185,10 @@
     "BENEFITS": {
       "TITLE": "Vos avantages et promotions",
       "LOYALTY_PROGRESS": "Progression de fidélité",
-      "LOYALTY_EMPTY": "Aucune donnée de fidélité pour le moment"
+      "LOYALTY_EMPTY": "Aucune donnée de fidélité pour le moment",
+      "POINTS_OF": "{{current}} sur {{goal}} points",
+      "UNLOCKED": "Débloquée ! Échangez-la au moment du paiement.",
+      "LOCKED": "Encore {{points}} points pour la débloquer"
     },
     "SERVICES_HISTORY": {
       "TITLE": "Mon historique de services",
@@ -819,6 +822,11 @@
       "CANCEL": "Annuler la réservation",
       "SECURE": "Paiement 100 % sécurisé · Vérification immédiate par l'équipe de la baie"
     },
+    "COUPON": {
+      "PLACEHOLDER": "Code promo",
+      "APPLY": "Appliquer",
+      "APPLIED": "Coupon appliqué : {{name}}"
+    },
     "HELP": {
       "TITLE": "Besoin d'aide pour votre paiement ?",
       "DESC": "Service client :"
@@ -1396,7 +1404,8 @@
       },
       "USERS_COUNT": "{{count}} utilisateurs",
       "EMPTY_TITLE": "Aucun rôle pour l’instant",
-      "EMPTY_MESSAGE": "Créez le premier rôle pour définir les permissions du système."
+      "EMPTY_MESSAGE": "Créez le premier rôle pour définir les permissions du système.",
+      "NO_PERMISSIONS": "Aucune permission"
     },
     "SERVICES": {
       "CREATE_SERVICE": "Ajouter un service",
@@ -1493,24 +1502,11 @@
     }
   },
   "CREATE_ROLE_MODAL": {
-    "TITLE": "Créer un rôle utilisateur",
-    "ROLE_NAME_LABEL": "Nom du rôle",
-    "ROLE_NAME_PLACEHOLDER": "Ex. Superviseur de baie",
-    "DESCRIPTION_LABEL": "Description",
-    "DESCRIPTION_PLACEHOLDER": "Fonctions principales du rôle...",
+    "TITLE_EDIT": "Permissions du rôle",
+    "SUBTITLE_EDIT": "Les 3 rôles sont fixes : choisissez-en un et cochez ses permissions.",
+    "ROLE_SELECT_LABEL": "Rôle",
     "PERMISSIONS_LABEL": "Permissions activées",
-    "PERMISSIONS": {
-      "VIEW_PANELS": "Voir les panneaux",
-      "CREATE_RECORDS": "Créer des enregistrements",
-      "EDIT_DATA": "Modifier les données",
-      "DELETE": "Supprimer"
-    },
-    "CANCEL": "Annuler",
-    "CREATE": "Créer le rôle",
-    "SUBTITLE": "Créez un rôle avec les permissions nécessaires.",
-    "SUBTITLE_EDIT": "Mettez à jour le nom et les permissions du rôle.",
-    "TITLE_EDIT": "Modifier le rôle",
-    "ERROR_NAME": "Saisissez le nom du rôle"
+    "NO_PERMISSIONS": "Aucune permission dans le catalogue."
   },
   "SERVICE_MODAL": {
     "TITLE_CREATE": "Ajouter un nouveau service",
@@ -2225,6 +2221,9 @@
     "ICON_LABEL": "Icône",
     "STATUS_LABEL": "Statut",
     "START_DATE_LABEL": "Date de début",
+    "DISCOUNT_PERCENT_LABEL": "Remise au moment de l'échange (%)",
+    "ERROR_DISCOUNT_PERCENT": "Entrez une remise entre 1 et 100",
+    "REQUIRED_POINTS_LABEL": "Points de fidélité requis",
     "FEATURED_LABEL": "Mettre en avant dans l’app",
     "FEATURES_LABEL": "Avantages",
     "FEATURES_ADD": "Ajouter un avantage",
@@ -2305,7 +2304,10 @@
     "ABSENCE_OVERLAP": "Une absence existe déjà à ces dates.",
     "OPERATOR_NOT_FOUND": "Opérateur introuvable.",
     "BOOKING_NOT_FOUND": "Réservation introuvable.",
-    "BOOKING_SERVICE_UNAVAILABLE": "Le service de réservations ne répond pas. Réessayez dans un instant."
+    "BOOKING_SERVICE_UNAVAILABLE": "Le service de réservations ne répond pas. Réessayez dans un instant.",
+    "PROMOTION_NOT_FOUND": "Ce coupon n'existe pas.",
+    "PROMOTION_NOT_REDEEMABLE": "Ce coupon n'est pas valide, ou vous n'avez pas encore assez de points.",
+    "PROMOTION_ALREADY_REDEEMED": "Vous avez déjà utilisé ce coupon sur cette réservation."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",

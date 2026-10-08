@@ -185,7 +185,10 @@
     "BENEFITS": {
       "TITLE": "Tus beneficios y promociones",
       "LOYALTY_PROGRESS": "Progreso de fidelidad",
-      "LOYALTY_EMPTY": "Aún no tienes datos de fidelidad"
+      "LOYALTY_EMPTY": "Aún no tienes datos de fidelidad",
+      "POINTS_OF": "{{current}} de {{goal}} puntos",
+      "UNLOCKED": "¡Ya la desbloqueaste! Cánjala al pagar.",
+      "LOCKED": "Te faltan {{points}} puntos para desbloquearla"
     },
     "SERVICES_HISTORY": {
       "TITLE": "Mi historial de servicios",
@@ -819,6 +822,11 @@
       "CANCEL": "Cancelar reserva",
       "SECURE": "Pago 100% seguro · Verificación inmediata por el equipo de bahía"
     },
+    "COUPON": {
+      "PLACEHOLDER": "Código del cupón",
+      "APPLY": "Aplicar",
+      "APPLIED": "Cupón aplicado: {{name}}"
+    },
     "HELP": {
       "TITLE": "¿Necesitas asistencia con tu pago?",
       "DESC": "Línea directa de atención al cliente:"
@@ -1396,7 +1404,8 @@
       },
       "USERS_COUNT": "{{count}} usuarios",
       "EMPTY_TITLE": "No hay roles todavía",
-      "EMPTY_MESSAGE": "Crea el primer rol para definir los permisos del sistema."
+      "EMPTY_MESSAGE": "Crea el primer rol para definir los permisos del sistema.",
+      "NO_PERMISSIONS": "Sin permisos"
     },
     "SERVICES": {
       "CREATE_SERVICE": "Agregar servicio",
@@ -1493,24 +1502,11 @@
     }
   },
   "CREATE_ROLE_MODAL": {
-    "TITLE": "Crear Rol de Usuario",
-    "ROLE_NAME_LABEL": "Nombre del Rol",
-    "ROLE_NAME_PLACEHOLDER": "Ej. Supervisor de Bahía",
-    "DESCRIPTION_LABEL": "Descripción",
-    "DESCRIPTION_PLACEHOLDER": "Funciones principales del rol...",
-    "PERMISSIONS_LABEL": "Permisos Habilitados",
-    "PERMISSIONS": {
-      "VIEW_PANELS": "Ver paneles",
-      "CREATE_RECORDS": "Crear registros",
-      "EDIT_DATA": "Editar datos",
-      "DELETE": "Eliminar"
-    },
-    "CANCEL": "Cancelar",
-    "CREATE": "Crear Rol",
-    "SUBTITLE": "Crea un rol con los permisos que necesitará.",
-    "SUBTITLE_EDIT": "Actualiza el nombre y los permisos del rol.",
-    "TITLE_EDIT": "Editar rol",
-    "ERROR_NAME": "Ingresa el nombre del rol"
+    "TITLE_EDIT": "Permisos del rol",
+    "SUBTITLE_EDIT": "Los 3 roles son fijos: elige uno y marca sus permisos.",
+    "ROLE_SELECT_LABEL": "Rol",
+    "PERMISSIONS_LABEL": "Permisos habilitados",
+    "NO_PERMISSIONS": "No hay permisos en el catálogo."
   },
   "SERVICE_MODAL": {
     "TITLE_CREATE": "Agregar Nuevo Servicio",
@@ -2225,6 +2221,9 @@
     "ICON_LABEL": "Icono",
     "STATUS_LABEL": "Estado",
     "START_DATE_LABEL": "Fecha de inicio",
+    "DISCOUNT_PERCENT_LABEL": "Descuento al canjear (%)",
+    "ERROR_DISCOUNT_PERCENT": "Ingresa un descuento entre 1 y 100",
+    "REQUIRED_POINTS_LABEL": "Puntos de fidelización necesarios",
     "FEATURED_LABEL": "Destacar en la app",
     "FEATURES_LABEL": "Beneficios",
     "FEATURES_ADD": "Agregar beneficio",
@@ -2305,7 +2304,10 @@
     "ABSENCE_OVERLAP": "Ya existe una ausencia en esas fechas.",
     "OPERATOR_NOT_FOUND": "No se encontró el operario.",
     "BOOKING_NOT_FOUND": "No se encontró la reserva.",
-    "BOOKING_SERVICE_UNAVAILABLE": "El servicio de reservas no responde. Intenta de nuevo en un momento."
+    "BOOKING_SERVICE_UNAVAILABLE": "El servicio de reservas no responde. Intenta de nuevo en un momento.",
+    "PROMOTION_NOT_FOUND": "Ese cupón no existe.",
+    "PROMOTION_NOT_REDEEMABLE": "Ese cupón no está vigente o todavía no acumulas los puntos necesarios.",
+    "PROMOTION_ALREADY_REDEEMED": "Ya canjeaste este cupón en esta reserva."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Contraseña actual",

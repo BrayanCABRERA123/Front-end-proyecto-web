@@ -185,7 +185,10 @@
     "BENEFITS": {
       "TITLE": "Seus benefícios e promoções",
       "LOYALTY_PROGRESS": "Progresso de fidelidade",
-      "LOYALTY_EMPTY": "Ainda não há dados de fidelidade"
+      "LOYALTY_EMPTY": "Ainda não há dados de fidelidade",
+      "POINTS_OF": "{{current}} de {{goal}} pontos",
+      "UNLOCKED": "Já desbloqueada! Resgate ao pagar.",
+      "LOCKED": "Faltam {{points}} pontos para desbloquear"
     },
     "SERVICES_HISTORY": {
       "TITLE": "Meu histórico de serviços",
@@ -819,6 +822,11 @@
       "CANCEL": "Cancelar reserva",
       "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box"
     },
+    "COUPON": {
+      "PLACEHOLDER": "Código do cupom",
+      "APPLY": "Aplicar",
+      "APPLIED": "Cupom aplicado: {{name}}"
+    },
     "HELP": {
       "TITLE": "Precisa de ajuda com seu pagamento?",
       "DESC": "Central de atendimento ao cliente:"
@@ -1396,7 +1404,8 @@
       },
       "USERS_COUNT": "{{count}} usuários",
       "EMPTY_TITLE": "Nenhum perfil ainda",
-      "EMPTY_MESSAGE": "Crie o primeiro perfil para definir as permissões do sistema."
+      "EMPTY_MESSAGE": "Crie o primeiro perfil para definir as permissões do sistema.",
+      "NO_PERMISSIONS": "Sem permissões"
     },
     "SERVICES": {
       "CREATE_SERVICE": "Adicionar serviço",
@@ -1493,24 +1502,11 @@
     }
   },
   "CREATE_ROLE_MODAL": {
-    "TITLE": "Criar Função de Usuário",
-    "ROLE_NAME_LABEL": "Nome da Função",
-    "ROLE_NAME_PLACEHOLDER": "Ex. Supervisor de Baia",
-    "DESCRIPTION_LABEL": "Descrição",
-    "DESCRIPTION_PLACEHOLDER": "Funções principais do cargo...",
-    "PERMISSIONS_LABEL": "Permissões Habilitadas",
-    "PERMISSIONS": {
-      "VIEW_PANELS": "Ver painéis",
-      "CREATE_RECORDS": "Criar registros",
-      "EDIT_DATA": "Editar dados",
-      "DELETE": "Excluir"
-    },
-    "CANCEL": "Cancelar",
-    "CREATE": "Criar Função",
-    "SUBTITLE": "Crie um perfil com as permissões necessárias.",
-    "SUBTITLE_EDIT": "Atualize o nome e as permissões do perfil.",
-    "TITLE_EDIT": "Editar perfil",
-    "ERROR_NAME": "Informe o nome do perfil"
+    "TITLE_EDIT": "Permissões do perfil",
+    "SUBTITLE_EDIT": "Os 3 perfis são fixos: escolha um e marque suas permissões.",
+    "ROLE_SELECT_LABEL": "Perfil",
+    "PERMISSIONS_LABEL": "Permissões habilitadas",
+    "NO_PERMISSIONS": "Não há permissões no catálogo."
   },
   "SERVICE_MODAL": {
     "TITLE_CREATE": "Adicionar Novo Serviço",
@@ -2225,6 +2221,9 @@
     "ICON_LABEL": "Ícone",
     "STATUS_LABEL": "Status",
     "START_DATE_LABEL": "Data de início",
+    "DISCOUNT_PERCENT_LABEL": "Desconto ao resgatar (%)",
+    "ERROR_DISCOUNT_PERCENT": "Informe um desconto entre 1 e 100",
+    "REQUIRED_POINTS_LABEL": "Pontos de fidelidade necessários",
     "FEATURED_LABEL": "Destacar no app",
     "FEATURES_LABEL": "Benefícios",
     "FEATURES_ADD": "Adicionar benefício",
@@ -2305,7 +2304,10 @@
     "ABSENCE_OVERLAP": "Já existe uma ausência nessas datas.",
     "OPERATOR_NOT_FOUND": "Operador não encontrado.",
     "BOOKING_NOT_FOUND": "Reserva não encontrada.",
-    "BOOKING_SERVICE_UNAVAILABLE": "O serviço de reservas não responde. Tente novamente em instantes."
+    "BOOKING_SERVICE_UNAVAILABLE": "O serviço de reservas não responde. Tente novamente em instantes.",
+    "PROMOTION_NOT_FOUND": "Esse cupom não existe.",
+    "PROMOTION_NOT_REDEEMABLE": "Esse cupom não está vigente ou você ainda não tem os pontos necessários.",
+    "PROMOTION_ALREADY_REDEEMED": "Você já resgatou esse cupom nesta reserva."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Senha atual",
