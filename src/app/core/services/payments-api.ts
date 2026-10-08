@@ -47,11 +47,21 @@ export interface PaymentResponse {
   processedAtUtc: string | null;
   rejectionReason: string | null;
   transactionReference: string | null;
+  // lo que el cliente dice que pagó según su comprobante (null si no lo indicó); amount es lo esperado
+  reportedAmount: number | null;
   receiptImage: string | null;
   reportedAtUtc: string | null;
   reportedBy: number | null;
   account: PaymentAccountResponse | null;
   booking: PaymentBookingInfo | null;
+}
+
+// lo que falta por pagar de una reserva: su total menos los cupones canjeados (payment-service)
+export interface AmountDueResponse {
+  bookingId: number;
+  bookingTotal: number;
+  appliedDiscounts: number;
+  amountDue: number;
 }
 
 export interface SavePaymentAccountRequest {
@@ -64,8 +74,9 @@ export interface SavePaymentAccountRequest {
 }
 
 /**
- * payment-service (.NET, puerto 3005). El monto lo pone el backend con el total de la reserva;
- * la web solo manda la reserva, la cuenta, la referencia y la imagen del comprobante.
+ * payment-service (.NET, puerto 3005). El monto a cobrar lo pone el backend con el total de la
+ * reserva; la web manda la reserva, la cuenta, la referencia, la imagen del comprobante y el monto
+ * que el cliente dice haber pagado (el admin compara ambos al revisar).
  */
 @Injectable({ providedIn: 'root' })
 export class PaymentsApiService {
@@ -79,8 +90,10 @@ export class PaymentsApiService {
     return this.http.get<PaymentAccountResponse[]>(`${this.api}/payment-accounts`);
   }
 
-  report(bookingId: number, paymentAccountId: number, transactionReference: string, receiptImage: string): Observable<PaymentResponse> {
-    return this.http.post<PaymentResponse>(`${this.api}/payments`, { bookingId, paymentAccountId, transactionReference, receiptImage });
+  report(bookingId: number, paymentAccountId: number, transactionReference: string, receiptImage: string,
+         reportedAmount: number | null = null): Observable<PaymentResponse> {
+    return this.http.post<PaymentResponse>(`${this.api}/payments`,
+      { bookingId, paymentAccountId, transactionReference, receiptImage, reportedAmount });
   }
 
   mine(): Observable<PaymentResponse[]> {
@@ -94,9 +107,15 @@ export class PaymentsApiService {
     return this.http.get<PaymentResponse[]>(`${this.api}/admin/payments`, { params });
   }
 
-  // pago recibido en el lavadero: queda aprobado con el total de la reserva
-  registerManual(bookingId: number, paymentAccountId: number): Observable<PaymentResponse> {
-    return this.http.post<PaymentResponse>(`${this.api}/admin/payments`, { bookingId, paymentAccountId });
+  // monto con el que quedaría un pago en caja (el mismo que usa registerManual)
+  amountDue(bookingId: number): Observable<AmountDueResponse> {
+    const params = new HttpParams().set('bookingId', bookingId);
+    return this.http.get<AmountDueResponse>(`${this.api}/admin/payments/amount-due`, { params });
+  }
+
+  // pago recibido en el lavadero: queda aprobado con lo que falta por pagar de la reserva
+  registerManual(bookingId: number, paymentAccountId: number, transactionReference: string | null = null): Observable<PaymentResponse> {
+    return this.http.post<PaymentResponse>(`${this.api}/admin/payments`, { bookingId, paymentAccountId, transactionReference });
   }
 
   approve(id: number): Observable<PaymentResponse> {
@@ -105,6 +124,11 @@ export class PaymentsApiService {
 
   reject(id: number, reason: string): Observable<PaymentResponse> {
     return this.http.post<PaymentResponse>(`${this.api}/admin/payments/${id}/reject`, { reason });
+  }
+
+  // devuelve un pago aprobado y revierte los puntos que ganó la reserva (204, sin cuerpo)
+  refund(id: number): Observable<void> {
+    return this.http.post<void>(`${this.api}/admin/payments/${id}/refund`, {});
   }
 
   adminAccounts(): Observable<PaymentAccountResponse[]> {
@@ -123,6 +147,9 @@ export class PaymentsApiService {
     return this.http.put<PaymentAccountResponse>(`${this.api}/admin/payment-accounts/${id}`, request);
   }
 }
+
+/** formatos de imagen para el QR y el comprobante (payment-service no acepta SVG ni otros) */
+export const ALLOWED_IMAGE_TYPES = ['image/png', 'image/jpeg'];
 
 /** lee un archivo de imagen como data URL (QR o comprobante) */
 export function readImageAsDataUrl(file: File): Promise<string> {
