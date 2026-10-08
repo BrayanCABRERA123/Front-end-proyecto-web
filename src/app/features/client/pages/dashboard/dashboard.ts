@@ -20,6 +20,7 @@ import { isActiveStatus, isFinishedStatus, isoToDisplayDate, servicesLabel, vehi
 import { VehiclesService } from '../../../../core/services/vehicles';
 import { UserSession } from '../../../../core/services/user-session';
 import { VehicleResponse } from '../../../../core/models/vehicle.models';
+import { LoyaltyApiService, PromotionForCustomer } from '../../../../core/services/loyalty-api';
 
 // avance del servicio según su estado (Programado → Confirmado → En progreso → Finalizado)
 const PROGRESS_BY_STATUS: Record<string, number> = {
@@ -40,6 +41,7 @@ export class DashboardComponent implements OnInit {
 
   private readonly vehiclesService = inject(VehiclesService);
   private readonly userSession = inject(UserSession);
+  private readonly loyaltyApi = inject(LoyaltyApiService);
 
   // datos del usuario (vienen del login real)
   userName = '';
@@ -75,18 +77,12 @@ export class DashboardComponent implements OnInit {
   // vehículos registrados por el cliente (reales del backend)
   vehicles: VehicleResponse[] = [];
 
-  // beneficios y promociones (contenido comercial, vendrá del backend)
-  benefits = [
-    { title: '20% OFF en tu 5° lavado', description: 'Te faltan 1 servicio para desbloquearlo' },
-    { title: 'Lavado Premium a precio Básico', description: 'Válido hasta el 30 de septiembre' }
-  ];
+  // beneficios y promociones: puntos de fidelización reales (payment-service), ya no mock
+  benefits: { title: string; description: string }[] = [];
 
-  // progreso del programa de fidelidad
-  loyalty = {
-    current: 4,
-    goal: 5,
-    percentage: 80
-  };
+  // progreso del programa de fidelidad: puntos acumulados vs. los que pide la próxima promoción
+  // que todavía no se desbloquea (null mientras carga o si no hay ninguna promoción configurada)
+  loyalty: { current: number; goal: number; percentage: number } | null = null;
 
   //CONSTRUCTOR
   constructor(
@@ -99,6 +95,7 @@ export class DashboardComponent implements OnInit {
     this.userName = this.userSession.user().name;
     this.loadVehicles();
     this.loadBookings();
+    this.loadLoyalty();
     this.bookingApi.establishment().subscribe({
       next: (location) => {
         this.location = location;
@@ -106,6 +103,48 @@ export class DashboardComponent implements OnInit {
       },
       error: () => { this.location = null; }
     });
+  }
+
+  // saldo de puntos + promociones (payment-service): alimenta la barra de progreso y la
+  // lista de beneficios, igual en web y en móvil (ADR-015)
+  private loadLoyalty(): void {
+    this.loyaltyApi.balance().subscribe({
+      next: (balance) => {
+        this.loyaltyApi.promotions().subscribe({
+          next: (promotions) => {
+            this.applyLoyalty(balance.points, promotions);
+            this.changes.markForCheck();
+          },
+          error: () => {
+            this.loyalty = { current: balance.points, goal: balance.points, percentage: 100 };
+            this.changes.markForCheck();
+          }
+        });
+      },
+      error: () => {
+        this.loyalty = null;
+        this.benefits = [];
+        this.changes.markForCheck();
+      }
+    });
+  }
+
+  private applyLoyalty(points: number, promotions: PromotionForCustomer[]): void {
+    const locked = promotions.filter(p => !p.unlocked).sort((a, b) => a.requiredPoints - b.requiredPoints);
+    const next = locked[0];
+    const goal = next ? next.requiredPoints : points || 1;
+    this.loyalty = {
+      current: points,
+      goal,
+      percentage: Math.min(100, Math.round((points / goal) * 100))
+    };
+
+    this.benefits = promotions.map(p => ({
+      title: `${p.name} · ${p.discountPercent}% OFF`,
+      description: p.unlocked
+        ? this.translate.instant('DASHBOARD.BENEFITS.UNLOCKED')
+        : this.translate.instant('DASHBOARD.BENEFITS.LOCKED', { points: p.requiredPoints - points })
+    }));
   }
 
   private loadVehicles(): void {

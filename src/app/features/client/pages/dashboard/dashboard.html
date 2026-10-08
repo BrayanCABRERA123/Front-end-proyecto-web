@@ -111,7 +111,7 @@
 
       <div class="loyalty-progress" *ngIf="loyalty; else noLoyalty">
         <div class="progress-row">
-          <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ loyalty.current }} de {{ loyalty.goal }} lavados)</span>
+          <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ 'DASHBOARD.BENEFITS.POINTS_OF' | translate:{ current: loyalty.current, goal: loyalty.goal } }})</span>
           <span>{{ loyalty.percentage }}%</span>
         </div>
         <div class="progress-bar">
