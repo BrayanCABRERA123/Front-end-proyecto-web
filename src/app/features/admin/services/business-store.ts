@@ -15,7 +15,6 @@ const DEFAULT_BUSINESS: BusinessData = {
 
   address: 'Calle 127 #19A-48, Bogotá, Colombia',
   phone: '+57 312 490 8821',
-  whatsapp: '+57 312 490 8821',
   email: 'contacto@expresscarwash.co',
   website: 'www.expresscarwash.co',
 

@@ -94,11 +94,6 @@
         }
       </label>
 
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.CONTACT.WHATSAPP' | translate }}</span>
-        <input type="text" [(ngModel)]="data.whatsapp">
-      </label>
-
       <label class="field" [class.field--invalid]="isInvalid('email')">
         <span>{{ 'BUSINESS_DATA.CONTACT.EMAIL' | translate }}</span>
         <input type="email" [(ngModel)]="data.email">

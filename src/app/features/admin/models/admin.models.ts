@@ -131,6 +131,8 @@ export interface AssignedOperator {
 export interface Booking {
   id: string;
   code: string;
+  /** usuario dueño de la reserva en security-service (para enviarle avisos) */
+  clientUserId: number | null;
   client: string;
   phone: string;
   email: string;
@@ -217,8 +219,6 @@ export interface Promotion {
   id: string;
   name: string;
   description: string;
-  price: number;
-  durationMin: number;
   couponCode: string;
   redemptions: number;
   featured: boolean;
@@ -245,7 +245,6 @@ export interface BusinessData {
 
   address: string;
   phone: string;
-  whatsapp: string;
   email: string;
   website: string;
 
