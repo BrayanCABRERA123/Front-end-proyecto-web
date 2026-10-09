@@ -14,6 +14,8 @@ import { isActiveStatus } from '../../../../core/utils/booking-display';
 import { apiErrorKey } from '../../../../core/utils/api-error';
 // calificaciones que el cliente ya dejó (operations-service)
 import { OperationsApiService } from '../../../../core/services/operations-api';
+// estado de pago de cada reserva (payment-service): decide si se muestra "Pagar"
+import { BookingPaymentState, PaymentsApiService } from '../../../../core/services/payments-api';
 import { catchError, forkJoin, of } from 'rxjs';
 
 type HistoryFilter = 'todas' | 'activas' | 'completadas' | 'canceladas';
@@ -40,6 +42,7 @@ export class HistoryComponent implements OnInit {
   private readonly feedback = inject(FeedbackService);
   private readonly translate = inject(TranslateService);
   private readonly operations = inject(OperationsApiService);
+  private readonly paymentsApi = inject(PaymentsApiService);
 
   // reservas reales del cliente (booking-service)
   bookings: ClientBookingItem[] = [];
@@ -59,15 +62,18 @@ export class HistoryComponent implements OnInit {
   load(): void {
     this.loading = true;
     this.loadError = null;
-    // si operations-service no responde, las reservas se muestran igual (sin calificaciones)
+    // si operations-service o payment-service no responden, las reservas se muestran igual
+    // (sin calificaciones o sin estado de pago)
     forkJoin({
       bookings: this.bookingApi.myBookings(),
-      ratings: this.operations.givenRatings().pipe(catchError(() => of([])))
+      ratings: this.operations.givenRatings().pipe(catchError(() => of([]))),
+      payments: this.paymentsApi.myBookings().pipe(catchError(() => of([] as BookingPaymentState[])))
     }).subscribe({
-      next: ({ bookings, ratings }) => {
+      next: ({ bookings, ratings, payments }) => {
         const byBooking = new Map(ratings.map(r => [r.bookingId, r]));
+        const paymentByBooking = new Map(payments.map(p => [p.bookingId, p]));
         this.bookings = bookings.map(b => {
-          const item = toClientBookingItem(b);
+          const item = toClientBookingItem(b, paymentByBooking.get(b.id) ?? null);
           const given = byBooking.get(item.id);
           if (given) {
             item.rating = given.rating;

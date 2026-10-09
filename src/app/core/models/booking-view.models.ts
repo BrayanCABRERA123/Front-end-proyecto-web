@@ -1,9 +1,10 @@
 import { BookingResponse, BookingStatusCode } from './booking.models';
+import { BookingPaymentState, PaymentStatusCode } from '../services/payments-api';
 import { isActiveStatus, isoToDisplayDate, vehicleLabel } from '../utils/booking-display';
 
 // fila del historial del cliente: la reserva cruda del backend ya lista para pintar.
-// el booking-service no maneja el estado de pago, por eso canPay se deriva de que la
-// reserva siga activa y no de un campo "pagado".
+// el booking-service no maneja el estado de pago: el último pago y si la reserva todavía se puede
+// pagar los dice payment-service (GET /payments/me/bookings). La pantalla no repite esa regla.
 export interface ClientBookingItem {
   id: number;
   code: string;
@@ -15,6 +16,8 @@ export interface ClientBookingItem {
   vehicle: string;
   plate: string;
   total: number;
+  // estado del último pago de la reserva (null = todavía no hay pago)
+  paymentStatus: PaymentStatusCode | null;
   canPay: boolean;
   canCancel: boolean;
   canRate: boolean;
@@ -22,7 +25,9 @@ export interface ClientBookingItem {
   ratingComment?: string;
 }
 
-export function toClientBookingItem(booking: BookingResponse): ClientBookingItem {
+/** @param payment estado del pago de la reserva según payment-service (null si no respondió) */
+export function toClientBookingItem(booking: BookingResponse,
+                                    payment: BookingPaymentState | null = null): ClientBookingItem {
   const active = isActiveStatus(booking.status);
   return {
     id: booking.id,
@@ -35,7 +40,9 @@ export function toClientBookingItem(booking: BookingResponse): ClientBookingItem
     vehicle: vehicleLabel(booking.vehicle),
     plate: booking.vehicle?.licensePlateFormatted ?? '',
     total: booking.total,
-    canPay: active,
+    paymentStatus: payment?.paymentStatus ?? null,
+    // sin respuesta de payment-service no se ofrece pagar: de todos modos no se podría
+    canPay: payment?.payable ?? false,
     // changeable lo decide el backend (RF-007: ni empezada ni pasada)
     canCancel: active && booking.changeable,
     canRate: booking.status === 'COMPLETED',

@@ -56,6 +56,14 @@ export interface PaymentResponse {
   booking: PaymentBookingInfo | null;
 }
 
+// cómo va el pago de cada reserva del cliente: el estado del último pago (null si no tiene) y si
+// todavía se puede pagar. payable lo decide payment-service con su misma regla de reporte
+export interface BookingPaymentState {
+  bookingId: number;
+  paymentStatus: PaymentStatusCode | null;
+  payable: boolean;
+}
+
 // lo que falta por pagar de una reserva: su total menos los cupones canjeados (payment-service)
 export interface AmountDueResponse {
   bookingId: number;
@@ -98,6 +106,11 @@ export class PaymentsApiService {
 
   mine(): Observable<PaymentResponse[]> {
     return this.http.get<PaymentResponse[]>(`${this.api}/payments/me`);
+  }
+
+  // por cada reserva del cliente: último pago y si todavía se puede pagar (decide payment-service)
+  myBookings(): Observable<BookingPaymentState[]> {
+    return this.http.get<BookingPaymentState[]>(`${this.api}/payments/me/bookings`);
   }
 
   /* ---------- admin ---------- */

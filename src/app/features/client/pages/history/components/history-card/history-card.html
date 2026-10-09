@@ -52,6 +52,16 @@
         {{ ('STATUS.' + booking.status) | translate }}
       </p>
 
+      <!-- Estado del pago (payment-service): explica por qué no aparece "Pagar" -->
+      @if (booking.paymentStatus) {
+      <p class="detail-item">
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.PAYMENT' | translate }}:
+        </span>
+        {{ ('HISTORY_CARD.PAYMENT_STATUS.' + booking.paymentStatus) | translate }}
+      </p>
+      }
+
     </div>
 
     <!-- Acciones -->
