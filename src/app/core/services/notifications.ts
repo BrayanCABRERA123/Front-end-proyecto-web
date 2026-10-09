@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
 import { API_BASE_URL } from '../constants/api';
-import { NotificationResponse, PageResponse } from '../models/notification.models';
+import { AdminNotificationRequest, NotificationResponse, PageResponse } from '../models/notification.models';
 
 // la bandeja muestra las más recientes (el backend permite hasta 100 por página)
 const INBOX_SIZE = 100;
@@ -45,5 +45,11 @@ export class NotificationsService {
   // borrado lógico en el backend: responde 204 sin cuerpo
   remove(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/${id}`);
+  }
+
+  // solo ADMIN: envía un aviso a otros usuarios y devuelve cuántos se crearon
+  sendAsAdmin(request: AdminNotificationRequest): Observable<number> {
+    return this.http.post<{ sent: number }>(`${API_BASE_URL}/admin/notifications`, request)
+      .pipe(map(response => response.sent));
   }
 }

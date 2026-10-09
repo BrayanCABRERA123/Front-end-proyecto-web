@@ -203,6 +203,7 @@ export class ReservationsStore {
     return {
       id,
       code: response.code,
+      clientUserId: response.ownerUserId,
       client: owner ? `${owner.firstName} ${owner.lastName}` : '—',
       phone: owner?.phone ?? '',
       email: owner?.email ?? '',

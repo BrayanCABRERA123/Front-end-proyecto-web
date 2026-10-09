@@ -23,9 +23,10 @@
               <mat-icon>visibility</mat-icon>
               {{ 'INSPECTION.VIEW_AS_CLIENT' | translate }}
             </button>
-            <button class="btn-outline" (click)="shareWhatsApp()">
-              <mat-icon>chat</mat-icon>
-              {{ 'INSPECTION.SHARE_WHATSAPP' | translate }}
+            <!-- aviso por el sistema de notificaciones (bandeja + correo del cliente) -->
+            <button class="btn-outline" (click)="notifyClient()" [disabled]="notifying()">
+              <mat-icon>notifications_active</mat-icon>
+              {{ 'INSPECTION.NOTIFY_CLIENT' | translate }}
             </button>
           }
           <button class="btn-primary" (click)="publishAndCopy()">

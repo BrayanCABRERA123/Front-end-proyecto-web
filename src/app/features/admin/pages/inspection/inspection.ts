@@ -11,6 +11,8 @@ import { InspectionPhotoComponent } from '../../../../shared/components/inspecti
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { InspectionStore } from '../../../../core/services/inspection-store';
+import { NotificationsService } from '../../../../core/services/notifications';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 import {
   InspectionFinding,
   InspectionPhaseEntry,
@@ -23,6 +25,9 @@ import {
 import { ReservationsStore, formatDate, formatTimeRange } from '../../services/reservations-store';
 import { Booking } from '../../models/admin.models';
 import { FindingModal, FindingModalData } from './components/finding-modal/finding-modal';
+
+// límite del mensaje en notification-service
+const NOTIFICATION_MAX_LENGTH = 500;
 
 /** el reporte se puede ofrecer en esta reserva: servicio largo y no cancelado */
 export function supportsInspection(booking: Booking): boolean {
@@ -52,6 +57,7 @@ export class InspectionComponent {
   private readonly feedback = inject(FeedbackService);
   private readonly reservations = inject(ReservationsStore);
   private readonly inspections = inject(InspectionStore);
+  private readonly notifications = inject(NotificationsService);
 
   readonly phaseIcons = PHASE_ICONS;
   readonly minMinutes = LONG_SERVICE_MIN_MINUTES;
@@ -66,6 +72,9 @@ export class InspectionComponent {
 
   // foto ampliada
   readonly preview = signal<string | null>(null);
+
+  // evita enviar el aviso dos veces mientras responde el backend
+  readonly notifying = signal(false);
 
   readonly editable = computed(() => {
     const booking = this.booking();
@@ -192,22 +201,51 @@ export class InspectionComponent {
     }
   }
 
-  /** abre WhatsApp con el enlace; usa el teléfono del cliente si lo tenemos */
-  shareWhatsApp(): void {
+  /**
+   * Avisa al cliente por el sistema de notificaciones (bandeja + correo, tipo INSPECTION_REPORT)
+   * con el resumen de la inspección. Mientras el reporte sea mock el enlace público solo abre en
+   * este navegador, por eso el aviso lleva el resumen y no el enlace.
+   */
+  notifyClient(): void {
     const booking = this.booking();
     const report = this.report();
-    if (!report?.published) return;
+    if (!report?.published || this.notifying()) return;
+    // sin la reserva (no cargó o salió de la ventana de fechas) no se sabe a quién avisar
+    if (!booking) {
+      this.feedback.error('COMMON.ERROR', 'INSPECTION.FEEDBACK.NO_BOOKING');
+      return;
+    }
+    if (!booking.clientUserId) {
+      this.feedback.error('COMMON.ERROR', 'INSPECTION.FEEDBACK.NO_CLIENT');
+      return;
+    }
 
-    const text = this.translate.instant('INSPECTION.WHATSAPP_TEXT', {
-      code: report.booking.code,
-      link: this.publicLink(),
+    const summary = this.summary();
+    const areas = report.phases.flatMap(p => p.findings).map(f => f.area);
+    const message: string = this.translate.instant(
+      areas.length ? 'INSPECTION.NOTIFICATION.MESSAGE_FINDINGS' : 'INSPECTION.NOTIFICATION.MESSAGE_CLEAN',
+      { ...summary, plate: report.booking.plate, code: report.booking.code, areas: areas.join(', ') }
+    );
+
+    this.notifying.set(true);
+    this.notifications.sendAsAdmin({
+      userIds: [booking.clientUserId],
+      type: 'INSPECTION_REPORT',
+      title: this.translate.instant('INSPECTION.NOTIFICATION.TITLE'),
+      // notification-service acepta hasta 500 caracteres
+      message: message.length > NOTIFICATION_MAX_LENGTH
+        ? `${message.slice(0, NOTIFICATION_MAX_LENGTH - 3)}...`
+        : message,
+    }).subscribe({
+      next: () => {
+        this.notifying.set(false);
+        this.feedback.success('INSPECTION.FEEDBACK.NOTIFIED_TITLE', 'INSPECTION.FEEDBACK.NOTIFIED_MESSAGE');
+      },
+      error: error => {
+        this.notifying.set(false);
+        this.feedback.error('COMMON.ERROR', apiErrorKey(error));
+      },
     });
-
-    const digits = (booking?.phone ?? '').replace(/\D/g, '');
-    // los celulares de Colombia tienen 10 dígitos: se agrega el indicativo 57
-    const phone = digits.length === 10 ? `57${digits}` : digits;
-
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
   }
 
   openPublicView(): void {

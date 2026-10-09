@@ -17,6 +17,16 @@ export interface NotificationResponse {
   sentAt: string;                  // ISO en UTC
 }
 
+// aviso que el administrador envía a usuarios concretos (POST /api/v1/admin/notifications).
+// type es el code del tipo; si falta, el backend usa SYSTEM_MESSAGE. El backend decide si
+// además sale por correo (INSPECTION_REPORT sí, SYSTEM_MESSAGE no).
+export interface AdminNotificationRequest {
+  userIds: number[];
+  type?: string;
+  title: string;    // máximo 120 caracteres
+  message: string;  // máximo 500 caracteres
+}
+
 // página de resultados (misma forma que el security-service)
 export interface PageResponse<T> {
   items: T[];
