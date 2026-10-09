@@ -5,9 +5,10 @@
     "PUSH": "Notificaciones Push",
     "PUSH_DESC": "Recibe alertas de reservas y promociones",
     "EMAIL": "Recordatorios por Email",
-    "EMAIL_DESC": "Un día antes de tu lavado programado",
+    "EMAIL_DESC": "Recordatorios de tus reservas por correo (un día y una hora antes)",
     "PROMO": "Promociones y Ofertas",
-    "PROMO_DESC": "Recibe descuentos exclusivos",
+    "PROMO_DESC": "Avisos de los cupones que desbloqueas con tus puntos (correo y push)",
+    "NOTIFICATIONS_SAVE_ERROR": "No se pudieron guardar tus preferencias de notificación. Inténtalo de nuevo.",
     "APPEARANCE": "Apariencia",
     "THEME": "Elegir tema",
     "THEME_DESC": "Cambiar interfaz (Personaliza los colores de la aplicación)",
@@ -17,7 +18,6 @@
     "HELP_CENTER": "Centro de ayuda",
     "HELP_MODAL": {
       "MESSAGE": "¿Tienes dudas o algún problema? Contáctanos por cualquiera de estos canales.",
-      "WHATSAPP": "WhatsApp",
       "SUPPORT_LINE": "Línea de atención",
       "EMAIL": "Correo",
       "HOURS": "Horario",
@@ -77,6 +77,14 @@
     "TYPE": "Tipo de servicio",
     "VEHICLE": "Vehículo",
     "STATUS": "Estado",
+    "PAYMENT": "Pago",
+    "PAYMENT_STATUS": {
+      "PENDING": "Pendiente de verificación",
+      "IN_REVIEW": "En verificación",
+      "APPROVED": "Pagado",
+      "REJECTED": "Rechazado",
+      "REFUNDED": "Reembolsado"
+    },
     "PAY_NOW": "Pagar ahora",
     "CANCEL": "Cancelar reserva",
     "RATED": "Calificado",
@@ -430,6 +438,7 @@
       "PLATE": "Placa",
       "SERVICE": "Servicio",
       "DURATION": "Duración estimada",
+      "POINTS": "Puntos que ganas",
       "DATE": "Fecha",
       "TIME": "Hora",
       "LOCATION": "Lugar",
@@ -440,6 +449,7 @@
       "BAY": "Bahía"
     },
     "MINUTES": "{{count}} min",
+    "POINTS": "Suma {{count}} puntos",
     "LOADING_TIMES": "Buscando horas libres...",
     "DAY_CLOSED": "Ese día el lavadero está cerrado",
     "NO_TIMES": "No hay horas libres ese día",
@@ -783,7 +793,6 @@
     "QR": {
       "INSTANT": "PAGO DIGITAL INMEDIATO",
       "VIA": "Vía",
-      "VALID_FOR": "El código es válido por 15 minutos",
       "SCAN_HINT": "Válido para escanear en pantalla",
       "VERIFIED": "Verificado",
       "KEY": "Llave / Cuenta autorizada",
@@ -806,7 +815,13 @@
       "REFERENCE_HINT": "Número de 8 a 12 caracteres emitido por tu entidad",
       "AMOUNT": "Monto pagado",
       "AMOUNT_HINT": "Monto fijado según reserva con descuento",
-      "INFO": "Un administrador verificará tu pago y recibirás una notificación. Tu plaza quedará 100% garantizada y lista en tu horario reservado."
+      "INFO": "Un administrador verificará tu pago y recibirás una notificación. Tu plaza quedará 100% garantizada y lista en tu horario reservado.",
+      "MISSING": {
+        "TITLE": "Para confirmar el pago te falta:",
+        "RECEIPT": "Subir el comprobante (JPG o PNG)",
+        "REFERENCE": "Escribir la referencia de la transacción (8 a 12 letras o números)",
+        "AMOUNT": "Indicar el monto pagado (mayor a 0)"
+      }
     },
     "SUMMARY": {
       "TITLE": "Resumen de la reserva",
@@ -1415,6 +1430,7 @@
         "NAME": "Nombre",
         "PRICE": "Precio",
         "DURATION": "Duración",
+        "POINTS": "Puntos",
         "CATEGORY": "Categoría",
         "STATUS": "Estado",
         "ACTIONS": "Acciones"
@@ -1426,13 +1442,17 @@
       "MINUTES_SUFFIX": "min",
       "EMPTY_TITLE": "No hay servicios todavía",
       "EMPTY_MESSAGE": "Agrega el primer servicio al catálogo del lavadero.",
-      "PRICES_COUNT": "({{count}} tarifas)"
+      "PRICES_COUNT": "({{count}} tarifas)",
+      "POINTS_VALUE": "{{count}} pts"
     },
     "PROMOTIONS": {
       "CREATE_PROMOTION": "Crear promoción",
-      "SUBTITLE": "Administra los paquetes promocionales y cupones de descuento.",
+      "SUBTITLE": "Administra los cupones de descuento que los clientes desbloquean con sus puntos.",
       "COUPON": "Cupón",
       "REDEMPTIONS": "{{count}} canjes",
+      "DISCOUNT_VALUE": "{{percent}}% de descuento",
+      "POINTS_VALUE": "se desbloquea con {{count}} puntos",
+      "NO_POINTS": "disponible para todos",
       "START_NOW": "Comenzar ahora",
       "EDIT_CARD": "Editar tarjeta",
       "STATUS_LABEL": "Estado",
@@ -1524,6 +1544,9 @@
     "PRICE_LABEL": "Precio (COP)",
     "DESCRIPTION_LABEL": "Descripción",
     "DESCRIPTION_PLACEHOLDER": "Describe los detalles del servicio...",
+    "POINTS_LABEL": "Puntos de fidelización",
+    "POINTS_HINT": "Puntos que gana el cliente cuando se aprueba el pago de este servicio. 0 = no suma puntos.",
+    "POINTS_ERROR": "Ingresa un número entero igual o mayor a 0.",
     "DURATION_LABEL": "Duración estimada",
     "CATEGORY_LABEL": "Categoría",
     "SAVE": "Guardar Servicio",
@@ -1941,7 +1964,6 @@
       "SUBTITLE": "Dirección de sede principal y datos oficiales de contacto",
       "ADDRESS": "Dirección sede principal",
       "PHONE": "Teléfono de contacto",
-      "WHATSAPP": "WhatsApp oficial",
       "EMAIL": "Correo electrónico corporativo",
       "WEBSITE": "Sitio web oficial"
     },
@@ -2210,37 +2232,29 @@
   "PROMOTION_MODAL": {
     "TITLE_CREATE": "Nueva promoción",
     "TITLE_EDIT": "Editar promoción",
-    "SUBTITLE": "Crea una oferta para atraer más clientes al lavadero.",
+    "SUBTITLE": "Crea un cupón de descuento que el cliente desbloquea con sus puntos de fidelización.",
     "NAME_LABEL": "Nombre",
     "NAME_PLACEHOLDER": "Ej. Lavado premium 2x1",
     "ERROR_NAME": "Ingresa el nombre de la promoción",
     "DESCRIPTION_LABEL": "Descripción",
     "DESCRIPTION_PLACEHOLDER": "Escribe los beneficios de la promoción",
     "ERROR_DESCRIPTION": "Ingresa una descripción",
-    "PRICE_LABEL": "Precio promocional",
-    "PRICE_PLACEHOLDER": "$",
-    "ERROR_PRICE": "Ingresa un precio mayor a cero",
-    "DURATION_LABEL": "Duración",
-    "ERROR_DURATION": "Ingresa la duración",
     "COUPON_LABEL": "Cupón",
     "COUPON_PLACEHOLDER": "Ej. PREMIUM20",
     "ERROR_COUPON": "Ingresa el cupón",
     "ICON_LABEL": "Icono",
-    "STATUS_LABEL": "Estado",
     "START_DATE_LABEL": "Fecha de inicio",
+    "START_DATE_HINT": "Si es una fecha futura, la promoción queda programada hasta ese día.",
     "DISCOUNT_PERCENT_LABEL": "Descuento al canjear (%)",
     "ERROR_DISCOUNT_PERCENT": "Ingresa un descuento entre 1 y 100",
     "REQUIRED_POINTS_LABEL": "Puntos de fidelización necesarios",
+    "REQUIRED_POINTS_HINT": "Puntos que debe acumular el cliente para desbloquear el cupón. 0 = disponible para todos.",
+    "ERROR_REQUIRED_POINTS": "Ingresa un número entero igual o mayor a 0",
     "FEATURED_LABEL": "Destacar en la app",
     "FEATURES_LABEL": "Beneficios",
     "FEATURES_ADD": "Agregar beneficio",
     "FEATURES_PLACEHOLDER": "Ej. Cera protectante incluida",
-    "FEATURES_EMPTY": "Aún no hay beneficios.",
-    "STATUS_OPTIONS": {
-      "active": "Activa",
-      "scheduled": "Programada",
-      "inactive": "Inactiva"
-    }
+    "FEATURES_EMPTY": "Aún no hay beneficios."
   },
   "QUICK_ACCESS": {
     "BOOK_WASH": "Agendar lavado",
@@ -2326,7 +2340,7 @@
     "SUBTITLE": "Registra por fases el estado del vehículo con fotos y notas",
     "BACK": "Volver a reservas",
     "VIEW_AS_CLIENT": "Ver como cliente",
-    "SHARE_WHATSAPP": "Enviar por WhatsApp",
+    "NOTIFY_CLIENT": "Notificar al cliente",
     "PUBLISH": "Publicar y copiar enlace",
     "COPY_LINK": "Copiar enlace",
     "LINK": "Enlace para el cliente",
@@ -2396,12 +2410,20 @@
     },
     "FEEDBACK": {
       "PUBLISHED_TITLE": "Enlace listo",
-      "PUBLISHED_MESSAGE": "El reporte está publicado y el enlace se copió. Compártelo con el cliente.",
+      "PUBLISHED_MESSAGE": "El reporte está publicado y el enlace se copió. Usa «Notificar al cliente» para avisarle por sus notificaciones y su correo.",
       "DELETE_TITLE": "Eliminar hallazgo",
       "DELETE_CONFIRM": "¿Eliminar el hallazgo \"{{area}}\" y sus fotos?",
-      "SAVE_ERROR": "No se pudo guardar el hallazgo. Intenta de nuevo."
+      "SAVE_ERROR": "No se pudo guardar el hallazgo. Intenta de nuevo.",
+      "NOTIFIED_TITLE": "Cliente notificado",
+      "NOTIFIED_MESSAGE": "Le enviamos el resumen de la inspección a sus notificaciones y a su correo.",
+      "NO_BOOKING": "No se pudo cargar la reserva. Recarga la página e inténtalo de nuevo.",
+      "NO_CLIENT": "Esta reserva no tiene un cliente registrado a quien avisar."
     },
-    "WHATSAPP_TEXT": "Hola, este es el reporte de inspección de tu vehículo (reserva {{code}}): {{link}}",
+    "NOTIFICATION": {
+      "TITLE": "Reporte de inspección de tu vehículo",
+      "MESSAGE_FINDINGS": "Este es el reporte de inspección de tu vehículo {{plate}} (reserva {{code}}). Fases terminadas: {{done}} de {{total}}. Hallazgos: {{findings}} (importantes: {{major}}): {{areas}}. Al entregarte el vehículo te mostramos el detalle con fotos.",
+      "MESSAGE_CLEAN": "Este es el reporte de inspección de tu vehículo {{plate}} (reserva {{code}}). Fases terminadas: {{done}} de {{total}}. No encontramos novedades."
+    },
     "NO_BOOKING_HINT": "No se pudo cargar la reserva; el reporte se muestra en solo lectura."
   },
   "PUBLIC_REPORT": {

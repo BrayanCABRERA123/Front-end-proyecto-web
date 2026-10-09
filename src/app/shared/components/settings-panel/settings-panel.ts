@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -15,11 +15,9 @@ import { StatusModal, StatusModalData } from '../../dialogs/status-modal/status-
 // dirección, teléfono y correo de la sede salen del booking-service (tabla booking.establishment,
 // la edita el admin desde "Datos del negocio")
 import { BookingApiService } from '../../../core/services/booking-api';
-// tema e idioma se guardan en la cuenta (security-service), no solo en el navegador
-import { PreferencesService } from '../../../core/services/preferences';
-
-// llave donde se guardan las preferencias de notificaciones (igual que 'theme' y 'lang')
-const NOTIFICATIONS_KEY = 'notificationSettings';
+// tema, idioma e interruptores de notificaciones se guardan en la cuenta (security-service)
+import { NotificationChannels, PreferencesService } from '../../../core/services/preferences';
+import { FeedbackService } from '../../dialogs/feedback.service';
 
 @Component({
   selector: 'app-settings-panel',
@@ -36,11 +34,12 @@ const NOTIFICATIONS_KEY = 'notificationSettings';
 })
 export class SettingsPanelComponent implements OnInit {
 
-  // valores por defecto; en ngOnInit se reemplazan por los guardados
-  settings = {
+  // interruptores de notificaciones: en ngOnInit se reemplazan por los de la cuenta. notification-service
+  // los respeta (push, correo de recordatorios y promociones); la bandeja siempre se llena
+  settings: NotificationChannels = {
     push: true,
     email: true,
-    promo: false
+    promo: true
   };
 
   selectedTheme: string = 'green-light';
@@ -50,7 +49,9 @@ export class SettingsPanelComponent implements OnInit {
     private translate: TranslateService,
     private dialog: MatDialog,
     private bookingApi: BookingApiService,
-    private preferences: PreferencesService
+    private preferences: PreferencesService,
+    private feedback: FeedbackService,
+    private changes: ChangeDetectorRef
   ) {
     this.translate.addLangs(['es', 'en', 'fr', 'pt']);
     this.translate.setDefaultLang('es');
@@ -74,8 +75,8 @@ export class SettingsPanelComponent implements OnInit {
   }
 
   private showHelpCenter(address: string, phone: string | null, email: string | null): void {
-    // el negocio solo tiene un teléfono en la base: lo mostramos como WhatsApp y como línea de
-    // atención, porque son el mismo número en la vida real
+    // el negocio solo tiene un teléfono en la base: es la línea de atención. Las novedades del
+    // servicio le llegan al cliente por sus notificaciones y su correo
     const data: StatusModalData = {
       type: 'info',
       icon: 'support_agent',
@@ -83,7 +84,6 @@ export class SettingsPanelComponent implements OnInit {
       message: 'CONFIG.HELP_MODAL.MESSAGE',
       buttonText: 'COMMON.CLOSE',
       details: [
-        { label: 'CONFIG.HELP_MODAL.WHATSAPP', value: phone ?? '—' },
         { label: 'CONFIG.HELP_MODAL.SUPPORT_LINE', value: phone ?? '—' },
         { label: 'CONFIG.HELP_MODAL.EMAIL', value: email ?? '—' },
         { label: 'CONFIG.HELP_MODAL.HOURS', value: this.translate.instant('CONFIG.HELP_MODAL.HOURS_VALUE') },
@@ -97,25 +97,30 @@ export class SettingsPanelComponent implements OnInit {
     });
   }
 
-  // guarda los interruptores de notificaciones cada vez que el usuario cambia uno
+  // guarda los interruptores en la cuenta cada vez que el usuario cambia uno; si falla, avisa y
+  // vuelve a mostrar los que quedaron guardados
   saveNotificationSettings(): void {
-    try {
-      localStorage.setItem(NOTIFICATIONS_KEY, JSON.stringify(this.settings));
-    } catch {
-      // si el navegador no permite guardar, el cambio queda solo mientras la página esté abierta
-    }
+    this.preferences.saveNotificationChannels(this.settings).subscribe({
+      next: saved => {
+        this.settings = saved;
+        this.changes.markForCheck();
+      },
+      error: () => {
+        this.feedback.error('COMMON.ERROR', 'CONFIG.NOTIFICATIONS_SAVE_ERROR');
+        this.loadNotificationSettings();
+      }
+    });
   }
 
-  // carga los interruptores guardados (si no hay nada, se quedan los valores por defecto)
+  // trae los interruptores de la cuenta (sin respuesta se quedan los valores por defecto)
   private loadNotificationSettings(): void {
-    try {
-      const saved = localStorage.getItem(NOTIFICATIONS_KEY);
-      if (saved) {
-        this.settings = { ...this.settings, ...JSON.parse(saved) };
-      }
-    } catch {
-      // si el valor guardado está dañado, se usan los valores por defecto
-    }
+    this.preferences.notificationChannels().subscribe({
+      next: channels => {
+        this.settings = channels;
+        this.changes.markForCheck();
+      },
+      error: () => undefined
+    });
   }
 
   ngOnInit(): void {

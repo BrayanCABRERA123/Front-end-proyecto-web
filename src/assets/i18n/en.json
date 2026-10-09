@@ -5,9 +5,10 @@
     "PUSH": "Push Notifications",
     "PUSH_DESC": "Receive alerts for bookings and promotions",
     "EMAIL": "Email Reminders",
-    "EMAIL_DESC": "One day before your scheduled wash",
+    "EMAIL_DESC": "Booking reminders by email (one day and one hour before)",
     "PROMO": "Promotions and Offers",
-    "PROMO_DESC": "Receive exclusive discounts",
+    "PROMO_DESC": "Alerts for the coupons you unlock with your points (email and push)",
+    "NOTIFICATIONS_SAVE_ERROR": "Your notification preferences could not be saved. Please try again.",
     "APPEARANCE": "Appearance",
     "THEME": "Choose theme",
     "THEME_DESC": "Customize the app colors",
@@ -17,7 +18,6 @@
     "HELP_CENTER": "Help Center",
     "HELP_MODAL": {
       "MESSAGE": "Have questions or a problem? Contact us through any of these channels.",
-      "WHATSAPP": "WhatsApp",
       "SUPPORT_LINE": "Support line",
       "EMAIL": "Email",
       "HOURS": "Opening hours",
@@ -77,6 +77,14 @@
     "TYPE": "Service type",
     "VEHICLE": "Vehicle",
     "STATUS": "Status",
+    "PAYMENT": "Payment",
+    "PAYMENT_STATUS": {
+      "PENDING": "Pending verification",
+      "IN_REVIEW": "Under review",
+      "APPROVED": "Paid",
+      "REJECTED": "Rejected",
+      "REFUNDED": "Refunded"
+    },
     "PAY_NOW": "Pay now",
     "CANCEL": "Cancel booking",
     "RATED": "Rated",
@@ -430,6 +438,7 @@
       "PLATE": "Plate",
       "SERVICE": "Service",
       "DURATION": "Estimated duration",
+      "POINTS": "Points you earn",
       "DATE": "Date",
       "TIME": "Time",
       "LOCATION": "Location",
@@ -440,6 +449,7 @@
       "BAY": "Bay"
     },
     "MINUTES": "{{count}} min",
+    "POINTS": "Earns {{count}} points",
     "LOADING_TIMES": "Looking for free times...",
     "DAY_CLOSED": "The car wash is closed that day",
     "NO_TIMES": "No free times that day",
@@ -783,7 +793,6 @@
     "QR": {
       "INSTANT": "INSTANT DIGITAL PAYMENT",
       "VIA": "Via",
-      "VALID_FOR": "The code is valid for 15 minutes",
       "SCAN_HINT": "Can be scanned from the screen",
       "VERIFIED": "Verified",
       "KEY": "Authorized key / account",
@@ -806,7 +815,13 @@
       "REFERENCE_HINT": "8 to 12 character number issued by your bank",
       "AMOUNT": "Amount paid",
       "AMOUNT_HINT": "Amount set by the booking, discount included",
-      "INFO": "An administrator will verify your payment and you'll receive a notification. Your slot will be 100% guaranteed and ready at your booked time."
+      "INFO": "An administrator will verify your payment and you'll receive a notification. Your slot will be 100% guaranteed and ready at your booked time.",
+      "MISSING": {
+        "TITLE": "To confirm the payment you still need to:",
+        "RECEIPT": "Upload the receipt (JPG or PNG)",
+        "REFERENCE": "Enter the transaction reference (8 to 12 letters or numbers)",
+        "AMOUNT": "Enter the amount paid (greater than 0)"
+      }
     },
     "SUMMARY": {
       "TITLE": "Booking summary",
@@ -1415,6 +1430,7 @@
         "NAME": "Name",
         "PRICE": "Price",
         "DURATION": "Duration",
+        "POINTS": "Points",
         "CATEGORY": "Category",
         "STATUS": "Status",
         "ACTIONS": "Actions"
@@ -1426,13 +1442,17 @@
       "MINUTES_SUFFIX": "min",
       "EMPTY_TITLE": "No services yet",
       "EMPTY_MESSAGE": "Add the first service to the car wash catalog.",
-      "PRICES_COUNT": "({{count}} rates)"
+      "PRICES_COUNT": "({{count}} rates)",
+      "POINTS_VALUE": "{{count}} pts"
     },
     "PROMOTIONS": {
       "CREATE_PROMOTION": "Create promotion",
-      "SUBTITLE": "Manage promotional packages and discount coupons.",
+      "SUBTITLE": "Manage the discount coupons customers unlock with their points.",
       "COUPON": "Coupon",
       "REDEMPTIONS": "{{count}} redemptions",
+      "DISCOUNT_VALUE": "{{percent}}% off",
+      "POINTS_VALUE": "unlocks at {{count}} points",
+      "NO_POINTS": "available to everyone",
       "START_NOW": "Start now",
       "EDIT_CARD": "Edit card",
       "STATUS_LABEL": "Status",
@@ -1524,6 +1544,9 @@
     "PRICE_LABEL": "Price (COP)",
     "DESCRIPTION_LABEL": "Description",
     "DESCRIPTION_PLACEHOLDER": "Describe the service details...",
+    "POINTS_LABEL": "Loyalty points",
+    "POINTS_HINT": "Points the customer earns when the payment for this service is approved. 0 = no points.",
+    "POINTS_ERROR": "Enter a whole number equal to or greater than 0.",
     "DURATION_LABEL": "Estimated duration",
     "CATEGORY_LABEL": "Category",
     "SAVE": "Save Service",
@@ -1941,7 +1964,6 @@
       "SUBTITLE": "Main office address and official contact details",
       "ADDRESS": "Main office address",
       "PHONE": "Contact phone",
-      "WHATSAPP": "Official WhatsApp",
       "EMAIL": "Corporate email",
       "WEBSITE": "Official website"
     },
@@ -2210,37 +2232,29 @@
   "PROMOTION_MODAL": {
     "TITLE_CREATE": "New promotion",
     "TITLE_EDIT": "Edit promotion",
-    "SUBTITLE": "Create an offer to attract more customers to the car wash.",
+    "SUBTITLE": "Create a discount coupon that customers unlock with their loyalty points.",
     "NAME_LABEL": "Name",
     "NAME_PLACEHOLDER": "e.g. Premium wash 2-for-1",
     "ERROR_NAME": "Enter the promotion name",
     "DESCRIPTION_LABEL": "Description",
     "DESCRIPTION_PLACEHOLDER": "Describe the promotion benefits",
     "ERROR_DESCRIPTION": "Enter a description",
-    "PRICE_LABEL": "Promotional price",
-    "PRICE_PLACEHOLDER": "$",
-    "ERROR_PRICE": "Enter a price greater than zero",
-    "DURATION_LABEL": "Duration",
-    "ERROR_DURATION": "Enter the duration",
     "COUPON_LABEL": "Coupon",
     "COUPON_PLACEHOLDER": "e.g. PREMIUM20",
     "ERROR_COUPON": "Enter the coupon",
     "ICON_LABEL": "Icon",
-    "STATUS_LABEL": "Status",
     "START_DATE_LABEL": "Start date",
+    "START_DATE_HINT": "If the date is in the future, the promotion stays scheduled until that day.",
     "DISCOUNT_PERCENT_LABEL": "Discount on redemption (%)",
     "ERROR_DISCOUNT_PERCENT": "Enter a discount between 1 and 100",
     "REQUIRED_POINTS_LABEL": "Loyalty points required",
+    "REQUIRED_POINTS_HINT": "Points the customer must collect to unlock the coupon. 0 = available to everyone.",
+    "ERROR_REQUIRED_POINTS": "Enter a whole number equal to or greater than 0",
     "FEATURED_LABEL": "Feature in the app",
     "FEATURES_LABEL": "Benefits",
     "FEATURES_ADD": "Add benefit",
     "FEATURES_PLACEHOLDER": "e.g. Protective wax included",
-    "FEATURES_EMPTY": "No benefits yet.",
-    "STATUS_OPTIONS": {
-      "active": "Active",
-      "scheduled": "Scheduled",
-      "inactive": "Inactive"
-    }
+    "FEATURES_EMPTY": "No benefits yet."
   },
   "QUICK_ACCESS": {
     "BOOK_WASH": "Book a wash",
@@ -2326,7 +2340,7 @@
     "SUBTITLE": "Record the vehicle condition by phase with photos and notes",
     "BACK": "Back to bookings",
     "VIEW_AS_CLIENT": "View as customer",
-    "SHARE_WHATSAPP": "Send via WhatsApp",
+    "NOTIFY_CLIENT": "Notify customer",
     "PUBLISH": "Publish and copy link",
     "COPY_LINK": "Copy link",
     "LINK": "Customer link",
@@ -2396,12 +2410,20 @@
     },
     "FEEDBACK": {
       "PUBLISHED_TITLE": "Link ready",
-      "PUBLISHED_MESSAGE": "The report is published and the link was copied. Share it with the customer.",
+      "PUBLISHED_MESSAGE": "The report is published and the link was copied. Use “Notify customer” to let them know through their notifications and email.",
       "DELETE_TITLE": "Delete finding",
       "DELETE_CONFIRM": "Delete the finding \"{{area}}\" and its photos?",
-      "SAVE_ERROR": "The finding could not be saved. Please try again."
+      "SAVE_ERROR": "The finding could not be saved. Please try again.",
+      "NOTIFIED_TITLE": "Customer notified",
+      "NOTIFIED_MESSAGE": "We sent the inspection summary to the customer’s notifications and email.",
+      "NO_BOOKING": "The booking could not be loaded. Reload the page and try again.",
+      "NO_CLIENT": "This booking has no registered customer to notify."
     },
-    "WHATSAPP_TEXT": "Hi, here is the inspection report for your vehicle (booking {{code}}): {{link}}",
+    "NOTIFICATION": {
+      "TITLE": "Your vehicle inspection report",
+      "MESSAGE_FINDINGS": "Here is the inspection report for your vehicle {{plate}} (booking {{code}}). Phases finished: {{done}} of {{total}}. Findings: {{findings}} (major: {{major}}): {{areas}}. We will show you the details and photos when we hand over your vehicle.",
+      "MESSAGE_CLEAN": "Here is the inspection report for your vehicle {{plate}} (booking {{code}}). Phases finished: {{done}} of {{total}}. We found no issues."
+    },
     "NO_BOOKING_HINT": "The booking could not be loaded; the report is shown read-only."
   },
   "PUBLIC_REPORT": {
