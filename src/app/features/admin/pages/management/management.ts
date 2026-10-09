@@ -36,7 +36,7 @@ import { PromotionModal, PromotionModalData, PromotionModalResult } from './comp
 import { UserAdminService } from '../../../../core/services/user-admin';
 import { AuthUser } from '../../../../core/models/auth.models';
 // promociones reales del payment-service
-import { PromotionView, PromotionsApiService } from '../../../../core/services/promotions-api';
+import { PromotionView, PromotionsApiService, SavePromotionRequest } from '../../../../core/services/promotions-api';
 
 type ManagementTab = 'users' | 'roles' | 'services' | 'promotions';
 
@@ -141,8 +141,6 @@ export class ManagementComponent implements OnInit {
       id: String(p.id),
       name: p.name,
       description: p.description ?? '',
-      price: p.price,
-      durationMin: p.durationMinutes,
       couponCode: p.code,
       redemptions: p.redemptions,
       featured: p.featured,
@@ -155,14 +153,14 @@ export class ManagementComponent implements OnInit {
     };
   }
 
-  // la pantalla no pide fecha de fin (solo activa/pausa): se guarda "sin vencimiento"
-  private toSaveRequest(result: PromotionModalResult) {
+  // la pantalla no pide fecha de fin (solo activa/pausa): se guarda "sin vencimiento".
+  // Tampoco pide precio ni duración: el cupón es un descuento sobre la reserva (payment-service
+  // los deja vacíos)
+  private toSaveRequest(result: PromotionModalResult): SavePromotionRequest {
     return {
       code: result.couponCode,
       name: result.name,
       description: result.description.trim() || null,
-      price: result.price,
-      durationMinutes: result.durationMin,
       icon: result.icon,
       featured: result.featured,
       benefits: result.features,

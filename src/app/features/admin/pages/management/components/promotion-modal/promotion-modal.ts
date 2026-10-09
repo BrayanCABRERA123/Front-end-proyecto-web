@@ -7,28 +7,24 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { Promotion } from '../../../../models/admin.models';
 
-export type PromotionStatus = Promotion['status'];
-
 // si llega una promoción, el modal está en modo edición y arranca con sus valores
 export interface PromotionModalData {
   promotion?: Promotion;
 }
 
+// el estado no se pide: payment-service lo calcula (programada si la fecha de inicio es futura) y
+// se pausa o reactiva desde la tarjeta. Tampoco se piden precio ni duración: el cupón es un
+// descuento sobre la reserva, no un paquete con precio propio (ADR-015)
 export interface PromotionModalResult {
   name: string;
   description: string;
-  price: number;
-  durationMin: number;
   couponCode: string;
-  redemptions: number;
   featured: boolean;
   icon: string;
   features: string[];
-  status: PromotionStatus;
   startDate: string;
   // cupón real (ADR-015): descuento % que se aplica al canjear, y puntos de fidelización
-  // necesarios para que se desbloquee; price/durationMin/icon/featured/features son solo
-  // la tarjeta de marketing, no afectan el descuento
+  // necesarios para que se desbloquee; icon/featured/features son solo la tarjeta
   discountPercent: number;
   requiredPoints: number;
 }
@@ -49,17 +45,14 @@ export class PromotionModal {
 
   name = '';
   description = '';
-  price: number | null = null;
-  durationMin: number | null = null;
   couponCode = '';
-  redemptions = 0;
   featured = false;
   icon = ICON_OPTIONS[0];
-  status: PromotionStatus = 'active';
   startDate = new Date().toISOString().slice(0, 10);
   features: string[] = [];
   discountPercent: number | null = 100;
-  requiredPoints = 0;
+  // number | null: si el admin borra el campo, ngModel deja null
+  requiredPoints: number | null = 0;
 
   editing = false;
   submitted = false;
@@ -73,13 +66,9 @@ export class PromotionModal {
       this.editing = true;
       this.name = p.name;
       this.description = p.description;
-      this.price = p.price;
-      this.durationMin = p.durationMin;
       this.couponCode = p.couponCode;
-      this.redemptions = p.redemptions;
       this.featured = p.featured;
       this.icon = p.icon;
-      this.status = p.status;
       this.startDate = p.startDate;
       this.features = [...p.features];
       this.discountPercent = p.discountPercent;
@@ -97,14 +86,6 @@ export class PromotionModal {
     return this.submitted && this.description.trim().length < 3;
   }
 
-  get priceInvalid(): boolean {
-    return this.submitted && (!this.price || this.price <= 0);
-  }
-
-  get durationInvalid(): boolean {
-    return this.submitted && (!this.durationMin || this.durationMin <= 0);
-  }
-
   get couponInvalid(): boolean {
     return this.submitted && this.couponCode.trim().length < 3;
   }
@@ -113,18 +94,21 @@ export class PromotionModal {
     return this.submitted && (!this.discountPercent || this.discountPercent < 1 || this.discountPercent > 100);
   }
 
+  // entero mayor o igual a 0 (0 = el cupón está disponible para todos)
+  private get requiredPointsValid(): boolean {
+    return this.requiredPoints !== null && Number.isInteger(this.requiredPoints) && this.requiredPoints >= 0;
+  }
+
   get requiredPointsInvalid(): boolean {
-    return this.submitted && this.requiredPoints < 0;
+    return this.submitted && !this.requiredPointsValid;
   }
 
   get canSave(): boolean {
     return this.name.trim().length >= 3
       && this.description.trim().length >= 3
-      && !!this.price && this.price > 0
-      && !!this.durationMin && this.durationMin > 0
       && this.couponCode.trim().length >= 3
       && !!this.discountPercent && this.discountPercent >= 1 && this.discountPercent <= 100
-      && this.requiredPoints >= 0;
+      && this.requiredPointsValid;
   }
 
   /* ---------- lista de características ---------- */
@@ -152,17 +136,13 @@ export class PromotionModal {
     const result: PromotionModalResult = {
       name: this.name.trim(),
       description: this.description.trim(),
-      price: this.price ?? 0,
-      durationMin: this.durationMin ?? 0,
       couponCode: this.couponCode.trim().toUpperCase(),
-      redemptions: this.redemptions,
       featured: this.featured,
       icon: this.icon,
       features: this.features.map(f => f.trim()).filter(f => f.length > 0),
-      status: this.status,
       startDate: this.startDate,
       discountPercent: this.discountPercent ?? 100,
-      requiredPoints: this.requiredPoints,
+      requiredPoints: this.requiredPoints ?? 0,
     };
 
     this.dialogRef.close(result);

@@ -242,6 +242,7 @@
                   <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.NAME' | translate }}</th>
                   <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.PRICE' | translate }}</th>
                   <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.DURATION' | translate }}</th>
+                  <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.POINTS' | translate }}</th>
                   <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.CATEGORY' | translate }}</th>
                   <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.STATUS' | translate }}</th>
                   <th>{{ 'ADMIN_MANAGEMENT.SERVICES.TABLE.ACTIONS' | translate }}</th>
@@ -256,6 +257,7 @@
                       <span class="muted">{{ 'ADMIN_MANAGEMENT.SERVICES.PRICES_COUNT' | translate:{ count: s.prices.length } }}</span>
                     </td>
                     <td>{{ referencePrice(s)?.estimatedMinutes ?? '—' }} {{ 'ADMIN_MANAGEMENT.SERVICES.MINUTES_SUFFIX' | translate }}</td>
+                    <td>{{ s.loyaltyPoints > 0 ? ('ADMIN_MANAGEMENT.SERVICES.POINTS_VALUE' | translate:{ count: s.loyaltyPoints }) : '—' }}</td>
                     <td><span class="type-chip">{{ s.category?.name ?? '—' }}</span></td>
                     <td>
                       <span [class]="'status-pill status-pill--' + (s.active ? 'active' : 'inactive')">
@@ -335,8 +337,10 @@
                 </div>
                 <p class="muted">{{ p.description }}</p>
 
-                <div class="promo-card__price">
-                  {{ cop(p.price) }} <span class="muted">· {{ p.durationMin }} {{ 'ADMIN_MANAGEMENT.SERVICES.MINUTES_SUFFIX' | translate }}</span>
+                <!-- lo que obtiene el cliente: descuento al canjear y puntos para desbloquearlo -->
+                <div class="promo-card__reward">
+                  {{ 'ADMIN_MANAGEMENT.PROMOTIONS.DISCOUNT_VALUE' | translate:{ percent: p.discountPercent } }}
+                  <span class="muted">· {{ (p.requiredPoints ? 'ADMIN_MANAGEMENT.PROMOTIONS.POINTS_VALUE' : 'ADMIN_MANAGEMENT.PROMOTIONS.NO_POINTS') | translate:{ count: p.requiredPoints } }}</span>
                 </div>
 
                 <div class="coupon-tag">

@@ -36,24 +36,6 @@
       }
     </label>
 
-    <div class="form-dialog__grid-2">
-      <label class="form-field" [class.form-field--invalid]="priceInvalid">
-        <span>{{ 'PROMOTION_MODAL.PRICE_LABEL' | translate }} *</span>
-        <input type="number" min="0" [(ngModel)]="price" [placeholder]="'PROMOTION_MODAL.PRICE_PLACEHOLDER' | translate">
-        @if (priceInvalid) {
-          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_PRICE' | translate }}</span>
-        }
-      </label>
-
-      <label class="form-field" [class.form-field--invalid]="durationInvalid">
-        <span>{{ 'PROMOTION_MODAL.DURATION_LABEL' | translate }} *</span>
-        <input type="number" min="15" max="480" step="15" [(ngModel)]="durationMin">
-        @if (durationInvalid) {
-          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_DURATION' | translate }}</span>
-        }
-      </label>
-    </div>
-
     <div class="form-field">
       <span>{{ 'PROMOTION_MODAL.ICON_LABEL' | translate }}</span>
       <div class="icon-picker">
@@ -66,24 +48,21 @@
       </div>
     </div>
 
-    <div class="form-dialog__grid-3">
-      <label class="form-field">
-        <span>{{ 'PROMOTION_MODAL.STATUS_LABEL' | translate }}</span>
-        <select [(ngModel)]="status">
-          <option value="active">{{ 'PROMOTION_MODAL.STATUS_OPTIONS.active' | translate }}</option>
-          <option value="scheduled">{{ 'PROMOTION_MODAL.STATUS_OPTIONS.scheduled' | translate }}</option>
-          <option value="inactive">{{ 'PROMOTION_MODAL.STATUS_OPTIONS.inactive' | translate }}</option>
-        </select>
-      </label>
-
+    <!-- el estado lo calcula payment-service: programada si la fecha es futura; se pausa desde la tarjeta -->
+    <div class="form-dialog__grid-2">
       <label class="form-field">
         <span>{{ 'PROMOTION_MODAL.START_DATE_LABEL' | translate }}</span>
         <input type="date" [(ngModel)]="startDate">
+        <p class="form-hint">{{ 'PROMOTION_MODAL.START_DATE_HINT' | translate }}</p>
       </label>
 
       <label class="form-field" [class.form-field--invalid]="requiredPointsInvalid">
         <span>{{ 'PROMOTION_MODAL.REQUIRED_POINTS_LABEL' | translate }}</span>
         <input type="number" min="0" step="10" [(ngModel)]="requiredPoints">
+        <p class="form-hint">{{ 'PROMOTION_MODAL.REQUIRED_POINTS_HINT' | translate }}</p>
+        @if (requiredPointsInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_REQUIRED_POINTS' | translate }}</span>
+        }
       </label>
     </div>
 

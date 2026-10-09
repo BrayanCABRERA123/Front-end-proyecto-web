@@ -10,8 +10,6 @@ export interface PromotionView {
   code: string;
   name: string;
   description: string | null;
-  price: number;
-  durationMinutes: number;
   icon: string | null;
   featured: boolean;
   benefits: string[];
@@ -33,8 +31,6 @@ export interface SavePromotionRequest {
   code: string;
   name: string;
   description: string | null;
-  price: number;
-  durationMinutes: number;
   icon: string | null;
   featured: boolean;
   benefits: string[];
@@ -44,7 +40,9 @@ export interface SavePromotionRequest {
   requiredPoints: number;
 }
 
-// gestión de promociones (paquetes a precio fijo) contra el payment-service (/api/v1/admin/promotions).
+// gestión de promociones (cupones de descuento que se desbloquean con puntos) contra el
+// payment-service (/api/v1/admin/promotions). price y durationMinutes ya no se usan: el backend
+// los acepta vacíos y la web no los envía.
 @Injectable({ providedIn: 'root' })
 export class PromotionsApiService {
 
