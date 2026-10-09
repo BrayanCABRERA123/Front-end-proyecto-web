@@ -59,11 +59,6 @@
             <span class="via">{{ 'PAYMENT.QR.VIA' | translate }} {{ ('PAYMENT.METHOD.' + selectedMethod) | translate
               }}</span>
           </div>
-          <p class="timer-note">
-            <mat-icon>schedule</mat-icon>
-            {{ 'PAYMENT.QR.VALID_FOR' | translate }} <strong>({{ qrTimeLeft }})</strong>
-          </p>
-
           <div class="qr-layout">
             <div class="qr-box">
               <div class="qr-code">
@@ -267,6 +262,18 @@
               {{ (selectedMethod === 'CASH' ? 'PAYMENT.SUMMARY.CASH_BUTTON' : 'PAYMENT.SUMMARY.PAY_BUTTON') | translate }}
             }
           </button>
+
+          <!-- por qué el botón sigue bloqueado: lo que falta completar -->
+          @if (missingRequirements.length) {
+            <div class="missing-box" role="status">
+              <strong>{{ 'PAYMENT.CONFIRM.MISSING.TITLE' | translate }}</strong>
+              <ul>
+                @for (item of missingRequirements; track item) {
+                  <li><mat-icon>radio_button_unchecked</mat-icon>{{ item | translate }}</li>
+                }
+              </ul>
+            </div>
+          }
 
           <button class="btn-link" (click)="cancelReservation()">
             {{ 'PAYMENT.SUMMARY.CANCEL' | translate }}

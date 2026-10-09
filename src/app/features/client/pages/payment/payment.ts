@@ -1,5 +1,5 @@
 // definimos el componente
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
 // importamos el sidebar
@@ -37,7 +37,6 @@ interface PaymentMethod {
 
 // lo que se guarda del pago para que no se pierda al recargar la página
 interface SavedPaymentState {
-  qrExpiresAt: number;
   flowStep: FlowStep;
   method: PaymentMethodId;
 }
@@ -60,9 +59,8 @@ function methodOptionOf(account: PaymentAccountResponse): PaymentMethod | null {
   return { id, icon, label: 'PAYMENT.METHOD.' + id, desc: 'PAYMENT.METHOD.' + id + '_DESC' };
 }
 
-// vigencia del QR
-const QR_DURATION_MS = 15 * 60 * 1000;
-
+// El QR es la imagen fija de la cuenta del lavadero (Nequi, Daviplata o transferencia) que sube el
+// admin: no es un cobro dinámico de una pasarela, así que no vence y no se muestra un temporizador.
 
 @Component({
   selector: 'app-payment',
@@ -71,7 +69,7 @@ const QR_DURATION_MS = 15 * 60 * 1000;
   templateUrl: './payment.html',
   styleUrls: ['./payment.scss']
 })
-export class PaymentComponent implements OnInit, OnDestroy {
+export class PaymentComponent implements OnInit {
 
   private readonly bookingApi = inject(BookingApiService);
   private readonly paymentsApi = inject(PaymentsApiService);
@@ -166,19 +164,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.couponError = null;
   }
 
-  // temporizador del QR (15 minutos)
-  // es signal porque la app es zoneless: así el setInterval repinta el contador
-  qrSecondsLeft = signal(QR_DURATION_MS / 1000);
-  private timerId?: ReturnType<typeof setInterval>;
-  // momento exacto en que vence el QR; se guarda para que al recargar siga contando
-  private qrExpiresAt = 0;
-
-  get qrTimeLeft(): string {
-    const m = Math.floor(this.qrSecondsLeft() / 60).toString().padStart(2, '0');
-    const s = (this.qrSecondsLeft() % 60).toString().padStart(2, '0');
-    return `${m}:${s}`;
-  }
-
   // confirmación del pago
   receiptFile: File | null = null;
   isDragging = false;
@@ -215,6 +200,17 @@ export class PaymentComponent implements OnInit, OnDestroy {
     return !!this.receiptFile && this.isRefValid && this.isPaidAmountValid;
   }
 
+  // lo que le falta al cliente para poder confirmar (se muestra debajo del botón deshabilitado,
+  // así sabe qué completar en vez de ver un botón bloqueado sin explicación)
+  get missingRequirements(): string[] {
+    if (this.isVerifying || this.selectedMethod === 'CASH') return [];
+    const missing: string[] = [];
+    if (!this.receiptFile) missing.push('PAYMENT.CONFIRM.MISSING.RECEIPT');
+    if (!this.isRefValid) missing.push('PAYMENT.CONFIRM.MISSING.REFERENCE');
+    if (!this.isPaidAmountValid) missing.push('PAYMENT.CONFIRM.MISSING.AMOUNT');
+    return missing;
+  }
+
 
   constructor(
     private dialog: MatDialog,
@@ -239,10 +235,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.loadBooking();
   }
 
-  ngOnDestroy(): void {
-    if (this.timerId) clearInterval(this.timerId);
-  }
-
   // trae las reservas del cliente y elige la que se va a pagar
   private loadBooking(): void {
     this.loading = true;
@@ -258,7 +250,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
         }
         this.booking = booking;
         this.applyBooking(booking);
-        this.startQrTimer();
         this.loadPaymentState(booking.id);
         this.changes.markForCheck();
       },
@@ -293,7 +284,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
     };
 
     this.restoreState();
-    this.updateQrSecondsLeft();
   }
 
   // si ya hay un pago reportado para esta reserva, la pantalla queda en revisión
@@ -312,34 +302,19 @@ export class PaymentComponent implements OnInit, OnDestroy {
     });
   }
 
-  private startQrTimer(): void {
-    this.timerId = setInterval(() => {
-      this.updateQrSecondsLeft();
-      if (this.qrSecondsLeft() === 0) clearInterval(this.timerId);
-    }, 1000);
-  }
-
-  // calcula los segundos que faltan a partir de la hora de vencimiento
-  private updateQrSecondsLeft() {
-    const msLeft = this.qrExpiresAt - Date.now();
-    this.qrSecondsLeft.set(Math.max(0, Math.ceil(msLeft / 1000)));
-  }
-
   // --- estado guardado del pago ---
   // el estado real (si el pago ya se reportó) lo manda loadPaymentState() desde payment-service y
-  // pisa lo que haya aquí; local solo queda el cronómetro del QR y el método elegido, que no
-  // tienen dónde vivir en el backend (son de la sesión, no de la reserva)
+  // pisa lo que haya aquí; local solo queda el método elegido, que es de la sesión y no de la reserva
   private get storageKey(): string {
     return `payment-${this.reservationCode}`;
   }
 
-  // recupera el pago guardado o empieza uno nuevo con el QR de 15 minutos
+  // recupera el método elegido la última vez (si no hay nada guardado, empieza un pago nuevo)
   private restoreState() {
     try {
       const saved = localStorage.getItem(this.storageKey);
       if (saved) {
         const state: SavedPaymentState = JSON.parse(saved);
-        this.qrExpiresAt = state.qrExpiresAt;
         this.flowStep = state.flowStep;
         this.selectedMethod = state.method;
         return;
@@ -348,13 +323,11 @@ export class PaymentComponent implements OnInit, OnDestroy {
       // si no se puede leer, se empieza un pago nuevo
     }
 
-    this.qrExpiresAt = Date.now() + QR_DURATION_MS;
     this.saveState();
   }
 
   private saveState() {
     const state: SavedPaymentState = {
-      qrExpiresAt: this.qrExpiresAt,
       flowStep: this.flowStep,
       method: this.selectedMethod
     };
