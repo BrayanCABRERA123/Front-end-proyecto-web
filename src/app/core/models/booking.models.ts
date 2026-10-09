@@ -26,6 +26,8 @@ export interface CatalogServiceResponse {
   category: ServiceCategoryResponse | null;
   active: boolean;
   prices: ServicePriceResponse[];
+  // puntos de fidelización que gana el cliente cuando paga este servicio (0 = no suma)
+  loyaltyPoints: number;
 }
 
 export interface ServicePriceRequest {
@@ -40,6 +42,8 @@ export interface CatalogServiceRequest {
   description?: string | null;
   categoryId: number;
   prices: ServicePriceRequest[];
+  // siempre se envía: si faltara, booking-service lo guardaría en 0 al editar
+  loyaltyPoints: number;
 }
 
 // un día de la semana: 1 = lunes ... 7 = domingo

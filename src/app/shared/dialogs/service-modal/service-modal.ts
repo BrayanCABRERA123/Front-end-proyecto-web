@@ -49,6 +49,8 @@ export class ServiceModal {
   name = '';
   description = '';
   categoryId: number | null = null;
+  // puntos de fidelización que gana el cliente al pagar el servicio (0 = no suma puntos)
+  loyaltyPoints: number | null = 0;
 
   // true cuando venimos de "editar" un servicio ya existente
   isEditing = false;
@@ -63,6 +65,7 @@ export class ServiceModal {
     this.name = service?.name ?? '';
     this.description = service?.description ?? '';
     this.categoryId = service?.category?.id ?? data.categories[0]?.id ?? null;
+    this.loyaltyPoints = service?.loyaltyPoints ?? 0;
     this.rows = data.vehicleTypes.map(type => {
       const current = service?.prices.find(p => p.vehicleTypeId === type.id);
       return {
@@ -84,11 +87,17 @@ export class ServiceModal {
     return this.rows.some(row => (row.price === null) !== (row.minutes === null));
   }
 
+  // los puntos son un entero de 0 en adelante (booking-service rechaza los negativos)
+  get pointsInvalid(): boolean {
+    return this.loyaltyPoints === null || !Number.isInteger(this.loyaltyPoints) || this.loyaltyPoints < 0;
+  }
+
   get canSave(): boolean {
     return this.name.trim().length > 0
       && this.categoryId !== null
       && this.filledRows.length > 0
-      && !this.hasHalfRow;
+      && !this.hasHalfRow
+      && !this.pointsInvalid;
   }
 
   close(): void {
@@ -107,6 +116,7 @@ export class ServiceModal {
         price: row.price ?? 0,
         estimatedMinutes: row.minutes ?? 0,
       })),
+      loyaltyPoints: this.loyaltyPoints ?? 0,
     };
 
     this.dialogRef.close(result);

@@ -35,6 +35,16 @@
       </textarea>
     </label>
 
+    <!-- puntos de fidelización: los gana el cliente cuando su pago queda aprobado -->
+    <label class="field">
+      <span>{{ 'SERVICE_MODAL.POINTS_LABEL' | translate }}</span>
+      <input type="number" min="0" step="1" [(ngModel)]="loyaltyPoints" placeholder="10">
+      <p class="hint">{{ 'SERVICE_MODAL.POINTS_HINT' | translate }}</p>
+      @if (pointsInvalid) {
+        <p class="error">{{ 'SERVICE_MODAL.POINTS_ERROR' | translate }}</p>
+      }
+    </label>
+
     <!-- tarifa por tipo de vehículo (ADR-010): la fila vacía = no se ofrece para ese tipo -->
     <div class="field">
       <span>{{ 'SERVICE_MODAL.PRICES_LABEL' | translate }}</span>
