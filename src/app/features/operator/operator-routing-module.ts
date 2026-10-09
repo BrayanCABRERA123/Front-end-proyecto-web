@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TasksComponent } from './pages/tasks/tasks';
 // importamos el home del operator
 import { HomeComponent } from './pages/home/home';
 import { ProfileComponent } from './pages/profile/profile';
@@ -13,8 +12,8 @@ import { ScheduleComponent } from './pages/schedule/schedule';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  // ruta para tareas
-  { path: 'tasks', component: TasksComponent },
+  // las tareas del operario son sus servicios asignados (la vieja ruta era solo una plantilla vacía)
+  { path: 'tasks', redirectTo: 'assigned-services', pathMatch: 'full' },
   { path: 'profile', component: ProfileComponent },
   { path: 'assigned-services', component: AssignedServicesComponent },
   { path: 'schedule', component: ScheduleComponent },
