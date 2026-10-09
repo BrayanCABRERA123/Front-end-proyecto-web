@@ -215,6 +215,23 @@
   }
 }
 
+// puntos de fidelización que suma el servicio
+.service-points {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: $fw-bold;
+  margin: -4px 0 8px;
+
+  mat-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
 .service-items {
   list-style: none;
   padding: 0;

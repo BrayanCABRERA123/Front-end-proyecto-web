@@ -65,6 +65,10 @@
               <p class="service-name">{{ s.name }}</p>
               <p class="service-price">{{ priceOf(s) | copPrice }}</p>
               <p class="service-time"><mat-icon>schedule</mat-icon> {{ 'RESERVE.MINUTES' | translate:{ count: minutesOf(s) } }}</p>
+              <!-- puntos de fidelización que suma este servicio cuando se paga -->
+              @if (s.loyaltyPoints > 0) {
+                <p class="service-points"><mat-icon>stars</mat-icon> {{ 'RESERVE.POINTS' | translate:{ count: s.loyaltyPoints } }}</p>
+              }
               @if (s.description) {
                 <p class="service-description">{{ s.description }}</p>
               }
@@ -146,6 +150,10 @@
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.DURATION' | translate }}</span>
       <strong>{{ service ? ('RESERVE.MINUTES' | translate:{ count: minutesOf(service) }) : '—' }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.POINTS' | translate }}</span>
+      <strong>{{ service && service.loyaltyPoints > 0 ? ('RESERVE.POINTS' | translate:{ count: service.loyaltyPoints }) : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.DATE' | translate }}</span>
