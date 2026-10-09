@@ -220,21 +220,35 @@
   font-weight: $fw-semibold;
 }
 
-.timer-note {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 10px 0 20px;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+// lo que le falta al cliente para poder confirmar el pago (debajo del botón bloqueado)
+.missing-box {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: $border-radius-sm;
+  background: var(--warning-soft);
+  color: var(--text);
+  font-size: 0.82rem;
 
-  mat-icon {
-    @include icon-size(1rem);
-    color: var(--primary);
+  ul {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 4px;
   }
 
-  strong {
-    color: var(--text);
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  // el ícono no se encoge cuando el texto ocupa dos líneas
+  mat-icon {
+    @include icon-size(0.9rem);
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--warning);
   }
 }
 
@@ -584,13 +598,14 @@
 .input-icon {
   position: relative;
 
+  // campo activo: fondo de tarjeta y borde con contraste; el gris queda solo para deshabilitado
   input {
     width: 100%;
     box-sizing: border-box;
     padding: 12px 40px 12px 14px;
     border-radius: $border-radius-sm;
-    border: 1px solid var(--border);
-    background: var(--bg);
+    border: 1.5px solid var(--text-muted);
+    background: var(--card);
     font-family: $font-family;
     font-size: 0.95rem;
     color: var(--text);
@@ -598,10 +613,12 @@
     &:focus {
       outline: none;
       border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
     }
 
     &:disabled {
       background: var(--item-bg);
+      border-color: var(--border);
       color: var(--text-secondary);
     }
 
