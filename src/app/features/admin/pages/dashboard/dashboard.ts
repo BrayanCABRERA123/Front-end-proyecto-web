@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +17,8 @@ import { Operator, OperatorsStore } from '../../services/operators-store';
 import { ScheduleStore } from '../../services/schedule-store';
 import { Booking, Payment } from '../../models/admin.models';
 import { apiErrorKey } from '../../../../core/utils/api-error';
+import { BookingApiService } from '../../../../core/services/booking-api';
+import { DaySummaryResponse } from '../../../../core/models/booking.models';
 
 // un día de la gráfica de ingresos (los datos salen de los pagos aprobados)
 interface RevenueDay {
@@ -76,6 +78,10 @@ export class DashboardComponent {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
   });
 
+  // reservas de hoy frente a ayer: las cuenta booking-service con la fecha del lavadero
+  readonly daySummary = signal<DaySummaryResponse | null>(null);
+  private readonly bookingApi = inject(BookingApiService);
+
   constructor(
     private router: Router,
     private reservations: ReservationsStore,
@@ -84,23 +90,19 @@ export class DashboardComponent {
     private schedule: ScheduleStore,
     private dialog: MatDialog,
     private feedback: FeedbackService,
-  ) {}
+  ) {
+    this.bookingApi.daySummary().subscribe({ next: summary => this.daySummary.set(summary), error: () => undefined });
+  }
 
   /* ---------- tarjetas resumen ---------- */
 
   get bookingsToday(): number {
-    return this.reservations.byDate(this.reservations.today).length;
+    return this.daySummary()?.bookings ?? this.reservations.byDate(this.reservations.today).length;
   }
 
-  get bookingsYesterday(): number {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    return this.reservations.byDate(yesterday.toISOString().slice(0, 10)).length;
-  }
-
-  // diferencia frente a ayer (puede ser negativa: ↗ o ↘)
+  // diferencia frente a ayer (puede ser negativa: ↗ o ↘); 0 mientras responde booking-service
   get vsYesterday(): number {
-    return this.bookingsToday - this.bookingsYesterday;
+    return this.daySummary()?.difference ?? 0;
   }
 
   get vsYesterdayAbs(): number {

@@ -24,7 +24,7 @@
         <article class="card stat">
           <div class="stat__top">
             <div class="icon-box"><mat-icon>event</mat-icon></div>
-            <span class="badge badge--success">{{ vsDirection }} {{ vsYesterdayAbs }} {{ 'ADMIN_DASHBOARD.STATS.VS_YESTERDAY' | translate }}</span>
+            <span class="badge" [class.badge--success]="vsYesterday >= 0" [class.badge--warning]="vsYesterday < 0">{{ vsDirection }} {{ vsYesterdayAbs }} {{ 'ADMIN_DASHBOARD.STATS.VS_YESTERDAY' | translate }}</span>
           </div>
           <strong class="stat__value">{{ bookingsToday }}</strong>
           <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.BOOKINGS_TODAY' | translate }}</span>
