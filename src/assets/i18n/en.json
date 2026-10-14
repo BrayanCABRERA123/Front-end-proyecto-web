@@ -815,7 +815,7 @@
       "REFERENCE": "Transaction reference",
       "REFERENCE_HINT": "8 to 12 character number issued by your bank",
       "AMOUNT": "Amount paid",
-      "AMOUNT_HINT": "Amount set by the booking, discount included",
+      "AMOUNT_HINT": "Type the exact amount on your receipt. It comes filled with the amount due",
       "INFO": "An administrator will verify your payment and you'll receive a notification. Your slot will be 100% guaranteed and ready at your booked time.",
       "MISSING": {
         "TITLE": "To confirm the payment you still need to:",

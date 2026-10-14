@@ -815,7 +815,7 @@
       "REFERENCE": "Referência da transação",
       "REFERENCE_HINT": "Número de 8 a 12 caracteres emitido pelo seu banco",
       "AMOUNT": "Valor pago",
-      "AMOUNT_HINT": "Valor definido pela reserva com desconto",
+      "AMOUNT_HINT": "Digite o valor exato do seu comprovante. Ele vem preenchido com o total a pagar",
       "INFO": "Um administrador verificará seu pagamento e você receberá uma notificação. Sua vaga ficará 100% garantida e pronta no horário reservado.",
       "MISSING": {
         "TITLE": "Para confirmar o pagamento, falta:",

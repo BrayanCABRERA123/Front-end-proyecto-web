@@ -815,7 +815,7 @@
       "REFERENCE": "Referencia de la transacción",
       "REFERENCE_HINT": "Número de 8 a 12 caracteres emitido por tu entidad",
       "AMOUNT": "Monto pagado",
-      "AMOUNT_HINT": "Monto fijado según reserva con descuento",
+      "AMOUNT_HINT": "Escribe el monto exacto de tu comprobante. Viene lleno con el total a pagar",
       "INFO": "Un administrador verificará tu pago y recibirás una notificación. Tu plaza quedará 100% garantizada y lista en tu horario reservado.",
       "MISSING": {
         "TITLE": "Para confirmar el pago te falta:",

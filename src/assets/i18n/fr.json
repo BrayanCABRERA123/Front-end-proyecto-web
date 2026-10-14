@@ -815,7 +815,7 @@
       "REFERENCE": "Référence de la transaction",
       "REFERENCE_HINT": "Numéro de 8 à 12 caractères émis par votre banque",
       "AMOUNT": "Montant payé",
-      "AMOUNT_HINT": "Montant fixé par la réservation, remise incluse",
+      "AMOUNT_HINT": "Saisissez le montant exact de votre reçu. Il est prérempli avec le montant à payer",
       "INFO": "Un administrateur vérifiera votre paiement et vous recevrez une notification. Votre créneau sera garanti à 100 % et prêt à l'heure réservée.",
       "MISSING": {
         "TITLE": "Pour confirmer le paiement, il vous reste à :",
