@@ -455,7 +455,14 @@
     "DAY_CLOSED": "O lava-rápido está fechado nesse dia",
     "NO_TIMES": "Não há horários livres nesse dia",
     "SLOT_TAKEN_TITLE": "Esse horário acabou de ser ocupado",
-    "SLOT_TAKEN_MESSAGE": "Mostramos os horários livres mais próximos desse dia."
+    "SLOT_TAKEN_MESSAGE": "Mostramos os horários livres mais próximos desse dia.",
+    "OPERATOR": {
+      "LABEL": "Operador (opcional)",
+      "ANY": "Sem preferência: atribuímos um livre",
+      "LOADING": "Procurando operadores livres...",
+      "HINT": "Se o operador escolhido não estiver mais livre ao confirmar, atribuímos outro.",
+      "NONE_FREE": "Não há operadores livres para escolher nesse horário; mesmo assim atribuiremos um."
+    }
   },
   "APP": {
     "TITLE": "Lavagem de Veículos"

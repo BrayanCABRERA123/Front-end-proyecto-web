@@ -455,7 +455,14 @@
     "DAY_CLOSED": "The car wash is closed that day",
     "NO_TIMES": "No free times that day",
     "SLOT_TAKEN_TITLE": "That time was just taken",
-    "SLOT_TAKEN_MESSAGE": "Here are the closest free times of that day."
+    "SLOT_TAKEN_MESSAGE": "Here are the closest free times of that day.",
+    "OPERATOR": {
+      "LABEL": "Operator (optional)",
+      "ANY": "No preference: we assign a free one",
+      "LOADING": "Looking for free operators...",
+      "HINT": "If the operator you chose is no longer free when we confirm, we assign another one.",
+      "NONE_FREE": "No operators free to choose at that time; we will still assign one."
+    }
   },
   "APP": {
     "TITLE": "Car Wash Service"

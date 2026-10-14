@@ -455,7 +455,14 @@
     "DAY_CLOSED": "Le lavage est fermé ce jour-là",
     "NO_TIMES": "Aucun horaire libre ce jour-là",
     "SLOT_TAKEN_TITLE": "Cet horaire vient d’être pris",
-    "SLOT_TAKEN_MESSAGE": "Voici les horaires libres les plus proches de ce jour."
+    "SLOT_TAKEN_MESSAGE": "Voici les horaires libres les plus proches de ce jour.",
+    "OPERATOR": {
+      "LABEL": "Opérateur (facultatif)",
+      "ANY": "Sans préférence : nous en attribuons un libre",
+      "LOADING": "Recherche d'opérateurs libres...",
+      "HINT": "Si l'opérateur choisi n'est plus libre à la confirmation, nous en attribuons un autre.",
+      "NONE_FREE": "Aucun opérateur libre à choisir à cette heure ; nous en attribuerons quand même un."
+    }
   },
   "APP": {
     "TITLE": "Lavage de Véhicules"

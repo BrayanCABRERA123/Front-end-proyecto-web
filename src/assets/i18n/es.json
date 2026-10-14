@@ -455,7 +455,14 @@
     "DAY_CLOSED": "Ese día el lavadero está cerrado",
     "NO_TIMES": "No hay horas libres ese día",
     "SLOT_TAKEN_TITLE": "Esa hora ya se ocupó",
-    "SLOT_TAKEN_MESSAGE": "Te mostramos las horas libres más cercanas de ese día."
+    "SLOT_TAKEN_MESSAGE": "Te mostramos las horas libres más cercanas de ese día.",
+    "OPERATOR": {
+      "LABEL": "Operario (opcional)",
+      "ANY": "Sin preferencia: te asignamos uno libre",
+      "LOADING": "Buscando operarios libres...",
+      "HINT": "Si el operario que elegiste ya no está libre al confirmar, te asignamos otro.",
+      "NONE_FREE": "No hay operarios libres para elegir a esa hora; igual te asignamos uno."
+    }
   },
   "APP": {
     "TITLE": "Lavado Vehicular"
