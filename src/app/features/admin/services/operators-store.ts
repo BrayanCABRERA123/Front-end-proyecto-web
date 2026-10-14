@@ -62,6 +62,10 @@ export class OperatorsStore {
 
   readonly operators = computed(() => this.state());
 
+  // false hasta que responde operations-service: así una ficha abierta por URL no dice "no encontrado" antes de tiempo
+  private readonly loadedState = signal(false);
+  readonly loaded = computed(() => this.loadedState());
+
   // tarjetas de la lista: las calcula operations-service; null mientras carga o si falla
   private readonly summaryState = signal<TeamSummaryResponse | null>(null);
   readonly summary = computed(() => this.summaryState());
@@ -85,12 +89,19 @@ export class OperatorsStore {
       next: list => {
         if (list.length === 0) {
           this.state.set([]);
+          this.loadedState.set(true);
           return;
         }
         forkJoin(list.map(o => this.api.absences(o.id).pipe(catchError(() => of([] as AbsenceResponse[])))))
-          .subscribe(absences => this.state.set(list.map((o, i) => toOperator(o, absences[i]))));
+          .subscribe(absences => {
+            this.state.set(list.map((o, i) => toOperator(o, absences[i])));
+            this.loadedState.set(true);
+          });
       },
-      error: () => this.state.set([])
+      error: () => {
+        this.state.set([]);
+        this.loadedState.set(true);
+      }
     });
   }
 

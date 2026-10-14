@@ -3,7 +3,9 @@
 
   <main class="home-content">
 
-    @if (!operator) {
+    @if (loading) {
+      <div class="card"><p class="muted">{{ 'COMMON.LOADING' | translate }}</p></div>
+    } @else if (!operator) {
       <div class="card">
         <app-empty-state
           variant="error"

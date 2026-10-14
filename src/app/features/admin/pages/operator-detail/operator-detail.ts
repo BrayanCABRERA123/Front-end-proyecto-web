@@ -28,7 +28,7 @@ import { AssignShiftModal, AssignShiftModalData, AssignShiftResult } from '../op
 })
 export class OperatorDetailComponent implements OnInit {
 
-  operator: Operator | undefined;
+  private operatorId = '';
   // métricas reales de la semana (operations-service); null mientras cargan o si fallan
   metrics: OperatorMetricsResponse | null = null;
 
@@ -43,6 +43,16 @@ export class OperatorDetailComponent implements OnInit {
     private operationsApi: OperationsApiService,
     private changes: ChangeDetectorRef,
   ) {}
+
+  // se lee del store cada vez: llega aunque la ficha se abra antes de que carguen los operarios y
+  // refleja los cambios (activar, turno, ausencias) sin volver a buscarlo
+  get operator(): Operator | undefined {
+    return this.store.getById(this.operatorId);
+  }
+
+  get loading(): boolean {
+    return !this.store.loaded();
+  }
 
   // servicios de hoy asignados a este operario
   get todayServices(): TodayService[] {
@@ -64,7 +74,7 @@ export class OperatorDetailComponent implements OnInit {
     // reactivo: al navegar de una ficha a otra cambia el id sin recargar la página
     this.route.paramMap.subscribe(params => {
       const id = params.get('id') ?? '';
-      this.operator = this.store.getById(id);
+      this.operatorId = id;
       this.loadMetrics(id);
     });
   }
