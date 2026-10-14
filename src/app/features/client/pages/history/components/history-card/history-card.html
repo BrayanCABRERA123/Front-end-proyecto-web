@@ -97,6 +97,9 @@
         {{ 'HISTORY_CARD.RATED' | translate }}
         <mat-icon>star</mat-icon>
         {{ booking.rating }}
+        @if (booking.ratingOperator) {
+          · {{ 'HISTORY_CARD.WASHED_BY' | translate:{ name: booking.ratingOperator } }}
+        }
       </span>
       }
 

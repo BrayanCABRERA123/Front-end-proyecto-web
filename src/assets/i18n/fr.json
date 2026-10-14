@@ -89,7 +89,8 @@
     "CANCEL": "Annuler la réservation",
     "RATED": "Évalué",
     "EDIT_RATING": "Modifier l’évaluation",
-    "RATE": "Évaluer le service"
+    "RATE": "Évaluer le service",
+    "WASHED_BY": "Servi par {{name}}"
   },
   "COMMON": {
     "CLOSE": "Fermer",

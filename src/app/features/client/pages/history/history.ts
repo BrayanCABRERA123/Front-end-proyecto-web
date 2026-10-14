@@ -78,6 +78,7 @@ export class HistoryComponent implements OnInit {
           if (given) {
             item.rating = given.rating;
             item.ratingComment = given.comment ?? undefined;
+            item.ratingOperator = given.operatorName || undefined;
           }
           return item;
         });
