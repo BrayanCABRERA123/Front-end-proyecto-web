@@ -846,7 +846,9 @@
     "HELP": {
       "TITLE": "Besoin d'aide pour votre paiement ?",
       "DESC": "Service client :"
-    }
+    },
+    "CASH_INFO_TITLE": "Vous payez sur place",
+    "CASH_INFO_MESSAGE": "Payez en espèces lorsque vous récupérez votre véhicule. L'administrateur enregistrera le paiement et vous recevrez la notification de paiement approuvé."
   },
   "VEHICLES": {
     "TITLE": "Mes Véhicules",

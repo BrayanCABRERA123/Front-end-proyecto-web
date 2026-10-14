@@ -409,13 +409,13 @@ export class PaymentComponent implements OnInit {
   async confirmPayment() {
     if (!this.canConfirm || !this.booking) return;
 
-    // efectivo: se paga en el lavadero, no hay comprobante que reportar
-    if (this.selectedMethod === 'CASH' || !this.selectedAccount || !this.receiptFile) {
-      this.flowStep = 'VERIFYING';
-      this.saveState();
-      this.showStatusModal({ title: 'PAYMENT.SUCCESS_TITLE', message: 'PAYMENT.SUCCESS_MESSAGE' });
+    // efectivo: se paga en el lavadero y lo registra el administrador ("Registrar pago en el
+    // local"), que lo deja aprobado. Aquí no se reporta nada ni queda "en verificación"
+    if (this.selectedMethod === 'CASH') {
+      this.showStatusModal({ title: 'PAYMENT.CASH_INFO_TITLE', message: 'PAYMENT.CASH_INFO_MESSAGE' });
       return;
     }
+    if (!this.selectedAccount || !this.receiptFile) return;
 
     // el monto a cobrar lo pone payment-service; paidAmount es lo que el cliente dice haber pagado
     const receipt = await readImageAsDataUrl(this.receiptFile);

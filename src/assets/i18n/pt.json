@@ -846,7 +846,9 @@
     "HELP": {
       "TITLE": "Precisa de ajuda com seu pagamento?",
       "DESC": "Central de atendimento ao cliente:"
-    }
+    },
+    "CASH_INFO_TITLE": "Você paga no local",
+    "CASH_INFO_MESSAGE": "Pague em dinheiro quando buscar seu veículo. O administrador registrará o pagamento e você receberá a notificação de pagamento aprovado."
   },
   "VEHICLES": {
     "TITLE": "Meus Veículos",

@@ -846,7 +846,9 @@
     "HELP": {
       "TITLE": "¿Necesitas asistencia con tu pago?",
       "DESC": "Línea directa de atención al cliente:"
-    }
+    },
+    "CASH_INFO_TITLE": "Pagas en el local",
+    "CASH_INFO_MESSAGE": "Paga en efectivo cuando llegues por tu vehículo. El administrador registrará el pago y te llegará la notificación de pago aprobado."
   },
   "VEHICLES": {
     "TITLE": "Mis Vehículos",

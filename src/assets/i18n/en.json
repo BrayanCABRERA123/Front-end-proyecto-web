@@ -846,7 +846,9 @@
     "HELP": {
       "TITLE": "Need help with your payment?",
       "DESC": "Customer service hotline:"
-    }
+    },
+    "CASH_INFO_TITLE": "You pay at the car wash",
+    "CASH_INFO_MESSAGE": "Pay in cash when you pick up your vehicle. The administrator will record the payment and you will get the payment-approved notification."
   },
   "VEHICLES": {
     "TITLE": "My Vehicles",
