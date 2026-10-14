@@ -10,6 +10,7 @@ import {
   BookingResponse,
   BookingStatusCode,
   BusinessDataDto,
+  DaySummaryResponse,
   BusinessHourDto,
   CatalogServiceRequest,
   CatalogServiceResponse,
@@ -63,6 +64,13 @@ export class BookingApiService {
   establishment(): Observable<EstablishmentResponse> {
     this.establishment$ ??= this.http.get<EstablishmentResponse>(`${this.api}/establishment`).pipe(shareReplay(1));
     return this.establishment$;
+  }
+
+  /* ---------- inicio del admin ---------- */
+
+  /** reservas de hoy frente a ayer, contadas por booking-service en la fecha del lavadero */
+  daySummary(): Observable<DaySummaryResponse> {
+    return this.http.get<DaySummaryResponse>(`${this.api}/admin/bookings/day-summary`);
   }
 
   /* ---------- datos del negocio (admin) ---------- */
