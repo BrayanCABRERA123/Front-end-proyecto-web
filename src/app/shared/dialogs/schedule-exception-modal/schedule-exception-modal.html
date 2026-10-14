@@ -33,12 +33,16 @@
           <input type="time" [(ngModel)]="closeTime">
         </label>
       </div>
+      @if (hasInvalidRange) {
+        <p class="field-error">{{ 'SCHEDULE_EXCEPTION_MODAL.ERROR_RANGE' | translate }}</p>
+      }
     }
 
     <label class="field">
       <span>{{ 'SCHEDULE_EXCEPTION_MODAL.REASON_LABEL' | translate }}</span>
       <textarea
         rows="2"
+        maxlength="120"
         [(ngModel)]="reason"
         [placeholder]="'SCHEDULE_EXCEPTION_MODAL.REASON_PLACEHOLDER' | translate">
       </textarea>

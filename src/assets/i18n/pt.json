@@ -1676,6 +1676,7 @@
     "CLOSED_ALL_DAY_LABEL": "Fechado o dia todo",
     "OPEN_LABEL": "Abertura",
     "CLOSE_LABEL": "Fechamento",
+    "ERROR_RANGE": "O horário de fechamento deve ser depois da abertura.",
     "REASON_LABEL": "Motivo / observações",
     "REASON_PLACEHOLDER": "Ex. Dia da Independência de Cartagena",
     "CANCEL": "Cancelar",

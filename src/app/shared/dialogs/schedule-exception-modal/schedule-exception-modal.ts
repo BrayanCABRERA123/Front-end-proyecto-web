@@ -47,8 +47,13 @@ export class ScheduleExceptionModal {
     }
   }
 
+  // si abre ese día, el cierre debe ser después de la apertura (booking-service lo exige igual)
+  get hasInvalidRange(): boolean {
+    return !this.closedAllDay && (!this.openTime || !this.closeTime || this.closeTime <= this.openTime);
+  }
+
   get canSave(): boolean {
-    return this.date.trim().length > 0 && this.reason.trim().length > 0;
+    return this.date.trim().length > 0 && this.reason.trim().length > 0 && !this.hasInvalidRange;
   }
 
   close(): void {

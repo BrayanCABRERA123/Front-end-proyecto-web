@@ -1676,6 +1676,7 @@
     "CLOSED_ALL_DAY_LABEL": "Fermé toute la journée",
     "OPEN_LABEL": "Ouverture",
     "CLOSE_LABEL": "Fermeture",
+    "ERROR_RANGE": "L'heure de fermeture doit être après l'heure d'ouverture.",
     "REASON_LABEL": "Motif / notes",
     "REASON_PLACEHOLDER": "Ex. Jour de l'Indépendance de Carthagène",
     "CANCEL": "Annuler",
