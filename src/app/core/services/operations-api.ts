@@ -43,6 +43,14 @@ export interface TeamSummaryResponse {
   ratingsCount: number;
 }
 
+// operario libre para un horario, como lo ve el cliente al reservar (RF-010)
+export interface AvailableOperatorResponse {
+  operatorId: number;
+  firstName: string;
+  averageRating: number | null;
+  ratingsCount: number;
+}
+
 export interface OperatorResponse {
   id: number;
   userId: number;
@@ -128,6 +136,15 @@ export class OperationsApiService {
 
   private readonly http = inject(HttpClient);
   private readonly api = API_BASE_URL;
+
+  /* ---------- cliente ---------- */
+
+  /** operarios libres para el horario que el cliente va a reservar (RF-010) */
+  availableOperators(date: string, time: string, minutes: number): Observable<AvailableOperatorResponse[]> {
+    return this.http.get<AvailableOperatorResponse[]>(`${this.api}/operators/available`, {
+      params: { date, time, minutes },
+    });
+  }
 
   /* ---------- admin ---------- */
 

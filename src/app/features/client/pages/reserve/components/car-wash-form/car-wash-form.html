@@ -105,7 +105,7 @@
             <mat-icon class="label-icon">schedule</mat-icon>
           </label>
           <div class="select-wrapper">
-            <select class="form-select" [(ngModel)]="time" [disabled]="timesLoading || !availableTimes.length">
+            <select class="form-select" [(ngModel)]="time" (ngModelChange)="onTimeChange()" [disabled]="timesLoading || !availableTimes.length">
               <option value="" disabled selected>
                 {{ (timesLoading ? 'RESERVE.LOADING_TIMES' : (dayClosed ? 'RESERVE.DAY_CLOSED' : (date && selectedServiceId && !availableTimes.length ? 'RESERVE.NO_TIMES' : 'RESERVE.SELECT_TIME'))) | translate }}
               </option>
@@ -117,6 +117,30 @@
           </div>
         </div>
       </div>
+
+      <!-- RF-010: operario (opcional). Sin preferencia, el lavadero asigna uno libre (RF-008) -->
+      @if (time) {
+        <div class="form-group">
+          <label class="form-label">
+            {{ 'RESERVE.OPERATOR.LABEL' | translate }}
+            <mat-icon class="label-icon">engineering</mat-icon>
+          </label>
+          <div class="select-wrapper">
+            <select class="form-select" [(ngModel)]="preferredOperatorId" [disabled]="operatorsLoading">
+              <option [ngValue]="null">
+                {{ (operatorsLoading ? 'RESERVE.OPERATOR.LOADING' : 'RESERVE.OPERATOR.ANY') | translate }}
+              </option>
+              @for (o of operators; track o.operatorId) {
+                <option [ngValue]="o.operatorId">
+                  {{ o.firstName }}{{ o.averageRating != null ? ' · ★ ' + o.averageRating + ' (' + o.ratingsCount + ')' : '' }}
+                </option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+          <small class="form-hint">{{ (operators.length || operatorsLoading ? 'RESERVE.OPERATOR.HINT' : 'RESERVE.OPERATOR.NONE_FREE') | translate }}</small>
+        </div>
+      }
 
       <!-- LUGAR DEL SERVICIO: el cliente lleva su vehículo a la sede (no es a domicilio) -->
       <div class="location-box">

@@ -184,6 +184,8 @@ export interface CreateBookingRequest {
   date: string;
   time: string;
   notes?: string | null;
+  // RF-010: operario que eligió el cliente (opcional); si no está libre, se asigna otro
+  preferredOperatorId?: number | null;
 }
 
 export interface RescheduleBookingRequest {

@@ -19,6 +19,7 @@ import {
   CatalogServiceResponse,
   EstablishmentResponse,
 } from '../../../../../../core/models/booking.models';
+import { AvailableOperatorResponse, OperationsApiService } from '../../../../../../core/services/operations-api';
 import { apiErrorKey } from '../../../../../../core/utils/api-error';
 
 /**
@@ -37,6 +38,7 @@ export class CarWashFormComponent implements OnInit {
 
   private readonly vehiclesService = inject(VehiclesService);
   private readonly bookingApi = inject(BookingApiService);
+  private readonly operationsApi = inject(OperationsApiService);
   private readonly cdr = inject(ChangeDetectorRef);
 
   // vehículos registrados del cliente (reales del backend)
@@ -57,6 +59,11 @@ export class CarWashFormComponent implements OnInit {
   availableTimes: string[] = [];
   dayClosed = false;
   timesLoading = false;
+
+  // RF-010: operarios libres a esa hora; null = sin preferencia (el sistema asigna uno, RF-008)
+  operators: AvailableOperatorResponse[] = [];
+  operatorsLoading = false;
+  preferredOperatorId: number | null = null;
 
   // sede del lavadero (booking.establishment): el cliente lleva su vehículo allí
   location: EstablishmentResponse | null = null;
@@ -164,6 +171,32 @@ export class CarWashFormComponent implements OnInit {
     this.time = '';
     this.availableTimes = [];
     this.dayClosed = false;
+    this.clearOperators();
+  }
+
+  private clearOperators(): void {
+    this.operators = [];
+    this.preferredOperatorId = null;
+  }
+
+  // al escoger la hora: quién está libre en ese horario (lo calcula operations-service)
+  onTimeChange(): void {
+    this.clearOperators();
+    const service = this.service;
+    if (!this.time || !this.date || !service) return;
+    this.operatorsLoading = true;
+    this.operationsApi.availableOperators(this.date, this.time, this.minutesOf(service)).subscribe({
+      next: (operators) => {
+        this.operators = operators;
+        this.operatorsLoading = false;
+        this.cdr.markForCheck();
+      },
+      // sin la lista se reserva igual, sin preferencia
+      error: () => {
+        this.operatorsLoading = false;
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   get vehicle(): VehicleResponse | null {
@@ -200,7 +233,8 @@ export class CarWashFormComponent implements OnInit {
       vehicleId: this.selectedVehicleId,
       serviceIds: [this.selectedServiceId],
       date: this.date,
-      time: this.time
+      time: this.time,
+      preferredOperatorId: this.preferredOperatorId
     }).subscribe({
       next: (booking) => {
         this.submitting = false;
