@@ -2001,7 +2001,8 @@
       "DISCARDED_TITLE": "Modifications annulées",
       "DISCARDED_MESSAGE": "Les données enregistrées ont été restaurées.",
       "INVALID_TITLE": "Vérifiez le formulaire",
-      "INVALID_MESSAGE": "Remplissez les champs obligatoires et corrigez les erreurs."
+      "INVALID_MESSAGE": "Remplissez les champs obligatoires et corrigez les erreurs.",
+      "LOAD_ERROR_TITLE": "Impossible de charger les données"
     },
     "VALIDATION": {
       "LEGAL_NAME": "Saisissez la raison sociale",
@@ -2342,7 +2343,12 @@
     "PROMOTION_ALREADY_REDEEMED": "Vous avez déjà utilisé ce coupon sur cette réservation.",
     "UNKNOWN_PERMISSION": "L’une des autorisations choisies n’existe plus. Rechargez la page et réessayez.",
     "SERVICE_TOO_EARLY": "Vous ne pouvez pas encore démarrer ce service : il s'ouvre 15 minutes avant l'heure de la réservation.",
-    "BOOKING_IN_PAST": "Cette réservation est déjà passée : elle ne peut pas être attribuée. Marquez-la comme absence ou annulez-la."
+    "BOOKING_IN_PAST": "Cette réservation est déjà passée : elle ne peut pas être attribuée. Marquez-la comme absence ou annulez-la.",
+    "ESTABLISHMENT_REQUIRED_FIELD": "La raison sociale, le NIT et l'adresse sont obligatoires",
+    "ESTABLISHMENT_INVALID_PHONE": "Le téléphone doit avoir au moins 7 chiffres",
+    "ESTABLISHMENT_INVALID_EMAIL": "L'e-mail de l'entreprise n'est pas valide",
+    "ESTABLISHMENT_INVALID_FOUNDATION_DATE": "La date de constitution ne peut pas être future",
+    "ESTABLISHMENT_NOT_FOUND": "Les données de l'entreprise ne sont pas configurées"
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",

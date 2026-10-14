@@ -10,8 +10,8 @@
     </div>
 
     <div class="section-header__actions">
-      <button class="btn-outline" (click)="discard()">{{ 'BUSINESS_DATA.DISCARD' | translate }}</button>
-      <button class="btn-primary" (click)="save()">
+      <button class="btn-outline" (click)="discard()" [disabled]="!loaded || saving">{{ 'BUSINESS_DATA.DISCARD' | translate }}</button>
+      <button class="btn-primary" (click)="save()" [disabled]="!loaded || saving">
         <mat-icon>check</mat-icon>
         {{ 'BUSINESS_DATA.SAVE' | translate }}
       </button>

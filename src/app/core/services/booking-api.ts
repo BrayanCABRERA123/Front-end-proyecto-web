@@ -9,6 +9,7 @@ import {
   BayStatusCode,
   BookingResponse,
   BookingStatusCode,
+  BusinessDataDto,
   BusinessHourDto,
   CatalogServiceRequest,
   CatalogServiceResponse,
@@ -62,6 +63,18 @@ export class BookingApiService {
   establishment(): Observable<EstablishmentResponse> {
     this.establishment$ ??= this.http.get<EstablishmentResponse>(`${this.api}/establishment`).pipe(shareReplay(1));
     return this.establishment$;
+  }
+
+  /* ---------- datos del negocio (admin) ---------- */
+
+  businessData(): Observable<BusinessDataDto> {
+    return this.http.get<BusinessDataDto>(`${this.api}/admin/establishment`);
+  }
+
+  // el backend valida y devuelve lo guardado; la próxima lectura pública vuelve a pedir la sede
+  saveBusinessData(data: BusinessDataDto): Observable<BusinessDataDto> {
+    this.establishment$ = undefined;
+    return this.http.put<BusinessDataDto>(`${this.api}/admin/establishment`, data);
   }
 
   /* ---------- reservas del cliente ---------- */

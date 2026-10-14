@@ -88,6 +88,35 @@ export interface EstablishmentResponse {
   phone: string | null;
   email: string | null;
   logoUrl: string | null;
+  website: string | null;
+  instagram: string | null;
+  facebook: string | null;
+  supportLine: string | null;
+  serviceHoursNote: string | null;
+}
+
+// todos los datos del negocio (Configuración del admin); vacío viaja como null
+export interface BusinessDataDto {
+  tradeName: string | null;
+  legalName: string;
+  taxId: string;
+  businessType: string | null;
+  foundedOn: string | null;   // yyyy-MM-dd
+  legalRepresentative: string | null;
+  legalRepresentativeDocument: string | null;
+  address: string;
+  phone: string | null;
+  email: string | null;
+  website: string | null;
+  taxRegime: string | null;
+  ciiuActivity: string | null;
+  dianResolution: string | null;
+  invoicePrefix: string | null;
+  invoiceRange: string | null;
+  instagram: string | null;
+  facebook: string | null;
+  supportLine: string | null;
+  serviceHoursNote: string | null;
 }
 
 export interface AvailabilityResponse {
