@@ -10,6 +10,8 @@ export interface Reservation {
   vehicle: string;
   durationMin: number;
   status: ReservationStatus;
+  // desde cuándo se puede iniciar (lo calcula operations-service)
+  startableAt?: string | null;
 }
 
 export function reservationStatusClass(status: ReservationStatus): string {

@@ -18,7 +18,7 @@ import {
 import { MiniCalendarComponent } from './mini-calendar/mini-calendar';
 // sus servicios asignados (operations-service)
 import { OperationsApiService, localIsoDate } from '../../../../core/services/operations-api';
-import { toWorkReservation } from '../../../../core/utils/operator-work';
+import { canStartNow, startFromLabel, toWorkReservation } from '../../../../core/utils/operator-work';
 
 type Tab = 'day' | 'week' | 'completed';
 
@@ -143,6 +143,8 @@ export class ScheduleComponent implements OnInit {
   }
 
   statusClass = reservationStatusClass;
+  canStartNow = canStartNow;
+  startFrom = startFromLabel;
   statusIcon = reservationStatusIcon;
   statusLabel = reservationStatusLabel;
 

@@ -2330,7 +2330,8 @@
     "PROMOTION_NOT_FOUND": "That coupon doesn't exist.",
     "PROMOTION_NOT_REDEEMABLE": "That coupon isn't active, or you haven't reached the points it needs yet.",
     "PROMOTION_ALREADY_REDEEMED": "You already redeemed this coupon on this booking.",
-    "UNKNOWN_PERMISSION": "One of the selected permissions no longer exists. Reload the page and try again."
+    "UNKNOWN_PERMISSION": "One of the selected permissions no longer exists. Reload the page and try again.",
+    "SERVICE_TOO_EARLY": "You cannot start this service yet: it opens 15 minutes before the booking time."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",
@@ -2435,5 +2436,8 @@
     "NOT_AVAILABLE_TITLE": "This report is not available",
     "NOT_AVAILABLE_MESSAGE": "The link is invalid or the report has not been published yet. Contact the car wash if you think this is a mistake.",
     "DISCLAIMER": "Photos and notes are recorded by the car wash while checking your vehicle in each phase of the service."
+  },
+  "OPERATOR_WORK": {
+    "START_FROM": "You can start it from {{time}} (15 minutes before the booking)."
   }
 }

@@ -69,6 +69,8 @@ export interface OperatorServiceResponse {
   finishedAt: string | null;
   rating: number | null;
   comment: string | null;
+  // desde cuándo se puede iniciar (operations-service: 15 minutos antes de la reserva)
+  startableAt: string | null;
 }
 
 export interface RatingResponse {

@@ -2330,7 +2330,8 @@
     "PROMOTION_NOT_FOUND": "Ce coupon n'existe pas.",
     "PROMOTION_NOT_REDEEMABLE": "Ce coupon n'est pas valide, ou vous n'avez pas encore assez de points.",
     "PROMOTION_ALREADY_REDEEMED": "Vous avez déjà utilisé ce coupon sur cette réservation.",
-    "UNKNOWN_PERMISSION": "L’une des autorisations choisies n’existe plus. Rechargez la page et réessayez."
+    "UNKNOWN_PERMISSION": "L’une des autorisations choisies n’existe plus. Rechargez la page et réessayez.",
+    "SERVICE_TOO_EARLY": "Vous ne pouvez pas encore démarrer ce service : il s'ouvre 15 minutes avant l'heure de la réservation."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",
@@ -2435,5 +2436,8 @@
     "NOT_AVAILABLE_TITLE": "Ce rapport n'est pas disponible",
     "NOT_AVAILABLE_MESSAGE": "Le lien n'est pas valide ou le rapport n'a pas encore été publié. Contactez la station si vous pensez qu'il s'agit d'une erreur.",
     "DISCLAIMER": "Les photos et notes sont enregistrées par la station lors de l'inspection de votre véhicule à chaque étape du service."
+  },
+  "OPERATOR_WORK": {
+    "START_FROM": "Vous pourrez le démarrer à partir de {{time}} (15 minutes avant la réservation)."
   }
 }

@@ -23,6 +23,22 @@ export function toWorkReservation(s: OperatorServiceResponse): Reservation {
     client: s.plate,
     vehicle: s.vehicle,
     durationMin: Math.max(0, eh * 60 + em - (sh * 60 + sm)),
-    status: workStatus(s.status)
+    status: workStatus(s.status),
+    startableAt: s.startableAt
   };
+}
+
+/**
+ * Si el botón "Iniciar" ya se puede usar. La regla (15 minutos antes de la reserva) la decide
+ * operations-service en startableAt; aquí solo se compara con la hora actual.
+ */
+export function canStartNow(startableAt: string | null | undefined): boolean {
+  return !startableAt || Date.now() >= Date.parse(startableAt);
+}
+
+/** Hora local (HH:mm) desde la que se podrá iniciar, para el aviso junto al botón. */
+export function startFromLabel(startableAt: string | null | undefined): string {
+  if (!startableAt) return '';
+  const d = new Date(startableAt);
+  return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
 }
