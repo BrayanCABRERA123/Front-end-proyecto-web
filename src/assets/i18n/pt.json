@@ -2334,7 +2334,8 @@
     "PROMOTION_NOT_REDEEMABLE": "Esse cupom não está vigente ou você ainda não tem os pontos necessários.",
     "PROMOTION_ALREADY_REDEEMED": "Você já resgatou esse cupom nesta reserva.",
     "UNKNOWN_PERMISSION": "Uma das permissões escolhidas não existe mais. Recarregue a página e tente novamente.",
-    "SERVICE_TOO_EARLY": "Você ainda não pode iniciar este serviço: ele é liberado 15 minutos antes do horário da reserva."
+    "SERVICE_TOO_EARLY": "Você ainda não pode iniciar este serviço: ele é liberado 15 minutos antes do horário da reserva.",
+    "BOOKING_IN_PAST": "Esta reserva já passou: não pode ser atribuída. Marque-a como não compareceu ou cancele-a."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Senha atual",

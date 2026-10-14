@@ -2334,7 +2334,8 @@
     "PROMOTION_NOT_REDEEMABLE": "Ce coupon n'est pas valide, ou vous n'avez pas encore assez de points.",
     "PROMOTION_ALREADY_REDEEMED": "Vous avez déjà utilisé ce coupon sur cette réservation.",
     "UNKNOWN_PERMISSION": "L’une des autorisations choisies n’existe plus. Rechargez la page et réessayez.",
-    "SERVICE_TOO_EARLY": "Vous ne pouvez pas encore démarrer ce service : il s'ouvre 15 minutes avant l'heure de la réservation."
+    "SERVICE_TOO_EARLY": "Vous ne pouvez pas encore démarrer ce service : il s'ouvre 15 minutes avant l'heure de la réservation.",
+    "BOOKING_IN_PAST": "Cette réservation est déjà passée : elle ne peut pas être attribuée. Marquez-la comme absence ou annulez-la."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",

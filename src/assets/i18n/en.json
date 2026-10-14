@@ -2334,7 +2334,8 @@
     "PROMOTION_NOT_REDEEMABLE": "That coupon isn't active, or you haven't reached the points it needs yet.",
     "PROMOTION_ALREADY_REDEEMED": "You already redeemed this coupon on this booking.",
     "UNKNOWN_PERMISSION": "One of the selected permissions no longer exists. Reload the page and try again.",
-    "SERVICE_TOO_EARLY": "You cannot start this service yet: it opens 15 minutes before the booking time."
+    "SERVICE_TOO_EARLY": "You cannot start this service yet: it opens 15 minutes before the booking time.",
+    "BOOKING_IN_PAST": "This booking is already in the past: it cannot be assigned. Mark it as no-show or cancel it."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",
