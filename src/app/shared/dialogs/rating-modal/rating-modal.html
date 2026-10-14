@@ -37,7 +37,7 @@
         {{ 'RATINGS.COMMENT' | translate }}
       </label>
 
-      <textarea [(ngModel)]="comment" [placeholder]="'RATINGS.PLACEHOLDER' | translate">
+      <textarea [(ngModel)]="comment" maxlength="500" [placeholder]="'RATINGS.PLACEHOLDER' | translate">
 
       </textarea>
 
