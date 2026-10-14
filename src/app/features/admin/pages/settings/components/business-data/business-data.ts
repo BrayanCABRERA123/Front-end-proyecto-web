@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BusinessStore } from '../../../../services/business-store';
 import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
 import { BusinessData } from '../../../../models/admin.models';
+import { apiErrorKey } from '../../../../../../core/utils/api-error';
 
 // campos obligatorios del formulario; cada uno tiene su mensaje de error
 const REQUIRED_FIELDS: Record<keyof Pick<BusinessData, 'legalName' | 'taxId' | 'address' | 'phone'>, string> = {
@@ -27,21 +28,40 @@ const PHONE_RE = /^\+?[\d\s()-]{7,20}$/;
   templateUrl: './business-data.html',
   styleUrl: './business-data.scss'
 })
-export class BusinessDataComponent {
+export class BusinessDataComponent implements OnInit {
 
+  // lo último guardado en booking-service
   private saved: BusinessData;
 
   // los campos mutan una copia; solo se confirman al guardar
   data: BusinessData;
 
   submitted = false;
+  loaded = false;
+  saving = false;
 
   constructor(
     private store: BusinessStore,
     private feedback: FeedbackService,
+    private changes: ChangeDetectorRef,
   ) {
-    this.saved = this.store.business();
+    this.saved = { ...this.store.empty };
     this.data = { ...this.saved };
+  }
+
+  ngOnInit(): void {
+    this.store.load().subscribe({
+      next: business => {
+        this.saved = business;
+        this.data = { ...business };
+        this.loaded = true;
+        this.changes.markForCheck();
+      },
+      error: err => {
+        this.feedback.error('BUSINESS_DATA.FEEDBACK.LOAD_ERROR_TITLE', apiErrorKey(err));
+        this.changes.markForCheck();
+      }
+    });
   }
 
   isInvalid(key: keyof BusinessData): boolean {
@@ -73,7 +93,7 @@ export class BusinessDataComponent {
   }
 
   discard(): void {
-    this.data = { ...this.store.business() };
+    this.data = { ...this.saved };
     this.submitted = false;
     this.feedback.info('BUSINESS_DATA.FEEDBACK.DISCARDED_TITLE', 'BUSINESS_DATA.FEEDBACK.DISCARDED_MESSAGE');
   }
@@ -85,12 +105,25 @@ export class BusinessDataComponent {
       return;
     }
 
-    this.store.updateBusiness(this.data);
-    this.saved = { ...this.data };
-    this.feedback.success(
-      'BUSINESS_DATA.FEEDBACK.SAVED_TITLE',
-      'BUSINESS_DATA.FEEDBACK.SAVED_MESSAGE',
-      { details: [{ label: 'BUSINESS_DATA.GENERAL.LEGAL_NAME', value: this.data.legalName }] }
-    );
+    this.saving = true;
+    this.store.save(this.data).subscribe({
+      next: business => {
+        this.saving = false;
+        this.saved = business;
+        this.data = { ...business };
+        this.submitted = false;
+        this.feedback.success(
+          'BUSINESS_DATA.FEEDBACK.SAVED_TITLE',
+          'BUSINESS_DATA.FEEDBACK.SAVED_MESSAGE',
+          { details: [{ label: 'BUSINESS_DATA.GENERAL.LEGAL_NAME', value: business.legalName }] }
+        );
+        this.changes.markForCheck();
+      },
+      error: err => {
+        this.saving = false;
+        this.feedback.error('BUSINESS_DATA.FEEDBACK.INVALID_TITLE', apiErrorKey(err));
+        this.changes.markForCheck();
+      }
+    });
   }
 }
