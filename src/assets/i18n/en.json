@@ -1753,12 +1753,18 @@
       "WEEKLY_SERVICES": "Services this week",
       "SERVICES_SUFFIX": "services",
       "VS_LAST_WEEK": "vs last week",
-      "AVAILABLE_HOURS": "Available hours",
-      "HOURS_USED_NOTE": "{{percent}}% of operating capacity used",
+      "NO_TREND": "No services last week to compare",
+      "WORKED_HOURS": "Worked hours",
+      "HOURS_USED_NOTE": "{{percent}}% of the available hours of the week",
       "PUNCTUALITY": "Punctuality",
-      "PUNCTUALITY_NOTE": "Excellent shift record",
+      "PUNCTUALITY_LEVEL": {
+        "EXCELLENT": "Excellent: almost always starts on time",
+        "GOOD": "Good: most of them on time",
+        "NEEDS_IMPROVEMENT": "Needs improvement: several late starts",
+        "NO_DATA": "No services started this week"
+      },
       "WEEKLY_REVENUE": "Revenue generated this week",
-      "GOAL_NOTE": "{{percent}}% of weekly goal reached"
+      "REVENUE_NOTE": "Value of the services finished this week"
     },
     "TODAY_HISTORY": {
       "TITLE": "Today's service history",

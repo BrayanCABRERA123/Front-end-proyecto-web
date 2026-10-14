@@ -53,16 +53,10 @@ export interface Operator {
   status: OperatorStatus;
   bay: string | null;
   weeklyServices: number;
-  weeklyServicesChange: number;
   tags: string[];
   featured?: boolean;
   phone: string;
   email: string;
-  availableHours: number;
-  totalHours: number;
-  punctuality: number;
-  weeklyRevenue: number;
-  weeklyGoalPercent: number;
   certifications: Certification[];
   todayServices: TodayService[];
   calendarBlocks: CalendarBlock[];

@@ -12,6 +12,22 @@ export interface ShiftDto {
   endsAt: string;
 }
 
+// semana de lunes a domingo; los null son "sin datos" (ej. sin servicios la semana anterior)
+export type PunctualityLevel = 'EXCELLENT' | 'GOOD' | 'NEEDS_IMPROVEMENT' | 'NO_DATA';
+export interface OperatorMetricsResponse {
+  weekStart: string;
+  weekEnd: string;
+  completedServices: number;
+  previousWeekServices: number;
+  servicesTrendPercent: number | null;
+  punctualityPercent: number | null;
+  punctualityLevel: PunctualityLevel;
+  revenue: number;
+  workedHours: number;
+  availableHours: number;
+  occupancyPercent: number | null;
+}
+
 export interface OperatorResponse {
   id: number;
   userId: number;
@@ -99,6 +115,11 @@ export class OperationsApiService {
   private readonly api = API_BASE_URL;
 
   /* ---------- admin ---------- */
+
+  // métricas de la semana actual del operario (las calcula operations-service)
+  operatorMetrics(id: number): Observable<OperatorMetricsResponse> {
+    return this.http.get<OperatorMetricsResponse>(`${this.api}/admin/operators/${id}/metrics`);
+  }
 
   operators(): Observable<OperatorResponse[]> {
     return this.http.get<OperatorResponse[]>(`${this.api}/admin/operators`);
