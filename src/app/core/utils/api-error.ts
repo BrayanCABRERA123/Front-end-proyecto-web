@@ -7,6 +7,7 @@ import { ApiProblem } from '../models/auth.models';
 const TRANSLATED_CODES = new Set([
   'INVALID_CREDENTIALS',
   'ACCOUNT_DISABLED',
+  'ACCOUNT_LOCKED',
   'EMAIL_ALREADY_REGISTERED',
   'DOCUMENT_ALREADY_REGISTERED',
   'WEAK_PASSWORD',

@@ -2294,6 +2294,7 @@
   "API_ERRORS": {
     "INVALID_CREDENTIALS": "E-mail ou senha incorretos",
     "ACCOUNT_DISABLED": "Sua conta está desativada. Contate o administrador.",
+    "ACCOUNT_LOCKED": "Muitas tentativas erradas. Sua conta foi bloqueada por 15 minutos; espere ou use \"Esqueceu sua senha?\" para entrar agora.",
     "EMAIL_ALREADY_REGISTERED": "Já existe uma conta com este e-mail",
     "DOCUMENT_ALREADY_REGISTERED": "Já existe uma conta com este número de documento",
     "WEAK_PASSWORD": "A senha não atende aos requisitos de segurança",
