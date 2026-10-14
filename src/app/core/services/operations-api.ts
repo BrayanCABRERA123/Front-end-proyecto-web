@@ -28,6 +28,21 @@ export interface OperatorMetricsResponse {
   occupancyPercent: number | null;
 }
 
+// resumen del equipo; los null son "sin datos" (sin servicios la semana anterior o sin calificaciones)
+export interface TeamSummaryResponse {
+  weekStart: string;
+  weekEnd: string;
+  totalOperators: number;
+  activeOperators: number;
+  availableToday: number;
+  absentToday: number;
+  completedServices: number;
+  previousWeekServices: number;
+  servicesTrendPercent: number | null;
+  averageRating: number | null;
+  ratingsCount: number;
+}
+
 export interface OperatorResponse {
   id: number;
   userId: number;
@@ -119,6 +134,11 @@ export class OperationsApiService {
   // métricas de la semana actual del operario (las calcula operations-service)
   operatorMetrics(id: number): Observable<OperatorMetricsResponse> {
     return this.http.get<OperatorMetricsResponse>(`${this.api}/admin/operators/${id}/metrics`);
+  }
+
+  // resumen del equipo para la lista de operarios (lo calcula operations-service)
+  teamSummary(): Observable<TeamSummaryResponse> {
+    return this.http.get<TeamSummaryResponse>(`${this.api}/admin/operators/summary`);
   }
 
   operators(): Observable<OperatorResponse[]> {

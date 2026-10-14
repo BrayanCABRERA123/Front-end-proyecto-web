@@ -1696,11 +1696,12 @@
     "NEW_OPERATOR": "New operator",
     "STATS": {
       "ON_STAFF": "Operators on staff",
-      "ON_STAFF_DETAIL": "{{hired}} hired · {{interns}} interns",
+      "ON_STAFF_DETAIL": "{{active}} active · {{inactive}} inactive",
       "AVAILABLE_TODAY": "Available today",
-      "AVAILABLE_DETAIL": "{{count}} on afternoon shift (2:00 PM - 10:00 PM)",
+      "AVAILABLE_DETAIL": "On shift today and not absent · {{count}} absent",
       "WEEKLY_SERVICES": "Services this week",
       "WEEKLY_SERVICES_DETAIL": "vs last week",
+      "NO_TREND": "No services last week to compare",
       "AVG_RATING": "Average rating",
       "AVG_RATING_DETAIL": "Based on {{count}} client reviews"
     },
