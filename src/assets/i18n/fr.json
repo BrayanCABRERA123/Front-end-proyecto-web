@@ -2348,7 +2348,15 @@
     "ESTABLISHMENT_INVALID_PHONE": "Le téléphone doit avoir au moins 7 chiffres",
     "ESTABLISHMENT_INVALID_EMAIL": "L'e-mail de l'entreprise n'est pas valide",
     "ESTABLISHMENT_INVALID_FOUNDATION_DATE": "La date de constitution ne peut pas être future",
-    "ESTABLISHMENT_NOT_FOUND": "Les données de l'entreprise ne sont pas configurées"
+    "ESTABLISHMENT_NOT_FOUND": "Les données de l'entreprise ne sont pas configurées",
+    "INSPECTION_NOT_FOUND": "Cette réservation n'a pas encore de rapport d'inspection",
+    "INSPECTION_NOT_EDITABLE": "Le rapport ne se modifie que pour les services de 3 heures ou plus, pendant que le véhicule est à la station",
+    "INSPECTION_NOT_PUBLISHED": "Publiez le rapport avant de prévenir le client",
+    "INVALID_FINDING": "Vérifiez la constatation : la partie du véhicule est obligatoire (120 caractères max.) et la note a 500 caractères max.",
+    "TOO_MANY_PHOTOS": "Une constatation accepte jusqu'à 5 photos",
+    "INVALID_PHOTO": "Les photos doivent être en JPG ou PNG et peser jusqu'à 2 Mo",
+    "CONTENT_TOO_LARGE": "Les photos sont trop lourdes : chacune peut peser jusqu'à 2 Mo",
+    "BOOKING_WITHOUT_CLIENT": "La réservation n'a pas de compte client à prévenir"
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",
@@ -2434,16 +2442,8 @@
       "DELETE_CONFIRM": "Supprimer le constat « {{area}} » et ses photos ?",
       "SAVE_ERROR": "Le constat n'a pas pu être enregistré. Réessayez.",
       "NOTIFIED_TITLE": "Client notifié",
-      "NOTIFIED_MESSAGE": "Le résumé de l’inspection a été envoyé dans les notifications et par e-mail au client.",
-      "NO_BOOKING": "Impossible de charger la réservation. Rechargez la page et réessayez.",
-      "NO_CLIENT": "Cette réservation n’a pas de client enregistré à notifier."
-    },
-    "NOTIFICATION": {
-      "TITLE": "Rapport d’inspection de votre véhicule",
-      "MESSAGE_FINDINGS": "Voici le rapport d’inspection de votre véhicule {{plate}} (réservation {{code}}). Phases terminées : {{done}} sur {{total}}. Constats : {{findings}} (importants : {{major}}) : {{areas}}. Nous vous montrerons le détail et les photos à la remise du véhicule.",
-      "MESSAGE_CLEAN": "Voici le rapport d’inspection de votre véhicule {{plate}} (réservation {{code}}). Phases terminées : {{done}} sur {{total}}. Aucune anomalie constatée."
-    },
-    "NO_BOOKING_HINT": "La réservation n'a pas pu être chargée ; le rapport est affiché en lecture seule."
+      "NOTIFIED_MESSAGE": "Le résumé de l’inspection a été envoyé dans les notifications et par e-mail au client."
+    }
   },
   "PUBLIC_REPORT": {
     "TITLE": "Rapport de votre véhicule",

@@ -59,6 +59,15 @@ const TRANSLATED_CODES = new Set([
   'ESTABLISHMENT_INVALID_EMAIL',
   'ESTABLISHMENT_INVALID_FOUNDATION_DATE',
   'ESTABLISHMENT_NOT_FOUND',
+  // reporte de inspección (operations-service)
+  'INSPECTION_NOT_FOUND',
+  'INSPECTION_NOT_EDITABLE',
+  'INSPECTION_NOT_PUBLISHED',
+  'INVALID_FINDING',
+  'TOO_MANY_PHOTOS',
+  'INVALID_PHOTO',
+  'CONTENT_TOO_LARGE',
+  'BOOKING_WITHOUT_CLIENT',
   // permiso que no está en el catálogo al editar un rol (security-service)
   'UNKNOWN_PERMISSION',
   // códigos del canje de cupones de fidelización (payment-service, ADR-015)

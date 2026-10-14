@@ -3,42 +3,36 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { InspectionPhotoComponent } from '../../../../shared/components/inspection-photo/inspection-photo';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
-import { InspectionStore } from '../../../../core/services/inspection-store';
-import { NotificationsService } from '../../../../core/services/notifications';
+import { InspectionApiService } from '../../../../core/services/inspection-api';
 import { apiErrorKey } from '../../../../core/utils/api-error';
 import {
   InspectionFinding,
   InspectionPhaseEntry,
   InspectionPhaseStatus,
+  InspectionState,
   LONG_SERVICE_MIN_MINUTES,
   NewFindingRequest,
   PHASE_ICONS,
-  VehicleInspectionReport,
 } from '../../../../core/models/inspection.models';
 import { ReservationsStore, formatDate, formatTimeRange } from '../../services/reservations-store';
 import { Booking } from '../../models/admin.models';
 import { FindingModal, FindingModalData } from './components/finding-modal/finding-modal';
 
-// límite del mensaje en notification-service
-const NOTIFICATION_MAX_LENGTH = 500;
-
-/** el reporte se puede ofrecer en esta reserva: servicio largo y no cancelado */
+/**
+ * Solo decide si el detalle de la reserva muestra el botón "Inspección"; al abrir la pantalla
+ * operations-service vuelve a aplicar la regla y es quien dice si se puede iniciar o editar.
+ */
 export function supportsInspection(booking: Booking): boolean {
   return booking.durationMin >= LONG_SERVICE_MIN_MINUTES
     && ['confirmed', 'in_progress', 'completed'].includes(booking.status);
-}
-
-/** el admin solo edita mientras el vehículo está en el lavadero */
-export function canEditInspection(booking: Booking): boolean {
-  return booking.durationMin >= LONG_SERVICE_MIN_MINUTES
-    && (booking.status === 'confirmed' || booking.status === 'in_progress');
 }
 
 @Component({
@@ -53,22 +47,24 @@ export class InspectionComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
-  private readonly translate = inject(TranslateService);
   private readonly feedback = inject(FeedbackService);
   private readonly reservations = inject(ReservationsStore);
-  private readonly inspections = inject(InspectionStore);
-  private readonly notifications = inject(NotificationsService);
+  private readonly inspections = inject(InspectionApiService);
 
   readonly phaseIcons = PHASE_ICONS;
   readonly minMinutes = LONG_SERVICE_MIN_MINUTES;
 
   readonly bookingId = this.route.snapshot.paramMap.get('id') ?? '';
 
-  // la reserva llega del store (puede tardar si se entra directo por la url)
+  // datos de la reserva para el encabezado (cliente, estado); llegan del store
   readonly booking = computed(() => this.reservations.bookings().find(b => b.id === this.bookingId) ?? null);
-  readonly loadingBooking = computed(() => this.reservations.loading());
 
-  readonly report = signal<VehicleInspectionReport | null>(null);
+  // lo que responde operations-service: si se puede, si se edita y el reporte
+  readonly state = signal<InspectionState | null>(null);
+  readonly loading = signal(true);
+  readonly report = computed(() => this.state()?.report ?? null);
+  readonly editable = computed(() => this.state()?.editable ?? false);
+  readonly supported = computed(() => this.state()?.available ?? false);
 
   // foto ampliada
   readonly preview = signal<string | null>(null);
@@ -76,34 +72,19 @@ export class InspectionComponent {
   // evita enviar el aviso dos veces mientras responde el backend
   readonly notifying = signal(false);
 
-  readonly editable = computed(() => {
-    const booking = this.booking();
-    return !!booking && canEditInspection(booking);
-  });
-
-  readonly supported = computed(() => {
-    const booking = this.booking();
-    return !!booking && supportsInspection(booking);
-  });
-
   readonly publicLink = computed(() => {
     const report = this.report();
     return report ? `${location.origin}/report/${report.publicToken}` : '';
   });
 
-  readonly summary = computed(() => {
-    const phases = this.report()?.phases ?? [];
-    const findings = phases.flatMap(p => p.findings);
-    return {
-      done: phases.filter(p => p.status === 'DONE').length,
-      total: phases.length,
-      findings: findings.length,
-      major: findings.filter(f => f.severity === 'MAJOR').length,
-    };
-  });
-
   constructor() {
-    this.inspections.getByBooking(this.bookingId).subscribe(report => this.report.set(report));
+    this.inspections.get(this.bookingId).subscribe({
+      next: state => {
+        this.state.set(state);
+        this.loading.set(false);
+      },
+      error: () => this.loading.set(false),
+    });
   }
 
   dateLabel(booking: Booking): string {
@@ -116,45 +97,36 @@ export class InspectionComponent {
 
   /* ---------- acciones ---------- */
 
-  startReport(): void {
-    const booking = this.booking();
-    if (!booking || !this.editable()) return;
+  /** aplica la respuesta del backend o muestra su mensaje de error */
+  private apply(request: Observable<InspectionState>, onDone?: () => void): void {
+    request.subscribe({
+      next: state => {
+        this.state.set(state);
+        onDone?.();
+      },
+      error: error => this.feedback.error('COMMON.ERROR', apiErrorKey(error)),
+    });
+  }
 
-    this.inspections.startReport(booking.id, {
-      code: booking.code,
-      vehicle: booking.vehicle,
-      plate: booking.plate,
-      service: booking.service,
-      date: booking.date,
-      time: booking.time,
-      durationMin: booking.durationMin,
-    }).subscribe(report => this.report.set(report));
+  startReport(): void {
+    this.apply(this.inspections.start(this.bookingId));
   }
 
   setPhaseStatus(entry: InspectionPhaseEntry, status: InspectionPhaseStatus): void {
-    if (!this.editable()) return;
-    this.inspections.setPhaseStatus(this.bookingId, entry.phase, status)
-      .subscribe(report => this.report.set(report));
+    this.apply(this.inspections.setPhaseStatus(this.bookingId, entry.phase, status));
   }
 
   addFinding(entry: InspectionPhaseEntry): void {
-    if (!this.editable()) return;
-
     const data: FindingModalData = { phase: entry.phase };
     const dialogRef = this.dialog.open(FindingModal, { panelClass: 'custom-dialog', data });
 
     dialogRef.afterClosed().subscribe((request: NewFindingRequest | null | undefined) => {
       if (!request) return;
-      this.inspections.addFinding(this.bookingId, entry.phase, request).subscribe({
-        next: report => this.report.set(report),
-        error: () => this.feedback.error('COMMON.ERROR', 'INSPECTION.FEEDBACK.SAVE_ERROR'),
-      });
+      this.apply(this.inspections.addFinding(this.bookingId, entry.phase, request));
     });
   }
 
   removeFinding(finding: InspectionFinding): void {
-    if (!this.editable()) return;
-
     const confirm: ConfirmModalData = {
       title: 'INSPECTION.FEEDBACK.DELETE_TITLE',
       message: 'INSPECTION.FEEDBACK.DELETE_CONFIRM',
@@ -168,22 +140,18 @@ export class InspectionComponent {
       .afterClosed()
       .subscribe(confirmed => {
         if (!confirmed) return;
-        this.inspections.removeFinding(this.bookingId, finding.id).subscribe(report => this.report.set(report));
+        this.apply(this.inspections.removeFinding(this.bookingId, finding.id));
       });
   }
 
   /** publica el reporte (si hace falta) y copia el enlace para el cliente */
   publishAndCopy(): void {
     if (!this.report()) return;
-
-    const publish$ = this.report()!.published
-      ? this.inspections.getByBooking(this.bookingId)
-      : this.inspections.publish(this.bookingId);
-
-    publish$.subscribe(report => {
-      this.report.set(report);
+    if (this.report()!.published) {
       this.copyLink();
-    });
+      return;
+    }
+    this.apply(this.inspections.publish(this.bookingId), () => this.copyLink());
   }
 
   private copyLink(): void {
@@ -202,41 +170,14 @@ export class InspectionComponent {
   }
 
   /**
-   * Avisa al cliente por el sistema de notificaciones (bandeja + correo, tipo INSPECTION_REPORT)
-   * con el resumen de la inspección. Mientras el reporte sea mock el enlace público solo abre en
-   * este navegador, por eso el aviso lleva el resumen y no el enlace.
+   * Avisa al cliente (bandeja, push y correo). El mensaje con el resumen y el enlace público lo
+   * arma notification-service a partir del evento que publica operations-service.
    */
   notifyClient(): void {
-    const booking = this.booking();
-    const report = this.report();
-    if (!report?.published || this.notifying()) return;
-    // sin la reserva (no cargó o salió de la ventana de fechas) no se sabe a quién avisar
-    if (!booking) {
-      this.feedback.error('COMMON.ERROR', 'INSPECTION.FEEDBACK.NO_BOOKING');
-      return;
-    }
-    if (!booking.clientUserId) {
-      this.feedback.error('COMMON.ERROR', 'INSPECTION.FEEDBACK.NO_CLIENT');
-      return;
-    }
-
-    const summary = this.summary();
-    const areas = report.phases.flatMap(p => p.findings).map(f => f.area);
-    const message: string = this.translate.instant(
-      areas.length ? 'INSPECTION.NOTIFICATION.MESSAGE_FINDINGS' : 'INSPECTION.NOTIFICATION.MESSAGE_CLEAN',
-      { ...summary, plate: report.booking.plate, code: report.booking.code, areas: areas.join(', ') }
-    );
+    if (!this.report()?.published || this.notifying()) return;
 
     this.notifying.set(true);
-    this.notifications.sendAsAdmin({
-      userIds: [booking.clientUserId],
-      type: 'INSPECTION_REPORT',
-      title: this.translate.instant('INSPECTION.NOTIFICATION.TITLE'),
-      // notification-service acepta hasta 500 caracteres
-      message: message.length > NOTIFICATION_MAX_LENGTH
-        ? `${message.slice(0, NOTIFICATION_MAX_LENGTH - 3)}...`
-        : message,
-    }).subscribe({
+    this.inspections.share(this.bookingId).subscribe({
       next: () => {
         this.notifying.set(false);
         this.feedback.success('INSPECTION.FEEDBACK.NOTIFIED_TITLE', 'INSPECTION.FEEDBACK.NOTIFIED_MESSAGE');

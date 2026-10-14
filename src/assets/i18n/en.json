@@ -2348,7 +2348,15 @@
     "ESTABLISHMENT_INVALID_PHONE": "The phone needs at least 7 digits",
     "ESTABLISHMENT_INVALID_EMAIL": "The business email is not valid",
     "ESTABLISHMENT_INVALID_FOUNDATION_DATE": "The foundation date cannot be in the future",
-    "ESTABLISHMENT_NOT_FOUND": "The business data is not set up"
+    "ESTABLISHMENT_NOT_FOUND": "The business data is not set up",
+    "INSPECTION_NOT_FOUND": "This booking has no inspection report yet",
+    "INSPECTION_NOT_EDITABLE": "The report can only be edited for services of 3 hours or more while the vehicle is at the shop",
+    "INSPECTION_NOT_PUBLISHED": "Publish the report before notifying the client",
+    "INVALID_FINDING": "Check the finding: the vehicle part is required (up to 120 characters) and the note has up to 500",
+    "TOO_MANY_PHOTOS": "A finding allows up to 5 photos",
+    "INVALID_PHOTO": "Photos must be JPG or PNG up to 2 MB",
+    "CONTENT_TOO_LARGE": "The photos are too large: each one can weigh up to 2 MB",
+    "BOOKING_WITHOUT_CLIENT": "The booking has no client account to notify"
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",
@@ -2434,16 +2442,8 @@
       "DELETE_CONFIRM": "Delete the finding \"{{area}}\" and its photos?",
       "SAVE_ERROR": "The finding could not be saved. Please try again.",
       "NOTIFIED_TITLE": "Customer notified",
-      "NOTIFIED_MESSAGE": "We sent the inspection summary to the customer’s notifications and email.",
-      "NO_BOOKING": "The booking could not be loaded. Reload the page and try again.",
-      "NO_CLIENT": "This booking has no registered customer to notify."
-    },
-    "NOTIFICATION": {
-      "TITLE": "Your vehicle inspection report",
-      "MESSAGE_FINDINGS": "Here is the inspection report for your vehicle {{plate}} (booking {{code}}). Phases finished: {{done}} of {{total}}. Findings: {{findings}} (major: {{major}}): {{areas}}. We will show you the details and photos when we hand over your vehicle.",
-      "MESSAGE_CLEAN": "Here is the inspection report for your vehicle {{plate}} (booking {{code}}). Phases finished: {{done}} of {{total}}. We found no issues."
-    },
-    "NO_BOOKING_HINT": "The booking could not be loaded; the report is shown read-only."
+      "NOTIFIED_MESSAGE": "We sent the inspection summary to the customer’s notifications and email."
+    }
   },
   "PUBLIC_REPORT": {
     "TITLE": "Your vehicle report",
