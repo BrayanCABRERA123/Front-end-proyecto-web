@@ -117,7 +117,8 @@ starOptions = [
   private toCard(r: RatingResponse): RatingCard {
     return {
       id: r.bookingId,
-      client: r.plate,
+      // nombre del cliente y la placa de su vehículo (si no hay nombre, solo la placa)
+      client: r.clientName ? `${r.clientName} · ${r.plate}` : r.plate,
       serviceType: r.services,
       date: isoToDisplayDate(r.date),
       isoDate: r.date,
