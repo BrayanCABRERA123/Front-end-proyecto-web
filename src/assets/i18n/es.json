@@ -2348,7 +2348,15 @@
     "ESTABLISHMENT_INVALID_PHONE": "El teléfono debe tener al menos 7 dígitos",
     "ESTABLISHMENT_INVALID_EMAIL": "El correo del negocio no es válido",
     "ESTABLISHMENT_INVALID_FOUNDATION_DATE": "La fecha de constitución no puede ser futura",
-    "ESTABLISHMENT_NOT_FOUND": "Los datos del negocio no están configurados"
+    "ESTABLISHMENT_NOT_FOUND": "Los datos del negocio no están configurados",
+    "INSPECTION_NOT_FOUND": "Esta reserva todavía no tiene reporte de inspección",
+    "INSPECTION_NOT_EDITABLE": "El reporte solo se edita en servicios de 3 horas o más mientras el vehículo está en el lavadero",
+    "INSPECTION_NOT_PUBLISHED": "Publica el reporte antes de avisarle al cliente",
+    "INVALID_FINDING": "Revisa el hallazgo: la parte del vehículo es obligatoria (hasta 120 caracteres) y la nota tiene hasta 500",
+    "TOO_MANY_PHOTOS": "Un hallazgo admite hasta 5 fotos",
+    "INVALID_PHOTO": "Las fotos deben ser JPG o PNG de hasta 2 MB",
+    "CONTENT_TOO_LARGE": "Las fotos pesan demasiado: cada una puede tener hasta 2 MB",
+    "BOOKING_WITHOUT_CLIENT": "La reserva no tiene una cuenta de cliente a la cual avisar"
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Contraseña actual",
@@ -2434,16 +2442,8 @@
       "DELETE_CONFIRM": "¿Eliminar el hallazgo \"{{area}}\" y sus fotos?",
       "SAVE_ERROR": "No se pudo guardar el hallazgo. Intenta de nuevo.",
       "NOTIFIED_TITLE": "Cliente notificado",
-      "NOTIFIED_MESSAGE": "Le enviamos el resumen de la inspección a sus notificaciones y a su correo.",
-      "NO_BOOKING": "No se pudo cargar la reserva. Recarga la página e inténtalo de nuevo.",
-      "NO_CLIENT": "Esta reserva no tiene un cliente registrado a quien avisar."
-    },
-    "NOTIFICATION": {
-      "TITLE": "Reporte de inspección de tu vehículo",
-      "MESSAGE_FINDINGS": "Este es el reporte de inspección de tu vehículo {{plate}} (reserva {{code}}). Fases terminadas: {{done}} de {{total}}. Hallazgos: {{findings}} (importantes: {{major}}): {{areas}}. Al entregarte el vehículo te mostramos el detalle con fotos.",
-      "MESSAGE_CLEAN": "Este es el reporte de inspección de tu vehículo {{plate}} (reserva {{code}}). Fases terminadas: {{done}} de {{total}}. No encontramos novedades."
-    },
-    "NO_BOOKING_HINT": "No se pudo cargar la reserva; el reporte se muestra en solo lectura."
+      "NOTIFIED_MESSAGE": "Le enviamos el resumen de la inspección a sus notificaciones y a su correo."
+    }
   },
   "PUBLIC_REPORT": {
     "TITLE": "Reporte de tu vehículo",

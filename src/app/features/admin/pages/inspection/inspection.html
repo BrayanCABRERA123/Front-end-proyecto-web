@@ -37,9 +37,9 @@
       }
     </div>
 
-    @if (!booking() && !report()) {
+    @if (!state()) {
       <div class="card">
-        @if (loadingBooking()) {
+        @if (loading()) {
           <app-empty-state variant="loading"></app-empty-state>
         } @else {
           <app-empty-state variant="error" icon="search_off"
@@ -56,10 +56,10 @@
       <!-- datos de la reserva -->
       <div class="card booking-card">
         <div class="booking-card__main">
-          <span class="plate">{{ booking()?.plate ?? report()?.booking?.plate }}</span>
+          <span class="plate">{{ report()?.booking?.plate ?? booking()?.plate }}</span>
           <div>
-            <strong>{{ booking()?.vehicle ?? report()?.booking?.vehicle }}</strong>
-            <span class="muted">{{ booking()?.code ?? report()?.booking?.code }}</span>
+            <strong>{{ report()?.booking?.vehicle ?? booking()?.vehicle }}</strong>
+            <span class="muted">{{ report()?.booking?.code ?? booking()?.code }}</span>
           </div>
           @if (booking(); as b) {
             <span [class]="'status-pill status-pill--' + b.status">
@@ -103,21 +103,21 @@
           <div class="card stat-card">
             <div>
               <p class="stat-label">{{ 'INSPECTION.STATS.PHASES' | translate }}</p>
-              <p class="stat-value">{{ summary().done }}/{{ summary().total }}</p>
+              <p class="stat-value">{{ report()!.summary.phasesDone }}/{{ report()!.summary.phasesTotal }}</p>
             </div>
             <div class="stat-icon"><mat-icon>timeline</mat-icon></div>
           </div>
           <div class="card stat-card">
             <div>
               <p class="stat-label">{{ 'INSPECTION.STATS.FINDINGS' | translate }}</p>
-              <p class="stat-value">{{ summary().findings }}</p>
+              <p class="stat-value">{{ report()!.summary.findings }}</p>
             </div>
             <div class="stat-icon stat-icon--neutral"><mat-icon>photo_library</mat-icon></div>
           </div>
           <div class="card stat-card">
             <div>
               <p class="stat-label">{{ 'INSPECTION.STATS.MAJOR' | translate }}</p>
-              <p class="stat-value" [class.stat-value--muted]="!summary().major">{{ summary().major }}</p>
+              <p class="stat-value" [class.stat-value--muted]="!report()!.summary.majorFindings">{{ report()!.summary.majorFindings }}</p>
             </div>
             <div class="stat-icon stat-icon--error"><mat-icon>report</mat-icon></div>
           </div>
@@ -136,8 +136,8 @@
         }
 
         @if (!editable()) {
-          <!-- sin la reserva (no cargó o salió de la ventana de fechas) solo se puede consultar -->
-          <p class="hint"><mat-icon>lock</mat-icon>{{ (booking() ? 'INSPECTION.READ_ONLY_HINT' : 'INSPECTION.NO_BOOKING_HINT') | translate }}</p>
+          <!-- operations-service solo deja editar mientras el vehículo está en el lavadero -->
+          <p class="hint"><mat-icon>lock</mat-icon>{{ 'INSPECTION.READ_ONLY_HINT' | translate }}</p>
         }
 
         <!-- fases -->
@@ -181,10 +181,10 @@
                         @if (finding.note) {
                           <p class="finding__note">{{ finding.note }}</p>
                         }
-                        @if (finding.photoIds.length) {
+                        @if (finding.photos.length) {
                           <div class="finding__photos">
-                            @for (photoId of finding.photoIds; track photoId) {
-                              <app-inspection-photo [photoId]="photoId" (open)="openPreview($event)"></app-inspection-photo>
+                            @for (photo of finding.photos; track photo.id) {
+                              <app-inspection-photo [secure]="true" [src]="photo.url" (open)="openPreview($event)"></app-inspection-photo>
                             }
                           </div>
                         }

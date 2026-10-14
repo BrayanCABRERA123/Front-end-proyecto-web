@@ -31,19 +31,19 @@
         </div>
 
         <div class="hero-card__vehicle">
-          <span class="plate">{{ maskedPlate(r.booking.plate) }}</span>
+          <span class="plate">{{ r.maskedPlate }}</span>
           <div>
-            <strong>{{ r.booking.vehicle }}</strong>
-            <span class="muted">{{ r.booking.service }} · {{ dateLabel(r.booking.date) }}, {{ r.booking.time }}</span>
+            <strong>{{ r.vehicle }}</strong>
+            <span class="muted">{{ r.services }} · {{ dateLabel(r.date) }}, {{ r.time }}</span>
           </div>
         </div>
 
         <div class="progress">
           <div class="progress__label">
-            <span>{{ 'PUBLIC_REPORT.PROGRESS' | translate:{ done: summary().done, total: summary().total } }}</span>
-            <strong>{{ progress() }}%</strong>
+            <span>{{ 'PUBLIC_REPORT.PROGRESS' | translate:{ done: r.summary.phasesDone, total: r.summary.phasesTotal } }}</span>
+            <strong>{{ r.summary.progressPercent }}%</strong>
           </div>
-          <div class="progress__bar"><div class="progress__fill" [style.width.%]="progress()"></div></div>
+          <div class="progress__bar"><div class="progress__fill" [style.width.%]="r.summary.progressPercent"></div></div>
         </div>
 
         <span class="muted">{{ 'PUBLIC_REPORT.UPDATED' | translate:{ date: updatedLabel(r) } }}</span>
@@ -82,10 +82,10 @@
                   @if (finding.note) {
                     <p class="finding__note">{{ finding.note }}</p>
                   }
-                  @if (finding.photoIds.length) {
+                  @if (finding.photos.length) {
                     <div class="finding__photos">
-                      @for (photoId of finding.photoIds; track photoId) {
-                        <app-inspection-photo [photoId]="photoId" (open)="preview.set($event)"></app-inspection-photo>
+                      @for (photo of finding.photos; track photo.id) {
+                        <app-inspection-photo [src]="photo.url" (open)="preview.set($event)"></app-inspection-photo>
                       }
                     </div>
                   }

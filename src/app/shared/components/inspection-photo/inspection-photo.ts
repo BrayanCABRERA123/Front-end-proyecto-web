@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PhotoStorageService } from '../../../core/services/photo-storage';
+import { InspectionPhotoService } from '../../../core/services/inspection-photos';
 
 /**
  * Miniatura de una foto del reporte de inspección.
  *
- * Recibe el id de la foto y la busca en el almacenamiento; al hacer clic emite la url
- * para que la pantalla la muestre ampliada. Lo usan el admin y la vista pública.
+ * Recibe la url de la foto (relativa a /api/v1, la da operations-service) y si exige sesión;
+ * al hacer clic emite la url para que la pantalla la muestre ampliada. Lo usan el admin
+ * (secure) y la vista pública.
  */
 @Component({
   selector: 'app-inspection-photo',
@@ -16,7 +17,7 @@ import { PhotoStorageService } from '../../../core/services/photo-storage';
   template: `
     <button type="button" class="inspection-photo" (click)="url() && open.emit(url()!)" [disabled]="!url()">
       @if (url()) {
-        <img [src]="url()" alt="">
+        <img [src]="url()" alt="" (error)="missing.set(true); url.set(null)">
       } @else if (missing()) {
         <mat-icon>broken_image</mat-icon>
       } @else {
@@ -28,18 +29,24 @@ import { PhotoStorageService } from '../../../core/services/photo-storage';
 })
 export class InspectionPhotoComponent {
 
-  private readonly photos = inject(PhotoStorageService);
+  private readonly photos = inject(InspectionPhotoService);
 
   readonly url = signal<string | null>(null);
   readonly missing = signal(false);
 
   @Output() open = new EventEmitter<string>();
 
-  @Input({ required: true }) set photoId(id: string) {
+  /** true para las fotos del admin (se piden con el token) */
+  @Input() secure = false;
+
+  @Input({ required: true }) set src(path: string) {
     this.url.set(null);
     this.missing.set(false);
-    this.photos.url(id)
-      .then(url => url ? this.url.set(url) : this.missing.set(true))
-      .catch(() => this.missing.set(true));
+    // espera un turno para que secure ya esté puesto cuando llega en el mismo binding
+    queueMicrotask(() => {
+      this.photos.url(path, this.secure)
+        .then(url => url ? this.url.set(url) : this.missing.set(true))
+        .catch(() => this.missing.set(true));
+    });
   }
 }

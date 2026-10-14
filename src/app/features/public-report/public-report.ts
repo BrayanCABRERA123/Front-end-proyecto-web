@@ -1,20 +1,18 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { InspectionStore } from '../../core/services/inspection-store';
+import { InspectionApiService } from '../../core/services/inspection-api';
 import { InspectionPhotoComponent } from '../../shared/components/inspection-photo/inspection-photo';
-import { InspectionFinding, PHASE_ICONS, VehicleInspectionReport } from '../../core/models/inspection.models';
+import { InspectionFinding, PHASE_ICONS, PublicInspectionReport } from '../../core/models/inspection.models';
 
 /**
  * Reporte de inspección que ve el cliente desde el enlace que le comparte el admin.
  *
- * Es público (sin sesión) y de solo lectura: no muestra correo ni teléfono, y la placa
- * va enmascarada por si el enlace termina en manos de otra persona.
- * Mientras sea mock, el enlace solo abre en el navegador donde se creó el reporte;
- * con backend funcionará desde cualquier dispositivo (GET /api/public/inspections/{token}).
+ * Es público (sin sesión) y de solo lectura: lo sirve operations-service solo si está publicado,
+ * sin correo ni teléfono y con la placa ya enmascarada. Abre desde cualquier dispositivo.
  */
 @Component({
   selector: 'app-public-report',
@@ -26,40 +24,24 @@ import { InspectionFinding, PHASE_ICONS, VehicleInspectionReport } from '../../c
 export class PublicReportComponent {
 
   private readonly route = inject(ActivatedRoute);
-  private readonly inspections = inject(InspectionStore);
+  private readonly inspections = inject(InspectionApiService);
 
   readonly phaseIcons = PHASE_ICONS;
 
   readonly loading = signal(true);
-  readonly report = signal<VehicleInspectionReport | null>(null);
+  readonly report = signal<PublicInspectionReport | null>(null);
   readonly preview = signal<string | null>(null);
-
-  readonly summary = computed(() => {
-    const phases = this.report()?.phases ?? [];
-    return {
-      done: phases.filter(p => p.status === 'DONE').length,
-      total: phases.length,
-      findings: phases.reduce((sum, p) => sum + p.findings.length, 0),
-    };
-  });
-
-  readonly progress = computed(() => {
-    const { done, total } = this.summary();
-    return total ? Math.round((done / total) * 100) : 0;
-  });
 
   constructor() {
     const token = this.route.snapshot.paramMap.get('token') ?? '';
-    this.inspections.getByPublicToken(token).subscribe(report => {
-      this.report.set(report);
-      this.loading.set(false);
+    this.inspections.published(token).subscribe({
+      next: report => {
+        this.report.set(report);
+        this.loading.set(false);
+      },
+      // no existe o no está publicado: la pantalla muestra "no disponible"
+      error: () => this.loading.set(false),
     });
-  }
-
-  /** "ABC123" -> "ABC•••" */
-  maskedPlate(plate: string): string {
-    const clean = plate.replace(/[\s-]/g, '');
-    return clean.length > 3 ? `${clean.slice(0, 3)}•••` : clean;
   }
 
   dateLabel(iso: string): string {
@@ -75,7 +57,7 @@ export class PublicReportComponent {
     return this.time(finding.createdAt);
   }
 
-  updatedLabel(report: VehicleInspectionReport): string {
+  updatedLabel(report: PublicInspectionReport): string {
     return new Date(report.updatedAt).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
   }
 }
