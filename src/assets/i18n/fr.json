@@ -2294,6 +2294,7 @@
   "API_ERRORS": {
     "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect",
     "ACCOUNT_DISABLED": "Votre compte est désactivé. Contactez l'administrateur.",
+    "ACCOUNT_LOCKED": "Trop de tentatives échouées. Votre compte est bloqué 15 minutes ; patientez ou utilisez « Mot de passe oublié ? » pour vous connecter maintenant.",
     "EMAIL_ALREADY_REGISTERED": "Un compte avec cet e-mail existe déjà",
     "DOCUMENT_ALREADY_REGISTERED": "Un compte avec ce numéro d'identité existe déjà",
     "WEAK_PASSWORD": "Le mot de passe ne respecte pas les exigences de sécurité",

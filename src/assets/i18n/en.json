@@ -2294,6 +2294,7 @@
   "API_ERRORS": {
     "INVALID_CREDENTIALS": "Incorrect email or password",
     "ACCOUNT_DISABLED": "Your account is disabled. Contact the administrator.",
+    "ACCOUNT_LOCKED": "Too many failed attempts. Your account is locked for 15 minutes; wait or use \"Forgot your password?\" to get in now.",
     "EMAIL_ALREADY_REGISTERED": "An account with this email already exists",
     "DOCUMENT_ALREADY_REGISTERED": "An account with this ID number already exists",
     "WEAK_PASSWORD": "The password does not meet the security requirements",
