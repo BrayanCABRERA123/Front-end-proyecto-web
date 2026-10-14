@@ -68,6 +68,13 @@ export class ScheduleComponent implements OnInit {
   /* ---------- encabezado ---------- */
 
   get todayLabel(): string {
+    // la excepción del día manda sobre el horario semanal (igual que en booking-service)
+    const now = new Date();
+    const todayIso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    const exception = this.store.exceptions().find(e => e.date === todayIso);
+    if (exception) {
+      return exception.closedAllDay ? '' : `${exception.openTime} - ${exception.closeTime}`;
+    }
     const today = this.store.getTodaySchedule();
     if (!today || !today.isWorking) return '';
     return `${today.openTime} - ${today.closeTime}`;
