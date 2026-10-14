@@ -1696,11 +1696,12 @@
     "NEW_OPERATOR": "Novo operador",
     "STATS": {
       "ON_STAFF": "Operadores no quadro",
-      "ON_STAFF_DETAIL": "{{hired}} contratados · {{interns}} estagiários",
+      "ON_STAFF_DETAIL": "{{active}} ativos · {{inactive}} inativos",
       "AVAILABLE_TODAY": "Disponíveis hoje",
-      "AVAILABLE_DETAIL": "{{count}} no turno da tarde (14:00 - 22:00)",
+      "AVAILABLE_DETAIL": "Com turno hoje e sem ausência · {{count}} ausentes",
       "WEEKLY_SERVICES": "Serviços da semana",
       "WEEKLY_SERVICES_DETAIL": "vs semana anterior",
+      "NO_TREND": "Sem serviços na semana anterior para comparar",
       "AVG_RATING": "Avaliação média",
       "AVG_RATING_DETAIL": "Com base em {{count}} avaliações de clientes"
     },

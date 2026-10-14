@@ -31,8 +31,8 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.ON_STAFF' | translate }}</p>
-          <p class="stat-value">{{ operators.length }}</p>
-          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.ON_STAFF_DETAIL' | translate:{ hired: operators.length - 2, interns: 2 } }}</span>
+          <p class="stat-value">{{ summary?.totalOperators ?? '—' }}</p>
+          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.ON_STAFF_DETAIL' | translate:{ active: summary?.activeOperators ?? 0, inactive: summary ? summary.totalOperators - summary.activeOperators : 0 } }}</span>
         </div>
         <div class="stat-icon"><mat-icon>badge</mat-icon></div>
       </div>
@@ -40,8 +40,8 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.AVAILABLE_TODAY' | translate }}</p>
-          <p class="stat-value">{{ countByStatus('available') }}</p>
-          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVAILABLE_DETAIL' | translate:{ count: 3 } }}</span>
+          <p class="stat-value">{{ summary?.availableToday ?? '—' }}</p>
+          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVAILABLE_DETAIL' | translate:{ count: summary?.absentToday ?? 0 } }}</span>
         </div>
         <div class="stat-icon stat-icon--success"><mat-icon>check_circle</mat-icon></div>
       </div>
@@ -49,8 +49,12 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.WEEKLY_SERVICES' | translate }}</p>
-          <p class="stat-value">{{ weeklyServicesTotal }}</p>
-          <span class="muted accent">↗ +14% {{ 'ADMIN_OPERATORS.STATS.WEEKLY_SERVICES_DETAIL' | translate }}</span>
+          <p class="stat-value">{{ summary?.completedServices ?? '—' }}</p>
+          @if (summary?.servicesTrendPercent != null) {
+            <span class="muted accent">{{ summary!.servicesTrendPercent! >= 0 ? '↗ +' : '↘ ' }}{{ summary!.servicesTrendPercent }}% {{ 'ADMIN_OPERATORS.STATS.WEEKLY_SERVICES_DETAIL' | translate }}</span>
+          } @else {
+            <span class="muted">{{ 'ADMIN_OPERATORS.STATS.NO_TREND' | translate }}</span>
+          }
         </div>
         <div class="stat-icon"><mat-icon>local_car_wash</mat-icon></div>
       </div>
@@ -58,8 +62,8 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.AVG_RATING' | translate }}</p>
-          <p class="stat-value">{{ averageRating }}<span class="muted">/5.0</span></p>
-          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVG_RATING_DETAIL' | translate:{ count: totalReviews } }}</span>
+          <p class="stat-value">{{ summary?.averageRating != null ? summary!.averageRating!.toFixed(1) : '—' }}<span class="muted">/5.0</span></p>
+          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVG_RATING_DETAIL' | translate:{ count: summary?.ratingsCount ?? 0 } }}</span>
         </div>
         <div class="stat-icon stat-icon--warning"><mat-icon>star</mat-icon></div>
       </div>

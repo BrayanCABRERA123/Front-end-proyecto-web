@@ -11,6 +11,7 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { ScheduleStore } from '../../services/schedule-store';
 import { Operator, OperatorStatus, OperatorsStore } from '../../services/operators-store';
+import { TeamSummaryResponse } from '../../../../core/services/operations-api';
 import { OperatorModal, OperatorModalData, OperatorModalResult } from './components/operator-modal/operator-modal';
 import { AssignShiftModal, AssignShiftModalData, AssignShiftResult } from './components/assign-shift-modal/assign-shift-modal';
 
@@ -61,18 +62,9 @@ export class OperatorsComponent {
     return this.operators.filter(o => o.status === status).length;
   }
 
-  get weeklyServicesTotal(): number {
-    return this.operators.reduce((sum, o) => sum + o.weeklyServices, 0);
-  }
-
-  get averageRating(): string {
-    if (this.operators.length === 0) return '0.0';
-    const total = this.operators.reduce((sum, o) => sum + o.rating, 0);
-    return (total / this.operators.length).toFixed(1);
-  }
-
-  get totalReviews(): number {
-    return this.operators.reduce((sum, o) => sum + o.reviewsCount, 0);
+  // resumen del equipo (operations-service); null mientras carga o si falla
+  get summary(): TeamSummaryResponse | null {
+    return this.store.summary();
   }
 
   goToDetail(operator: Operator): void {

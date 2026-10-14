@@ -14,6 +14,7 @@ import {
   AbsenceResponse,
   OperationsApiService,
   OperatorResponse,
+  TeamSummaryResponse,
   localIsoDate,
 } from '../../../core/services/operations-api';
 import { AuthService } from '../../../core/services/auth';
@@ -61,6 +62,10 @@ export class OperatorsStore {
 
   readonly operators = computed(() => this.state());
 
+  // tarjetas de la lista: las calcula operations-service; null mientras carga o si falla
+  private readonly summaryState = signal<TeamSummaryResponse | null>(null);
+  readonly summary = computed(() => this.summaryState());
+
   readonly availableOperators = computed(() =>
     this.state().filter(o => o.status !== 'medical_leave')
   );
@@ -72,6 +77,10 @@ export class OperatorsStore {
   /** vuelve a pedir los operarios y sus ausencias (solo con sesión de admin) */
   refresh(): void {
     if (!this.auth.hasAnyRole(['ADMIN'])) return;
+    this.api.teamSummary().subscribe({
+      next: summary => this.summaryState.set(summary),
+      error: () => this.summaryState.set(null)
+    });
     this.api.operators().subscribe({
       next: list => {
         if (list.length === 0) {
