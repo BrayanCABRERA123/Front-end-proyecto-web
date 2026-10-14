@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import { ScheduleStore } from '../../services/schedule-store';
 // reservas del día con su operario asignado (booking + operations)
 import { ReservationsStore, formatTimeRange } from '../../services/reservations-store';
 import { Operator, TodayService } from '../../models/admin.models';
+import { OperationsApiService, OperatorMetricsResponse } from '../../../../core/services/operations-api';
 import { OperatorAbsenceModal, AbsenceModalResult } from './components/operator-absence-modal/operator-absence-modal';
 import { AvailabilityModal, AvailabilityModalData } from './components/availability-modal/availability-modal';
 import { AssignShiftModal, AssignShiftModalData, AssignShiftResult } from '../operators/components/assign-shift-modal/assign-shift-modal';
@@ -28,6 +29,8 @@ import { AssignShiftModal, AssignShiftModalData, AssignShiftResult } from '../op
 export class OperatorDetailComponent implements OnInit {
 
   operator: Operator | undefined;
+  // métricas reales de la semana (operations-service); null mientras cargan o si fallan
+  metrics: OperatorMetricsResponse | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +40,8 @@ export class OperatorDetailComponent implements OnInit {
     private dialog: MatDialog,
     private feedback: FeedbackService,
     private reservations: ReservationsStore,
+    private operationsApi: OperationsApiService,
+    private changes: ChangeDetectorRef,
   ) {}
 
   // servicios de hoy asignados a este operario
@@ -60,13 +65,21 @@ export class OperatorDetailComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id') ?? '';
       this.operator = this.store.getById(id);
+      this.loadMetrics(id);
     });
   }
 
   // porcentaje de horas ocupadas, para la barra de progreso
-  get hoursUsedPercent(): number {
-    if (!this.operator || this.operator.totalHours === 0) return 0;
-    return Math.round((this.operator.availableHours / this.operator.totalHours) * 100);
+  private loadMetrics(id: string): void {
+    this.metrics = null;
+    if (!id) return;
+    this.operationsApi.operatorMetrics(Number(id)).subscribe({
+      next: metrics => {
+        this.metrics = metrics;
+        this.changes.markForCheck();
+      },
+      error: () => this.changes.markForCheck()
+    });
   }
 
   // formatea a pesos colombianos, ej: $1.420.000

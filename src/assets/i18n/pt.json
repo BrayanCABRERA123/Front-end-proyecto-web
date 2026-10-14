@@ -1753,12 +1753,18 @@
       "WEEKLY_SERVICES": "Serviços da semana",
       "SERVICES_SUFFIX": "serviços",
       "VS_LAST_WEEK": "vs semana anterior",
-      "AVAILABLE_HOURS": "Horas disponíveis",
-      "HOURS_USED_NOTE": "{{percent}}% da capacidade operacional ocupada",
+      "NO_TREND": "Sem serviços na semana anterior para comparar",
+      "WORKED_HOURS": "Horas trabalhadas",
+      "HOURS_USED_NOTE": "{{percent}}% das horas disponíveis da semana",
       "PUNCTUALITY": "Pontualidade",
-      "PUNCTUALITY_NOTE": "Excelente histórico de turnos",
+      "PUNCTUALITY_LEVEL": {
+        "EXCELLENT": "Excelente: quase sempre começa no horário",
+        "GOOD": "Bom: a maioria no horário",
+        "NEEDS_IMPROVEMENT": "A melhorar: vários atrasos",
+        "NO_DATA": "Nenhum serviço iniciado nesta semana"
+      },
       "WEEKLY_REVENUE": "Receita gerada na semana",
-      "GOAL_NOTE": "{{percent}}% da meta semanal atingida"
+      "REVENUE_NOTE": "Valor dos serviços concluídos nesta semana"
     },
     "TODAY_HISTORY": {
       "TITLE": "Histórico de serviços de hoje",
