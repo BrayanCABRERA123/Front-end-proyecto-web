@@ -72,9 +72,12 @@
             </div>
 
             @if (nextService.status === 'pendiente') {
-              <button class="btn-next" (click)="startService(nextService)">
+              <button class="btn-next" [disabled]="!canStartNow(nextService.startableAt)" (click)="startService(nextService)">
                 {{ 'SCHEDULE.START' | translate }}
               </button>
+              @if (!canStartNow(nextService.startableAt)) {
+                <p class="start-hint">{{ 'OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(nextService.startableAt) } }}</p>
+              }
             } @else {
               <button class="btn-next" (click)="requestFinish(nextService)">
                 {{ 'SCHEDULE.FINISH' | translate }}
@@ -123,7 +126,9 @@
 
                 <div class="reservation-actions">
                   @if (r.status === 'pendiente') {
-                    <button class="btn-action" (click)="startService(r)">
+                    <button class="btn-action" [disabled]="!canStartNow(r.startableAt)"
+                            [title]="canStartNow(r.startableAt) ? '' : ('OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(r.startableAt) })"
+                            (click)="startService(r)">
                       <mat-icon>play_arrow</mat-icon>
                       {{ 'SCHEDULE.START' | translate }}
                     </button>

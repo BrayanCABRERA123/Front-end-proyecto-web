@@ -2330,7 +2330,8 @@
     "PROMOTION_NOT_FOUND": "Esse cupom não existe.",
     "PROMOTION_NOT_REDEEMABLE": "Esse cupom não está vigente ou você ainda não tem os pontos necessários.",
     "PROMOTION_ALREADY_REDEEMED": "Você já resgatou esse cupom nesta reserva.",
-    "UNKNOWN_PERMISSION": "Uma das permissões escolhidas não existe mais. Recarregue a página e tente novamente."
+    "UNKNOWN_PERMISSION": "Uma das permissões escolhidas não existe mais. Recarregue a página e tente novamente.",
+    "SERVICE_TOO_EARLY": "Você ainda não pode iniciar este serviço: ele é liberado 15 minutos antes do horário da reserva."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Senha atual",
@@ -2435,5 +2436,8 @@
     "NOT_AVAILABLE_TITLE": "Este relatório não está disponível",
     "NOT_AVAILABLE_MESSAGE": "O link não é válido ou o relatório ainda não foi publicado. Fale com o lava-rápido se achar que é um erro.",
     "DISCLAIMER": "As fotos e notas são registradas pelo lava-rápido ao revisar seu veículo em cada etapa do serviço."
+  },
+  "OPERATOR_WORK": {
+    "START_FROM": "Você poderá iniciá-lo a partir das {{time}} (15 minutos antes da reserva)."
   }
 }

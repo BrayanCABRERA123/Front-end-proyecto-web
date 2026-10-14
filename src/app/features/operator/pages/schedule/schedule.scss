@@ -487,3 +487,15 @@
     }
   }
 }
+
+// "Iniciar" antes de tiempo: deshabilitado y con la hora desde la que se puede
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.start-hint {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}

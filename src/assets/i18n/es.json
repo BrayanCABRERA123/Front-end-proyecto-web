@@ -2330,7 +2330,8 @@
     "PROMOTION_NOT_FOUND": "Ese cupón no existe.",
     "PROMOTION_NOT_REDEEMABLE": "Ese cupón no está vigente o todavía no acumulas los puntos necesarios.",
     "PROMOTION_ALREADY_REDEEMED": "Ya canjeaste este cupón en esta reserva.",
-    "UNKNOWN_PERMISSION": "Uno de los permisos elegidos ya no existe. Recarga la página e inténtalo de nuevo."
+    "UNKNOWN_PERMISSION": "Uno de los permisos elegidos ya no existe. Recarga la página e inténtalo de nuevo.",
+    "SERVICE_TOO_EARLY": "Todavía no puedes iniciar este servicio: se habilita 15 minutos antes de la hora de la reserva."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Contraseña actual",
@@ -2435,5 +2436,8 @@
     "NOT_AVAILABLE_TITLE": "Este reporte no está disponible",
     "NOT_AVAILABLE_MESSAGE": "El enlace no es válido o el reporte todavía no se ha publicado. Comunícate con el lavadero si crees que es un error.",
     "DISCLAIMER": "Las fotos y notas las registra el lavadero al revisar tu vehículo en cada fase del servicio."
+  },
+  "OPERATOR_WORK": {
+    "START_FROM": "Podrás iniciarlo desde las {{time}} (15 minutos antes de la reserva)."
   }
 }

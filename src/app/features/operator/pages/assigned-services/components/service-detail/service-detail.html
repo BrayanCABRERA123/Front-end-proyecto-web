@@ -53,10 +53,13 @@
       <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.PROGRESS_TITLE' | translate }}</p>
       <div class="action-buttons">
         @if (service.statusColor === 'pending') {
-          <button class="btn-start" (click)="startService()">
+          <button class="btn-start" [disabled]="!canStartNow(service.startableAt)" (click)="startService()">
             <mat-icon>play_circle_outline</mat-icon>
             {{ 'ASSIGNED_SERVICES.DETAIL.START' | translate }}
           </button>
+          @if (!canStartNow(service.startableAt)) {
+            <p class="start-hint">{{ 'OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(service.startableAt) } }}</p>
+          }
         }
         @if (service.statusColor === 'progress') {
           <button class="btn-report" (click)="reportProgress()">

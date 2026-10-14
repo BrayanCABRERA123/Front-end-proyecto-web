@@ -8,6 +8,7 @@ import {
   reservationStatusIcon,
   reservationStatusLabel
 } from '../../../../../../shared/dialogs/reservation-models/reservation.model';
+import { canStartNow, startFromLabel } from '../../../../../../core/utils/operator-work';
 
 @Component({
   selector: 'app-pending-service-card',
@@ -25,4 +26,6 @@ export class PendingServiceCardComponent {
   statusClass = reservationStatusClass;
   statusIcon = reservationStatusIcon;
   statusLabel = reservationStatusLabel;
+  canStartNow = canStartNow;
+  startFrom = startFromLabel;
 }

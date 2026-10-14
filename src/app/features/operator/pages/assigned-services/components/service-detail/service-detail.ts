@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
+import { canStartNow, startFromLabel } from '../../../../../../core/utils/operator-work';
 // modales reutilizables: confirmación y mensaje de estado
 import { ConfirmModal, ConfirmModalData } from '../../../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
@@ -21,6 +22,10 @@ export class ServiceDetailComponent {
 
   // el padre llama a booking-service; aquí solo se confirma con el operario
   @Output() advance = new EventEmitter<'IN_PROGRESS' | 'COMPLETED'>();
+
+  // el botón "Iniciar" se habilita desde la hora que dice operations-service
+  canStartNow = canStartNow;
+  startFrom = startFromLabel;
 
   constructor(private dialog: MatDialog) {}
 

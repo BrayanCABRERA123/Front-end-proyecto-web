@@ -23,6 +23,7 @@ export interface OperatorServiceRow {
   status: string;
   statusColor: 'pending' | 'progress' | 'completed';
   paymentMethod: string;
+  startableAt: string | null;
 }
 
 /**
@@ -141,7 +142,8 @@ export class AssignedServicesComponent implements OnInit {
       phone: '—',
       status: this.translate.instant('STATUS.' + statusKey),
       statusColor,
-      paymentMethod: `$ ${s.total.toLocaleString('es-CO')}`
+      paymentMethod: `$ ${s.total.toLocaleString('es-CO')}`,
+      startableAt: s.startableAt
     };
   }
 }
