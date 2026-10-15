@@ -1396,7 +1396,7 @@
         "NAME": "Noms",
         "EMAIL": "E-mail",
         "USER_TYPE": "Type d'utilisateur",
-        "DATE_ADDED": "Dernière connexion",
+        "DATE_ADDED": "Date d'inscription",
         "INVITED": "Invité",
         "STATUS": "Statut",
         "ACTIONS": "Actions"

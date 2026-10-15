@@ -196,8 +196,7 @@ export class ManagementComponent implements OnInit {
       email: user.email,
       // llave de traducción del rol: la tabla la traduce
       userType: `PROFILE.ROLE.${role}`,
-      // la base todavía no guarda la fecha de registro: se muestra el último ingreso
-      dateAdded: user.lastLogin ? user.lastLogin.slice(0, 10) : '—',
+      dateAdded: user.createdAt ? user.createdAt.slice(0, 10) : '—',
       invited: false,
       status: user.active ? 'active' : 'disabled'
     };

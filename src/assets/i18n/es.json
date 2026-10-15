@@ -1396,7 +1396,7 @@
         "NAME": "Nombres",
         "EMAIL": "Correo",
         "USER_TYPE": "Tipo de usuario",
-        "DATE_ADDED": "Último ingreso",
+        "DATE_ADDED": "Fecha de registro",
         "INVITED": "Invitado",
         "STATUS": "Estado",
         "ACTIONS": "Acciones"
