@@ -8,6 +8,7 @@ import { PasswordRequirementsComponent } from '../../../../../../shared/componen
 
 import { AuthService } from '../../../../../../core/services/auth';
 import { apiErrorKey } from '../../../../../../core/utils/api-error';
+import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
 
 @Component({
   selector: 'app-new-password-step',
@@ -29,6 +30,7 @@ export class NewPasswordStepComponent {
   errorKey = signal<string | null>(null);
 
   private readonly auth = inject(AuthService);
+  private readonly feedback = inject(FeedbackService);
 
   newPassword: string = '';
   confirmPassword: string = '';
@@ -67,6 +69,8 @@ export class NewPasswordStepComponent {
       error: (error: unknown) => {
         this.saving.set(false);
         this.errorKey.set(apiErrorKey(error));
+        // ej. SAME_PASSWORD: la nueva contraseña no puede ser la que ya tenía
+        this.feedback.error('AUTH_FEEDBACK.PASSWORD_ERROR_TITLE', apiErrorKey(error), { buttonText: 'AUTH_FEEDBACK.OK' });
       }
     });
   }

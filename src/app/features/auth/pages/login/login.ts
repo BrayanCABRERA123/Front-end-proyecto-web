@@ -13,7 +13,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AuthService } from '../../../../core/services/auth';
 import { AuthUser } from '../../../../core/models/auth.models';
-import { apiErrorKey } from '../../../../core/utils/api-error';
+import { apiErrorCode, apiErrorKey } from '../../../../core/utils/api-error';
+import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class LoginComponent {
 
   private readonly auth = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
+  private readonly feedback = inject(FeedbackService);
 
   // llegó aquí porque su sesión venció (lo marca el interceptor)
   readonly sessionExpired = this.route.snapshot.queryParamMap.has('expired');
@@ -105,6 +107,7 @@ export class LoginComponent {
       error: (error: unknown) => {
         this.loading.set(false);
         this.errorKey.set(apiErrorKey(error));
+        this.showLoginError(error);
       }
     });
 
@@ -119,7 +122,32 @@ export class LoginComponent {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
     const target = returnUrl?.startsWith(home) ? returnUrl : home;
 
-    this.router.navigateByUrl(target);
+    // el modal se abre al llegar a la nueva página: Material cierra los diálogos al navegar
+    this.router.navigateByUrl(target).then(() =>
+      this.feedback.success('AUTH_FEEDBACK.LOGIN_SUCCESS_TITLE', 'AUTH_FEEDBACK.LOGIN_SUCCESS_MESSAGE', {
+        messageParams: { name: `${user.firstName} ${user.lastName}`.trim() },
+        icon: 'verified_user'
+      })
+    );
+
+  }
+
+
+  // 5 intentos fallidos bloquean la cuenta 15 minutos: se avisa con su propio título
+  private showLoginError(error: unknown) {
+
+    if (apiErrorCode(error) === 'ACCOUNT_LOCKED') {
+      this.feedback.error('AUTH_FEEDBACK.LOCKED_TITLE', apiErrorKey(error), {
+        icon: 'lock_clock',
+        buttonText: 'AUTH_FEEDBACK.OK'
+      });
+      return;
+    }
+
+    this.feedback.error('AUTH_FEEDBACK.LOGIN_ERROR_TITLE', apiErrorKey(error), {
+      icon: 'no_accounts',
+      buttonText: 'AUTH_FEEDBACK.OK'
+    });
 
   }
 

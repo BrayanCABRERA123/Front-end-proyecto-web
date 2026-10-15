@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AuthService } from '../../../../../../core/services/auth';
 import { apiErrorKey } from '../../../../../../core/utils/api-error';
+import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class EmailStepComponent {
   errorKey = signal<string | null>(null);
 
   private readonly auth = inject(AuthService);
+  private readonly feedback = inject(FeedbackService);
 
   @Output() emailSent = new EventEmitter<string>();
 
@@ -41,10 +43,16 @@ export class EmailStepComponent {
       next: () => {
         this.sending.set(false);
         this.emailSent.emit(email);
+        this.feedback.info('AUTH_FEEDBACK.CODE_SENT_TITLE', 'AUTH_FEEDBACK.CODE_SENT_MESSAGE', {
+          messageParams: { email },
+          icon: 'mark_email_read',
+          buttonText: 'AUTH_FEEDBACK.OK'
+        });
       },
       error: (error: unknown) => {
         this.sending.set(false);
         this.errorKey.set(apiErrorKey(error));
+        this.feedback.error('AUTH_FEEDBACK.ERROR_TITLE', apiErrorKey(error), { buttonText: 'AUTH_FEEDBACK.OK' });
       }
     });
   }

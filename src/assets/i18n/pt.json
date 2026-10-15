@@ -2464,5 +2464,22 @@
   },
   "OPERATOR_WORK": {
     "START_FROM": "Você poderá iniciá-lo a partir das {{time}} (15 minutos antes da reserva)."
+  },
+  "AUTH_FEEDBACK": {
+    "LOGIN_SUCCESS_TITLE": "Login realizado com sucesso!",
+    "LOGIN_SUCCESS_MESSAGE": "Bem-vindo(a), {{name}}.",
+    "LOGIN_ERROR_TITLE": "Não foi possível entrar",
+    "LOCKED_TITLE": "Conta bloqueada temporariamente",
+    "RECOVER_BUTTON": "Recuperar senha",
+    "OK": "Entendi",
+    "CODE_SENT_TITLE": "Verifique seu e-mail",
+    "CODE_SENT_MESSAGE": "Se {{email}} estiver cadastrado, enviamos um código de 6 dígitos. Ele vence em 15 minutos.",
+    "CODE_RESENT_TITLE": "Código reenviado",
+    "CODE_ERROR_TITLE": "Código inválido",
+    "PASSWORD_UPDATED_TITLE": "Senha atualizada",
+    "PASSWORD_UPDATED_MESSAGE": "Agora você pode entrar com sua nova senha.",
+    "PASSWORD_ERROR_TITLE": "Não foi possível alterar a senha",
+    "GO_TO_LOGIN": "Ir para o login",
+    "ERROR_TITLE": "Algo deu errado"
   }
 }

@@ -2464,5 +2464,22 @@
   },
   "OPERATOR_WORK": {
     "START_FROM": "You can start it from {{time}} (15 minutes before the booking)."
+  },
+  "AUTH_FEEDBACK": {
+    "LOGIN_SUCCESS_TITLE": "Signed in successfully!",
+    "LOGIN_SUCCESS_MESSAGE": "Welcome, {{name}}.",
+    "LOGIN_ERROR_TITLE": "Could not sign in",
+    "LOCKED_TITLE": "Account temporarily locked",
+    "RECOVER_BUTTON": "Recover password",
+    "OK": "Got it",
+    "CODE_SENT_TITLE": "Check your email",
+    "CODE_SENT_MESSAGE": "If {{email}} is registered, we sent you a 6-digit code. It expires in 15 minutes.",
+    "CODE_RESENT_TITLE": "Code resent",
+    "CODE_ERROR_TITLE": "Invalid code",
+    "PASSWORD_UPDATED_TITLE": "Password updated",
+    "PASSWORD_UPDATED_MESSAGE": "You can now sign in with your new password.",
+    "PASSWORD_ERROR_TITLE": "Could not change the password",
+    "GO_TO_LOGIN": "Go to sign in",
+    "ERROR_TITLE": "Something went wrong"
   }
 }
