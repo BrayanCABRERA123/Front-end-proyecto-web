@@ -1,0 +1,105 @@
+@use '../../../../../../../styles/mixins' as *;
+@use '../../../../../../shared/dialogs/dialog-base';
+
+// lista editable de habilidades: nombre + nivel + quitar
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+
+    span { @include caption-text; color: var(--text-secondary); }
+    small { @include caption-text; color: var(--text-muted); }
+  }
+
+  &__empty {
+    @include caption-text;
+    margin: 0;
+    padding: 14px;
+    text-align: center;
+    color: var(--text-muted);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+  }
+
+  &__add {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    font-family: $font-family-base;
+    font-weight: $fw-semibold;
+    color: var(--primary);
+    background: transparent;
+    border: 1px dashed var(--primary);
+    border-radius: 999px;
+    cursor: pointer;
+
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+    &:hover:not(:disabled) { background: color-mix(in srgb, var(--primary) 10%, transparent); }
+    &:disabled { opacity: .45; cursor: not-allowed; }
+  }
+
+  .form-field__error {
+    @include caption-text;
+    color: var(--error);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  }
+}
+
+.skill-row {
+  display: grid;
+  grid-template-columns: 1fr 150px 40px;
+  gap: 8px;
+  align-items: center;
+
+  input, select {
+    font-family: $font-family-base;
+    font-size: $fs-body;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:focus { outline: none; border-color: var(--primary); }
+    &::placeholder { color: var(--text-muted); }
+  }
+
+  select { cursor: pointer; }
+
+  &--invalid input { border-color: var(--error); }
+
+  &__remove {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover { color: var(--error); border-color: var(--error); }
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr 40px;
+
+    select { grid-column: 1; grid-row: 2; }
+  }
+}

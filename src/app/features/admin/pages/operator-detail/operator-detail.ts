@@ -16,6 +16,9 @@ import { ReservationsStore, formatTimeRange } from '../../services/reservations-
 import { Operator, TodayService } from '../../models/admin.models';
 import { OperationsApiService, OperatorMetricsResponse } from '../../../../core/services/operations-api';
 import { OperatorAbsenceModal, AbsenceModalResult } from './components/operator-absence-modal/operator-absence-modal';
+import { OperatorProfileModal, OperatorProfileModalData, OperatorProfileModalResult } from './components/operator-profile-modal/operator-profile-modal';
+import { OperatorSkillLevel } from '../../../../core/services/operations-api';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 import { AvailabilityModal, AvailabilityModalData } from './components/availability-modal/availability-modal';
 import { AssignShiftModal, AssignShiftModalData, AssignShiftResult } from '../operators/components/assign-shift-modal/assign-shift-modal';
 
@@ -125,6 +128,28 @@ export class OperatorDetailComponent implements OnInit {
         'OPERATOR_DETAIL.FEEDBACK.ABSENCE_MESSAGE',
         { messageParams: { name: this.operator!.name } }
       );
+    });
+  }
+
+  // especialidad y habilidades (operations-service): guardar reemplaza la lista completa
+  editProfile(): void {
+    const operator = this.operator;
+    if (!operator) return;
+
+    const data: OperatorProfileModalData = {
+      name: operator.name,
+      specialty: operator.specialty,
+      skills: operator.certifications.map(c => ({ name: c.name, level: c.level as OperatorSkillLevel })),
+    };
+    const dialogRef = this.dialog.open(OperatorProfileModal, { panelClass: 'custom-dialog', data });
+
+    dialogRef.afterClosed().subscribe((result: OperatorProfileModalResult | null | undefined) => {
+      if (!result) return;
+      this.store.saveProfile(operator.id, result.specialty, result.skills).subscribe({
+        next: () => this.feedback.success('OPERATOR_PROFILE_MODAL.SAVED_TITLE', 'OPERATOR_PROFILE_MODAL.SAVED_MESSAGE',
+          { messageParams: { name: operator.name } }),
+        error: (error: unknown) => this.feedback.error('OPERATOR_PROFILE_MODAL.SAVE_ERROR_TITLE', apiErrorKey(error))
+      });
     });
   }
 

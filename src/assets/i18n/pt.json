@@ -2481,5 +2481,25 @@
     "PASSWORD_ERROR_TITLE": "Não foi possível alterar a senha",
     "GO_TO_LOGIN": "Ir para o login",
     "ERROR_TITLE": "Algo deu errado"
+  },
+  "OPERATOR_PROFILE_MODAL": {
+    "TITLE": "Especialidade e habilidades",
+    "SUBTITLE": "O que {{name}} faz de melhor. Aparece na ficha dele(a).",
+    "EDIT": "Editar",
+    "SPECIALTY_LABEL": "Especialidade",
+    "SPECIALTY_PLACEHOLDER": "Ex. Higienização interna",
+    "NO_SPECIALTY": "Sem especialidade cadastrada",
+    "SKILLS_LABEL": "Habilidades e certificações",
+    "SKILL_NAME_PLACEHOLDER": "Ex. Polimento cerâmico",
+    "ADD_SKILL": "Adicionar habilidade",
+    "REMOVE_SKILL": "Remover",
+    "EMPTY": "Ainda não há habilidades cadastradas.",
+    "MAX_SKILLS": "Máximo de 10 habilidades.",
+    "ERROR_NAME": "Digite o nome de cada habilidade.",
+    "ERROR_DUPLICATE": "Há habilidades repetidas.",
+    "SAVED_TITLE": "Ficha atualizada",
+    "SAVED_MESSAGE": "A especialidade e as habilidades de {{name}} foram salvas.",
+    "SAVE_ERROR_TITLE": "Não foi possível salvar",
+    "LEVELS": {"CERTIFIED": "Certificado", "EXPERT": "Nível especialista", "ADVANCED": "Avançado"}
   }
 }

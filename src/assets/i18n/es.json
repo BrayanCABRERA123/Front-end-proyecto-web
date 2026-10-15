@@ -2481,5 +2481,25 @@
     "PASSWORD_ERROR_TITLE": "No se pudo cambiar la contraseña",
     "GO_TO_LOGIN": "Ir a iniciar sesión",
     "ERROR_TITLE": "Algo salió mal"
+  },
+  "OPERATOR_PROFILE_MODAL": {
+    "TITLE": "Especialidad y habilidades",
+    "SUBTITLE": "Lo que mejor hace {{name}}. Se muestra en su ficha.",
+    "EDIT": "Editar",
+    "SPECIALTY_LABEL": "Especialidad",
+    "SPECIALTY_PLACEHOLDER": "Ej. Detallado interior",
+    "NO_SPECIALTY": "Sin especialidad registrada",
+    "SKILLS_LABEL": "Habilidades y certificaciones",
+    "SKILL_NAME_PLACEHOLDER": "Ej. Pulido cerámico",
+    "ADD_SKILL": "Agregar habilidad",
+    "REMOVE_SKILL": "Quitar",
+    "EMPTY": "Aún no tiene habilidades registradas.",
+    "MAX_SKILLS": "Máximo 10 habilidades.",
+    "ERROR_NAME": "Escribe el nombre de cada habilidad.",
+    "ERROR_DUPLICATE": "Hay habilidades repetidas.",
+    "SAVED_TITLE": "Ficha actualizada",
+    "SAVED_MESSAGE": "Se guardaron la especialidad y las habilidades de {{name}}.",
+    "SAVE_ERROR_TITLE": "No se pudo guardar",
+    "LEVELS": {"CERTIFIED": "Certificado", "EXPERT": "Nivel experto", "ADVANCED": "Avanzado"}
   }
 }

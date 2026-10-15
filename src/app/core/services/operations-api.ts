@@ -112,6 +112,20 @@ export interface OperatorServiceResponse {
   startableAt: string | null;
 }
 
+// especialidad y habilidades del operario (ficha del operario)
+export type OperatorSkillLevel = 'CERTIFIED' | 'EXPERT' | 'ADVANCED';
+
+export interface OperatorSkillDto {
+  name: string;
+  level: OperatorSkillLevel;
+}
+
+export interface OperatorProfileResponse {
+  operatorId: number;
+  specialty: string | null;
+  skills: OperatorSkillDto[];
+}
+
 // operario que atiende una reserva del cliente (solo su primer nombre)
 export interface BookingOperatorResponse {
   bookingId: number;
@@ -166,6 +180,16 @@ export class OperationsApiService {
 
   operators(): Observable<OperatorResponse[]> {
     return this.http.get<OperatorResponse[]>(`${this.api}/admin/operators`);
+  }
+
+  // especialidad y habilidades de todos los operarios
+  operatorProfiles(): Observable<OperatorProfileResponse[]> {
+    return this.http.get<OperatorProfileResponse[]>(`${this.api}/admin/operators/profiles`);
+  }
+
+  // reemplaza la especialidad y la lista completa de habilidades
+  updateOperatorProfile(id: number, specialty: string | null, skills: OperatorSkillDto[]): Observable<OperatorProfileResponse> {
+    return this.http.put<OperatorProfileResponse>(`${this.api}/admin/operators/${id}/profile`, { specialty, skills });
   }
 
   setActive(id: number, active: boolean): Observable<OperatorResponse> {

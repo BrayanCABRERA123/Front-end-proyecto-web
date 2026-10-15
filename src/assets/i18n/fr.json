@@ -2481,5 +2481,25 @@
     "PASSWORD_ERROR_TITLE": "Impossible de changer le mot de passe",
     "GO_TO_LOGIN": "Aller à la connexion",
     "ERROR_TITLE": "Une erreur est survenue"
+  },
+  "OPERATOR_PROFILE_MODAL": {
+    "TITLE": "Spécialité et compétences",
+    "SUBTITLE": "Ce que {{name}} fait le mieux. Affiché sur sa fiche.",
+    "EDIT": "Modifier",
+    "SPECIALTY_LABEL": "Spécialité",
+    "SPECIALTY_PLACEHOLDER": "Ex. Nettoyage intérieur",
+    "NO_SPECIALTY": "Aucune spécialité enregistrée",
+    "SKILLS_LABEL": "Compétences et certifications",
+    "SKILL_NAME_PLACEHOLDER": "Ex. Polissage céramique",
+    "ADD_SKILL": "Ajouter une compétence",
+    "REMOVE_SKILL": "Retirer",
+    "EMPTY": "Aucune compétence enregistrée pour le moment.",
+    "MAX_SKILLS": "10 compétences maximum.",
+    "ERROR_NAME": "Saisissez le nom de chaque compétence.",
+    "ERROR_DUPLICATE": "Certaines compétences sont en double.",
+    "SAVED_TITLE": "Fiche mise à jour",
+    "SAVED_MESSAGE": "La spécialité et les compétences de {{name}} ont été enregistrées.",
+    "SAVE_ERROR_TITLE": "Enregistrement impossible",
+    "LEVELS": {"CERTIFIED": "Certifié", "EXPERT": "Niveau expert", "ADVANCED": "Avancé"}
   }
 }
