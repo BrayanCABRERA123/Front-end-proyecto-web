@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, forkJoin, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { AvailableOperator } from '../../../shared/dialogs/assign-operator-modal/assign-operator.model';
 
 import {
@@ -13,7 +13,9 @@ import {
 import {
   AbsenceResponse,
   OperationsApiService,
+  OperatorProfileResponse,
   OperatorResponse,
+  OperatorSkillDto,
   TeamSummaryResponse,
   localIsoDate,
 } from '../../../core/services/operations-api';
@@ -92,17 +94,27 @@ export class OperatorsStore {
           this.loadedState.set(true);
           return;
         }
-        forkJoin(list.map(o => this.api.absences(o.id).pipe(catchError(() => of([] as AbsenceResponse[])))))
-          .subscribe(absences => {
-            this.state.set(list.map((o, i) => toOperator(o, absences[i])));
-            this.loadedState.set(true);
-          });
+        // sin perfiles (especialidad y habilidades) los operarios se muestran igual
+        forkJoin({
+          absences: forkJoin(list.map(o => this.api.absences(o.id).pipe(catchError(() => of([] as AbsenceResponse[]))))),
+          profiles: this.api.operatorProfiles().pipe(catchError(() => of([] as OperatorProfileResponse[])))
+        }).subscribe(({ absences, profiles }) => {
+          const profileById = new Map(profiles.map(p => [p.operatorId, p]));
+          this.state.set(list.map((o, i) => toOperator(o, absences[i], profileById.get(o.id) ?? null)));
+          this.loadedState.set(true);
+        });
       },
       error: () => {
         this.state.set([]);
         this.loadedState.set(true);
       }
     });
+  }
+
+  /** guarda la especialidad y las habilidades (operations-service) y recarga la lista */
+  saveProfile(id: string, specialty: string, skills: OperatorSkillDto[]): Observable<OperatorProfileResponse> {
+    return this.api.updateOperatorProfile(Number(id), specialty.trim() || null, skills)
+      .pipe(tap(() => this.refresh()));
   }
 
   getById(id: string): Operator | undefined {
@@ -193,7 +205,7 @@ export function toHours(start: string, end: string): number {
 const hhmm = (time: string) => time.slice(0, 5);
 
 // operario de operations-service -> modelo de las pantallas del admin
-function toOperator(o: OperatorResponse, absences: AbsenceResponse[]): Operator {
+function toOperator(o: OperatorResponse, absences: AbsenceResponse[], profile: OperatorProfileResponse | null): Operator {
   const today = localIsoDate(new Date());
   const mapped: Absence[] = absences.map(a => {
     const end = new Date(a.endsAt);
@@ -214,7 +226,7 @@ function toOperator(o: OperatorResponse, absences: AbsenceResponse[]): Operator 
     id: String(o.id),
     name,
     initials: name.split(/\s+/).slice(0, 2).map(w => w.charAt(0).toUpperCase()).join(''),
-    specialty: '',
+    specialty: profile?.specialty ?? '',
     rating: o.averageRating ?? 0,
     reviewsCount: o.ratingsCount,
     status: absentToday ? 'medical_leave' : 'available',
@@ -223,7 +235,8 @@ function toOperator(o: OperatorResponse, absences: AbsenceResponse[]): Operator 
     tags: o.active ? [] : ['Inactivo'],
     phone: o.phone,
     email: o.email,
-    certifications: [],
+    // el nivel viaja como código (CERTIFIED, EXPERT, ADVANCED): la pantalla lo traduce
+    certifications: (profile?.skills ?? []).map(skill => ({ name: skill.name, level: skill.level })),
     todayServices: [],
     calendarBlocks,
     availability,

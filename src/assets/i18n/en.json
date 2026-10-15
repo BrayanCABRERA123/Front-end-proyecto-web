@@ -2481,5 +2481,25 @@
     "PASSWORD_ERROR_TITLE": "Could not change the password",
     "GO_TO_LOGIN": "Go to sign in",
     "ERROR_TITLE": "Something went wrong"
+  },
+  "OPERATOR_PROFILE_MODAL": {
+    "TITLE": "Specialty and skills",
+    "SUBTITLE": "What {{name}} does best. It is shown on their profile.",
+    "EDIT": "Edit",
+    "SPECIALTY_LABEL": "Specialty",
+    "SPECIALTY_PLACEHOLDER": "E.g. Interior detailing",
+    "NO_SPECIALTY": "No specialty yet",
+    "SKILLS_LABEL": "Skills and certifications",
+    "SKILL_NAME_PLACEHOLDER": "E.g. Ceramic polishing",
+    "ADD_SKILL": "Add skill",
+    "REMOVE_SKILL": "Remove",
+    "EMPTY": "No skills recorded yet.",
+    "MAX_SKILLS": "Up to 10 skills.",
+    "ERROR_NAME": "Type the name of each skill.",
+    "ERROR_DUPLICATE": "Some skills are repeated.",
+    "SAVED_TITLE": "Profile updated",
+    "SAVED_MESSAGE": "The specialty and skills of {{name}} were saved.",
+    "SAVE_ERROR_TITLE": "Could not save",
+    "LEVELS": {"CERTIFIED": "Certified", "EXPERT": "Expert level", "ADVANCED": "Advanced"}
   }
 }

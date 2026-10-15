@@ -49,7 +49,7 @@
 
             <p class="specialty">
               <mat-icon>verified</mat-icon>
-              {{ operator.specialty }}
+              {{ operator.specialty || ('OPERATOR_PROFILE_MODAL.NO_SPECIALTY' | translate) }}
             </p>
 
             <p class="sub-line">
@@ -168,14 +168,20 @@
         <div class="card">
           <div class="card-header">
             <h2>{{ 'OPERATOR_DETAIL.SKILLS.TITLE' | translate }}</h2>
+            <button class="edit-chip" type="button" (click)="editProfile()">
+              <mat-icon>edit</mat-icon>
+              {{ 'OPERATOR_PROFILE_MODAL.EDIT' | translate }}
+            </button>
           </div>
 
           <ul class="skills-list">
             @for (c of operator.certifications; track c.name) {
               <li>
                 <span>{{ c.name }}</span>
-                <span class="skill-level">{{ c.level }}</span>
+                <span class="skill-level">{{ ('OPERATOR_PROFILE_MODAL.LEVELS.' + c.level) | translate }}</span>
               </li>
+            } @empty {
+              <li class="skills-empty">{{ 'OPERATOR_PROFILE_MODAL.EMPTY' | translate }}</li>
             }
           </ul>
 

@@ -1,0 +1,68 @@
+<div class="form-dialog">
+
+  <div class="form-dialog__header">
+    <div>
+      <h2>{{ 'OPERATOR_PROFILE_MODAL.TITLE' | translate }}</h2>
+      <p>{{ 'OPERATOR_PROFILE_MODAL.SUBTITLE' | translate:{ name: data.name } }}</p>
+    </div>
+    <button type="button" class="form-dialog__close" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="form-dialog__body">
+
+    <label class="form-field">
+      <span>{{ 'OPERATOR_PROFILE_MODAL.SPECIALTY_LABEL' | translate }}</span>
+      <input type="text" [(ngModel)]="specialty" maxlength="80"
+             [placeholder]="'OPERATOR_PROFILE_MODAL.SPECIALTY_PLACEHOLDER' | translate">
+    </label>
+
+    <div class="skills">
+      <div class="skills__header">
+        <span>{{ 'OPERATOR_PROFILE_MODAL.SKILLS_LABEL' | translate }}</span>
+        <small>{{ 'OPERATOR_PROFILE_MODAL.MAX_SKILLS' | translate }}</small>
+      </div>
+
+      @for (skill of skills; track $index; let i = $index) {
+        <div class="skill-row" [class.skill-row--invalid]="submitted && !skill.name.trim()">
+          <input type="text" [(ngModel)]="skill.name" maxlength="60"
+                 [placeholder]="'OPERATOR_PROFILE_MODAL.SKILL_NAME_PLACEHOLDER' | translate">
+          <select [(ngModel)]="skill.level">
+            @for (level of levels; track level) {
+              <option [value]="level">{{ ('OPERATOR_PROFILE_MODAL.LEVELS.' + level) | translate }}</option>
+            }
+          </select>
+          <button type="button" class="skill-row__remove" (click)="removeSkill(i)"
+                  [attr.aria-label]="'OPERATOR_PROFILE_MODAL.REMOVE_SKILL' | translate"
+                  [title]="'OPERATOR_PROFILE_MODAL.REMOVE_SKILL' | translate">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      } @empty {
+        <p class="skills__empty">{{ 'OPERATOR_PROFILE_MODAL.EMPTY' | translate }}</p>
+      }
+
+      @if (submitted && missingName) {
+        <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'OPERATOR_PROFILE_MODAL.ERROR_NAME' | translate }}</span>
+      }
+      @if (submitted && duplicated) {
+        <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'OPERATOR_PROFILE_MODAL.ERROR_DUPLICATE' | translate }}</span>
+      }
+
+      <button type="button" class="skills__add" (click)="addSkill()" [disabled]="!canAddSkill">
+        <mat-icon>add</mat-icon>
+        {{ 'OPERATOR_PROFILE_MODAL.ADD_SKILL' | translate }}
+      </button>
+    </div>
+
+  </div>
+
+  <div class="form-dialog__actions">
+    <button class="form-dialog__cancel" type="button" (click)="close()">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button class="form-dialog__submit" type="button" (click)="save()">
+      {{ 'COMMON.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>
