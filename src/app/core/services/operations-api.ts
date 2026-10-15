@@ -112,6 +112,12 @@ export interface OperatorServiceResponse {
   startableAt: string | null;
 }
 
+// operario que atiende una reserva del cliente (solo su primer nombre)
+export interface BookingOperatorResponse {
+  bookingId: number;
+  operatorName: string;
+}
+
 export interface RatingResponse {
   bookingId: number;
   bookingCode: string;
@@ -226,6 +232,11 @@ export class OperationsApiService {
 
   givenRatings(): Observable<RatingResponse[]> {
     return this.http.get<RatingResponse[]>(`${this.api}/ratings/me`);
+  }
+
+  // solo trae las reservas que ya tienen operario asignado
+  myBookingOperators(): Observable<BookingOperatorResponse[]> {
+    return this.http.get<BookingOperatorResponse[]>(`${this.api}/operators/my-bookings`);
   }
 }
 

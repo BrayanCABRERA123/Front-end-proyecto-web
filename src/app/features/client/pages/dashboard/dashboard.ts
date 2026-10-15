@@ -21,6 +21,7 @@ import { VehiclesService } from '../../../../core/services/vehicles';
 import { UserSession } from '../../../../core/services/user-session';
 import { VehicleResponse } from '../../../../core/models/vehicle.models';
 import { LoyaltyApiService, PromotionForCustomer } from '../../../../core/services/loyalty-api';
+import { OperationsApiService } from '../../../../core/services/operations-api';
 
 // avance del servicio según su estado (Programado → Confirmado → En progreso → Finalizado)
 const PROGRESS_BY_STATUS: Record<string, number> = {
@@ -72,6 +73,7 @@ export class DashboardComponent implements OnInit {
   // sede del lavadero, leída del booking-service
   location: EstablishmentResponse | null = null;
   private readonly bookingApi = inject(BookingApiService);
+  private readonly operationsApi = inject(OperationsApiService);
   private readonly changes = inject(ChangeDetectorRef);
 
   // vehículos registrados por el cliente (reales del backend)
@@ -199,6 +201,20 @@ export class DashboardComponent implements OnInit {
       operator: '',
       status: next.status
     } : null;
+
+    if (next) this.loadOperator(next.id);
+  }
+
+  // primer nombre del operario asignado (operations-service); sin respuesta se queda en '—'
+  private loadOperator(bookingId: number): void {
+    this.operationsApi.myBookingOperators().subscribe({
+      next: (assigned) => {
+        const operator = assigned.find(item => item.bookingId === bookingId)?.operatorName ?? '';
+        if (this.nextService) this.nextService.operator = operator;
+        this.changes.markForCheck();
+      },
+      error: () => undefined
+    });
   }
 
   private setStat(label: string, value: number): void {
