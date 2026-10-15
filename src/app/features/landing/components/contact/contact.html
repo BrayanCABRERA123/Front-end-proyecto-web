@@ -4,7 +4,7 @@
   <p class="contact-subtitle">{{ 'CONTACT.SUBTITLE' | translate }}</p>
 
   <div class="contact-grid">
-    @for (card of contactCards; track card.labelKey) {
+    @for (card of contactCards(); track card.labelKey) {
       <div class="contact-card">
         <div class="contact-icon">
           <mat-icon>{{ card.icon }}</mat-icon>
