@@ -69,14 +69,16 @@ export class SettingsPanelComponent implements OnInit {
   // abre el Centro de ayuda con los canales de atención del lavadero
   openHelpCenter(): void {
     this.bookingApi.establishment().subscribe({
-      next: (location) => this.showHelpCenter(location.address, location.phone, location.email),
-      error: () => this.showHelpCenter('—', null, null)
+      next: (location) => this.showHelpCenter(location.address, location.supportLine || location.phone,
+        location.email, location.serviceHoursNote),
+      error: () => this.showHelpCenter('—', null, null, null)
     });
   }
 
-  private showHelpCenter(address: string, phone: string | null, email: string | null): void {
-    // el negocio solo tiene un teléfono en la base: es la línea de atención. Las novedades del
-    // servicio le llegan al cliente por sus notificaciones y su correo
+  // línea de atención y horario salen de los datos del negocio (Configuración del admin); si el
+  // admin no los llenó se usa el teléfono y el horario general
+  private showHelpCenter(address: string, phone: string | null, email: string | null, hours: string | null): void {
+    // las novedades del servicio le llegan al cliente por sus notificaciones y su correo
     const data: StatusModalData = {
       type: 'info',
       icon: 'support_agent',
@@ -86,7 +88,7 @@ export class SettingsPanelComponent implements OnInit {
       details: [
         { label: 'CONFIG.HELP_MODAL.SUPPORT_LINE', value: phone ?? '—' },
         { label: 'CONFIG.HELP_MODAL.EMAIL', value: email ?? '—' },
-        { label: 'CONFIG.HELP_MODAL.HOURS', value: this.translate.instant('CONFIG.HELP_MODAL.HOURS_VALUE') },
+        { label: 'CONFIG.HELP_MODAL.HOURS', value: hours || this.translate.instant('CONFIG.HELP_MODAL.HOURS_VALUE') },
         { label: 'CONFIG.HELP_MODAL.ADDRESS', value: address }
       ]
     };
