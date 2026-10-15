@@ -12,6 +12,8 @@ export interface AuthUser {
   roles: UserRole[];
   active: boolean;
   lastLogin: string | null;
+  // fecha de registro de la cuenta (solo en las listas del admin)
+  createdAt?: string | null;
 }
 
 export interface LoginResponse {
