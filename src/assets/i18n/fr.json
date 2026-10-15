@@ -2464,5 +2464,22 @@
   },
   "OPERATOR_WORK": {
     "START_FROM": "Vous pourrez le démarrer à partir de {{time}} (15 minutes avant la réservation)."
+  },
+  "AUTH_FEEDBACK": {
+    "LOGIN_SUCCESS_TITLE": "Connexion réussie !",
+    "LOGIN_SUCCESS_MESSAGE": "Bienvenue, {{name}}.",
+    "LOGIN_ERROR_TITLE": "Connexion impossible",
+    "LOCKED_TITLE": "Compte temporairement bloqué",
+    "RECOVER_BUTTON": "Récupérer le mot de passe",
+    "OK": "Compris",
+    "CODE_SENT_TITLE": "Vérifiez votre e-mail",
+    "CODE_SENT_MESSAGE": "Si {{email}} est enregistré, nous vous avons envoyé un code à 6 chiffres. Il expire dans 15 minutes.",
+    "CODE_RESENT_TITLE": "Code renvoyé",
+    "CODE_ERROR_TITLE": "Code invalide",
+    "PASSWORD_UPDATED_TITLE": "Mot de passe mis à jour",
+    "PASSWORD_UPDATED_MESSAGE": "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+    "PASSWORD_ERROR_TITLE": "Impossible de changer le mot de passe",
+    "GO_TO_LOGIN": "Aller à la connexion",
+    "ERROR_TITLE": "Une erreur est survenue"
   }
 }

@@ -10,6 +10,8 @@ export interface FeedbackOptions {
   details?: StatusModalData['details'];
   /** texto del botón; por defecto "Aceptar" */
   buttonText?: string;
+  /** ícono de Material; por defecto el del tipo */
+  icon?: string;
 }
 
 /**

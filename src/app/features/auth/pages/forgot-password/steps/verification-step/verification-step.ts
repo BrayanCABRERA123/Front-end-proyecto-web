@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AuthService } from '../../../../../../core/services/auth';
 import { apiErrorKey } from '../../../../../../core/utils/api-error';
+import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
 
 @Component({
   selector: 'app-verification-step',
@@ -29,6 +30,7 @@ export class VerificationStepComponent {
   codeResent = signal(false);
 
   private readonly auth = inject(AuthService);
+  private readonly feedback = inject(FeedbackService);
 
   @ViewChildren('digitInput') digitInputs!: QueryList<ElementRef>;
 
@@ -71,6 +73,7 @@ export class VerificationStepComponent {
       error: (error: unknown) => {
         this.verifying.set(false);
         this.errorKey.set(apiErrorKey(error));
+        this.feedback.error('AUTH_FEEDBACK.CODE_ERROR_TITLE', apiErrorKey(error), { buttonText: 'AUTH_FEEDBACK.OK' });
       }
     });
   }
@@ -83,8 +86,17 @@ export class VerificationStepComponent {
     this.codeResent.set(false);
 
     this.auth.requestPasswordReset(this.email).subscribe({
-      next: () => this.codeResent.set(true),
-      error: (error: unknown) => this.errorKey.set(apiErrorKey(error))
+      next: () => {
+        this.codeResent.set(true);
+        this.feedback.info('AUTH_FEEDBACK.CODE_RESENT_TITLE', 'FORGOT.VERIFICATION.RESENT', {
+          icon: 'mark_email_read',
+          buttonText: 'AUTH_FEEDBACK.OK'
+        });
+      },
+      error: (error: unknown) => {
+        this.errorKey.set(apiErrorKey(error));
+        this.feedback.error('AUTH_FEEDBACK.ERROR_TITLE', apiErrorKey(error), { buttonText: 'AUTH_FEEDBACK.OK' });
+      }
     });
   }
 
