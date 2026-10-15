@@ -158,10 +158,19 @@ export class ProfileCardComponent implements OnInit, OnChanges {
       next: user => this.applyBackendUser(user),
       error: () => undefined // sin backend se queda con lo que llegó por @Input
     });
+
+    // la dirección también vive en el backend (ADR-010): la misma en la web y en el celular
+    this.auth.getAddress().subscribe({
+      next: address => {
+        this.form.patchValue({ address });
+        this.cdr.markForCheck();
+      },
+      error: () => undefined
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // la dirección todavía no la guarda el backend (ADR-010: security.person_address pendiente)
+    // mientras llega la del backend se muestra la que trae la sesión
     if (this.form && changes['user'] && !changes['user'].firstChange) {
       this.form.patchValue({ address: this.user.address });
     }
@@ -278,7 +287,9 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     // sin espacio: el backend acepta "+573001234567"
     const phone = `${this.selectedCountry.dialCode}${value.phoneNumber}`;
 
-    const saveProfile = () => this.auth.updateProfile({ firstName, lastName, phone });
+    const address = (value.address ?? '').trim();
+    const saveProfile = () => this.auth.updateProfile({ firstName, lastName, phone })
+      .pipe(switchMap(() => this.auth.updateAddress(address)));
 
     // si cambió el correo, primero se confirma con la contraseña (el modal hace las dos cosas)
     if (emailChanged) {
@@ -314,7 +325,7 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     const user = this.auth.user();
     if (user) this.applyBackendUser(user);
 
-    // la página guarda lo que el backend todavía no maneja (la dirección) y refresca el sidebar
+    // la página refresca la sesión (y con ella el sidebar) con lo que ya quedó guardado
     this.saved.emit({
       name: user ? `${user.firstName} ${user.lastName}` : this.displayName,
       email: user?.email ?? this.currentEmail,

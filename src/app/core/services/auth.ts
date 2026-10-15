@@ -128,6 +128,20 @@ export class AuthService {
       .pipe(tap(user => this.refreshUser(user)));
   }
 
+  // dirección de contacto del perfil (ADR-010, security.person_address); '' = no tiene
+  getAddress(): Observable<string> {
+    return this.http
+      .get<{ address: string }>(`${API_BASE_URL}/users/me/address`)
+      .pipe(map(response => response.address ?? ''));
+  }
+
+  // guardarla vacía la borra; devuelve la que quedó guardada (sin espacios a los lados)
+  updateAddress(address: string): Observable<string> {
+    return this.http
+      .put<{ address: string }>(`${API_BASE_URL}/users/me/address`, { address })
+      .pipe(map(response => response.address ?? ''));
+  }
+
   // guarda nombres y teléfono en el backend. El correo no se cambia: es el usuario de login (ADR-010)
   updateProfile(changes: UpdateProfileRequest): Observable<AuthUser> {
     return this.http
