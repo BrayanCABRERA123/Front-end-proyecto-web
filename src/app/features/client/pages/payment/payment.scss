@@ -456,6 +456,29 @@
 }
 
 // aviso del último pago rechazado (mismo esquema que la tarjeta de efectivo, en rojo)
+// pago aprobado por el administrador (mismo diseño que el rechazo, en verde)
+.approved-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--success-soft);
+
+  >mat-icon {
+    @include icon-size(2rem);
+    color: var(--success);
+  }
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 1.05rem;
+    color: var(--success);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
 .rejected-card {
   display: flex;
   gap: 16px;
