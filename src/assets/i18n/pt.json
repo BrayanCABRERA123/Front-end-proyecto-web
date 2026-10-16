@@ -1948,7 +1948,7 @@
     "SCHEDULE_BAY": "Horário e baia",
     "OPERATOR": "Operador",
     "BANK_RECONCILIATION": "Dados de conciliação bancária",
-    "VERIFIED_NOTE": "Verificado com a operadora",
+    "VERIFIED_NOTE": "Informado pelo cliente",
     "METHOD": "Método de pagamento",
     "TRANSACTION_REFERENCE": "Referência da transação",
     "COPY": "Copiar",
