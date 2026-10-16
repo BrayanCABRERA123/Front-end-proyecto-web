@@ -2,8 +2,8 @@
   "CONFIG": {
     "TITLE": "Settings",
     "NOTIFICATIONS": "Notifications",
-    "PUSH": "Push Notifications",
-    "PUSH_DESC": "Receive alerts for bookings and promotions",
+    "PUSH": "Push notifications on your phone",
+    "PUSH_DESC": "Get booking and promotion alerts on your phone with the app installed. The web bell always shows everything.",
     "EMAIL": "Email Reminders",
     "EMAIL_DESC": "Booking reminders by email (one day and one hour before)",
     "PROMO": "Promotions and Offers",
