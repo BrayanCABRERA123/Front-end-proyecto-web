@@ -22,24 +22,18 @@
 
         <!-- el administrador ya aprobó el pago: no hay nada más que hacer -->
         @if (isApproved) {
-          <section class="card approved-card" role="status">
-            <mat-icon>verified</mat-icon>
-            <div>
-              <h2>{{ 'PAYMENT.SUMMARY.APPROVED_TITLE' | translate }}</h2>
-              <p>{{ 'PAYMENT.SUMMARY.APPROVED_MESSAGE' | translate }}</p>
-            </div>
-          </section>
+          <app-payment-notice tone="success" icon="verified"
+            [title]="'PAYMENT.SUMMARY.APPROVED_TITLE' | translate"
+            [message]="'PAYMENT.SUMMARY.APPROVED_MESSAGE' | translate">
+          </app-payment-notice>
         }
 
         <!-- el último pago de esta reserva fue rechazado: se explica por qué antes de reportar otro -->
         @if (lastRejectionReason && !isLocked) {
-          <section class="card rejected-card">
-            <mat-icon>error_outline</mat-icon>
-            <div>
-              <h2>{{ 'ADMIN_PAYMENTS.FEEDBACK.REJECTED_TITLE' | translate }}</h2>
-              <p>{{ 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL' | translate }}: {{ lastRejectionReason }}</p>
-            </div>
-          </section>
+          <app-payment-notice tone="error" icon="error_outline"
+            [title]="'ADMIN_PAYMENTS.FEEDBACK.REJECTED_TITLE' | translate"
+            [message]="('PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL' | translate) + ': ' + lastRejectionReason">
+          </app-payment-notice>
         }
 
         <!-- Método de pago -->
@@ -226,34 +220,16 @@
 
           <!-- canjear un cupón de fidelización (ADR-015): puntos acumulados desbloquean la
                promoción, se aplica un % de descuento real sobre el total -->
-          <div class="coupon-box">
-            @if (!couponResult) {
-              <label class="coupon-box__row">
-                <input type="text" [(ngModel)]="couponCode" maxlength="20" [disabled]="isLocked"
-                       [placeholder]="'PAYMENT.COUPON.PLACEHOLDER' | translate"
-                       (keyup.enter)="redeemCoupon()">
-                <button type="button" class="coupon-box__apply" [disabled]="!canRedeemCoupon" (click)="redeemCoupon()">
-                  @if (redeemingCoupon) {
-                    <mat-icon>hourglass_top</mat-icon>
-                  } @else {
-                    {{ 'PAYMENT.COUPON.APPLY' | translate }}
-                  }
-                </button>
-              </label>
-              @if (couponError) {
-                <p class="coupon-box__error"><mat-icon>error</mat-icon>{{ couponError | translate }}</p>
-              }
-            } @else {
-              <div class="coupon-box__applied">
-                <mat-icon>local_offer</mat-icon>
-                <span>{{ 'PAYMENT.COUPON.APPLIED' | translate:{ name: couponResult.promotionName } }}</span>
-                <strong>-${{ couponResult.discountAmount | number }} COP</strong>
-                <button type="button" class="coupon-box__remove" [disabled]="isLocked" (click)="removeCoupon()" aria-label="remove">
-                  <mat-icon>close</mat-icon>
-                </button>
-              </div>
-            }
-          </div>
+          <app-payment-coupon
+            [(code)]="couponCode"
+            [result]="couponResult"
+            [error]="couponError"
+            [redeeming]="redeemingCoupon"
+            [canRedeem]="canRedeemCoupon"
+            [locked]="isLocked"
+            (redeem)="redeemCoupon()"
+            (remove)="removeCoupon()">
+          </app-payment-coupon>
 
           <div class="summary-total">
             <div>
@@ -279,14 +255,7 @@
 
           <!-- por qué el botón sigue bloqueado: lo que falta completar -->
           @if (missingRequirements.length) {
-            <div class="missing-box" role="status">
-              <strong>{{ 'PAYMENT.CONFIRM.MISSING.TITLE' | translate }}</strong>
-              <ul>
-                @for (item of missingRequirements; track item) {
-                  <li><mat-icon>radio_button_unchecked</mat-icon>{{ item | translate }}</li>
-                }
-              </ul>
-            </div>
+            <app-payment-missing [items]="missingRequirements"></app-payment-missing>
           }
 
           <button class="btn-link" (click)="cancelReservation()">

@@ -1,0 +1,8 @@
+<div class="missing-box" role="status">
+  <strong>{{ 'PAYMENT.CONFIRM.MISSING.TITLE' | translate }}</strong>
+  <ul>
+    @for (item of items; track item) {
+      <li><mat-icon>radio_button_unchecked</mat-icon>{{ item | translate }}</li>
+    }
+  </ul>
+</div>
