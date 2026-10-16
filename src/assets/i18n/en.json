@@ -32,7 +32,7 @@
   "SIDEBAR": {
     "PAYMENT": "Pay service",
     "DASHBOARD": "Dashboard",
-    "TITLE": "Car Wash",
+    "TITLE": "LavaRápido",
     "PROFILE": "Profile",
     "RESERVE": "Book Wash",
     "NOTIFICATIONS": "Notifications",
@@ -155,14 +155,14 @@
   },
   "DASHBOARD": {
     "HELLO": "Hello, {{name}}!",
-    "WELCOME": "Welcome back to Car Wash",
+    "WELCOME": "Welcome back to LavaRápido",
     "NEXT_RESERVATIONS": "Upcoming Reservations",
     "RESUMEN": {
       "ACTIVE": "Active bookings",
       "VEHICLES": "Vehicles",
       "NOTIFICATIONS": "Notifications"
     },
-    "SUBTITLE": "This is your client information module for AquaWash",
+    "SUBTITLE": "This is your client information module for Express Car Wash",
     "CLIENT_VIEW": "Client View",
     "STATS": {
       "ACTIVE_RESERVATIONS": "My active bookings",
@@ -470,7 +470,7 @@
     }
   },
   "APP": {
-    "TITLE": "Car Wash Service"
+    "TITLE": "LavaRápido"
   },
   "NAV": {
     "LOGIN": "Login",
@@ -1009,7 +1009,7 @@
       "TERMS": "Terms of Service",
       "PRIVACY": "Privacy Policy"
     },
-    "COPYRIGHT": "© {{year}} AquaWash. All rights reserved."
+    "COPYRIGHT": "© {{year}} Express Car Wash S.A.S. All rights reserved."
   },
   "ABOUT": {
     "EYEBROW": "Who we are",
