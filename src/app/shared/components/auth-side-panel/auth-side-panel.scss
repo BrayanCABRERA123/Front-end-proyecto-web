@@ -51,17 +51,19 @@
 }
 
 /* ── BRAND ── */
+/* ícono y nombre en una sola fila, centrados sobre el panel */
 .panel-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-top: -78px;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
 .brand-logo {
+  flex-shrink: 0;
   width: 64px;
   height: 64px;
-  margin-top: -95px;
   border-radius: 16px;
   background: var(--primary);
   border: none;
@@ -77,8 +79,8 @@
 
 .brand-text h3 {
   margin: 0;
-  margin-top: -50px;
-  font-size: 19px;
+  font-size: 28px;
+  line-height: 1.1;
   font-weight: 800;
   letter-spacing: 0.5px;
   color: var(--text);
