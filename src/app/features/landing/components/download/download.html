@@ -1,0 +1,37 @@
+<!-- descarga de la app Android: solo aparece si el servidor tiene un APK publicado -->
+@if (apk) {
+  <section id="download" class="download-section">
+    <div class="download-card">
+
+      <div class="download-text">
+        <span class="download-eyebrow">
+          <mat-icon>android</mat-icon>
+          {{ 'DOWNLOAD.EYEBROW' | translate }}
+        </span>
+        <h2 class="download-title">{{ 'DOWNLOAD.TITLE' | translate }}</h2>
+        <p class="download-description">{{ 'DOWNLOAD.DESCRIPTION' | translate }}</p>
+
+        <a class="download-button" [href]="downloadUrl" download="LavaRapidoVehicular.apk">
+          <mat-icon>download</mat-icon>
+          {{ 'DOWNLOAD.BUTTON' | translate }}
+        </a>
+        <span class="download-meta">
+          {{ 'DOWNLOAD.VERSION' | translate: { version: apk.versionCode } }}
+          @if (sizeLabel) { · {{ sizeLabel }} }
+        </span>
+
+        <p class="download-hint">
+          <mat-icon>info</mat-icon>
+          {{ 'DOWNLOAD.INSTALL_HINT' | translate }}
+        </p>
+      </div>
+
+      @if (qrDataUrl) {
+        <div class="download-qr">
+          <img [src]="qrDataUrl" width="220" height="220" [alt]="'DOWNLOAD.QR_ALT' | translate">
+          <span>{{ 'DOWNLOAD.QR_HINT' | translate }}</span>
+        </div>
+      }
+    </div>
+  </section>
+}

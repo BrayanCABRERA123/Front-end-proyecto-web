@@ -482,6 +482,16 @@
     "START": "Comenzar ahora",
     "ALREADY_ACCOUNT": "Ya tengo cuenta"
   },
+  "DOWNLOAD": {
+    "EYEBROW": "App para Android",
+    "TITLE": "Lleva LavaRápido en tu celular",
+    "DESCRIPTION": "Reserva, paga y sigue el lavado de tu vehículo desde la app, con avisos al instante cuando tu servicio empieza o termina.",
+    "BUTTON": "Descargar app (Android)",
+    "VERSION": "Versión {{version}}",
+    "INSTALL_HINT": "Al abrir el archivo, Android puede pedirte permitir la instalación de apps de origen desconocido: acéptalo para instalarla.",
+    "QR_HINT": "Escanéalo con la cámara del celular",
+    "QR_ALT": "Código QR para descargar la app"
+  },
   "FEATURES": {
     "TITLE": "¿Por qué elegirnos?",
     "SUBTITLE": "Brindamos el mejor servicio de lavado móvil con calidad profesional.",
