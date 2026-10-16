@@ -480,10 +480,10 @@
     "SERVICES": "Servicios"
   },
   "HERO": {
-    "BADGE": "Servicio móvil de lavado #1",
+    "BADGE": "Reservas en línea para tu lavadero",
     "TITLE_1": "Tu auto impecable,",
-    "TITLE_2": "donde estés",
-    "DESCRIPTION": "Reserva tu lavado en minutos. Trabajamos con todo el equipo profesional para que puedas reservar sin filas, sin esperas y sin problemas.",
+    "TITLE_2": "sin hacer fila",
+    "DESCRIPTION": "Reserva tu lavado en minutos y llega a la hora acordada: tu bahía y tu operario te esperan. Sigue el servicio desde el celular y paga sin filas.",
     "START": "Comenzar ahora",
     "ALREADY_ACCOUNT": "Ya tengo cuenta"
   },

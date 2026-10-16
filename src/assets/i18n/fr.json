@@ -480,10 +480,10 @@
     "SERVICES": "Services"
   },
   "HERO": {
-    "BADGE": "Service de lavage mobile #1",
+    "BADGE": "Réservation en ligne pour votre station de lavage",
     "TITLE_1": "Votre voiture impeccable,",
-    "TITLE_2": "où que vous soyez",
-    "DESCRIPTION": "Réservez votre lavage en quelques minutes. Nous travaillons avec une équipe professionnelle pour éviter les files et les attentes.",
+    "TITLE_2": "sans faire la queue",
+    "DESCRIPTION": "Réservez votre lavage en quelques minutes et arrivez à l'heure prévue : votre baie et votre opérateur vous attendent. Suivez le service depuis votre téléphone et payez sans file d'attente.",
     "START": "Commencer",
     "ALREADY_ACCOUNT": "J'ai déjà un compte"
   },
