@@ -215,6 +215,11 @@
     "MOTO": "Moto"
   },
   "NOTIFICATIONS": {
+    "WATCHER": {
+      "MANY": "Vous avez {{count}} nouvelles notifications",
+      "VIEW": "Voir",
+      "UNREAD": "{{count}} non lues"
+    },
     "TITLE": "Notifications",
     "CLIENT_SUBTITLE": "Vous pouvez consulter ici les notifications concernant vos réservations, promotions et nouveautés du système.",
     "OPERATOR_SUBTITLE": "Vous pouvez consulter ici les notifications importantes concernant vos services attribués, les changements de statut et les communications du système.",

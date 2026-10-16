@@ -320,3 +320,12 @@ select option {
   background-color: var(--card);
   color: var(--text);
 }
+
+/* aviso flotante de notificación nueva (NotificationWatcher) */
+.notification-toast {
+  --mdc-snackbar-container-color: var(--primary);
+  --mdc-snackbar-supporting-text-color: #fff;
+  --mat-snack-bar-button-color: #fff;
+  --mat-snack-bar-container-color: var(--primary);
+  --mat-snack-bar-supporting-text-color: #fff;
+}

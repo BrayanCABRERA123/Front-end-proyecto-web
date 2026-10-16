@@ -59,6 +59,11 @@
 
 
         <span class="menu-label">{{ item.label | translate }}</span>
+        @if (item.icon === 'notifications' && watcher.unread() > 0) {
+          <span class="menu-badge" [attr.aria-label]="'NOTIFICATIONS.WATCHER.UNREAD' | translate: { count: watcher.unread() }">
+            {{ watcher.unread() > 99 ? '99+' : watcher.unread() }}
+          </span>
+        }
       </a>
     }
   </nav>
