@@ -842,6 +842,9 @@
       "PAY_BUTTON": "Já fiz o pagamento",
       "CASH_BUTTON": "Confirmar reserva",
       "VERIFYING_BUTTON": "Pagamento em verificação",
+      "APPROVED_BUTTON": "Pagamento aprovado",
+      "APPROVED_TITLE": "Pagamento aprovado",
+      "APPROVED_MESSAGE": "O administrador aprovou seu pagamento. Sua reserva está paga; não há mais nada a fazer.",
       "CANCEL": "Cancelar reserva",
       "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box"
     },

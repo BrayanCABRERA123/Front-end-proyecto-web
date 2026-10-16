@@ -842,6 +842,9 @@
       "PAY_BUTTON": "J'ai effectué le paiement",
       "CASH_BUTTON": "Confirmer la réservation",
       "VERIFYING_BUTTON": "Paiement en cours de vérification",
+      "APPROVED_BUTTON": "Paiement approuvé",
+      "APPROVED_TITLE": "Paiement approuvé",
+      "APPROVED_MESSAGE": "L'administrateur a approuvé votre paiement. Votre réservation est payée ; vous n'avez rien d'autre à faire.",
       "CANCEL": "Annuler la réservation",
       "SECURE": "Paiement 100 % sécurisé · Vérification immédiate par l'équipe de la baie"
     },

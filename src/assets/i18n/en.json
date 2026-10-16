@@ -842,6 +842,9 @@
       "PAY_BUTTON": "I've made the payment",
       "CASH_BUTTON": "Confirm booking",
       "VERIFYING_BUTTON": "Payment under review",
+      "APPROVED_BUTTON": "Payment approved",
+      "APPROVED_TITLE": "Payment approved",
+      "APPROVED_MESSAGE": "The administrator approved your payment. Your booking is paid; there is nothing else to do.",
       "CANCEL": "Cancel booking",
       "SECURE": "100% secure payment · Immediate verification by the bay team"
     },

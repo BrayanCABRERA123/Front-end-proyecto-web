@@ -842,6 +842,9 @@
       "PAY_BUTTON": "Ya realicé el pago",
       "CASH_BUTTON": "Confirmar reserva",
       "VERIFYING_BUTTON": "Pago en verificación",
+      "APPROVED_BUTTON": "Pago aprobado",
+      "APPROVED_TITLE": "Pago aprobado",
+      "APPROVED_MESSAGE": "El administrador aprobó tu pago. Tu reserva quedó pagada; no tienes que hacer nada más.",
       "CANCEL": "Cancelar reserva",
       "SECURE": "Pago 100% seguro · Verificación inmediata por el equipo de bahía"
     },

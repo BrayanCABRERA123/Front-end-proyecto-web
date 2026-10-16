@@ -20,8 +20,19 @@
       <!-- ================= Columna izquierda ================= -->
       <div class="payment-main">
 
+        <!-- el administrador ya aprobó el pago: no hay nada más que hacer -->
+        @if (isApproved) {
+          <section class="card approved-card" role="status">
+            <mat-icon>verified</mat-icon>
+            <div>
+              <h2>{{ 'PAYMENT.SUMMARY.APPROVED_TITLE' | translate }}</h2>
+              <p>{{ 'PAYMENT.SUMMARY.APPROVED_MESSAGE' | translate }}</p>
+            </div>
+          </section>
+        }
+
         <!-- el último pago de esta reserva fue rechazado: se explica por qué antes de reportar otro -->
-        @if (lastRejectionReason && !isVerifying) {
+        @if (lastRejectionReason && !isLocked) {
           <section class="card rejected-card">
             <mat-icon>error_outline</mat-icon>
             <div>
@@ -155,7 +166,7 @@
             <div class="form-field">
               <label>{{ 'PAYMENT.CONFIRM.AMOUNT' | translate }} <span class="req">*</span></label>
               <div class="input-icon">
-                <input type="number" min="1" step="1" name="paidAmount" [disabled]="isVerifying"
+                <input type="number" min="1" step="1" name="paidAmount" [disabled]="isLocked"
                        [ngModel]="paidAmount" (ngModelChange)="paidAmountInput = $event" />
                 <mat-icon *ngIf="isPaidAmountValid" class="ok">check_circle</mat-icon>
               </div>
@@ -218,7 +229,7 @@
           <div class="coupon-box">
             @if (!couponResult) {
               <label class="coupon-box__row">
-                <input type="text" [(ngModel)]="couponCode" maxlength="20" [disabled]="isVerifying"
+                <input type="text" [(ngModel)]="couponCode" maxlength="20" [disabled]="isLocked"
                        [placeholder]="'PAYMENT.COUPON.PLACEHOLDER' | translate"
                        (keyup.enter)="redeemCoupon()">
                 <button type="button" class="coupon-box__apply" [disabled]="!canRedeemCoupon" (click)="redeemCoupon()">
@@ -237,7 +248,7 @@
                 <mat-icon>local_offer</mat-icon>
                 <span>{{ 'PAYMENT.COUPON.APPLIED' | translate:{ name: couponResult.promotionName } }}</span>
                 <strong>-${{ couponResult.discountAmount | number }} COP</strong>
-                <button type="button" class="coupon-box__remove" [disabled]="isVerifying" (click)="removeCoupon()" aria-label="remove">
+                <button type="button" class="coupon-box__remove" [disabled]="isLocked" (click)="removeCoupon()" aria-label="remove">
                   <mat-icon>close</mat-icon>
                 </button>
               </div>
@@ -254,7 +265,10 @@
 
           <button class="btn-primary" [disabled]="!canConfirm" (click)="confirmPayment()">
             <!-- ya enviado: el botón queda bloqueado mostrando que está en revisión -->
-            @if (isVerifying) {
+            @if (isApproved) {
+              <mat-icon>verified</mat-icon>
+              {{ 'PAYMENT.SUMMARY.APPROVED_BUTTON' | translate }}
+            } @else if (isVerifying) {
               <mat-icon>hourglass_top</mat-icon>
               {{ 'PAYMENT.SUMMARY.VERIFYING_BUTTON' | translate }}
             } @else {

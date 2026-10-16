@@ -26,7 +26,8 @@ import { LoyaltyApiService, RedeemPromotionResult } from '../../../../core/servi
 
 // tipos para que el código sea más claro
 type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
-type FlowStep = 'PENDING' | 'VERIFYING';
+// PENDING: falta pagar · VERIFYING: el admin lo está revisando · APPROVED: el admin lo aprobó
+type FlowStep = 'PENDING' | 'VERIFYING' | 'APPROVED';
 
 interface PaymentMethod {
   id: PaymentMethodId;
@@ -193,9 +194,19 @@ export class PaymentComponent implements OnInit {
     return this.flowStep === 'VERIFYING';
   }
 
+  // el administrador ya aprobó el pago de esta reserva
+  get isApproved(): boolean {
+    return this.flowStep === 'APPROVED';
+  }
+
+  // con el pago enviado (en revisión o aprobado) ya no se puede cambiar ni volver a pagar
+  get isLocked(): boolean {
+    return this.isVerifying || this.isApproved;
+  }
+
   get canConfirm(): boolean {
     // evita enviar el mismo pago dos veces
-    if (this.isVerifying) return false;
+    if (this.isLocked) return false;
     if (this.selectedMethod === 'CASH') return true;
     return !!this.receiptFile && this.isRefValid && this.isPaidAmountValid;
   }
@@ -203,7 +214,7 @@ export class PaymentComponent implements OnInit {
   // lo que le falta al cliente para poder confirmar (se muestra debajo del botón deshabilitado,
   // así sabe qué completar en vez de ver un botón bloqueado sin explicación)
   get missingRequirements(): string[] {
-    if (this.isVerifying || this.selectedMethod === 'CASH') return [];
+    if (this.isLocked || this.selectedMethod === 'CASH') return [];
     const missing: string[] = [];
     if (!this.receiptFile) missing.push('PAYMENT.CONFIRM.MISSING.RECEIPT');
     if (!this.isRefValid) missing.push('PAYMENT.CONFIRM.MISSING.REFERENCE');
@@ -226,7 +237,7 @@ export class PaymentComponent implements OnInit {
         this.accounts = accounts;
         const digital = accounts.map(a => methodOptionOf(a)).filter((m): m is PaymentMethod => !!m);
         this.paymentMethods = [...digital, CASH_METHOD];
-        if (!this.isVerifying) this.selectedMethod = this.paymentMethods[0].id;
+        if (!this.isLocked) this.selectedMethod = this.paymentMethods[0].id;
         this.changes.markForCheck();
       },
       error: () => { /* sin payment-service solo queda efectivo */ }
@@ -286,14 +297,14 @@ export class PaymentComponent implements OnInit {
     this.restoreState();
   }
 
-  // si ya hay un pago reportado para esta reserva, la pantalla queda en revisión
+  // el estado del pago lo dice payment-service: aprobado, en revisión o sin pagar (o rechazado)
   private loadPaymentState(bookingId: number): void {
     this.paymentsApi.mine().subscribe({
       next: (payments) => {
         // payment-service los devuelve del más reciente al más antiguo: el primero es el vigente
         const current = payments.find(p => p.booking?.id === bookingId);
-        const open = !!current && ['PENDING', 'IN_REVIEW', 'APPROVED'].includes(current.status);
-        this.flowStep = open ? 'VERIFYING' : 'PENDING';
+        this.flowStep = current?.status === 'APPROVED' ? 'APPROVED'
+          : current && ['PENDING', 'IN_REVIEW'].includes(current.status) ? 'VERIFYING' : 'PENDING';
         this.lastRejectionReason = current?.status === 'REJECTED' ? (current.rejectionReason ?? '—') : null;
         this.saveState();
         this.changes.markForCheck();
@@ -348,8 +359,8 @@ export class PaymentComponent implements OnInit {
   }
 
   selectMethod(id: PaymentMethodId) {
-    // con el pago en revisión ya no se puede cambiar el método
-    if (this.isVerifying) return;
+    // con el pago en revisión o aprobado ya no se puede cambiar el método
+    if (this.isLocked) return;
     this.selectedMethod = id;
     this.saveState();
   }
