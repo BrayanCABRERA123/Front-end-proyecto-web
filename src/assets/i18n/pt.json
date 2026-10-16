@@ -653,7 +653,8 @@
       "DATE_TIME": "DATA E HORA",
       "VEHICLE": "VEÍCULO",
       "CLIENT": "CLIENTE",
-      "STATUS": "STATUS"
+      "STATUS": "STATUS",
+      "EMPTY": "Você não tem serviços atribuídos nessas datas."
     },
     "DETAIL": {
       "TITLE": "Informações do serviço",
@@ -2518,6 +2519,10 @@
     "SAVED_TITLE": "Ficha atualizada",
     "SAVED_MESSAGE": "A especialidade e as habilidades de {{name}} foram salvas.",
     "SAVE_ERROR_TITLE": "Não foi possível salvar",
-    "LEVELS": {"CERTIFIED": "Certificado", "EXPERT": "Nível especialista", "ADVANCED": "Avançado"}
+    "LEVELS": {
+      "CERTIFIED": "Certificado",
+      "EXPERT": "Nível especialista",
+      "ADVANCED": "Avançado"
+    }
   }
 }

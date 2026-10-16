@@ -31,6 +31,10 @@
             </span>
           </td>
         </tr>
+      } @empty {
+        <tr>
+          <td class="empty-row" colspan="5">{{ 'ASSIGNED_SERVICES.TABLE.EMPTY' | translate }}</td>
+        </tr>
       }
     </tbody>
 

@@ -110,6 +110,8 @@ export interface OperatorServiceResponse {
   comment: string | null;
   // desde cuándo se puede iniciar (operations-service: 15 minutos antes de la reserva)
   startableAt: string | null;
+  // primer nombre del cliente (vacío si security-service no respondió)
+  clientName?: string;
 }
 
 // especialidad y habilidades del operario (ficha del operario)

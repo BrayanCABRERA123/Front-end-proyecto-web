@@ -653,7 +653,8 @@
       "DATE_TIME": "DATE & TIME",
       "VEHICLE": "VEHICLE",
       "CLIENT": "CLIENT",
-      "STATUS": "STATUS"
+      "STATUS": "STATUS",
+      "EMPTY": "You have no services assigned for these dates."
     },
     "DETAIL": {
       "TITLE": "Service information",
@@ -2518,6 +2519,10 @@
     "SAVED_TITLE": "Profile updated",
     "SAVED_MESSAGE": "The specialty and skills of {{name}} were saved.",
     "SAVE_ERROR_TITLE": "Could not save",
-    "LEVELS": {"CERTIFIED": "Certified", "EXPERT": "Expert level", "ADVANCED": "Advanced"}
+    "LEVELS": {
+      "CERTIFIED": "Certified",
+      "EXPERT": "Expert level",
+      "ADVANCED": "Advanced"
+    }
   }
 }
