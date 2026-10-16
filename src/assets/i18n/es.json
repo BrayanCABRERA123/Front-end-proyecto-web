@@ -461,6 +461,7 @@
     "NO_TIMES": "No hay horas libres ese día",
     "SLOT_TAKEN_TITLE": "Esa hora ya se ocupó",
     "SLOT_TAKEN_MESSAGE": "Te mostramos las horas libres más cercanas de ese día.",
+    "SLOT_NOT_BOOKABLE_TITLE": "Esa hora no se puede reservar",
     "OPERATOR": {
       "LABEL": "Operario (opcional)",
       "ANY": "Sin preferencia: te asignamos uno libre",
@@ -2346,6 +2347,9 @@
     "CANNOT_DISABLE_OWN_ACCOUNT": "No puedes desactivar tu propia cuenta",
     "NOTIFICATION_NOT_FOUND": "La notificación ya no existe.",
     "SLOT_UNAVAILABLE": "Esa hora ya no está disponible.",
+    "SLOT_CLOSED_DAY": "El lavadero no abre ese día. Elige otra fecha.",
+    "SLOT_OUTSIDE_HOURS": "A esa hora el servicio no cabe en el horario de atención. Elige otra hora.",
+    "SLOT_TIME_PASSED": "Esa hora ya pasó. Elige una hora más tarde.",
     "VEHICLE_ALREADY_BOOKED": "Ese vehículo ya tiene una reserva a esa hora.",
     "SERVICE_NOT_AVAILABLE_FOR_VEHICLE": "Ese servicio no está disponible para tu tipo de vehículo.",
     "INVALID_DATE": "La fecha no es válida para reservar.",

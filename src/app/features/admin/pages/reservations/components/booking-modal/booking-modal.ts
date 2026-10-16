@@ -6,7 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { Booking } from '../../../../models/admin.models';
-import { BookingApiService, slotAlternatives } from '../../../../../../core/services/booking-api';
+import { BookingApiService, slotAlternatives, slotTakenByOthers } from '../../../../../../core/services/booking-api';
 import { ReservationsStore } from '../../../../services/reservations-store';
 import { CatalogServiceResponse, OwnedVehicleResponse } from '../../../../../../core/models/booking.models';
 import { apiErrorKey } from '../../../../../../core/utils/api-error';
@@ -215,7 +215,7 @@ export class BookingModal {
         const alternatives = slotAlternatives(error);
         if (alternatives) {
           this.showAlternatives(alternatives);
-          this.saveErrorKey = 'RESERVE.SLOT_TAKEN_MESSAGE';
+          this.saveErrorKey = slotTakenByOthers(error) ? 'RESERVE.SLOT_TAKEN_MESSAGE' : apiErrorKey(error);
         } else {
           this.saveErrorKey = apiErrorKey(error);
         }

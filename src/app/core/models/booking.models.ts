@@ -195,10 +195,11 @@ export interface RescheduleBookingRequest {
   notes?: string | null;
 }
 
-// 409 SLOT_UNAVAILABLE trae hasta 5 horas libres del mismo día (RF-006)
+// 409 SLOT_UNAVAILABLE trae hasta 5 horas libres del mismo día (RF-006) y el motivo
 export interface SlotUnavailableProblem {
   code: 'SLOT_UNAVAILABLE';
   alternatives: string[];
+  reason?: 'CLOSED_DAY' | 'OUTSIDE_HOURS' | 'TIME_PASSED' | 'NO_FREE_BAY';
 }
 
 // vehículo de cualquier cliente con su dueño (customer-service, solo admin)

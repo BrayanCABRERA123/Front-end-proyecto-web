@@ -32,6 +32,10 @@ const TRANSLATED_CODES = new Set([
   'NOTIFICATION_NOT_FOUND',
   // códigos del booking-service (reservas)
   'SLOT_UNAVAILABLE',
+  // motivo del 409 SLOT_UNAVAILABLE (campo reason del booking-service)
+  'SLOT_CLOSED_DAY',
+  'SLOT_OUTSIDE_HOURS',
+  'SLOT_TIME_PASSED',
   'VEHICLE_ALREADY_BOOKED',
   'SERVICE_NOT_AVAILABLE_FOR_VEHICLE',
   'INVALID_DATE',
@@ -94,6 +98,11 @@ export function apiErrorCode(error: unknown): string {
     return 'NETWORK_ERROR';
   }
 
-  const code = (error.error as ApiProblem | null)?.code;
+  const problem = error.error as (ApiProblem & { reason?: string }) | null;
+  const code = problem?.code;
+  // "no hay bahía libre" solo cuando ese es el motivo: fuera del horario o día cerrado se dice tal cual
+  if (code === 'SLOT_UNAVAILABLE' && problem?.reason && TRANSLATED_CODES.has(`SLOT_${problem.reason}`)) {
+    return `SLOT_${problem.reason}`;
+  }
   return code && TRANSLATED_CODES.has(code) ? code : 'UNEXPECTED';
 }
