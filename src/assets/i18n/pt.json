@@ -2,8 +2,8 @@
   "CONFIG": {
     "TITLE": "Configurações",
     "NOTIFICATIONS": "Notificações",
-    "PUSH": "Notificações Push",
-    "PUSH_DESC": "Receba alertas de reservas e promoções",
+    "PUSH": "Notificações push no celular",
+    "PUSH_DESC": "Receba no celular, com o app instalado, alertas de reservas e promoções. O sino da web sempre mostra tudo.",
     "EMAIL": "Lembretes por Email",
     "EMAIL_DESC": "Lembretes das suas reservas por e-mail (um dia e uma hora antes)",
     "PROMO": "Promoções e Ofertas",

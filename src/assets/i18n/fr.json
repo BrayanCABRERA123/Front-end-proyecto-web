@@ -2,8 +2,8 @@
   "CONFIG": {
     "TITLE": "Paramètres",
     "NOTIFICATIONS": "Notifications",
-    "PUSH": "Notifications Push",
-    "PUSH_DESC": "Recevez des alertes de réservations et promotions",
+    "PUSH": "Notifications push sur le téléphone",
+    "PUSH_DESC": "Recevez sur votre téléphone, avec l'application installée, les alertes de réservations et de promotions. La cloche du site affiche toujours tout.",
     "EMAIL": "Rappels par Email",
     "EMAIL_DESC": "Rappels de vos réservations par e-mail (un jour et une heure avant)",
     "PROMO": "Promotions et Offres",
