@@ -480,10 +480,10 @@
     "SERVICES": "Serviços"
   },
   "HERO": {
-    "BADGE": "Serviço móvel de lavagem #1",
+    "BADGE": "Reservas online para o seu lava-rápido",
     "TITLE_1": "Seu carro impecável,",
-    "TITLE_2": "onde você estiver",
-    "DESCRIPTION": "Reserve sua lavagem em minutos. Trabalhamos com uma equipe profissional para que você possa agendar sem filas e sem espera.",
+    "TITLE_2": "sem pegar fila",
+    "DESCRIPTION": "Reserve sua lavagem em minutos e chegue no horário combinado: sua baia e seu operador estarão esperando. Acompanhe o serviço pelo celular e pague sem filas.",
     "START": "Começar agora",
     "ALREADY_ACCOUNT": "Já tenho conta"
   },

@@ -480,10 +480,10 @@
     "SERVICES": "Services"
   },
   "HERO": {
-    "BADGE": "Mobile car wash service #1",
+    "BADGE": "Online booking for your car wash",
     "TITLE_1": "Your car spotless,",
-    "TITLE_2": "wherever you are",
-    "DESCRIPTION": "Book your wash in minutes. We work with a professional team so you can schedule without lines or waiting.",
+    "TITLE_2": "without waiting in line",
+    "DESCRIPTION": "Book your wash in minutes and arrive at your time: your bay and your operator will be ready. Follow the service from your phone and pay without lines.",
     "START": "Get started",
     "ALREADY_ACCOUNT": "I already have an account"
   },
