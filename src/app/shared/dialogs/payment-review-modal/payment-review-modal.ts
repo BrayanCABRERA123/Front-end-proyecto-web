@@ -6,7 +6,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { PaymentReviewData, PaymentReviewResult } from './payment-review.model';
-import { PAYMENT_TEXTS } from '../../../core/constants/payment-texts';
 import { AuthService } from '../../../core/services/auth';
 
 @Component({
@@ -17,8 +16,6 @@ import { AuthService } from '../../../core/services/auth';
   styleUrl: './payment-review-modal.scss'
 })
 export class PaymentReviewModal {
-
-  readonly texts = PAYMENT_TEXTS;
 
   private readonly auth = inject(AuthService);
 

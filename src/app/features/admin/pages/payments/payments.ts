@@ -17,7 +17,6 @@ import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { PaymentsStore, formatPaymentDate } from '../../services/payments-store';
 import { Payment, PaymentStatus } from '../../models/admin.models';
 import { apiErrorKey } from '../../../../core/utils/api-error';
-import { PAYMENT_TEXTS } from '../../../../core/constants/payment-texts';
 
 @Component({
   selector: 'app-payments',
@@ -28,7 +27,6 @@ import { PAYMENT_TEXTS } from '../../../../core/constants/payment-texts';
 })
 export class PaymentsComponent implements OnInit {
 
-  readonly texts = PAYMENT_TEXTS;
 
   search = '';
   methodFilter = '';
@@ -175,9 +173,10 @@ export class PaymentsComponent implements OnInit {
   // reembolsar es irreversible (revierte los puntos de la reserva): se confirma antes
   confirmRefund(payment: Payment): void {
     const data: ConfirmModalData = {
-      title: PAYMENT_TEXTS.REFUND_CONFIRM_TITLE,
-      message: PAYMENT_TEXTS.REFUND_CONFIRM_MESSAGE(payment.code),
-      confirmText: PAYMENT_TEXTS.REFUND_CONFIRM,
+      title: 'ADMIN_PAYMENTS.REFUND.CONFIRM_TITLE',
+      message: 'ADMIN_PAYMENTS.REFUND.CONFIRM_MESSAGE',
+      messageParams: { code: payment.code },
+      confirmText: 'ADMIN_PAYMENTS.REFUND.CONFIRM',
       cancelText: 'COMMON.CANCEL',
       danger: true
     };
@@ -186,7 +185,8 @@ export class PaymentsComponent implements OnInit {
       .subscribe((confirmed: boolean) => {
         if (!confirmed) return;
         this.store.refund(payment.id,
-          () => this.feedback.success(PAYMENT_TEXTS.REFUNDED_TITLE, PAYMENT_TEXTS.REFUNDED_MESSAGE(payment.code)),
+          () => this.feedback.success('ADMIN_PAYMENTS.REFUND.DONE_TITLE', 'ADMIN_PAYMENTS.REFUND.DONE_MESSAGE',
+            { messageParams: { code: payment.code } }),
           err => this.feedback.error('COMMON.ERROR', apiErrorKey(err)));
       });
   }
