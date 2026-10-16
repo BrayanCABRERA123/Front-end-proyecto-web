@@ -162,7 +162,7 @@
       "VEHICLES": "Véhicules",
       "NOTIFICATIONS": "Notifications"
     },
-    "SUBTITLE": "Voici votre module d'information en tant que client d'Express Car Wash",
+    "SUBTITLE": "Voici votre module d'information en tant que client de Lavado Vehicular",
     "CLIENT_VIEW": "Vue Client",
     "STATS": {
       "ACTIVE_RESERVATIONS": "Mes réservations actives",
@@ -1015,13 +1015,7 @@
   "ABOUT": {
     "EYEBROW": "Qui sommes-nous",
     "TITLE": "Nous prenons soin de votre véhicule comme si c'était le nôtre",
-    "DESCRIPTION": "Nous sommes une équipe de laveurs professionnels certifiés, engagés pour l'excellence et l'environnement. Réservez en ligne, arrivez à votre heure et votre baie vous attend, sans file ni attente.",
-    "STATS": {
-      "VEHICLES": "Véhicules lavés",
-      "CLIENTS": "Clients satisfaits",
-      "DAILY": "Services par jour",
-      "YEARS": "Années d'expérience"
-    }
+    "DESCRIPTION": "Nous sommes une équipe de laveurs professionnels certifiés, engagés pour l'excellence et l'environnement. Réservez en ligne, arrivez à votre heure et votre baie vous attend, sans file ni attente."
   },
   "CONTACT": {
     "EYEBROW": "Contact",

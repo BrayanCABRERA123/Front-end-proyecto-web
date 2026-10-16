@@ -162,7 +162,7 @@
       "VEHICLES": "Vehicles",
       "NOTIFICATIONS": "Notifications"
     },
-    "SUBTITLE": "This is your client information module for Express Car Wash",
+    "SUBTITLE": "This is your client information module for Lavado Vehicular",
     "CLIENT_VIEW": "Client View",
     "STATS": {
       "ACTIVE_RESERVATIONS": "My active bookings",
@@ -1015,13 +1015,7 @@
   "ABOUT": {
     "EYEBROW": "Who we are",
     "TITLE": "We take care of your vehicle as if it were our own",
-    "DESCRIPTION": "We are a team of certified professional washers, committed to excellence and to the environment. Book online, arrive at your time and your bay is ready, with no lines or waiting.",
-    "STATS": {
-      "VEHICLES": "Vehicles washed",
-      "CLIENTS": "Happy clients",
-      "DAILY": "Services a day",
-      "YEARS": "Years of experience"
-    }
+    "DESCRIPTION": "We are a team of certified professional washers, committed to excellence and to the environment. Book online, arrive at your time and your bay is ready, with no lines or waiting."
   },
   "CONTACT": {
     "EYEBROW": "Contact",

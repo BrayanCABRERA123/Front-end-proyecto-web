@@ -12,14 +12,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class FeaturesComponent {
 
-  // cifras destacadas de la sección "quiénes somos"
-  stats = [
-    { icon: 'directions_car', value: '15K+', labelKey: 'ABOUT.STATS.VEHICLES' },
-    { icon: 'sentiment_satisfied', value: '8K+', labelKey: 'ABOUT.STATS.CLIENTS' },
-    { icon: 'event_available', value: '12+', labelKey: 'ABOUT.STATS.DAILY' },
-    { icon: 'military_tech', value: '5+', labelKey: 'ABOUT.STATS.YEARS' }
-  ];
-
   features = [
     {
       icon: 'water_drop',

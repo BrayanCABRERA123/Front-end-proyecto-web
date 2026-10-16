@@ -1,24 +1,12 @@
 <section id="about" class="features-section">
 
-  <!-- bloque "quiénes somos": texto + ilustración decorativa + cifras -->
+  <!-- bloque "quiénes somos": texto + ilustración decorativa -->
   <div class="about-block">
 
     <div class="about-text">
       <span class="about-eyebrow">{{ 'ABOUT.EYEBROW' | translate }}</span>
       <h2 class="about-title">{{ 'ABOUT.TITLE' | translate }}</h2>
       <p class="about-description">{{ 'ABOUT.DESCRIPTION' | translate }}</p>
-
-      <div class="about-stats">
-        @for (stat of stats; track stat.labelKey) {
-          <div class="stat-item">
-            <mat-icon>{{ stat.icon }}</mat-icon>
-            <div class="stat-info">
-              <span class="stat-value">{{ stat.value }}</span>
-              <span class="stat-label">{{ stat.labelKey | translate }}</span>
-            </div>
-          </div>
-        }
-      </div>
     </div>
 
     <!-- ilustración decorativa con burbujas flotantes -->
