@@ -2527,5 +2527,10 @@
       "EXPERT": "Expert level",
       "ADVANCED": "Advanced"
     }
+  },
+  "NOT_FOUND": {
+    "TITLE": "Page not found",
+    "MESSAGE": "The address you opened does not exist or has moved.",
+    "BUTTON": "Go to the home page"
   }
 }
