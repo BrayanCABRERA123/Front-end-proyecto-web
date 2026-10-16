@@ -46,6 +46,12 @@ export class AuthService {
     return this.accessToken() !== null;
   }
 
+  // true mientras haya una sesión guardada, aunque su token ya haya vencido.
+  // Después de logout es false: un 401 tardío ya no significa "sesión vencida"
+  hasSession(): boolean {
+    return this.sessionSignal() !== null;
+  }
+
   // solo lectura: un token vencido se ignora aquí y se limpia en expireSession/logout
   accessToken(): string | null {
     const session = this.sessionSignal();

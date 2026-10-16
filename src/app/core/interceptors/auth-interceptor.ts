@@ -28,7 +28,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: unknown) => {
       const isPublic = PUBLIC_AUTH_PATHS.some(path => req.url.includes(path));
 
-      if (error instanceof HttpErrorResponse && error.status === 401 && !isPublic) {
+      // sin sesión (ya se cerró) el 401 es de una petición que quedó en curso: no es "sesión vencida"
+      if (error instanceof HttpErrorResponse && error.status === 401 && !isPublic && auth.hasSession()) {
         auth.expireSession(router.url);
       }
 
