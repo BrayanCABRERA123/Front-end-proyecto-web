@@ -46,5 +46,12 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/operator/operator-module')
         .then(m => m.OperatorModule)
+  },
+  // cualquier otra dirección: página de "no encontrada" con enlace al inicio de cada rol
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./features/not-found/not-found')
+        .then(c => c.NotFoundComponent)
   }
 ];

@@ -2527,5 +2527,10 @@
       "EXPERT": "Nivel experto",
       "ADVANCED": "Avanzado"
     }
+  },
+  "NOT_FOUND": {
+    "TITLE": "Página no encontrada",
+    "MESSAGE": "La dirección que abriste no existe o cambió de lugar.",
+    "BUTTON": "Ir al inicio"
   }
 }

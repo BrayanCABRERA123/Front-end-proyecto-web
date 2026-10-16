@@ -2527,5 +2527,10 @@
       "EXPERT": "Niveau expert",
       "ADVANCED": "Avancé"
     }
+  },
+  "NOT_FOUND": {
+    "TITLE": "Page introuvable",
+    "MESSAGE": "L'adresse que vous avez ouverte n'existe pas ou a changé.",
+    "BUTTON": "Aller à l'accueil"
   }
 }
