@@ -21,6 +21,15 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "allowedCommonJsDependencies": [
+              "canvg",
+              "core-js",
+              "file-saver",
+              "html2canvas",
+              "qrcode",
+              "raf",
+              "rgbcolor"
+            ],
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
