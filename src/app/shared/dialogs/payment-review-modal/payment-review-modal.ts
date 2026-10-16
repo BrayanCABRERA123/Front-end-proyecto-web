@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { PaymentReviewData, PaymentReviewResult } from './payment-review.model';
 import { PAYMENT_TEXTS } from '../../../core/constants/payment-texts';
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-payment-review-modal',
@@ -18,6 +19,14 @@ import { PAYMENT_TEXTS } from '../../../core/constants/payment-texts';
 export class PaymentReviewModal {
 
   readonly texts = PAYMENT_TEXTS;
+
+  private readonly auth = inject(AuthService);
+
+  // quien revisa el pago pendiente es el admin que tiene la sesión abierta
+  get reviewerName(): string {
+    const user = this.auth.user();
+    return user ? `${user.firstName} ${user.lastName}`.trim() : '';
+  }
 
   // true cuando el admin le dio "Rechazar" y ahora toca pedirle el motivo
   askingRejectReason = false;
