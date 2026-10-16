@@ -138,7 +138,7 @@ export class AssignedServicesComponent implements OnInit {
       serviceType: s.services,
       dateTime: `${isoToDisplayDate(s.date)} - ${s.startTime.slice(0, 5)}`,
       vehicle: [s.vehicle, s.plate].filter(Boolean).join(' - '),
-      client: s.plate || '—',
+      client: s.clientName || '—',
       phone: '—',
       status: this.translate.instant('STATUS.' + statusKey),
       statusColor,
