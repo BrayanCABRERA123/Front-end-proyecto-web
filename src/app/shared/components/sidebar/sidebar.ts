@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, computed } from '@angular/core';
+import { Component, Input, OnInit, computed, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +8,7 @@ import { ConfirmLogoutDialogComponent } from '../../../shared/dialogs/confirm-lo
 // usuario de la sesión: el mismo que se edita en el perfil
 import { UserSession } from '../../../core/services/user-session';
 import { AuthService } from '../../../core/services/auth';
+import { NotificationWatcher } from '../../../core/services/notification-watcher';
 
 @Component({
   selector: 'app-sidebar',
@@ -74,7 +75,11 @@ export class SidebarComponent implements OnInit {
   }[] = [];
 
 
+  // no leídas: el número junto a "Notificaciones" del menú (se actualiza solo)
+  readonly watcher = inject(NotificationWatcher);
+
   ngOnInit(): void {
+    this.watcher.start();
 
     switch (this.rol) {
 

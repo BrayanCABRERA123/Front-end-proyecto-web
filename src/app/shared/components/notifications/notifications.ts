@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +17,7 @@ import { ConfirmModal, ConfirmModalData } from '../../dialogs/confirm-modal/conf
 import { FeedbackService } from '../../dialogs/feedback.service';
 // servicio que habla con el notification-service
 import { NotificationsService } from '../../../core/services/notifications';
+import { NotificationWatcher } from '../../../core/services/notification-watcher';
 // convierte un error del backend en la llave de traducción API_ERRORS.<code>
 import { apiErrorKey } from '../../../core/utils/api-error';
 
@@ -73,8 +75,13 @@ export class NotificationsComponent implements OnInit {
     private notificationsService: NotificationsService
   ) {}
 
+  private readonly watcher = inject(NotificationWatcher);
+  private readonly destroyRef = inject(DestroyRef);
+
   ngOnInit(): void {
     this.reload();
+    // llegaron notificaciones nuevas mientras la página está abierta: se recarga sola
+    this.watcher.arrived.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.reload());
   }
 
   // pide la bandeja al backend
@@ -209,5 +216,7 @@ export class NotificationsComponent implements OnInit {
   // la app es zoneless: los cambios que llegan del backend no se pintan solos
   private refreshView() {
     this.cdr.markForCheck();
+    // el contador del menú sigue lo que se leyó o borró aquí
+    this.watcher.refresh();
   }
 }
