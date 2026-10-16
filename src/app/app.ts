@@ -21,7 +21,7 @@ export class App {
   }
 
   initApp() {
-    this.translate.setDefaultLang('es');
+    this.translate.setFallbackLang('es');
     // primero lo último usado en este navegador; con sesión, lo de la cuenta (RF-019/020)
     this.preferences.applyLocal();
     if (this.auth.isAuthenticated()) {

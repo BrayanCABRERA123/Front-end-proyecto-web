@@ -54,7 +54,7 @@ export class SettingsPanelComponent implements OnInit {
     private changes: ChangeDetectorRef
   ) {
     this.translate.addLangs(['es', 'en', 'fr', 'pt']);
-    this.translate.setDefaultLang('es');
+    this.translate.setFallbackLang('es');
   }
 
   // abre el documento legal solo para consulta (sin botones de aceptación,
