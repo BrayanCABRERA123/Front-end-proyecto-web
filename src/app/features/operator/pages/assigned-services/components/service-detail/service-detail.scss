@@ -149,33 +149,6 @@
   }
 }
 
-// botón reportar
-.btn-report {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 20px;
-  background-color: var(--primary-soft);
-  color: var(--primary);
-  border: none;
-  border-radius: 10px;
-  @include body-text-bold;
-  line-height: normal;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-
-  &:hover {
-    background-color: var(--primary);
-    color: #ffffff;
-  }
-}
-
 // botón finalizar — neutro
 .btn-finish {
   display: flex;
@@ -258,7 +231,6 @@
   }
 
   .btn-start,
-  .btn-report,
   .btn-finish,
   .btn-contact {
     width: 100%;

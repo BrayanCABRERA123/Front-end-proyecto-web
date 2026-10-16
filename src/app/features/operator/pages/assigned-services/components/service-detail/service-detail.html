@@ -62,10 +62,6 @@
           }
         }
         @if (service.statusColor === 'progress') {
-          <button class="btn-report" (click)="reportProgress()">
-            <mat-icon>refresh</mat-icon>
-            {{ 'ASSIGNED_SERVICES.DETAIL.REPORT' | translate }}
-          </button>
           <button class="btn-finish" (click)="finishService()">
             <mat-icon>flag</mat-icon>
             {{ 'ASSIGNED_SERVICES.DETAIL.FINISH' | translate }}

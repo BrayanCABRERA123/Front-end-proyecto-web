@@ -37,13 +37,6 @@ export class ServiceDetailComponent {
     );
   }
 
-  reportProgress(): void {
-    this.confirmThenNotify(
-      { title: 'ASSIGNED_SERVICES.DETAIL.REPORT_TITLE', message: 'ASSIGNED_SERVICES.DETAIL.REPORT_MESSAGE', confirmText: 'ASSIGNED_SERVICES.DETAIL.REPORT_CONFIRM' },
-      { title: 'ASSIGNED_SERVICES.DETAIL.REPORTED_TITLE', message: 'ASSIGNED_SERVICES.DETAIL.REPORTED_MESSAGE' }
-    );
-  }
-
   // usa los mismos textos de confirmación que "Mi Agenda"
   finishService(): void {
     this.confirmThenNotify(
