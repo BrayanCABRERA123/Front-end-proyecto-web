@@ -23,10 +23,11 @@ import { VehicleResponse } from '../../../../core/models/vehicle.models';
 import { LoyaltyApiService, PromotionForCustomer } from '../../../../core/services/loyalty-api';
 import { OperationsApiService } from '../../../../core/services/operations-api';
 
-// avance del servicio según su estado (Programado → Confirmado → En progreso → Finalizado)
+// avance del servicio según su estado (Programado → Confirmado → En progreso → Finalizado).
+// Programado y Confirmado van en 0 %: el lavado todavía no ha empezado
 const PROGRESS_BY_STATUS: Record<string, number> = {
-  SCHEDULED: 10,
-  CONFIRMED: 25,
+  SCHEDULED: 0,
+  CONFIRMED: 0,
   IN_PROGRESS: 50,
   COMPLETED: 100
 };
