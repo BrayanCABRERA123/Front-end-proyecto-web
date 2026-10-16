@@ -1948,7 +1948,7 @@
     "SCHEDULE_BAY": "Schedule & bay",
     "OPERATOR": "Operator",
     "BANK_RECONCILIATION": "Bank reconciliation details",
-    "VERIFIED_NOTE": "Verified against gateway",
+    "VERIFIED_NOTE": "Reported by the client",
     "METHOD": "Payment method",
     "TRANSACTION_REFERENCE": "Transaction reference",
     "COPY": "Copy",
