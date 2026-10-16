@@ -48,33 +48,6 @@
   margin: 0;
 }
 
-.footer-social {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 4px;
-}
-
-.social-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-
-  background-color: var(--bg-soft);
-  color: var(--text-secondary);
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: var(--primary);
-    color: #ffffff;
-    transform: translateY(-2px);
-  }
-}
-
 .footer-column {
   display: flex;
   flex-direction: column;
