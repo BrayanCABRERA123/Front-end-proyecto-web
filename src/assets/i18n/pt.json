@@ -1902,7 +1902,8 @@
     "STATUS": {
       "pending": "Pendente",
       "approved": "Aprovado",
-      "rejected": "Rejeitado"
+      "rejected": "Rejeitado",
+      "refunded": "Reembolsado"
     },
     "ACTIONS": {
       "review": "Revisar",
@@ -1926,6 +1927,13 @@
       "REVIEWED_MESSAGE": "O pagamento {{code}} foi marcado como revisado.",
       "REJECTED_TITLE": "Pagamento rejeitado",
       "REJECTED_MESSAGE": "O pagamento {{code}} foi rejeitado."
+    },
+    "REFUND": {
+      "CONFIRM_TITLE": "Reembolsar pagamento",
+      "CONFIRM_MESSAGE": "Você confirma que devolveu o dinheiro do pagamento {{code}}? Os pontos que a reserva ganhou serão estornados e isso não pode ser desfeito.",
+      "CONFIRM": "Sim, reembolsar",
+      "DONE_TITLE": "Pagamento reembolsado",
+      "DONE_MESSAGE": "O pagamento {{code}} foi reembolsado e os pontos da reserva foram estornados."
     }
   },
   "PAYMENT_REVIEW_MODAL": {
@@ -1950,6 +1958,9 @@
     "AMOUNT_COMPARISON": "Comparação de valores",
     "AMOUNT_TO_PAY": "Valor a pagar (serviço)",
     "AMOUNT_DECLARED": "Valor declarado no comprovante",
+    "NOT_DECLARED": "Não informado",
+    "NOT_DECLARED_TITLE": "O cliente não informou o valor",
+    "NOT_DECLARED_TEXT": "Verifique o valor diretamente na imagem do comprovante.",
     "MATCH_TITLE": "Os valores coincidem exatamente!",
     "MATCH_TEXT": "O pagamento cobre 100% da tarifa oficial combinada na reserva.",
     "MATCH_BADGE": "Conforme (0% de diferença)",
@@ -1959,6 +1970,7 @@
     "CANCEL": "Cancelar",
     "REJECT": "Rejeitar",
     "APPROVE": "Aprovar pagamento",
+    "REFUND": "Reembolsar",
     "REJECT_REASON_LABEL": "Motivo da rejeição",
     "REJECT_REASON_PLACEHOLDER": "Ex. O valor não corresponde ao preço do serviço"
   },

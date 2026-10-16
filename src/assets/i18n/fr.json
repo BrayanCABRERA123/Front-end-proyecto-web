@@ -1902,7 +1902,8 @@
     "STATUS": {
       "pending": "En attente",
       "approved": "Approuvé",
-      "rejected": "Rejeté"
+      "rejected": "Rejeté",
+      "refunded": "Remboursé"
     },
     "ACTIONS": {
       "review": "Vérifier",
@@ -1926,6 +1927,13 @@
       "REVIEWED_MESSAGE": "Le paiement {{code}} a été marqué comme examiné.",
       "REJECTED_TITLE": "Paiement rejeté",
       "REJECTED_MESSAGE": "Le paiement {{code}} a été rejeté."
+    },
+    "REFUND": {
+      "CONFIRM_TITLE": "Rembourser le paiement",
+      "CONFIRM_MESSAGE": "Confirmez-vous avoir restitué l'argent du paiement {{code}} ? Les points gagnés par la réservation seront annulés et l'action est irréversible.",
+      "CONFIRM": "Oui, rembourser",
+      "DONE_TITLE": "Paiement remboursé",
+      "DONE_MESSAGE": "Le paiement {{code}} a été remboursé et les points de la réservation ont été annulés."
     }
   },
   "PAYMENT_REVIEW_MODAL": {
@@ -1950,6 +1958,9 @@
     "AMOUNT_COMPARISON": "Comparaison des montants",
     "AMOUNT_TO_PAY": "Montant dû (service)",
     "AMOUNT_DECLARED": "Montant déclaré sur le justificatif",
+    "NOT_DECLARED": "Non indiqué",
+    "NOT_DECLARED_TITLE": "Le client n'a pas indiqué le montant",
+    "NOT_DECLARED_TEXT": "Vérifiez le montant directement sur l'image du justificatif.",
     "MATCH_TITLE": "Les montants correspondent exactement !",
     "MATCH_TEXT": "Le paiement couvre 100 % du tarif officiel convenu pour la réservation.",
     "MATCH_BADGE": "Conforme (0% d'écart)",
@@ -1959,6 +1970,7 @@
     "CANCEL": "Annuler",
     "REJECT": "Rejeter",
     "APPROVE": "Approuver le paiement",
+    "REFUND": "Rembourser",
     "REJECT_REASON_LABEL": "Motif du rejet",
     "REJECT_REASON_PLACEHOLDER": "Ex. Le montant ne correspond pas au prix du service"
   },

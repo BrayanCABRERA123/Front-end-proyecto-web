@@ -5,7 +5,7 @@
       <div class="title-row">
         <h2>{{ 'PAYMENT_REVIEW_MODAL.TITLE' | translate:{ code: data.code } }}</h2>
         <span [class]="'status-pill status-pill--' + data.status">
-          {{ data.status === 'refunded' ? texts.STATUS_REFUNDED : (('ADMIN_PAYMENTS.STATUS.' + data.status) | translate) }}
+          {{ ('ADMIN_PAYMENTS.STATUS.' + data.status) | translate }}
         </span>
       </div>
       <p>{{ 'PAYMENT_REVIEW_MODAL.SUBTITLE' | translate }}</p>
@@ -105,7 +105,7 @@
               @if (hasDeclared) {
                 <strong>{{ cop(data.amountDeclared!) }} COP</strong>
               } @else {
-                <strong>{{ texts.NOT_DECLARED }}</strong>
+                <strong>{{ 'PAYMENT_REVIEW_MODAL.NOT_DECLARED' | translate }}</strong>
               }
             </div>
           </div>
@@ -114,8 +114,8 @@
             <div class="match-box">
               <mat-icon>info</mat-icon>
               <div>
-                <strong>{{ texts.NOT_DECLARED_TITLE }}</strong>
-                <p>{{ texts.NOT_DECLARED_TEXT }}</p>
+                <strong>{{ 'PAYMENT_REVIEW_MODAL.NOT_DECLARED_TITLE' | translate }}</strong>
+                <p>{{ 'PAYMENT_REVIEW_MODAL.NOT_DECLARED_TEXT' | translate }}</p>
               </div>
             </div>
           } @else if (amountsMatch) {
@@ -194,7 +194,7 @@
         @if (data.status === 'approved') {
           <button class="btn-reject" type="button" (click)="refund()">
             <mat-icon>undo</mat-icon>
-            {{ texts.REFUND }}
+            {{ 'PAYMENT_REVIEW_MODAL.REFUND' | translate }}
           </button>
         }
       }

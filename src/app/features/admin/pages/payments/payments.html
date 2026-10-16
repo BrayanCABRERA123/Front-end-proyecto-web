@@ -75,7 +75,7 @@
         <option value="pending">{{ 'ADMIN_PAYMENTS.FILTERS.PENDING_ONLY' | translate }}</option>
         <option value="approved">{{ 'ADMIN_PAYMENTS.STATUS.approved' | translate }}</option>
         <option value="rejected">{{ 'ADMIN_PAYMENTS.STATUS.rejected' | translate }}</option>
-        <option value="refunded">{{ texts.STATUS_REFUNDED }}</option>
+        <option value="refunded">{{ 'ADMIN_PAYMENTS.STATUS.refunded' | translate }}</option>
       </select>
 
       <button class="btn-outline" (click)="clearFilters()">
@@ -142,7 +142,7 @@
                   </td>
                   <td>
                     <span [class]="'status-pill status-pill--' + p.status">
-                      {{ p.status === 'refunded' ? texts.STATUS_REFUNDED : (('ADMIN_PAYMENTS.STATUS.' + p.status) | translate) }}
+                      {{ ('ADMIN_PAYMENTS.STATUS.' + p.status) | translate }}
                     </span>
                   </td>
                   <td class="actions-cell">

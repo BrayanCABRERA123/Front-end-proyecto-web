@@ -1902,7 +1902,8 @@
     "STATUS": {
       "pending": "Pending",
       "approved": "Approved",
-      "rejected": "Rejected"
+      "rejected": "Rejected",
+      "refunded": "Refunded"
     },
     "ACTIONS": {
       "review": "Review",
@@ -1926,6 +1927,13 @@
       "REVIEWED_MESSAGE": "Payment {{code}} was marked as reviewed.",
       "REJECTED_TITLE": "Payment rejected",
       "REJECTED_MESSAGE": "Payment {{code}} was rejected."
+    },
+    "REFUND": {
+      "CONFIRM_TITLE": "Refund payment",
+      "CONFIRM_MESSAGE": "Do you confirm you returned the money of payment {{code}}? The points the booking earned will be reversed and this cannot be undone.",
+      "CONFIRM": "Yes, refund",
+      "DONE_TITLE": "Payment refunded",
+      "DONE_MESSAGE": "Payment {{code}} was refunded and the booking points were reversed."
     }
   },
   "PAYMENT_REVIEW_MODAL": {
@@ -1950,6 +1958,9 @@
     "AMOUNT_COMPARISON": "Amount comparison",
     "AMOUNT_TO_PAY": "Amount due (service)",
     "AMOUNT_DECLARED": "Amount declared on receipt",
+    "NOT_DECLARED": "Not stated",
+    "NOT_DECLARED_TITLE": "The client did not state the amount",
+    "NOT_DECLARED_TEXT": "Check the amount directly on the receipt image.",
     "MATCH_TITLE": "The amounts match exactly!",
     "MATCH_TEXT": "The payment covers 100% of the official rate agreed for the booking.",
     "MATCH_BADGE": "Compliant (0% difference)",
@@ -1959,6 +1970,7 @@
     "CANCEL": "Cancel",
     "REJECT": "Reject",
     "APPROVE": "Approve payment",
+    "REFUND": "Refund",
     "REJECT_REASON_LABEL": "Rejection reason",
     "REJECT_REASON_PLACEHOLDER": "E.g. The amount doesn't match the service price"
   },
