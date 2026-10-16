@@ -5,11 +5,12 @@ import { FeaturesComponent } from '../components/features/features';
 import { ServicesComponent } from '../components/services/services';
 import { ContactComponent } from '../components/contact/contact';
 import { FooterComponent } from '../components/footer/footer';
+import { DownloadComponent } from '../components/download/download';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, HeroComponent, FeaturesComponent, ServicesComponent, ContactComponent, FooterComponent],
+  imports: [NavbarComponent, HeroComponent, FeaturesComponent, ServicesComponent, DownloadComponent, ContactComponent, FooterComponent],
   templateUrl: './landing.html',
   styleUrl: './landing.scss'
 })

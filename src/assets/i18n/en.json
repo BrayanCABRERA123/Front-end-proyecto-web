@@ -482,6 +482,16 @@
     "START": "Get started",
     "ALREADY_ACCOUNT": "I already have an account"
   },
+  "DOWNLOAD": {
+    "EYEBROW": "Android app",
+    "TITLE": "Take LavaRápido on your phone",
+    "DESCRIPTION": "Book, pay and follow your car wash from the app, with instant alerts when your service starts or finishes.",
+    "BUTTON": "Download the app (Android)",
+    "VERSION": "Version {{version}}",
+    "INSTALL_HINT": "When you open the file, Android may ask you to allow installing apps from unknown sources: accept it to install the app.",
+    "QR_HINT": "Scan it with your phone camera",
+    "QR_ALT": "QR code to download the app"
+  },
   "FEATURES": {
     "TITLE": "Why choose us?",
     "SUBTITLE": "We provide the best mobile car wash service with professional quality.",
