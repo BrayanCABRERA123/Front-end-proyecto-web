@@ -22,7 +22,8 @@ interface CalendarDay {
 export class MiniCalendarComponent implements OnChanges {
 
   // mapa 'AAAA-MM-DD' -> cuantos servicios hay ese dia
-  @Input() servicesByDate: Record<string, number> = {};
+  // fechas sin servicios no vienen en el mapa: por eso cada valor puede faltar
+  @Input() servicesByDate: Partial<Record<string, number>> = {};
   @Input() selectedDate: string = '';
 
   @Output() selectedDateChange = new EventEmitter<string>();
