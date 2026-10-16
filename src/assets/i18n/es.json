@@ -1015,13 +1015,7 @@
   "ABOUT": {
     "EYEBROW": "Quiénes somos",
     "TITLE": "Cuidamos tu vehículo como si fuera nuestro",
-    "DESCRIPTION": "Somos un equipo de lavadores profesionales certificados, comprometidos con la excelencia y el cuidado del medio ambiente. Reservas en línea, llegas a tu hora y tu bahía te espera, sin filas ni esperas.",
-    "STATS": {
-      "VEHICLES": "Vehículos lavados",
-      "CLIENTS": "Clientes satisfechos",
-      "DAILY": "Servicios al día",
-      "YEARS": "Años de experiencia"
-    }
+    "DESCRIPTION": "Somos un equipo de lavadores profesionales certificados, comprometidos con la excelencia y el cuidado del medio ambiente. Reservas en línea, llegas a tu hora y tu bahía te espera, sin filas ni esperas."
   },
   "CONTACT": {
     "EYEBROW": "Contacto",

@@ -1015,13 +1015,7 @@
   "ABOUT": {
     "EYEBROW": "Qui sommes-nous",
     "TITLE": "Nous prenons soin de votre véhicule comme si c'était le nôtre",
-    "DESCRIPTION": "Nous sommes une équipe de laveurs professionnels certifiés, engagés pour l'excellence et l'environnement. Réservez en ligne, arrivez à votre heure et votre baie vous attend, sans file ni attente.",
-    "STATS": {
-      "VEHICLES": "Véhicules lavés",
-      "CLIENTS": "Clients satisfaits",
-      "DAILY": "Services par jour",
-      "YEARS": "Années d'expérience"
-    }
+    "DESCRIPTION": "Nous sommes une équipe de laveurs professionnels certifiés, engagés pour l'excellence et l'environnement. Réservez en ligne, arrivez à votre heure et votre baie vous attend, sans file ni attente."
   },
   "CONTACT": {
     "EYEBROW": "Contact",

@@ -60,54 +60,6 @@
   max-width: 460px;
 }
 
-.about-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  padding: 14px;
-  background-color: var(--card);
-  border-radius: 14px;
-
-  mat-icon {
-    flex-shrink: 0;
-    width: 38px;
-    height: 38px;
-    font-size: $fs-h3;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: var(--primary);
-    background-color: var(--primary-soft);
-    border-radius: 10px;
-  }
-}
-
-.stat-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-value {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text);
-  line-height: 1.1;
-}
-
-.stat-label {
-  font-size: 11.5px;
-  color: var(--text-secondary);
-}
-
 /* ILUSTRACIÓN DECORATIVA */
 
 .about-visual {
