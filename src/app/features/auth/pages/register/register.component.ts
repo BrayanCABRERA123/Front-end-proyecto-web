@@ -256,7 +256,9 @@ export class RegisterComponent {
       lastName: value.lastName.trim(),
       email: value.email,
       phone: value.phone || null,
-      password: value.password
+      password: value.password,
+      acceptsTerms: value.acceptTerms === true,
+      acceptsDataPolicy: value.acceptDataPolicy === true
     }).subscribe({
       next: () => {
         this.loading.set(false);

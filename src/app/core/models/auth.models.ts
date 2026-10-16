@@ -31,6 +31,9 @@ export interface RegisterRequest {
   email: string;
   phone: string | null;
   password: string;
+  // casillas de los Términos y de la Política de Tratamiento de Datos: security-service guarda la fecha
+  acceptsTerms: boolean;
+  acceptsDataPolicy: boolean;
 }
 
 // lo que el usuario puede cambiar de su propio perfil (PATCH /users/me)
