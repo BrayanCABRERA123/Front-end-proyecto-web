@@ -32,7 +32,7 @@
   "SIDEBAR": {
     "PAYMENT": "Pagar serviço",
     "DASHBOARD": "Painel",
-    "TITLE": "Lavagem de Veículos",
+    "TITLE": "LavaRápido",
     "PROFILE": "Perfil",
     "RESERVE": "Reservar lavagem",
     "NOTIFICATIONS": "Notificações",
@@ -155,14 +155,14 @@
   },
   "DASHBOARD": {
     "HELLO": "Olá, {{name}}!",
-    "WELCOME": "Bem-vindo de volta à Lavagem de Veículos",
+    "WELCOME": "Bem-vindo de volta ao LavaRápido",
     "NEXT_RESERVATIONS": "Próximas Reservas",
     "RESUMEN": {
       "ACTIVE": "Reservas ativas",
       "VEHICLES": "Veículos",
       "NOTIFICATIONS": "Notificações"
     },
-    "SUBTITLE": "Este é o seu módulo de informações como cliente AquaWash",
+    "SUBTITLE": "Este é o seu módulo de informações como cliente da Express Car Wash",
     "CLIENT_VIEW": "Visão do Cliente",
     "STATS": {
       "ACTIVE_RESERVATIONS": "Minhas reservas ativas",
@@ -470,7 +470,7 @@
     }
   },
   "APP": {
-    "TITLE": "Lavagem de Veículos"
+    "TITLE": "LavaRápido"
   },
   "NAV": {
     "LOGIN": "Entrar",
@@ -1009,7 +1009,7 @@
       "TERMS": "Termos de serviço",
       "PRIVACY": "Política de privacidade"
     },
-    "COPYRIGHT": "© {{year}} AquaWash. Todos os direitos reservados."
+    "COPYRIGHT": "© {{year}} Express Car Wash S.A.S. Todos os direitos reservados."
   },
   "ABOUT": {
     "EYEBROW": "Quem somos",
