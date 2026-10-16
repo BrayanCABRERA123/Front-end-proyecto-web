@@ -19,6 +19,7 @@ import { Booking, Payment } from '../../models/admin.models';
 import { apiErrorKey } from '../../../../core/utils/api-error';
 import { BookingApiService } from '../../../../core/services/booking-api';
 import { DaySummaryResponse } from '../../../../core/models/booking.models';
+import { AuthService } from '../../../../core/services/auth';
 
 // un día de la gráfica de ingresos (los datos salen de los pagos aprobados)
 interface RevenueDay {
@@ -72,7 +73,12 @@ const SERVICE_ICONS = ['workspace_premium', 'sanitizer', 'auto_awesome', 'local_
 })
 export class DashboardComponent {
 
-  adminName = 'Laura';
+  private readonly auth = inject(AuthService);
+
+  // primer nombre de quien inició sesión (security-service)
+  get adminName(): string {
+    return this.auth.user()?.firstName ?? '';
+  }
 
   today = new Date().toLocaleDateString('es-CO', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
