@@ -1,8 +1,9 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 
-import { Payment, PaymentStatus } from '../models/admin.models';
+import { Booking, Payment, PaymentStatus } from '../models/admin.models';
 import { PaymentResponse, PaymentsApiService } from '../../../core/services/payments-api';
 import { AuthService } from '../../../core/services/auth';
+import { ReservationsStore } from './reservations-store';
 
 /** fecha ISO (yyyy-MM-dd) de hoy, en hora local */
 function todayIso(): string {
@@ -25,13 +26,19 @@ export class PaymentsStore {
 
   private readonly api = inject(PaymentsApiService);
   private readonly auth = inject(AuthService);
+  // payment-service solo trae vehículo y placa de la reserva: el cliente, la bahía y el operario
+  // salen de las reservas que el admin ya tiene cargadas (mismo código de reserva)
+  private readonly reservations = inject(ReservationsStore);
 
   private readonly state = signal<Payment[]>([]);
   private readonly source = new Map<string, PaymentResponse>();
 
-  readonly payments = computed(() => this.state());
+  readonly payments = computed(() => {
+    const byCode = new Map(this.reservations.bookings().map(b => [b.code, b]));
+    return this.state().map(p => withBooking(p, byCode.get(p.bookingCode)));
+  });
   // pagos en revisión, los más recientes primero (dashboard)
-  readonly pendingPayments = computed(() => this.state().filter(p => p.status === 'pending'));
+  readonly pendingPayments = computed(() => this.payments().filter(p => p.status === 'pending'));
   readonly today = todayIso();
 
   constructor() {
@@ -52,7 +59,7 @@ export class PaymentsStore {
   }
 
   getById(id: string): Payment | undefined {
-    return this.state().find(p => p.id === id);
+    return this.payments().find(p => p.id === id);
   }
 
   /**
@@ -123,5 +130,18 @@ function toPayment(p: PaymentResponse): Payment {
     email: '—',
     bankAccount: p.account?.accountNumber ?? '—',
     amountDeclared: p.reportedAmount,
+  };
+}
+
+/** completa el pago con los datos de su reserva; sin reserva cargada quedan los del pago */
+function withBooking(p: Payment, booking: Booking | undefined): Payment {
+  if (!booking) return p;
+  return {
+    ...p,
+    client: booking.client || p.client,
+    phone: booking.phone || p.phone,
+    email: booking.email || p.email,
+    bay: booking.bay ?? p.bay,
+    operator: booking.operator?.name ?? p.operator,
   };
 }
