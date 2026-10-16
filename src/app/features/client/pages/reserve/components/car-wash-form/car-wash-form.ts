@@ -13,7 +13,7 @@ import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
 // servicios reales: vehículos (customer-service) y catálogo/reservas (booking-service)
 import { VehiclesService } from '../../../../../../core/services/vehicles';
 import { VehicleResponse } from '../../../../../../core/models/vehicle.models';
-import { BookingApiService, slotAlternatives } from '../../../../../../core/services/booking-api';
+import { BookingApiService, slotAlternatives, slotTakenByOthers } from '../../../../../../core/services/booking-api';
 import {
   BookingResponse,
   CatalogServiceResponse,
@@ -245,10 +245,14 @@ export class CarWashFormComponent implements OnInit {
         this.submitting = false;
         const alternatives = slotAlternatives(error);
         if (alternatives) {
-          // RF-006: la hora se ocupó; se muestran las horas libres que propone el backend
+          // RF-006: la hora no sirve; se muestran las horas libres que propone el backend y el motivo
           this.time = '';
           this.availableTimes = alternatives;
-          this.feedback.error('RESERVE.SLOT_TAKEN_TITLE', 'RESERVE.SLOT_TAKEN_MESSAGE');
+          if (slotTakenByOthers(error)) {
+            this.feedback.error('RESERVE.SLOT_TAKEN_TITLE', 'RESERVE.SLOT_TAKEN_MESSAGE');
+          } else {
+            this.feedback.error('RESERVE.SLOT_NOT_BOOKABLE_TITLE', apiErrorKey(error));
+          }
         } else {
           this.feedback.error('COMMON.ERROR', apiErrorKey(error));
         }

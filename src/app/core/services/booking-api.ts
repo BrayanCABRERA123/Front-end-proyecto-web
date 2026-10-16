@@ -206,3 +206,10 @@ export function slotAlternatives(error: unknown): string[] | null {
   }
   return null;
 }
+
+// true cuando la hora no está libre porque otra reserva la tomó; false si es fuera del horario,
+// un día cerrado o una hora que ya pasó (versiones anteriores del backend no mandan el motivo)
+export function slotTakenByOthers(error: unknown): boolean {
+  const reason = error instanceof HttpErrorResponse ? (error.error as SlotUnavailableProblem | null)?.reason : undefined;
+  return !reason || reason === 'NO_FREE_BAY';
+}

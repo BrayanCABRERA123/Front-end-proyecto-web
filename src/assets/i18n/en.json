@@ -461,6 +461,7 @@
     "NO_TIMES": "No free times that day",
     "SLOT_TAKEN_TITLE": "That time was just taken",
     "SLOT_TAKEN_MESSAGE": "Here are the closest free times of that day.",
+    "SLOT_NOT_BOOKABLE_TITLE": "That time cannot be booked",
     "OPERATOR": {
       "LABEL": "Operator (optional)",
       "ANY": "No preference: we assign a free one",
@@ -2346,6 +2347,9 @@
     "CANNOT_DISABLE_OWN_ACCOUNT": "You cannot disable your own account",
     "NOTIFICATION_NOT_FOUND": "The notification no longer exists.",
     "SLOT_UNAVAILABLE": "That time is no longer available.",
+    "SLOT_CLOSED_DAY": "The car wash is closed that day. Choose another date.",
+    "SLOT_OUTSIDE_HOURS": "At that time the service does not fit in the opening hours. Choose another time.",
+    "SLOT_TIME_PASSED": "That time has already passed. Choose a later time.",
     "VEHICLE_ALREADY_BOOKED": "That vehicle already has a booking at that time.",
     "SERVICE_NOT_AVAILABLE_FOR_VEHICLE": "That service is not available for your vehicle type.",
     "INVALID_DATE": "That date cannot be booked.",

@@ -461,6 +461,7 @@
     "NO_TIMES": "Não há horários livres nesse dia",
     "SLOT_TAKEN_TITLE": "Esse horário acabou de ser ocupado",
     "SLOT_TAKEN_MESSAGE": "Mostramos os horários livres mais próximos desse dia.",
+    "SLOT_NOT_BOOKABLE_TITLE": "Esse horário não pode ser reservado",
     "OPERATOR": {
       "LABEL": "Operador (opcional)",
       "ANY": "Sem preferência: atribuímos um livre",
@@ -2346,6 +2347,9 @@
     "CANNOT_DISABLE_OWN_ACCOUNT": "Você não pode desativar sua própria conta",
     "NOTIFICATION_NOT_FOUND": "A notificação não existe mais.",
     "SLOT_UNAVAILABLE": "Esse horário não está mais disponível.",
+    "SLOT_CLOSED_DAY": "O lava-rápido não abre nesse dia. Escolha outra data.",
+    "SLOT_OUTSIDE_HOURS": "Nesse horário o serviço não cabe no horário de atendimento. Escolha outro horário.",
+    "SLOT_TIME_PASSED": "Esse horário já passou. Escolha um horário mais tarde.",
     "VEHICLE_ALREADY_BOOKED": "Esse veículo já tem uma reserva nesse horário.",
     "SERVICE_NOT_AVAILABLE_FOR_VEHICLE": "Esse serviço não está disponível para seu tipo de veículo.",
     "INVALID_DATE": "Essa data não pode ser reservada.",
