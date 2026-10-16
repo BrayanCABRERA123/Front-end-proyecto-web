@@ -164,7 +164,11 @@
   </div>
 
   <div class="review-footer">
-    <span class="muted">{{ 'PAYMENT_REVIEW_MODAL.AUDITED_BY' | translate }}: Laura Méndez</span>
+    <span class="muted">
+      @if (data.status === 'pending' && reviewerName) {
+        {{ 'PAYMENT_REVIEW_MODAL.AUDITED_BY' | translate }}: {{ reviewerName }}
+      }
+    </span>
 
     <div class="review-footer__actions">
       @if (askingRejectReason) {
