@@ -16,7 +16,7 @@ export class FeaturesComponent {
   stats = [
     { icon: 'directions_car', value: '15K+', labelKey: 'ABOUT.STATS.VEHICLES' },
     { icon: 'sentiment_satisfied', value: '8K+', labelKey: 'ABOUT.STATS.CLIENTS' },
-    { icon: 'location_city', value: '12+', labelKey: 'ABOUT.STATS.CITIES' },
+    { icon: 'event_available', value: '12+', labelKey: 'ABOUT.STATS.DAILY' },
     { icon: 'military_tech', value: '5+', labelKey: 'ABOUT.STATS.YEARS' }
   ];
 

@@ -993,7 +993,7 @@
     }
   },
   "FOOTER": {
-    "DESCRIPTION": "Service professionnel de lavage automobile mobile, apportant le meilleur nettoyage directement à votre véhicule.",
+    "DESCRIPTION": "Une station de lavage avec réservation en ligne : choisissez le service et l'heure, votre baie vous attend.",
     "COMPANY": {
       "TITLE": "Entreprise",
       "ABOUT": "À propos de nous",
@@ -1015,11 +1015,11 @@
   "ABOUT": {
     "EYEBROW": "Qui sommes-nous",
     "TITLE": "Nous prenons soin de votre véhicule comme si c'était le nôtre",
-    "DESCRIPTION": "Nous sommes une équipe de laveurs professionnels certifiés, engagés pour l'excellence et le respect de l'environnement. Nous apportons le service jusqu'à votre porte, sans files d'attente.",
+    "DESCRIPTION": "Nous sommes une équipe de laveurs professionnels certifiés, engagés pour l'excellence et l'environnement. Réservez en ligne, arrivez à votre heure et votre baie vous attend, sans file ni attente.",
     "STATS": {
       "VEHICLES": "Véhicules lavés",
       "CLIENTS": "Clients satisfaits",
-      "CITIES": "Villes",
+      "DAILY": "Services par jour",
       "YEARS": "Années d'expérience"
     }
   },
@@ -1029,8 +1029,7 @@
     "SUBTITLE": "Écrivez-nous et nous vous répondrons sous 24 heures",
     "EMAIL_LABEL": "E-mail",
     "PHONE_LABEL": "Téléphone",
-    "COVERAGE_LABEL": "Couverture",
-    "COVERAGE_VALUE": "Principales villes de Colombie",
+    "ADDRESS_LABEL": "Adresse",
     "CTA": "Réservez votre premier lavage"
   },
   "CALENDAR": {
