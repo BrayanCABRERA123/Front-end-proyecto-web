@@ -24,6 +24,7 @@ import { ALLOWED_IMAGE_TYPES, PaymentAccountResponse, PaymentsApiService, readIm
 // canje de cupón de fidelización (payment-service, ADR-015)
 import { LoyaltyApiService, RedeemPromotionResult } from '../../../../core/services/loyalty-api';
 import { PaymentCouponComponent } from './components/payment-coupon/payment-coupon';
+import { PaymentHelpComponent } from './components/payment-help/payment-help';
 import { PaymentNoticeComponent } from './components/payment-notice/payment-notice';
 import { PaymentMissingComponent } from './components/payment-missing/payment-missing';
 
@@ -70,7 +71,7 @@ function methodOptionOf(account: PaymentAccountResponse): PaymentMethod | null {
   selector: 'app-payment',
   standalone: true,
   imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule, FormsModule, PaymentCouponComponent,
-    PaymentNoticeComponent, PaymentMissingComponent],
+    PaymentHelpComponent, PaymentNoticeComponent, PaymentMissingComponent],
   templateUrl: './payment.html',
   styleUrls: ['./payment.scss']
 })

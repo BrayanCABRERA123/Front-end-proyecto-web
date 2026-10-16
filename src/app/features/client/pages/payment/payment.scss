@@ -829,32 +829,6 @@
   }
 }
 
-.help-card {
-  display: flex;
-  gap: 12px;
-  padding: 18px;
-
-  mat-icon {
-    color: var(--primary);
-    flex-shrink: 0;
-  }
-
-  strong {
-    font-size: 0.9rem;
-    color: var(--text);
-  }
-
-  p {
-    margin: 4px 0 0;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-
-    b {
-      color: var(--text);
-    }
-  }
-}
-
 /* ---------- Temas oscuros ---------- */
 :host-context(body.green-dark) .card,
 :host-context(body.pink-dark) .card {

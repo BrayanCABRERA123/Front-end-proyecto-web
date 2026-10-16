@@ -1,0 +1,12 @@
+<div class="help-card">
+  <mat-icon>support_agent</mat-icon>
+  <div>
+    <strong>{{ 'PAYMENT.HELP.TITLE' | translate }}</strong>
+    <p>
+      {{ 'PAYMENT.HELP.DESC' | translate }}
+      @if (supportLine()) {
+        <b>{{ supportLine() }}</b>
+      }
+    </p>
+  </div>
+</div>
