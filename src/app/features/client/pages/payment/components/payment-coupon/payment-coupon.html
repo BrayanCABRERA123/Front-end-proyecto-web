@@ -1,0 +1,28 @@
+<div class="coupon-box">
+  @if (!result) {
+    <label class="coupon-box__row">
+      <input type="text" [ngModel]="code" (ngModelChange)="codeChange.emit($event)" maxlength="20" [disabled]="locked"
+             [placeholder]="'PAYMENT.COUPON.PLACEHOLDER' | translate"
+             (keyup.enter)="redeem.emit()">
+      <button type="button" class="coupon-box__apply" [disabled]="!canRedeem" (click)="redeem.emit()">
+        @if (redeeming) {
+          <mat-icon>hourglass_top</mat-icon>
+        } @else {
+          {{ 'PAYMENT.COUPON.APPLY' | translate }}
+        }
+      </button>
+    </label>
+    @if (error) {
+      <p class="coupon-box__error"><mat-icon>error</mat-icon>{{ error | translate }}</p>
+    }
+  } @else {
+    <div class="coupon-box__applied">
+      <mat-icon>local_offer</mat-icon>
+      <span>{{ 'PAYMENT.COUPON.APPLIED' | translate:{ name: result.promotionName } }}</span>
+      <strong>-${{ result.discountAmount | number }} COP</strong>
+      <button type="button" class="coupon-box__remove" [disabled]="locked" (click)="remove.emit()" aria-label="remove">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  }
+</div>

@@ -23,6 +23,10 @@ import { apiErrorKey } from '../../../../core/utils/api-error';
 import { ALLOWED_IMAGE_TYPES, PaymentAccountResponse, PaymentsApiService, readImageAsDataUrl } from '../../../../core/services/payments-api';
 // canje de cupón de fidelización (payment-service, ADR-015)
 import { LoyaltyApiService, RedeemPromotionResult } from '../../../../core/services/loyalty-api';
+import { PaymentCouponComponent } from './components/payment-coupon/payment-coupon';
+import { PaymentHelpComponent } from './components/payment-help/payment-help';
+import { PaymentNoticeComponent } from './components/payment-notice/payment-notice';
+import { PaymentMissingComponent } from './components/payment-missing/payment-missing';
 
 // tipos para que el código sea más claro
 type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
@@ -66,7 +70,8 @@ function methodOptionOf(account: PaymentAccountResponse): PaymentMethod | null {
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule, FormsModule],
+  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule, FormsModule, PaymentCouponComponent,
+    PaymentHelpComponent, PaymentNoticeComponent, PaymentMissingComponent],
   templateUrl: './payment.html',
   styleUrls: ['./payment.scss']
 })
