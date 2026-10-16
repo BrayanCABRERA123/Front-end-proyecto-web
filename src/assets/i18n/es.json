@@ -993,7 +993,7 @@
     }
   },
   "FOOTER": {
-    "DESCRIPTION": "Servicio profesional de lavado móvil que lleva la mejor limpieza directamente a tu vehículo.",
+    "DESCRIPTION": "Lavadero con reservas en línea: eliges el servicio y la hora, y tu bahía te espera.",
     "COMPANY": {
       "TITLE": "Compañía",
       "ABOUT": "Sobre nosotros",
@@ -1015,11 +1015,11 @@
   "ABOUT": {
     "EYEBROW": "Quiénes somos",
     "TITLE": "Cuidamos tu vehículo como si fuera nuestro",
-    "DESCRIPTION": "Somos un equipo de lavadores profesionales certificados, comprometidos con la excelencia y el cuidado del medio ambiente. Llevamos el servicio hasta la puerta de tu casa u oficina, sin filas ni esperas.",
+    "DESCRIPTION": "Somos un equipo de lavadores profesionales certificados, comprometidos con la excelencia y el cuidado del medio ambiente. Reservas en línea, llegas a tu hora y tu bahía te espera, sin filas ni esperas.",
     "STATS": {
       "VEHICLES": "Vehículos lavados",
       "CLIENTS": "Clientes satisfechos",
-      "CITIES": "Ciudades",
+      "DAILY": "Servicios al día",
       "YEARS": "Años de experiencia"
     }
   },
@@ -1029,8 +1029,7 @@
     "SUBTITLE": "Escríbenos y te respondemos en menos de 24 horas",
     "EMAIL_LABEL": "Correo",
     "PHONE_LABEL": "Teléfono",
-    "COVERAGE_LABEL": "Cobertura",
-    "COVERAGE_VALUE": "Principales ciudades de Colombia",
+    "ADDRESS_LABEL": "Sede",
     "CTA": "Agenda tu primer lavado"
   },
   "CALENDAR": {
