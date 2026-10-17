@@ -325,12 +325,17 @@
     padding-top: 70px;
   }
 
+  // dos por fila; con border-box el relleno ya no las hace más anchas que la pantalla
   .stats-badges {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .stat-badge {
-    width: 100%;
+    box-sizing: border-box;
     justify-content: center;
+    padding: 8px 10px;
+    text-align: center;
   }
 }
