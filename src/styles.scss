@@ -329,3 +329,18 @@ select option {
   --mat-snack-bar-container-color: var(--primary);
   --mat-snack-bar-supporting-text-color: #fff;
 }
+
+/* En el celular el botón del menú del sidebar queda fijo arriba a la izquierda: el contenido de las
+   páginas con sidebar deja su espacio para que el botón no tape el título ni su ícono */
+@include mobile {
+  .home-layout > app-sidebar + .home-content {
+    padding-top: 72px;
+  }
+}
+
+/* El tema de Material le da al body un interlineado fijo de 20px que los títulos heredan en px: un
+   título de 30px con líneas de 20px se monta sobre sí mismo al partirse en dos. Interlineado
+   relativo para todos los títulos (los componentes que definen el suyo lo siguen usando). */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.25;
+}
