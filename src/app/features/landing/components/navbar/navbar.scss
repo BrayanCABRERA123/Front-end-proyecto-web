@@ -211,3 +211,32 @@ body.pink-dark .lang-btn {
 }
 
 .lang-check.selected { color: var(--primary); }
+
+/* ── CELULAR ── */
+@include mobile {
+  .navbar { padding: 12px 16px; }
+
+  .navbar-logo {
+    gap: 8px;
+    min-width: 0;
+
+    .logo-img { width: 24px; height: 24px; }
+    .logo-text { font-size: 16px; }
+  }
+
+  .navbar-actions { gap: 8px; }
+
+  .lang-btn { padding: 6px 10px; gap: 6px; }
+
+  .btn-login,
+  .btn-register {
+    padding: 8px 12px;
+    white-space: nowrap;
+  }
+}
+
+// en los celulares angostos solo queda "Iniciar sesión": el registro sigue a un toque con el
+// botón "Comenzar ahora" de la portada
+@media screen and (max-width: 420px) {
+  .btn-register { display: none; }
+}
