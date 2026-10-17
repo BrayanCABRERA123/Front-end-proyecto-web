@@ -379,3 +379,44 @@ input.ng-invalid.ng-touched:focus {
     font-size: 26px;
   }
 }
+
+/* ── CELULAR ── */
+// el formulario es largo: en el celular se desplaza toda la página en vez de una caja de alto fijo,
+// y sin el marco exterior usa todo el ancho
+@media (max-width: 600px) {
+  :host,
+  .register-container {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .auth-shell {
+    height: auto;
+    overflow: visible;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .register-form-section {
+    height: auto;
+    padding: 0;
+    overflow: visible;
+  }
+
+  // espacio arriba para que la flecha de volver quede sobre el título
+  .register-card {
+    height: auto;
+    overflow: visible;
+    padding: 64px 20px 28px;
+  }
+
+  .register-scroll {
+    overflow: visible;
+    padding-right: 0;
+  }
+}

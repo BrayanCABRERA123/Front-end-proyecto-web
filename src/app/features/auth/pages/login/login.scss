@@ -249,3 +249,26 @@ button[type="submit"]:disabled {
     font-size: 28px;
   }
 }
+
+/* ── CELULAR ── */
+// sin el marco exterior: el formulario usa todo el ancho en vez de quedar como tarjeta dentro de tarjeta
+@media (max-width: 600px) {
+  .auth-shell {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .login-form-section { padding: 0; }
+
+  // espacio arriba para que la flecha de volver quede sobre el título y no encima
+  .login-card { padding: 64px 20px 28px; }
+
+  h3 {
+    font-size: 26px;
+    line-height: 1.2;
+  }
+}
