@@ -6,11 +6,12 @@ import { ServicesComponent } from '../components/services/services';
 import { ContactComponent } from '../components/contact/contact';
 import { FooterComponent } from '../components/footer/footer';
 import { DownloadComponent } from '../components/download/download';
+import { FaqComponent } from '../components/faq/faq';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, HeroComponent, FeaturesComponent, ServicesComponent, DownloadComponent, ContactComponent, FooterComponent],
+  imports: [NavbarComponent, HeroComponent, FeaturesComponent, ServicesComponent, DownloadComponent, ContactComponent, FaqComponent, FooterComponent],
   templateUrl: './landing.html',
   styleUrl: './landing.scss'
 })

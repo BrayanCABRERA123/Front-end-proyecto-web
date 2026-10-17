@@ -2532,5 +2532,40 @@
     "TITLE": "Page introuvable",
     "MESSAGE": "L'adresse que vous avez ouverte n'existe pas ou a changé.",
     "BUTTON": "Aller à l'accueil"
+  },
+  "FAQ": {
+    "EYEBROW": "Questions fréquentes",
+    "TITLE": "Des questions ?",
+    "SUBTITLE": "Ce qu'on nous demande le plus avant de réserver",
+    "ITEMS": {
+      "BOOK": {
+        "Q": "Comment réserver un lavage ?",
+        "A": "Créez votre compte avec une adresse Gmail, enregistrez votre véhicule et choisissez le type de service, la date et l'un des créneaux libres. Nous n'affichons que les créneaux réellement disponibles et la réservation est confirmée immédiatement."
+      },
+      "PAYMENT": {
+        "Q": "Quels moyens de paiement acceptez-vous ?",
+        "A": "Vous pouvez payer en espèces à la station en récupérant votre véhicule, ou scanner le code QR avec Nequi, Daviplata ou votre application bancaire et envoyer le justificatif. La station vérifie le justificatif et vous prévient quand le paiement est approuvé."
+      },
+      "CANCEL": {
+        "Q": "Puis-je annuler ma réservation ?",
+        "A": "Oui. Depuis Historique ou Payer le service, vous pouvez l'annuler tant que le service n'a pas commencé. Le créneau se libère pour d'autres clients et vous recevez un avis par e-mail."
+      },
+      "OPERATOR": {
+        "Q": "Puis-je choisir qui lave mon véhicule ?",
+        "A": "C'est facultatif. En réservant, vous pouvez choisir l'un des opérateurs libres à cet horaire ; s'il n'est plus disponible au moment de confirmer, nous en assignons un autre et vous prévenons."
+      },
+      "POINTS": {
+        "Q": "Comment fonctionnent les points ?",
+        "A": "Chaque service ajoute des points de fidélité une fois le paiement approuvé. Avec vos points, vous débloquez des coupons de réduction à utiliser lors du paiement de votre prochain lavage."
+      },
+      "REMINDERS": {
+        "Q": "Allez-vous me rappeler mon rendez-vous ?",
+        "A": "Oui. Nous envoyons des rappels par e-mail un jour et une heure avant votre réservation, et les notifications du compte affichent chaque changement : opérateur assigné, avancement du service et paiements."
+      },
+      "APP": {
+        "Q": "Existe-t-il une application mobile ?",
+        "A": "Oui, nous avons une application Android avec les mêmes options que le site. Téléchargez-la depuis cette page avec le bouton de téléchargement ou le code QR."
+      }
+    }
   }
 }
