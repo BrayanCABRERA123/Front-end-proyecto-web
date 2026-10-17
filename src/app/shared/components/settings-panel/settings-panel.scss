@@ -103,7 +103,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   padding: 10px 0;
+
+  // el texto se ajusta y el interruptor conserva su tamaño: en pantallas angostas ya no se montan
+  > div { flex: 1; min-width: 0; }
+  mat-slide-toggle { flex-shrink: 0; }
 
   .title {
     font-weight: $fw-semibold;
