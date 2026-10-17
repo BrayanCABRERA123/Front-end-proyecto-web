@@ -990,9 +990,7 @@
     "DESCRIPTION": "A car wash with online booking: choose the service and the time, and your bay will be ready.",
     "COMPANY": {
       "TITLE": "Company",
-      "ABOUT": "About us",
-      "CONTACT": "Contact",
-      "CAREERS": "Careers"
+      "ABOUT": "About us"
     },
     "SERVICES_TITLE": "Services",
     "SUPPORT": {

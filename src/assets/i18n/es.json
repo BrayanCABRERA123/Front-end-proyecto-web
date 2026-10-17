@@ -990,9 +990,7 @@
     "DESCRIPTION": "Lavadero con reservas en línea: eliges el servicio y la hora, y tu bahía te espera.",
     "COMPANY": {
       "TITLE": "Compañía",
-      "ABOUT": "Sobre nosotros",
-      "CONTACT": "Contacto",
-      "CAREERS": "Trabaja con nosotros"
+      "ABOUT": "Sobre nosotros"
     },
     "SERVICES_TITLE": "Servicios",
     "SUPPORT": {

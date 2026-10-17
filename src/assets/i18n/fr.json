@@ -990,9 +990,7 @@
     "DESCRIPTION": "Une station de lavage avec réservation en ligne : choisissez le service et l'heure, votre baie vous attend.",
     "COMPANY": {
       "TITLE": "Entreprise",
-      "ABOUT": "À propos de nous",
-      "CONTACT": "Contact",
-      "CAREERS": "Carrières"
+      "ABOUT": "À propos de nous"
     },
     "SERVICES_TITLE": "Services",
     "SUPPORT": {

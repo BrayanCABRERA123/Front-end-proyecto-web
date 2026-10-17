@@ -990,9 +990,7 @@
     "DESCRIPTION": "Lava-rápido com reservas online: escolha o serviço e o horário, e sua baia estará pronta.",
     "COMPANY": {
       "TITLE": "Empresa",
-      "ABOUT": "Sobre nós",
-      "CONTACT": "Contato",
-      "CAREERS": "Trabalhe conosco"
+      "ABOUT": "Sobre nós"
     },
     "SERVICES_TITLE": "Serviços",
     "SUPPORT": {
