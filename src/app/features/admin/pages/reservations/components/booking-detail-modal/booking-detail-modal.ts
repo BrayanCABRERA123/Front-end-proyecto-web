@@ -45,7 +45,7 @@ export class BookingDetailModal {
     return this.booking.status === 'confirmed';
   }
 
-  /** reporte de inspección por fases: solo en servicios largos (RF-027) */
+  /** reporte de inspección por fases: solo en servicios largos (RF-036) */
   get canInspect(): boolean {
     return supportsInspection(this.booking);
   }

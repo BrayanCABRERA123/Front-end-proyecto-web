@@ -1,4 +1,4 @@
-// reporte de inspección del vehículo para servicios largos (RF-027).
+// reporte de inspección del vehículo para servicios largos (RF-036).
 // lo guarda operations-service: el admin lo llena por fases y el cliente lo ve en un enlace
 // público de solo lectura. Las reglas (qué reservas lo admiten, cuándo se edita, el resumen y la
 // placa enmascarada del enlace) las aplica el backend; aquí solo están los tipos de sus respuestas.
