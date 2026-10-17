@@ -17,11 +17,12 @@
           class="table-row"
           [class.selected]="selectedService?.id === service.id"
           (click)="onSelectService(service)">
-          <td>{{ service.serviceType }}</td>
-          <td>{{ service.dateTime }}</td>
-          <td>{{ service.vehicle }}</td>
-          <td>{{ service.client }}</td>
-          <td>
+          <!-- data-label: en el celular cada fila se ve como tarjeta con "etiqueta: valor" -->
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.SERVICE_TYPE' | translate">{{ service.serviceType }}</td>
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.DATE_TIME' | translate">{{ service.dateTime }}</td>
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.VEHICLE' | translate">{{ service.vehicle }}</td>
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.CLIENT' | translate">{{ service.client }}</td>
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.STATUS' | translate">
             <span
               class="status-badge"
               [class.pending]="service.statusColor === 'pending'"

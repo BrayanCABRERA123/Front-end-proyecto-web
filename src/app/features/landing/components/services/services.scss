@@ -181,3 +181,13 @@
 
   &:hover { background-color: var(--primary-hover); }
 }
+
+/* ── CELULAR ── */
+@include mobile {
+  .services-section { padding: 48px 16px; }
+
+  .services-title {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+}

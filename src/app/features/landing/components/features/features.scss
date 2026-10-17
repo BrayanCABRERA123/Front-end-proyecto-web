@@ -244,3 +244,18 @@
   line-height: 1.5;
   margin: 0;
 }
+
+/* ── CELULAR ── */
+@include mobile {
+  .features-section { padding: 48px 16px; }
+
+  .about-title { font-size: 26px; }
+
+  // con interlineado propio las dos líneas del título no se montan
+  .features-title {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+
+  .feature-card { padding: 24px 20px; }
+}

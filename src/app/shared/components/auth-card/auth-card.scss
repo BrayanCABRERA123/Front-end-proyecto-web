@@ -38,6 +38,7 @@
 
 @media (max-width: 600px) {
   .card-wrapper {
-    padding: 28px 22px;
+    // espacio arriba para que la flecha de volver no tape el indicador de pasos
+    padding: 64px 20px 28px;
   }
 }

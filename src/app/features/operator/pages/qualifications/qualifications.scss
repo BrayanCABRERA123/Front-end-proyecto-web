@@ -19,9 +19,15 @@
   @media (max-width: 1024px) {
     padding: 28px 24px;
   }
- 
+
+  // espacio arriba para el botón del menú (aparece desde 768 px), como en las demás pantallas
+  @media (max-width: 768px) {
+    padding-top: 70px;
+  }
+
   @media (max-width: 640px) {
     padding: 20px 16px;
+    padding-top: 70px;
     gap: 18px;
   }
 }

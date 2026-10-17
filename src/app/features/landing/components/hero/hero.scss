@@ -121,3 +121,31 @@
     border-color: #ffffff;
   }
 }
+
+/* ── CELULAR ── */
+@include mobile {
+  // el espacio de arriba deja ver la etiqueta debajo de la barra fija
+  .hero-section { padding: 96px 16px 40px; }
+
+  .hero-content {
+    gap: 20px;
+    margin-bottom: 0;
+  }
+
+  .hero-title { font-size: 32px; }
+
+  .hero-description { font-size: 14px; }
+
+  // botones uno debajo del otro, a todo el ancho y sin partir el texto
+  .hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+  }
+}

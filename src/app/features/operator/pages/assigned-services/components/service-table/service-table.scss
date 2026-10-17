@@ -102,6 +102,45 @@ td {
   }
 }
 
+/* ── CELULAR: cada servicio como tarjeta en vez de una tabla que se desplaza de lado ── */
+@media (max-width: 600px) {
+  .table-card { overflow-x: visible; }
+
+  .service-table {
+    min-width: 0;
+
+    thead { display: none; }
+
+    tbody,
+    tr,
+    td { display: block; }
+  }
+
+  .table-row {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .table-row td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    border: none;
+    text-align: right;
+
+    &::before {
+      content: attr(data-label);
+      flex-shrink: 0;
+      color: var(--text-secondary);
+      font-size: $fs-caption;
+      font-weight: $fw-semibold;
+      text-align: left;
+    }
+  }
+}
+
 @media (max-width: 480px) {
   th, td {
     padding: 10px 12px;

@@ -431,6 +431,9 @@ table {
 @include tablet {
   .home-content { padding: 20px; }
   .filters-row { flex-direction: column; align-items: stretch; }
+  // las etiquetas bajan de línea y la búsqueda se ajusta: así la fila no sale de la tarjeta
+  .chips { flex-wrap: wrap; }
+  .search-box { min-width: 0; }
 }
 
 // texto mientras se cargan las cuentas del backend
