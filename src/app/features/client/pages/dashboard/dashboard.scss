@@ -358,15 +358,20 @@
     padding-top: 66px;
   }
 
+  // dos por fila: en una sola columna había que bajar mucho para llegar al próximo servicio
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
   }
 
   .quick-access-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .card, .stat-card {
     padding: 1rem;
   }
+
+  .stat-value { font-size: 1.4rem; }
+  .stat-label { font-size: 0.8rem; }
 }
