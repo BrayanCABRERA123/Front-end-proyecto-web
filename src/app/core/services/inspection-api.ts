@@ -12,7 +12,7 @@ import {
 } from '../models/inspection.models';
 
 /**
- * Reporte de inspección del vehículo (RF-027) en operations-service. Cada acción del admin
+ * Reporte de inspección del vehículo (RF-036) en operations-service. Cada acción del admin
  * devuelve el estado completo, así la pantalla siempre muestra lo que quedó guardado.
  */
 @Injectable({ providedIn: 'root' })
