@@ -990,9 +990,7 @@
     "DESCRIPTION": "Lavadero con reservas en línea: eliges el servicio y la hora, y tu bahía te espera.",
     "COMPANY": {
       "TITLE": "Compañía",
-      "ABOUT": "Sobre nosotros",
-      "CONTACT": "Contacto",
-      "CAREERS": "Trabaja con nosotros"
+      "ABOUT": "Sobre nosotros"
     },
     "SERVICES_TITLE": "Servicios",
     "SUPPORT": {
@@ -2532,5 +2530,40 @@
     "TITLE": "Página no encontrada",
     "MESSAGE": "La dirección que abriste no existe o cambió de lugar.",
     "BUTTON": "Ir al inicio"
+  },
+  "FAQ": {
+    "EYEBROW": "Preguntas frecuentes",
+    "TITLE": "¿Tienes dudas?",
+    "SUBTITLE": "Lo que más nos preguntan antes de reservar",
+    "ITEMS": {
+      "BOOK": {
+        "Q": "¿Cómo reservo un lavado?",
+        "A": "Crea tu cuenta con un correo de Gmail, registra tu vehículo y elige el tipo de servicio, la fecha y una de las horas libres. Solo te mostramos las horas que de verdad están disponibles y la reserva queda confirmada al instante."
+      },
+      "PAYMENT": {
+        "Q": "¿Qué métodos de pago aceptan?",
+        "A": "Puedes pagar en efectivo en el local al recibir tu vehículo, o escanear el código QR con Nequi, Daviplata o la aplicación de tu banco y subir el comprobante. El lavadero revisa el comprobante y te avisa cuando el pago queda aprobado."
+      },
+      "CANCEL": {
+        "Q": "¿Puedo cancelar mi reserva?",
+        "A": "Sí. Desde Historial o Pagar servicio puedes cancelarla mientras el servicio no haya empezado. La hora queda libre para otros clientes y te llega un aviso por correo."
+      },
+      "OPERATOR": {
+        "Q": "¿Puedo elegir quién lava mi vehículo?",
+        "A": "Es opcional. Al reservar puedes elegir uno de los operarios libres en ese horario; si ya no está disponible al confirmar, te asignamos otro y te avisamos."
+      },
+      "POINTS": {
+        "Q": "¿Cómo funcionan los puntos?",
+        "A": "Cada servicio suma puntos de fidelización cuando el pago queda aprobado. Con los puntos desbloqueas cupones de descuento que puedes canjear al pagar tu siguiente lavado."
+      },
+      "REMINDERS": {
+        "Q": "¿Me recuerdan mi turno?",
+        "A": "Sí. Te enviamos recordatorios por correo un día y una hora antes de tu reserva, y en las notificaciones de la cuenta ves cada cambio: asignación del operario, avance del servicio y pagos."
+      },
+      "APP": {
+        "Q": "¿Hay aplicación para el celular?",
+        "A": "Sí, tenemos aplicación para Android con las mismas opciones de la web. Descárgala desde esta página con el botón de descarga o el código QR."
+      }
+    }
   }
 }

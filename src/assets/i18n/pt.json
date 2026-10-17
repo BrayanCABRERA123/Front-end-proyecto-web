@@ -990,9 +990,7 @@
     "DESCRIPTION": "Lava-rápido com reservas online: escolha o serviço e o horário, e sua baia estará pronta.",
     "COMPANY": {
       "TITLE": "Empresa",
-      "ABOUT": "Sobre nós",
-      "CONTACT": "Contato",
-      "CAREERS": "Trabalhe conosco"
+      "ABOUT": "Sobre nós"
     },
     "SERVICES_TITLE": "Serviços",
     "SUPPORT": {
@@ -2532,5 +2530,40 @@
     "TITLE": "Página não encontrada",
     "MESSAGE": "O endereço que você abriu não existe ou mudou de lugar.",
     "BUTTON": "Ir para o início"
+  },
+  "FAQ": {
+    "EYEBROW": "Perguntas frequentes",
+    "TITLE": "Tem dúvidas?",
+    "SUBTITLE": "O que mais nos perguntam antes de reservar",
+    "ITEMS": {
+      "BOOK": {
+        "Q": "Como reservo uma lavagem?",
+        "A": "Crie sua conta com um e-mail do Gmail, cadastre seu veículo e escolha o tipo de serviço, a data e um dos horários livres. Só mostramos os horários realmente disponíveis e a reserva é confirmada na hora."
+      },
+      "PAYMENT": {
+        "Q": "Quais formas de pagamento vocês aceitam?",
+        "A": "Você pode pagar em dinheiro no local ao retirar seu veículo, ou escanear o código QR com Nequi, Daviplata ou o aplicativo do seu banco e enviar o comprovante. O lava-rápido confere o comprovante e avisa quando o pagamento é aprovado."
+      },
+      "CANCEL": {
+        "Q": "Posso cancelar minha reserva?",
+        "A": "Sim. Em Histórico ou Pagar serviço você pode cancelá-la enquanto o serviço não tiver começado. O horário fica livre para outros clientes e você recebe um aviso por e-mail."
+      },
+      "OPERATOR": {
+        "Q": "Posso escolher quem lava meu veículo?",
+        "A": "É opcional. Ao reservar, você pode escolher um dos operadores livres nesse horário; se ele não estiver mais disponível ao confirmar, designamos outro e avisamos você."
+      },
+      "POINTS": {
+        "Q": "Como funcionam os pontos?",
+        "A": "Cada serviço soma pontos de fidelidade quando o pagamento é aprovado. Com os pontos você desbloqueia cupons de desconto para usar ao pagar a próxima lavagem."
+      },
+      "REMINDERS": {
+        "Q": "Vocês me lembram do horário?",
+        "A": "Sim. Enviamos lembretes por e-mail um dia e uma hora antes da sua reserva, e as notificações da conta mostram cada mudança: operador designado, andamento do serviço e pagamentos."
+      },
+      "APP": {
+        "Q": "Existe aplicativo para celular?",
+        "A": "Sim, temos um aplicativo para Android com as mesmas opções da web. Baixe-o nesta página com o botão de download ou o código QR."
+      }
+    }
   }
 }

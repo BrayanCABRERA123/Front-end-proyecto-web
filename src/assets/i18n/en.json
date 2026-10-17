@@ -990,9 +990,7 @@
     "DESCRIPTION": "A car wash with online booking: choose the service and the time, and your bay will be ready.",
     "COMPANY": {
       "TITLE": "Company",
-      "ABOUT": "About us",
-      "CONTACT": "Contact",
-      "CAREERS": "Careers"
+      "ABOUT": "About us"
     },
     "SERVICES_TITLE": "Services",
     "SUPPORT": {
@@ -2532,5 +2530,40 @@
     "TITLE": "Page not found",
     "MESSAGE": "The address you opened does not exist or has moved.",
     "BUTTON": "Go to the home page"
+  },
+  "FAQ": {
+    "EYEBROW": "Frequently asked questions",
+    "TITLE": "Any questions?",
+    "SUBTITLE": "What people ask us most before booking",
+    "ITEMS": {
+      "BOOK": {
+        "Q": "How do I book a wash?",
+        "A": "Create your account with a Gmail address, register your vehicle and choose the type of service, the date and one of the free times. We only show times that are really available, and the booking is confirmed right away."
+      },
+      "PAYMENT": {
+        "Q": "Which payment methods do you accept?",
+        "A": "You can pay in cash at the shop when you pick up your vehicle, or scan the QR code with Nequi, Daviplata or your banking app and upload the receipt. The car wash checks the receipt and lets you know when the payment is approved."
+      },
+      "CANCEL": {
+        "Q": "Can I cancel my booking?",
+        "A": "Yes. From History or Pay service you can cancel it as long as the service has not started. The time becomes available for other customers and you get an email notice."
+      },
+      "OPERATOR": {
+        "Q": "Can I choose who washes my vehicle?",
+        "A": "It is optional. When booking you can choose one of the operators free at that time; if they are no longer available when you confirm, we assign another one and let you know."
+      },
+      "POINTS": {
+        "Q": "How do points work?",
+        "A": "Each service adds loyalty points once the payment is approved. With your points you unlock discount coupons that you can redeem when paying for your next wash."
+      },
+      "REMINDERS": {
+        "Q": "Will you remind me of my appointment?",
+        "A": "Yes. We send email reminders one day and one hour before your booking, and the account notifications show every change: operator assignment, service progress and payments."
+      },
+      "APP": {
+        "Q": "Is there a mobile app?",
+        "A": "Yes, we have an Android app with the same options as the web. Download it from this page with the download button or the QR code."
+      }
+    }
   }
 }

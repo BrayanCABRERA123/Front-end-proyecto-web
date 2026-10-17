@@ -2,6 +2,8 @@
   height: 100%;
   display: flex;
   align-items: center;
+  // el bloque de contenido queda centrado en el panel (antes iba pegado a la izquierda)
+  justify-content: center;
   padding: 45px;
   position: relative;
   overflow: hidden;
@@ -45,17 +47,19 @@
 
 .panel-content {
   width: 100%;
-  max-width: 380px;
+  max-width: 460px;
   position: relative;
   z-index: 2;
+  // un poco más arriba que el centro exacto del panel
+  transform: translateY(-40px);
 }
 
 /* ── BRAND ── */
-/* ícono y nombre en una sola fila, centrados sobre el panel */
+/* ícono y nombre en una sola fila, alineados al mismo borde que el título, el texto y las tarjetas */
 .panel-brand {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 16px;
   margin-bottom: 32px;
 }
@@ -118,7 +122,6 @@
   margin-top: 16px;
   margin-bottom: 26px;
   line-height: 1.7;
-  max-width: 330px;
   font-size: 16px;
   color: var(--text);
 }
