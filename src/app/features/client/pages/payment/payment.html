@@ -48,11 +48,11 @@
 
           <div class="method-grid">
             <button type="button" class="method-option" *ngFor="let method of paymentMethods"
-              [class.selected]="selectedMethod === method.id" (click)="selectMethod(method.id)">
-              <mat-icon class="check" *ngIf="selectedMethod === method.id">check_circle</mat-icon>
+              [class.selected]="isSelected(method)" (click)="selectMethod(method)">
+              <mat-icon class="check" *ngIf="isSelected(method)">check_circle</mat-icon>
               <span class="method-icon"><mat-icon>{{ method.icon }}</mat-icon></span>
               <span class="method-label">{{ method.label | translate }}</span>
-              <span class="method-desc">{{ method.desc | translate }}</span>
+              <span class="method-desc">{{ method.holder || (method.desc | translate) }}</span>
             </button>
           </div>
         </section>

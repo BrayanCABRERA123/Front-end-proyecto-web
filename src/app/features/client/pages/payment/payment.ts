@@ -35,19 +35,24 @@ type FlowStep = 'PENDING' | 'VERIFYING' | 'APPROVED';
 
 interface PaymentMethod {
   id: PaymentMethodId;
+  // cuenta del lavadero que representa la opción (efectivo no tiene cuenta)
+  accountId: number | null;
   icon: string;
   label: string;
   desc: string;
+  // titular, solo cuando hay dos cuentas del mismo medio y hace falta distinguirlas
+  holder?: string;
 }
 
 // lo que se guarda del pago para que no se pierda al recargar la página
 interface SavedPaymentState {
   flowStep: FlowStep;
   method: PaymentMethodId;
+  accountId?: number | null;
 }
 
 // efectivo siempre está: se paga en el lavadero
-const CASH_METHOD: PaymentMethod = { id: 'CASH', icon: 'payments', label: 'PAYMENT.METHOD.CASH', desc: 'PAYMENT.METHOD.CASH_DESC' };
+const CASH_METHOD: PaymentMethod = { id: 'CASH', accountId: null, icon: 'payments', label: 'PAYMENT.METHOD.CASH', desc: 'PAYMENT.METHOD.CASH_DESC' };
 
 /** medio de la pantalla para el código de payment-service */
 function methodIdOf(code: string): PaymentMethodId {
@@ -61,7 +66,7 @@ function methodOptionOf(account: PaymentAccountResponse): PaymentMethod | null {
   const id = methodIdOf(account.methodCode);
   if (id === 'CASH') return null;
   const icon = id === 'NEQUI' ? 'smartphone' : id === 'DAVIPLATA' ? 'account_balance' : 'receipt_long';
-  return { id, icon, label: 'PAYMENT.METHOD.' + id, desc: 'PAYMENT.METHOD.' + id + '_DESC' };
+  return { id, accountId: account.id, icon, label: 'PAYMENT.METHOD.' + id, desc: 'PAYMENT.METHOD.' + id + '_DESC' };
 }
 
 // El QR es la imagen fija de la cuenta del lavadero (Nequi, Daviplata o transferencia) que sube el
@@ -104,10 +109,20 @@ export class PaymentComponent implements OnInit {
 
   // método seleccionado por el usuario
   selectedMethod: PaymentMethodId = 'CASH';
+  // cuenta elegida: con dos cuentas del mismo medio (por ejemplo, dos Nequi) el medio no basta
+  selectedAccountId: number | null = null;
 
   // cuenta del medio elegido (su QR es el que se muestra)
   get selectedAccount(): PaymentAccountResponse | null {
-    return this.accounts.find(a => methodIdOf(a.methodCode) === this.selectedMethod) ?? null;
+    return this.accounts.find(a => a.id === this.selectedAccountId)
+      ?? this.accounts.find(a => methodIdOf(a.methodCode) === this.selectedMethod)
+      ?? null;
+  }
+
+  isSelected(method: PaymentMethod): boolean {
+    return method.accountId === null
+      ? this.selectedMethod === 'CASH'
+      : this.selectedMethod !== 'CASH' && this.selectedAccount?.id === method.accountId;
   }
 
   // datos de la cuenta que recibe el pago
@@ -241,8 +256,16 @@ export class PaymentComponent implements OnInit {
       next: (accounts) => {
         this.accounts = accounts;
         const digital = accounts.map(a => methodOptionOf(a)).filter((m): m is PaymentMethod => !!m);
+        for (const option of digital) {
+          if (digital.filter(other => other.id === option.id).length > 1) {
+            option.holder = accounts.find(a => a.id === option.accountId)?.accountHolder;
+          }
+        }
         this.paymentMethods = [...digital, CASH_METHOD];
-        if (!this.isLocked) this.selectedMethod = this.paymentMethods[0].id;
+        if (!this.isLocked) {
+          this.selectedMethod = this.paymentMethods[0].id;
+          this.selectedAccountId = this.paymentMethods[0].accountId;
+        }
         this.changes.markForCheck();
       },
       error: () => { /* sin payment-service solo queda efectivo */ }
@@ -333,6 +356,7 @@ export class PaymentComponent implements OnInit {
         const state: SavedPaymentState = JSON.parse(saved);
         this.flowStep = state.flowStep;
         this.selectedMethod = state.method;
+        this.selectedAccountId = state.accountId ?? null;
         return;
       }
     } catch {
@@ -345,7 +369,8 @@ export class PaymentComponent implements OnInit {
   private saveState() {
     const state: SavedPaymentState = {
       flowStep: this.flowStep,
-      method: this.selectedMethod
+      method: this.selectedMethod,
+      accountId: this.selectedAccountId
     };
 
     try {
@@ -363,10 +388,11 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  selectMethod(id: PaymentMethodId) {
+  selectMethod(method: PaymentMethod) {
     // con el pago en revisión o aprobado ya no se puede cambiar el método
     if (this.isLocked) return;
-    this.selectedMethod = id;
+    this.selectedMethod = method.id;
+    this.selectedAccountId = method.accountId;
     this.saveState();
   }
 
