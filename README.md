@@ -1,59 +1,61 @@
-# Web
+# LavaRápido — aplicación web
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+Aplicación web de LavaRápido: página de inicio pública con preguntas frecuentes, registro e inicio
+de sesión, y los paneles del cliente (reservas, vehículos, pagos, historial y calificaciones), del
+operario (servicios asignados y ejecución) y del administrador (usuarios, catálogo, horarios,
+operarios, reservas, informe de inspección, pagos y reportes). Incluye el informe de inspección
+público que el cliente abre sin sesión.
 
-## Development server
+Stack: Angular 21 · Angular Material · RxJS · ngx-translate (español, inglés, francés y portugués) · Vitest.
 
-To start a local development server, run:
+## Cómo correrla
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Necesita el backend arriba (`docker compose --profile app up -d` desde `lavarapido-infra`).
+En desarrollo, `proxy.conf.json` envía `/api` al API Gateway (`http://localhost:8080`).
 
 ```bash
-ng generate component component-name
+npm install
+npm start                 # http://localhost:4200
+npm test                  # pruebas unitarias con Vitest
+npm run build             # compilación de producción en dist/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Cuentas de prueba del perfil `dev` (solo en local): `admin@gmail.com`, `operador@gmail.com` y
+`cliente@gmail.com`; las contraseñas están en `GUIA-EQUIPO.md` de `lavarapido-infra`.
 
-```bash
-ng generate --help
+## Estructura
+
+```
+src/app/
+├── core/         guards, interceptors (token y sesión vencida), services, models, constants, utils
+├── features/     landing · auth · client · operator · admin · public-report · not-found
+├── layout/       barra de navegación
+└── shared/       componentes, diálogos, pipes y datos comunes
+src/assets/i18n/  textos en es, en, fr y pt
+src/styles/       tema, variables y mixins de diseño adaptable (mobile ≤ 768 px, tablet ≤ 1024 px)
 ```
 
-## Building
+## Diseño adaptable
 
-To build the project run:
+Cada pantalla se revisa a 360 px (celular) y 768 px (tableta) sin desbordamiento horizontal
+antes de fusionar a `develop`.
 
-```bash
-ng build
-```
+## Proyecto LavaRápido
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Este repositorio es parte de LavaRápido (Vehicle Washing), proyecto formativo del Tecnólogo en
+Análisis y Desarrollo de Software (ADSO), ficha 3145556, SENA Regional Huila.
 
-## Running unit tests
+| Recurso | Enlace |
+|---|---|
+| Documentación y manuales (ES/EN, MD · PDF · Word) | [lavarapido-docs](https://github.com/BrayanCABRERA123/lavarapido-docs#readme) |
+| Manual técnico | [09_MANUALES/ES/MD/manual-tecnico.md](https://github.com/BrayanCABRERA123/lavarapido-docs/blob/main/09_MANUALES/ES/MD/manual-tecnico.md) |
+| Manual de instalación | [09_MANUALES/ES/MD/manual-de-instalacion.md](https://github.com/BrayanCABRERA123/lavarapido-docs/blob/main/09_MANUALES/ES/MD/manual-de-instalacion.md) |
+| Levantar todo el sistema | [lavarapido-infra](https://github.com/BrayanCABRERA123/lavarapido-infra) (`docker compose --profile app up -d`) |
+| Aplicación desplegada | https://lavarapidovehicular.northcentralus.cloudapp.azure.com |
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+**Ramas y commits:** se trabaja en `develop` con ramas `feature/`, `fix/` y `docs/` que se
+fusionan con `git merge --no-ff`; los commits siguen Conventional Commits
+(`feat(scope): ...`, `fix(scope): ...`). Detalle en la
+[guía de git del equipo](https://github.com/BrayanCABRERA123/lavarapido-docs#guía-de-git-del-equipo).
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Equipo:** Brayan Estiven Patiño Cabrera, Juan Camilo Guilombo Osorio y Merari Urbano Quintero.
