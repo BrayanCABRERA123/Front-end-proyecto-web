@@ -32,6 +32,7 @@ const TRANSLATED_CODES = new Set([
   'NOTIFICATION_NOT_FOUND',
   // códigos del booking-service (reservas)
   'SLOT_UNAVAILABLE',
+  'BAY_NEW_IN_MAINTENANCE',
   // motivo del 409 SLOT_UNAVAILABLE (campo reason del booking-service)
   'SLOT_CLOSED_DAY',
   'SLOT_OUTSIDE_HOURS',

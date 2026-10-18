@@ -25,11 +25,16 @@ export interface WashBayModalResult {
 export class WashBayModal {
 
   // únicos tres estados permitidos para una bahía
-  readonly statuses: { value: BayStatus; labelKey: string }[] = [
+  private readonly allStatuses: { value: BayStatus; labelKey: string }[] = [
     { value: 'active', labelKey: 'ADMIN_SCHEDULE.BAYS_SECTION.STATUS.active' },
     { value: 'inactive', labelKey: 'ADMIN_SCHEDULE.BAYS_SECTION.STATUS.inactive' },
     { value: 'maintenance', labelKey: 'ADMIN_SCHEDULE.BAYS_SECTION.STATUS.maintenance' },
   ];
+
+  /** una bahía nueva nace activa o inactiva: mantenimiento solo se pone cuando ya existe */
+  get statuses(): { value: BayStatus; labelKey: string }[] {
+    return this.isEditing ? this.allStatuses : this.allStatuses.filter(s => s.value !== 'maintenance');
+  }
 
   name = '';
   status: BayStatus = 'active';

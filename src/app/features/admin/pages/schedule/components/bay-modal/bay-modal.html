@@ -35,9 +35,10 @@
           <option [ngValue]="s.value">{{ s.labelKey | translate }}</option>
         }
       </select>
+      @if (!isEditing) {
+        <span class="form-field__hint">{{ 'BAY_MODAL.HINT_CREATE_STATUS' | translate }}</span>
+      }
     </label>
-
-    
 
   </div>
 
