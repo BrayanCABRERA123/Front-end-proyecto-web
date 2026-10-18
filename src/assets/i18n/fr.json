@@ -1553,6 +1553,9 @@
   "SERVICE_MODAL": {
     "TITLE_CREATE": "Ajouter un nouveau service",
     "TITLE_EDIT": "Modifier le service",
+    "GENERAL_SECTION": "Informations du service",
+    "MINUTES_SUFFIX": "min",
+    "CLOSE": "Fermer",
     "SUBTITLE": "Définissez le tarif et la durée pour l'assignation de baie",
     "NAME_LABEL": "Nom du service",
     "NAME_PLACEHOLDER": "Ex. Désinfection à l'ozone",
@@ -1666,7 +1669,7 @@
       "RESET_TITLE": "Horaire réinitialisé",
       "RESET_MESSAGE": "L’horaire a retrouvé ses valeurs par défaut.",
       "BAY_ADDED_TITLE": "Baie ajoutée",
-      "BAY_ADDED_MESSAGE": "La baie «{{name}}» est maintenant disponible.",
+      "BAY_ADDED_MESSAGE": "La baie «{{name}}» a été ajoutée à l’horaire.",
       "BAY_UPDATED_TITLE": "Baie mise à jour",
       "BAY_UPDATED_MESSAGE": "Les modifications de «{{name}}» ont été enregistrées.",
       "BAY_DELETE_TITLE": "Supprimer la baie",
@@ -2130,13 +2133,13 @@
   "BAY_MODAL": {
     "TITLE_CREATE": "Ajouter une baie",
     "TITLE_EDIT": "Modifier la baie",
-    "SUBTITLE": "Enregistrez une nouvelle baie ou mettez à jour son statut et son opérateur.",
+    "SUBTITLE": "Enregistrez une nouvelle baie ou mettez à jour son nom et son statut.",
     "NAME_LABEL": "Nom de la baie",
     "NAME_PLACEHOLDER": "Ex. Baie 5",
     "ERROR_NAME": "Saisissez le nom de la baie",
     "STATUS_LABEL": "Statut",
     "OPERATOR_LABEL": "Opérateur assigné",
-    "HINT_NO_OPERATOR": "Les baies en maintenance ou inactives n’utilisent pas d’opérateur."
+    "HINT_CREATE_STATUS": "Une nouvelle baie commence active ou inactive. Pour la mettre en maintenance, créez-la puis changez son statut."
   },
   "BOOKING_DETAIL": {
     "CODE": "Code",
@@ -2342,6 +2345,7 @@
     "NETWORK_ERROR": "Impossible de joindre le serveur. Réessayez dans un instant.",
     "UNEXPECTED": "Une erreur inattendue est survenue. Réessayez.",
     "CANNOT_DISABLE_OWN_ACCOUNT": "Vous ne pouvez pas désactiver votre propre compte",
+    "BAY_NEW_IN_MAINTENANCE": "Une nouvelle baie ne peut pas commencer en maintenance. Créez-la puis changez son statut.",
     "NOTIFICATION_NOT_FOUND": "La notification n'existe plus.",
     "SLOT_UNAVAILABLE": "Cet horaire n'est plus disponible.",
     "SLOT_CLOSED_DAY": "La station de lavage est fermée ce jour-là. Choisissez une autre date.",

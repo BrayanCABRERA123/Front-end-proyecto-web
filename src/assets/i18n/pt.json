@@ -1553,6 +1553,9 @@
   "SERVICE_MODAL": {
     "TITLE_CREATE": "Adicionar Novo Serviço",
     "TITLE_EDIT": "Editar Serviço",
+    "GENERAL_SECTION": "Informações do serviço",
+    "MINUTES_SUFFIX": "min",
+    "CLOSE": "Fechar",
     "SUBTITLE": "Configure a tarifa e o tempo para atribuição de baia",
     "NAME_LABEL": "Nome do Serviço",
     "NAME_PLACEHOLDER": "Ex. Desinfecção com Ozônio",
@@ -1666,7 +1669,7 @@
       "RESET_TITLE": "Horário restaurado",
       "RESET_MESSAGE": "O horário voltou aos valores padrão.",
       "BAY_ADDED_TITLE": "Baia adicionada",
-      "BAY_ADDED_MESSAGE": "A baia «{{name}}» está disponível.",
+      "BAY_ADDED_MESSAGE": "A baia «{{name}}» foi adicionada ao horário.",
       "BAY_UPDATED_TITLE": "Baia atualizada",
       "BAY_UPDATED_MESSAGE": "As alterações de «{{name}}» foram salvas.",
       "BAY_DELETE_TITLE": "Excluir baia",
@@ -2130,13 +2133,13 @@
   "BAY_MODAL": {
     "TITLE_CREATE": "Adicionar baia",
     "TITLE_EDIT": "Editar baia",
-    "SUBTITLE": "Cadastre uma nova baia ou atualize seu status e operador.",
+    "SUBTITLE": "Cadastre uma nova baia ou atualize seu nome e status.",
     "NAME_LABEL": "Nome da baia",
     "NAME_PLACEHOLDER": "Ex.: Baia 5",
     "ERROR_NAME": "Informe o nome da baia",
     "STATUS_LABEL": "Status",
     "OPERATOR_LABEL": "Operador atribuído",
-    "HINT_NO_OPERATOR": "Baias em manutenção ou inativas não usam operador."
+    "HINT_CREATE_STATUS": "Uma baia nova começa ativa ou inativa. Para colocá-la em manutenção, crie-a e depois mude seu status."
   },
   "BOOKING_DETAIL": {
     "CODE": "Código",
@@ -2342,6 +2345,7 @@
     "NETWORK_ERROR": "Não foi possível conectar ao servidor. Tente novamente em instantes.",
     "UNEXPECTED": "Ocorreu um erro inesperado. Tente novamente.",
     "CANNOT_DISABLE_OWN_ACCOUNT": "Você não pode desativar sua própria conta",
+    "BAY_NEW_IN_MAINTENANCE": "Uma baia nova não pode começar em manutenção. Crie-a e depois mude seu status.",
     "NOTIFICATION_NOT_FOUND": "A notificação não existe mais.",
     "SLOT_UNAVAILABLE": "Esse horário não está mais disponível.",
     "SLOT_CLOSED_DAY": "O lava-rápido não abre nesse dia. Escolha outra data.",

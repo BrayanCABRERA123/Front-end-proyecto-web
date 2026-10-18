@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 import {
@@ -37,7 +38,7 @@ interface PriceRow {
 @Component({
   selector: 'app-service-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule],
   templateUrl: './service-modal.html',
   styleUrl: './service-modal.scss'
 })
@@ -83,8 +84,12 @@ export class ServiceModal {
   }
 
   // una fila a medias (solo precio o solo minutos) no es válida
+  isHalfRow(row: PriceRow): boolean {
+    return (row.price === null) !== (row.minutes === null);
+  }
+
   get hasHalfRow(): boolean {
-    return this.rows.some(row => (row.price === null) !== (row.minutes === null));
+    return this.rows.some(row => this.isHalfRow(row));
   }
 
   // los puntos son un entero de 0 en adelante (booking-service rechaza los negativos)

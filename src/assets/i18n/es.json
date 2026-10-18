@@ -1553,6 +1553,9 @@
   "SERVICE_MODAL": {
     "TITLE_CREATE": "Agregar Nuevo Servicio",
     "TITLE_EDIT": "Editar Servicio",
+    "GENERAL_SECTION": "Información del servicio",
+    "MINUTES_SUFFIX": "min",
+    "CLOSE": "Cerrar",
     "SUBTITLE": "Configura tarifa y tiempo para asignación de bahía",
     "NAME_LABEL": "Nombre del Servicio",
     "NAME_PLACEHOLDER": "Ej. Desinfección con Ozono",
@@ -1666,7 +1669,7 @@
       "RESET_TITLE": "Horario restablecido",
       "RESET_MESSAGE": "El horario volvió a los valores por defecto.",
       "BAY_ADDED_TITLE": "Bahía agregada",
-      "BAY_ADDED_MESSAGE": "La bahía «{{name}}» quedó disponible.",
+      "BAY_ADDED_MESSAGE": "La bahía «{{name}}» se agregó al horario.",
       "BAY_UPDATED_TITLE": "Bahía actualizada",
       "BAY_UPDATED_MESSAGE": "Se guardaron los cambios de «{{name}}».",
       "BAY_DELETE_TITLE": "Eliminar bahía",
@@ -2130,13 +2133,13 @@
   "BAY_MODAL": {
     "TITLE_CREATE": "Agregar bahía",
     "TITLE_EDIT": "Editar bahía",
-    "SUBTITLE": "Registra una nueva bahía o actualiza su estado y operario.",
+    "SUBTITLE": "Registra una nueva bahía o actualiza su nombre y estado.",
     "NAME_LABEL": "Nombre de la bahía",
     "NAME_PLACEHOLDER": "Ej. Bahía 5",
     "ERROR_NAME": "Ingresa el nombre de la bahía",
     "STATUS_LABEL": "Estado",
     "OPERATOR_LABEL": "Operario asignado",
-    "HINT_NO_OPERATOR": "En mantenimiento e inactiva no usan operario."
+    "HINT_CREATE_STATUS": "Una bahía nueva empieza activa o inactiva. Para ponerla en mantenimiento, créala y después cambia su estado."
   },
   "BOOKING_DETAIL": {
     "CODE": "Código",
@@ -2342,6 +2345,7 @@
     "NETWORK_ERROR": "No hay conexión con el servidor. Intenta de nuevo en un momento.",
     "UNEXPECTED": "Ocurrió un error inesperado. Intenta de nuevo.",
     "CANNOT_DISABLE_OWN_ACCOUNT": "No puedes desactivar tu propia cuenta",
+    "BAY_NEW_IN_MAINTENANCE": "Una bahía nueva no puede empezar en mantenimiento. Créala y después cambia su estado.",
     "NOTIFICATION_NOT_FOUND": "La notificación ya no existe.",
     "SLOT_UNAVAILABLE": "Esa hora ya no está disponible.",
     "SLOT_CLOSED_DAY": "El lavadero no abre ese día. Elige otra fecha.",
