@@ -133,10 +133,11 @@
                       <!-- desactivar reemplaza a editar/eliminar: la cuenta no se borra (ADR-010) -->
                       <button
                         class="btn-icon"
-                        [class.btn-icon--danger]="u.status === 'active'"
+                        [class.btn-icon--danger]="u.status === 'active' && !isOwnAccount(u)"
+                        [disabled]="u.status === 'active' && isOwnAccount(u)"
                         (click)="toggleUserStatus(u)"
-                        [attr.aria-label]="(u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE') | translate"
-                        [title]="(u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE') | translate">
+                        [attr.aria-label]="(u.status === 'active' && isOwnAccount(u) ? 'API_ERRORS.CANNOT_DISABLE_OWN_ACCOUNT' : u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE') | translate"
+                        [title]="(u.status === 'active' && isOwnAccount(u) ? 'API_ERRORS.CANNOT_DISABLE_OWN_ACCOUNT' : u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE') | translate">
                         <mat-icon>{{ u.status === 'active' ? 'block' : 'check_circle' }}</mat-icon>
                       </button>
                     </td>

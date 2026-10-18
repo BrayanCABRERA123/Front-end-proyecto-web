@@ -13,11 +13,11 @@
           [attr.aria-controls]="'faq-answer-' + key"
           (click)="toggle(key)">
           <span>{{ ('FAQ.ITEMS.' + key + '.Q') | translate }}</span>
-          <mat-icon>{{ open() === key ? 'remove' : 'add' }}</mat-icon>
+          <mat-icon class="faq-arrow" aria-hidden="true">expand_more</mat-icon>
         </button>
-        @if (open() === key) {
-          <p class="faq-answer" [id]="'faq-answer-' + key">{{ ('FAQ.ITEMS.' + key + '.A') | translate }}</p>
-        }
+        <div class="faq-panel" [id]="'faq-answer-' + key" role="region" [attr.aria-hidden]="open() !== key">
+          <p class="faq-answer">{{ ('FAQ.ITEMS.' + key + '.A') | translate }}</p>
+        </div>
       </div>
     }
   </div>

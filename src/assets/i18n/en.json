@@ -1553,6 +1553,9 @@
   "SERVICE_MODAL": {
     "TITLE_CREATE": "Add New Service",
     "TITLE_EDIT": "Edit Service",
+    "GENERAL_SECTION": "Service information",
+    "MINUTES_SUFFIX": "min",
+    "CLOSE": "Close",
     "SUBTITLE": "Set the rate and time used for bay assignment",
     "NAME_LABEL": "Service Name",
     "NAME_PLACEHOLDER": "E.g. Ozone Disinfection",
@@ -1666,7 +1669,7 @@
       "RESET_TITLE": "Schedule reset",
       "RESET_MESSAGE": "The schedule was restored to its default values.",
       "BAY_ADDED_TITLE": "Bay added",
-      "BAY_ADDED_MESSAGE": "Bay «{{name}}» is now available.",
+      "BAY_ADDED_MESSAGE": "Bay «{{name}}» was added to the schedule.",
       "BAY_UPDATED_TITLE": "Bay updated",
       "BAY_UPDATED_MESSAGE": "Changes to «{{name}}» were saved.",
       "BAY_DELETE_TITLE": "Delete bay",
@@ -2130,13 +2133,13 @@
   "BAY_MODAL": {
     "TITLE_CREATE": "Add bay",
     "TITLE_EDIT": "Edit bay",
-    "SUBTITLE": "Register a new bay or update its status and operator.",
+    "SUBTITLE": "Register a new bay or update its name and status.",
     "NAME_LABEL": "Bay name",
     "NAME_PLACEHOLDER": "e.g. Bay 5",
     "ERROR_NAME": "Enter the bay name",
     "STATUS_LABEL": "Status",
     "OPERATOR_LABEL": "Assigned operator",
-    "HINT_NO_OPERATOR": "Maintenance and inactive bays do not use an operator."
+    "HINT_CREATE_STATUS": "A new bay starts active or inactive. To put it in maintenance, create it and then change its status."
   },
   "BOOKING_DETAIL": {
     "CODE": "Code",
@@ -2342,6 +2345,7 @@
     "NETWORK_ERROR": "Cannot reach the server. Please try again in a moment.",
     "UNEXPECTED": "An unexpected error occurred. Please try again.",
     "CANNOT_DISABLE_OWN_ACCOUNT": "You cannot disable your own account",
+    "BAY_NEW_IN_MAINTENANCE": "A new bay cannot start in maintenance. Create it and then change its status.",
     "NOTIFICATION_NOT_FOUND": "The notification no longer exists.",
     "SLOT_UNAVAILABLE": "That time is no longer available.",
     "SLOT_CLOSED_DAY": "The car wash is closed that day. Choose another date.",

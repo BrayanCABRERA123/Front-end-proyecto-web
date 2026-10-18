@@ -314,6 +314,12 @@ table {
 
   &:hover { background: var(--item-hover); }
   &--danger:hover { color: var(--error); border-color: var(--error); }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+    &:hover { background: transparent; }
+  }
 }
 
 /* promociones */

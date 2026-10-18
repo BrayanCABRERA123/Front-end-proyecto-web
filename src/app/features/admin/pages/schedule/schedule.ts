@@ -189,18 +189,20 @@ export class ScheduleComponent implements OnInit {
     if (status === bay.status) return;
 
     this.store.setBayStatus(bay.id, status).subscribe({
-      next: () => this.feedback.success(
+      next: updated => this.feedback.success(
         'ADMIN_SCHEDULE.FEEDBACK.BAY_UPDATED_TITLE',
         'ADMIN_SCHEDULE.FEEDBACK.BAY_UPDATED_MESSAGE',
-        {
-          details: [
-            { label: 'ADMIN_SCHEDULE.BAYS_SECTION.NAME_LABEL', value: bay.name },
-            { label: 'ADMIN_SCHEDULE.BAYS_SECTION.STATUS_LABEL', value: this.translate.instant(this.statusLabelKey(status)) }
-          ]
-        }
+        { messageParams: { name: updated.name }, details: this.bayDetails(updated) }
       ),
       error: (error) => this.showError(error)
     });
+  }
+
+  private bayDetails(bay: WashBay): { label: string; value: string }[] {
+    return [
+      { label: 'ADMIN_SCHEDULE.BAYS_SECTION.NAME_LABEL', value: bay.name },
+      { label: 'ADMIN_SCHEDULE.BAYS_SECTION.STATUS_LABEL', value: this.translate.instant(this.statusLabelKey(bay.status)) }
+    ];
   }
 
   openAddBay(): void {
@@ -209,8 +211,10 @@ export class ScheduleComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: WashBayModalResult | null) => {
       if (!result) return;
       this.store.addBay(result.name, result.status).subscribe({
-        next: () => this.feedback.success('ADMIN_SCHEDULE.FEEDBACK.BAY_ADDED_TITLE', 'ADMIN_SCHEDULE.FEEDBACK.BAY_ADDED_MESSAGE', {
-          details: [{ label: 'ADMIN_SCHEDULE.BAYS_SECTION.NAME_LABEL', value: result.name }]
+        // el resumen sale de la bahía que devolvió el backend, no de lo que se escribió
+        next: created => this.feedback.success('ADMIN_SCHEDULE.FEEDBACK.BAY_ADDED_TITLE', 'ADMIN_SCHEDULE.FEEDBACK.BAY_ADDED_MESSAGE', {
+          messageParams: { name: created.name },
+          details: this.bayDetails(created)
         }),
         error: (error) => this.showError(error)
       });
@@ -224,8 +228,9 @@ export class ScheduleComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: WashBayModalResult | null) => {
       if (!result) return;
       this.store.updateBay(bay.id, result).subscribe({
-        next: () => this.feedback.success('ADMIN_SCHEDULE.FEEDBACK.BAY_UPDATED_TITLE', 'ADMIN_SCHEDULE.FEEDBACK.BAY_UPDATED_MESSAGE', {
-          details: [{ label: 'ADMIN_SCHEDULE.BAYS_SECTION.NAME_LABEL', value: result.name }]
+        next: updated => this.feedback.success('ADMIN_SCHEDULE.FEEDBACK.BAY_UPDATED_TITLE', 'ADMIN_SCHEDULE.FEEDBACK.BAY_UPDATED_MESSAGE', {
+          messageParams: { name: updated.name },
+          details: this.bayDetails(updated)
         }),
         error: (error) => this.showError(error)
       });

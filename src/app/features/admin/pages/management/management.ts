@@ -34,6 +34,7 @@ import { apiErrorKey } from '../../../../core/utils/api-error';
 import { PromotionModal, PromotionModalData, PromotionModalResult } from './components/promotion-modal/promotion-modal';
 // cuentas reales del security-service
 import { UserAdminService } from '../../../../core/services/user-admin';
+import { AuthService } from '../../../../core/services/auth';
 import { AuthUser } from '../../../../core/models/auth.models';
 // promociones reales del payment-service
 import { PromotionView, PromotionsApiService, SavePromotionRequest } from '../../../../core/services/promotions-api';
@@ -85,6 +86,7 @@ export class ManagementComponent implements OnInit {
   private readonly promotionsApi = inject(PromotionsApiService);
   private readonly rolesApi = inject(RolePermissionsApiService);
   private readonly translate = inject(TranslateService);
+  private readonly auth = inject(AuthService);
 
   constructor(
     private dialog: MatDialog,
@@ -245,7 +247,13 @@ export class ManagementComponent implements OnInit {
     });
   }
 
+  /** nadie puede desactivar su propia cuenta (el backend tambien lo rechaza) */
+  isOwnAccount(user: AdminUser): boolean {
+    return user.id === String(this.auth.user()?.id);
+  }
+
   toggleUserStatus(user: AdminUser): void {
+    if (user.status === 'active' && this.isOwnAccount(user)) return;
     const disabling = user.status === 'active';
     const data: ConfirmModalData = {
       title: disabling ? 'ADMIN_MANAGEMENT.FEEDBACK.USER_DISABLE_TITLE' : 'ADMIN_MANAGEMENT.FEEDBACK.USER_ENABLE_TITLE',
