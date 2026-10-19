@@ -1391,7 +1391,6 @@
     "USERS": {
       "FILTERS": {
         "ENABLED": "Habilitados",
-        "REGISTERED": "Registrados",
         "DISABLED": "Desabilitados",
         "CLEAR": "Limpar filtros"
       },

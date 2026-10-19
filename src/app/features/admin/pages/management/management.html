@@ -39,9 +39,6 @@
             <button class="chip" [class.chip--active]="userFilter === 'enabled'" (click)="userFilter = 'enabled'">
               {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.ENABLED' | translate }} <span class="chip-count">{{ enabledCount }}</span>
             </button>
-            <button class="chip" [class.chip--active]="userFilter === 'registered'" (click)="userFilter = 'registered'">
-              {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.REGISTERED' | translate }} <span class="chip-count">{{ registeredCount }}</span>
-            </button>
             <button class="chip" [class.chip--active]="userFilter === 'disabled'" (click)="userFilter = 'disabled'">
               {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.DISABLED' | translate }} <span class="chip-count">{{ disabledCount }}</span>
             </button>
