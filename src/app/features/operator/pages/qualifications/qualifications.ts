@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 // calificaciones reales que dejaron los clientes (operations-service)
 import { OperationsApiService, RatingResponse } from '../../../../core/services/operations-api';
 import { isoToDisplayDate } from '../../../../core/utils/booking-display';
+import { todayIso } from '../../../../core/utils/dates';
 
 interface RatingCard {
   id: number;
@@ -41,6 +42,9 @@ interface RatingCard {
   styleUrl: './qualifications.scss'
 })
 export class QualificationsComponent implements OnInit {
+
+  // tope de los filtros de fecha: no hay historial del futuro
+  readonly today = todayIso();
 
   private readonly operations = inject(OperationsApiService);
   private readonly cdr = inject(ChangeDetectorRef);

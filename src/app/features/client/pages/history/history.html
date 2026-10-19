@@ -50,12 +50,12 @@
           <div class="date-inputs">
             <div class="date-group">
               <span class="date-label">{{ 'HISTORY.FROM' | translate }}</span>
-              <input type="date" class="date-input" [(ngModel)]="dateFrom" />
+              <input type="date" class="date-input" [(ngModel)]="dateFrom" [max]="dateTo || today" />
             </div>
             <span class="date-separator">→</span>
             <div class="date-group">
               <span class="date-label">{{ 'HISTORY.TO' | translate }}</span>
-              <input type="date" class="date-input" [(ngModel)]="dateTo" />
+              <input type="date" class="date-input" [(ngModel)]="dateTo" [min]="dateFrom" [max]="today" />
             </div>
           </div>
         </div>

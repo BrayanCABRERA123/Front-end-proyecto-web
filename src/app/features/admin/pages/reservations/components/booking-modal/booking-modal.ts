@@ -10,6 +10,7 @@ import { BookingApiService, slotAlternatives, slotTakenByOthers } from '../../..
 import { ReservationsStore } from '../../../../services/reservations-store';
 import { CatalogServiceResponse, OwnedVehicleResponse } from '../../../../../../core/models/booking.models';
 import { apiErrorKey } from '../../../../../../core/utils/api-error';
+import { isoDaysFromToday, todayIso } from '../../../../../../core/utils/dates';
 import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
 
 // presente cuando se reprograma una reserva existente
@@ -60,6 +61,10 @@ export class BookingModal {
   services: CatalogServiceResponse[] = [];
   selectedServiceIds = new Set<number>();
 
+  // rango que acepta booking-service: de hoy a 60 días
+  readonly minDate = todayIso();
+  readonly maxDate = isoDaysFromToday(60);
+
   date = '';
   time = '';
   times: string[] = [];
@@ -73,16 +78,15 @@ export class BookingModal {
     @Optional() @Inject(MAT_DIALOG_DATA) data: BookingModalData | null,
   ) {
     const booking = data?.booking;
-    const today = new Date();
-    const pad = (value: number) => String(value).padStart(2, '0');
-    this.date = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+    this.date = this.minDate;
 
     if (booking) {
       // reprogramar: mismo vehículo; se proponen la fecha y los servicios que tenía
       this.editing = true;
       this.bookingId = Number(booking.id);
       this.plate = booking.plate;
-      this.date = booking.date;
+      // una reserva de un día ya pasado se reprograma desde hoy
+      this.date = booking.date < this.minDate ? this.minDate : booking.date;
       this.notes = booking.notes;
       booking.serviceIds.forEach(id => this.selectedServiceIds.add(id));
       this.searchVehicle();
@@ -186,7 +190,11 @@ export class BookingModal {
   }
 
   get canSave(): boolean {
-    return !!this.vehicle && this.selectedServiceIds.size > 0 && !!this.date && !!this.time;
+    return !!this.vehicle && this.selectedServiceIds.size > 0 && this.dateInRange && !!this.time;
+  }
+
+  get dateInRange(): boolean {
+    return !!this.date && this.date >= this.minDate && this.date <= this.maxDate;
   }
 
   close(): void {

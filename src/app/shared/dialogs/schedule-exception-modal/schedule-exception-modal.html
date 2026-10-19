@@ -10,8 +10,11 @@
     <div class="row-2">
       <label class="field">
         <span>{{ 'SCHEDULE_EXCEPTION_MODAL.DATE_LABEL' | translate }}</span>
-        <input type="date" [(ngModel)]="date">
+        <input type="date" [(ngModel)]="date" [min]="minDate">
       </label>
+      @if (isPastDate) {
+        <p class="field-error">{{ 'CALENDAR.ERROR_PAST_DATE' | translate }}</p>
+      }
 
       
     </div>

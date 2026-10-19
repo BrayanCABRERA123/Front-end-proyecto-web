@@ -40,6 +40,7 @@ const TRANSLATED_CODES = new Set([
   'VEHICLE_ALREADY_BOOKED',
   'SERVICE_NOT_AVAILABLE_FOR_VEHICLE',
   'INVALID_DATE',
+  'ABSENCE_IN_PAST',
   'CUSTOMER_SERVICE_UNAVAILABLE',
   'BOOKING_NOT_CHANGEABLE',
   // códigos del operations-service (operarios, asignación, ejecución y calificaciones)

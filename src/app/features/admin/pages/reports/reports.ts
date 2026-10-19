@@ -13,6 +13,7 @@ import { Chart } from 'chart.js/auto';
 import { ExportReportModalComponent } from '../../../../shared/dialogs/export-report-modal/export-report-modal';
 import { ReservationsStore } from '../../services/reservations-store';
 import { PaymentsStore } from '../../services/payments-store';
+import { isoDaysFromToday } from '../../../../core/utils/dates';
 
 // período visible de la gráfica y de las tarjetas resumen
 type ReportPeriod = 'day' | 'week' | 'month';
@@ -62,9 +63,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
 
   // fecha ISO (yyyy-MM-dd) de hace n días
   private isoDaysAgo(days: number): string {
-    const d = new Date();
-    d.setDate(d.getDate() - days);
-    return d.toISOString().slice(0, 10);
+    return isoDaysFromToday(-days);
   }
 
   // formatea a pesos colombianos, ej: $85.000

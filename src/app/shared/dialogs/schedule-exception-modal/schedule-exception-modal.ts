@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { todayIso } from '../../../core/utils/dates';
+
 export type ExceptionType = 'holiday' | 'special';
 
 export interface ScheduleExceptionData {
@@ -26,6 +28,8 @@ export type ScheduleExceptionResult = ScheduleExceptionData;
 export class ScheduleExceptionModal {
 
   isEditing = false;
+
+  readonly minDate = todayIso();
 
   date = '';
   closedAllDay = true;
@@ -53,7 +57,11 @@ export class ScheduleExceptionModal {
   }
 
   get canSave(): boolean {
-    return this.date.trim().length > 0 && this.reason.trim().length > 0 && !this.hasInvalidRange;
+    return !this.isPastDate && this.date.trim().length > 0 && this.reason.trim().length > 0 && !this.hasInvalidRange;
+  }
+
+  get isPastDate(): boolean {
+    return !!this.date && this.date < this.minDate;
   }
 
   close(): void {

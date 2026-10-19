@@ -12,6 +12,7 @@ import { BookingApiService } from '../../../../core/services/booking-api';
 import { ClientBookingItem, toClientBookingItem } from '../../../../core/models/booking-view.models';
 import { isActiveStatus } from '../../../../core/utils/booking-display';
 import { apiErrorKey } from '../../../../core/utils/api-error';
+import { todayIso } from '../../../../core/utils/dates';
 // calificaciones que el cliente ya dejó (operations-service)
 import { OperationsApiService } from '../../../../core/services/operations-api';
 // estado de pago de cada reserva (payment-service): decide si se muestra "Pagar"
@@ -35,6 +36,9 @@ type HistoryFilter = 'todas' | 'activas' | 'completadas' | 'canceladas';
   styleUrl: './history.scss'
 })
 export class HistoryComponent implements OnInit {
+
+  // tope de los filtros de fecha: no hay historial del futuro
+  readonly today = todayIso();
 
   private readonly bookingApi = inject(BookingApiService);
   private readonly changes = inject(ChangeDetectorRef);

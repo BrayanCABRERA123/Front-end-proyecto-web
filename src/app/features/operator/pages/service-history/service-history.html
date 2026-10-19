@@ -43,7 +43,7 @@
         </div>
 
         <div class="filter-group">
-          <input type="date" class="filter-input" [(ngModel)]="dateFilter" />
+          <input type="date" class="filter-input" [(ngModel)]="dateFilter" [max]="today" />
         </div>
 
         <div class="filter-group">

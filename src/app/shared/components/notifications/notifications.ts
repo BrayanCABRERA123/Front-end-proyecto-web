@@ -20,6 +20,7 @@ import { NotificationsService } from '../../../core/services/notifications';
 import { NotificationWatcher } from '../../../core/services/notification-watcher';
 // convierte un error del backend en la llave de traducción API_ERRORS.<code>
 import { apiErrorKey } from '../../../core/utils/api-error';
+import { todayIso } from '../../../core/utils/dates';
 
 export type { AppNotification, NotificationType };
 
@@ -43,6 +44,9 @@ type TabKey = 'all' | 'recordatorio' | 'promocion' | 'confirmacion' | 'others';
   styleUrls: ['./notifications.scss']
 })
 export class NotificationsComponent implements OnInit {
+
+  // tope de los filtros de fecha: no hay historial del futuro
+  readonly today = todayIso();
 
   @Input() rol: 'CLIENT' | 'OPERATOR' | 'ADMIN' = 'CLIENT';
 

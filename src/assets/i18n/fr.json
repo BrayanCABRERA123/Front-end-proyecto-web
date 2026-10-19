@@ -1042,7 +1042,8 @@
       "Ven",
       "Sam",
       "Dim"
-    ]
+    ],
+    "ERROR_PAST_DATE": "La date ne peut pas être antérieure à aujourd'hui."
   },
   "SCHEDULE": {
     "TITLE": "Mon Agenda",
@@ -1852,9 +1853,8 @@
     },
     "LEGEND": {
       "AVAILABLE": "Disponible",
-      "SERVICE": "Service assigné",
       "LEAVE": "Absence approuvée",
-      "LUNCH": "Déjeuner / pause"
+      "OFF": "Ne travaille pas"
     },
     "TODAY": "Aujourd'hui",
     "PREV_WEEK": "Semaine précédente",
@@ -2389,7 +2389,8 @@
     "TOO_MANY_PHOTOS": "Une constatation accepte jusqu'à 5 photos",
     "INVALID_PHOTO": "Les photos doivent être en JPG ou PNG et peser jusqu'à 2 Mo",
     "CONTENT_TOO_LARGE": "Les photos sont trop lourdes : chacune peut peser jusqu'à 2 Mo",
-    "BOOKING_WITHOUT_CLIENT": "La réservation n'a pas de compte client à prévenir"
+    "BOOKING_WITHOUT_CLIENT": "La réservation n'a pas de compte client à prévenir",
+    "ABSENCE_IN_PAST": "L'absence ne peut pas commencer avant aujourd'hui."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",

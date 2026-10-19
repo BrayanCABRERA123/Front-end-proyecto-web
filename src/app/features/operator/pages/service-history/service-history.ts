@@ -11,6 +11,7 @@ import { ServiceHistoryDetailModal } from '../../../../shared/dialogs/service-hi
 import { ServiceHistoryItem } from '../../../../shared/dialogs/history-models/service-history.model';
 // servicios que ya hizo (operations-service)
 import { OperationsApiService, localIsoDate } from '../../../../core/services/operations-api';
+import { todayIso } from '../../../../core/utils/dates';
 
 // estos 3 valores coinciden con HistoryStatus (shared/dialogs/history-models), no se traducen aquí
 type Tab = 'todos' | 'finalizado' | 'cancelado' | 'reasignado';
@@ -31,6 +32,9 @@ type Tab = 'todos' | 'finalizado' | 'cancelado' | 'reasignado';
   styleUrl: './service-history.scss'
 })
 export class ServiceHistoryComponent implements OnInit {
+
+  // tope de los filtros de fecha: no hay historial del futuro
+  readonly today = todayIso();
 
   activeTab: Tab = 'todos';
   search = '';
