@@ -1382,7 +1382,6 @@
     }
   },
   "ADMIN_MANAGEMENT": {
-    "STATUS_LINE": "Sistema en línea · Sucursal Central",
     "TABS": {
       "USERS": "Usuarios",
       "ROLES": "Roles",
@@ -1483,8 +1482,7 @@
       },
       "STATS": {
         "TOTAL_REDEMPTIONS": "Total canjes",
-        "CLIENT_SAVINGS": "Ahorro a clientes",
-        "CONVERSION": "Conversión de cupones"
+        "CLIENT_SAVINGS": "Ahorro a clientes"
       },
       "EMPTY_TITLE": "No hay promociones",
       "EMPTY_MESSAGE": "Crea una promoción para impulsar las ventas del lavadero.",

@@ -69,7 +69,7 @@ export class ManagementComponent implements OnInit {
 
   // promociones reales (payment-service)
   private readonly promotionsList = signal<Promotion[]>([]);
-  private readonly promotionMetrics = signal({ redemptions: 0, savings: 0, conversion: 0 });
+  private readonly promotionMetrics = signal({ redemptions: 0, savings: 0 });
 
   // permisos de los 3 roles fijos, reales (security-service, ADR-015). La tabla se arma en
   // computed() para que el número de usuarios se actualice cuando lleguen las cuentas, sin
@@ -482,10 +482,6 @@ export class ManagementComponent implements OnInit {
   get totalRedemptions(): number { return this.promotionMetrics().redemptions; }
 
   get clientSavings(): number { return this.promotionMetrics().savings; }
-
-  // no hay forma de contar cuántas veces se mostró/ofreció una promoción todavía, así que la
-  // conversión real no se puede calcular (ver PromotionApplicationService en payment-service)
-  get conversion(): number { return this.promotionMetrics().conversion; }
 
   openCreatePromotion(): void {
     const dialogRef = this.dialog.open(PromotionModal, { panelClass: 'custom-dialog' });

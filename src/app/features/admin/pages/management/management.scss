@@ -55,21 +55,6 @@
   }
 }
 
-.status-line {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  @include caption-text;
-  color: var(--text-secondary);
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--success);
-}
-
 /* tarjeta contenedora de cada pestaña */
 .card {
   background: var(--card);

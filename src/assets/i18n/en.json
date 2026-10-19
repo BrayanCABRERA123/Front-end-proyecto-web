@@ -1382,7 +1382,6 @@
     }
   },
   "ADMIN_MANAGEMENT": {
-    "STATUS_LINE": "System online · Main branch",
     "TABS": {
       "USERS": "Users",
       "ROLES": "Roles",
@@ -1483,8 +1482,7 @@
       },
       "STATS": {
         "TOTAL_REDEMPTIONS": "Total redemptions",
-        "CLIENT_SAVINGS": "Client savings",
-        "CONVERSION": "Coupon conversion"
+        "CLIENT_SAVINGS": "Client savings"
       },
       "EMPTY_TITLE": "No promotions yet",
       "EMPTY_MESSAGE": "Create a promotion to boost car wash sales.",
