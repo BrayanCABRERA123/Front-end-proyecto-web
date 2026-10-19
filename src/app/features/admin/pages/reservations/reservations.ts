@@ -17,6 +17,7 @@ import { OperatorsStore } from '../../services/operators-store';
 import { Booking, BookingStatus } from '../../models/admin.models';
 import { BookingModal, BookingModalData } from './components/booking-modal/booking-modal';
 import { apiErrorKey } from '../../../../core/utils/api-error';
+import { isoDaysFromToday } from '../../../../core/utils/dates';
 import { BookingDetailModal, BookingDetailResult } from './components/booking-detail-modal/booking-detail-modal';
 
 @Component({
@@ -77,9 +78,7 @@ export class ReservationsComponent implements OnInit {
   // etiqueta relativa de la fila: Hoy / Mañana / fecha
   dayLabel(date: string): string {
     if (date === this.today) return 'Hoy';
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    if (date === tomorrow.toISOString().slice(0, 10)) return 'Mañana';
+    if (date === isoDaysFromToday(1)) return 'Mañana';
     return formatDate(date);
   }
 

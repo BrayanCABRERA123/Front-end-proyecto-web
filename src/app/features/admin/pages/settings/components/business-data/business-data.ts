@@ -8,6 +8,7 @@ import { BusinessStore } from '../../../../services/business-store';
 import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
 import { BusinessData } from '../../../../models/admin.models';
 import { apiErrorKey } from '../../../../../../core/utils/api-error';
+import { todayIso } from '../../../../../../core/utils/dates';
 
 // campos obligatorios del formulario; cada uno tiene su mensaje de error
 const REQUIRED_FIELDS: Record<keyof Pick<BusinessData, 'legalName' | 'taxId' | 'address' | 'phone'>, string> = {
@@ -29,6 +30,9 @@ const PHONE_RE = /^\+?[\d\s()-]{7,20}$/;
   styleUrl: './business-data.scss'
 })
 export class BusinessDataComponent implements OnInit {
+
+  // tope de los filtros de fecha: no hay historial del futuro
+  readonly today = todayIso();
 
   // lo último guardado en booking-service
   private saved: BusinessData;

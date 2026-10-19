@@ -17,6 +17,7 @@ import { Operator, OperatorsStore } from '../../services/operators-store';
 import { ScheduleStore } from '../../services/schedule-store';
 import { Booking, Payment } from '../../models/admin.models';
 import { apiErrorKey } from '../../../../core/utils/api-error';
+import { isoDay } from '../../../../core/utils/dates';
 import { BookingApiService } from '../../../../core/services/booking-api';
 import { DaySummaryResponse } from '../../../../core/models/booking.models';
 import { AuthService } from '../../../../core/services/auth';
@@ -147,7 +148,7 @@ export class DashboardComponent {
     for (let i = -6; i <= 0; i++) {
       const d = new Date();
       d.setDate(d.getDate() + i);
-      const iso = d.toISOString().slice(0, 10);
+      const iso = isoDay(d);
 
       const amount = payments
         .filter(p => p.date === iso && p.status === 'approved')

@@ -52,7 +52,7 @@
     <div class="form-dialog__grid-2">
       <label class="form-field">
         <span>{{ 'PROMOTION_MODAL.START_DATE_LABEL' | translate }}</span>
-        <input type="date" [(ngModel)]="startDate">
+        <input type="date" [(ngModel)]="startDate" [min]="minStartDate">
         <p class="form-hint">{{ 'PROMOTION_MODAL.START_DATE_HINT' | translate }}</p>
       </label>
 

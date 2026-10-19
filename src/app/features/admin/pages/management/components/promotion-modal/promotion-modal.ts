@@ -6,6 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { Promotion } from '../../../../models/admin.models';
+import { todayIso } from '../../../../../../core/utils/dates';
 
 // si llega una promoción, el modal está en modo edición y arranca con sus valores
 export interface PromotionModalData {
@@ -48,7 +49,9 @@ export class PromotionModal {
   couponCode = '';
   featured = false;
   icon = ICON_OPTIONS[0];
-  startDate = new Date().toISOString().slice(0, 10);
+  startDate = todayIso();
+  // fecha mínima del calendario: hoy, o la que ya tenía la promoción si empezó antes
+  minStartDate = todayIso();
   features: string[] = [];
   discountPercent: number | null = 100;
   // number | null: si el admin borra el campo, ngModel deja null
@@ -70,6 +73,7 @@ export class PromotionModal {
       this.featured = p.featured;
       this.icon = p.icon;
       this.startDate = p.startDate;
+      if (p.startDate < this.minStartDate) this.minStartDate = p.startDate;
       this.features = [...p.features];
       this.discountPercent = p.discountPercent;
       this.requiredPoints = p.requiredPoints;
@@ -105,6 +109,7 @@ export class PromotionModal {
 
   get canSave(): boolean {
     return this.name.trim().length >= 3
+      && !!this.startDate && this.startDate >= this.minStartDate
       && this.description.trim().length >= 3
       && this.couponCode.trim().length >= 3
       && !!this.discountPercent && this.discountPercent >= 1 && this.discountPercent <= 100

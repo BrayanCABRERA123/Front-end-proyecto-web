@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { todayIso } from '../../../../../../core/utils/dates';
+
 export interface AbsenceModalResult {
   startDate: string;
   endDate: string;
@@ -20,16 +22,22 @@ export interface AbsenceModalResult {
 })
 export class OperatorAbsenceModal {
 
-  startDate = new Date().toISOString().slice(0, 10);
-  endDate = new Date().toISOString().slice(0, 10);
+  // una ausencia se registra de hoy en adelante (operations-service también lo exige)
+  readonly minDate = todayIso();
+  startDate = this.minDate;
+  endDate = this.minDate;
   reason = '';
 
   submitted = false;
 
   constructor(private dialogRef: MatDialogRef<OperatorAbsenceModal>) {}
 
+  get startInvalid(): boolean {
+    return this.submitted && (!this.startDate || this.startDate < this.minDate);
+  }
+
   get dateInvalid(): boolean {
-    return this.submitted && this.endDate < this.startDate;
+    return this.submitted && (!this.endDate || this.endDate < this.startDate);
   }
 
   get reasonInvalid(): boolean {
@@ -37,7 +45,9 @@ export class OperatorAbsenceModal {
   }
 
   get canSave(): boolean {
-    return this.endDate >= this.startDate && this.reason.trim().length >= 3;
+    return !!this.startDate && this.startDate >= this.minDate
+      && !!this.endDate && this.endDate >= this.startDate
+      && this.reason.trim().length >= 3;
   }
 
   close(): void {

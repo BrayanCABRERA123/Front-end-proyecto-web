@@ -1042,7 +1042,8 @@
       "Vie",
       "Sáb",
       "Dom"
-    ]
+    ],
+    "ERROR_PAST_DATE": "La fecha no puede ser anterior a hoy."
   },
   "SCHEDULE": {
     "TITLE": "Mi Agenda",
@@ -1852,9 +1853,8 @@
     },
     "LEGEND": {
       "AVAILABLE": "Disponible",
-      "SERVICE": "Servicio asignado",
       "LEAVE": "Ausencia aprobada",
-      "LUNCH": "Almuerzo / pausa"
+      "OFF": "No trabaja"
     },
     "TODAY": "Hoy",
     "PREV_WEEK": "Semana anterior",
@@ -2389,7 +2389,8 @@
     "TOO_MANY_PHOTOS": "Un hallazgo admite hasta 5 fotos",
     "INVALID_PHOTO": "Las fotos deben ser JPG o PNG de hasta 2 MB",
     "CONTENT_TOO_LARGE": "Las fotos pesan demasiado: cada una puede tener hasta 2 MB",
-    "BOOKING_WITHOUT_CLIENT": "La reserva no tiene una cuenta de cliente a la cual avisar"
+    "BOOKING_WITHOUT_CLIENT": "La reserva no tiene una cuenta de cliente a la cual avisar",
+    "ABSENCE_IN_PAST": "La ausencia no puede empezar antes de hoy."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Contraseña actual",

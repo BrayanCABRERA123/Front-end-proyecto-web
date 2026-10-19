@@ -127,12 +127,13 @@
   &--service { background: var(--primary); }
   &--leave { background: var(--error); }
   &--lunch { background: var(--warning); }
+  &--off { background: var(--border); }
 }
 
 /* grilla semanal */
 .week-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -178,7 +179,13 @@
   &--service { background: var(--primary-soft); color: var(--primary); }
   &--leave { background: var(--error-soft); color: var(--error); }
   &--lunch { background: var(--warning-soft); color: var(--warning); }
+  &--off { background: var(--bg); color: var(--text-muted); border: 1px dashed var(--border); }
 }
+
+/* hoy resaltado; los días que ya pasaron, atenuados (solo consulta) */
+.day-column--today { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.day-column--today .day-column__header { background: var(--primary-soft); color: var(--primary); }
+.day-column--past { opacity: .55; }
 
 .empty-view {
   display: flex;
@@ -266,6 +273,9 @@
 
   &:hover { background: var(--item-hover); }
 
+  &--today:not(.day-chip--active) { border-color: var(--primary); color: var(--primary); }
+  &--past:not(.day-chip--active) { opacity: .55; }
+
   &--active {
     background: var(--primary);
     border-color: var(--primary);
@@ -294,7 +304,7 @@
 
   &__weekdays {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 8px;
     @include caption-text;
     font-weight: $fw-bold;
@@ -304,7 +314,7 @@
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 8px;
   }
 }
@@ -319,7 +329,10 @@
   align-items: center;
   gap: 4px;
 
-  &--empty { border-style: dashed; background: transparent; }
+  &--empty { border: none; background: transparent; }
+  &--today { border-color: var(--primary); background: var(--primary-soft); }
+  &--today .month-cell__day { color: var(--primary); }
+  &--past { opacity: .5; }
 
   &__day {
     @include body-text-bold;
@@ -330,16 +343,15 @@
 /* responsive */
 @include tablet {
   .home-content { padding: 20px; }
-  .week-grid { grid-template-columns: repeat(2, 1fr); }
-
-  .month-view__weekdays,
-  .month-view__grid { grid-template-columns: repeat(3, 1fr); }
+  .week-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @include mobile {
   .week-grid { grid-template-columns: 1fr; }
   .week-nav { flex-wrap: wrap; }
 
+  // el mes siempre conserva sus 7 columnas: solo se achican las celdas
   .month-view__weekdays,
-  .month-view__grid { grid-template-columns: repeat(2, 1fr); }
+  .month-view__grid { gap: 4px; }
+  .month-cell { min-height: 44px; padding: 4px 2px; }
 }

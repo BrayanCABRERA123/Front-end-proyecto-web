@@ -1042,7 +1042,8 @@
       "Fri",
       "Sat",
       "Sun"
-    ]
+    ],
+    "ERROR_PAST_DATE": "The date cannot be earlier than today."
   },
   "SCHEDULE": {
     "TITLE": "My Schedule",
@@ -1852,9 +1853,8 @@
     },
     "LEGEND": {
       "AVAILABLE": "Available",
-      "SERVICE": "Assigned service",
       "LEAVE": "Approved leave",
-      "LUNCH": "Lunch / break"
+      "OFF": "Day off"
     },
     "TODAY": "Today",
     "PREV_WEEK": "Previous week",
@@ -2389,7 +2389,8 @@
     "TOO_MANY_PHOTOS": "A finding allows up to 5 photos",
     "INVALID_PHOTO": "Photos must be JPG or PNG up to 2 MB",
     "CONTENT_TOO_LARGE": "The photos are too large: each one can weigh up to 2 MB",
-    "BOOKING_WITHOUT_CLIENT": "The booking has no client account to notify"
+    "BOOKING_WITHOUT_CLIENT": "The booking has no client account to notify",
+    "ABSENCE_IN_PAST": "The absence cannot start before today."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",

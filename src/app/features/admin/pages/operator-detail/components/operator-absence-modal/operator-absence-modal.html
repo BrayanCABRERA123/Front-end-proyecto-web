@@ -11,14 +11,17 @@
   <div class="form-dialog__body">
 
     <div class="form-dialog__grid-2">
-      <label class="form-field">
+      <label class="form-field" [class.form-field--invalid]="startInvalid">
         <span>{{ 'OPERATOR_ABSENCE_MODAL.START_DATE_LABEL' | translate }} *</span>
-        <input type="date" [(ngModel)]="startDate" (ngModelChange)="endDate = endDate < startDate ? startDate : endDate">
+        <input type="date" [(ngModel)]="startDate" [min]="minDate" (ngModelChange)="endDate = endDate < startDate ? startDate : endDate">
+        @if (startInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'CALENDAR.ERROR_PAST_DATE' | translate }}</span>
+        }
       </label>
 
       <label class="form-field" [class.form-field--invalid]="dateInvalid">
         <span>{{ 'OPERATOR_ABSENCE_MODAL.END_DATE_LABEL' | translate }} *</span>
-        <input type="date" [(ngModel)]="endDate">
+        <input type="date" [(ngModel)]="endDate" [min]="startDate || minDate">
         @if (dateInvalid) {
           <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'OPERATOR_ABSENCE_MODAL.ERROR_DATE_RANGE' | translate }}</span>
         }

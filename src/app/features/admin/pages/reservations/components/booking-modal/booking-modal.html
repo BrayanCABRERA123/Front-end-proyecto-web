@@ -58,7 +58,7 @@
       <div class="form-dialog__grid-2">
         <label class="form-field">
           <span>{{ 'BOOKING_MODAL.DATE_LABEL' | translate }} *</span>
-          <input type="date" [(ngModel)]="date" (ngModelChange)="onDateChange()">
+          <input type="date" [(ngModel)]="date" (ngModelChange)="onDateChange()" [min]="minDate" [max]="maxDate">
         </label>
 
         <label class="form-field">

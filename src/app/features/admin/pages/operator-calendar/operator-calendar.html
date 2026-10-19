@@ -3,7 +3,9 @@
 
   <main class="home-content">
 
-    @if (!operator) {
+    @if (loading) {
+      <div class="card"><p class="muted">{{ 'COMMON.LOADING' | translate }}</p></div>
+    } @else if (!operator) {
       <div class="card">
         <app-empty-state
           variant="error"
@@ -30,22 +32,24 @@
         <a (click)="goBack()">{{ 'OPERATOR_DETAIL.BREADCRUMB_AVAILABILITY' | translate:{ name: operator.name } }}</a>
       </nav>
 
-      <!-- encabezado de semana -->
+      <!-- encabezado: la navegación por semanas sirve a las vistas semana y día -->
       <div class="week-header">
-        <div class="week-nav">
-          <button class="nav-btn" (click)="shiftWeek(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_WEEK' | translate">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-          <button class="today-btn" (click)="goToCurrentWeek()">
-            {{ 'OPERATOR_CALENDAR.TODAY' | translate }}
-          </button>
-          <strong>
-            {{ 'OPERATOR_CALENDAR.WEEK_LABEL' | translate:{ week: weekLabelContent.week, from: weekLabelContent.from, to: weekLabelContent.to } }}
-          </strong>
-          <button class="nav-btn" (click)="shiftWeek(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_WEEK' | translate">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
-        </div>
+        @if (view !== 'month') {
+          <div class="week-nav">
+            <button class="nav-btn" (click)="shiftWeek(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_WEEK' | translate">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button class="today-btn" (click)="goToToday()">
+              {{ 'OPERATOR_CALENDAR.TODAY' | translate }}
+            </button>
+            <strong>
+              {{ 'OPERATOR_CALENDAR.WEEK_LABEL' | translate:{ week: weekLabelContent.week, from: weekLabelContent.from, to: weekLabelContent.to } }}
+            </strong>
+            <button class="nav-btn" (click)="shiftWeek(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_WEEK' | translate">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        }
 
         <span class="full-day-chip">
           <mat-icon>schedule</mat-icon>
@@ -59,35 +63,31 @@
         </div>
       </div>
 
-      <!-- leyenda -->
+      <!-- leyenda: solo lo que el calendario realmente pinta -->
       <div class="legend">
         <span><i class="dot dot--available"></i> {{ 'OPERATOR_CALENDAR.LEGEND.AVAILABLE' | translate }}</span>
-        <span><i class="dot dot--service"></i> {{ 'OPERATOR_CALENDAR.LEGEND.SERVICE' | translate }}</span>
         <span><i class="dot dot--leave"></i> {{ 'OPERATOR_CALENDAR.LEGEND.LEAVE' | translate }}</span>
-        <span><i class="dot dot--lunch"></i> {{ 'OPERATOR_CALENDAR.LEGEND.LUNCH' | translate }}</span>
+        <span><i class="dot dot--off"></i> {{ 'OPERATOR_CALENDAR.LEGEND.OFF' | translate }}</span>
       </div>
 
       @if (view === 'week') {
         <div class="week-grid">
           @for (dayIndex of dayIndexes; track dayIndex) {
-            <div class="day-column">
+            <div class="day-column" [class.day-column--today]="isToday(dayIndex)" [class.day-column--past]="isPast(dayIndex)">
               <div class="day-column__header">
                 <span>{{ dayLabel(dayIndex) }}</span>
                 <small>{{ dayDateLabel(dayIndex) }}</small>
               </div>
 
               <div class="day-column__body">
-                @for (block of blocksForDay(dayIndex); track block.startTime) {
-                  <div [class]="'block block--' + block.type">
-                    <span class="block__time">{{ block.startTime }} - {{ block.endTime }}</span>
-                    <span class="block__label">{{ block.label }}</span>
-                    @if (block.bay) { <span class="block__bay">{{ block.bay }}</span> }
+                @for (entry of entriesForDay(dayIndex); track $index) {
+                  <div [class]="'block block--' + entry.type">
+                    @if (entry.startTime) { <span class="block__time">{{ entry.startTime }} - {{ entry.endTime }}</span> }
+                    <span class="block__label">{{ entry.label }}</span>
                   </div>
-                }
-
-                @if (blocksForDay(dayIndex).length === 0) {
-                  <div class="block block--available">
-                    <span class="block__label">{{ 'OPERATOR_CALENDAR.FREE_SLOT' | translate }}</span>
+                } @empty {
+                  <div class="block block--off">
+                    <span class="block__label">{{ 'OPERATOR_CALENDAR.LEGEND.OFF' | translate }}</span>
                   </div>
                 }
               </div>
@@ -101,6 +101,8 @@
               <button
                 class="day-chip"
                 [class.day-chip--active]="selectedDayIndex === dayIndex"
+                [class.day-chip--today]="isToday(dayIndex)"
+                [class.day-chip--past]="isPast(dayIndex)"
                 (click)="selectedDayIndex = dayIndex">
                 {{ dayLabel(dayIndex) }}
                 <small>{{ dayDateLabel(dayIndex) }}</small>
@@ -109,16 +111,15 @@
           </div>
 
           <div class="day-view__column">
-            @for (block of blocksForDay(selectedDayIndex); track block.startTime) {
-              <div [class]="'block block--' + block.type">
-                <span class="block__time">{{ block.startTime }} - {{ block.endTime }}</span>
-                <span class="block__label">{{ block.label }}</span>
-                @if (block.bay) { <span class="block__bay">{{ block.bay }}</span> }
+            @for (entry of entriesForDay(selectedDayIndex); track $index) {
+              <div [class]="'block block--' + entry.type">
+                @if (entry.startTime) { <span class="block__time">{{ entry.startTime }} - {{ entry.endTime }}</span> }
+                <span class="block__label">{{ entry.label }}</span>
               </div>
             } @empty {
               <div class="day-view__empty">
-                <mat-icon>event_available</mat-icon>
-                <p>{{ 'OPERATOR_CALENDAR.FREE_SLOT' | translate }}</p>
+                <mat-icon>event_busy</mat-icon>
+                <p>{{ 'OPERATOR_CALENDAR.LEGEND.OFF' | translate }}</p>
               </div>
             }
           </div>
@@ -129,7 +130,7 @@
             <button class="nav-btn" (click)="shiftMonth(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_MONTH' | translate">
               <mat-icon>chevron_left</mat-icon>
             </button>
-            <button class="today-btn" (click)="goToCurrentMonth()">
+            <button class="today-btn" (click)="goToToday()">
               {{ 'OPERATOR_CALENDAR.TODAY' | translate }}
             </button>
             <strong>{{ monthLabel }}</strong>
@@ -139,21 +140,21 @@
           </div>
 
           <div class="month-view__weekdays">
-            @for (dayIndex of dayIndexes; track dayIndex) {
-              <span>{{ dayLabel(dayIndex) }}</span>
+            @for (d of 'CALENDAR.DAYS_SHORT' | translate; track $index) {
+              <span>{{ d }}</span>
             }
           </div>
 
           <div class="month-view__grid">
             @for (cell of monthCells; track $index) {
-              <div class="month-cell" [class.month-cell--empty]="cell.day === null">
+              <div
+                class="month-cell"
+                [class.month-cell--empty]="cell.day === null"
+                [class.month-cell--today]="cell.isToday"
+                [class.month-cell--past]="cell.isPast">
                 @if (cell.day !== null) {
                   <span class="month-cell__day">{{ cell.day }}</span>
-                  @if (cell.hasBlocks) {
-                    <span [title]="cell.blockCount + ' bloques'">
-                      <i class="dot dot--service"></i>
-                    </span>
-                  }
+                  <i [class]="'dot dot--' + cell.kind"></i>
                 }
               </div>
             }
