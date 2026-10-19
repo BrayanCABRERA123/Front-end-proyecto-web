@@ -187,6 +187,7 @@
       </div>
     </div>
 
+    @if (canCloseAccount) {
     <div class="card modern-card danger">
       <div class="card-header">
         <div class="icon-box"><mat-icon>person</mat-icon></div>
@@ -206,6 +207,7 @@
         <button class="btn-danger" (click)="confirmDeleteAccount()">{{ 'PROFILE.DELETE' | translate }}</button>
       </div>
     </div>
+    }
 
   </div>
 

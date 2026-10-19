@@ -100,6 +100,11 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     return this.backendName() ?? this.user.name;
   }
 
+  // el administrador no puede cerrar su propia cuenta (security-service también lo rechaza)
+  get canCloseAccount(): boolean {
+    return !(this.auth.user()?.roles ?? []).includes('ADMIN');
+  }
+
   // rol que se muestra debajo del nombre (si tiene varios, el de más privilegios)
   get roleLabelKey(): string {
     const roles = this.auth.user()?.roles ?? [];
@@ -376,6 +381,7 @@ export class ProfileCardComponent implements OnInit, OnChanges {
   // "eliminar cuenta": pide la contraseña y el backend la desactiva (no la borra).
   // Ya no se puede iniciar sesión con ella; sus reservas y pagos se conservan.
   confirmDeleteAccount(): void {
+    if (!this.canCloseAccount) return;
     this.confirmWithPassword({
       icon: 'delete',
       title: 'PROFILE.DELETE_CONFIRM_TITLE',
