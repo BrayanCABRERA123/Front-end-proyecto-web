@@ -59,7 +59,7 @@ export class ManagementComponent implements OnInit {
     { key: 'promotions', icon: 'local_offer' },
   ];
 
-  userFilter: 'enabled' | 'registered' | 'disabled' = 'enabled';
+  userFilter: 'enabled' | 'disabled' = 'enabled';
   usersSearch = '';
 
   // cuentas reales (security-service)
@@ -222,9 +222,7 @@ export class ManagementComponent implements OnInit {
     const term = this.usersSearch.trim().toLowerCase();
 
     return this.users
-      // Registrados = todas las cuentas (habilitadas y deshabilitadas)
-      .filter(u => this.userFilter === 'registered'
-        || (this.userFilter === 'disabled' ? u.status === 'disabled' : u.status === 'active'))
+      .filter(u => this.userFilter === 'disabled' ? u.status === 'disabled' : u.status === 'active')
       .filter(u => !term
         || u.name.toLowerCase().includes(term)
         || u.email.toLowerCase().includes(term)
@@ -232,7 +230,6 @@ export class ManagementComponent implements OnInit {
   }
 
   get enabledCount(): number { return this.users.filter(u => u.status === 'active').length; }
-  get registeredCount(): number { return this.users.length; }
   get disabledCount(): number { return this.users.filter(u => u.status === 'disabled').length; }
 
   openCreateUser(): void {
