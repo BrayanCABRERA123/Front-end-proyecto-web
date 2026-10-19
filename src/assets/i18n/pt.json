@@ -1404,9 +1404,9 @@
         "EMAIL": "E-mail",
         "USER_TYPE": "Tipo de usuário",
         "DATE_ADDED": "Data de cadastro",
-        "INVITED": "Convidado",
         "STATUS": "Status",
-        "ACTIONS": "Ações"
+        "ACTIONS": "Ações",
+        "LAST_LOGIN": "Último acesso"
       },
       "YES": "Sim",
       "NO": "Não",
@@ -1422,7 +1422,8 @@
       "ENABLE": "Ativar conta",
       "LOADING": "Carregando usuários...",
       "LOAD_ERROR_TITLE": "Não foi possível carregar os usuários",
-      "RETRY": "Tentar novamente"
+      "RETRY": "Tentar novamente",
+      "NEVER": "Nunca"
     },
     "ROLES": {
       "CREATE_ROLE": "Criar função",

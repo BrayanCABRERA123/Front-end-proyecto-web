@@ -196,7 +196,7 @@ export interface AdminUser {
   email: string;
   userType: string;
   dateAdded: string;
-  invited: boolean;
+  lastLogin: string | null; // aaaa-mm-dd del último inicio de sesión; null = nunca entró
   status: 'active' | 'disabled';
 }
 

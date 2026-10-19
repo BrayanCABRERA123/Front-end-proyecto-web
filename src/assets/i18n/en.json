@@ -1404,9 +1404,9 @@
         "EMAIL": "Email",
         "USER_TYPE": "User type",
         "DATE_ADDED": "Registration date",
-        "INVITED": "Invited",
         "STATUS": "Status",
-        "ACTIONS": "Actions"
+        "ACTIONS": "Actions",
+        "LAST_LOGIN": "Last sign-in"
       },
       "YES": "Yes",
       "NO": "No",
@@ -1422,7 +1422,8 @@
       "ENABLE": "Enable account",
       "LOADING": "Loading users...",
       "LOAD_ERROR_TITLE": "Users could not be loaded",
-      "RETRY": "Retry"
+      "RETRY": "Retry",
+      "NEVER": "Never"
     },
     "ROLES": {
       "CREATE_ROLE": "Create role",

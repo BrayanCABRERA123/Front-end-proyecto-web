@@ -108,7 +108,7 @@
                   <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.EMAIL' | translate }}</th>
                   <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.USER_TYPE' | translate }}</th>
                   <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.DATE_ADDED' | translate }}</th>
-                  <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.INVITED' | translate }}</th>
+                  <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.LAST_LOGIN' | translate }}</th>
                   <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.STATUS' | translate }}</th>
                   <th>{{ 'ADMIN_MANAGEMENT.USERS.TABLE.ACTIONS' | translate }}</th>
                 </tr>
@@ -123,7 +123,7 @@
                     <td>{{ u.email }}</td>
                     <td><span class="type-chip">{{ u.userType | translate }}</span></td>
                     <td>{{ u.dateAdded }}</td>
-                    <td>{{ (u.invited ? 'ADMIN_MANAGEMENT.USERS.YES' : 'ADMIN_MANAGEMENT.USERS.NO') | translate }}</td>
+                    <td>{{ u.lastLogin ?? ('ADMIN_MANAGEMENT.USERS.NEVER' | translate) }}</td>
                     <td>
                       <span [class]="'status-pill status-pill--' + (u.status === 'active' ? 'active' : 'inactive')">
                         {{ ('ADMIN_MANAGEMENT.USERS.STATUS.' + u.status) | translate }}
