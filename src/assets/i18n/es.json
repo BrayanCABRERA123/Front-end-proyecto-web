@@ -1989,8 +1989,7 @@
   },
   "BUSINESS_DATA": {
     "TITLE": "Datos del Negocio",
-    "STATUS_BADGE": "Empresa activa",
-    "SUBTITLE": "Administra la información fiscal, corporativa y canales oficiales de atención de {{name}}.",
+    "SUBTITLE": "Administra la información fiscal, corporativa y los canales oficiales de atención de {{name}}",
     "DISCARD": "Descartar",
     "SAVE": "Guardar cambios",
     "GENERAL": {
@@ -2018,7 +2017,8 @@
       "CIIU": "Actividad CIIU",
       "DIAN_RESOLUTION": "Resolución DIAN",
       "PREFIX": "Prefijo autorizado",
-      "RANGE": "Rango de facturación"
+      "RANGE": "Rango de facturación",
+      "REAL_BUSINESS_NOTE": "Se llena con los datos tributarios del negocio real (régimen, CIIU y resolución de facturación de la DIAN) cuando se implemente."
     },
     "CHANNELS": {
       "TITLE": "Canales oficiales",
@@ -2026,7 +2026,8 @@
       "INSTAGRAM": "Instagram",
       "FACEBOOK": "Facebook page",
       "SUPPORT_LINE": "Línea de atención al cliente (nacional)",
-      "SERVICE_HOURS": "Horario de atención"
+      "SERVICE_HOURS": "Horario de atención",
+      "REAL_BUSINESS_NOTE": "Se llena con las redes, la línea de atención y el horario oficiales del negocio real cuando se implemente."
     },
     "FEEDBACK": {
       "SAVED_TITLE": "Datos guardados",
@@ -2042,8 +2043,17 @@
       "TAX_ID": "Ingresa el NIT",
       "PHONE": "Ingresa un teléfono válido",
       "EMAIL": "Ingresa un correo válido",
-      "ADDRESS": "Ingresa la dirección"
-    }
+      "ADDRESS": "Ingresa la dirección",
+      "REQUIRED": "Este campo es obligatorio",
+      "FUTURE_DATE": "La fecha no puede ser futura"
+    },
+    "THE_BUSINESS": "el negocio",
+    "PENDING": "Por completar",
+    "UNSAVED_BADGE": "Cambios sin guardar",
+    "APPLY": "Aplicar",
+    "MODAL_HINT": "Los cambios se aplican en la pantalla; recuerda pulsar «Guardar cambios» para guardarlos.",
+    "NOTICE_TITLE": "Datos para completar con el negocio real",
+    "NOTICE_MESSAGE": "Cuando el sistema se implemente para una empresa o un proyecto real, toda esta información se llena con los datos del negocio. Usa el lápiz de cada sección para editarla y luego «Guardar cambios»."
   },
   "PAYMENT_METHODS_SECTION": {
     "TITLE": "Métodos de pago",

@@ -1989,8 +1989,7 @@
   },
   "BUSINESS_DATA": {
     "TITLE": "Données de l'entreprise",
-    "STATUS_BADGE": "Entreprise active",
-    "SUBTITLE": "Gérez les informations fiscales, corporatives et les canaux de contact officiels de {{name}}.",
+    "SUBTITLE": "Gérez les informations fiscales, l'entreprise et les canaux officiels de {{name}}",
     "DISCARD": "Annuler",
     "SAVE": "Enregistrer",
     "GENERAL": {
@@ -2018,7 +2017,8 @@
       "CIIU": "Activité CIIU",
       "DIAN_RESOLUTION": "Résolution DIAN",
       "PREFIX": "Préfixe autorisé",
-      "RANGE": "Plage de facturation"
+      "RANGE": "Plage de facturation",
+      "REAL_BUSINESS_NOTE": "Rempli avec les données fiscales de l'entreprise réelle (régime, CIIU et résolution de facturation DIAN) lors du déploiement."
     },
     "CHANNELS": {
       "TITLE": "Canaux officiels",
@@ -2026,7 +2026,8 @@
       "INSTAGRAM": "Instagram",
       "FACEBOOK": "Page Facebook",
       "SUPPORT_LINE": "Ligne d'assistance client (nationale)",
-      "SERVICE_HOURS": "Horaires d'ouverture"
+      "SERVICE_HOURS": "Horaires d'ouverture",
+      "REAL_BUSINESS_NOTE": "Rempli avec les réseaux, la ligne d'assistance et les horaires officiels de l'entreprise réelle lors du déploiement."
     },
     "FEEDBACK": {
       "SAVED_TITLE": "Données enregistrées",
@@ -2042,8 +2043,17 @@
       "TAX_ID": "Saisissez le NIT",
       "PHONE": "Saisissez un numéro valide",
       "EMAIL": "Saisissez un e-mail valide",
-      "ADDRESS": "Saisissez l’adresse"
-    }
+      "ADDRESS": "Saisissez l’adresse",
+      "REQUIRED": "Ce champ est obligatoire",
+      "FUTURE_DATE": "La date ne peut pas être dans le futur"
+    },
+    "THE_BUSINESS": "l'entreprise",
+    "PENDING": "À compléter",
+    "UNSAVED_BADGE": "Modifications non enregistrées",
+    "APPLY": "Appliquer",
+    "MODAL_HINT": "Les modifications s'appliquent à l'écran ; pensez à cliquer sur « Enregistrer les modifications ».",
+    "NOTICE_TITLE": "Données à compléter avec l'entreprise réelle",
+    "NOTICE_MESSAGE": "Lorsque le système sera déployé pour une entreprise ou un projet réel, toutes ces informations seront remplies avec ses données. Utilisez le crayon de chaque section pour la modifier, puis « Enregistrer les modifications »."
   },
   "PAYMENT_METHODS_SECTION": {
     "TITLE": "Méthodes de paiement",
