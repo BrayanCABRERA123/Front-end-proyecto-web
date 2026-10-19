@@ -162,7 +162,7 @@
       "VEHICLES": "Vehicles",
       "NOTIFICATIONS": "Notifications"
     },
-    "SUBTITLE": "This is your client information module for Lavado Vehicular",
+    "SUBTITLE": "Customer panel",
     "CLIENT_VIEW": "Client View",
     "STATS": {
       "ACTIVE_RESERVATIONS": "My active bookings",

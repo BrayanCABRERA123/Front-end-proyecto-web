@@ -20,6 +20,7 @@ import { apiErrorKey } from '../../../../core/utils/api-error';
 import { BookingApiService } from '../../../../core/services/booking-api';
 import { DaySummaryResponse } from '../../../../core/models/booking.models';
 import { AuthService } from '../../../../core/services/auth';
+import { LongDatePipe } from '../../../../shared/pipes/long-date.pipe';
 
 // un día de la gráfica de ingresos (los datos salen de los pagos aprobados)
 interface RevenueDay {
@@ -67,7 +68,7 @@ const SERVICE_ICONS = ['workspace_premium', 'sanitizer', 'auto_awesome', 'local_
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatIconModule, TranslateModule, SidebarComponent],
+  imports: [CommonModule, MatIconModule, TranslateModule, SidebarComponent, LongDatePipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -80,9 +81,7 @@ export class DashboardComponent {
     return this.auth.user()?.firstName ?? '';
   }
 
-  today = new Date().toLocaleDateString('es-CO', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
-  });
+  readonly today = new Date();
 
   // reservas de hoy frente a ayer: las cuenta booking-service con la fecha del lavadero
   readonly daySummary = signal<DaySummaryResponse | null>(null);

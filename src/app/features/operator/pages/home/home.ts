@@ -18,6 +18,7 @@ import { NotificationsService } from '../../../../core/services/notifications';
 import { OperationsApiService } from '../../../../core/services/operations-api';
 import { toWorkReservation } from '../../../../core/utils/operator-work';
 import { UserSession } from '../../../../core/services/user-session';
+import { LongDatePipe } from '../../../../shared/pipes/long-date.pipe';
 
 interface Stat {
   icon: string;
@@ -36,12 +37,15 @@ interface Stat {
     StatsCardComponent,
     PendingServiceCardComponent,
     MatIconModule,
-    TranslateModule
+    TranslateModule,
+    LongDatePipe
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
 export class HomeComponent implements OnInit {
+
+  readonly today = new Date();
 
   operatorName = '';
 

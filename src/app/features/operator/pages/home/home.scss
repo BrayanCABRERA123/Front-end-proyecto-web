@@ -40,6 +40,8 @@
   @include body-text;
   color: var(--text-secondary);
   margin: 0;
+
+  .accent { color: var(--primary); }
 }
 
 .btn-ver-servicios {

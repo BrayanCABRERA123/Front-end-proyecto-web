@@ -10,7 +10,7 @@
           <div class="icon-box icon-box--lg"><mat-icon>storefront</mat-icon></div>
           <div>
             <h1>{{ 'ADMIN_DASHBOARD.GREETING' | translate:{ name: adminName } }}</h1>
-            <p class="muted">{{ today }} · <span class="accent">{{ 'ADMIN_DASHBOARD.SUBTITLE' | translate }}</span></p>
+            <p class="muted">{{ today | longDate }} · <span class="accent">{{ 'ADMIN_DASHBOARD.SUBTITLE' | translate }}</span></p>
           </div>
         </div>
         <button class="btn btn--primary" (click)="goToReservations()">
