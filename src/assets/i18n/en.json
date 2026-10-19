@@ -448,6 +448,7 @@
       "DATE": "Date",
       "TIME": "Time",
       "LOCATION": "Location",
+      "CAR_WASH": "Car Wash",
       "TOTAL": "Total",
       "SUBMIT": "Book Now",
       "NOTE": "We will be waiting for you at our location. Please arrive a few minutes early. You can pay online or at the car wash.",
