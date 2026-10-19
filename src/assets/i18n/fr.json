@@ -1404,9 +1404,9 @@
         "EMAIL": "E-mail",
         "USER_TYPE": "Type d'utilisateur",
         "DATE_ADDED": "Date d'inscription",
-        "INVITED": "Invité",
         "STATUS": "Statut",
-        "ACTIONS": "Actions"
+        "ACTIONS": "Actions",
+        "LAST_LOGIN": "Dernière connexion"
       },
       "YES": "Oui",
       "NO": "Non",
@@ -1422,7 +1422,8 @@
       "ENABLE": "Activer le compte",
       "LOADING": "Chargement des utilisateurs...",
       "LOAD_ERROR_TITLE": "Impossible de charger les utilisateurs",
-      "RETRY": "Réessayer"
+      "RETRY": "Réessayer",
+      "NEVER": "Jamais"
     },
     "ROLES": {
       "CREATE_ROLE": "Créer un rôle",

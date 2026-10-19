@@ -199,7 +199,7 @@ export class ManagementComponent implements OnInit {
       // llave de traducción del rol: la tabla la traduce
       userType: `PROFILE.ROLE.${role}`,
       dateAdded: user.createdAt ? user.createdAt.slice(0, 10) : '—',
-      invited: false,
+      lastLogin: user.lastLogin ? user.lastLogin.slice(0, 10) : null,
       status: user.active ? 'active' : 'disabled'
     };
   }
@@ -221,8 +221,9 @@ export class ManagementComponent implements OnInit {
     const term = this.usersSearch.trim().toLowerCase();
 
     return this.users
-      .filter(u => (this.userFilter === 'disabled' ? u.status === 'disabled' : u.status === 'active'))
-      .filter(u => this.userFilter !== 'registered' || u.invited)
+      // Registrados = todas las cuentas (habilitadas y deshabilitadas)
+      .filter(u => this.userFilter === 'registered'
+        || (this.userFilter === 'disabled' ? u.status === 'disabled' : u.status === 'active'))
       .filter(u => !term
         || u.name.toLowerCase().includes(term)
         || u.email.toLowerCase().includes(term)
@@ -230,7 +231,7 @@ export class ManagementComponent implements OnInit {
   }
 
   get enabledCount(): number { return this.users.filter(u => u.status === 'active').length; }
-  get registeredCount(): number { return this.users.filter(u => u.invited).length; }
+  get registeredCount(): number { return this.users.length; }
   get disabledCount(): number { return this.users.filter(u => u.status === 'disabled').length; }
 
   openCreateUser(): void {
