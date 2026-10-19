@@ -1250,7 +1250,7 @@
   "ADMIN_DASHBOARD": {
     "GREETING": "¡Hola, {{name}}!",
     "SUBTITLE": "Panel de control general",
-    "VIEW_TODAY_BOOKINGS": "Ver reservas de hoy",
+    "VIEW_TODAY_BOOKINGS": "Ver reserva",
     "TODAY_SUFFIX": "(Hoy)",
     "STATS": {
       "BOOKINGS_TODAY": "Reservas de hoy",
