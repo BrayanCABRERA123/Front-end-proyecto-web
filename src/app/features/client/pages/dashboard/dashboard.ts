@@ -264,7 +264,7 @@ export class DashboardComponent implements OnInit {
         { label: 'RESERVE.SUMMARY.SERVICE', value: service.serviceName },
         { label: 'RESERVE.SUMMARY.VEHICLE', value: `${service.vehicle} · ${service.plate}`.trim() },
         { label: 'RESERVE.SUMMARY.DATE', value: service.date },
-        { label: 'RESERVE.SUMMARY.LOCATION', value: this.location?.address ?? '' },
+        { label: 'RESERVE.SUMMARY.CAR_WASH', value: this.location?.address ?? '' },
         { label: 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED', value: service.operator || '—' },
         { label: 'DASHBOARD.NEXT_SERVICE.STATUS', value: t(`STATUS.${service.status}`) },
         { label: 'DASHBOARD.NEXT_SERVICE.PROGRESS', value: `${this.nextServiceProgress}%` }

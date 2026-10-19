@@ -277,7 +277,7 @@ export class CarWashFormComponent implements OnInit {
         { label: 'RESERVE.SUMMARY.DATE', value: booking.date },
         { label: 'RESERVE.SUMMARY.TIME', value: `${booking.startTime} - ${booking.endTime}` },
         { label: 'RESERVE.SUMMARY.BAY', value: booking.bay?.name ?? '' },
-        { label: 'RESERVE.SUMMARY.LOCATION', value: this.location?.address ?? '' },
+        { label: 'RESERVE.SUMMARY.CAR_WASH', value: this.location?.address ?? '' },
         { label: 'RESERVE.SUMMARY.TOTAL', value: new CopPricePipe().transform(booking.total) }
       ]
     };
