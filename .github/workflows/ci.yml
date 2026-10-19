@@ -1,0 +1,38 @@
+# Compila para producción y corre las pruebas (Vitest con jsdom, sin navegador) en cada push o
+# pull request a develop/main.
+name: CI
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compilar y probar
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Compilación de producción
+        run: npx ng build --configuration production
+
+      - name: Pruebas
+        run: npx ng test --watch=false
