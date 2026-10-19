@@ -1423,7 +1423,8 @@
       "LOADING": "Chargement des utilisateurs...",
       "LOAD_ERROR_TITLE": "Impossible de charger les utilisateurs",
       "RETRY": "Réessayer",
-      "NEVER": "Jamais"
+      "NEVER": "Jamais",
+      "CHANGE_ROLE": "Changer le type d'utilisateur"
     },
     "ROLES": {
       "CREATE_ROLE": "Créer un rôle",
@@ -1537,7 +1538,12 @@
       "PROMO_STOPPED_MESSAGE": "La promotion «{{name}}» est maintenant en pause.",
       "PROMO_STARTED_MESSAGE": "La promotion «{{name}}» est maintenant active.",
       "PROMO_DELETED_MESSAGE": "La promotion «{{name}}» a été supprimée.",
-      "USER_STATUS_ERROR_TITLE": "Impossible de changer l'état"
+      "USER_STATUS_ERROR_TITLE": "Impossible de changer l'état",
+      "ROLE_CHANGE_TITLE": "Changer le type d'utilisateur ?",
+      "ROLE_CHANGE_MESSAGE": "{{name}} deviendra {{role}}. Ses sessions ouvertes seront fermées et il devra se reconnecter.",
+      "ROLE_CHANGED_TITLE": "Type d'utilisateur mis à jour",
+      "ROLE_CHANGED_MESSAGE": "{{name}} est maintenant {{role}}.",
+      "ROLE_CHANGE_ERROR_TITLE": "Impossible de changer le type d'utilisateur"
     },
     "PERMISSION_NAMES": {
       "VIEW_PANELS": "Voir les panneaux",
@@ -2391,7 +2397,9 @@
     "INVALID_PHOTO": "Les photos doivent être en JPG ou PNG et peser jusqu'à 2 Mo",
     "CONTENT_TOO_LARGE": "Les photos sont trop lourdes : chacune peut peser jusqu'à 2 Mo",
     "BOOKING_WITHOUT_CLIENT": "La réservation n'a pas de compte client à prévenir",
-    "ABSENCE_IN_PAST": "L'absence ne peut pas commencer avant aujourd'hui."
+    "ABSENCE_IN_PAST": "L'absence ne peut pas commencer avant aujourd'hui.",
+    "ADMIN_CANNOT_BE_DISABLED": "Un compte administrateur ne peut pas être désactivé. Changez d'abord son type d'utilisateur.",
+    "CANNOT_CHANGE_OWN_ROLE": "Vous ne pouvez pas changer le type d'utilisateur de votre propre compte."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",

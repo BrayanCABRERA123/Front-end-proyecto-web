@@ -121,7 +121,20 @@
                       {{ u.name }}
                     </td>
                     <td>{{ u.email }}</td>
-                    <td><span class="type-chip">{{ u.userType | translate }}</span></td>
+                    <td>
+                      <!-- el admin cambia aquí el tipo de usuario; el suyo propio no se puede cambiar -->
+                      @if (isOwnAccount(u)) {
+                        <span class="type-chip" [title]="'API_ERRORS.CANNOT_CHANGE_OWN_ROLE' | translate">{{ u.userType | translate }}</span>
+                      } @else {
+                        <select #roleSelect class="role-select" [value]="u.role"
+                                (change)="changeUserRole(u, $any(roleSelect.value), roleSelect)"
+                                [attr.aria-label]="'ADMIN_MANAGEMENT.USERS.CHANGE_ROLE' | translate">
+                          @for (r of accountRoles; track r) {
+                            <option [value]="r" [selected]="r === u.role">{{ ('PROFILE.ROLE.' + r) | translate }}</option>
+                          }
+                        </select>
+                      }
+                    </td>
                     <td>{{ u.dateAdded }}</td>
                     <td>{{ u.lastLogin ?? ('ADMIN_MANAGEMENT.USERS.NEVER' | translate) }}</td>
                     <td>
@@ -133,11 +146,11 @@
                       <!-- desactivar reemplaza a editar/eliminar: la cuenta no se borra (ADR-010) -->
                       <button
                         class="btn-icon"
-                        [class.btn-icon--danger]="u.status === 'active' && !isOwnAccount(u)"
-                        [disabled]="u.status === 'active' && isOwnAccount(u)"
+                        [class.btn-icon--danger]="u.status === 'active' && !disableBlockedKey(u)"
+                        [disabled]="!!disableBlockedKey(u)"
                         (click)="toggleUserStatus(u)"
-                        [attr.aria-label]="(u.status === 'active' && isOwnAccount(u) ? 'API_ERRORS.CANNOT_DISABLE_OWN_ACCOUNT' : u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE') | translate"
-                        [title]="(u.status === 'active' && isOwnAccount(u) ? 'API_ERRORS.CANNOT_DISABLE_OWN_ACCOUNT' : u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE') | translate">
+                        [attr.aria-label]="(disableBlockedKey(u) ?? (u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE')) | translate"
+                        [title]="(disableBlockedKey(u) ?? (u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE')) | translate">
                         <mat-icon>{{ u.status === 'active' ? 'block' : 'check_circle' }}</mat-icon>
                       </button>
                     </td>

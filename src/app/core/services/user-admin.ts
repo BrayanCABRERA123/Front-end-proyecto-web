@@ -26,6 +26,11 @@ export class UserAdminService {
     return this.http.get<PageResponse<AuthUser>>(`${API_BASE_URL}/admin/users`, { params });
   }
 
+  // cambia el tipo de usuario; el backend cierra sus sesiones para que entre con el rol nuevo
+  setRole(userId: number, role: UserRole): Observable<AuthUser> {
+    return this.http.patch<AuthUser>(`${API_BASE_URL}/admin/users/${userId}/role`, { role });
+  }
+
   // activa o desactiva una cuenta; al desactivarla, el backend también cierra sus sesiones
   setActive(userId: number, active: boolean): Observable<AuthUser> {
     return this.http.patch<AuthUser>(`${API_BASE_URL}/admin/users/${userId}/status`, { active });

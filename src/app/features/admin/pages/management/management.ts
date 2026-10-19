@@ -35,7 +35,7 @@ import { PromotionModal, PromotionModalData, PromotionModalResult } from './comp
 // cuentas reales del security-service
 import { UserAdminService } from '../../../../core/services/user-admin';
 import { AuthService } from '../../../../core/services/auth';
-import { AuthUser } from '../../../../core/models/auth.models';
+import { AuthUser, UserRole as AccountRole } from '../../../../core/models/auth.models';
 // promociones reales del payment-service
 import { PromotionView, PromotionsApiService, SavePromotionRequest } from '../../../../core/services/promotions-api';
 
@@ -196,6 +196,7 @@ export class ManagementComponent implements OnInit {
       id: String(user.id),
       name: `${user.firstName} ${user.lastName}`,
       email: user.email,
+      role,
       // llave de traducción del rol: la tabla la traduce
       userType: `PROFILE.ROLE.${role}`,
       dateAdded: user.createdAt ? user.createdAt.slice(0, 10) : '—',
@@ -248,13 +249,52 @@ export class ManagementComponent implements OnInit {
     });
   }
 
+  // tipos de usuario que el admin puede asignar desde la tabla
+  readonly accountRoles: AccountRole[] = ['CLIENT', 'OPERATOR', 'ADMIN'];
+
+  /** por qué no se puede desactivar esta cuenta (null = sí se puede). El backend aplica lo mismo */
+  disableBlockedKey(user: AdminUser): string | null {
+    if (user.status !== 'active') return null;
+    if (this.isOwnAccount(user)) return 'API_ERRORS.CANNOT_DISABLE_OWN_ACCOUNT';
+    if (user.role === 'ADMIN') return 'API_ERRORS.ADMIN_CANNOT_BE_DISABLED';
+    return null;
+  }
+
+  /** cambia el tipo de usuario tras confirmar; nadie cambia su propio rol */
+  changeUserRole(user: AdminUser, role: AccountRole, select: HTMLSelectElement): void {
+    if (role === user.role || this.isOwnAccount(user)) return;
+    const roleName = this.translate.instant(`PROFILE.ROLE.${role}`);
+    const data: ConfirmModalData = {
+      title: 'ADMIN_MANAGEMENT.FEEDBACK.ROLE_CHANGE_TITLE',
+      message: 'ADMIN_MANAGEMENT.FEEDBACK.ROLE_CHANGE_MESSAGE',
+      messageParams: { name: user.name, role: roleName },
+      confirmText: 'COMMON.ACCEPT',
+      cancelText: 'COMMON.CANCEL',
+    };
+    this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data }).afterClosed().subscribe(confirmed => {
+      // si se cancela, el select vuelve a mostrar el rol que tenía
+      if (!confirmed) { select.value = user.role; return; }
+      this.userAdmin.setRole(Number(user.id), role).subscribe({
+        next: updated => {
+          this.accounts.update(list => list.map(u => (u.id === user.id ? this.toAdminUser(updated) : u)));
+          this.feedback.success('ADMIN_MANAGEMENT.FEEDBACK.ROLE_CHANGED_TITLE', 'ADMIN_MANAGEMENT.FEEDBACK.ROLE_CHANGED_MESSAGE',
+            { messageParams: { name: user.name, role: roleName } });
+        },
+        error: (error: unknown) => {
+          select.value = user.role;
+          this.feedback.error('ADMIN_MANAGEMENT.FEEDBACK.ROLE_CHANGE_ERROR_TITLE', apiErrorKey(error));
+        }
+      });
+    });
+  }
+
   /** nadie puede desactivar su propia cuenta (el backend tambien lo rechaza) */
   isOwnAccount(user: AdminUser): boolean {
     return user.id === String(this.auth.user()?.id);
   }
 
   toggleUserStatus(user: AdminUser): void {
-    if (user.status === 'active' && this.isOwnAccount(user)) return;
+    if (this.disableBlockedKey(user)) return;
     const disabling = user.status === 'active';
     const data: ConfirmModalData = {
       title: disabling ? 'ADMIN_MANAGEMENT.FEEDBACK.USER_DISABLE_TITLE' : 'ADMIN_MANAGEMENT.FEEDBACK.USER_ENABLE_TITLE',
