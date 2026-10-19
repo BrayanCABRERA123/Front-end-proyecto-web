@@ -1382,7 +1382,6 @@
     }
   },
   "ADMIN_MANAGEMENT": {
-    "STATUS_LINE": "Système en ligne · Succursale principale",
     "TABS": {
       "USERS": "Utilisateurs",
       "ROLES": "Rôles",
@@ -1483,8 +1482,7 @@
       },
       "STATS": {
         "TOTAL_REDEMPTIONS": "Utilisations totales",
-        "CLIENT_SAVINGS": "Économies clients",
-        "CONVERSION": "Conversion des coupons"
+        "CLIENT_SAVINGS": "Économies clients"
       },
       "EMPTY_TITLE": "Aucune promotion pour l’instant",
       "EMPTY_MESSAGE": "Créez une promotion pour stimuler les ventes du lavage.",

@@ -1382,7 +1382,6 @@
     }
   },
   "ADMIN_MANAGEMENT": {
-    "STATUS_LINE": "Sistema on-line · Filial principal",
     "TABS": {
       "USERS": "Usuários",
       "ROLES": "Funções",
@@ -1483,8 +1482,7 @@
       },
       "STATS": {
         "TOTAL_REDEMPTIONS": "Total de resgates",
-        "CLIENT_SAVINGS": "Economia dos clientes",
-        "CONVERSION": "Conversão de cupons"
+        "CLIENT_SAVINGS": "Economia dos clientes"
       },
       "EMPTY_TITLE": "Nenhuma promoção ainda",
       "EMPTY_MESSAGE": "Crie uma promoção para impulsionar as vendas do lava-rápido.",
