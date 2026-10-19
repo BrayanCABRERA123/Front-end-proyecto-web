@@ -1989,8 +1989,7 @@
   },
   "BUSINESS_DATA": {
     "TITLE": "Business Data",
-    "STATUS_BADGE": "Active company",
-    "SUBTITLE": "Manage {{name}}'s tax, corporate and official contact information.",
+    "SUBTITLE": "Manage the tax, corporate information and official service channels of {{name}}",
     "DISCARD": "Discard",
     "SAVE": "Save changes",
     "GENERAL": {
@@ -2018,7 +2017,8 @@
       "CIIU": "CIIU activity",
       "DIAN_RESOLUTION": "DIAN resolution",
       "PREFIX": "Authorized prefix",
-      "RANGE": "Invoice range"
+      "RANGE": "Invoice range",
+      "REAL_BUSINESS_NOTE": "Filled in with the real business's tax data (regime, CIIU and DIAN invoicing resolution) when deployed."
     },
     "CHANNELS": {
       "TITLE": "Official channels",
@@ -2026,7 +2026,8 @@
       "INSTAGRAM": "Instagram",
       "FACEBOOK": "Facebook page",
       "SUPPORT_LINE": "Customer support line (national)",
-      "SERVICE_HOURS": "Business hours"
+      "SERVICE_HOURS": "Business hours",
+      "REAL_BUSINESS_NOTE": "Filled in with the real business's official social networks, support line and hours when deployed."
     },
     "FEEDBACK": {
       "SAVED_TITLE": "Data saved",
@@ -2042,8 +2043,17 @@
       "TAX_ID": "Enter the tax ID",
       "PHONE": "Enter a valid phone number",
       "EMAIL": "Enter a valid email",
-      "ADDRESS": "Enter the address"
-    }
+      "ADDRESS": "Enter the address",
+      "REQUIRED": "This field is required",
+      "FUTURE_DATE": "The date cannot be in the future"
+    },
+    "THE_BUSINESS": "the business",
+    "PENDING": "To be completed",
+    "UNSAVED_BADGE": "Unsaved changes",
+    "APPLY": "Apply",
+    "MODAL_HINT": "Changes are applied on screen; remember to press “Save changes” to keep them.",
+    "NOTICE_TITLE": "Data to fill in with the real business",
+    "NOTICE_MESSAGE": "When the system is deployed for a real company or project, all this information is filled in with the business's data. Use each section's pencil to edit it and then “Save changes”."
   },
   "PAYMENT_METHODS_SECTION": {
     "TITLE": "Payment methods",

@@ -4,178 +4,72 @@
     <div>
       <div class="title-row">
         <h2>{{ 'BUSINESS_DATA.TITLE' | translate }}</h2>
-        <span class="status-badge">{{ 'BUSINESS_DATA.STATUS_BADGE' | translate }}</span>
+        @if (dirty) {
+          <span class="status-badge status-badge--pending">{{ 'BUSINESS_DATA.UNSAVED_BADGE' | translate }}</span>
+        }
       </div>
-      <p>{{ 'BUSINESS_DATA.SUBTITLE' | translate:{ name: data.legalName } }}</p>
+      <p>{{ 'BUSINESS_DATA.SUBTITLE' | translate:{ name: data.legalName || ('BUSINESS_DATA.THE_BUSINESS' | translate) } }}</p>
     </div>
 
     <div class="section-header__actions">
-      <button class="btn-outline" (click)="discard()" [disabled]="!loaded || saving">{{ 'BUSINESS_DATA.DISCARD' | translate }}</button>
-      <button class="btn-primary" (click)="save()" [disabled]="!loaded || saving">
+      <button class="btn-outline" (click)="discard()" [disabled]="!loaded || saving || !dirty">{{ 'BUSINESS_DATA.DISCARD' | translate }}</button>
+      <button class="btn-primary" (click)="save()" [disabled]="!loaded || saving || !dirty">
         <mat-icon>check</mat-icon>
         {{ 'BUSINESS_DATA.SAVE' | translate }}
       </button>
     </div>
   </div>
 
+  <!-- todo lo de esta pantalla se llena con los datos del negocio real cuando se implemente -->
+  <div class="real-business-notice">
+    <mat-icon>storefront</mat-icon>
+    <div>
+      <strong>{{ 'BUSINESS_DATA.NOTICE_TITLE' | translate }}</strong>
+      <p>{{ 'BUSINESS_DATA.NOTICE_MESSAGE' | translate }}</p>
+    </div>
+  </div>
+
   <div class="cards-grid">
-
-    <!-- información general -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon"><mat-icon>domain</mat-icon></div>
-        <div>
-          <h3>{{ 'BUSINESS_DATA.GENERAL.TITLE' | translate }}</h3>
-          <p>{{ 'BUSINESS_DATA.GENERAL.SUBTITLE' | translate }}</p>
+    @for (section of sections; track section.id) {
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><mat-icon>{{ section.icon }}</mat-icon></div>
+          <div class="card-header__text">
+            <h3>{{ section.titleKey | translate }}</h3>
+            <p>{{ section.subtitleKey | translate }}</p>
+          </div>
+          <button
+            class="edit-btn"
+            type="button"
+            (click)="editSection(section)"
+            [disabled]="!loaded || saving"
+            [attr.aria-label]="('COMMON.EDIT' | translate) + ' — ' + (section.titleKey | translate)"
+            [title]="'COMMON.EDIT' | translate">
+            <mat-icon>edit</mat-icon>
+          </button>
         </div>
-      </div>
 
-      <label class="field" [class.field--invalid]="isInvalid('legalName')">
-        <span>{{ 'BUSINESS_DATA.GENERAL.LEGAL_NAME' | translate }} *</span>
-        <input type="text" [(ngModel)]="data.legalName">
-        @if (isInvalid('legalName')) {
-          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('legalName') | translate }}</span>
+        @if (section.realBusinessNoteKey) {
+          <p class="section-note">
+            <mat-icon>info</mat-icon>
+            {{ section.realBusinessNoteKey | translate }}
+          </p>
         }
-      </label>
 
-      <label class="field" [class.field--invalid]="isInvalid('taxId')">
-        <span>{{ 'BUSINESS_DATA.GENERAL.TAX_ID' | translate }} *</span>
-        <input type="text" [(ngModel)]="data.taxId">
-        @if (isInvalid('taxId')) {
-          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('taxId') | translate }}</span>
-        }
-      </label>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.GENERAL.BUSINESS_TYPE' | translate }}</span>
-        <input type="text" [(ngModel)]="data.businessType">
-      </label>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.GENERAL.FOUNDATION_DATE' | translate }}</span>
-        <input type="date" [(ngModel)]="data.foundationDate" [max]="today">
-      </label>
-
-      <div class="row-2">
-        <label class="field">
-          <span>{{ 'BUSINESS_DATA.GENERAL.LEGAL_REP' | translate }}</span>
-          <input type="text" [(ngModel)]="data.legalRep">
-        </label>
-        <label class="field">
-          <span>{{ 'BUSINESS_DATA.GENERAL.LEGAL_REP_DOC' | translate }}</span>
-          <input type="text" [(ngModel)]="data.legalRepDoc">
-        </label>
+        <dl class="values">
+          @for (field of section.fields; track field.key) {
+            <div class="values__row">
+              <dt>{{ field.labelKey | translate }}{{ field.required ? ' *' : '' }}</dt>
+              @if (display(field.key)) {
+                <dd>{{ display(field.key) }}</dd>
+              } @else {
+                <dd class="values__pending">{{ 'BUSINESS_DATA.PENDING' | translate }}</dd>
+              }
+            </div>
+          }
+        </dl>
       </div>
-    </div>
-
-    <!-- ubicación y contacto -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon"><mat-icon>location_on</mat-icon></div>
-        <div>
-          <h3>{{ 'BUSINESS_DATA.CONTACT.TITLE' | translate }}</h3>
-          <p>{{ 'BUSINESS_DATA.CONTACT.SUBTITLE' | translate }}</p>
-        </div>
-      </div>
-
-      <label class="field" [class.field--invalid]="isInvalid('address')">
-        <span>{{ 'BUSINESS_DATA.CONTACT.ADDRESS' | translate }} *</span>
-        <input type="text" [(ngModel)]="data.address">
-        @if (isInvalid('address')) {
-          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('address') | translate }}</span>
-        }
-      </label>
-
-      <label class="field" [class.field--invalid]="isInvalid('phone')">
-        <span>{{ 'BUSINESS_DATA.CONTACT.PHONE' | translate }} *</span>
-        <input type="text" [(ngModel)]="data.phone">
-        @if (isInvalid('phone')) {
-          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('phone') | translate }}</span>
-        }
-      </label>
-
-      <label class="field" [class.field--invalid]="isInvalid('email')">
-        <span>{{ 'BUSINESS_DATA.CONTACT.EMAIL' | translate }}</span>
-        <input type="email" [(ngModel)]="data.email">
-        @if (isInvalid('email')) {
-          <span class="field__error"><mat-icon>error</mat-icon>{{ errorFor('email') | translate }}</span>
-        }
-      </label>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.CONTACT.WEBSITE' | translate }}</span>
-        <input type="text" [(ngModel)]="data.website">
-      </label>
-    </div>
-
-    <!-- información fiscal -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon"><mat-icon>receipt_long</mat-icon></div>
-        <div>
-          <h3>{{ 'BUSINESS_DATA.FISCAL.TITLE' | translate }}</h3>
-          <p>{{ 'BUSINESS_DATA.FISCAL.SUBTITLE' | translate }}</p>
-        </div>
-      </div>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.FISCAL.REGIME' | translate }}</span>
-        <input type="text" [(ngModel)]="data.taxRegime">
-      </label>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.FISCAL.CIIU' | translate }}</span>
-        <input type="text" [(ngModel)]="data.ciiuActivity">
-      </label>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.FISCAL.DIAN_RESOLUTION' | translate }}</span>
-        <input type="text" [(ngModel)]="data.dianResolution">
-      </label>
-
-      <div class="row-2">
-        <label class="field">
-          <span>{{ 'BUSINESS_DATA.FISCAL.PREFIX' | translate }}</span>
-          <input type="text" [(ngModel)]="data.invoicePrefix">
-        </label>
-        <label class="field">
-          <span>{{ 'BUSINESS_DATA.FISCAL.RANGE' | translate }}</span>
-          <input type="text" [(ngModel)]="data.invoiceRange">
-        </label>
-      </div>
-    </div>
-
-    <!-- canales oficiales -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-icon"><mat-icon>share</mat-icon></div>
-        <div>
-          <h3>{{ 'BUSINESS_DATA.CHANNELS.TITLE' | translate }}</h3>
-          <p>{{ 'BUSINESS_DATA.CHANNELS.SUBTITLE' | translate }}</p>
-        </div>
-      </div>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.CHANNELS.INSTAGRAM' | translate }}</span>
-        <input type="text" [(ngModel)]="data.instagram">
-      </label>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.CHANNELS.FACEBOOK' | translate }}</span>
-        <input type="text" [(ngModel)]="data.facebook">
-      </label>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.CHANNELS.SUPPORT_LINE' | translate }}</span>
-        <input type="text" [(ngModel)]="data.supportLine">
-      </label>
-
-      <label class="field">
-        <span>{{ 'BUSINESS_DATA.CHANNELS.SERVICE_HOURS' | translate }}</span>
-        <input type="text" [(ngModel)]="data.serviceHours">
-      </label>
-    </div>
-
+    }
   </div>
 
 </div>

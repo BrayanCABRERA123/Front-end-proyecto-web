@@ -1,52 +1,104 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { BusinessStore } from '../../../../services/business-store';
 import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
 import { BusinessData } from '../../../../models/admin.models';
 import { apiErrorKey } from '../../../../../../core/utils/api-error';
-import { todayIso } from '../../../../../../core/utils/dates';
+import {
+  BusinessField,
+  BusinessFieldKey,
+  BusinessSectionModal,
+  BusinessSectionModalData,
+  BusinessSectionModalResult,
+} from '../business-section-modal/business-section-modal';
 
-// campos obligatorios del formulario; cada uno tiene su mensaje de error
-const REQUIRED_FIELDS: Record<keyof Pick<BusinessData, 'legalName' | 'taxId' | 'address' | 'phone'>, string> = {
-  legalName: 'BUSINESS_DATA.VALIDATION.LEGAL_NAME',
-  taxId: 'BUSINESS_DATA.VALIDATION.TAX_ID',
-  address: 'BUSINESS_DATA.VALIDATION.ADDRESS',
-  phone: 'BUSINESS_DATA.VALIDATION.PHONE',
-};
+/** una tarjeta de la pantalla: se muestra en solo lectura y se edita con el lápiz */
+interface BusinessSection {
+  id: string;
+  icon: string;
+  titleKey: string;
+  subtitleKey: string;
+  // aviso de que se completa con los datos del negocio real (fiscal y canales)
+  realBusinessNoteKey?: string;
+  fields: BusinessField[];
+}
 
-// los correos y teléfonos se revisan con una regla sencilla de leer
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE_RE = /^\+?[\d\s()-]{7,20}$/;
+const SECTIONS: BusinessSection[] = [
+  {
+    id: 'general', icon: 'domain',
+    titleKey: 'BUSINESS_DATA.GENERAL.TITLE', subtitleKey: 'BUSINESS_DATA.GENERAL.SUBTITLE',
+    fields: [
+      { key: 'legalName', labelKey: 'BUSINESS_DATA.GENERAL.LEGAL_NAME', required: true },
+      { key: 'taxId', labelKey: 'BUSINESS_DATA.GENERAL.TAX_ID', required: true },
+      { key: 'businessType', labelKey: 'BUSINESS_DATA.GENERAL.BUSINESS_TYPE' },
+      { key: 'foundationDate', labelKey: 'BUSINESS_DATA.GENERAL.FOUNDATION_DATE', type: 'date' },
+      { key: 'legalRep', labelKey: 'BUSINESS_DATA.GENERAL.LEGAL_REP' },
+      { key: 'legalRepDoc', labelKey: 'BUSINESS_DATA.GENERAL.LEGAL_REP_DOC' },
+    ],
+  },
+  {
+    id: 'contact', icon: 'location_on',
+    titleKey: 'BUSINESS_DATA.CONTACT.TITLE', subtitleKey: 'BUSINESS_DATA.CONTACT.SUBTITLE',
+    fields: [
+      { key: 'address', labelKey: 'BUSINESS_DATA.CONTACT.ADDRESS', required: true },
+      { key: 'phone', labelKey: 'BUSINESS_DATA.CONTACT.PHONE', required: true },
+      { key: 'email', labelKey: 'BUSINESS_DATA.CONTACT.EMAIL', type: 'email' },
+      { key: 'website', labelKey: 'BUSINESS_DATA.CONTACT.WEBSITE' },
+    ],
+  },
+  {
+    id: 'fiscal', icon: 'receipt_long',
+    titleKey: 'BUSINESS_DATA.FISCAL.TITLE', subtitleKey: 'BUSINESS_DATA.FISCAL.SUBTITLE',
+    realBusinessNoteKey: 'BUSINESS_DATA.FISCAL.REAL_BUSINESS_NOTE',
+    fields: [
+      { key: 'taxRegime', labelKey: 'BUSINESS_DATA.FISCAL.REGIME' },
+      { key: 'ciiuActivity', labelKey: 'BUSINESS_DATA.FISCAL.CIIU' },
+      { key: 'dianResolution', labelKey: 'BUSINESS_DATA.FISCAL.DIAN_RESOLUTION' },
+      { key: 'invoicePrefix', labelKey: 'BUSINESS_DATA.FISCAL.PREFIX' },
+      { key: 'invoiceRange', labelKey: 'BUSINESS_DATA.FISCAL.RANGE' },
+    ],
+  },
+  {
+    id: 'channels', icon: 'share',
+    titleKey: 'BUSINESS_DATA.CHANNELS.TITLE', subtitleKey: 'BUSINESS_DATA.CHANNELS.SUBTITLE',
+    realBusinessNoteKey: 'BUSINESS_DATA.CHANNELS.REAL_BUSINESS_NOTE',
+    fields: [
+      { key: 'instagram', labelKey: 'BUSINESS_DATA.CHANNELS.INSTAGRAM' },
+      { key: 'facebook', labelKey: 'BUSINESS_DATA.CHANNELS.FACEBOOK' },
+      { key: 'supportLine', labelKey: 'BUSINESS_DATA.CHANNELS.SUPPORT_LINE' },
+      { key: 'serviceHours', labelKey: 'BUSINESS_DATA.CHANNELS.SERVICE_HOURS' },
+    ],
+  },
+];
 
 @Component({
   selector: 'app-business-data',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, MatIconModule, TranslateModule],
   templateUrl: './business-data.html',
   styleUrl: './business-data.scss'
 })
 export class BusinessDataComponent implements OnInit {
 
-  // tope de los filtros de fecha: no hay historial del futuro
-  readonly today = todayIso();
+  readonly sections = SECTIONS;
 
   // lo último guardado en booking-service
   private saved: BusinessData;
 
-  // los campos mutan una copia; solo se confirman al guardar
+  // lo que se ve en pantalla: el lápiz lo cambia y "Guardar cambios" lo confirma
   data: BusinessData;
 
-  submitted = false;
   loaded = false;
   saving = false;
 
   constructor(
     private store: BusinessStore,
     private feedback: FeedbackService,
+    private dialog: MatDialog,
     private changes: ChangeDetectorRef,
   ) {
     this.saved = { ...this.store.empty };
@@ -68,54 +120,50 @@ export class BusinessDataComponent implements OnInit {
     });
   }
 
-  isInvalid(key: keyof BusinessData): boolean {
-    return this.submitted && this.errorFor(key) !== '';
+  /** hay cambios hechos con el lápiz que todavía no se guardaron */
+  get dirty(): boolean {
+    return (Object.keys(this.data) as BusinessFieldKey[]).some(k => (this.data[k] ?? '') !== (this.saved[k] ?? ''));
   }
 
-  errorFor(key: keyof BusinessData): string {
-    if (!this.submitted) return '';
-
+  /** valor para mostrar; la fecha va como dd/mm/aaaa */
+  display(key: BusinessFieldKey): string {
     const value = String(this.data[key] ?? '').trim();
-
-    if (key === 'legalName' || key === 'taxId' || key === 'address' || key === 'phone') {
-      if (!value) return REQUIRED_FIELDS[key];
+    if (key === 'foundationDate' && value) {
+      const [y, m, d] = value.split('-');
+      return `${d}/${m}/${y}`;
     }
-    if (key === 'email' && value && !EMAIL_RE.test(value)) return 'BUSINESS_DATA.VALIDATION.EMAIL';
-    if (key === 'phone' && value && !PHONE_RE.test(value)) return 'BUSINESS_DATA.VALIDATION.PHONE';
-
-    return '';
+    return value;
   }
 
-  /** el guardado se habilita solo cuando lo obligatorio está completo y bien escrito */
-  get canSave(): boolean {
-    const requiredOk = (Object.keys(REQUIRED_FIELDS) as (keyof BusinessData)[]).every(
-      k => String(this.data[k] ?? '').trim().length > 0
-    );
-    const emailOk = !this.data.email || EMAIL_RE.test(this.data.email);
-    const phoneOk = PHONE_RE.test(this.data.phone);
-    return requiredOk && emailOk && phoneOk;
+  editSection(section: BusinessSection): void {
+    const data: BusinessSectionModalData = {
+      titleKey: section.titleKey,
+      subtitleKey: section.subtitleKey,
+      icon: section.icon,
+      fields: section.fields,
+      values: this.data,
+    };
+    this.dialog.open(BusinessSectionModal, { panelClass: 'custom-dialog', data })
+      .afterClosed()
+      .subscribe((result: BusinessSectionModalResult | null | undefined) => {
+        if (!result) return;
+        this.data = { ...this.data, ...result };
+        this.changes.markForCheck();
+      });
   }
 
   discard(): void {
     this.data = { ...this.saved };
-    this.submitted = false;
     this.feedback.info('BUSINESS_DATA.FEEDBACK.DISCARDED_TITLE', 'BUSINESS_DATA.FEEDBACK.DISCARDED_MESSAGE');
   }
 
   save(): void {
-    this.submitted = true;
-    if (!this.canSave) {
-      this.feedback.error('BUSINESS_DATA.FEEDBACK.INVALID_TITLE', 'BUSINESS_DATA.FEEDBACK.INVALID_MESSAGE');
-      return;
-    }
-
     this.saving = true;
     this.store.save(this.data).subscribe({
       next: business => {
         this.saving = false;
         this.saved = business;
         this.data = { ...business };
-        this.submitted = false;
         this.feedback.success(
           'BUSINESS_DATA.FEEDBACK.SAVED_TITLE',
           'BUSINESS_DATA.FEEDBACK.SAVED_MESSAGE',
