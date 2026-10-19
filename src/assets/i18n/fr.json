@@ -162,7 +162,7 @@
       "VEHICLES": "Véhicules",
       "NOTIFICATIONS": "Notifications"
     },
-    "SUBTITLE": "Voici votre module d'information en tant que client de Lavado Vehicular",
+    "SUBTITLE": "Panneau client",
     "CLIENT_VIEW": "Vue Client",
     "STATS": {
       "ACTIVE_RESERVATIONS": "Mes réservations actives",

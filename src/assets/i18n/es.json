@@ -162,7 +162,7 @@
       "VEHICLES": "Vehículos",
       "NOTIFICATIONS": "Notificaciones"
     },
-    "SUBTITLE": "Este es tu módulo de información como cliente de Lavado Vehicular",
+    "SUBTITLE": "Panel del cliente",
     "CLIENT_VIEW": "Vista de Cliente",
     "STATS": {
       "ACTIVE_RESERVATIONS": "Mis reservas activas",

@@ -22,6 +22,7 @@ import { UserSession } from '../../../../core/services/user-session';
 import { VehicleResponse } from '../../../../core/models/vehicle.models';
 import { LoyaltyApiService, PromotionForCustomer } from '../../../../core/services/loyalty-api';
 import { OperationsApiService } from '../../../../core/services/operations-api';
+import { LongDatePipe } from '../../../../shared/pipes/long-date.pipe';
 
 // avance del servicio según su estado (Programado → Confirmado → En progreso → Finalizado).
 // Programado y Confirmado van en 0 %: el lavado todavía no ha empezado
@@ -35,11 +36,13 @@ const PROGRESS_BY_STATUS: Record<string, number> = {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule],
+  imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule, LongDatePipe],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  readonly today = new Date();
 
   private readonly vehiclesService = inject(VehiclesService);
   private readonly userSession = inject(UserSession);

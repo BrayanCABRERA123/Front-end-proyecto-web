@@ -10,7 +10,7 @@
           {{ 'OPERATOR_HOME.TITLE' | translate: { name: operatorName } }}
         </h1>
         <p class="page-subtitle">
-          {{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: pending } }}
+          {{ today | longDate }} · <span class="accent">{{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: pending } }}</span>
         </p>
       </div>
       <button class="btn-ver-servicios" (click)="goToAssignedServices()">
