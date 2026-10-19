@@ -194,6 +194,7 @@ export interface AdminUser {
   id: string;
   name: string;
   email: string;
+  role: 'ADMIN' | 'OPERATOR' | 'CLIENT';
   userType: string;
   dateAdded: string;
   lastLogin: string | null; // aaaa-mm-dd del último inicio de sesión; null = nunca entró
