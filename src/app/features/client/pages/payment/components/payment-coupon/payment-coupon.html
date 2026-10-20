@@ -20,9 +20,12 @@
       <mat-icon>local_offer</mat-icon>
       <span>{{ 'PAYMENT.COUPON.APPLIED' | translate:{ name: result.promotionName } }}</span>
       <strong>-${{ result.discountAmount | number }} COP</strong>
-      <button type="button" class="coupon-box__remove" [disabled]="locked" (click)="remove.emit()" aria-label="remove">
-        <mat-icon>close</mat-icon>
-      </button>
+      <!-- con el pago enviado o aprobado el cupón ya no se puede quitar -->
+      @if (!locked) {
+        <button type="button" class="coupon-box__remove" (click)="remove.emit()" aria-label="remove">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
     </div>
   }
 </div>

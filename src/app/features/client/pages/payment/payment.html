@@ -36,8 +36,9 @@
           </app-payment-notice>
         }
 
+        <!-- con el pago aprobado ya no se elige método ni se reporta nada: solo queda el resumen -->
         <!-- Método de pago -->
-        <section class="card">
+        <section class="card" *ngIf="!isApproved">
           <div class="card-header">
             <div class="card-title">
               <mat-icon>credit_card</mat-icon>
@@ -58,7 +59,7 @@
         </section>
 
         <!-- Pago digital con QR (Nequi / Daviplata / Transferencia) -->
-        <section class="card" *ngIf="selectedMethod !== 'CASH'">
+        <section class="card" *ngIf="!isApproved && selectedMethod !== 'CASH'">
           <div class="qr-top">
             <span class="tag">{{ 'PAYMENT.QR.INSTANT' | translate }}</span>
             <span class="via">{{ 'PAYMENT.QR.VIA' | translate }} {{ ('PAYMENT.METHOD.' + selectedMethod) | translate
@@ -115,7 +116,7 @@
         </section>
 
         <!-- Pago en efectivo -->
-        <section class="card cash-card" *ngIf="selectedMethod === 'CASH'">
+        <section class="card cash-card" *ngIf="!isApproved && selectedMethod === 'CASH'">
           <mat-icon>storefront</mat-icon>
           <div>
             <h2>{{ 'PAYMENT.CASH.TITLE' | translate }}</h2>
@@ -124,7 +125,7 @@
         </section>
 
         <!-- Confirmar pago -->
-        <section class="card" *ngIf="selectedMethod !== 'CASH'">
+        <section class="card" *ngIf="!isApproved && selectedMethod !== 'CASH'">
           <div class="card-title">
             <mat-icon>fact_check</mat-icon>
             <h2>{{ 'PAYMENT.CONFIRM.TITLE' | translate }}</h2>
@@ -220,7 +221,8 @@
 
           <!-- canjear un cupón de fidelización (ADR-015): puntos acumulados desbloquean la
                promoción, se aplica un % de descuento real sobre el total -->
-          <app-payment-coupon
+          <!-- aprobado: solo se muestra el cupón si se usó, sin poder quitarlo -->
+          <app-payment-coupon *ngIf="!isApproved || couponResult"
             [(code)]="couponCode"
             [result]="couponResult"
             [error]="couponError"
@@ -239,12 +241,11 @@
             <strong>${{ totalToPay | number }} <small>COP</small></strong>
           </div>
 
+          <!-- aprobado: no hay nada que pagar, solo se puede cancelar la reserva -->
+          @if (!isApproved) {
           <button class="btn-primary" [disabled]="!canConfirm" (click)="confirmPayment()">
             <!-- ya enviado: el botón queda bloqueado mostrando que está en revisión -->
-            @if (isApproved) {
-              <mat-icon>verified</mat-icon>
-              {{ 'PAYMENT.SUMMARY.APPROVED_BUTTON' | translate }}
-            } @else if (isVerifying) {
+            @if (isVerifying) {
               <mat-icon>hourglass_top</mat-icon>
               {{ 'PAYMENT.SUMMARY.VERIFYING_BUTTON' | translate }}
             } @else {
@@ -252,6 +253,7 @@
               {{ (selectedMethod === 'CASH' ? 'PAYMENT.SUMMARY.CASH_BUTTON' : 'PAYMENT.SUMMARY.PAY_BUTTON') | translate }}
             }
           </button>
+          }
 
           <!-- por qué el botón sigue bloqueado: lo que falta completar -->
           @if (missingRequirements.length) {
