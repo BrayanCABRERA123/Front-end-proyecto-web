@@ -12,6 +12,7 @@ export type NotificationType =
 // title y desc son el texto que escribió el backend (ya no son llaves de traducción).
 export interface AppNotification {
   id: number;
+  code: string;   // tipo del backend (ej. PAYMENT_CONFIRMED): decide a dónde lleva "Ir a..."
   icon: string;
   type: NotificationType;
   title: string;
@@ -48,6 +49,7 @@ export function toAppNotification(response: NotificationResponse): AppNotificati
   const type = TYPE_BY_CATEGORY[response.category] ?? 'sistema';
   return {
     id: response.id,
+    code: response.type,
     icon: ICON_BY_TYPE[type],
     type,
     title: response.title,

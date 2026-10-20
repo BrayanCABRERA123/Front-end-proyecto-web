@@ -61,15 +61,40 @@
 .dialog-actions {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn-close {
+  background: var(--item-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
 }
 
 .btn-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: var(--primary);
   color: white;
   border: none;
   padding: 8px 16px;
   border-radius: 10px;
   cursor: pointer;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
 
   &:hover {
     background: var(--primary-hover);

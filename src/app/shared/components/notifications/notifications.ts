@@ -12,7 +12,8 @@ import {
   notificationTypeLabel,
   toAppNotification
 } from '../../dialogs/notification-models/notification.model';
-import { NotificationDetailModal } from '../../dialogs/notification-detail-modal/notification-detail-modal';
+import { NotificationDetailModal, NotificationDetailData } from '../../dialogs/notification-detail-modal/notification-detail-modal';
+import { notificationTarget } from '../../dialogs/notification-models/notification-target';
 import { ConfirmModal, ConfirmModalData } from '../../dialogs/confirm-modal/confirm-modal';
 import { FeedbackService } from '../../dialogs/feedback.service';
 // servicio que habla con el notification-service
@@ -170,12 +171,14 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-  // al abrir el detalle la notificación queda leída
+  // al abrir el detalle (clic en la notificación o en "Ver detalle") queda leída;
+  // el detalle trae el botón "Ir a..." hacia el apartado de donde viene el aviso
   viewDetail(n: AppNotification) {
     if (!n.read) this.markAsRead(n);
+    const data: NotificationDetailData = { ...n, read: true, target: notificationTarget(this.rol, n.code) };
     this.dialog.open(NotificationDetailModal, {
       panelClass: 'custom-dialog',
-      data: { ...n, read: true }
+      data
     });
   }
 

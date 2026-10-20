@@ -2587,5 +2587,13 @@
         "A": "Sí, tenemos aplicación para Android con las mismas opciones de la web. Descárgala desde esta página con el botón de descarga o el código QR."
       }
     }
+  },
+  "GO_TO": {
+    "HOME": "Ir al inicio",
+    "HISTORY": "Ir al historial",
+    "ASSIGNED": "Ir a servicios asignados",
+    "RESERVATIONS": "Ir a reservas",
+    "PAYMENT": "Ir al pago",
+    "RATINGS": "Ir a calificaciones"
   }
 }

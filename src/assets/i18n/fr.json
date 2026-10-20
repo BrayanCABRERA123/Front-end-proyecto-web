@@ -2587,5 +2587,13 @@
         "A": "Oui, nous avons une application Android avec les mêmes options que le site. Téléchargez-la depuis cette page avec le bouton de téléchargement ou le code QR."
       }
     }
+  },
+  "GO_TO": {
+    "HOME": "Aller à l'accueil",
+    "HISTORY": "Aller à l'historique",
+    "ASSIGNED": "Aller aux services assignés",
+    "RESERVATIONS": "Aller aux réservations",
+    "PAYMENT": "Aller au paiement",
+    "RATINGS": "Aller aux évaluations"
   }
 }
