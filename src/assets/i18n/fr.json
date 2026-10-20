@@ -51,6 +51,8 @@
     "REPORTS": "Rapports"
   },
   "HISTORY": {
+    "DETAIL_TITLE": "Détail de la réservation",
+    "TOTAL": "Total",
     "FILTERS": "Filtres",
     "ALL": "Tous",
     "ACTIVE": "Actives",

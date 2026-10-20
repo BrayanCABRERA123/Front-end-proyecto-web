@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import {
   ServiceHistoryItem,
   historyStatusClass,
@@ -27,10 +28,17 @@ export class ServiceHistoryDetailModal {
 
   constructor(
     private dialogRef: MatDialogRef<ServiceHistoryDetailModal>,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public service: ServiceHistoryItem
   ) {}
 
   close() {
     this.dialogRef.close();
+  }
+
+  // la calificación que dejó el cliente se ve completa en Calificaciones
+  goToRatings() {
+    this.dialogRef.close();
+    this.router.navigateByUrl('/operator/qualifications');
   }
 }

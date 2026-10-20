@@ -1,6 +1,7 @@
 @use '../../../../../../../styles/mixins' as *;
 
 .history-card {
+  cursor: pointer;
   background-color: var(--card);
   border-radius: 16px;
   padding: 24px;

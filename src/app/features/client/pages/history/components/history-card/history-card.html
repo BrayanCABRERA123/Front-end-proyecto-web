@@ -1,5 +1,6 @@
 <!-- Tarjeta de cada reserva del historial -->
-<div class="history-card">
+<!-- clic en la tarjeta = ver el detalle; los botones hacen solo su acción -->
+<div class="history-card" (click)="open.emit(booking)">
 
   <!-- Header -->
   <div class="card-header">
@@ -69,7 +70,7 @@
 
       <!-- Ir a pagar las reservas todavía activas -->
       @if (booking.canPay) {
-      <button class="btn-pay" (click)="goToPayment()">
+      <button class="btn-pay" (click)="$event.stopPropagation(); goToPayment()">
         {{ 'HISTORY_CARD.PAY_NOW' | translate }}
         <mat-icon>arrow_forward</mat-icon>
       </button>
@@ -77,7 +78,7 @@
 
       <!-- Cancelar la reserva (solo si el backend la deja cambiar) -->
       @if (booking.canCancel) {
-      <button class="btn-cancel" (click)="requestCancel()">
+      <button class="btn-cancel" (click)="$event.stopPropagation(); requestCancel()">
         {{ 'HISTORY_CARD.CANCEL' | translate }}
         <mat-icon>cancel</mat-icon>
       </button>
@@ -85,7 +86,7 @@
 
       <!-- Calificar (solo si el lavado terminó y aún no se ha calificado) -->
       @if (booking.canRate && !booking.rating) {
-      <button class="btn-rate" (click)="openRating(booking)">
+      <button class="btn-rate" (click)="$event.stopPropagation(); openRating(booking)">
         {{ 'HISTORY_CARD.RATE' | translate }}
         <mat-icon>star_outline</mat-icon>
       </button>

@@ -35,6 +35,10 @@
     border-bottom: none;
   }
 
+  .table-row {
+    cursor: pointer;
+  }
+
   .table-row:hover {
     background: var(--item-bg);
   }

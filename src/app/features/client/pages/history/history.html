@@ -95,7 +95,7 @@
       } @else {
 
       @for (item of filteredBookings; track item.id) {
-      <app-history-card [booking]="item" (cancel)="cancelBooking($event)"></app-history-card>
+      <app-history-card [booking]="item" (cancel)="cancelBooking($event)" (open)="openDetail($event)"></app-history-card>
       }
 
       <!-- Vacío -->

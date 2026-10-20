@@ -80,7 +80,9 @@ export class ServiceHistoryComponent implements OnInit {
             comment: s.comment,
             status: 'finalizado',
             reason: null
-          } as ServiceHistoryItem));
+          } as ServiceHistoryItem))
+          // de la más nueva a la más antigua
+          .sort((a, b) => `${b.date} ${b.time}`.localeCompare(`${a.date} ${a.time}`));
         this.animatedPercentage = this.completionRate;
         this.cdr.markForCheck();
       },
