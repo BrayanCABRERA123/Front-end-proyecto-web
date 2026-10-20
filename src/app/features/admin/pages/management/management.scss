@@ -242,22 +242,6 @@ table {
   color: var(--text-secondary);
 }
 
-// selector del tipo de usuario dentro de la tabla
-.role-select {
-  font-family: $font-family-base;
-  font-size: 12px;
-  font-weight: $fw-semibold;
-  padding: 5px 8px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--card);
-  color: var(--text);
-  cursor: pointer;
-  max-width: 100%;
-
-  &:focus { outline: none; border-color: var(--primary); }
-}
-
 .status-pill {
   display: inline-flex;
   align-items: center;
