@@ -30,6 +30,9 @@ export class HistoryCardComponent {
   // el padre es quien cancela (tiene el servicio y recarga la lista)
   @Output() cancel = new EventEmitter<ClientBookingItem>();
 
+  // clic en la tarjeta: el padre abre el detalle
+  @Output() open = new EventEmitter<ClientBookingItem>();
+
   // inyeccion de servicios
   constructor(
     private translate: TranslateService,

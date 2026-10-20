@@ -1,6 +1,8 @@
 @use '../../../../styles/mixins' as *;
 
 .dialog-container {
+  // el padding cuenta dentro del ancho: en celular no se sale del modal
+  box-sizing: border-box;
   position: relative;
   background: var(--card);
   color: var(--text);
@@ -128,6 +130,41 @@
   &:hover {
     border-color: var(--primary);
     color: var(--primary);
+  }
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+
+  .btn-close {
+    flex: 1;
+  }
+}
+
+.btn-go {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: var(--primary-hover);
   }
 }
 

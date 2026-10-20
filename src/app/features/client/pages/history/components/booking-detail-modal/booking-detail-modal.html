@@ -1,0 +1,87 @@
+<div class="dialog-container">
+
+  <button class="btn-x" (click)="close()" [attr.aria-label]="'COMMON.CLOSE' | translate">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="detail-header">
+    <span class="type-badge" [ngClass]="statusClass">
+      {{ ('STATUS.' + booking.status) | translate }}
+    </span>
+    <span class="code">{{ booking.code }}</span>
+  </div>
+
+  <h2 class="dialog-title">{{ 'HISTORY.DETAIL_TITLE' | translate }}</h2>
+
+  <div class="detail-grid">
+
+    <div class="detail-item">
+      <mat-icon>local_car_wash</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'HISTORY_CARD.TYPE' | translate }}</span>
+        <span class="detail-value">{{ booking.services.join(' / ') }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>event</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'HISTORY.DATE' | translate }}</span>
+        <span class="detail-value">{{ booking.displayDate }} · {{ booking.timeRange }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>directions_car</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'HISTORY_CARD.VEHICLE' | translate }}</span>
+        <span class="detail-value">{{ booking.vehicle || '—' }}@if (booking.plate) { · {{ booking.plate }}}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>payments</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'HISTORY.TOTAL' | translate }}</span>
+        <span class="detail-value">
+          {{ booking.total | copPrice }}
+          @if (booking.paymentStatus) {
+            · {{ ('HISTORY_CARD.PAYMENT_STATUS.' + booking.paymentStatus) | translate }}
+          }
+        </span>
+      </div>
+    </div>
+
+    @if (booking.rating) {
+      <div class="detail-item">
+        <mat-icon>star</mat-icon>
+        <div class="detail-full">
+          <span class="detail-label">{{ 'HISTORY_CARD.RATED' | translate }}</span>
+          <span class="stars">
+            @for (s of stars; track s) {
+              <mat-icon [class.active]="s <= booking.rating!">star</mat-icon>
+            }
+          </span>
+          @if (booking.ratingComment) {
+            <p class="comment">"{{ booking.ratingComment }}"</p>
+          }
+        </div>
+      </div>
+    }
+
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn-close" (click)="close()">
+      {{ 'COMMON.CLOSE' | translate }}
+    </button>
+    <!-- lleva a la pantalla de pago de esta reserva -->
+    @if (canGoToPayment) {
+      <button class="btn-go" (click)="goToPayment()">
+        {{ 'GO_TO.PAYMENT' | translate }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    }
+  </div>
+
+</div>

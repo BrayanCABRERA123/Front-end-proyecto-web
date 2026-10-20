@@ -71,8 +71,17 @@
 
   </div>
 
-  <button class="btn-close" (click)="close()">
-    {{ 'COMMON.CLOSE' | translate }}
-  </button>
+  <div class="modal-actions">
+    <button class="btn-close" (click)="close()">
+      {{ 'COMMON.CLOSE' | translate }}
+    </button>
+    <!-- con calificación: lleva a Calificaciones, donde se ve junto a las demás -->
+    @if (service.rating !== null) {
+      <button class="btn-go" (click)="goToRatings()">
+        {{ 'GO_TO.RATINGS' | translate }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    }
+  </div>
 
 </div>

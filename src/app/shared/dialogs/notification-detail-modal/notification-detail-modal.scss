@@ -2,6 +2,8 @@
 
 
 .dialog-container {
+  // el padding cuenta dentro del ancho: en celular no se sale del modal
+  box-sizing: border-box;
   background: var(--card);
   color: var(--text);
   padding: 24px;

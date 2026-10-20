@@ -16,7 +16,8 @@
 
     <tbody>
       @for (s of services; track s.id) {
-        <tr class="table-row">
+        <!-- clic en la fila = ver el detalle -->
+        <tr class="table-row" (click)="viewDetail.emit(s)">
 
           <td [attr.data-label]="'HISTORY_TABLE.DATE_COMPLETED' | translate">
             {{ s.date | date: 'dd/MM/yyyy' }} - {{ s.time }}
@@ -61,7 +62,7 @@
           </td>
 
           <td>
-            <button class="btn-view" (click)="viewDetail.emit(s)">
+            <button class="btn-view" (click)="$event.stopPropagation(); viewDetail.emit(s)">
               <mat-icon>visibility</mat-icon>
             </button>
           </td>

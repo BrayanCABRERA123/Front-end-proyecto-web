@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { HistoryCardComponent } from './components/history-card/history-card';
+import { BookingDetailModal } from './components/booking-detail-modal/booking-detail-modal';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -85,7 +86,9 @@ export class HistoryComponent implements OnInit {
             item.ratingOperator = given.operatorName || undefined;
           }
           return item;
-        });
+        })
+          // de la más nueva a la más antigua (fecha y hora de la reserva)
+          .sort((a, b) => `${b.date} ${b.timeRange}`.localeCompare(`${a.date} ${a.timeRange}`));
         this.loading = false;
         this.changes.markForCheck();
       },
@@ -95,6 +98,11 @@ export class HistoryComponent implements OnInit {
         this.changes.markForCheck();
       }
     });
+  }
+
+  // clic en la tarjeta: detalle de la reserva con el botón "Ir al pago"
+  openDetail(item: ClientBookingItem): void {
+    this.dialog.open(BookingDetailModal, { panelClass: 'custom-dialog', data: item });
   }
 
   // confirmación + cancelación real (POST /bookings/{id}/cancel)
