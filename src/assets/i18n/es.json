@@ -1423,8 +1423,7 @@
       "LOADING": "Cargando usuarios...",
       "LOAD_ERROR_TITLE": "No se pudieron cargar los usuarios",
       "RETRY": "Reintentar",
-      "NEVER": "Nunca",
-      "CHANGE_ROLE": "Cambiar tipo de usuario"
+      "NEVER": "Nunca"
     },
     "ROLES": {
       "CREATE_ROLE": "Crear rol",
@@ -1537,12 +1536,7 @@
       "PROMO_STOPPED_MESSAGE": "La promoción «{{name}}» quedó pausada.",
       "PROMO_STARTED_MESSAGE": "La promoción «{{name}}» quedó activa.",
       "PROMO_DELETED_MESSAGE": "La promoción «{{name}}» se eliminó.",
-      "USER_STATUS_ERROR_TITLE": "No se pudo cambiar el estado",
-      "ROLE_CHANGE_TITLE": "¿Cambiar el tipo de usuario?",
-      "ROLE_CHANGE_MESSAGE": "{{name}} pasará a ser {{role}}. Se cerrarán sus sesiones abiertas y deberá iniciar sesión de nuevo.",
-      "ROLE_CHANGED_TITLE": "Tipo de usuario actualizado",
-      "ROLE_CHANGED_MESSAGE": "{{name}} ahora es {{role}}.",
-      "ROLE_CHANGE_ERROR_TITLE": "No se pudo cambiar el tipo de usuario"
+      "USER_STATUS_ERROR_TITLE": "No se pudo cambiar el estado"
     },
     "PERMISSION_NAMES": {
       "VIEW_PANELS": "Ver paneles",
@@ -2407,8 +2401,7 @@
     "CONTENT_TOO_LARGE": "Las fotos pesan demasiado: cada una puede tener hasta 2 MB",
     "BOOKING_WITHOUT_CLIENT": "La reserva no tiene una cuenta de cliente a la cual avisar",
     "ABSENCE_IN_PAST": "La ausencia no puede empezar antes de hoy.",
-    "ADMIN_CANNOT_BE_DISABLED": "Una cuenta de administrador no se puede desactivar. Cambia primero su tipo de usuario.",
-    "CANNOT_CHANGE_OWN_ROLE": "No puedes cambiar el tipo de usuario de tu propia cuenta."
+    "ADMIN_CANNOT_BE_DISABLED": "Una cuenta de administrador no se puede desactivar."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Contraseña actual",

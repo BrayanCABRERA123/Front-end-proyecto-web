@@ -30,7 +30,6 @@ const TRANSLATED_CODES = new Set([
   'USER_NOT_FOUND',
   'CANNOT_DISABLE_OWN_ACCOUNT',
   'ADMIN_CANNOT_BE_DISABLED',
-  'CANNOT_CHANGE_OWN_ROLE',
   'CONFLICT',
   'NOTIFICATION_NOT_FOUND',
   // códigos del booking-service (reservas)

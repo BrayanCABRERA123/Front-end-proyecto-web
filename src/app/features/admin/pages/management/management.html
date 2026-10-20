@@ -114,20 +114,7 @@
                       {{ u.name }}
                     </td>
                     <td>{{ u.email }}</td>
-                    <td>
-                      <!-- el admin cambia aquí el tipo de usuario; el suyo propio no se puede cambiar -->
-                      @if (isOwnAccount(u)) {
-                        <span class="type-chip" [title]="'API_ERRORS.CANNOT_CHANGE_OWN_ROLE' | translate">{{ u.userType | translate }}</span>
-                      } @else {
-                        <select #roleSelect class="role-select" [value]="u.role"
-                                (change)="changeUserRole(u, $any(roleSelect.value), roleSelect)"
-                                [attr.aria-label]="'ADMIN_MANAGEMENT.USERS.CHANGE_ROLE' | translate">
-                          @for (r of accountRoles; track r) {
-                            <option [value]="r" [selected]="r === u.role">{{ ('PROFILE.ROLE.' + r) | translate }}</option>
-                          }
-                        </select>
-                      }
-                    </td>
+                    <td><span class="type-chip">{{ u.userType | translate }}</span></td>
                     <td>{{ u.dateAdded }}</td>
                     <td>{{ u.lastLogin ?? ('ADMIN_MANAGEMENT.USERS.NEVER' | translate) }}</td>
                     <td>

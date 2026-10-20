@@ -1423,8 +1423,7 @@
       "LOADING": "Loading users...",
       "LOAD_ERROR_TITLE": "Users could not be loaded",
       "RETRY": "Retry",
-      "NEVER": "Never",
-      "CHANGE_ROLE": "Change user type"
+      "NEVER": "Never"
     },
     "ROLES": {
       "CREATE_ROLE": "Create role",
@@ -1537,12 +1536,7 @@
       "PROMO_STOPPED_MESSAGE": "The promotion «{{name}}» is now paused.",
       "PROMO_STARTED_MESSAGE": "The promotion «{{name}}» is now active.",
       "PROMO_DELETED_MESSAGE": "The promotion «{{name}}» was deleted.",
-      "USER_STATUS_ERROR_TITLE": "The status could not be changed",
-      "ROLE_CHANGE_TITLE": "Change the user type?",
-      "ROLE_CHANGE_MESSAGE": "{{name}} will become {{role}}. Their open sessions will be closed and they must sign in again.",
-      "ROLE_CHANGED_TITLE": "User type updated",
-      "ROLE_CHANGED_MESSAGE": "{{name}} is now {{role}}.",
-      "ROLE_CHANGE_ERROR_TITLE": "The user type could not be changed"
+      "USER_STATUS_ERROR_TITLE": "The status could not be changed"
     },
     "PERMISSION_NAMES": {
       "VIEW_PANELS": "View panels",
@@ -2407,8 +2401,7 @@
     "CONTENT_TOO_LARGE": "The photos are too large: each one can weigh up to 2 MB",
     "BOOKING_WITHOUT_CLIENT": "The booking has no client account to notify",
     "ABSENCE_IN_PAST": "The absence cannot start before today.",
-    "ADMIN_CANNOT_BE_DISABLED": "An administrator account cannot be disabled. Change its user type first.",
-    "CANNOT_CHANGE_OWN_ROLE": "You cannot change the user type of your own account."
+    "ADMIN_CANNOT_BE_DISABLED": "An administrator account cannot be disabled."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",
