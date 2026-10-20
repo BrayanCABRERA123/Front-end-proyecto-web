@@ -109,7 +109,8 @@
 
     @for (n of filteredNotifications; track n.id) {
 
-      <div class="item" [class.unread]="!n.read">
+      <!-- clic en la notificación = ver el detalle (y queda leída) -->
+      <div class="item" [class.unread]="!n.read" (click)="viewDetail(n)">
 
         <div class="left">
 
@@ -141,23 +142,23 @@
           <span class="date">{{ n.date | date: 'dd/MM/yyyy' }} - {{ n.time }}</span>
 
           @if (n.read) {
-            <button class="btn-toggle" (click)="markAsUnread(n)">
+            <button class="btn-toggle" (click)="$event.stopPropagation(); markAsUnread(n)">
               <mat-icon>mail</mat-icon>
               {{ 'NOTIFICATIONS.MARK_UNREAD' | translate }}
             </button>
           } @else {
-            <button class="btn-toggle unread-action" (click)="markAsRead(n)">
+            <button class="btn-toggle unread-action" (click)="$event.stopPropagation(); markAsRead(n)">
               <mat-icon>done_all</mat-icon>
               {{ 'NOTIFICATIONS.MARK_READ' | translate }}
             </button>
           }
 
-          <button class="btn-detail" (click)="viewDetail(n)">
+          <button class="btn-detail" (click)="$event.stopPropagation(); viewDetail(n)">
             <mat-icon>visibility</mat-icon>
             {{ 'NOTIFICATIONS.BTN_DETAIL' | translate }}
           </button>
 
-          <mat-icon class="delete" (click)="requestDelete(n)">delete</mat-icon>
+          <mat-icon class="delete" (click)="$event.stopPropagation(); requestDelete(n)">delete</mat-icon>
 
         </div>
 

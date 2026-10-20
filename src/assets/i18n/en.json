@@ -2587,5 +2587,13 @@
         "A": "Yes, we have an Android app with the same options as the web. Download it from this page with the download button or the QR code."
       }
     }
+  },
+  "GO_TO": {
+    "HOME": "Go to home",
+    "HISTORY": "Go to history",
+    "ASSIGNED": "Go to assigned services",
+    "RESERVATIONS": "Go to bookings",
+    "PAYMENT": "Go to payment",
+    "RATINGS": "Go to ratings"
   }
 }

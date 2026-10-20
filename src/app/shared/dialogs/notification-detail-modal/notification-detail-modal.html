@@ -33,9 +33,20 @@
   </div>
 
   <div class="dialog-actions">
-    <button class="btn-confirm" (click)="close()">
-      {{ 'COMMON.CLOSE' | translate }}
-    </button>
+    @if (notification.target) {
+      <button class="btn-close" (click)="close()">
+        {{ 'COMMON.CLOSE' | translate }}
+      </button>
+      <!-- lleva al apartado de donde viene el aviso -->
+      <button class="btn-confirm" (click)="goTo()">
+        {{ notification.target.label | translate }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    } @else {
+      <button class="btn-confirm" (click)="close()">
+        {{ 'COMMON.CLOSE' | translate }}
+      </button>
+    }
   </div>
 
 </div>

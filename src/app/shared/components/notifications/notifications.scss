@@ -324,6 +324,11 @@
   }
 }
 
+// toda la tarjeta abre el detalle
+.item {
+  cursor: pointer;
+}
+
 .item.unread {
   background: var(--primary-soft);
   border-color: rgba(var(--primary-rgb), .35);
