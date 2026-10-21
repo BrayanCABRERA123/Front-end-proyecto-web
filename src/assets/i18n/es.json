@@ -1434,7 +1434,8 @@
     },
     "ROLES": {
       "CREATE_ROLE": "Crear rol",
-      "SUBTITLE": "Define qué puede ver y hacer cada tipo de usuario dentro del panel.",
+      "SUBTITLE": "Los tres roles (Administrador, Operario y Cliente) son fijos y cada cuenta tiene uno.",
+      "FIXED_NOTE": "Lo que cada persona puede hacer lo decide su rol en el sistema. Los permisos de esta tabla se guardan como referencia del equipo, pero todavía no cambian el acceso.",
       "TABLE": {
         "NAME": "Rol",
         "DESCRIPTION": "Descripción",
@@ -1554,7 +1555,8 @@
   },
   "CREATE_ROLE_MODAL": {
     "TITLE_EDIT": "Permisos del rol",
-    "SUBTITLE_EDIT": "Los 3 roles son fijos: elige uno y marca sus permisos.",
+    "SUBTITLE_EDIT": "Marca los permisos de referencia de un rol.",
+    "REFERENCE_NOTE": "Estos permisos se guardan como referencia; el acceso real lo sigue decidiendo el rol.",
     "ROLE_SELECT_LABEL": "Rol",
     "PERMISSIONS_LABEL": "Permisos habilitados",
     "NO_PERMISSIONS": "No hay permisos en el catálogo."

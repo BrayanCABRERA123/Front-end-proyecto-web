@@ -1434,7 +1434,8 @@
     },
     "ROLES": {
       "CREATE_ROLE": "Criar função",
-      "SUBTITLE": "Defina o que cada tipo de usuário pode ver e fazer dentro do painel.",
+      "SUBTITLE": "Os três perfis (Administrador, Operador e Cliente) são fixos e cada conta tem um.",
+      "FIXED_NOTE": "O que cada pessoa pode fazer é decidido pelo seu perfil no sistema. As permissões desta tabela são salvas como referência da equipe, mas ainda não mudam o acesso.",
       "TABLE": {
         "NAME": "Função",
         "DESCRIPTION": "Descrição",
@@ -1554,7 +1555,8 @@
   },
   "CREATE_ROLE_MODAL": {
     "TITLE_EDIT": "Permissões do perfil",
-    "SUBTITLE_EDIT": "Os 3 perfis são fixos: escolha um e marque suas permissões.",
+    "SUBTITLE_EDIT": "Marque as permissões de referência de um perfil.",
+    "REFERENCE_NOTE": "Essas permissões são salvas como referência; o perfil continua decidindo o acesso real.",
     "ROLE_SELECT_LABEL": "Perfil",
     "PERMISSIONS_LABEL": "Permissões habilitadas",
     "NO_PERMISSIONS": "Não há permissões no catálogo."

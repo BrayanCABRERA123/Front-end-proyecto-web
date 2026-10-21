@@ -1434,7 +1434,8 @@
     },
     "ROLES": {
       "CREATE_ROLE": "Créer un rôle",
-      "SUBTITLE": "Définissez ce que chaque type d'utilisateur peut voir et faire dans le panneau.",
+      "SUBTITLE": "Les trois rôles (Administrateur, Opérateur et Client) sont fixes et chaque compte en a un.",
+      "FIXED_NOTE": "Ce que chaque personne peut faire dépend de son rôle dans le système. Les permissions de ce tableau sont enregistrées comme référence pour l’équipe, mais elles ne changent pas encore l’accès.",
       "TABLE": {
         "NAME": "Rôle",
         "DESCRIPTION": "Description",
@@ -1554,7 +1555,8 @@
   },
   "CREATE_ROLE_MODAL": {
     "TITLE_EDIT": "Permissions du rôle",
-    "SUBTITLE_EDIT": "Les 3 rôles sont fixes : choisissez-en un et cochez ses permissions.",
+    "SUBTITLE_EDIT": "Cochez les permissions de référence d’un rôle.",
+    "REFERENCE_NOTE": "Ces permissions sont enregistrées comme référence ; le rôle décide toujours l’accès réel.",
     "ROLE_SELECT_LABEL": "Rôle",
     "PERMISSIONS_LABEL": "Permissions activées",
     "NO_PERMISSIONS": "Aucune permission dans le catalogue."

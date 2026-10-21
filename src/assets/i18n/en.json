@@ -1434,7 +1434,8 @@
     },
     "ROLES": {
       "CREATE_ROLE": "Create role",
-      "SUBTITLE": "Define what each type of user can see and do inside the panel.",
+      "SUBTITLE": "The three roles (Administrator, Operator and Client) are fixed and each account has one.",
+      "FIXED_NOTE": "What each person can do is decided by their role in the system. The permissions in this table are saved as a reference for the team, but they do not change access yet.",
       "TABLE": {
         "NAME": "Role",
         "DESCRIPTION": "Description",
@@ -1554,7 +1555,8 @@
   },
   "CREATE_ROLE_MODAL": {
     "TITLE_EDIT": "Role permissions",
-    "SUBTITLE_EDIT": "The 3 roles are fixed: pick one and check its permissions.",
+    "SUBTITLE_EDIT": "Check the reference permissions of a role.",
+    "REFERENCE_NOTE": "These permissions are saved as a reference; the role still decides the real access.",
     "ROLE_SELECT_LABEL": "Role",
     "PERMISSIONS_LABEL": "Enabled permissions",
     "NO_PERMISSIONS": "No permissions in the catalog."
