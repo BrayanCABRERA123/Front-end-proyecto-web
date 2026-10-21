@@ -3,7 +3,7 @@ import { signal } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { ReservationsComponent } from './reservations';
 import { ReservationsStore } from '../../services/reservations-store';
@@ -84,6 +84,14 @@ describe('ReservationsComponent (admin)', () => {
     component.selectedDate = TODAY;
     expect(component.filteredBookings.map(b => b.id)).toEqual(['1']);
     expect(component.hasActiveFilters).toBe(true);
+  });
+
+  it('el día de la reserva sale en el idioma de la pantalla', () => {
+    TestBed.inject(TranslateService).setTranslation('en', { ADMIN_RESERVATIONS: { TABLE: { TODAY: 'Today' } } });
+    TestBed.inject(TranslateService).use('en');
+
+    expect(component.dayLabel(TODAY)).toBe('Today');
+    expect(component.dayLabel('2026-10-05')).toBe('05/10/2026');
   });
 
   it('pagina de a 6 y no se sale de las páginas que existen', () => {

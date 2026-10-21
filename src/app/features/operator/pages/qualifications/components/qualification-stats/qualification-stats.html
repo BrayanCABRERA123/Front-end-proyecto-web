@@ -5,7 +5,7 @@
       <mat-icon class="stat-icon">star_outline</mat-icon>
       <span class="stat-label">{{ 'QUALIFICATION_STATS.AVG_RATING' | translate }}</span>
     </div>
-    <p class="stat-value">{{ averageRating }}</p>
+    <p class="stat-value">{{ averageRating > 0 ? averageRating : '—' }}</p>
     <div class="stars-row">
       @for (star of stars; track $index) {
         <mat-icon class="star" [class.filled]="star === 1">

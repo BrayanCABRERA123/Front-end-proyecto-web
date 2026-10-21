@@ -198,6 +198,7 @@
       "LOYALTY_PROGRESS": "Loyalty progress",
       "LOYALTY_EMPTY": "No loyalty data yet",
       "POINTS_OF": "{{current}} of {{goal}} points",
+      "ALL_UNLOCKED": "You unlocked every promotion · {{points}} points",
       "UNLOCKED": "Unlocked! Redeem it when you pay.",
       "LOCKED": "{{points}} points to go to unlock it"
     },
@@ -651,12 +652,11 @@
     "SUBTITLE": "You have {{count}} pending services for today",
     "BTN_SERVICES": "View assigned services",
     "PROGRESS_LABEL": "Services completed today",
-    "IN_PROGRESS": "In Progress",
     "PENDING": "Pending",
     "RESERVATIONS_TITLE": "Today's services",
     "BTN_START": "Start",
     "STATS": {
-      "ASSIGNED": "Assigned Bookings",
+      "ASSIGNED": "Assigned bookings",
       "VEHICLES": "Vehicles",
       "NOTIFICATIONS": "Notifications",
       "RATING": "Rating",
@@ -721,6 +721,7 @@
     "FILTERS_TITLE": "Search filters",
     "FILTER_DATE": "Filter by date",
     "FILTER_TYPE": "Filter by service type",
+    "FILTER_STARS": "Filter by stars",
     "BTN_FILTER": "Filter",
     "TYPE_ALL": "All",
     "TYPE_BASIC": "Basic Wash",
@@ -1296,7 +1297,9 @@
       "ASSIGNED_OPERATOR": "Assigned operator",
       "STATUS": "Status",
       "UNASSIGNED": "Unassigned",
-      "NOT_APPLICABLE": "N/A"
+      "NOT_APPLICABLE": "N/A",
+      "TODAY": "Today",
+      "TOMORROW": "Tomorrow"
     },
     "STATUS": {
       "confirmed": "Confirmed",

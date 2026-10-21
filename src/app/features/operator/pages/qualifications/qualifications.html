@@ -47,7 +47,7 @@
         </div>
 
         <div class="filter-group">
-          <label class="filter-label">&nbsp;</label>
+          <label class="filter-label">{{ 'QUALIFICATIONS.FILTER_STARS' | translate }}</label>
           <div class="select-wrapper">
             <select class="filter-select" [(ngModel)]="starsFilter">
               @for (star of starOptions; track star.value) {

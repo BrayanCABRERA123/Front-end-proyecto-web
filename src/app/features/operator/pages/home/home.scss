@@ -80,7 +80,7 @@
 
 .progress-row {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 16px;
 }
 
@@ -236,14 +236,6 @@
 @media (max-width: 1200px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .progress-row {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .progress-card {
-    grid-column: span 2;
   }
 }
 

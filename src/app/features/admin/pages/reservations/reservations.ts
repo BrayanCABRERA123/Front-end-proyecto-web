@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { AssignOperatorModal } from '../../../../shared/dialogs/assign-operator-modal/assign-operator-modal';
@@ -50,6 +50,7 @@ export class ReservationsComponent implements OnInit {
     private dialog: MatDialog,
     private feedback: FeedbackService,
     private router: Router,
+    private translate: TranslateService,
   ) {}
 
   // se recarga al entrar para ver las reservas que llegaron desde la app del cliente
@@ -80,8 +81,8 @@ export class ReservationsComponent implements OnInit {
 
   // etiqueta relativa de la fila: Hoy / Mañana / fecha
   dayLabel(date: string): string {
-    if (date === this.today) return 'Hoy';
-    if (date === isoDaysFromToday(1)) return 'Mañana';
+    if (date === this.today) return this.translate.instant('ADMIN_RESERVATIONS.TABLE.TODAY');
+    if (date === isoDaysFromToday(1)) return this.translate.instant('ADMIN_RESERVATIONS.TABLE.TOMORROW');
     return formatDate(date);
   }
 

@@ -198,6 +198,7 @@
       "LOYALTY_PROGRESS": "Progreso de fidelidad",
       "LOYALTY_EMPTY": "Aún no tienes datos de fidelidad",
       "POINTS_OF": "{{current}} de {{goal}} puntos",
+      "ALL_UNLOCKED": "Desbloqueaste todas las promociones · {{points}} puntos",
       "UNLOCKED": "¡Ya la desbloqueaste! Cánjala al pagar.",
       "LOCKED": "Te faltan {{points}} puntos para desbloquearla"
     },
@@ -651,12 +652,11 @@
     "SUBTITLE": "Tienes {{count}} servicios pendientes para hoy",
     "BTN_SERVICES": "Ver servicios asignados",
     "PROGRESS_LABEL": "Servicios completados hoy",
-    "IN_PROGRESS": "En Progreso",
     "PENDING": "Pendientes",
     "RESERVATIONS_TITLE": "Servicios de hoy",
     "BTN_START": "Iniciar",
     "STATS": {
-      "ASSIGNED": "Reservas Asignadas",
+      "ASSIGNED": "Reservas asignadas",
       "VEHICLES": "Vehículos",
       "NOTIFICATIONS": "Notificaciones",
       "RATING": "Calificación",
@@ -721,6 +721,7 @@
     "FILTERS_TITLE": "Filtros de búsqueda",
     "FILTER_DATE": "Filtrar por fecha",
     "FILTER_TYPE": "Filtrar por tipo de servicio",
+    "FILTER_STARS": "Filtrar por estrellas",
     "BTN_FILTER": "Filtrar",
     "TYPE_ALL": "Todas",
     "TYPE_BASIC": "Lavado Básico",
@@ -1296,7 +1297,9 @@
       "ASSIGNED_OPERATOR": "Operario asignado",
       "STATUS": "Estado",
       "UNASSIGNED": "Sin asignar",
-      "NOT_APPLICABLE": "N/A"
+      "NOT_APPLICABLE": "N/A",
+      "TODAY": "Hoy",
+      "TOMORROW": "Mañana"
     },
     "STATUS": {
       "confirmed": "Confirmada",

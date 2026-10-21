@@ -111,7 +111,11 @@
 
       <div class="loyalty-progress" *ngIf="loyalty; else noLoyalty">
         <div class="progress-row">
-          <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ 'DASHBOARD.BENEFITS.POINTS_OF' | translate:{ current: loyalty.current, goal: loyalty.goal } }})</span>
+          @if (loyalty.allUnlocked) {
+            <span>{{ 'DASHBOARD.BENEFITS.ALL_UNLOCKED' | translate:{ points: loyalty.current } }}</span>
+          } @else {
+            <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ 'DASHBOARD.BENEFITS.POINTS_OF' | translate:{ current: loyalty.current, goal: loyalty.goal } }})</span>
+          }
           <span>{{ loyalty.percentage }}%</span>
         </div>
         <div class="progress-bar">
