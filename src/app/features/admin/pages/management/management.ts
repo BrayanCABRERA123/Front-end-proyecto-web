@@ -226,7 +226,8 @@ export class ManagementComponent implements OnInit {
       .filter(u => !term
         || u.name.toLowerCase().includes(term)
         || u.email.toLowerCase().includes(term)
-        || u.userType.toLowerCase().includes(term));
+        // el tipo se busca por su nombre en el idioma de la pantalla ("Operario"), no por la clave
+        || String(this.translate.instant(u.userType)).toLowerCase().includes(term));
   }
 
   get enabledCount(): number { return this.users.filter(u => u.status === 'active').length; }
