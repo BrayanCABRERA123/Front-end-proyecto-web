@@ -651,7 +651,6 @@
     "SUBTITLE": "Você tem {{count}} serviços pendentes para hoje",
     "BTN_SERVICES": "Ver serviços atribuídos",
     "PROGRESS_LABEL": "Serviços concluídos hoje",
-    "IN_PROGRESS": "Em andamento",
     "PENDING": "Pendentes",
     "RESERVATIONS_TITLE": "Serviços de hoje",
     "BTN_START": "Iniciar",

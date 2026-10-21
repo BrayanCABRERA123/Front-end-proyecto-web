@@ -651,12 +651,11 @@
     "SUBTITLE": "Tienes {{count}} servicios pendientes para hoy",
     "BTN_SERVICES": "Ver servicios asignados",
     "PROGRESS_LABEL": "Servicios completados hoy",
-    "IN_PROGRESS": "En Progreso",
     "PENDING": "Pendientes",
     "RESERVATIONS_TITLE": "Servicios de hoy",
     "BTN_START": "Iniciar",
     "STATS": {
-      "ASSIGNED": "Reservas Asignadas",
+      "ASSIGNED": "Reservas asignadas",
       "VEHICLES": "Vehículos",
       "NOTIFICATIONS": "Notificaciones",
       "RATING": "Calificación",

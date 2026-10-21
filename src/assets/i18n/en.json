@@ -651,12 +651,11 @@
     "SUBTITLE": "You have {{count}} pending services for today",
     "BTN_SERVICES": "View assigned services",
     "PROGRESS_LABEL": "Services completed today",
-    "IN_PROGRESS": "In Progress",
     "PENDING": "Pending",
     "RESERVATIONS_TITLE": "Today's services",
     "BTN_START": "Start",
     "STATS": {
-      "ASSIGNED": "Assigned Bookings",
+      "ASSIGNED": "Assigned bookings",
       "VEHICLES": "Vehicles",
       "NOTIFICATIONS": "Notifications",
       "RATING": "Rating",
