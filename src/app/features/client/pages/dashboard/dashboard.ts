@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
 
   // progreso del programa de fidelidad: puntos acumulados vs. los que pide la próxima promoción
   // que todavía no se desbloquea (null mientras carga o si no hay ninguna promoción configurada)
-  loyalty: { current: number; goal: number; percentage: number } | null = null;
+  loyalty: { current: number; goal: number; percentage: number; allUnlocked?: boolean } | null = null;
 
   //CONSTRUCTOR
   constructor(
@@ -138,15 +138,13 @@ export class DashboardComponent implements OnInit {
   private applyLoyalty(points: number, promotions: PromotionForCustomer[]): void {
     const locked = promotions.filter(p => !p.unlocked).sort((a, b) => a.requiredPoints - b.requiredPoints);
     const next = locked[0];
-    const goal = next ? next.requiredPoints : points || 1;
-    this.loyalty = {
-      current: points,
-      goal,
-      percentage: Math.min(100, Math.round((points / goal) * 100))
-    };
+    // sin promociones por desbloquear no hay meta: la barra queda completa
+    this.loyalty = next
+      ? { current: points, goal: next.requiredPoints, percentage: Math.min(100, Math.round((points / Math.max(next.requiredPoints, 1)) * 100)) }
+      : { current: points, goal: points, percentage: 100, allUnlocked: true };
 
     this.benefits = promotions.map(p => ({
-      title: `${p.name} · ${p.discountPercent}% OFF`,
+      title: p.discountPercent > 0 ? `${p.name} · ${p.discountPercent}% OFF` : p.name,
       description: p.unlocked
         ? this.translate.instant('DASHBOARD.BENEFITS.UNLOCKED')
         : this.translate.instant('DASHBOARD.BENEFITS.LOCKED', { points: p.requiredPoints - points })
