@@ -823,7 +823,12 @@
       "ACCOUNT_TYPE": "Type de compte",
       "ACCOUNT_TYPE_VALUE": "Clé / Compte d'épargne associé",
       "AMOUNT": "Montant à payer",
-      "HINT": "Ouvrez votre app, scannez le code et confirmez le paiement du montant exact."
+      "HINT": "Ouvrez votre app, scannez le code et confirmez le paiement du montant exact.",
+      "ZOOM": "Agrandir le QR",
+      "ZOOM_IN": "Zoom avant",
+      "ZOOM_OUT": "Zoom arrière",
+      "ZOOM_CLOSE": "Fermer",
+      "ZOOM_HINT": "Utilisez la loupe, la molette de la souris ou un double-clic pour agrandir. Une fois agrandie, faites défiler pour déplacer l'image."
     },
     "CASH": {
       "TITLE": "Paiement en espèces",
@@ -832,7 +837,7 @@
     "CONFIRM": {
       "TITLE": "Confirmez votre paiement",
       "DROP": "Glissez votre justificatif ici ou cliquez pour parcourir",
-      "FORMATS": "Formats acceptés : JPG ou PNG (max. 10 Mo)",
+      "FORMATS": "Formats acceptés : JPG ou PNG. L'image est réduite sous 2 Mo avant l'envoi.",
       "REFERENCE": "Référence de la transaction",
       "REFERENCE_HINT": "Numéro de 8 à 12 caractères émis par votre banque",
       "AMOUNT": "Montant payé",
@@ -872,7 +877,9 @@
       "DESC": "Service client :"
     },
     "CASH_INFO_TITLE": "Vous payez sur place",
-    "CASH_INFO_MESSAGE": "Payez en espèces lorsque vous récupérez votre véhicule. L'administrateur enregistrera le paiement et vous recevrez la notification de paiement approuvé."
+    "CASH_INFO_MESSAGE": "Payez en espèces lorsque vous récupérez votre véhicule. L'administrateur enregistrera le paiement et vous recevrez la notification de paiement approuvé.",
+    "RECEIPT_COMPRESSING": "Préparation du justificatif...",
+    "RECEIPT_TOO_LARGE": "Impossible de réduire l'image sous 2 Mo. Essayez avec une capture d'écran du justificatif."
   },
   "VEHICLES": {
     "TITLE": "Mes Véhicules",

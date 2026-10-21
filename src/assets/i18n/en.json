@@ -823,7 +823,12 @@
       "ACCOUNT_TYPE": "Account type",
       "ACCOUNT_TYPE_VALUE": "Linked key / savings account",
       "AMOUNT": "Amount to pay",
-      "HINT": "Open your app, scan the code and confirm the payment for the exact amount."
+      "HINT": "Open your app, scan the code and confirm the payment for the exact amount.",
+      "ZOOM": "Enlarge QR",
+      "ZOOM_IN": "Zoom in",
+      "ZOOM_OUT": "Zoom out",
+      "ZOOM_CLOSE": "Close",
+      "ZOOM_HINT": "Use the magnifier, the mouse wheel or double-click to enlarge. When zoomed, scroll to move the image."
     },
     "CASH": {
       "TITLE": "Cash payment",
@@ -832,7 +837,7 @@
     "CONFIRM": {
       "TITLE": "Confirm your payment",
       "DROP": "Drag your receipt here or click to browse",
-      "FORMATS": "Allowed formats: JPG or PNG (max. 10MB)",
+      "FORMATS": "Allowed formats: JPG or PNG. The image is reduced below 2 MB before it is sent.",
       "REFERENCE": "Transaction reference",
       "REFERENCE_HINT": "8 to 12 character number issued by your bank",
       "AMOUNT": "Amount paid",
@@ -872,7 +877,9 @@
       "DESC": "Customer service hotline:"
     },
     "CASH_INFO_TITLE": "You pay at the car wash",
-    "CASH_INFO_MESSAGE": "Pay in cash when you pick up your vehicle. The administrator will record the payment and you will get the payment-approved notification."
+    "CASH_INFO_MESSAGE": "Pay in cash when you pick up your vehicle. The administrator will record the payment and you will get the payment-approved notification.",
+    "RECEIPT_COMPRESSING": "Preparing the receipt...",
+    "RECEIPT_TOO_LARGE": "We could not reduce the image below 2 MB. Try a screenshot of the receipt."
   },
   "VEHICLES": {
     "TITLE": "My Vehicles",
