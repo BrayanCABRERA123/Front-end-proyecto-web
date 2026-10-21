@@ -70,6 +70,9 @@ export class ReservationsComponent implements OnInit {
 
   get today(): string { return this.store.today; }
 
+  /** la reserva todavía necesita operario (misma regla que el inicio) */
+  isUnassigned(booking: Booking): boolean { return this.store.isUnassigned(booking); }
+
   // nombres para el filtro "Todos los operarios"
   get operatorNames(): string[] {
     return this.operators.operators().map(o => o.name);
@@ -135,7 +138,7 @@ export class ReservationsComponent implements OnInit {
     return {
       total: todayBookings.length,
       confirmedInProgress: todayBookings.filter(b => b.status === 'confirmed' || b.status === 'in_progress').length,
-      unassigned: todayBookings.filter(b => !b.operator && b.status !== 'cancelled' && b.status !== 'completed').length,
+      unassigned: todayBookings.filter(b => this.store.isUnassigned(b)).length,
       cancelled: todayBookings.filter(b => b.status === 'cancelled').length,
     };
   }

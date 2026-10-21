@@ -13,7 +13,7 @@ import {
 import { apiErrorKey } from '../../../core/utils/api-error';
 import { Booking, BookingStatus } from '../models/admin.models';
 // quién tiene cada reserva (operations-service)
-import { AssignmentResponse, OperationsApiService } from '../../../core/services/operations-api';
+import { AssignmentResponse, OperationsApiService, UnassignedResponse } from '../../../core/services/operations-api';
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 
 
@@ -88,6 +88,8 @@ export class ReservationsStore {
   private readonly state = signal<Booking[]>([]);
   private clients = new Map<number, AuthUser>();
   private assignments = new Map<string, AssignmentResponse>();
+  // reservas que necesitan operario según operations-service (una sola regla para el inicio y reservas)
+  private readonly unassignedIds = signal<ReadonlySet<string>>(new Set());
 
   readonly loading = signal(false);
   readonly loadError = signal<string | null>(null);
@@ -115,11 +117,18 @@ export class ReservationsStore {
       assignments: this.operations.assignments(isoDate(-DAYS_BACK), isoDate(DAYS_AHEAD)).pipe(
         catchError(() => of([] as AssignmentResponse[]))
       ),
+      unassigned: this.operations.unassigned(isoDate(), isoDate(DAYS_AHEAD)).pipe(
+        catchError(() => of(null as UnassignedResponse | null))
+      ),
     }).subscribe({
-      next: ({ bookings, clients, assignments }) => {
+      next: ({ bookings, clients, assignments, unassigned }) => {
         this.clients = new Map(clients.map(client => [client.id, client]));
         this.assignments = new Map(assignments.map(a => [String(a.bookingId), a]));
         this.state.set(bookings.map(b => this.toBooking(b)));
+        this.unassignedIds.set(new Set(unassigned
+          ? unassigned.bookingIds.map(String)
+          // operations no respondió: misma regla calculada aquí para no dejar el conteo en cero
+          : this.state().filter(b => this.needsOperatorLocally(b)).map(b => b.id)));
         this.loading.set(false);
       },
       error: (error) => {
@@ -142,6 +151,14 @@ export class ReservationsStore {
     return this.state().find(b => b.id === id);
   }
 
+  /** la reserva todavía necesita operario (regla de operations-service) */
+  isUnassigned(booking: Booking): boolean {
+    return this.unassignedIds().has(booking.id);
+  }
+
+  /** reservas que necesitan operario, de la más próxima a la más lejana */
+  readonly unassigned = computed(() => this.bookings().filter(b => this.unassignedIds().has(b.id)));
+
   /* ---------- cambios (el backend valida y responde la reserva actualizada) ---------- */
 
   create(request: CreateBookingRequest): Observable<Booking> {
@@ -161,7 +178,11 @@ export class ReservationsStore {
   setStatus(id: string, status: BookingStatus, reasonCode?: string): Observable<Booking> {
     return this.api.adminChangeStatus(Number(id), statusCode(status), reasonCode).pipe(
       map(response => this.toBooking(response)),
-      tap(updated => this.replace(updated))
+      tap(updated => {
+        this.replace(updated);
+        // cancelada, iniciada o no asistió: ya no necesita operario
+        if (updated.status !== 'confirmed' && updated.status !== 'scheduled') this.markAssigned(id);
+      })
     );
   }
 
@@ -176,6 +197,7 @@ export class ReservationsStore {
       next: assignment => {
         this.assignments.set(id, assignment);
         this.state.update(list => list.map(b => (b.id === id ? { ...b, operator: this.operatorRef(id) } : b)));
+        this.markAssigned(id);
         onAssigned?.();
       },
       error: err => this.feedback.error('COMMON.ERROR', apiErrorKey(err))
@@ -183,6 +205,18 @@ export class ReservationsStore {
   }
 
   /* ---------- internos ---------- */
+
+  private needsOperatorLocally(b: Booking): boolean {
+    const now = new Date();
+    const pad = (value: number) => String(value).padStart(2, '0');
+    const nowKey = `${isoDate()}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    const endKey = `${b.date}T${minutesToTime(timeToMinutes(b.time) + b.durationMin)}`;
+    return (b.status === 'confirmed' || b.status === 'scheduled') && !b.operator && endKey > nowKey;
+  }
+
+  private markAssigned(id: string): void {
+    this.unassignedIds.update(ids => new Set([...ids].filter(other => other !== id)));
+  }
 
   private replace(updated: Booking): void {
     this.state.update(list => list.map(b => (b.id === updated.id ? updated : b)));

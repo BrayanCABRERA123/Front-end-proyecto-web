@@ -185,8 +185,10 @@
                           </span>
                         }
                       </div>
-                    } @else {
+                    } @else if (isUnassigned(b)) {
                       <span class="badge badge--warning">{{ 'ADMIN_RESERVATIONS.TABLE.UNASSIGNED' | translate }}</span>
+                    } @else {
+                      <span class="muted">—</span>
                     }
                   </td>
                   <td>
