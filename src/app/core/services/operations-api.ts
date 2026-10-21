@@ -87,6 +87,13 @@ export interface UnassignedResponse {
   bookingIds: number[];
 }
 
+/** reserva que terminó y nadie registró: NOT_STARTED (nadie le dio Iniciar) o NOT_FINISHED */
+export interface ToCloseResponse {
+  bookingId: number;
+  reason: 'NOT_STARTED' | 'NOT_FINISHED';
+  operatorId: number;
+}
+
 /** operario candidato para una reserva: available false trae el código del motivo */
 export interface CandidateResponse {
   operatorId: number;
@@ -239,6 +246,16 @@ export class OperationsApiService {
   unassigned(from: string, to: string): Observable<UnassignedResponse> {
     const params = new HttpParams().set('from', from).set('to', to);
     return this.http.get<UnassignedResponse>(`${this.api}/admin/assignments/unassigned`, { params });
+  }
+
+  // reservas con operario que terminaron sin registrarse (sin fechas: la última semana)
+  toClose(): Observable<ToCloseResponse[]> {
+    return this.http.get<ToCloseResponse[]>(`${this.api}/admin/assignments/to-close`);
+  }
+
+  // el admin confirma que sí se atendió: queda completada con su operario
+  closeAsAttended(bookingId: number): Observable<void> {
+    return this.http.post<void>(`${this.api}/admin/assignments/${bookingId}/attended`, {});
   }
 
   /* ---------- operario ---------- */

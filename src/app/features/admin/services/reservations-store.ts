@@ -13,7 +13,7 @@ import {
 import { apiErrorKey } from '../../../core/utils/api-error';
 import { Booking, BookingStatus } from '../models/admin.models';
 // quién tiene cada reserva (operations-service)
-import { AssignmentResponse, OperationsApiService, UnassignedResponse } from '../../../core/services/operations-api';
+import { AssignmentResponse, OperationsApiService, UnassignedResponse, ToCloseResponse } from '../../../core/services/operations-api';
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 
 
@@ -90,6 +90,8 @@ export class ReservationsStore {
   private assignments = new Map<string, AssignmentResponse>();
   // reservas que necesitan operario según operations-service (una sola regla para el inicio y reservas)
   private readonly unassignedIds = signal<ReadonlySet<string>>(new Set());
+  // reservas con operario que terminaron y nadie registró: las cierra el admin (id -> motivo)
+  private readonly toCloseReasons = signal<ReadonlyMap<string, ToCloseResponse['reason']>>(new Map());
 
   readonly loading = signal(false);
   readonly loadError = signal<string | null>(null);
@@ -120,8 +122,10 @@ export class ReservationsStore {
       unassigned: this.operations.unassigned(isoDate(), isoDate(DAYS_AHEAD)).pipe(
         catchError(() => of(null as UnassignedResponse | null))
       ),
+      // si operations no responde, la tarjeta "Por cerrar" queda vacía y el resto funciona
+      toClose: this.operations.toClose().pipe(catchError(() => of([] as ToCloseResponse[]))),
     }).subscribe({
-      next: ({ bookings, clients, assignments, unassigned }) => {
+      next: ({ bookings, clients, assignments, unassigned, toClose }) => {
         this.clients = new Map(clients.map(client => [client.id, client]));
         this.assignments = new Map(assignments.map(a => [String(a.bookingId), a]));
         this.state.set(bookings.map(b => this.toBooking(b)));
@@ -129,6 +133,7 @@ export class ReservationsStore {
           ? unassigned.bookingIds.map(String)
           // operations no respondió: misma regla calculada aquí para no dejar el conteo en cero
           : this.state().filter(b => this.needsOperatorLocally(b)).map(b => b.id)));
+        this.toCloseReasons.set(new Map(toClose.map(item => [String(item.bookingId), item.reason])));
         this.loading.set(false);
       },
       error: (error) => {
@@ -159,6 +164,11 @@ export class ReservationsStore {
   /** reservas que necesitan operario, de la más próxima a la más lejana */
   readonly unassigned = computed(() => this.bookings().filter(b => this.unassignedIds().has(b.id)));
 
+  /** reservas con operario que terminaron y nadie registró, de la más antigua a la más reciente */
+  readonly toClose = computed(() => this.bookings()
+    .filter(b => this.toCloseReasons().has(b.id))
+    .map(booking => ({ booking, reason: this.toCloseReasons().get(booking.id)! })));
+
   /* ---------- cambios (el backend valida y responde la reserva actualizada) ---------- */
 
   create(request: CreateBookingRequest): Observable<Booking> {
@@ -182,6 +192,17 @@ export class ReservationsStore {
         this.replace(updated);
         // cancelada, iniciada o no asistió: ya no necesita operario
         if (updated.status !== 'confirmed' && updated.status !== 'scheduled') this.markAssigned(id);
+        if (updated.status === 'no_show' || updated.status === 'completed') this.markClosed(id);
+      })
+    );
+  }
+
+  /** el admin confirma que la reserva sí se atendió aunque nadie la registró */
+  closeAsAttended(id: string): Observable<void> {
+    return this.operations.closeAsAttended(Number(id)).pipe(
+      tap(() => {
+        this.state.update(list => list.map(b => (b.id === id ? { ...b, status: 'completed' as const } : b)));
+        this.markClosed(id);
       })
     );
   }
@@ -212,6 +233,10 @@ export class ReservationsStore {
     const nowKey = `${isoDate()}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
     const endKey = `${b.date}T${minutesToTime(timeToMinutes(b.time) + b.durationMin)}`;
     return (b.status === 'confirmed' || b.status === 'scheduled') && !b.operator && endKey > nowKey;
+  }
+
+  private markClosed(id: string): void {
+    this.toCloseReasons.update(reasons => new Map([...reasons].filter(([other]) => other !== id)));
   }
 
   private markAssigned(id: string): void {

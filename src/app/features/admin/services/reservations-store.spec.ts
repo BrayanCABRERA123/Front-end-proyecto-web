@@ -40,7 +40,8 @@ describe('ReservationsStore', () => {
   afterEach(() => http.verify());
 
   /** responde la carga inicial; unassigned null simula que operations no contestó */
-  function answerLoad(bookings: BookingResponse[], assignments: object[], unassigned: number[] | null): void {
+  function answerLoad(bookings: BookingResponse[], assignments: object[], unassigned: number[] | null,
+                      toClose: object[] = []): void {
     http.expectOne(r => r.url === '/api/v1/admin/bookings').flush(bookings);
     http.expectOne(r => r.url === '/api/v1/admin/users').flush({ items: [], page: 0, size: 100, totalItems: 0, totalPages: 0 });
     http.expectOne(r => r.url === '/api/v1/admin/assignments').flush(assignments);
@@ -50,6 +51,7 @@ describe('ReservationsStore', () => {
     } else {
       req.flush({ count: unassigned.length, bookingIds: unassigned });
     }
+    http.expectOne(r => r.url === '/api/v1/admin/assignments/to-close').flush(toClose);
   }
 
   it('toma de operations las reservas sin operario (una sola regla)', () => {
@@ -83,5 +85,34 @@ describe('ReservationsStore', () => {
     expect(done).toBe(true);
     expect(store.unassigned()).toEqual([]);
     expect(store.getById('5')!.operator?.name).toBe('Oscar Ruiz');
+  });
+
+  it('lista por cerrar las que operations marca y las saca al cerrarlas', () => {
+    const store = TestBed.inject(ReservationsStore);
+    answerLoad([booking(8, 'CONFIRMED', day(-1)), booking(9, 'IN_PROGRESS', day(-1), '12:00')], [], [],
+      [{ bookingId: 8, reason: 'NOT_STARTED', operatorId: 3 }, { bookingId: 9, reason: 'NOT_FINISHED', operatorId: 3 }]);
+
+    expect(store.toClose().map(item => [item.booking.id, item.reason])).toEqual([['8', 'NOT_STARTED'], ['9', 'NOT_FINISHED']]);
+
+    let closed = false;
+    store.closeAsAttended('8').subscribe(() => (closed = true));
+    http.expectOne(r => r.method === 'POST' && r.url === '/api/v1/admin/assignments/8/attended').flush(null);
+
+    expect(closed).toBe(true);
+    expect(store.getById('8')!.status).toBe('completed');
+    expect(store.toClose().map(item => item.booking.id)).toEqual(['9']);
+  });
+
+  it('si operations no responde, por cerrar queda vacío y las reservas igual se ven', () => {
+    const store = TestBed.inject(ReservationsStore);
+    http.expectOne(r => r.url === '/api/v1/admin/bookings').flush([booking(8, 'CONFIRMED', day(-1))]);
+    http.expectOne(r => r.url === '/api/v1/admin/users').flush({ items: [], page: 0, size: 100, totalItems: 0, totalPages: 0 });
+    http.expectOne(r => r.url === '/api/v1/admin/assignments').flush([]);
+    http.expectOne(r => r.url === '/api/v1/admin/assignments/unassigned').flush({ count: 0, bookingIds: [] });
+    http.expectOne(r => r.url === '/api/v1/admin/assignments/to-close')
+      .flush({ code: 'SERVICE_UNAVAILABLE' }, { status: 503, statusText: 'Service Unavailable' });
+
+    expect(store.toClose()).toEqual([]);
+    expect(store.bookings().length).toBe(1);
   });
 });
