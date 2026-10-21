@@ -21,6 +21,7 @@
     </label>
 
     <span class="field-label">{{ 'CREATE_ROLE_MODAL.PERMISSIONS_LABEL' | translate }}</span>
+    <p class="role-dialog__note"><mat-icon>info</mat-icon>{{ 'CREATE_ROLE_MODAL.REFERENCE_NOTE' | translate }}</p>
 
     <div class="permissions-grid">
       @for (permission of permissionsCatalog; track permission.id) {
