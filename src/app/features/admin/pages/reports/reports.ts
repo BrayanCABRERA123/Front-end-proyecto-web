@@ -66,6 +66,13 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
     return isoDaysFromToday(-days);
   }
 
+  // servicios realizados (reservas completadas) con fecha entre from y to, ambos incluidos:
+  // las futuras, las canceladas y las que quedaron en "no asistió" no son servicios hechos
+  private servicesDone(from: string, to: string = from): number {
+    return this.reservations.bookings()
+      .filter(b => b.status === 'completed' && b.date >= from && b.date <= to).length;
+  }
+
   // formatea a pesos colombianos, ej: $85.000
   cop(amount: number): string {
     return '$' + amount.toLocaleString('es-CO');
@@ -75,8 +82,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
 
   get dayReport(): { services: number; revenue: number } {
     return {
-      services: this.reservations.byDate(this.reservations.today)
-        .filter(b => b.status !== 'cancelled').length,
+      services: this.servicesDone(this.reservations.today),
       revenue: this.payments.payments()
         .filter(p => p.date === this.payments.today && p.status === 'approved')
         .reduce((sum, p) => sum + p.amount, 0),
@@ -86,8 +92,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
   get weekReport(): { services: number; revenue: number } {
     const start = this.isoDaysAgo(6);
     return {
-      services: this.reservations.bookings()
-        .filter(b => b.date >= start && b.status !== 'cancelled').length,
+      services: this.servicesDone(start, this.reservations.today),
       revenue: this.payments.payments()
         .filter(p => p.date >= start && p.status === 'approved')
         .reduce((sum, p) => sum + p.amount, 0),
@@ -97,8 +102,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
   get monthReport(): { services: number; revenue: number } {
     const start = this.isoDaysAgo(29);
     return {
-      services: this.reservations.bookings()
-        .filter(b => b.date >= start && b.status !== 'cancelled').length,
+      services: this.servicesDone(start, this.reservations.today),
       revenue: this.payments.payments()
         .filter(p => p.date >= start && p.status === 'approved')
         .reduce((sum, p) => sum + p.amount, 0),
@@ -139,7 +143,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
     const services = buckets.map(bucket => {
       const hour = bucket.slice(0, 2);
       return this.reservations.byDate(this.reservations.today)
-        .filter(b => b.status !== 'cancelled' && b.time.slice(0, 2) === hour).length;
+        .filter(b => b.status === 'completed' && b.time.slice(0, 2) === hour).length;
     });
 
     const revenue = buckets.map(bucket => {
@@ -163,8 +167,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
       const d = new Date(iso + 'T12:00:00');
       labels.push(d.toLocaleDateString('es-CO', { weekday: 'short' }));
 
-      services.push(this.reservations.bookings()
-        .filter(b => b.date === iso && b.status !== 'cancelled').length);
+      services.push(this.servicesDone(iso));
 
       revenue.push(this.payments.payments()
         .filter(p => p.date === iso && p.status === 'approved')
@@ -185,8 +188,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
       const d = new Date(iso + 'T12:00:00');
       labels.push(i % 5 === 0 ? `${d.getDate()}/${d.getMonth() + 1}` : '');
 
-      services.push(this.reservations.bookings()
-        .filter(b => b.date === iso && b.status !== 'cancelled').length);
+      services.push(this.servicesDone(iso));
 
       revenue.push(this.payments.payments()
         .filter(p => p.date === iso && p.status === 'approved')
