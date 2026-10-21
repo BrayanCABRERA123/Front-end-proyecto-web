@@ -125,7 +125,9 @@
   &--confirmed { background: var(--primary-soft); color: var(--primary); }
   &--in_progress { background: var(--success-soft); color: var(--success); }
   &--completed { background: var(--neutral-badge-soft); color: var(--neutral-badge); }
+  &--scheduled { background: transparent; color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
   &--cancelled { background: var(--error-soft); color: var(--error); }
+  &--no_show { background: var(--warning-soft); color: var(--warning); }
 }
 
 .detail-pill-row {
