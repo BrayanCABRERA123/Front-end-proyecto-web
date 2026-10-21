@@ -41,6 +41,15 @@ export class AuthService {
 
   readonly user = computed(() => this.sessionSignal()?.user ?? null);
 
+  constructor() {
+    // otra pestaña del mismo navegador inició o cerró sesión (comparten localStorage)
+    if (typeof window !== 'undefined') {
+      window.addEventListener('storage', event => {
+        if (event.key === STORAGE_KEY || event.key === null) this.syncFromOtherTab();
+      });
+    }
+  }
+
   // true solo si hay token y todavía no vence
   isAuthenticated(): boolean {
     return this.accessToken() !== null;
@@ -202,6 +211,32 @@ export class AuthService {
     } catch {
       // nada que limpiar
     }
+  }
+
+  /**
+   * Aplica en esta pestaña lo que otra hizo con la sesión: si la cerró, esta también vuelve al
+   * login; si entró otra cuenta, se recarga para no mostrar datos de la cuenta anterior; si es la
+   * misma cuenta (perfil actualizado), solo se toma la sesión nueva.
+   */
+  syncFromOtherTab(): void {
+    const current = this.sessionSignal();
+    const next = this.load();
+    if (!next) {
+      if (!current) return;
+      this.sessionSignal.set(null);
+      this.router.navigateByUrl('/auth');
+      return;
+    }
+    if (current && current.user.id === next.user.id) {
+      this.sessionSignal.set(next);
+      return;
+    }
+    this.reloadPage();
+  }
+
+  /** separado para poder probarlo sin recargar el navegador de pruebas */
+  protected reloadPage(): void {
+    window.location.reload();
   }
 
   private load(): StoredSession | null {
