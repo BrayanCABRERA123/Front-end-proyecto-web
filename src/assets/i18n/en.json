@@ -1263,6 +1263,19 @@
       "REVIEW": "Review",
       "VIEW_ALL": "View all {{count}} pending receipts"
     },
+    "TO_CLOSE": {
+      "TITLE": "To close",
+      "SUBTITLE": "They ended with an operator and nobody registered them. The system does not decide alone: confirm what happened.",
+      "COUNT": "{{count}} to close",
+      "REASON_NOT_STARTED": "{{operator}} did not press Start",
+      "REASON_NOT_FINISHED": "{{operator}} started it and did not finish it",
+      "ATTENDED": "Attended",
+      "NO_SHOW": "No-show",
+      "ATTENDED_CONFIRM": "Booking {{code}} will be completed by {{operator}}: it counts in reports and in their services. Was it attended?",
+      "NO_SHOW_CONFIRM": "Booking {{code}} will be marked as \"No-show\". Did the client not come?",
+      "ATTENDED_DONE": "Booking {{code}} is now completed.",
+      "NO_SHOW_DONE": "Booking {{code}} is now marked as \"No-show\"."
+    },
     "UNASSIGNED_BOOKINGS": {
       "TITLE": "Bookings without an operator",
       "SUBTITLE": "Confirmed services waiting for a technician",

@@ -1263,6 +1263,19 @@
       "REVIEW": "Revisar",
       "VIEW_ALL": "Ver os {{count}} comprovantes pendentes"
     },
+    "TO_CLOSE": {
+      "TITLE": "Para fechar",
+      "SUBTITLE": "Terminaram com operador e ninguém as registrou. O sistema não decide sozinho: confirme o que aconteceu.",
+      "COUNT": "{{count}} para fechar",
+      "REASON_NOT_STARTED": "{{operator}} não tocou em Iniciar",
+      "REASON_NOT_FINISHED": "{{operator}} iniciou e não finalizou",
+      "ATTENDED": "Atendido",
+      "NO_SHOW": "Não compareceu",
+      "ATTENDED_CONFIRM": "A reserva {{code}} ficará concluída por {{operator}}: conta nos relatórios e nos serviços dele. Foi atendida?",
+      "NO_SHOW_CONFIRM": "A reserva {{code}} ficará como \"Não compareceu\". O cliente não veio?",
+      "ATTENDED_DONE": "A reserva {{code}} foi concluída.",
+      "NO_SHOW_DONE": "A reserva {{code}} ficou como \"Não compareceu\"."
+    },
     "UNASSIGNED_BOOKINGS": {
       "TITLE": "Reservas sem operador",
       "SUBTITLE": "Serviços confirmados aguardando atribuição técnica",

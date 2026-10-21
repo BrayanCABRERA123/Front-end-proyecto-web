@@ -1263,6 +1263,19 @@
       "REVIEW": "Vérifier",
       "VIEW_ALL": "Voir les {{count}} justificatifs en attente"
     },
+    "TO_CLOSE": {
+      "TITLE": "À clôturer",
+      "SUBTITLE": "Elles se sont terminées avec un opérateur et personne ne les a enregistrées. Le système ne décide pas seul : confirmez ce qui s'est passé.",
+      "COUNT": "{{count}} à clôturer",
+      "REASON_NOT_STARTED": "{{operator}} n'a pas appuyé sur Démarrer",
+      "REASON_NOT_FINISHED": "{{operator}} l'a démarrée sans la terminer",
+      "ATTENDED": "Effectué",
+      "NO_SHOW": "Absent",
+      "ATTENDED_CONFIRM": "La réservation {{code}} sera terminée par {{operator}} : elle compte dans les rapports et dans ses services. A-t-elle été effectuée ?",
+      "NO_SHOW_CONFIRM": "La réservation {{code}} sera marquée « Absent ». Le client n'est-il pas venu ?",
+      "ATTENDED_DONE": "La réservation {{code}} est terminée.",
+      "NO_SHOW_DONE": "La réservation {{code}} est marquée « Absent »."
+    },
     "UNASSIGNED_BOOKINGS": {
       "TITLE": "Réservations sans opérateur",
       "SUBTITLE": "Services confirmés en attente d'un technicien",

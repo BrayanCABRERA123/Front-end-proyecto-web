@@ -120,6 +120,47 @@
       </div>
 
       <!-- pagos + reservas sin operario -->
+      <!-- terminaron con operario y nadie las registró: el sistema no decide solo, las cierra el admin -->
+      @if (toCloseRows.length > 0) {
+        <article class="card to-close">
+          <div class="card__head">
+            <div>
+              <h2><mat-icon class="warning">pending_actions</mat-icon> {{ 'ADMIN_DASHBOARD.TO_CLOSE.TITLE' | translate }}</h2>
+              <p class="muted">{{ 'ADMIN_DASHBOARD.TO_CLOSE.SUBTITLE' | translate }}</p>
+            </div>
+            <span class="badge badge--warning">{{ 'ADMIN_DASHBOARD.TO_CLOSE.COUNT' | translate:{ count: toCloseRows.length } }}</span>
+          </div>
+
+          <ul class="list">
+            @for (r of toCloseRows; track r.id) {
+              <li class="row-item">
+                <div class="row-item__info">
+                  <p>
+                    <span class="tag tag--time">{{ r.when }}</span>
+                    <span class="muted small">{{ r.code }}</span>
+                  </p>
+                  <strong>{{ r.client }} — {{ r.vehicle }}</strong>
+                  <p class="muted small">
+                    <mat-icon class="tiny">engineering</mat-icon>
+                    {{ ('ADMIN_DASHBOARD.TO_CLOSE.REASON_' + r.reason) | translate:{ operator: r.operator } }}
+                  </p>
+                </div>
+                <div class="to-close__actions">
+                  <button class="btn btn--primary btn--sm" (click)="closeAsAttended(r)">
+                    <mat-icon>task_alt</mat-icon> {{ 'ADMIN_DASHBOARD.TO_CLOSE.ATTENDED' | translate }}
+                  </button>
+                  @if (r.reason === 'NOT_STARTED') {
+                    <button class="btn btn--outline btn--sm" (click)="markNoShow(r)">
+                      <mat-icon>person_off</mat-icon> {{ 'ADMIN_DASHBOARD.TO_CLOSE.NO_SHOW' | translate }}
+                    </button>
+                  }
+                </div>
+              </li>
+            }
+          </ul>
+        </article>
+      }
+
       <div class="row row--bottom">
         <article class="card">
           <div class="card__head">

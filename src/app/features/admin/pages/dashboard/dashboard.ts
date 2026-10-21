@@ -7,11 +7,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
+import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { AssignOperatorModal } from '../../../../shared/dialogs/assign-operator-modal/assign-operator-modal';
 import { AvailableOperator, AssignOperatorModalData, AssignOperatorResult } from '../../../../shared/dialogs/assign-operator-modal/assign-operator.model';
 import { PaymentReviewModal } from '../../../../shared/dialogs/payment-review-modal/payment-review-modal';
 import { PaymentReviewData, PaymentReviewResult } from '../../../../shared/dialogs/payment-review-modal/payment-review.model';
-import { ReservationsStore, formatTimeRange } from '../../services/reservations-store';
+import { ReservationsStore, formatDate, formatTimeRange } from '../../services/reservations-store';
 import { PaymentsStore, formatPaymentDate } from '../../services/payments-store';
 import { Operator, OperatorsStore } from '../../services/operators-store';
 import { ScheduleStore } from '../../services/schedule-store';
@@ -53,6 +54,17 @@ interface PendingPaymentRow {
 }
 
 // reserva confirmada que todavía no tiene operario asignado
+/** reserva con operario que terminó y nadie registró (tarjeta "Por cerrar") */
+interface ToCloseRow {
+  id: string;
+  code: string;
+  when: string;
+  client: string;
+  vehicle: string;
+  operator: string;
+  reason: 'NOT_STARTED' | 'NOT_FINISHED';
+}
+
 interface UnassignedBookingRow {
   id: string;
   time: string;
@@ -236,6 +248,53 @@ export class DashboardComponent {
       cash: 'Efectivo',
     };
     return labels[method] ?? method;
+  }
+
+  /* ---------- por cerrar: terminaron con operario y nadie las registró ---------- */
+
+  get toCloseRows(): ToCloseRow[] {
+    return this.reservations.toClose().map(({ booking, reason }) => ({
+      id: booking.id,
+      code: booking.code,
+      when: `${formatDate(booking.date)} · ${formatTimeRange(booking.time, booking.durationMin)}`,
+      client: booking.client,
+      vehicle: booking.vehicle,
+      operator: booking.operator?.name ?? '—',
+      reason,
+    }));
+  }
+
+  // "Se atendió": queda completada con su operario (cuenta en reportes y en sus servicios)
+  closeAsAttended(row: ToCloseRow): void {
+    this.confirmThen('ADMIN_DASHBOARD.TO_CLOSE.ATTENDED_CONFIRM', row, false, () =>
+      this.reservations.closeAsAttended(row.id).subscribe({
+        next: () => this.feedback.success('ADMIN_DASHBOARD.TO_CLOSE.TITLE', 'ADMIN_DASHBOARD.TO_CLOSE.ATTENDED_DONE',
+          { messageParams: { code: row.code } }),
+        error: error => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+      }));
+  }
+
+  // "No asistió": solo si nunca se inició
+  markNoShow(row: ToCloseRow): void {
+    this.confirmThen('ADMIN_DASHBOARD.TO_CLOSE.NO_SHOW_CONFIRM', row, true, () =>
+      this.reservations.setStatus(row.id, 'no_show').subscribe({
+        next: () => this.feedback.success('ADMIN_DASHBOARD.TO_CLOSE.TITLE', 'ADMIN_DASHBOARD.TO_CLOSE.NO_SHOW_DONE',
+          { messageParams: { code: row.code } }),
+        error: error => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+      }));
+  }
+
+  private confirmThen(message: string, row: ToCloseRow, danger: boolean, action: () => void): void {
+    const data: ConfirmModalData = {
+      title: 'ADMIN_DASHBOARD.TO_CLOSE.TITLE',
+      message,
+      messageParams: { code: row.code, operator: row.operator },
+      confirmText: 'COMMON.ACCEPT',
+      cancelText: 'COMMON.CANCEL',
+      danger,
+    };
+    this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data }).afterClosed()
+      .subscribe(confirmed => { if (confirmed) action(); });
   }
 
   /* ---------- reservas sin operario ---------- */
