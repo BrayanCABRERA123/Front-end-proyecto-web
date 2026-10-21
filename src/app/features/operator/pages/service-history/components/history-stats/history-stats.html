@@ -28,7 +28,7 @@
     <div class="stat-icon icon-rating">
       <mat-icon>star</mat-icon>
     </div>
-    <p class="stat-value">{{ averageRating }}</p>
+    <p class="stat-value">{{ averageRating > 0 ? averageRating : '—' }}</p>
     <p class="stat-label">{{ 'HISTORY_STATS.RATING' | translate }}</p>
   </div>
 

@@ -720,6 +720,7 @@
     "FILTERS_TITLE": "Search filters",
     "FILTER_DATE": "Filter by date",
     "FILTER_TYPE": "Filter by service type",
+    "FILTER_STARS": "Filter by stars",
     "BTN_FILTER": "Filter",
     "TYPE_ALL": "All",
     "TYPE_BASIC": "Basic Wash",

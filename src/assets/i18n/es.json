@@ -720,6 +720,7 @@
     "FILTERS_TITLE": "Filtros de búsqueda",
     "FILTER_DATE": "Filtrar por fecha",
     "FILTER_TYPE": "Filtrar por tipo de servicio",
+    "FILTER_STARS": "Filtrar por estrellas",
     "BTN_FILTER": "Filtrar",
     "TYPE_ALL": "Todas",
     "TYPE_BASIC": "Lavado Básico",
