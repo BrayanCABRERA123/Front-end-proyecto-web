@@ -192,22 +192,29 @@
   &::placeholder { color: var(--text-muted); }
 }
 
-// Fila inline: fecha y búsqueda en la misma línea
+// Fila inline: fecha y búsqueda en la misma línea mientras quepan; si no, la búsqueda baja
 .row-inline {
-  flex-wrap: nowrap;     // ← no rompe en dos líneas
+  flex-wrap: wrap;
+  row-gap: 12px;
   align-items: center;
 }
 
 // El bloque de búsqueda crece para llenar el espacio restante
 .search-block.flex-grow {
-  flex: 1;               // ← ocupa todo lo que sobra
+  flex: 1 1 340px;       // ← ocupa todo lo que sobra
   min-width: 0;
 }
 
-// El wrapper del input también crece
+// sin espacio para las dos cosas en una línea el separador vertical queda colgando
+@media (max-width: 1279px) {
+  .row-inline .vertical-divider { display: none; }
+}
+
+// El wrapper del input también crece, pero no se aplasta: si no cabe junto a la etiqueta
+// baja debajo de ella (el bloque tiene flex-wrap)
 .search-input-wrapper.flex-grow {
   flex: 1;
-  min-width: 0;
+  min-width: 220px;
 }
 
 // El input ocupa todo el ancho de su wrapper
@@ -242,6 +249,8 @@
     flex: unset;
     width: 100%;
   }
+
+  .search-input-wrapper.flex-grow { width: 100%; }
 }
 
 
