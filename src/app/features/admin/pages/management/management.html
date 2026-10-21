@@ -156,7 +156,10 @@
           </div>
         </div>
 
-        <!-- los 3 roles son fijos (ADR-015): no se crean ni se borran, solo se editan sus permisos -->
+        <!-- los 3 roles son fijos (ADR-015): no se crean ni se borran. La matriz de permisos se guarda
+             como referencia; el acceso lo decide el rol (cada servicio revisa el rol del token) -->
+        <p class="roles-note"><mat-icon>info</mat-icon>{{ 'ADMIN_MANAGEMENT.ROLES.FIXED_NOTE' | translate }}</p>
+
         <div class="table-wrapper">
           <table>
             <thead>

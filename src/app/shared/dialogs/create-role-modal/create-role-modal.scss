@@ -130,3 +130,18 @@
   &:hover { background: var(--primary-hover); }
   &:disabled { opacity: .5; cursor: not-allowed; }
 }
+
+/* aviso: los permisos de la tabla son de referencia, el acceso lo decide el rol */
+.role-dialog__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  @include caption-text;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+  padding: 10px 12px;
+  background: var(--item-bg);
+  border-radius: $border-radius-sm;
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; margin-top: 1px; }
+}
