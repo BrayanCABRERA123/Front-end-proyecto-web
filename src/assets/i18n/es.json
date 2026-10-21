@@ -1297,7 +1297,9 @@
       "ASSIGNED_OPERATOR": "Operario asignado",
       "STATUS": "Estado",
       "UNASSIGNED": "Sin asignar",
-      "NOT_APPLICABLE": "N/A"
+      "NOT_APPLICABLE": "N/A",
+      "TODAY": "Hoy",
+      "TOMORROW": "Mañana"
     },
     "STATUS": {
       "confirmed": "Confirmada",
