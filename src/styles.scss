@@ -344,3 +344,9 @@ select option {
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.25;
 }
+
+/* Un ícono dentro de una fila flex se encogía cuando el texto de al lado era largo (se veía cortado
+   o como medio círculo). Los íconos conservan su tamaño y el que cede es el texto. */
+mat-icon {
+  flex-shrink: 0;
+}

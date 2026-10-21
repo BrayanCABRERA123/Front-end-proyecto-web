@@ -1760,7 +1760,8 @@
     "TODAY_HISTORY": {
       "TITLE": "Today's service history",
       "COUNT": "{{count}} services assigned",
-      "SUBTITLE": "Real-time workflow management for {{bay}}",
+      "SUBTITLE": "Services assigned to {{name}} today and their progress",
+      "EMPTY": "No services assigned for today.",
       "TABLE": {
         "SERVICE_VEHICLE": "Service & vehicle",
         "BAY": "Bay",
@@ -1783,8 +1784,8 @@
       "TITLE": "Skills and certifications"
     },
     "BAY_RULE": {
-      "TITLE": "Bay operating rule",
-      "TEXT": "Service blocks assigned to {{name}} cannot overlap with general maintenance shifts in {{bay}}.",
+      "TITLE": "Assignment rule",
+      "TEXT": "{{name}} cannot be assigned two bookings whose times overlap: the system blocks it when assigning.",
       "EXPORT": "Export technical sheet (PDF)"
     },
     "ASSIGNED_NOTE": "Blocks and shifts assigned by central administration.",

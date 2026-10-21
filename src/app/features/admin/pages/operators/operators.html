@@ -161,7 +161,7 @@
             <span class="services-line">
               <mat-icon>check_circle</mat-icon>
               {{ o.weeklyServices }} {{ 'ADMIN_OPERATORS.CARD.SERVICES_SUFFIX' | translate }}
-              {{ o.weeklyServices === 0 ? ('(' + ('ADMIN_OPERATORS.STATUS.medical_leave' | translate) + ')') : '' }}
+              {{ o.status === 'medical_leave' ? ('(' + ('ADMIN_OPERATORS.STATUS.medical_leave' | translate) + ')') : '' }}
             </span>
 
             <div class="tag-list">
