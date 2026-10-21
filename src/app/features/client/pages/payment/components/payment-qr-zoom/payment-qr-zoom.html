@@ -1,0 +1,32 @@
+<!-- QR ampliado: se cierra con la X, con Escape o tocando fuera del panel -->
+@if (open && src) {
+  <div class="backdrop" (click)="close()">
+    <div class="panel" role="dialog" aria-modal="true" [attr.aria-label]="title" (click)="$event.stopPropagation()">
+      <header>
+        <h2>{{ title }}</h2>
+        <button type="button" class="icon-button" (click)="close()" [attr.aria-label]="'PAYMENT.QR.ZOOM_CLOSE' | translate">
+          <mat-icon>close</mat-icon>
+        </button>
+      </header>
+
+      <div class="viewport" (wheel)="onWheel($event)">
+        <img [src]="src" alt="QR" [style.width.%]="zoom * 100" (dblclick)="toggleZoom()" />
+      </div>
+
+      <p class="hint">{{ 'PAYMENT.QR.ZOOM_HINT' | translate }}</p>
+
+      <!-- la lupa -->
+      <div class="toolbar">
+        <button type="button" class="zoom-button" (click)="zoomOut()" [disabled]="!canZoomOut"
+          [attr.aria-label]="'PAYMENT.QR.ZOOM_OUT' | translate">
+          <mat-icon>zoom_out</mat-icon>
+        </button>
+        <span class="level">{{ zoom * 100 }}%</span>
+        <button type="button" class="zoom-button" (click)="zoomIn()" [disabled]="!canZoomIn"
+          [attr.aria-label]="'PAYMENT.QR.ZOOM_IN' | translate">
+          <mat-icon>zoom_in</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+}

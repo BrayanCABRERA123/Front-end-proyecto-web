@@ -20,13 +20,14 @@ import { BookingResponse } from '../../../../core/models/booking.models';
 import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../../core/utils/booking-display';
 import { apiErrorKey } from '../../../../core/utils/api-error';
 // cuentas del lavadero y reporte del pago (payment-service)
-import { ALLOWED_IMAGE_TYPES, PaymentAccountResponse, PaymentsApiService, readImageAsDataUrl } from '../../../../core/services/payments-api';
+import { ALLOWED_IMAGE_TYPES, PaymentAccountResponse, PaymentsApiService, compressReceipt } from '../../../../core/services/payments-api';
 // canje de cupón de fidelización (payment-service, ADR-015)
 import { LoyaltyApiService, RedeemPromotionResult } from '../../../../core/services/loyalty-api';
 import { PaymentCouponComponent } from './components/payment-coupon/payment-coupon';
 import { PaymentHelpComponent } from './components/payment-help/payment-help';
 import { PaymentNoticeComponent } from './components/payment-notice/payment-notice';
 import { PaymentMissingComponent } from './components/payment-missing/payment-missing';
+import { PaymentQrZoomComponent } from './components/payment-qr-zoom/payment-qr-zoom';
 
 // tipos para que el código sea más claro
 type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
@@ -51,7 +52,7 @@ interface SavedPaymentState {
   accountId?: number | null;
 }
 
-// efectivo siempre está: se paga en el lavadero
+// efectivo: se paga en el lavadero; solo aparece si el admin tiene activa la cuenta de caja
 const CASH_METHOD: PaymentMethod = { id: 'CASH', accountId: null, icon: 'payments', label: 'PAYMENT.METHOD.CASH', desc: 'PAYMENT.METHOD.CASH_DESC' };
 
 /** medio de la pantalla para el código de payment-service */
@@ -76,7 +77,7 @@ function methodOptionOf(account: PaymentAccountResponse): PaymentMethod | null {
   selector: 'app-payment',
   standalone: true,
   imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule, FormsModule, PaymentCouponComponent,
-    PaymentHelpComponent, PaymentNoticeComponent, PaymentMissingComponent],
+    PaymentHelpComponent, PaymentNoticeComponent, PaymentMissingComponent, PaymentQrZoomComponent],
   templateUrl: './payment.html',
   styleUrls: ['./payment.scss']
 })
@@ -104,8 +105,9 @@ export class PaymentComponent implements OnInit {
   // código de la reserva (lo llena el backend)
   reservationCode = '';
 
-  // medios disponibles: los que el admin tiene activos, más efectivo en el lavadero
-  paymentMethods: PaymentMethod[] = [CASH_METHOD];
+  // medios disponibles: los que el admin tiene activos (efectivo incluido, si su cuenta está activa)
+  paymentMethods: PaymentMethod[] = [];
+  private accountsLoaded = false;
 
   // método seleccionado por el usuario
   selectedMethod: PaymentMethodId = 'CASH';
@@ -187,6 +189,10 @@ export class PaymentComponent implements OnInit {
 
   // confirmación del pago
   receiptFile: File | null = null;
+  // el comprobante ya comprimido (lo que se envía) y su peso real
+  private receiptDataUrl: string | null = null;
+  private receiptBytes = 0;
+  compressingReceipt = false;
   isDragging = false;
   transactionRef = '';
   // monto que el cliente pagó según su comprobante; mientras no lo cambie, se asume el total
@@ -228,7 +234,7 @@ export class PaymentComponent implements OnInit {
     // evita enviar el mismo pago dos veces
     if (this.isLocked) return false;
     if (this.selectedMethod === 'CASH') return true;
-    return !!this.receiptFile && this.isRefValid && this.isPaidAmountValid;
+    return !!this.receiptDataUrl && !this.compressingReceipt && this.isRefValid && this.isPaidAmountValid;
   }
 
   // lo que le falta al cliente para poder confirmar (se muestra debajo del botón deshabilitado,
@@ -261,14 +267,17 @@ export class PaymentComponent implements OnInit {
             option.holder = accounts.find(a => a.id === option.accountId)?.accountHolder;
           }
         }
-        this.paymentMethods = [...digital, CASH_METHOD];
-        if (!this.isLocked) {
+        const cashActive = accounts.some(a => methodIdOf(a.methodCode) === 'CASH');
+        this.paymentMethods = cashActive ? [...digital, CASH_METHOD] : digital;
+        this.accountsLoaded = true;
+        if (!this.isLocked && this.paymentMethods.length > 0) {
           this.selectedMethod = this.paymentMethods[0].id;
           this.selectedAccountId = this.paymentMethods[0].accountId;
         }
+        this.ensureAvailableMethod();
         this.changes.markForCheck();
       },
-      error: () => { /* sin payment-service solo queda efectivo */ }
+      error: () => { /* sin payment-service no hay medios para elegir */ }
     });
 
     this.loadBooking();
@@ -357,6 +366,7 @@ export class PaymentComponent implements OnInit {
         this.flowStep = state.flowStep;
         this.selectedMethod = state.method;
         this.selectedAccountId = state.accountId ?? null;
+        this.ensureAvailableMethod();
         return;
       }
     } catch {
@@ -387,6 +397,19 @@ export class PaymentComponent implements OnInit {
       // nada que limpiar
     }
   }
+
+  // el método guardado puede ya no estar activo (por ejemplo, el admin apagó el efectivo): se pasa
+  // al primero disponible. Con el pago enviado no se toca
+  private ensureAvailableMethod(): void {
+    if (!this.accountsLoaded || this.isLocked || this.paymentMethods.length === 0) return;
+    if (this.paymentMethods.some(m => this.isSelected(m))) return;
+    this.selectedMethod = this.paymentMethods[0].id;
+    this.selectedAccountId = this.paymentMethods[0].accountId;
+    this.saveState();
+  }
+
+  // QR en grande con lupa
+  qrZoomOpen = false;
 
   selectMethod(method: PaymentMethod) {
     // con el pago en revisión o aprobado ya no se puede cambiar el método
@@ -424,7 +447,8 @@ export class PaymentComponent implements OnInit {
     if (file) this.setReceipt(file);
   }
 
-  private setReceipt(file: File) {
+  private async setReceipt(file: File) {
+    // se deja elegir hasta 10 MB; antes de enviarlo se comprime a máximo 2 MB
     const validType = ALLOWED_IMAGE_TYPES.includes(file.type);
     const validSize = file.size <= 10 * 1024 * 1024;
     if (!validType || !validSize) {
@@ -436,16 +460,35 @@ export class PaymentComponent implements OnInit {
       });
       return;
     }
-    this.receiptFile = file;
+    // se comprime al elegirlo para mostrar ya el peso real que se va a enviar
+    this.compressingReceipt = true;
+    this.changes.markForCheck();
+    try {
+      const compressed = await compressReceipt(file);
+      if (!compressed) {
+        this.showStatusModal({ type: 'error', title: 'PAYMENT.INVALID_FILE_TITLE', message: 'PAYMENT.RECEIPT_TOO_LARGE' });
+        return;
+      }
+      this.receiptFile = file;
+      this.receiptDataUrl = compressed.dataUrl;
+      this.receiptBytes = compressed.size;
+    } catch {
+      this.showStatusModal({ type: 'error', title: 'PAYMENT.INVALID_FILE_TITLE', message: 'PAYMENT.INVALID_FILE_MESSAGE' });
+    } finally {
+      this.compressingReceipt = false;
+      this.changes.markForCheck();
+    }
   }
 
   removeReceipt() {
     this.receiptFile = null;
+    this.receiptDataUrl = null;
+    this.receiptBytes = 0;
   }
 
   get receiptSize(): string {
     if (!this.receiptFile) return '';
-    return (this.receiptFile.size / (1024 * 1024)).toFixed(1) + 'MB';
+    return (this.receiptBytes / (1024 * 1024)).toFixed(1) + 'MB';
   }
 
   async confirmPayment() {
@@ -457,11 +500,10 @@ export class PaymentComponent implements OnInit {
       this.showStatusModal({ title: 'PAYMENT.CASH_INFO_TITLE', message: 'PAYMENT.CASH_INFO_MESSAGE' });
       return;
     }
-    if (!this.selectedAccount || !this.receiptFile) return;
+    if (!this.selectedAccount || !this.receiptDataUrl) return;
 
     // el monto a cobrar lo pone payment-service; paidAmount es lo que el cliente dice haber pagado
-    const receipt = await readImageAsDataUrl(this.receiptFile);
-    this.paymentsApi.report(this.booking.id, this.selectedAccount.id, this.transactionRef, receipt, this.paidAmount).subscribe({
+    this.paymentsApi.report(this.booking.id, this.selectedAccount.id, this.transactionRef, this.receiptDataUrl, this.paidAmount).subscribe({
       next: () => {
         this.flowStep = 'VERIFYING';
         this.lastRejectionReason = null;

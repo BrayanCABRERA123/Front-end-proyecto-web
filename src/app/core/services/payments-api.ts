@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { API_BASE_URL } from '../constants/api';
+import { compressImage } from '../utils/image-compress';
 
 // ---------- forma de las respuestas de payment-service ----------
 
@@ -165,11 +166,26 @@ export class PaymentsApiService {
 export const ALLOWED_IMAGE_TYPES = ['image/png', 'image/jpeg'];
 
 /** lee un archivo de imagen como data URL (QR o comprobante) */
-export function readImageAsDataUrl(file: File): Promise<string> {
+export function readImageAsDataUrl(file: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(String(reader.result));
     reader.onerror = () => reject(reader.error);
     reader.readAsDataURL(file);
   });
+}
+
+// Comprobante de pago: payment-service acepta máximo 2 MB. Una foto o captura de celular pesa más,
+// así que se reduce a JPEG antes de enviarlo; el texto se sigue leyendo bien con 1600 px de lado
+// mayor. Si aún pasa de 2 MB se prueba más pequeño y con menos calidad.
+export const MAX_RECEIPT_BYTES = 2 * 1024 * 1024;
+const RECEIPT_ATTEMPTS: [maxSide: number, quality: number][] = [[1600, 0.75], [1280, 0.6], [1024, 0.5]];
+
+/** comprime el comprobante; null si ni con el intento más pequeño baja de 2 MB */
+export async function compressReceipt(file: File): Promise<{ dataUrl: string; size: number } | null> {
+  for (const [maxSide, quality] of RECEIPT_ATTEMPTS) {
+    const blob = await compressImage(file, maxSide, quality);
+    if (blob.size <= MAX_RECEIPT_BYTES) return { dataUrl: await readImageAsDataUrl(blob), size: blob.size };
+  }
+  return null;
 }

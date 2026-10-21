@@ -823,7 +823,12 @@
       "ACCOUNT_TYPE": "Tipo de cuenta",
       "ACCOUNT_TYPE_VALUE": "Llave / Cuenta de ahorros vinculada",
       "AMOUNT": "Monto a pagar",
-      "HINT": "Abre tu app, escanea el código y confirma el pago por el monto exacto."
+      "HINT": "Abre tu app, escanea el código y confirma el pago por el monto exacto.",
+      "ZOOM": "Ampliar QR",
+      "ZOOM_IN": "Acercar",
+      "ZOOM_OUT": "Alejar",
+      "ZOOM_CLOSE": "Cerrar",
+      "ZOOM_HINT": "Usa la lupa, la rueda del mouse o doble clic para ampliar. Con zoom, desplázate para mover la imagen."
     },
     "CASH": {
       "TITLE": "Pago en efectivo",
@@ -832,7 +837,7 @@
     "CONFIRM": {
       "TITLE": "Confirma tu pago",
       "DROP": "Arrastra aquí tu comprobante o haz clic para examinar",
-      "FORMATS": "Formatos permitidos: JPG o PNG (máx. 10MB)",
+      "FORMATS": "Formatos permitidos: JPG o PNG. La imagen se reduce a menos de 2 MB antes de enviarla.",
       "REFERENCE": "Referencia de la transacción",
       "REFERENCE_HINT": "Número de 8 a 12 caracteres emitido por tu entidad",
       "AMOUNT": "Monto pagado",
@@ -872,7 +877,9 @@
       "DESC": "Línea directa de atención al cliente:"
     },
     "CASH_INFO_TITLE": "Pagas en el local",
-    "CASH_INFO_MESSAGE": "Paga en efectivo cuando llegues por tu vehículo. El administrador registrará el pago y te llegará la notificación de pago aprobado."
+    "CASH_INFO_MESSAGE": "Paga en efectivo cuando llegues por tu vehículo. El administrador registrará el pago y te llegará la notificación de pago aprobado.",
+    "RECEIPT_COMPRESSING": "Preparando el comprobante...",
+    "RECEIPT_TOO_LARGE": "No pudimos reducir la imagen a menos de 2 MB. Prueba con una captura de pantalla del comprobante."
   },
   "VEHICLES": {
     "TITLE": "Mis Vehículos",
