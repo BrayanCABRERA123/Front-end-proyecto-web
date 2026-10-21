@@ -240,10 +240,14 @@ export class DashboardComponent {
 
   /* ---------- reservas sin operario ---------- */
 
+  /** cuántas reservas necesitan operario (la misma cuenta que la pantalla de reservas) */
+  get unassignedCount(): number {
+    return this.reservations.unassigned().length;
+  }
+
+  // las tres más próximas que necesitan operario
   get unassignedBookings(): UnassignedBookingRow[] {
-    return this.reservations.bookings()
-      .filter(b => b.status === 'confirmed' && !b.operator && b.date >= this.reservations.today)
-      .sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
+    return this.reservations.unassigned()
       .slice(0, 3)
       .map((b, i) => ({
         id: b.id,

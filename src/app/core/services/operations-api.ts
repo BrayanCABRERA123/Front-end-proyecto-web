@@ -81,6 +81,12 @@ export interface AssignmentResponse {
   status: ExecutionStatusCode;
 }
 
+/** Reservas sin operario (programadas o confirmadas, sin terminar, sin operario en ninguna línea). */
+export interface UnassignedResponse {
+  count: number;
+  bookingIds: number[];
+}
+
 /** operario candidato para una reserva: available false trae el código del motivo */
 export interface CandidateResponse {
   operatorId: number;
@@ -227,6 +233,12 @@ export class OperationsApiService {
   assignments(from: string, to: string): Observable<AssignmentResponse[]> {
     const params = new HttpParams().set('from', from).set('to', to);
     return this.http.get<AssignmentResponse[]>(`${this.api}/admin/assignments`, { params });
+  }
+
+  // reservas que todavía necesitan operario: la regla vive en operations, igual para todas las pantallas
+  unassigned(from: string, to: string): Observable<UnassignedResponse> {
+    const params = new HttpParams().set('from', from).set('to', to);
+    return this.http.get<UnassignedResponse>(`${this.api}/admin/assignments/unassigned`, { params });
   }
 
   /* ---------- operario ---------- */
