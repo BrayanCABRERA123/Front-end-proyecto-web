@@ -1760,7 +1760,8 @@
     "TODAY_HISTORY": {
       "TITLE": "Histórico de serviços de hoje",
       "COUNT": "{{count}} serviços atribuídos",
-      "SUBTITLE": "Gestão do fluxo de trabalho em tempo real para {{bay}}",
+      "SUBTITLE": "Serviços atribuídos hoje a {{name}} e seu andamento",
+      "EMPTY": "Nenhum serviço atribuído para hoje.",
       "TABLE": {
         "SERVICE_VEHICLE": "Serviço e veículo",
         "BAY": "Baia",
@@ -1783,8 +1784,8 @@
       "TITLE": "Habilidades e certificações"
     },
     "BAY_RULE": {
-      "TITLE": "Regra operacional das baias",
-      "TEXT": "Os blocos de serviço atribuídos a {{name}} não podem se sobrepor aos turnos de manutenção geral na {{bay}}.",
+      "TITLE": "Regra de atribuição",
+      "TEXT": "{{name}} não pode receber duas reservas com horários sobrepostos: o sistema impede ao atribuir.",
       "EXPORT": "Exportar ficha técnica (PDF)"
     },
     "ASSIGNED_NOTE": "Blocos e turnos atribuídos pela administração central.",

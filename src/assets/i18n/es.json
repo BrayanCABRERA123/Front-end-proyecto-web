@@ -1760,7 +1760,8 @@
     "TODAY_HISTORY": {
       "TITLE": "Historial de servicios de hoy",
       "COUNT": "{{count}} servicios asignados",
-      "SUBTITLE": "Gestión de flujo de trabajo en tiempo real para {{bay}}",
+      "SUBTITLE": "Servicios asignados hoy a {{name}} y su avance",
+      "EMPTY": "No tiene servicios asignados para hoy.",
       "TABLE": {
         "SERVICE_VEHICLE": "Servicio y vehículo",
         "BAY": "Bahía",
@@ -1783,8 +1784,8 @@
       "TITLE": "Habilidades y certificaciones"
     },
     "BAY_RULE": {
-      "TITLE": "Regla operativa de bahías",
-      "TEXT": "Los bloques de servicio asignados a {{name}} no pueden solaparse con turnos de mantenimiento general en {{bay}}.",
+      "TITLE": "Regla de asignación",
+      "TEXT": "A {{name}} no se le pueden asignar dos reservas que se crucen en horario: el sistema lo impide al asignar.",
       "EXPORT": "Exportar ficha técnica (PDF)"
     },
     "ASSIGNED_NOTE": "Bloques y turnos asignados por la administración central.",

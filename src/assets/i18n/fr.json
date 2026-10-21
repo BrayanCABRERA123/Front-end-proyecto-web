@@ -1760,7 +1760,8 @@
     "TODAY_HISTORY": {
       "TITLE": "Historique des services du jour",
       "COUNT": "{{count}} services assignés",
-      "SUBTITLE": "Gestion du flux de travail en temps réel pour {{bay}}",
+      "SUBTITLE": "Services assignés aujourd'hui à {{name}} et leur avancement",
+      "EMPTY": "Aucun service assigné pour aujourd'hui.",
       "TABLE": {
         "SERVICE_VEHICLE": "Service et véhicule",
         "BAY": "Baie",
@@ -1783,8 +1784,8 @@
       "TITLE": "Compétences et certifications"
     },
     "BAY_RULE": {
-      "TITLE": "Règle d'exploitation des baies",
-      "TEXT": "Les créneaux de service assignés à {{name}} ne peuvent pas chevaucher les créneaux de maintenance générale dans {{bay}}.",
+      "TITLE": "Règle d'affectation",
+      "TEXT": "{{name}} ne peut pas recevoir deux réservations dont les horaires se chevauchent : le système l'empêche lors de l'affectation.",
       "EXPORT": "Exporter la fiche technique (PDF)"
     },
     "ASSIGNED_NOTE": "Créneaux et horaires assignés par l'administration centrale.",

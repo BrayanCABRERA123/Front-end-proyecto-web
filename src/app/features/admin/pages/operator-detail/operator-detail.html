@@ -122,13 +122,13 @@
           <div class="card-header">
             <div>
               <h2>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TITLE' | translate }}</h2>
-              <p>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.SUBTITLE' | translate:{ bay: operator.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) } }}</p>
+              <p>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.SUBTITLE' | translate:{ name: operator.name } }}</p>
             </div>
             <span class="count-chip">{{ 'OPERATOR_DETAIL.TODAY_HISTORY.COUNT' | translate:{ count: todayServices.length } }}</span>
           </div>
 
           @if (todayServices.length === 0) {
-            <p class="muted">—</p>
+            <p class="muted today-empty">{{ 'OPERATOR_DETAIL.TODAY_HISTORY.EMPTY' | translate }}</p>
           } @else {
             <div class="table-wrapper">
               <table>
@@ -189,7 +189,7 @@
             <mat-icon>info</mat-icon>
             <div>
               <strong>{{ 'OPERATOR_DETAIL.BAY_RULE.TITLE' | translate }}</strong>
-              <p>{{ 'OPERATOR_DETAIL.BAY_RULE.TEXT' | translate:{ name: operator.name, bay: operator.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) } }}</p>
+              <p>{{ 'OPERATOR_DETAIL.BAY_RULE.TEXT' | translate:{ name: operator.name } }}</p>
               <a class="link" (click)="exportSheet()">{{ 'OPERATOR_DETAIL.BAY_RULE.EXPORT' | translate }}</a>
             </div>
           </div>
