@@ -1349,6 +1349,10 @@
       "ASSIGNED_MESSAGE": "La reserva {{code}} tiene operario asignado.",
       "NO_SHOW_TITLE": "Marcar como no asistió",
       "NO_SHOW_CONFIRM": "¿El cliente de la reserva {{code}} no llegó?",
+      "COMPLETED_TITLE": "Completar reserva",
+      "COMPLETED_CONFIRM": "¿Marcar la reserva {{code}} como completada?",
+      "CANCELLED_TITLE": "Cancelar reserva",
+      "CANCELLED_CONFIRM": "¿Cancelar la reserva {{code}}? Esta acción no se puede deshacer.",
       "STATUS_NO_SHOW_MESSAGE": "La reserva {{code}} quedó como no asistió.",
       "STATUS_SCHEDULED_MESSAGE": "La reserva {{code}} quedó agendada."
     }

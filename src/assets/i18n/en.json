@@ -1349,6 +1349,10 @@
       "ASSIGNED_MESSAGE": "Booking {{code}} now has an assigned operator.",
       "NO_SHOW_TITLE": "Mark as no show",
       "NO_SHOW_CONFIRM": "Did the customer of booking {{code}} not arrive?",
+      "COMPLETED_TITLE": "Complete booking",
+      "COMPLETED_CONFIRM": "Mark booking {{code}} as completed?",
+      "CANCELLED_TITLE": "Cancel booking",
+      "CANCELLED_CONFIRM": "Cancel booking {{code}}? This cannot be undone.",
       "STATUS_NO_SHOW_MESSAGE": "Booking {{code}} was marked as no show.",
       "STATUS_SCHEDULED_MESSAGE": "Booking {{code}} is scheduled."
     }

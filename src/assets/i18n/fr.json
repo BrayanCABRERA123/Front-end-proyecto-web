@@ -1349,6 +1349,10 @@
       "ASSIGNED_MESSAGE": "La réservation {{code}} a maintenant un opérateur assigné.",
       "NO_SHOW_TITLE": "Marquer comme absent",
       "NO_SHOW_CONFIRM": "Le client de la réservation {{code}} n'est pas venu ?",
+      "COMPLETED_TITLE": "Terminer la réservation",
+      "COMPLETED_CONFIRM": "Marquer la réservation {{code}} comme terminée ?",
+      "CANCELLED_TITLE": "Annuler la réservation",
+      "CANCELLED_CONFIRM": "Annuler la réservation {{code}} ? Cette action est irréversible.",
       "STATUS_NO_SHOW_MESSAGE": "La réservation {{code}} est marquée comme absent.",
       "STATUS_SCHEDULED_MESSAGE": "La réservation {{code}} est planifiée."
     }
