@@ -1815,6 +1815,8 @@
       "ABSENCE_MESSAGE": "A licença de «{{name}}» foi registrada e o status mudou para licença médica.",
       "AVAILABILITY_TITLE": "Disponibilidade salva",
       "AVAILABILITY_MESSAGE": "O horário semanal de «{{name}}» foi atualizado.",
+      "ABSENCE_ERROR_TITLE": "Não foi possível registrar a licença",
+      "AVAILABILITY_ERROR_TITLE": "Não foi possível salvar a disponibilidade",
       "SHIFT_TITLE": "Turno atribuído",
       "SHIFT_MESSAGE": "O turno de «{{name}}» foi atualizado."
     },

@@ -1815,6 +1815,8 @@
       "ABSENCE_MESSAGE": "Le congé de «{{name}}» a été enregistré et son statut est passé en congé médical.",
       "AVAILABILITY_TITLE": "Disponibilité enregistrée",
       "AVAILABILITY_MESSAGE": "L’horaire hebdomadaire de «{{name}}» a été mis à jour.",
+      "ABSENCE_ERROR_TITLE": "Impossible d’enregistrer le congé",
+      "AVAILABILITY_ERROR_TITLE": "Impossible d’enregistrer la disponibilité",
       "SHIFT_TITLE": "Quart assigné",
       "SHIFT_MESSAGE": "Le quart de «{{name}}» a été mis à jour."
     },

@@ -1815,6 +1815,8 @@
       "ABSENCE_MESSAGE": "La incapacidad de «{{name}}» quedó registrada y su estado cambió a incapacidad.",
       "AVAILABILITY_TITLE": "Disponibilidad guardada",
       "AVAILABILITY_MESSAGE": "El horario semanal de «{{name}}» se actualizó.",
+      "ABSENCE_ERROR_TITLE": "No se pudo registrar la incapacidad",
+      "AVAILABILITY_ERROR_TITLE": "No se pudo guardar la disponibilidad",
       "SHIFT_TITLE": "Turno asignado",
       "SHIFT_MESSAGE": "El turno de «{{name}}» se actualizó."
     },

@@ -13,7 +13,7 @@ import { OperatorsStore } from '../../services/operators-store';
 import { ScheduleStore } from '../../services/schedule-store';
 // reservas del día con su operario asignado (booking + operations)
 import { ReservationsStore, formatTimeRange } from '../../services/reservations-store';
-import { Operator, TodayService } from '../../models/admin.models';
+import { AvailabilitySlot, Operator, TodayService } from '../../models/admin.models';
 import { OperationsApiService, OperatorMetricsResponse } from '../../../../core/services/operations-api';
 import { OperatorAbsenceModal, AbsenceModalResult } from './components/operator-absence-modal/operator-absence-modal';
 import { OperatorProfileModal, OperatorProfileModalData, OperatorProfileModalResult } from './components/operator-profile-modal/operator-profile-modal';
@@ -116,18 +116,18 @@ export class OperatorDetailComponent implements OnInit {
 
     const dialogRef = this.dialog.open(OperatorAbsenceModal, { panelClass: 'custom-dialog' });
 
+    const operator = this.operator;
     dialogRef.afterClosed().subscribe((result: AbsenceModalResult | null) => {
       if (!result) return;
-      this.store.addAbsence(this.operator!.id, result);
-
-      // una ausencia registrada pone al operario en permiso médico
-      this.store.setStatus(this.operator!.id, 'medical_leave');
-
-      this.feedback.success(
-        'OPERATOR_DETAIL.FEEDBACK.ABSENCE_TITLE',
-        'OPERATOR_DETAIL.FEEDBACK.ABSENCE_MESSAGE',
-        { messageParams: { name: this.operator!.name } }
-      );
+      // la incapacidad sale de las ausencias: al recargar, el operario aparece incapacitado
+      this.store.addAbsence(operator.id, result).subscribe({
+        next: () => this.feedback.success(
+          'OPERATOR_DETAIL.FEEDBACK.ABSENCE_TITLE',
+          'OPERATOR_DETAIL.FEEDBACK.ABSENCE_MESSAGE',
+          { messageParams: { name: operator.name } }
+        ),
+        error: (error: unknown) => this.feedback.error('OPERATOR_DETAIL.FEEDBACK.ABSENCE_ERROR_TITLE', apiErrorKey(error))
+      });
     });
   }
 
@@ -154,20 +154,23 @@ export class OperatorDetailComponent implements OnInit {
   }
 
   editAvailability(): void {
-    if (!this.operator) return;
+    const operator = this.operator;
+    if (!operator) return;
 
-    const data: AvailabilityModalData = { slots: this.operator.availability };
+    const data: AvailabilityModalData = { slots: operator.availability };
 
     const dialogRef = this.dialog.open(AvailabilityModal, { panelClass: 'custom-dialog', data });
 
-    dialogRef.afterClosed().subscribe((slots: import('../../models/admin.models').AvailabilitySlot[] | null) => {
+    dialogRef.afterClosed().subscribe((slots: AvailabilitySlot[] | null) => {
       if (!slots) return;
-      this.store.setAvailability(this.operator!.id, slots);
-      this.feedback.success(
-        'OPERATOR_DETAIL.FEEDBACK.AVAILABILITY_TITLE',
-        'OPERATOR_DETAIL.FEEDBACK.AVAILABILITY_MESSAGE',
-        { messageParams: { name: this.operator!.name } }
-      );
+      this.store.setAvailability(operator.id, slots).subscribe({
+        next: () => this.feedback.success(
+          'OPERATOR_DETAIL.FEEDBACK.AVAILABILITY_TITLE',
+          'OPERATOR_DETAIL.FEEDBACK.AVAILABILITY_MESSAGE',
+          { messageParams: { name: operator.name } }
+        ),
+        error: (error: unknown) => this.feedback.error('OPERATOR_DETAIL.FEEDBACK.AVAILABILITY_ERROR_TITLE', apiErrorKey(error))
+      });
     });
   }
 

@@ -1815,6 +1815,8 @@
       "ABSENCE_MESSAGE": "«{{name}}»’s leave was recorded and their status changed to medical leave.",
       "AVAILABILITY_TITLE": "Availability saved",
       "AVAILABILITY_MESSAGE": "«{{name}}»’s weekly schedule was updated.",
+      "ABSENCE_ERROR_TITLE": "Could not register the leave",
+      "AVAILABILITY_ERROR_TITLE": "Could not save the availability",
       "SHIFT_TITLE": "Shift assigned",
       "SHIFT_MESSAGE": "«{{name}}»’s shift was updated."
     },
