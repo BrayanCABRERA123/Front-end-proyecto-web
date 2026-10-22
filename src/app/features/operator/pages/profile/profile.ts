@@ -1,12 +1,11 @@
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // importamos el sidebar 
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 // importamos el componente compartido de perfil
-import { ProfileCardComponent, ProfileSaveData } from '../../../../shared/components/profile-card/profile-card';
-// usuario de la sesión: el mismo que muestra el sidebar
-import { UserSession } from '../../../../core/services/user-session';
+import { ProfileCardComponent } from '../../../../shared/components/profile-card/profile-card';
 
+// la tarjeta carga y guarda el perfil, y actualiza la sesión (ProfileViewModel)
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -14,18 +13,4 @@ import { UserSession } from '../../../../core/services/user-session';
   templateUrl: './profile.html',
   styleUrl: './profile.scss'
 })
-export class ProfileComponent {
-
-  // datos del usuario operator (se recalcula solo cuando cambian en la sesión)
-  user = computed(() => ({
-    ...this.session.user(),
-    initials: this.session.initials()
-  }));
-
-  constructor(private session: UserSession) {}
-
-  // guarda los cambios del perfil; el sidebar se actualiza automáticamente
-  onSaved(data: ProfileSaveData): void {
-    this.session.update(data);
-  }
-}
+export class ProfileComponent {}
