@@ -7,18 +7,18 @@
 
   <main class="report-content">
 
-    @if (loading()) {
+    @if (vm.loading()) {
       <div class="card state-card">
         <span class="spinner"></span>
       </div>
-    } @else if (!report()) {
+    } @else if (!vm.report()) {
       <div class="card state-card">
         <div class="state-card__icon"><mat-icon>link_off</mat-icon></div>
         <h2>{{ 'PUBLIC_REPORT.NOT_AVAILABLE_TITLE' | translate }}</h2>
         <p>{{ 'PUBLIC_REPORT.NOT_AVAILABLE_MESSAGE' | translate }}</p>
       </div>
     } @else {
-      @let r = report()!;
+      @let r = vm.report()!;
 
       <!-- encabezado del reporte -->
       <section class="card hero-card">
