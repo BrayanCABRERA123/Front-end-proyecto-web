@@ -29,11 +29,34 @@ Cuentas de prueba del perfil `dev` (solo en local): `admin@gmail.com`, `operador
 src/app/
 ├── core/         guards, interceptors (token y sesión vencida), services, models, constants, utils
 ├── features/     landing · auth · client · operator · admin · public-report · not-found
-├── layout/       barra de navegación
 └── shared/       componentes, diálogos, pipes y datos comunes
 src/assets/i18n/  textos en es, en, fr y pt
 src/styles/       tema, variables y mixins de diseño adaptable (mobile ≤ 768 px, tablet ≤ 1024 px)
 ```
+
+## Arquitectura: por features + MVVM
+
+Cada rol es una *feature* con sus pantallas, y cada pantalla se divide en Vista, ViewModel y
+Modelo:
+
+```
+features/<rol>/
+├── pages/<pantalla>/                 VISTA: <pantalla>.ts + .html + .scss
+├── viewmodels/<pantalla>.viewmodel.ts   VIEWMODEL: estado (signals) y acciones de la pantalla
+├── services/                         estado compartido entre pantallas del rol (stores del admin)
+└── <rol>-routing-module.ts
+core/models + core/services           MODELO: tipos y llamadas HTTP al gateway
+```
+
+- **Vista.** Muestra el estado del ViewModel y le pasa los eventos. Abre los modales (confirmar,
+  formularios) y navega, pero no llama a `core/services` ni decide reglas.
+- **ViewModel.** Clase `@Injectable()` que se registra en `providers` de su página, así vive y
+  muere con la pantalla. Guarda el estado en *signals* (la app es *zoneless*: la vista se repinta
+  sola) y expone las acciones; es lo único que habla con `core/services` y los stores. Avisa el
+  resultado con `FeedbackService`. No toca HTML.
+- **Modelo.** `core/models` (tipos del backend) y `core/services` (un servicio por microservicio).
+- Los modales que solo llenan un formulario y devuelven el resultado son parte de la vista.
+- Las pruebas del comportamiento van sobre el ViewModel, sin pantalla.
 
 ## Diseño adaptable
 
