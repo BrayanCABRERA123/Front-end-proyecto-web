@@ -111,16 +111,23 @@
 
       <div class="loyalty-progress" *ngIf="vm.loyalty() as loyalty; else noLoyalty">
         <div class="progress-row">
-          @if (loyalty.allUnlocked) {
+          @if (loyalty.noPromotions) {
+            <span>{{ 'DASHBOARD.BENEFITS.NO_PROMOTIONS' | translate:{ points: loyalty.current } }}</span>
+          } @else if (loyalty.allUnlocked) {
             <span>{{ 'DASHBOARD.BENEFITS.ALL_UNLOCKED' | translate:{ points: loyalty.current } }}</span>
           } @else {
             <span>{{ 'DASHBOARD.BENEFITS.LOYALTY_PROGRESS' | translate }} ({{ 'DASHBOARD.BENEFITS.POINTS_OF' | translate:{ current: loyalty.current, goal: loyalty.goal } }})</span>
           }
-          <span>{{ loyalty.percentage }}%</span>
+          @if (!loyalty.noPromotions) {
+            <span>{{ loyalty.percentage }}%</span>
+          }
         </div>
-        <div class="progress-bar">
-          <div class="progress-fill" [style.width.%]="loyalty.percentage"></div>
-        </div>
+        <!-- sin promociones no hay meta: no se muestra la barra -->
+        @if (!loyalty.noPromotions) {
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="loyalty.percentage"></div>
+          </div>
+        }
       </div>
 
       <ng-template #noLoyalty>

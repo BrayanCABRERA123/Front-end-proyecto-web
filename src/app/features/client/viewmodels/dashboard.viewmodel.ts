@@ -38,6 +38,8 @@ export interface LoyaltyProgress {
   goal: number;
   percentage: number;
   allUnlocked?: boolean;
+  // el admin no ha creado promociones (o no cargaron): solo se muestran los puntos, sin meta
+  noPromotions?: boolean;
 }
 
 /** Inicio del cliente: contadores, próximo servicio, sede, beneficios y avance de puntos. */
@@ -132,7 +134,7 @@ export class ClientDashboardViewModel {
       next: balance => {
         this.loyaltyApi.promotions().subscribe({
           next: promotions => this.applyLoyalty(balance.points, promotions),
-          error: () => this.loyalty.set({ current: balance.points, goal: balance.points, percentage: 100 })
+          error: () => this.loyalty.set({ current: balance.points, goal: 0, percentage: 0, noPromotions: true })
         });
       },
       error: () => {
@@ -144,9 +146,14 @@ export class ClientDashboardViewModel {
 
   private applyLoyalty(points: number, promotions: PromotionForCustomer[]): void {
     const next = promotions.filter(p => !p.unlocked).sort((a, b) => a.requiredPoints - b.requiredPoints)[0];
-    this.loyalty.set(next
-      ? { current: points, goal: next.requiredPoints, percentage: Math.min(100, Math.round((points / Math.max(next.requiredPoints, 1)) * 100)) }
-      : { current: points, goal: points, percentage: 100, allUnlocked: true });
+    if (promotions.length === 0) {
+      // sin promociones no hay nada que desbloquear: no se dice "las desbloqueaste todas"
+      this.loyalty.set({ current: points, goal: 0, percentage: 0, noPromotions: true });
+    } else if (next) {
+      this.loyalty.set({ current: points, goal: next.requiredPoints, percentage: Math.min(100, Math.round((points / Math.max(next.requiredPoints, 1)) * 100)) });
+    } else {
+      this.loyalty.set({ current: points, goal: points, percentage: 100, allUnlocked: true });
+    }
 
     this.benefits.set(promotions.map(p => ({
       title: p.discountPercent > 0 ? `${p.name} · ${p.discountPercent}% OFF` : p.name,

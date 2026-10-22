@@ -198,6 +198,7 @@
       "LOYALTY_EMPTY": "Ainda não há dados de fidelidade",
       "POINTS_OF": "{{current}} de {{goal}} pontos",
       "ALL_UNLOCKED": "Você desbloqueou todas as promoções · {{points}} pontos",
+      "NO_PROMOTIONS": "Você tem {{points}} pontos · Nenhuma promoção disponível no momento",
       "UNLOCKED": "Já desbloqueada! Resgate ao pagar.",
       "LOCKED": "Faltam {{points}} pontos para desbloquear"
     },

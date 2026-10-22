@@ -72,6 +72,29 @@ describe('ViewModels del cliente', () => {
     ]);
   });
 
+  it('Dashboard: sin promociones creadas muestra los puntos, no "las desbloqueaste todas"', () => {
+    bookingApi.myBookings.mockReturnValue(of([]));
+    loyalty.balance.mockReturnValue(of({ points: 0 }));
+    loyalty.promotions.mockReturnValue(of([]));
+    const vm = TestBed.inject(ClientDashboardViewModel);
+
+    vm.load();
+
+    expect(vm.loyalty()).toEqual({ current: 0, goal: 0, percentage: 0, noPromotions: true });
+    expect(vm.benefits()).toEqual([]);
+  });
+
+  it('Dashboard: con todas las promociones desbloqueadas sí lo dice', () => {
+    bookingApi.myBookings.mockReturnValue(of([]));
+    loyalty.balance.mockReturnValue(of({ points: 80 }));
+    loyalty.promotions.mockReturnValue(of([{ name: 'Cera', discountPercent: 10, requiredPoints: 20, unlocked: true }]));
+    const vm = TestBed.inject(ClientDashboardViewModel);
+
+    vm.load();
+
+    expect(vm.loyalty()).toEqual({ current: 80, goal: 80, percentage: 100, allUnlocked: true });
+  });
+
   it('Historial: filtra por estado y la calificación nueva aparece sin recargar', () => {
     bookingApi.myBookings.mockReturnValue(of([booking(1, 'COMPLETED', '2026-10-01'), booking(2, 'CONFIRMED', tomorrow)]));
     operations.rate.mockReturnValue(of({ rating: 5, comment: 'Excelente' }));
