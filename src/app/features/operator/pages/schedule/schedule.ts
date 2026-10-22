@@ -19,6 +19,8 @@ import { MiniCalendarComponent } from './mini-calendar/mini-calendar';
 // sus servicios asignados (operations-service)
 import { OperationsApiService, localIsoDate } from '../../../../core/services/operations-api';
 import { canStartNow, startFromLabel, toWorkReservation } from '../../../../core/utils/operator-work';
+import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 
 type Tab = 'day' | 'week' | 'completed';
 
@@ -42,7 +44,8 @@ export class ScheduleComponent implements OnInit {
     private translate: TranslateService,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private operations: OperationsApiService
+    private operations: OperationsApiService,
+    private feedback: FeedbackService
   ) {}
 
   ngOnInit(): void {
@@ -168,9 +171,12 @@ export class ScheduleComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      this.operations.start(r.id).subscribe(() => {
-        this.load();
-        this.showSuccess('ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE', r.code);
+      this.operations.start(r.id).subscribe({
+        next: () => {
+          this.load();
+          this.showSuccess('ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE', r.code);
+        },
+        error: err => this.showError(err)
       });
     });
   }
@@ -192,9 +198,12 @@ export class ScheduleComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
 
-      this.operations.finish(r.id).subscribe(() => {
-        this.load();
-        this.showSuccess('ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE', r.code);
+      this.operations.finish(r.id).subscribe({
+        next: () => {
+          this.load();
+          this.showSuccess('ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE', r.code);
+        },
+        error: err => this.showError(err)
       });
     });
   }
@@ -212,6 +221,13 @@ export class ScheduleComponent implements OnInit {
         this.requestFinish(r);
       }
     });
+  }
+
+  // el backend no dejó iniciar o finalizar (ej. aún no es la hora o ya la cerró el admin):
+  // se dice por qué y se recarga para mostrar el estado real
+  private showError(err: unknown) {
+    this.feedback.error('COMMON.ERROR', apiErrorKey(err));
+    this.load();
   }
 
   // avisa que el servicio se inició o finalizó (mismo mensaje que en Servicios asignados)
