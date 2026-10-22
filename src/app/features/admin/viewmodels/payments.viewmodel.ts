@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 import { PaymentReviewData } from '../../../shared/dialogs/payment-review-modal/payment-review.model';
 import { PaymentsApiService } from '../../../core/services/payments-api';
+import { AuthService } from '../../../core/services/auth';
 import { apiErrorKey } from '../../../core/utils/api-error';
 import { PaymentsStore } from '../services/payments-store';
 import { Payment, PaymentStatus } from '../models/admin.models';
@@ -16,6 +17,7 @@ export class PaymentsViewModel {
   private readonly store = inject(PaymentsStore);
   private readonly paymentsApi = inject(PaymentsApiService);
   private readonly feedback = inject(FeedbackService);
+  private readonly auth = inject(AuthService);
 
   search = '';
   methodFilter = '';
@@ -66,7 +68,7 @@ export class PaymentsViewModel {
   }
 
   reviewData(payment: Payment): PaymentReviewData {
-    return paymentReviewData(payment, this.store);
+    return paymentReviewData(payment, this.store, this.auth.user());
   }
 
   // pago recibido en el lavadero para una reserva real

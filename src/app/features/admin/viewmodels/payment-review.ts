@@ -1,6 +1,7 @@
 import { PaymentReviewData } from '../../../shared/dialogs/payment-review-modal/payment-review.model';
 import { PaymentsStore, formatPaymentDate } from '../services/payments-store';
 import { Payment } from '../models/admin.models';
+import { AuthUser } from '../../../core/models/auth.models';
 
 // lo que comparten el dashboard y la pantalla de pagos del admin al revisar un pago
 
@@ -16,7 +17,7 @@ export function paymentMethodLabel(method: Payment['method']): string {
 }
 
 /** lo que muestra el modal de revisión de un pago */
-export function paymentReviewData(payment: Payment, store: PaymentsStore): PaymentReviewData {
+export function paymentReviewData(payment: Payment, store: PaymentsStore, reviewer: AuthUser | null): PaymentReviewData {
   return {
     code: payment.code,
     status: payment.status,
@@ -39,5 +40,6 @@ export function paymentReviewData(payment: Payment, store: PaymentsStore): Payme
     rejectionReason: payment.rejectionReason,
     receiptImage: store.receiptOf(payment.id),
     payee: store.payeeOf(payment.id),
+    reviewerName: reviewer ? `${reviewer.firstName} ${reviewer.lastName}`.trim() : '',
   };
 }

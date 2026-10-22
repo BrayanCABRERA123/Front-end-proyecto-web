@@ -213,7 +213,7 @@ export class AdminDashboardViewModel {
   // lo que muestra el modal de revisión de un pago
   reviewData(paymentId: string): PaymentReviewData | null {
     const payment = this.payments.getById(paymentId);
-    return payment ? paymentReviewData(payment, this.payments) : null;
+    return payment ? paymentReviewData(payment, this.payments, this.auth.user()) : null;
   }
 
   // el aviso de éxito sale solo cuando payment-service aceptó la decisión
