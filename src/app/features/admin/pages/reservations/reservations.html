@@ -31,7 +31,7 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_RESERVATIONS.STATS.TOTAL_TODAY' | translate }}</p>
-          <p class="stat-value">{{ stats.total }}</p>
+          <p class="stat-value">{{ vm.stats.total }}</p>
         </div>
         <div class="stat-icon"><mat-icon>assignment</mat-icon></div>
       </div>
@@ -39,7 +39,7 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_RESERVATIONS.STATS.CONFIRMED_PROGRESS' | translate }}</p>
-          <p class="stat-value">{{ stats.confirmedInProgress }}</p>
+          <p class="stat-value">{{ vm.stats.confirmedInProgress }}</p>
         </div>
         <div class="stat-icon"><mat-icon>autorenew</mat-icon></div>
       </div>
@@ -47,7 +47,7 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_RESERVATIONS.STATS.UNASSIGNED' | translate }}</p>
-          <p class="stat-value">{{ stats.unassigned }}</p>
+          <p class="stat-value">{{ vm.stats.unassigned }}</p>
           <span class="badge badge--warning">{{ 'ADMIN_RESERVATIONS.STATS.ATTENTION_REQUIRED' | translate }}</span>
         </div>
         <div class="stat-icon stat-icon--warning"><mat-icon>warning</mat-icon></div>
@@ -56,7 +56,7 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_RESERVATIONS.STATS.CANCELLED' | translate }}</p>
-          <p class="stat-value stat-value--muted">{{ stats.cancelled }}</p>
+          <p class="stat-value stat-value--muted">{{ vm.stats.cancelled }}</p>
         </div>
         <div class="stat-icon stat-icon--neutral"><mat-icon>close</mat-icon></div>
       </div>
@@ -70,18 +70,18 @@
         <mat-icon>search</mat-icon>
         <input
           type="text"
-          [(ngModel)]="searchTerm"
-          (ngModelChange)="currentPage = 1"
+          [(ngModel)]="vm.searchTerm"
+          (ngModelChange)="vm.currentPage = 1"
           [placeholder]="'ADMIN_RESERVATIONS.FILTERS.SEARCH_PLACEHOLDER' | translate">
       </div>
 
       <div class="date-box">
         <mat-icon>calendar_today</mat-icon>
-        <input type="date" [(ngModel)]="selectedDate" (ngModelChange)="currentPage = 1">
-        <button class="today-chip" (click)="selectToday()">Hoy</button>
+        <input type="date" [(ngModel)]="vm.selectedDate" (ngModelChange)="vm.currentPage = 1">
+        <button class="today-chip" (click)="vm.selectToday()">Hoy</button>
       </div>
 
-      <select [(ngModel)]="statusFilter" (ngModelChange)="currentPage = 1">
+      <select [(ngModel)]="vm.statusFilter" (ngModelChange)="vm.currentPage = 1">
         <option value="">{{ 'ADMIN_RESERVATIONS.FILTERS.ALL_STATUSES' | translate }}</option>
         <option value="confirmed">{{ 'ADMIN_RESERVATIONS.STATUS.confirmed' | translate }}</option>
         <option value="in_progress">{{ 'ADMIN_RESERVATIONS.STATUS.in_progress' | translate }}</option>
@@ -90,14 +90,14 @@
         <option value="no_show">{{ 'ADMIN_RESERVATIONS.STATUS.no_show' | translate }}</option>
       </select>
 
-      <select [(ngModel)]="operatorFilter" (ngModelChange)="currentPage = 1">
+      <select [(ngModel)]="vm.operatorFilter" (ngModelChange)="vm.currentPage = 1">
         <option value="">{{ 'ADMIN_RESERVATIONS.FILTERS.ALL_OPERATORS' | translate }}</option>
-        @for (name of operatorNames; track name) {
+        @for (name of vm.operatorNames; track name) {
           <option [value]="name">{{ name }}</option>
         }
       </select>
 
-      <button class="btn-outline" (click)="clearFilters()">
+      <button class="btn-outline" (click)="vm.clearFilters()">
         {{ 'ADMIN_RESERVATIONS.FILTERS.CLEAR' | translate }}
       </button>
 
@@ -106,13 +106,13 @@
     <!-- tabla -->
     <div class="card table-card">
 
-      @if (loading) {
+      @if (vm.loading) {
         <p class="muted">{{ 'COMMON.LOADING' | translate }}</p>
-      } @else if (loadError) {
-        <app-empty-state variant="empty" icon="error" titleKey="COMMON.ERROR" [messageKey]="loadError">
-          <button class="btn-outline" (click)="reload()">{{ 'NOTIFICATIONS.RETRY' | translate }}</button>
+      } @else if (vm.loadError) {
+        <app-empty-state variant="empty" icon="error" titleKey="COMMON.ERROR" [messageKey]="vm.loadError">
+          <button class="btn-outline" (click)="vm.load()">{{ 'NOTIFICATIONS.RETRY' | translate }}</button>
         </app-empty-state>
-      } @else if (bookings.length === 0) {
+      } @else if (vm.bookings.length === 0) {
 
         <app-empty-state
           variant="empty"
@@ -125,14 +125,14 @@
           </button>
         </app-empty-state>
 
-      } @else if (filteredBookings.length === 0) {
+      } @else if (vm.filteredBookings.length === 0) {
 
         <app-empty-state
           variant="filtered"
           titleKey="ADMIN_RESERVATIONS.NO_RESULTS_TITLE"
           messageKey="ADMIN_RESERVATIONS.NO_RESULTS_MESSAGE"
-          [params]="{ term: searchTerm }">
-          <button class="btn-outline" (click)="clearFilters()">
+          [params]="{ term: vm.searchTerm }">
+          <button class="btn-outline" (click)="vm.clearFilters()">
             {{ 'ADMIN_RESERVATIONS.FILTERS.CLEAR' | translate }}
           </button>
         </app-empty-state>
@@ -153,7 +153,7 @@
               </tr>
             </thead>
             <tbody>
-              @for (b of pagedBookings; track b.code) {
+              @for (b of vm.pagedBookings; track b.code) {
                 <tr>
                   <td>
                     <strong>{{ b.client }}</strong>
@@ -185,7 +185,7 @@
                           </span>
                         }
                       </div>
-                    } @else if (isUnassigned(b)) {
+                    } @else if (vm.isUnassigned(b)) {
                       <span class="badge badge--warning">{{ 'ADMIN_RESERVATIONS.TABLE.UNASSIGNED' | translate }}</span>
                     } @else {
                       <span class="muted">—</span>
@@ -218,24 +218,24 @@
         <!-- paginación -->
         <div class="pagination">
           <span class="muted">
-            {{ 'ADMIN_RESERVATIONS.PAGINATION.SHOWING' | translate:{ from: rangeFrom, to: rangeTo, total: filteredBookings.length } }}
+            {{ 'ADMIN_RESERVATIONS.PAGINATION.SHOWING' | translate:{ from: vm.rangeFrom, to: vm.rangeTo, total: vm.filteredBookings.length } }}
           </span>
 
           <div class="pagination__controls">
-            <button [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+            <button [disabled]="vm.currentPage === 1" (click)="vm.goToPage(vm.currentPage - 1)">
               {{ 'ADMIN_RESERVATIONS.PAGINATION.PREVIOUS' | translate }}
             </button>
 
-            @for (page of pageNumbers; track page) {
+            @for (page of vm.pageNumbers; track page) {
               <button
                 class="page-number"
-                [class.page-number--active]="currentPage === page"
-                (click)="goToPage(page)">
+                [class.page-number--active]="vm.currentPage === page"
+                (click)="vm.goToPage(page)">
                 {{ page }}
               </button>
             }
 
-            <button [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+            <button [disabled]="vm.currentPage === vm.totalPages" (click)="vm.goToPage(vm.currentPage + 1)">
               {{ 'ADMIN_RESERVATIONS.PAGINATION.NEXT' | translate }}
             </button>
           </div>

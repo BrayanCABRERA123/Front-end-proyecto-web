@@ -43,15 +43,15 @@ describe('ReportsComponent (admin)', () => {
   });
 
   it('cuenta como realizados solo los servicios completados hasta hoy', () => {
-    expect(component.dayReport.services).toBe(1);
+    expect(component.vm.dayReport.services).toBe(1);
     // la futura, la cancelada y la de "no asistió" no son servicios hechos
-    expect(component.weekReport.services).toBe(2);
-    expect(component.monthReport.services).toBe(3);
+    expect(component.vm.weekReport.services).toBe(2);
+    expect(component.vm.monthReport.services).toBe(3);
   });
 
   it('la gráfica de la semana suma lo mismo que la tarjeta de la semana', () => {
-    const week = component.chartData;
-    expect(week.services.reduce((a, b) => a + b, 0)).toBe(component.weekReport.services);
+    const week = component.vm.chartData;
+    expect(week.services.reduce((a, b) => a + b, 0)).toBe(component.vm.weekReport.services);
     expect(week.isEmpty).toBe(false);
   });
 });

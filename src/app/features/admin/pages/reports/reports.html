@@ -28,7 +28,7 @@
         <div class="revenue-icon"><mat-icon>attach_money</mat-icon></div>
         <div>
           <p class="revenue-label">{{ 'REPORTS.YEAR_REVENUE' | translate }}</p>
-          <p class="revenue-value">{{ cop(yearRevenue) }}</p>
+          <p class="revenue-value">{{ cop(vm.yearRevenue) }}</p>
         </div>
       </div>
 
@@ -84,7 +84,7 @@
           @for (p of periods; track p) {
             <button
               class="period-toggle__btn"
-              [class.period-toggle__btn--active]="period === p"
+              [class.period-toggle__btn--active]="vm.period() === p"
               (click)="changePeriod(p)">
               {{ ('REPORTS.PERIODS.' + p.toUpperCase()) | translate }}
             </button>
@@ -92,10 +92,10 @@
         </div>
       </div>
 
-      <div class="chart-wrapper" [class.chart-wrapper--empty]="chartData.isEmpty">
+      <div class="chart-wrapper" [class.chart-wrapper--empty]="vm.chartData.isEmpty">
         <canvas #barCanvas></canvas>
 
-        @if (chartData.isEmpty) {
+        @if (vm.chartData.isEmpty) {
           <div class="chart-wrapper__note">
             <mat-icon>query_stats</mat-icon>
             <p>{{ 'REPORTS.CHART.NO_DATA' | translate }}</p>
@@ -112,8 +112,8 @@
           <h3>{{ 'REPORTS.SUMMARY.DAY' | translate }}</h3>
           <div class="summary-icon"><mat-icon>calendar_today</mat-icon></div>
         </div>
-        <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ dayReport.services }}</strong></p>
-        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">{{ cop(dayReport.revenue) }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ vm.dayReport.services }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">{{ cop(vm.dayReport.revenue) }}</strong></p>
       </div>
 
       <div class="card summary-mini-card">
@@ -121,8 +121,8 @@
           <h3>{{ 'REPORTS.SUMMARY.WEEK' | translate }}</h3>
           <div class="summary-icon"><mat-icon>calendar_today</mat-icon></div>
         </div>
-        <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ weekReport.services }}</strong></p>
-        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">{{ cop(weekReport.revenue) }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ vm.weekReport.services }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">{{ cop(vm.weekReport.revenue) }}</strong></p>
       </div>
 
       <div class="card summary-mini-card">
@@ -130,8 +130,8 @@
           <h3>{{ 'REPORTS.SUMMARY.MONTH' | translate }}</h3>
           <div class="summary-icon"><mat-icon>calendar_today</mat-icon></div>
         </div>
-        <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ monthReport.services }}</strong></p>
-        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">{{ cop(monthReport.revenue) }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.SERVICES_DONE' | translate }}: <strong>{{ vm.monthReport.services }}</strong></p>
+        <p>{{ 'REPORTS.SUMMARY.TOTAL_REVENUE' | translate }}: <strong class="highlight">{{ cop(vm.monthReport.revenue) }}</strong></p>
       </div>
 
     </div>

@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // importamos el sidebar del layout
@@ -11,43 +11,30 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart } from 'chart.js/auto';
 // modal de exportación de reportes
 import { ExportReportModalComponent } from '../../../../shared/dialogs/export-report-modal/export-report-modal';
-import { ReservationsStore } from '../../services/reservations-store';
-import { PaymentsStore } from '../../services/payments-store';
-import { isoDaysFromToday } from '../../../../core/utils/dates';
+import { ReportPeriod, ReportsViewModel } from '../../viewmodels/reports.viewmodel';
 
-// período visible de la gráfica y de las tarjetas resumen
-type ReportPeriod = 'day' | 'week' | 'month';
-
-interface ChartData {
-  labels: string[];
-  services: number[];
-  revenue: number[];
-  isEmpty: boolean;
-}
-
+// vista de Reportes: los números están en ReportsViewModel; aquí quedan la gráfica (Chart.js),
+// los colores del tema, la animación del ranking y la exportación
 @Component({
   selector: 'app-reports',
   standalone: true,
   imports: [CommonModule, FormsModule, SidebarComponent, EmptyStateComponent, MatIconModule, MatDialogModule, TranslateModule],
+  providers: [ReportsViewModel],
   templateUrl: './reports.html',
   styleUrls: ['./reports.scss']
 })
 export class ReportsComponent implements AfterViewInit, OnDestroy {
+
+  readonly vm = inject(ReportsViewModel);
+  private readonly dialog = inject(MatDialog);
+  private readonly translate = inject(TranslateService);
 
   @ViewChild('barCanvas') barCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('rankingCard') topServicesEl!: ElementRef<HTMLDivElement>;
 
   private chart?: Chart;
 
-  period: ReportPeriod = 'week';
   periods: ReportPeriod[] = ['day', 'week', 'month'];
-
-  constructor(
-    private dialog: MatDialog,
-    private translate: TranslateService,
-    private reservations: ReservationsStore,
-    private payments: PaymentsStore,
-  ) {}
 
   ngAfterViewInit(): void {
     this.createChart();
@@ -59,143 +46,21 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
     this.chart?.destroy();
   }
 
-  /* ---------- utilidades comunes ---------- */
-
-  // fecha ISO (yyyy-MM-dd) de hace n días
-  private isoDaysAgo(days: number): string {
-    return isoDaysFromToday(-days);
-  }
-
-  // servicios realizados (reservas completadas) con fecha entre from y to, ambos incluidos:
-  // las futuras, las canceladas y las que quedaron en "no asistió" no son servicios hechos
-  private servicesDone(from: string, to: string = from): number {
-    return this.reservations.bookings()
-      .filter(b => b.status === 'completed' && b.date >= from && b.date <= to).length;
-  }
-
   // formatea a pesos colombianos, ej: $85.000
   cop(amount: number): string {
     return '$' + amount.toLocaleString('es-CO');
   }
 
-  /* ---------- tarjetas resumen (día / semana / mes) ---------- */
-
-  get dayReport(): { services: number; revenue: number } {
-    return {
-      services: this.servicesDone(this.reservations.today),
-      revenue: this.payments.payments()
-        .filter(p => p.date === this.payments.today && p.status === 'approved')
-        .reduce((sum, p) => sum + p.amount, 0),
-    };
-  }
-
-  get weekReport(): { services: number; revenue: number } {
-    const start = this.isoDaysAgo(6);
-    return {
-      services: this.servicesDone(start, this.reservations.today),
-      revenue: this.payments.payments()
-        .filter(p => p.date >= start && p.status === 'approved')
-        .reduce((sum, p) => sum + p.amount, 0),
-    };
-  }
-
-  get monthReport(): { services: number; revenue: number } {
-    const start = this.isoDaysAgo(29);
-    return {
-      services: this.servicesDone(start, this.reservations.today),
-      revenue: this.payments.payments()
-        .filter(p => p.date >= start && p.status === 'approved')
-        .reduce((sum, p) => sum + p.amount, 0),
-    };
-  }
-
-  // ingresos del año: pagos aprobados registrados
-  get yearRevenue(): number {
-    return this.payments.payments()
-      .filter(p => p.status === 'approved')
-      .reduce((sum, p) => sum + p.amount, 0);
-  }
-
-  /* ---------- gráfica por período ---------- */
-
   changePeriod(period: ReportPeriod): void {
-    if (this.period === period) return;
-    this.period = period;
+    if (this.vm.period() === period) return;
+    this.vm.setPeriod(period);
     this.chart?.destroy();
     this.createChart();
   }
 
-  get chartData(): ChartData {
-    switch (this.period) {
-      case 'day': return this.dailyChartData();
-      case 'month': return this.monthlyChartData();
-      default: return this.weeklyChartData();
-    }
-  }
-
-  // "Hoy": servicios e ingresos por franja horaria
-  private dailyChartData(): ChartData {
-    const buckets: string[] = [];
-    for (let h = 6; h <= 20; h++) {
-      buckets.push(String(h).padStart(2, '0') + ':00');
-    }
-
-    const services = buckets.map(bucket => {
-      const hour = bucket.slice(0, 2);
-      return this.reservations.byDate(this.reservations.today)
-        .filter(b => b.status === 'completed' && b.time.slice(0, 2) === hour).length;
-    });
-
-    const revenue = buckets.map(bucket => {
-      const hour = bucket.slice(0, 2);
-      return this.payments.payments()
-        .filter(p => p.date === this.payments.today && p.status === 'approved' && p.time.slice(0, 2) === hour)
-        .reduce((sum, p) => sum + p.amount, 0);
-    });
-
-    return { labels: buckets, services, revenue, isEmpty: !services.some(s => s > 0) && !revenue.some(r => r > 0) };
-  }
-
-  // "Semana": últimos 7 días por nombre de día
-  private weeklyChartData(): ChartData {
-    const labels: string[] = [];
-    const services: number[] = [];
-    const revenue: number[] = [];
-
-    for (let i = 6; i >= 0; i--) {
-      const iso = this.isoDaysAgo(i);
-      const d = new Date(iso + 'T12:00:00');
-      labels.push(d.toLocaleDateString('es-CO', { weekday: 'short' }));
-
-      services.push(this.servicesDone(iso));
-
-      revenue.push(this.payments.payments()
-        .filter(p => p.date === iso && p.status === 'approved')
-        .reduce((sum, p) => sum + p.amount, 0));
-    }
-
-    return { labels, services, revenue, isEmpty: !services.some(s => s > 0) && !revenue.some(r => r > 0) };
-  }
-
-  // "Mes": últimos 30 días por día (etiqueta cada 5 días)
-  private monthlyChartData(): ChartData {
-    const labels: string[] = [];
-    const services: number[] = [];
-    const revenue: number[] = [];
-
-    for (let i = 29; i >= 0; i--) {
-      const iso = this.isoDaysAgo(i);
-      const d = new Date(iso + 'T12:00:00');
-      labels.push(i % 5 === 0 ? `${d.getDate()}/${d.getMonth() + 1}` : '');
-
-      services.push(this.servicesDone(iso));
-
-      revenue.push(this.payments.payments()
-        .filter(p => p.date === iso && p.status === 'approved')
-        .reduce((sum, p) => sum + p.amount, 0));
-    }
-
-    return { labels, services, revenue, isEmpty: !services.some(s => s > 0) && !revenue.some(r => r > 0) };
+  // servicios más pedidos con el color del tema de cada posición
+  get topServices(): { name: string; sales: number; percentage: number; color: string }[] {
+    return this.vm.topServices.map((service, i) => ({ ...service, color: this.rankingColor(i) }));
   }
 
   // colores del tema actual (claro u oscuro) leídos de las variables CSS
@@ -228,7 +93,7 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
   // crea la gráfica de barras con tooltip personalizado y animación de entrada
   private createChart(): void {
     const t = this.theme();
-    const data = this.chartData;
+    const data = this.vm.chartData;
 
     this.chart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
@@ -309,31 +174,6 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  /* ---------- ranking de servicios más vendidos ---------- */
-
-  // frecuencia de cada servicio en el último mes (reservas no canceladas)
-  get topServices(): { name: string; sales: number; percentage: number; color: string }[] {
-    const counts = new Map<string, number>();
-    const start = this.isoDaysAgo(29);
-
-    this.reservations.bookings()
-      .filter(b => b.date >= start && b.status !== 'cancelled')
-      .forEach(b => counts.set(b.service, (counts.get(b.service) ?? 0) + 1));
-
-    const sorted = [...counts.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 3);
-
-    const max = sorted.length ? sorted[0][1] : 0;
-
-    return sorted.map(([name, sales], i) => ({
-      name,
-      sales,
-      percentage: max ? Math.round((sales / max) * 100) : 0,
-      color: this.rankingColor(i),
-    }));
-  }
-
   // anima las barras de progreso de "servicios más vendidos" de 0 hasta su valor real
   private animateBars(): void {
     const bars = this.topServicesEl?.nativeElement.querySelectorAll<HTMLElement>('.ranking-fill');
@@ -352,10 +192,10 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
     this.dialog.open(ExportReportModalComponent, {
       panelClass: 'custom-dialog',
       data: {
-        dayReport: this.dayReport,
-        weekReport: this.weekReport,
-        monthReport: this.monthReport,
-        yearRevenue: this.yearRevenue,
+        dayReport: this.vm.dayReport,
+        weekReport: this.vm.weekReport,
+        monthReport: this.vm.monthReport,
+        yearRevenue: this.vm.yearRevenue,
         topServices: this.topServices
       }
     });

@@ -59,7 +59,7 @@ describe('ReservationsComponent (admin)', () => {
     ]);
     store.unassignedIds = new Set(['1', '5']);
 
-    expect(component.stats).toEqual({ total: 4, confirmedInProgress: 2, unassigned: 1, cancelled: 1 });
+    expect(component.vm.stats).toEqual({ total: 4, confirmedInProgress: 2, unassigned: 1, cancelled: 1 });
   });
 
   it('busca por cliente, placa o código y filtra por estado, operario y fecha', () => {
@@ -70,20 +70,20 @@ describe('ReservationsComponent (admin)', () => {
         operator: { id: '3', initials: 'OR', name: 'Oscar Ruiz' } }),
     ]);
 
-    component.searchTerm = 'xyz';
-    expect(component.filteredBookings.map(b => b.id)).toEqual(['2']);
-    component.searchTerm = 'res-000003';
-    expect(component.filteredBookings.map(b => b.id)).toEqual(['3']);
+    component.vm.searchTerm = 'xyz';
+    expect(component.vm.filteredBookings.map(b => b.id)).toEqual(['2']);
+    component.vm.searchTerm = 'res-000003';
+    expect(component.vm.filteredBookings.map(b => b.id)).toEqual(['3']);
 
-    component.searchTerm = '';
-    component.statusFilter = 'confirmed';
-    expect(component.filteredBookings.map(b => b.id)).toEqual(['1', '3']);
-    component.operatorFilter = 'Oscar Ruiz';
-    expect(component.filteredBookings.map(b => b.id)).toEqual(['3']);
-    component.operatorFilter = '';
-    component.selectedDate = TODAY;
-    expect(component.filteredBookings.map(b => b.id)).toEqual(['1']);
-    expect(component.hasActiveFilters).toBe(true);
+    component.vm.searchTerm = '';
+    component.vm.statusFilter = 'confirmed';
+    expect(component.vm.filteredBookings.map(b => b.id)).toEqual(['1', '3']);
+    component.vm.operatorFilter = 'Oscar Ruiz';
+    expect(component.vm.filteredBookings.map(b => b.id)).toEqual(['3']);
+    component.vm.operatorFilter = '';
+    component.vm.selectedDate = TODAY;
+    expect(component.vm.filteredBookings.map(b => b.id)).toEqual(['1']);
+    expect(component.vm.hasActiveFilters).toBe(true);
   });
 
   it('el día de la reserva sale en el idioma de la pantalla', () => {
@@ -97,12 +97,12 @@ describe('ReservationsComponent (admin)', () => {
   it('pagina de a 6 y no se sale de las páginas que existen', () => {
     store.list.set(Array.from({ length: 13 }, (_, i) => booking(i + 1, {})));
 
-    expect(component.totalPages).toBe(3);
-    expect(component.pagedBookings.length).toBe(6);
-    component.goToPage(3);
-    expect(component.pagedBookings.length).toBe(1);
-    expect(component.rangeFrom).toBe(13);
-    component.goToPage(9);
-    expect(component.currentPage).toBe(3);
+    expect(component.vm.totalPages).toBe(3);
+    expect(component.vm.pagedBookings.length).toBe(6);
+    component.vm.goToPage(3);
+    expect(component.vm.pagedBookings.length).toBe(1);
+    expect(component.vm.rangeFrom).toBe(13);
+    component.vm.goToPage(9);
+    expect(component.vm.currentPage).toBe(3);
   });
 });

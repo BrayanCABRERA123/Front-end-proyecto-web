@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,77 +8,31 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { PaymentModalComponent, ManualPaymentResult } from './components/payment-modal/payment-modal';
-import { PaymentsApiService } from '../../../../core/services/payments-api';
 import { PaymentReviewModal } from '../../../../shared/dialogs/payment-review-modal/payment-review-modal';
-import { PaymentReviewData, PaymentReviewResult } from '../../../../shared/dialogs/payment-review-modal/payment-review.model';
+import { PaymentReviewResult } from '../../../../shared/dialogs/payment-review-modal/payment-review.model';
 import { ExportColumn, ExportDataModal, ExportDataModalData } from '../../../../shared/dialogs/export-data-modal/export-data-modal';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
-import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
-import { PaymentsStore, formatPaymentDate } from '../../services/payments-store';
-import { Payment, PaymentStatus } from '../../models/admin.models';
-import { apiErrorKey } from '../../../../core/utils/api-error';
+import { formatPaymentDate } from '../../services/payments-store';
+import { Payment } from '../../models/admin.models';
+import { PaymentsViewModel } from '../../viewmodels/payments.viewmodel';
 
+// vista de Pagos del admin: filtros y acciones están en PaymentsViewModel; aquí quedan los
+// modales, la confirmación del reembolso y la exportación
 @Component({
   selector: 'app-payments',
   standalone: true,
   imports: [CommonModule, FormsModule, SidebarComponent, MatIconModule, TranslateModule, EmptyStateComponent],
+  providers: [PaymentsViewModel],
   templateUrl: './payments.html',
   styleUrls: ['./payments.scss']
 })
 export class PaymentsComponent implements OnInit {
 
+  readonly vm = inject(PaymentsViewModel);
+  private readonly dialog = inject(MatDialog);
 
-  search = '';
-  methodFilter = '';
-  statusFilter: PaymentStatus | '' = '';
-
-  constructor(
-    private store: PaymentsStore,
-    private dialog: MatDialog,
-    private feedback: FeedbackService,
-    private paymentsApi: PaymentsApiService,
-  ) {}
-
-  // pagos reales de payment-service
   ngOnInit(): void {
-    this.store.refresh();
-  }
-
-  get payments(): Payment[] { return this.store.payments(); }
-
-  get filteredPayments(): Payment[] {
-    const term = this.search.trim().toLowerCase();
-
-    return this.payments
-      .filter(p => !this.methodFilter || p.method === this.methodFilter)
-      .filter(p => !this.statusFilter || p.status === this.statusFilter)
-      .filter(p => !term
-        || p.client.toLowerCase().includes(term)
-        || p.reference.toLowerCase().includes(term)
-        || p.code.toLowerCase().includes(term));
-  }
-
-  get hasActiveFilters(): boolean {
-    return !!this.search || !!this.methodFilter || !!this.statusFilter;
-  }
-
-  get stats() {
-    const approvedToday = this.payments.filter(p => p.status === 'approved' && p.date === this.store.today);
-
-    return {
-      pending: this.payments.filter(p => p.status === 'pending').length,
-      approvedToday: approvedToday.length,
-      approvedAmount: approvedToday.reduce((sum, p) => sum + p.amount, 0),
-      rejected: this.payments.filter(p => p.status === 'rejected').length,
-      totalCollected: approvedToday.reduce((sum, p) => sum + p.amount, 0),
-      transactionsCount: this.payments.length,
-    };
-  }
-
-  clearFilters(): void {
-    this.search = '';
-    this.methodFilter = '';
-    this.statusFilter = '';
+    this.vm.load();
   }
 
   // formatea a pesos colombianos, ej: $85.000
@@ -91,83 +45,26 @@ export class PaymentsComponent implements OnInit {
     return formatPaymentDate(iso);
   }
 
-  methodLabel(method: Payment['method']): string {
-    const labels: Record<Payment['method'], string> = {
-      nequi: 'Nequi',
-      daviplata: 'Daviplata',
-      transfer: 'Transferencia',
-      cash: 'Efectivo',
-    };
-    return labels[method] ?? method;
-  }
-
   // --- registro manual: pago recibido en el lavadero para una reserva real ---
-
   openManualModal(): void {
     this.dialog.open(PaymentModalComponent, { panelClass: 'custom-dialog' }).afterClosed()
       .subscribe((result: ManualPaymentResult | null) => {
-        if (!result) return;
-        this.paymentsApi.registerManual(result.bookingId, result.paymentAccountId, result.transactionReference).subscribe({
-          next: created => {
-            this.store.refresh();
-            this.feedback.success('ADMIN_PAYMENTS.FEEDBACK.MANUAL_TITLE', 'ADMIN_PAYMENTS.FEEDBACK.MANUAL_MESSAGE',
-              { messageParams: { code: '#PAG-' + created.id, client: created.booking?.code ?? '' } });
-          },
-          error: err => this.feedback.error('COMMON.ERROR', apiErrorKey(err))
-        });
+        if (result) this.vm.registerManual(result);
       });
   }
 
   // --- revisión de pago pendiente / recibo / motivo de rechazo ---
-
   openReview(payment: Payment): void {
-    const data: PaymentReviewData = {
-      code: payment.code,
-      status: payment.status,
-      client: payment.client,
-      phone: payment.phone,
-      email: payment.email,
-      bookingCode: payment.bookingCode,
-      service: payment.service,
-      vehicle: payment.vehicle,
-      plate: payment.plate,
-      scheduleLabel: payment.scheduleLabel,
-      bay: payment.bay,
-      operator: payment.operator,
-      method: payment.method,
-      transactionReference: payment.reference,
-      amountDue: payment.amount,
-      amountDeclared: payment.amountDeclared,
-      receiptDate: `${formatPaymentDate(payment.date)}, ${payment.time} COT`,
-      bankAccount: payment.bankAccount,
-      rejectionReason: payment.rejectionReason,
-      receiptImage: this.store.receiptOf(payment.id),
-      payee: this.store.payeeOf(payment.id),
-    };
-
-    const dialogRef = this.dialog.open(PaymentReviewModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((result: PaymentReviewResult | null) => {
-      if (!result || !result.action) return;
-      if (result.action === 'refunded') {
-        this.confirmRefund(payment);
-        return;
-      }
-
-      // el aviso de éxito sale solo cuando payment-service aceptó la decisión
-      this.store.review(payment.id, result.action, result.reason,
-        err => this.feedback.error('COMMON.ERROR', apiErrorKey(err)),
-        () => this.feedback.success(
-          'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_TITLE',
-          'ADMIN_PAYMENTS.FEEDBACK.REVIEWED_MESSAGE',
-          {
-            messageParams: { code: payment.code },
-            details: result.reason
-              ? [{ label: 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL', value: result.reason }]
-              : [],
-          }
-        ));
-    });
+    this.dialog.open(PaymentReviewModal, { panelClass: 'custom-dialog', data: this.vm.reviewData(payment) })
+      .afterClosed()
+      .subscribe((result: PaymentReviewResult | null) => {
+        if (!result || !result.action) return;
+        if (result.action === 'refunded') {
+          this.confirmRefund(payment);
+          return;
+        }
+        this.vm.review(payment, result.action, result.reason);
+      });
   }
 
   // reembolsar es irreversible (revierte los puntos de la reserva): se confirma antes
@@ -180,29 +77,14 @@ export class PaymentsComponent implements OnInit {
       cancelText: 'COMMON.CANCEL',
       danger: true
     };
-
     this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data }).afterClosed()
       .subscribe((confirmed: boolean) => {
-        if (!confirmed) return;
-        this.store.refund(payment.id,
-          () => this.feedback.success('ADMIN_PAYMENTS.REFUND.DONE_TITLE', 'ADMIN_PAYMENTS.REFUND.DONE_MESSAGE',
-            { messageParams: { code: payment.code } }),
-          err => this.feedback.error('COMMON.ERROR', apiErrorKey(err)));
+        if (confirmed) this.vm.refund(payment);
       });
   }
 
-  // un pago rechazado se explica en un modal de estado con el motivo
   viewRejectionReason(payment: Payment): void {
-    this.feedback.info(
-      'ADMIN_PAYMENTS.FEEDBACK.REJECTED_TITLE',
-      'ADMIN_PAYMENTS.FEEDBACK.REJECTED_MESSAGE',
-      {
-        messageParams: { code: payment.code },
-        details: [
-          { label: 'PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL', value: payment.rejectionReason ?? '—' },
-        ],
-      }
-    );
+    this.vm.showRejectionReason(payment);
   }
 
   // exporta la conciliación con los filtros aplicados
@@ -217,10 +99,10 @@ export class PaymentsComponent implements OnInit {
       { key: 'status', labelKey: 'ADMIN_PAYMENTS.TABLE.STATUS' },
     ];
 
-    const rows = this.filteredPayments.map(p => ({
+    const rows = this.vm.filteredPayments.map(p => ({
       code: p.code,
       client: p.client,
-      method: this.methodLabel(p.method),
+      method: this.vm.methodLabel(p.method),
       amount: this.cop(p.amount),
       date: `${formatPaymentDate(p.date)}, ${p.time}`,
       service: p.service,
