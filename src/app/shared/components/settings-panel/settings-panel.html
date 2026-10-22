@@ -18,7 +18,7 @@
             <p class="title">{{ 'CONFIG.PUSH' | translate }}</p>
             <span class="subtitle">{{ 'CONFIG.PUSH_DESC' | translate }}</span>
           </div>
-          <mat-slide-toggle [(ngModel)]="settings.push" (ngModelChange)="saveNotificationSettings()"></mat-slide-toggle>
+          <mat-slide-toggle [ngModel]="vm.channels().push" (ngModelChange)="vm.setChannel('push', $event)"></mat-slide-toggle>
         </div>
 
         <div class="divider"></div>
@@ -28,7 +28,7 @@
             <p class="title">{{ 'CONFIG.EMAIL' | translate }}</p>
             <span class="subtitle">{{ 'CONFIG.EMAIL_DESC' | translate }}</span>
           </div>
-          <mat-slide-toggle [(ngModel)]="settings.email" (ngModelChange)="saveNotificationSettings()"></mat-slide-toggle>
+          <mat-slide-toggle [ngModel]="vm.channels().email" (ngModelChange)="vm.setChannel('email', $event)"></mat-slide-toggle>
         </div>
 
         <div class="divider"></div>
@@ -38,7 +38,7 @@
             <p class="title">{{ 'CONFIG.PROMO' | translate }}</p>
             <span class="subtitle">{{ 'CONFIG.PROMO_DESC' | translate }}</span>
           </div>
-          <mat-slide-toggle [(ngModel)]="settings.promo" (ngModelChange)="saveNotificationSettings()"></mat-slide-toggle>
+          <mat-slide-toggle [ngModel]="vm.channels().promo" (ngModelChange)="vm.setChannel('promo', $event)"></mat-slide-toggle>
         </div>
 
       </div>
@@ -63,11 +63,11 @@
           <!-- VERDE CLARO -->
           <div
             class="theme-card green-light"
-            [class.active]="selectedTheme === 'green-light'"
-            (click)="changeTheme('green-light')">
+            [class.active]="vm.theme() === 'green-light'"
+            (click)="vm.changeTheme('green-light')">
 
             <div class="theme-top">
-              <mat-icon *ngIf="selectedTheme === 'green-light'">check_circle</mat-icon>
+              <mat-icon *ngIf="vm.theme() === 'green-light'">check_circle</mat-icon>
             </div>
 
             <div class="theme-body">
@@ -80,11 +80,11 @@
           <!-- VERDE OSCURO -->
           <div
             class="theme-card green-dark"
-            [class.active]="selectedTheme === 'green-dark'"
-            (click)="changeTheme('green-dark')">
+            [class.active]="vm.theme() === 'green-dark'"
+            (click)="vm.changeTheme('green-dark')">
 
             <div class="theme-top">
-              <mat-icon *ngIf="selectedTheme === 'green-dark'">check_circle</mat-icon>
+              <mat-icon *ngIf="vm.theme() === 'green-dark'">check_circle</mat-icon>
             </div>
 
             <div class="theme-body">
@@ -97,11 +97,11 @@
           <!-- ROSADO CLARO -->
           <div
             class="theme-card pink"
-            [class.active]="selectedTheme === 'pink'"
-            (click)="changeTheme('pink')">
+            [class.active]="vm.theme() === 'pink'"
+            (click)="vm.changeTheme('pink')">
 
             <div class="theme-top">
-              <mat-icon *ngIf="selectedTheme === 'pink'">check_circle</mat-icon>
+              <mat-icon *ngIf="vm.theme() === 'pink'">check_circle</mat-icon>
             </div>
 
             <div class="theme-body">
@@ -114,11 +114,11 @@
           <!-- ROSADO OSCURO -->
           <div
             class="theme-card pink-dark"
-            [class.active]="selectedTheme === 'pink-dark'"
-            (click)="changeTheme('pink-dark')">
+            [class.active]="vm.theme() === 'pink-dark'"
+            (click)="vm.changeTheme('pink-dark')">
 
             <div class="theme-top">
-              <mat-icon *ngIf="selectedTheme === 'pink-dark'">check_circle</mat-icon>
+              <mat-icon *ngIf="vm.theme() === 'pink-dark'">check_circle</mat-icon>
             </div>
 
             <div class="theme-body">
@@ -141,15 +141,15 @@
           <!-- ESPAÑOL -->
           <div
             class="lang-card"
-            [class.active]="selectedLanguage === 'es'"
-            (click)="changeLanguage('es')">
+            [class.active]="vm.language() === 'es'"
+            (click)="vm.changeLanguage('es')">
 
             <div class="lang-top">
               <div class="lang-left">
                 <span class="fi fi-es fis"></span>
                 <strong>Español</strong>
               </div>
-              <mat-icon class="lang-check" [class.selected]="selectedLanguage === 'es'">check_circle_outline</mat-icon>
+              <mat-icon class="lang-check" [class.selected]="vm.language() === 'es'">check_circle_outline</mat-icon>
             </div>
             <span class="lang-sub">Interfaz en español</span>
 
@@ -158,15 +158,15 @@
           <!-- ENGLISH -->
           <div
             class="lang-card"
-            [class.active]="selectedLanguage === 'en'"
-            (click)="changeLanguage('en')">
+            [class.active]="vm.language() === 'en'"
+            (click)="vm.changeLanguage('en')">
 
             <div class="lang-top">
               <div class="lang-left">
                 <span class="fi fi-gb fis"></span>
                 <strong>English</strong>
               </div>
-              <mat-icon class="lang-check" [class.selected]="selectedLanguage === 'en'">check_circle_outline</mat-icon>
+              <mat-icon class="lang-check" [class.selected]="vm.language() === 'en'">check_circle_outline</mat-icon>
             </div>
             <span class="lang-sub">Interface in english</span>
 
@@ -175,15 +175,15 @@
           <!-- FRANCES -->
           <div
             class="lang-card"
-            [class.active]="selectedLanguage === 'fr'"
-            (click)="changeLanguage('fr')">
+            [class.active]="vm.language() === 'fr'"
+            (click)="vm.changeLanguage('fr')">
 
             <div class="lang-top">
               <div class="lang-left">
                 <span class="fi fi-fr fis"></span>
                 <strong>Français</strong>
               </div>
-              <mat-icon class="lang-check" [class.selected]="selectedLanguage === 'fr'">check_circle_outline</mat-icon>
+              <mat-icon class="lang-check" [class.selected]="vm.language() === 'fr'">check_circle_outline</mat-icon>
             </div>
             <span class="lang-sub">Interface en français</span>
 
@@ -192,15 +192,15 @@
           <!-- PORTUGUES -->
           <div
             class="lang-card"
-            [class.active]="selectedLanguage === 'pt'"
-            (click)="changeLanguage('pt')">
+            [class.active]="vm.language() === 'pt'"
+            (click)="vm.changeLanguage('pt')">
 
             <div class="lang-top">
               <div class="lang-left">
                 <span class="fi fi-pt fis"></span>
                 <strong>Português</strong>
               </div>
-              <mat-icon class="lang-check" [class.selected]="selectedLanguage === 'pt'">check_circle_outline</mat-icon>
+              <mat-icon class="lang-check" [class.selected]="vm.language() === 'pt'">check_circle_outline</mat-icon>
             </div>
             <span class="lang-sub">Interface em português</span>
 
