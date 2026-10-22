@@ -18,45 +18,45 @@
     <div class="stats-row">
       <div class="stat-card">
         <span class="stat-label">{{ 'SCHEDULE.STATS.TOTAL' | translate }}</span>
-        <span class="stat-value">{{ totalForDay }}</span>
+        <span class="stat-value">{{ vm.totalForDay() }}</span>
       </div>
       <div class="stat-card stat-pending">
         <span class="stat-label">{{ 'SCHEDULE.STATS.PENDING' | translate }}</span>
-        <span class="stat-value">{{ pendingForDay }}</span>
+        <span class="stat-value">{{ vm.pendingForDay() }}</span>
       </div>
       <div class="stat-card stat-progress">
         <span class="stat-label">{{ 'SCHEDULE.STATS.IN_PROGRESS' | translate }}</span>
-        <span class="stat-value">{{ inProgressForDay }}</span>
+        <span class="stat-value">{{ vm.inProgressForDay() }}</span>
       </div>
       <div class="stat-card stat-completed">
         <span class="stat-label">{{ 'SCHEDULE.STATS.DONE' | translate }}</span>
-        <span class="stat-value">{{ completedForDay }}</span>
+        <span class="stat-value">{{ vm.completedForDay() }}</span>
       </div>
     </div>
 
     <div class="schedule-layout">
 
       <app-mini-calendar
-        [servicesByDate]="servicesByDate"
-        [selectedDate]="selectedDate"
-        (selectedDateChange)="onDateSelected($event)">
+        [servicesByDate]="vm.servicesByDate()"
+        [selectedDate]="vm.selectedDate()"
+        (selectedDateChange)="vm.selectDate($event)">
       </app-mini-calendar>
 
       <div class="schedule-right">
 
         <div class="tabs">
-          <button class="tab" [class.active]="activeTab === 'day'" (click)="changeTab('day')">
+          <button class="tab" [class.active]="vm.activeTab() === 'day'" (click)="vm.changeTab('day')">
             {{ 'SCHEDULE.TABS.DAY' | translate }}
           </button>
-          <button class="tab" [class.active]="activeTab === 'week'" (click)="changeTab('week')">
+          <button class="tab" [class.active]="vm.activeTab() === 'week'" (click)="vm.changeTab('week')">
             {{ 'SCHEDULE.TABS.WEEK' | translate }}
           </button>
-          <button class="tab" [class.active]="activeTab === 'completed'" (click)="changeTab('completed')">
+          <button class="tab" [class.active]="vm.activeTab() === 'completed'" (click)="vm.changeTab('completed')">
             {{ 'SCHEDULE.TABS.DONE' | translate }}
           </button>
         </div>
 
-        @if (activeTab === 'day' && nextService) {
+        @if (vm.activeTab() === 'day' && vm.nextService(); as next) {
           <div class="next-card">
             <div class="next-info">
               <mat-icon>schedule</mat-icon>
@@ -66,20 +66,20 @@
                   {{ 'SCHEDULE.NEXT.IN_MINUTES' | translate: { min: minutesToNext } }}
                 </p>
                 <p class="next-title">
-                  {{ nextService.service }} — {{ nextService.client }}
+                  {{ next.service }} — {{ next.client }}
                 </p>
               </div>
             </div>
 
-            @if (nextService.status === 'pendiente') {
-              <button class="btn-next" [disabled]="!canStartNow(nextService.startableAt)" (click)="startService(nextService)">
+            @if (next.status === 'pendiente') {
+              <button class="btn-next" [disabled]="!canStartNow(next.startableAt)" (click)="startService(next)">
                 {{ 'SCHEDULE.START' | translate }}
               </button>
-              @if (!canStartNow(nextService.startableAt)) {
-                <p class="start-hint">{{ 'OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(nextService.startableAt) } }}</p>
+              @if (!canStartNow(next.startableAt)) {
+                <p class="start-hint">{{ 'OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(next.startableAt) } }}</p>
               }
             } @else {
-              <button class="btn-next" (click)="requestFinish(nextService)">
+              <button class="btn-next" (click)="requestFinish(next)">
                 {{ 'SCHEDULE.FINISH' | translate }}
               </button>
             }
@@ -89,9 +89,9 @@
         <div class="list-card">
 
           <h2 class="list-title">
-            @if (activeTab === 'day') {
+            @if (vm.activeTab() === 'day') {
               {{ 'SCHEDULE.RESERVATIONS_OF' | translate }} {{ readableDate }}
-            } @else if (activeTab === 'week') {
+            } @else if (vm.activeTab() === 'week') {
               {{ 'SCHEDULE.TABS.WEEK' | translate }}
             } @else {
               {{ 'SCHEDULE.TABS.DONE' | translate }}
@@ -99,7 +99,7 @@
           </h2>
 
           <div class="list">
-            @for (r of visibleList; track r.id) {
+            @for (r of vm.visibleList(); track r.id) {
               <div class="reservation-item">
 
                 <div class="reservation-time">

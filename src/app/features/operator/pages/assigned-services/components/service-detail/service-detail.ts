@@ -4,9 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { canStartNow, startFromLabel } from '../../../../../../core/utils/operator-work';
-// modales reutilizables: confirmación y mensaje de estado
-import { ConfirmModal, ConfirmModalData } from '../../../../../../shared/dialogs/confirm-modal/confirm-modal';
+// modal de estado (contacto del cliente) y confirmaciones de iniciar/finalizar
 import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
+import { confirmFinish, confirmStart } from '../../../../components/work-confirm';
 
 @Component({
   selector: 'app-service-detail',
@@ -30,18 +30,16 @@ export class ServiceDetailComponent {
   constructor(private dialog: MatDialog) {}
 
   startService(): void {
-    this.confirmThen(
-      { title: 'ASSIGNED_SERVICES.DETAIL.START_TITLE', message: 'ASSIGNED_SERVICES.DETAIL.START_MESSAGE', confirmText: 'ASSIGNED_SERVICES.DETAIL.START_CONFIRM' },
-      () => this.advance.emit('IN_PROGRESS')
-    );
+    confirmStart(this.dialog, this.service.id).subscribe(confirmed => {
+      if (confirmed) this.advance.emit('IN_PROGRESS');
+    });
   }
 
   // usa los mismos textos de confirmación que "Mi Agenda"
   finishService(): void {
-    this.confirmThen(
-      { title: 'SCHEDULE.FINISH_TITLE', message: 'SCHEDULE.FINISH_MESSAGE', confirmText: 'SCHEDULE.FINISH_CONFIRM' },
-      () => this.advance.emit('COMPLETED')
-    );
+    confirmFinish(this.dialog, this.service.id).subscribe(confirmed => {
+      if (confirmed) this.advance.emit('COMPLETED');
+    });
   }
 
   // muestra los datos de contacto del cliente en el modal de estado (tipo info)
@@ -60,20 +58,5 @@ export class ServiceDetailComponent {
     };
 
     this.dialog.open(StatusModal, { panelClass: 'custom-dialog', data });
-  }
-
-  // pide confirmación; el éxito lo avisa el padre cuando el servidor responde
-  private confirmThen(
-    confirm: Pick<ConfirmModalData, 'title' | 'message' | 'confirmText'>,
-    onConfirm: () => void
-  ): void {
-    const dialogRef = this.dialog.open(ConfirmModal, {
-      panelClass: 'custom-dialog',
-      data: { ...confirm, messageParams: { code: this.service.id }, danger: false } as ConfirmModalData
-    });
-
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) onConfirm();
-    });
   }
 }

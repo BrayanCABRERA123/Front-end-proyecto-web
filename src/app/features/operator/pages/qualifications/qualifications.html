@@ -12,10 +12,10 @@
     </div>
 
     <app-qualification-stats
-      [averageRating]="averageRating"
-      [satisfactionLevel]="satisfactionLevel"
-      [satisfactionPercentage]="satisfactionPercentage"
-      [totalRatings]="totalRatings">
+      [averageRating]="vm.averageRating()"
+      [satisfactionLevel]="vm.satisfactionLevel()"
+      [satisfactionPercentage]="vm.satisfactionPercentage()"
+      [totalRatings]="vm.totalRatings()">
     </app-qualification-stats>
 
     <div class="filters-card">
@@ -29,16 +29,16 @@
             <input
               type="date"
               class="filter-input"
-              [(ngModel)]="dateFilter"
-              [max]="today"/>
+              [(ngModel)]="vm.dateFilter"
+              [max]="vm.today"/>
           </div>
         </div>
 
         <div class="filter-group">
           <label class="filter-label">{{ 'QUALIFICATIONS.FILTER_TYPE' | translate }}</label>
           <div class="select-wrapper">
-            <select class="filter-select" [(ngModel)]="serviceTypeFilter">
-              @for (type of serviceTypes; track type.value) {
+            <select class="filter-select" [(ngModel)]="vm.serviceTypeFilter">
+              @for (type of vm.serviceTypes(); track type.value) {
                 <option [value]="type.value">{{ type.label | translate }}</option>
               }
             </select>
@@ -49,8 +49,8 @@
         <div class="filter-group">
           <label class="filter-label">{{ 'QUALIFICATIONS.FILTER_STARS' | translate }}</label>
           <div class="select-wrapper">
-            <select class="filter-select" [(ngModel)]="starsFilter">
-              @for (star of starOptions; track star.value) {
+            <select class="filter-select" [(ngModel)]="vm.starsFilter">
+              @for (star of vm.starOptions; track star.value) {
                 <option [value]="star.value">{{ star.label | translate }}</option>
               }
             </select>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="filter-actions">
-          <button class="btn-reset" (click)="dateFilter = ''; serviceTypeFilter = ''; starsFilter = ''">
+          <button class="btn-reset" (click)="vm.clearFilters()">
             <mat-icon>refresh</mat-icon>
           </button>
           <button class="btn-filter">
@@ -72,14 +72,14 @@
     </div>
 
     <div class="qualifications-list">
-      @for (rating of filteredRatings; track rating.id) {
+      @for (rating of vm.filteredRatings(); track rating.id) {
         <app-qualification-card
           [rating]="rating"
           [stars]="getStars(rating.rating)">
         </app-qualification-card>
       }
 
-      @if (filteredRatings.length === 0) {
+      @if (vm.filteredRatings().length === 0) {
         <div class="empty-state">
           <mat-icon>star_border</mat-icon>
           <p>{{ 'QUALIFICATIONS.EMPTY' | translate }}</p>

@@ -11,19 +11,19 @@
     </div>
 
     <app-history-stats
-      [completed]="completed"
-      [canceledOrReassigned]="canceledOrReassigned"
-      [totalGenerated]="totalGenerated"
-      [averageRating]="averageRating">
+      [completed]="vm.completed()"
+      [canceledOrReassigned]="vm.canceledOrReassigned()"
+      [totalGenerated]="vm.totalGenerated()"
+      [averageRating]="vm.averageRating()">
     </app-history-stats>
 
     <div class="progress-card">
       <div class="progress-header">
         <span>{{ 'SERVICE_HISTORY.COMPLETION_RATE' | translate }}</span>
-        <strong>{{ completionRate }}%</strong>
+        <strong>{{ vm.completionRate() }}%</strong>
       </div>
       <div class="progress-bar">
-        <div class="progress-fill" [style.width.%]="animatedPercentage"></div>
+        <div class="progress-fill" [style.width.%]="vm.completionRate()"></div>
       </div>
     </div>
 
@@ -37,20 +37,20 @@
             <input
               type="text"
               class="search-input"
-              [(ngModel)]="search"
+              [(ngModel)]="vm.search"
               [placeholder]="'SERVICE_HISTORY.SEARCH_PLACEHOLDER' | translate" />
           </div>
         </div>
 
         <div class="filter-group">
-          <input type="date" class="filter-input" [(ngModel)]="dateFilter" [max]="today" />
+          <input type="date" class="filter-input" [(ngModel)]="vm.dateFilter" [max]="vm.today" />
         </div>
 
         <div class="filter-group">
           <div class="select-wrapper">
-            <select class="filter-select" [(ngModel)]="serviceFilter">
+            <select class="filter-select" [(ngModel)]="vm.serviceFilter">
               <option value="">{{ 'SERVICE_HISTORY.ALL_SERVICES' | translate }}</option>
-              @for (type of serviceTypes; track type) {
+              @for (type of vm.serviceTypes(); track type) {
                 <option [value]="type">{{ type }}</option>
               }
             </select>
@@ -58,7 +58,7 @@
           </div>
         </div>
 
-        <button class="btn-reset" (click)="clearFilters()">
+        <button class="btn-reset" (click)="vm.clearFilters()">
           <mat-icon>refresh</mat-icon>
           {{ 'SERVICE_HISTORY.CLEAR' | translate }}
         </button>
@@ -66,24 +66,24 @@
       </div>
 
       <div class="tabs">
-        <button class="tab" [class.active]="activeTab === 'todos'" (click)="changeTab('todos')">
-          {{ 'SERVICE_HISTORY.TABS.ALL' | translate }} ({{ countTab('todos') }})
+        <button class="tab" [class.active]="vm.activeTab() === 'todos'" (click)="vm.changeTab('todos')">
+          {{ 'SERVICE_HISTORY.TABS.ALL' | translate }} ({{ vm.countTab('todos') }})
         </button>
-        <button class="tab" [class.active]="activeTab === 'finalizado'" (click)="changeTab('finalizado')">
-          {{ 'SERVICE_HISTORY.TABS.DONE' | translate }} ({{ countTab('finalizado') }})
+        <button class="tab" [class.active]="vm.activeTab() === 'finalizado'" (click)="vm.changeTab('finalizado')">
+          {{ 'SERVICE_HISTORY.TABS.DONE' | translate }} ({{ vm.countTab('finalizado') }})
         </button>
-        <button class="tab" [class.active]="activeTab === 'cancelado'" (click)="changeTab('cancelado')">
-          {{ 'SERVICE_HISTORY.TABS.CANCELED' | translate }} ({{ countTab('cancelado') }})
+        <button class="tab" [class.active]="vm.activeTab() === 'cancelado'" (click)="vm.changeTab('cancelado')">
+          {{ 'SERVICE_HISTORY.TABS.CANCELED' | translate }} ({{ vm.countTab('cancelado') }})
         </button>
-        <button class="tab" [class.active]="activeTab === 'reasignado'" (click)="changeTab('reasignado')">
-          {{ 'SERVICE_HISTORY.TABS.REASSIGNED' | translate }} ({{ countTab('reasignado') }})
+        <button class="tab" [class.active]="vm.activeTab() === 'reasignado'" (click)="vm.changeTab('reasignado')">
+          {{ 'SERVICE_HISTORY.TABS.REASSIGNED' | translate }} ({{ vm.countTab('reasignado') }})
         </button>
       </div>
 
     </div>
 
     <app-history-table
-      [services]="filteredServices"
+      [services]="vm.filteredServices()"
       (viewDetail)="viewDetail($event)">
     </app-history-table>
 
