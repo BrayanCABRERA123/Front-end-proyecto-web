@@ -291,8 +291,9 @@ export class CarWashFormComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      // el siguiente paso del flujo es pagar la reserva
-      this.router.navigate(['/client/payment']);
+      // el siguiente paso del flujo es pagar ESTA reserva: sin el id, la pantalla de pago
+      // elegiría la próxima activa, que puede ser otra reserva del cliente
+      this.router.navigate(['/client/payment'], { queryParams: { booking: booking.id } });
     });
   }
 
