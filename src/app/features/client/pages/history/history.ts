@@ -1,27 +1,17 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
-import { HistoryCardComponent } from './components/history-card/history-card';
+import { HistoryCardComponent, RatingRequest } from './components/history-card/history-card';
 import { BookingDetailModal } from './components/booking-detail-modal/booking-detail-modal';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
-import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
-import { BookingApiService } from '../../../../core/services/booking-api';
-import { ClientBookingItem, toClientBookingItem } from '../../../../core/models/booking-view.models';
-import { isActiveStatus } from '../../../../core/utils/booking-display';
-import { apiErrorKey } from '../../../../core/utils/api-error';
-import { todayIso } from '../../../../core/utils/dates';
-// calificaciones que el cliente ya dejó (operations-service)
-import { OperationsApiService } from '../../../../core/services/operations-api';
-// estado de pago de cada reserva (payment-service): decide si se muestra "Pagar"
-import { BookingPaymentState, PaymentsApiService } from '../../../../core/services/payments-api';
-import { catchError, forkJoin, of } from 'rxjs';
+import { ClientBookingItem } from '../../../../core/models/booking-view.models';
+import { ClientHistoryViewModel } from '../../viewmodels/history.viewmodel';
 
-type HistoryFilter = 'todas' | 'activas' | 'completadas' | 'canceladas';
-
+// vista del historial del cliente: los datos, filtros y acciones están en ClientHistoryViewModel
 @Component({
   selector: 'app-history',
   standalone: true,
@@ -33,71 +23,17 @@ type HistoryFilter = 'todas' | 'activas' | 'completadas' | 'canceladas';
     MatIconModule,
     TranslateModule
   ],
+  providers: [ClientHistoryViewModel],
   templateUrl: './history.html',
   styleUrl: './history.scss'
 })
 export class HistoryComponent implements OnInit {
 
-  // tope de los filtros de fecha: no hay historial del futuro
-  readonly today = todayIso();
-
-  private readonly bookingApi = inject(BookingApiService);
-  private readonly changes = inject(ChangeDetectorRef);
+  readonly vm = inject(ClientHistoryViewModel);
   private readonly dialog = inject(MatDialog);
-  private readonly feedback = inject(FeedbackService);
-  private readonly translate = inject(TranslateService);
-  private readonly operations = inject(OperationsApiService);
-  private readonly paymentsApi = inject(PaymentsApiService);
-
-  // reservas reales del cliente (booking-service)
-  bookings: ClientBookingItem[] = [];
-  loading = false;
-  loadError: string | null = null;
-
-  // filtros
-  activeFilter: HistoryFilter = 'todas';
-  dateFrom = '';
-  dateTo = '';
-  search = '';
 
   ngOnInit(): void {
-    this.load();
-  }
-
-  load(): void {
-    this.loading = true;
-    this.loadError = null;
-    // si operations-service o payment-service no responden, las reservas se muestran igual
-    // (sin calificaciones o sin estado de pago)
-    forkJoin({
-      bookings: this.bookingApi.myBookings(),
-      ratings: this.operations.givenRatings().pipe(catchError(() => of([]))),
-      payments: this.paymentsApi.myBookings().pipe(catchError(() => of([] as BookingPaymentState[])))
-    }).subscribe({
-      next: ({ bookings, ratings, payments }) => {
-        const byBooking = new Map(ratings.map(r => [r.bookingId, r]));
-        const paymentByBooking = new Map(payments.map(p => [p.bookingId, p]));
-        this.bookings = bookings.map(b => {
-          const item = toClientBookingItem(b, paymentByBooking.get(b.id) ?? null);
-          const given = byBooking.get(item.id);
-          if (given) {
-            item.rating = given.rating;
-            item.ratingComment = given.comment ?? undefined;
-            item.ratingOperator = given.operatorName || undefined;
-          }
-          return item;
-        })
-          // de la más nueva a la más antigua (fecha y hora de la reserva)
-          .sort((a, b) => `${b.date} ${b.timeRange}`.localeCompare(`${a.date} ${a.timeRange}`));
-        this.loading = false;
-        this.changes.markForCheck();
-      },
-      error: (error) => {
-        this.loading = false;
-        this.loadError = apiErrorKey(error);
-        this.changes.markForCheck();
-      }
-    });
+    this.vm.load();
   }
 
   // clic en la tarjeta: detalle de la reserva con el botón "Ir al pago"
@@ -105,7 +41,7 @@ export class HistoryComponent implements OnInit {
     this.dialog.open(BookingDetailModal, { panelClass: 'custom-dialog', data: item });
   }
 
-  // confirmación + cancelación real (POST /bookings/{id}/cancel)
+  // pide confirmación antes de cancelar (acción irreversible)
   cancelBooking(item: ClientBookingItem): void {
     const data: ConfirmModalData = {
       title: 'HISTORY.CANCEL_CONFIRM.TITLE',
@@ -117,50 +53,11 @@ export class HistoryComponent implements OnInit {
     };
 
     this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data }).afterClosed().subscribe(confirmed => {
-      if (!confirmed) return;
-
-      this.bookingApi.cancelMyBooking(item.id).subscribe({
-        next: () => {
-          this.feedback.success(
-            'HISTORY.CANCEL_SUCCESS.TITLE',
-            'HISTORY.CANCEL_SUCCESS.MESSAGE',
-            { messageParams: { code: item.code } }
-          );
-          // vuelve a pedir la lista para reflejar el estado cancelado
-          this.load();
-        },
-        error: (error) => {
-          this.feedback.error('COMMON.ERROR', apiErrorKey(error));
-          this.changes.markForCheck();
-        }
-      });
+      if (confirmed) this.vm.cancel(item);
     });
   }
 
-  // filtro por estado + rango de fechas + texto (código, placa, vehículo o servicio)
-  get filteredBookings(): ClientBookingItem[] {
-    return this.bookings.filter(item => {
-      if (this.activeFilter === 'activas' && !isActiveStatus(item.status)) return false;
-      if (this.activeFilter === 'completadas' && item.status !== 'COMPLETED') return false;
-      if (this.activeFilter === 'canceladas' && item.status !== 'CANCELLED' && item.status !== 'NO_SHOW') return false;
-
-      // booking.date ya viene en aaaa-mm-dd, igual que los inputs de fecha
-      if (this.dateFrom && item.date < this.dateFrom) return false;
-      if (this.dateTo && item.date > this.dateTo) return false;
-
-      if (this.search) {
-        const text = this.search.toLowerCase();
-        const haystack = [
-          item.code,
-          item.plate,
-          item.vehicle,
-          ...item.services,
-          this.translate.instant('STATUS.' + item.status)
-        ].join(' ').toLowerCase();
-        return haystack.includes(text);
-      }
-
-      return true;
-    });
+  rateBooking(request: RatingRequest): void {
+    this.vm.rate(request.booking, request.rating, request.comment);
   }
 }

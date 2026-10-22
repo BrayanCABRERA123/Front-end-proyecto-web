@@ -14,14 +14,14 @@
       </div>
 
       <div class="vehicle-options">
-        @if (vehiclesLoading) {
+        @if (vm.vehiclesLoading()) {
           <p class="vehicle-loading">{{ 'RESERVE.STEP1.LOADING' | translate }}</p>
         } @else {
-          @for (v of vehicles; track v.id) {
+          @for (v of vm.vehicles(); track v.id) {
             <button
               class="vehicle-option"
-              [class.selected]="selectedVehicleId === v.id"
-              (click)="selectVehicle(v.id)">
+              [class.selected]="vm.selectedVehicleId() === v.id"
+              (click)="vm.selectVehicle(v.id)">
               <div class="vehicle-icon">
                 <mat-icon>{{ v.vehicleType === 'MOTO' ? 'two_wheeler' : (v.vehicleType === 'TRUCK' ? 'local_shipping' : 'directions_car') }}</mat-icon>
               </div>
@@ -51,17 +51,17 @@
       </div>
 
       <!-- los precios dependen del tipo de vehículo: primero se escoge el vehículo -->
-      @if (!selectedVehicleId) {
+      @if (!vm.selectedVehicleId()) {
         <p class="vehicle-loading">{{ 'RESERVE.STEP2.CHOOSE_VEHICLE_FIRST' | translate }}</p>
-      } @else if (servicesLoading) {
+      } @else if (vm.servicesLoading()) {
         <p class="vehicle-loading">{{ 'RESERVE.STEP2.LOADING' | translate }}</p>
       } @else {
         <div class="service-options">
-          @for (s of services; track s.id) {
+          @for (s of vm.services(); track s.id) {
             <button
               class="service-option"
-              [class.selected]="selectedServiceId === s.id"
-              (click)="selectService(s.id)">
+              [class.selected]="vm.selectedServiceId() === s.id"
+              (click)="vm.selectService(s.id)">
               <p class="service-name">{{ s.name }}</p>
               <p class="service-price">{{ priceOf(s) | copPrice }}</p>
               <p class="service-time"><mat-icon>schedule</mat-icon> {{ 'RESERVE.MINUTES' | translate:{ count: minutesOf(s) } }}</p>
@@ -95,7 +95,7 @@
             <mat-icon class="label-icon">calendar_today</mat-icon>
           </label>
           <div class="input-wrapper">
-            <input type="date" class="form-input" [(ngModel)]="date" (ngModelChange)="onDateChange()" [min]="minDate" [max]="maxDate" />
+            <input type="date" class="form-input" [(ngModel)]="vm.date" (ngModelChange)="vm.onDateChange()" [min]="vm.minDate" [max]="vm.maxDate" />
           </div>
         </div>
 
@@ -105,11 +105,11 @@
             <mat-icon class="label-icon">schedule</mat-icon>
           </label>
           <div class="select-wrapper">
-            <select class="form-select" [(ngModel)]="time" (ngModelChange)="onTimeChange()" [disabled]="timesLoading || !availableTimes.length">
+            <select class="form-select" [(ngModel)]="vm.time" (ngModelChange)="vm.onTimeChange()" [disabled]="vm.timesLoading() || !vm.availableTimes().length">
               <option value="" disabled selected>
-                {{ (timesLoading ? 'RESERVE.LOADING_TIMES' : (dayClosed ? 'RESERVE.DAY_CLOSED' : (date && selectedServiceId && !availableTimes.length ? 'RESERVE.NO_TIMES' : 'RESERVE.SELECT_TIME'))) | translate }}
+                {{ (vm.timesLoading() ? 'RESERVE.LOADING_TIMES' : (vm.dayClosed() ? 'RESERVE.DAY_CLOSED' : (vm.date() && vm.selectedServiceId() && !vm.availableTimes().length ? 'RESERVE.NO_TIMES' : 'RESERVE.SELECT_TIME'))) | translate }}
               </option>
-              @for (h of availableTimes; track h) {
+              @for (h of vm.availableTimes(); track h) {
                 <option [value]="h">{{ h }}</option>
               }
             </select>
@@ -119,18 +119,18 @@
       </div>
 
       <!-- RF-010: operario (opcional). Sin preferencia, el lavadero asigna uno libre (RF-008) -->
-      @if (time) {
+      @if (vm.time()) {
         <div class="form-group">
           <label class="form-label">
             {{ 'RESERVE.OPERATOR.LABEL' | translate }}
             <mat-icon class="label-icon">engineering</mat-icon>
           </label>
           <div class="select-wrapper">
-            <select class="form-select" [(ngModel)]="preferredOperatorId" [disabled]="operatorsLoading">
+            <select class="form-select" [(ngModel)]="vm.preferredOperatorId" [disabled]="vm.operatorsLoading()">
               <option [ngValue]="null">
-                {{ (operatorsLoading ? 'RESERVE.OPERATOR.LOADING' : 'RESERVE.OPERATOR.ANY') | translate }}
+                {{ (vm.operatorsLoading() ? 'RESERVE.OPERATOR.LOADING' : 'RESERVE.OPERATOR.ANY') | translate }}
               </option>
-              @for (o of operators; track o.operatorId) {
+              @for (o of vm.operators(); track o.operatorId) {
                 <option [ngValue]="o.operatorId">
                   {{ o.firstName }}{{ o.averageRating != null ? ' · ★ ' + o.averageRating + ' (' + o.ratingsCount + ')' : '' }}
                 </option>
@@ -138,7 +138,7 @@
             </select>
             <mat-icon class="select-icon">expand_more</mat-icon>
           </div>
-          <small class="form-hint">{{ (operators.length || operatorsLoading ? 'RESERVE.OPERATOR.HINT' : 'RESERVE.OPERATOR.NONE_FREE') | translate }}</small>
+          <small class="form-hint">{{ (vm.operators().length || vm.operatorsLoading() ? 'RESERVE.OPERATOR.HINT' : 'RESERVE.OPERATOR.NONE_FREE') | translate }}</small>
         </div>
       }
 
@@ -147,8 +147,8 @@
         <mat-icon>storefront</mat-icon>
         <div>
           <p class="location-title">{{ 'RESERVE.LOCATION.TITLE' | translate }}</p>
-          <p class="location-name">{{ location?.tradeName ?? '—' }}</p>
-          <p class="location-address">{{ location?.address ?? '' }}</p>
+          <p class="location-name">{{ vm.location()?.tradeName ?? '—' }}</p>
+          <p class="location-address">{{ vm.location()?.address ?? '' }}</p>
         </div>
       </div>
     </div>
@@ -161,43 +161,43 @@
 
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.VEHICLE' | translate }}</span>
-      <strong>{{ vehicle ? (vehicle.brand + ' ' + vehicle.model) : '—' }}</strong>
+      <strong>{{ vm.vehicle() ? (vm.vehicle()!.brand + ' ' + vm.vehicle()!.model) : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.PLATE' | translate }}</span>
-      <strong>{{ vehicle ? vehicle.licensePlateFormatted : '—' }}</strong>
+      <strong>{{ vm.vehicle()?.licensePlateFormatted ?? '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.SERVICE' | translate }}</span>
-      <strong>{{ service?.name ?? '—' }}</strong>
+      <strong>{{ vm.service()?.name ?? '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.DURATION' | translate }}</span>
-      <strong>{{ service ? ('RESERVE.MINUTES' | translate:{ count: minutesOf(service) }) : '—' }}</strong>
+      <strong>{{ vm.service() ? ('RESERVE.MINUTES' | translate:{ count: minutesOf(vm.service()!) }) : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.POINTS' | translate }}</span>
-      <strong>{{ service && service.loyaltyPoints > 0 ? ('RESERVE.POINTS' | translate:{ count: service.loyaltyPoints }) : '—' }}</strong>
+      <strong>{{ (vm.service()?.loyaltyPoints ?? 0) > 0 ? ('RESERVE.POINTS' | translate:{ count: vm.service()!.loyaltyPoints }) : '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.DATE' | translate }}</span>
-      <strong>{{ date || '—' }}</strong>
+      <strong>{{ vm.date() || '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.TIME' | translate }}</span>
-      <strong>{{ time || '—' }}</strong>
+      <strong>{{ vm.time() || '—' }}</strong>
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.CAR_WASH' | translate }}</span>
-      <strong>{{ location?.tradeName ?? '—' }}</strong>
+      <strong>{{ vm.location()?.tradeName ?? '—' }}</strong>
     </div>
 
     <div class="summary-total">
       <span><mat-icon>attach_money</mat-icon> {{ 'RESERVE.SUMMARY.TOTAL' | translate }}</span>
-      <strong>{{ serviceTotal ? (serviceTotal | copPrice) : '$—' }}</strong>
+      <strong>{{ vm.serviceTotal() ? (vm.serviceTotal() | copPrice) : '$—' }}</strong>
     </div>
 
-    <button class="btn-primary" [disabled]="!isFormValid" (click)="onSubmit()">
+    <button class="btn-primary" [disabled]="!vm.isFormValid()" (click)="onSubmit()">
       {{ 'RESERVE.SUMMARY.SUBMIT' | translate }} <mat-icon>arrow_forward</mat-icon>
     </button>
 

@@ -80,6 +80,8 @@ export class PaymentViewModel {
 
   // estado del pago: pendiente, en verificación o aprobado
   readonly flowStep = signal<FlowStep>('PENDING');
+  // línea de soporte del lavadero (datos del negocio); vacía si booking-service no responde
+  readonly supportLine = signal('');
   // motivo del último pago rechazado de esta reserva (para que el cliente sepa qué corregir)
   readonly lastRejectionReason = signal<string | null>(null);
 
@@ -175,6 +177,10 @@ export class PaymentViewModel {
     this.bookingId = bookingId;
     this.loadAccounts();
     this.loadBooking();
+    this.bookingApi.establishment().subscribe({
+      next: business => this.supportLine.set(business.supportLine || business.phone || ''),
+      error: () => undefined
+    });
   }
 
   isSelected(method: PaymentMethod): boolean {

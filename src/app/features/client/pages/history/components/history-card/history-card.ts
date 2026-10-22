@@ -1,19 +1,20 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RatingModalComponent, RatingModalData, RatingResult } from '../../../../../../shared/dialogs/rating-modal/rating-modal';
-// modal reutilizable para mostrar mensajes de éxito
-import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
 import { Router } from '@angular/router';
 // formato de precio en pesos colombianos
 import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
 import { ClientBookingItem } from '../../../../../../core/models/booking-view.models';
-// la calificación se guarda en operations-service
-import { OperationsApiService } from '../../../../../../core/services/operations-api';
-import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
-import { apiErrorKey } from '../../../../../../core/utils/api-error';
+
+// lo que el cliente calificó; la página lo guarda en operations-service con su ViewModel
+export interface RatingRequest {
+  booking: ClientBookingItem;
+  rating: number;
+  comment: string | null;
+}
 
 @Component({
   selector: 'app-history-card',
@@ -33,14 +34,12 @@ export class HistoryCardComponent {
   // clic en la tarjeta: el padre abre el detalle
   @Output() open = new EventEmitter<ClientBookingItem>();
 
-  // inyeccion de servicios
+  // el cliente calificó: el padre la guarda y actualiza la tarjeta
+  @Output() rate = new EventEmitter<RatingRequest>();
+
   constructor(
-    private translate: TranslateService,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private operations: OperationsApiService,
-    private feedback: FeedbackService
+    private router: Router
   ) { }
 
   // estado del servicio para el color del ícono
@@ -76,31 +75,10 @@ export class HistoryCardComponent {
       comment: booking.ratingComment
     };
 
-    const dialogRef = this.dialog.open(RatingModalComponent, {
-      width: '600px',
-      data
-    });
-
-    dialogRef.afterClosed().subscribe((result?: RatingResult) => {
-      if (!result) return;
-
-      this.operations.rate(booking.id, result.rating, result.comment || null).subscribe({
-        next: saved => {
-          booking.rating = saved.rating;
-          booking.ratingComment = saved.comment ?? undefined;
-
-          // la app es zoneless: avisamos a Angular que redibuje la tarjeta
-          this.cdr.markForCheck();
-
-          const status: StatusModalData = { title: 'RATINGS.SUCCESS_TITLE', message: 'RATINGS.SUCCESS_MESSAGE' };
-          this.dialog.open(StatusModal, {
-            panelClass: 'custom-dialog',
-            data: status
-          });
-        },
-        error: error => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+    this.dialog.open(RatingModalComponent, { width: '600px', data })
+      .afterClosed()
+      .subscribe((result?: RatingResult) => {
+        if (result) this.rate.emit({ booking, rating: result.rating, comment: result.comment || null });
       });
-    });
-
   }
 }

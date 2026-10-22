@@ -10,7 +10,7 @@
     <div class="dashboard-header">
 
       <div>
-        <h1>{{ 'DASHBOARD.HELLO' | translate:{ name: userName } }}</h1>
+        <h1>{{ 'DASHBOARD.HELLO' | translate:{ name: vm.userName() } }}</h1>
         <p>{{ today | longDate }} · <span class="accent">{{ 'DASHBOARD.SUBTITLE' | translate }}</span></p>
       </div>
 
@@ -27,7 +27,7 @@
 
     <!-- Estadísticas rápidas -->
     <div class="stats-grid">
-      <div class="stat-card" *ngFor="let stat of stats">
+      <div class="stat-card" *ngFor="let stat of vm.stats()">
         <div class="stat-icon">
           <mat-icon>{{ stat.icon }}</mat-icon>
         </div>
@@ -45,22 +45,22 @@
             <mat-icon>schedule</mat-icon>
             <h2>{{ 'DASHBOARD.NEXT_SERVICE.TITLE' | translate }}</h2>
           </div>
-          <span class="badge" *ngIf="nextService" [class]="'badge-' + nextService.status.toLowerCase()">
-            {{ ('STATUS.' + nextService.status) | translate }}
+          <span class="badge" *ngIf="vm.nextService() as next" [class]="'badge-' + next.status.toLowerCase()">
+            {{ ('STATUS.' + next.status) | translate }}
           </span>
         </div>
 
-        <div class="next-service-body" *ngIf="nextService; else noNextService">
+        <div class="next-service-body" *ngIf="vm.nextService() as next; else noNextService">
           <div class="next-service-info">
             <p class="next-service-name">
-              {{ nextService.serviceName }} —
-              {{ nextService.vehicle }} · {{ nextService.plate }}
+              {{ next.serviceName }} —
+              {{ next.vehicle }} · {{ next.plate }}
             </p>
-            <p class="next-service-date">{{ nextService.date }}</p>
+            <p class="next-service-date">{{ next.date }}</p>
 
             <div class="next-service-meta">
-              <span><mat-icon>storefront</mat-icon> {{ location?.tradeName ?? '—' }} · {{ location?.address ?? '' }}</span>
-              <span><mat-icon>person</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ nextService.operator || '—' }}</span>
+              <span><mat-icon>storefront</mat-icon> {{ vm.location()?.tradeName ?? '—' }} · {{ vm.location()?.address ?? '' }}</span>
+              <span><mat-icon>person</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ next.operator || '—' }}</span>
             </div>
           </div>
 
@@ -73,12 +73,12 @@
           </div>
         </ng-template>
 
-        <div class="progress-row" *ngIf="nextService">
+        <div class="progress-row" *ngIf="vm.nextService()">
           <span>{{ 'DASHBOARD.NEXT_SERVICE.PROGRESS' | translate }}</span>
-          <span>{{ nextServiceProgress }}%</span>
+          <span>{{ vm.nextServiceProgress() }}%</span>
         </div>
-        <div class="progress-bar" *ngIf="nextService">
-          <div class="progress-fill" [style.width.%]="nextServiceProgress"></div>
+        <div class="progress-bar" *ngIf="vm.nextService()">
+          <div class="progress-fill" [style.width.%]="vm.nextServiceProgress()"></div>
         </div>
       </div>
 
@@ -103,13 +103,13 @@
       </div>
 
       <div class="benefits-grid">
-        <div class="benefit-item" *ngFor="let benefit of benefits">
+        <div class="benefit-item" *ngFor="let benefit of vm.benefits()">
           <p class="benefit-title">{{ benefit.title }}</p>
-          <p class="benefit-desc">{{ benefit.description }}</p>
+          <p class="benefit-desc">{{ (benefit.unlocked ? 'DASHBOARD.BENEFITS.UNLOCKED' : 'DASHBOARD.BENEFITS.LOCKED') | translate:{ points: benefit.pointsLeft } }}</p>
         </div>
       </div>
 
-      <div class="loyalty-progress" *ngIf="loyalty; else noLoyalty">
+      <div class="loyalty-progress" *ngIf="vm.loyalty() as loyalty; else noLoyalty">
         <div class="progress-row">
           @if (loyalty.allUnlocked) {
             <span>{{ 'DASHBOARD.BENEFITS.ALL_UNLOCKED' | translate:{ points: loyalty.current } }}</span>
