@@ -104,4 +104,19 @@ describe('Payment', () => {
     expect(vm.totalToPay()).toBe(20000);
     expect(vm.missingRequirements()).toEqual(['PAYMENT.CONFIRM.MISSING.RECEIPT', 'PAYMENT.CONFIRM.MISSING.REFERENCE']);
   });
+
+  it('shows "step 2 of 2" only when there is a booking to pay', async () => {
+    http.match(req => req.url.endsWith('/payment-accounts'))[0].flush([nequi(1, 'Lavadero Principal')]);
+    http.match(req => req.url.endsWith('/bookings/me'))[0].flush([]);
+    await fixture.whenStable();
+    const html: HTMLElement = fixture.nativeElement;
+
+    expect(html.querySelector('.step-pill')).toBeNull();
+
+    vm.booking.set({ id: 9 } as BookingResponse);
+    vm.reservationCode.set('RES-9');
+    await fixture.whenStable();
+
+    expect(html.querySelector('.step-pill')?.textContent).toContain('#RES-9');
+  });
 });

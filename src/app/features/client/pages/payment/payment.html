@@ -7,10 +7,13 @@
   <main class="home-content">
 
     <div class="payment-header">
-      <span class="step-pill">
-        <mat-icon>check_circle</mat-icon>
-        {{ 'PAYMENT.STEP' | translate }} · #{{ vm.reservationCode() }}
-      </span>
+      <!-- "Paso 2 de 2" solo cuando ya hay una reserva para pagar -->
+      @if (vm.booking()) {
+        <span class="step-pill">
+          <mat-icon>check_circle</mat-icon>
+          {{ 'PAYMENT.STEP' | translate }} · #{{ vm.reservationCode() }}
+        </span>
+      }
       <h1>{{ 'PAYMENT.TITLE' | translate }}</h1>
       <p>{{ 'PAYMENT.SUBTITLE' | translate }}</p>
     </div>
