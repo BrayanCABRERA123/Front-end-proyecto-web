@@ -3,9 +3,9 @@
 
   <main class="home-content">
 
-    @if (loading) {
+    @if (vm.loading) {
       <div class="card"><p class="muted">{{ 'COMMON.LOADING' | translate }}</p></div>
-    } @else if (!operator) {
+    } @else if (!vm.operator) {
       <div class="card">
         <app-empty-state
           variant="error"
@@ -29,23 +29,23 @@
         <span>/</span>
         <a (click)="goToOperatorsList()">{{ 'ADMIN_PAGES.OPERATORS.TITLE' | translate }}</a>
         <span>/</span>
-        <a (click)="goBack()">{{ 'OPERATOR_DETAIL.BREADCRUMB_AVAILABILITY' | translate:{ name: operator.name } }}</a>
+        <a (click)="goBack()">{{ 'OPERATOR_DETAIL.BREADCRUMB_AVAILABILITY' | translate:{ name: vm.operator.name } }}</a>
       </nav>
 
       <!-- encabezado: la navegación por semanas sirve a las vistas semana y día -->
       <div class="week-header">
-        @if (view !== 'month') {
+        @if (vm.view !== 'month') {
           <div class="week-nav">
-            <button class="nav-btn" (click)="shiftWeek(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_WEEK' | translate">
+            <button class="nav-btn" (click)="vm.shiftWeek(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_WEEK' | translate">
               <mat-icon>chevron_left</mat-icon>
             </button>
-            <button class="today-btn" (click)="goToToday()">
+            <button class="today-btn" (click)="vm.goToToday()">
               {{ 'OPERATOR_CALENDAR.TODAY' | translate }}
             </button>
             <strong>
-              {{ 'OPERATOR_CALENDAR.WEEK_LABEL' | translate:{ week: weekLabelContent.week, from: weekLabelContent.from, to: weekLabelContent.to } }}
+              {{ 'OPERATOR_CALENDAR.WEEK_LABEL' | translate:{ week: vm.weekLabelContent.week, from: vm.weekLabelContent.from, to: vm.weekLabelContent.to } }}
             </strong>
-            <button class="nav-btn" (click)="shiftWeek(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_WEEK' | translate">
+            <button class="nav-btn" (click)="vm.shiftWeek(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_WEEK' | translate">
               <mat-icon>chevron_right</mat-icon>
             </button>
           </div>
@@ -53,13 +53,13 @@
 
         <span class="full-day-chip">
           <mat-icon>schedule</mat-icon>
-          {{ 'OPERATOR_CALENDAR.FULL_DAY' | translate:{ from: fullDayContent.from, to: fullDayContent.to } }}
+          {{ 'OPERATOR_CALENDAR.FULL_DAY' | translate:{ from: vm.fullDayContent.from, to: vm.fullDayContent.to } }}
         </span>
 
         <div class="view-toggle">
-          <button [class.view-toggle__btn--active]="view === 'week'" class="view-toggle__btn" (click)="setView('week')">{{ 'OPERATOR_CALENDAR.VIEW.WEEK' | translate }}</button>
-          <button [class.view-toggle__btn--active]="view === 'day'" class="view-toggle__btn" (click)="setView('day')">{{ 'OPERATOR_CALENDAR.VIEW.DAY' | translate }}</button>
-          <button [class.view-toggle__btn--active]="view === 'month'" class="view-toggle__btn" (click)="setView('month')">{{ 'OPERATOR_CALENDAR.VIEW.MONTH' | translate }}</button>
+          <button [class.view-toggle__btn--active]="vm.view === 'week'" class="view-toggle__btn" (click)="vm.setView('week')">{{ 'OPERATOR_CALENDAR.VIEW.WEEK' | translate }}</button>
+          <button [class.view-toggle__btn--active]="vm.view === 'day'" class="view-toggle__btn" (click)="vm.setView('day')">{{ 'OPERATOR_CALENDAR.VIEW.DAY' | translate }}</button>
+          <button [class.view-toggle__btn--active]="vm.view === 'month'" class="view-toggle__btn" (click)="vm.setView('month')">{{ 'OPERATOR_CALENDAR.VIEW.MONTH' | translate }}</button>
         </div>
       </div>
 
@@ -70,17 +70,17 @@
         <span><i class="dot dot--off"></i> {{ 'OPERATOR_CALENDAR.LEGEND.OFF' | translate }}</span>
       </div>
 
-      @if (view === 'week') {
+      @if (vm.view === 'week') {
         <div class="week-grid">
-          @for (dayIndex of dayIndexes; track dayIndex) {
-            <div class="day-column" [class.day-column--today]="isToday(dayIndex)" [class.day-column--past]="isPast(dayIndex)">
+          @for (dayIndex of vm.dayIndexes; track dayIndex) {
+            <div class="day-column" [class.day-column--today]="vm.isToday(dayIndex)" [class.day-column--past]="vm.isPast(dayIndex)">
               <div class="day-column__header">
-                <span>{{ dayLabel(dayIndex) }}</span>
-                <small>{{ dayDateLabel(dayIndex) }}</small>
+                <span>{{ vm.dayLabel(dayIndex) }}</span>
+                <small>{{ vm.dayDateLabel(dayIndex) }}</small>
               </div>
 
               <div class="day-column__body">
-                @for (entry of entriesForDay(dayIndex); track $index) {
+                @for (entry of vm.entriesForDay(dayIndex); track $index) {
                   <div [class]="'block block--' + entry.type">
                     @if (entry.startTime) { <span class="block__time">{{ entry.startTime }} - {{ entry.endTime }}</span> }
                     <span class="block__label">{{ entry.label }}</span>
@@ -94,24 +94,24 @@
             </div>
           }
         </div>
-      } @else if (view === 'day') {
+      } @else if (vm.view === 'day') {
         <div class="card day-view">
           <div class="day-view__picker">
-            @for (dayIndex of dayIndexes; track dayIndex) {
+            @for (dayIndex of vm.dayIndexes; track dayIndex) {
               <button
                 class="day-chip"
-                [class.day-chip--active]="selectedDayIndex === dayIndex"
-                [class.day-chip--today]="isToday(dayIndex)"
-                [class.day-chip--past]="isPast(dayIndex)"
-                (click)="selectedDayIndex = dayIndex">
-                {{ dayLabel(dayIndex) }}
-                <small>{{ dayDateLabel(dayIndex) }}</small>
+                [class.day-chip--active]="vm.selectedDayIndex === dayIndex"
+                [class.day-chip--today]="vm.isToday(dayIndex)"
+                [class.day-chip--past]="vm.isPast(dayIndex)"
+                (click)="vm.selectedDayIndex = dayIndex">
+                {{ vm.dayLabel(dayIndex) }}
+                <small>{{ vm.dayDateLabel(dayIndex) }}</small>
               </button>
             }
           </div>
 
           <div class="day-view__column">
-            @for (entry of entriesForDay(selectedDayIndex); track $index) {
+            @for (entry of vm.entriesForDay(vm.selectedDayIndex); track $index) {
               <div [class]="'block block--' + entry.type">
                 @if (entry.startTime) { <span class="block__time">{{ entry.startTime }} - {{ entry.endTime }}</span> }
                 <span class="block__label">{{ entry.label }}</span>
@@ -127,14 +127,14 @@
       } @else {
         <div class="card month-view">
           <div class="month-view__header">
-            <button class="nav-btn" (click)="shiftMonth(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_MONTH' | translate">
+            <button class="nav-btn" (click)="vm.shiftMonth(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_MONTH' | translate">
               <mat-icon>chevron_left</mat-icon>
             </button>
-            <button class="today-btn" (click)="goToToday()">
+            <button class="today-btn" (click)="vm.goToToday()">
               {{ 'OPERATOR_CALENDAR.TODAY' | translate }}
             </button>
-            <strong>{{ monthLabel }}</strong>
-            <button class="nav-btn" (click)="shiftMonth(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_MONTH' | translate">
+            <strong>{{ vm.monthLabel }}</strong>
+            <button class="nav-btn" (click)="vm.shiftMonth(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_MONTH' | translate">
               <mat-icon>chevron_right</mat-icon>
             </button>
           </div>
@@ -146,7 +146,7 @@
           </div>
 
           <div class="month-view__grid">
-            @for (cell of monthCells; track $index) {
+            @for (cell of vm.monthCells; track $index) {
               <div
                 class="month-cell"
                 [class.month-cell--empty]="cell.day === null"

@@ -7,14 +7,14 @@
       <div class="header-title">
         <h1>{{ 'NOTIFICATIONS.CENTER_TITLE' | translate }}</h1>
 
-        @if (totalUnread > 0) {
+        @if (vm.totalUnread() > 0) {
           <span class="unread-pill">
-            {{ totalUnread }} {{ 'NOTIFICATIONS.UNREAD_PLURAL' | translate }}
+            {{ vm.totalUnread() }} {{ 'NOTIFICATIONS.UNREAD_PLURAL' | translate }}
           </span>
         }
       </div>
 
-      <button class="btn-mark-all" (click)="markAllAsRead()">
+      <button class="btn-mark-all" (click)="vm.markAllAsRead()">
         <mat-icon>done_all</mat-icon>
         {{ 'NOTIFICATIONS.MARK_ALL_READ' | translate }}
       </button>
@@ -34,18 +34,18 @@
 
   <!-- PESTAÑAS DE CATEGORÍA -->
   <div class="tabs">
-    @for (tab of tabs; track tab.key) {
+    @for (tab of vm.tabs; track tab.key) {
       <button
         type="button"
         class="tab"
-        [class.active]="activeTab === tab.key"
-        (click)="changeTab(tab.key)">
+        [class.active]="vm.activeTab() === tab.key"
+        (click)="vm.changeTab(tab.key)">
 
         <mat-icon>{{ tab.icon }}</mat-icon>
         {{ tab.label | translate }}
 
-        @if (countUnread(tab.key) > 0) {
-          <span class="tab-count">{{ countUnread(tab.key) }}</span>
+        @if (vm.countUnread(tab.key) > 0) {
+          <span class="tab-count">{{ vm.countUnread(tab.key) }}</span>
         }
       </button>
     }
@@ -65,7 +65,7 @@
         </label>
 
         <div class="select-wrapper">
-          <select class="filter-select" [(ngModel)]="statusFilter">
+          <select class="filter-select" [(ngModel)]="vm.statusFilter">
             <option value="all">{{ 'ASSIGNED_SERVICES.FILTERS.ALL' | translate }}</option>
             <option value="read">{{ 'NOTIFICATIONS.READ' | translate }}</option>
             <option value="unread">{{ 'NOTIFICATIONS.UNREAD' | translate }}</option>
@@ -82,12 +82,12 @@
         <div class="date-range">
           <div class="date-group">
             <span class="date-label">{{ 'HISTORY.FROM' | translate }}</span>
-            <input type="date" class="filter-input" [(ngModel)]="dateFrom" [max]="dateTo || today">
+            <input type="date" class="filter-input" [(ngModel)]="vm.dateFrom" [max]="vm.dateTo() || today">
           </div>
           <span class="date-sep">→</span>
           <div class="date-group">
             <span class="date-label">{{ 'HISTORY.TO' | translate }}</span>
-            <input type="date" class="filter-input" [(ngModel)]="dateTo" [min]="dateFrom" [max]="today">
+            <input type="date" class="filter-input" [(ngModel)]="vm.dateTo" [min]="vm.dateFrom()" [max]="today">
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@
       <div class="filter-actions">
 
         <!-- limpia estado y fechas -->
-        <button class="btn-reset" (click)="resetFilters()">
+        <button class="btn-reset" (click)="vm.resetFilters()">
           <mat-icon>refresh</mat-icon>
         </button>
 
@@ -107,7 +107,7 @@
   <!-- LISTA -->
   <div class="list">
 
-    @for (n of filteredNotifications; track n.id) {
+    @for (n of vm.filteredNotifications(); track n.id) {
 
       <!-- clic en la notificación = ver el detalle (y queda leída) -->
       <div class="item" [class.unread]="!n.read" (click)="viewDetail(n)">
@@ -142,12 +142,12 @@
           <span class="date">{{ n.date | date: 'dd/MM/yyyy' }} - {{ n.time }}</span>
 
           @if (n.read) {
-            <button class="btn-toggle" (click)="$event.stopPropagation(); markAsUnread(n)">
+            <button class="btn-toggle" (click)="$event.stopPropagation(); vm.markAsUnread(n)">
               <mat-icon>mail</mat-icon>
               {{ 'NOTIFICATIONS.MARK_UNREAD' | translate }}
             </button>
           } @else {
-            <button class="btn-toggle unread-action" (click)="$event.stopPropagation(); markAsRead(n)">
+            <button class="btn-toggle unread-action" (click)="$event.stopPropagation(); vm.markAsRead(n)">
               <mat-icon>done_all</mat-icon>
               {{ 'NOTIFICATIONS.MARK_READ' | translate }}
             </button>
@@ -168,14 +168,14 @@
 
       <!-- cargando, error del backend o bandeja vacía -->
       <div class="empty-state">
-        @if (loading) {
+        @if (vm.loading()) {
           <mat-icon>hourglass_empty</mat-icon>
           <p>{{ 'NOTIFICATIONS.LOADING' | translate }}</p>
-        } @else if (loadError) {
+        } @else if (vm.loadError()) {
           <mat-icon>cloud_off</mat-icon>
           <p>{{ 'NOTIFICATIONS.LOAD_ERROR' | translate }}</p>
-          <p>{{ loadError | translate }}</p>
-          <button class="btn-mark-all" (click)="reload()">
+          <p>{{ vm.loadError() | translate }}</p>
+          <button class="btn-mark-all" (click)="vm.reload()">
             <mat-icon>refresh</mat-icon>
             {{ 'NOTIFICATIONS.RETRY' | translate }}
           </button>

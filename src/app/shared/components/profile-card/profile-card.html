@@ -6,42 +6,42 @@
 
   <!-- Resumen del usuario -->
   <div class="card summary-card">
-    <div class="avatar">{{ displayInitials }}</div>
+    <div class="avatar">{{ vm.displayInitials() }}</div>
 
     <div class="summary-info">
-      <h2 class="user-name">{{ displayName }}</h2>
+      <h2 class="user-name">{{ vm.displayName() }}</h2>
       <!-- rol real de la cuenta (viene del backend); la fecha de registro aún no se guarda -->
-      <p class="subtitle">{{ roleLabelKey | translate }}</p>
+      <p class="subtitle">{{ vm.roleLabelKey() | translate }}</p>
     </div>
 
-    <div class="edit-status" [class.editing]="editing" [class.saved]="!editing">
-      <mat-icon>{{ editing ? 'edit' : 'check_circle' }}</mat-icon>
+    <div class="edit-status" [class.editing]="vm.editing()" [class.saved]="!vm.editing()">
+      <mat-icon>{{ vm.editing() ? 'edit' : 'check_circle' }}</mat-icon>
       <span>
-        {{ editing ? ('PROFILE.EDIT_MODE' | translate) : ('PROFILE.SAVED_MODE' | translate) }}
+        {{ vm.editing() ? ('PROFILE.EDIT_MODE' | translate) : ('PROFILE.SAVED_MODE' | translate) }}
       </span>
     </div>
   </div>
 
   <!-- Campos editables -->
-  <form [formGroup]="form">
+  <form [formGroup]="vm.form">
 
     <div class="fields-grid">
 
       <!-- nombres y apellidos por separado: así los guarda security.person -->
       @for (field of ['firstName', 'lastName']; track field) {
-        <div class="field-card" [class.field-error]="form.get(field)?.invalid && form.get(field)?.touched">
+        <div class="field-card" [class.field-error]="vm.form.get(field)?.invalid && vm.form.get(field)?.touched">
           <div class="field-icon"><mat-icon>person</mat-icon></div>
           <div class="field-body">
             <label>{{ (field === 'firstName' ? 'PROFILE.FIRST_NAMES' : 'PROFILE.LAST_NAMES') | translate }}</label>
             <input type="text" [formControlName]="field" maxlength="60"/>
 
-            @if (form.get(field)?.invalid && form.get(field)?.touched) {
+            @if (vm.form.get(field)?.invalid && vm.form.get(field)?.touched) {
               <p class="error-msg">
-                @if (form.get(field)?.hasError('required')) {
+                @if (vm.form.get(field)?.hasError('required')) {
                   {{ 'PROFILE.VALIDATION.NAME_REQUIRED' | translate }}
-                } @else if (form.get(field)?.hasError('minlength')) {
+                } @else if (vm.form.get(field)?.hasError('minlength')) {
                   {{ 'PROFILE.VALIDATION.NAME_MIN' | translate }}
-                } @else if (form.get(field)?.hasError('pattern')) {
+                } @else if (vm.form.get(field)?.hasError('pattern')) {
                   {{ 'PROFILE.VALIDATION.NAME_INVALID' | translate }}
                 }
               </p>
@@ -51,28 +51,28 @@
       }
 
       <!-- correo: es el usuario de login; si se cambia, se pide la contraseña actual -->
-      <div class="field-card" [class.field-error]="form.get('email')?.invalid && form.get('email')?.touched">
+      <div class="field-card" [class.field-error]="vm.form.get('email')?.invalid && vm.form.get('email')?.touched">
         <div class="field-icon"><mat-icon>email</mat-icon></div>
         <div class="field-body">
           <label>{{ 'PROFILE.EMAIL' | translate }}</label>
           <input type="email" formControlName="email" maxlength="60"/>
 
-          @if (form.get('email')?.invalid && form.get('email')?.touched) {
+          @if (vm.form.get('email')?.invalid && vm.form.get('email')?.touched) {
             <p class="error-msg">
-              @if (form.get('email')?.hasError('required')) {
+              @if (vm.form.get('email')?.hasError('required')) {
                 {{ 'PROFILE.VALIDATION.EMAIL_REQUIRED' | translate }}
               } @else {
                 {{ 'PROFILE.VALIDATION.EMAIL_INVALID' | translate }}
               }
             </p>
-          } @else if (editing) {
+          } @else if (vm.editing()) {
             <p class="hint-msg">{{ 'PROFILE.EMAIL_CHANGE_HINT' | translate }}</p>
           }
         </div>
       </div>
 
       <!-- telefono -->
-      <div class="field-card" [class.field-error]="form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched">
+      <div class="field-card" [class.field-error]="vm.form.get('phoneNumber')?.invalid && vm.form.get('phoneNumber')?.touched">
         <div class="field-icon"><mat-icon>phone</mat-icon></div>
         <div class="field-body">
           <label>{{ 'PROFILE.PHONE' | translate }}</label>
@@ -83,20 +83,20 @@
               <button
                 type="button"
                 class="phone-select-trigger"
-                [disabled]="!editing"
+                [disabled]="!vm.editing()"
                 (click)="togglePhoneDropdown()">
 
-                <span class="fi fi-{{ selectedCountry.flagCode }} fis"></span>
-                <span class="phone-indicativo">{{ selectedCountry.dialCode }}</span>
+                <span class="fi fi-{{ vm.selectedCountry.flagCode }} fis"></span>
+                <span class="phone-indicativo">{{ vm.selectedCountry.dialCode }}</span>
                 <mat-icon class="chevron">expand_more</mat-icon>
               </button>
 
               @if (phoneDropdownOpen) {
                 <div class="phone-dropdown">
-                  @for (country of countries; track country.code) {
+                  @for (country of vm.countries; track country.code) {
                     <div
                       class="phone-option"
-                      [class.active]="country.code === form.get('phoneCountry')?.value"
+                      [class.active]="country.code === vm.form.get('phoneCountry')?.value"
                       (click)="selectCountry(country.code)">
                       <span class="fi fi-{{ country.flagCode }} fis"></span>
                       <span>{{ country.dialCode }}</span>
@@ -110,15 +110,15 @@
               type="text"
               class="phone-input"
               formControlName="phoneNumber"
-              [maxlength]="selectedCountry.digits"
+              [maxlength]="vm.selectedCountry.digits"
               inputmode="numeric"/>
           </div>
 
-          @if (form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched) {
+          @if (vm.form.get('phoneNumber')?.invalid && vm.form.get('phoneNumber')?.touched) {
             <p class="error-msg">
-              @if (form.get('phoneNumber')?.hasError('required')) {
+              @if (vm.form.get('phoneNumber')?.hasError('required')) {
                 {{ 'PROFILE.VALIDATION.PHONE_REQUIRED' | translate }}
-              } @else if (form.get('phoneNumber')?.hasError('invalidPhone')) {
+              } @else if (vm.form.get('phoneNumber')?.hasError('invalidPhone')) {
                 {{ 'PROFILE.VALIDATION.PHONE_INVALID' | translate }}
               }
             </p>
@@ -127,14 +127,14 @@
       </div>
 
       <!-- direccion -->
-      <div class="field-card" [class.field-error]="form.get('address')?.invalid && form.get('address')?.touched">
+      <div class="field-card" [class.field-error]="vm.form.get('address')?.invalid && vm.form.get('address')?.touched">
         <div class="field-icon"><mat-icon>home</mat-icon></div>
         <div class="field-body">
           <!-- dirección opcional: el servicio es en la sede del lavadero -->
           <label>{{ 'PROFILE.ADDRESS' | translate }} ({{ 'PROFILE.OPTIONAL' | translate }})</label>
           <input type="text" formControlName="address"/>
 
-          @if (form.get('address')?.hasError('minlength') && form.get('address')?.touched) {
+          @if (vm.form.get('address')?.hasError('minlength') && vm.form.get('address')?.touched) {
             <p class="error-msg">
               {{ 'PROFILE.VALIDATION.ADDRESS_MIN' | translate }}
             </p>
@@ -145,20 +145,20 @@
     </div>
 
     <!-- error devuelto por el servidor al guardar (teléfono inválido, sin conexión...) -->
-    @if (errorKey()) {
-      <p class="error-msg" role="alert">{{ errorKey()! | translate }}</p>
+    @if (vm.errorKey()) {
+      <p class="error-msg" role="alert">{{ vm.errorKey()! | translate }}</p>
     }
 
     <div class="edit-container">
       <button
         type="button"
         class="btn-edit"
-        [class.saved-mode]="!editing"
-        [disabled]="(editing && form.invalid) || saving()"
+        [class.saved-mode]="!vm.editing()"
+        [disabled]="(vm.editing() && vm.form.invalid) || vm.saving()"
         (click)="toggleEdit()">
 
-        <mat-icon>{{ editing ? 'save' : 'edit' }}</mat-icon>
-        <span>{{ editing ? ('PROFILE.SAVE' | translate) : ('PROFILE.EDIT' | translate) }}</span>
+        <mat-icon>{{ vm.editing() ? 'save' : 'edit' }}</mat-icon>
+        <span>{{ vm.editing() ? ('PROFILE.SAVE' | translate) : ('PROFILE.EDIT' | translate) }}</span>
       </button>
     </div>
 
@@ -187,7 +187,7 @@
       </div>
     </div>
 
-    @if (canCloseAccount) {
+    @if (vm.canCloseAccount()) {
     <div class="card modern-card danger">
       <div class="card-header">
         <div class="icon-box"><mat-icon>person</mat-icon></div>

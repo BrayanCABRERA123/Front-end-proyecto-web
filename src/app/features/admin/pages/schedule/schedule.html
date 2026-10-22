@@ -14,10 +14,10 @@
       </div>
 
       <div class="page-header__actions">
-        @if (isOpenToday) {
+        @if (vm.isOpenToday) {
           <span class="open-badge">
             <i class="dot"></i>
-            {{ 'ADMIN_SCHEDULE.OPEN_TODAY' | translate }} · {{ todayLabel }}
+            {{ 'ADMIN_SCHEDULE.OPEN_TODAY' | translate }} · {{ vm.todayLabel }}
           </span>
         }
       </div>
@@ -25,21 +25,21 @@
 
     <!-- pestañas -->
     <div class="tabs">
-      <button class="tab" [class.tab--active]="activeTab === 'hours'" (click)="setTab('hours')">
+      <button class="tab" [class.tab--active]="vm.activeTab === 'hours'" (click)="vm.setTab('hours')">
         <mat-icon>event</mat-icon>
         {{ 'ADMIN_SCHEDULE.TABS.BUSINESS_HOURS' | translate }}
         <span class="tab-chip">{{ 'ADMIN_SCHEDULE.WEEKLY' | translate }}</span>
       </button>
 
-      <button class="tab" [class.tab--active]="activeTab === 'bays'" (click)="setTab('bays')">
+      <button class="tab" [class.tab--active]="vm.activeTab === 'bays'" (click)="vm.setTab('bays')">
         <mat-icon>directions_car</mat-icon>
         {{ 'ADMIN_SCHEDULE.TABS.BAYS' | translate }}
-        <span class="tab-chip">{{ 'ADMIN_SCHEDULE.ACTIVE_BAYS_COUNT' | translate:{ count: activeBaysCount } }}</span>
+        <span class="tab-chip">{{ 'ADMIN_SCHEDULE.ACTIVE_BAYS_COUNT' | translate:{ count: vm.activeBaysCount } }}</span>
       </button>
     </div>
 
     <!-- ================= HORARIO DEL NEGOCIO ================= -->
-    @if (activeTab === 'hours') {
+    @if (vm.activeTab === 'hours') {
 
       <div class="card">
 
@@ -55,11 +55,11 @@
         </div>
 
         <div class="day-rows">
-          @for (d of orderedSchedule; track d.key) {
+          @for (d of vm.orderedSchedule; track d.key) {
             <div class="day-row" [class.day-row--off]="!d.isWorking">
 
               <label class="day-toggle">
-                <input type="checkbox" [checked]="d.isWorking" (change)="toggleDay(d.key)">
+                <input type="checkbox" [checked]="d.isWorking" (change)="vm.toggleDay(d.key)">
                 <span class="switch"></span>
               </label>
 
@@ -75,7 +75,7 @@
                 <input
                   type="time"
                   [ngModel]="d.openTime"
-                  (ngModelChange)="setDayTime(d.key, 'openTime', $event)"
+                  (ngModelChange)="vm.setDayTime(d.key, 'openTime', $event)"
                   [disabled]="!d.isWorking">
               </div>
 
@@ -86,20 +86,20 @@
                 <input
                   type="time"
                   [ngModel]="d.closeTime"
-                  (ngModelChange)="setDayTime(d.key, 'closeTime', $event)"
+                  (ngModelChange)="vm.setDayTime(d.key, 'closeTime', $event)"
                   [disabled]="!d.isWorking">
               </div>
 
               <div class="pause-field">
                 <span class="muted">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.PAUSE_LABEL' | translate }}</span>
                 @if (d.isWorking) {
-                  <select [ngModel]="d.pause" (ngModelChange)="setDayPause(d.key, $event)">
+                  <select [ngModel]="d.pause" (ngModelChange)="vm.setDayPause(d.key, $event)">
                     <option value="none">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.PAUSE_NONE' | translate }}</option>
                     <option value="lunch">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.PAUSE_LUNCH' | translate }}</option>
                   </select>
                   @if (d.pause === 'lunch') {
-                    <input type="time" [ngModel]="d.breakStart" (ngModelChange)="setDayTime(d.key, 'breakStart', $event)">
-                    <input type="time" [ngModel]="d.breakEnd" (ngModelChange)="setDayTime(d.key, 'breakEnd', $event)">
+                    <input type="time" [ngModel]="d.breakStart" (ngModelChange)="vm.setDayTime(d.key, 'breakStart', $event)">
+                    <input type="time" [ngModel]="d.breakEnd" (ngModelChange)="vm.setDayTime(d.key, 'breakEnd', $event)">
                   }
                 } @else {
                   <span class="pause-chip">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.PAUSE_NOT_APPLICABLE' | translate }}</span>
@@ -121,10 +121,10 @@
           </span>
 
           <div class="card-footer__actions">
-            <button class="btn-outline" (click)="resetSchedule()">
+            <button class="btn-outline" (click)="vm.resetSchedule()">
               {{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.RESET' | translate }}
             </button>
-            <button class="btn-primary" (click)="saveSchedule()">
+            <button class="btn-primary" (click)="vm.saveSchedule()">
               <mat-icon>check</mat-icon>
               {{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.SAVE' | translate }}
             </button>
@@ -140,7 +140,7 @@
           <div>
             <h2>
               {{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.TITLE' | translate }}
-              <span class="count-chip">{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.COUNT' | translate:{ count: exceptions.length } }}</span>
+              <span class="count-chip">{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.COUNT' | translate:{ count: vm.exceptions.length } }}</span>
             </h2>
             <p>{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.SUBTITLE' | translate }}</p>
           </div>
@@ -150,7 +150,7 @@
           </button>
         </div>
 
-        @if (exceptions.length === 0) {
+        @if (vm.exceptions.length === 0) {
           <app-empty-state
             icon="event_busy"
             [titleKey]="'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.EMPTY_TITLE'"
@@ -173,7 +173,7 @@
                 </tr>
               </thead>
               <tbody>
-                @for (e of exceptions; track e.id) {
+                @for (e of vm.exceptions; track e.id) {
                   <tr>
                     <td><strong>{{ e.date }}</strong></td>
                     <td>
@@ -209,7 +209,7 @@
     }
 
     <!-- ================= BAHÍAS ================= -->
-    @if (activeTab === 'bays') {
+    @if (vm.activeTab === 'bays') {
       <div class="card">
 
         <div class="card-header">
@@ -223,7 +223,7 @@
           </button>
         </div>
 
-        @if (bays.length === 0) {
+        @if (vm.bays.length === 0) {
           <app-empty-state
             icon="local_car_wash"
             [titleKey]="'ADMIN_SCHEDULE.BAYS_SECTION.EMPTY_TITLE'"
@@ -235,7 +235,7 @@
           </app-empty-state>
         } @else {
           <div class="bays-grid">
-            @for (b of bays; track b.id) {
+            @for (b of vm.bays; track b.id) {
               <article class="bay-card"
                        [class.bay-card--active]="b.status === 'active'"
                        [class.bay-card--maintenance]="b.status === 'maintenance'"
@@ -244,8 +244,8 @@
                 <div class="bay-card__top">
                   <div class="bay-icon"><mat-icon>directions_car</mat-icon></div>
                   <span [class]="'state-pill state-pill--icon ' + (b.status === 'active' ? 'state-pill--open' : b.status === 'maintenance' ? 'state-pill--warning' : 'state-pill--closed')">
-                    <mat-icon class="state-pill__icon">{{ statusIcon(b.status) }}</mat-icon>
-                    {{ statusLabelKey(b.status) | translate }}
+                    <mat-icon class="state-pill__icon">{{ vm.statusIcon(b.status) }}</mat-icon>
+                    {{ vm.statusLabelKey(b.status) | translate }}
                   </span>
                 </div>
 
@@ -263,12 +263,12 @@
                   </label>
 
                   <div class="bay-status__control" [class]="'bay-status__control bay-status__control--' + b.status">
-                    <mat-icon class="bay-status__icon">{{ statusIcon(b.status) }}</mat-icon>
+                    <mat-icon class="bay-status__icon">{{ vm.statusIcon(b.status) }}</mat-icon>
                     <select
                       [id]="'bay-status-' + b.id"
                       [ngModel]="b.status"
-                      (ngModelChange)="changeBayStatus(b, $event)">
-                      @for (s of bayStatuses; track s.value) {
+                      (ngModelChange)="vm.changeBayStatus(b, $event)">
+                      @for (s of vm.bayStatuses; track s.value) {
                         <option [ngValue]="s.value">{{ s.labelKey | translate }}</option>
                       }
                     </select>

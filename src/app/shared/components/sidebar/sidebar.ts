@@ -1,114 +1,33 @@
-import { Component, Input, OnInit, computed, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmLogoutDialogComponent } from '../../../shared/dialogs/confirm-logout/confirm-logout';
-// usuario de la sesión: el mismo que se edita en el perfil
-import { UserSession } from '../../../core/services/user-session';
-import { AuthService } from '../../../core/services/auth';
-import { NotificationWatcher } from '../../../core/services/notification-watcher';
+import { SidebarRole, SidebarViewModel } from '../../viewmodels/sidebar.viewmodel';
 
+// menú lateral: las opciones por rol, el usuario y las no leídas están en SidebarViewModel
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule, RouterModule, MatIconModule, TranslateModule],
+  providers: [SidebarViewModel],
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.scss']
 })
-
 export class SidebarComponent implements OnInit {
-  @Input() rol: 'CLIENT' | 'OPERATOR' | 'ADMIN' = 'CLIENT';
+
+  readonly vm = inject(SidebarViewModel);
+  private readonly dialog = inject(MatDialog);
+
+  @Input() rol: SidebarRole = 'CLIENT';
   // controla si el sidebar está abierto en mobile
   isOpen: boolean = false;
-  logoRoute = '/';
-
-  // se actualiza solo cuando el usuario cambia su nombre o correo en el perfil
-  user = computed(() => ({
-    name: this.session.user().name,
-    email: this.session.user().email,
-    initials: this.session.initials()
-  }));
-
-  /*Menu opciones Client */
-  clientMenu = [
-    { icon: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', route: '/client' },
-    { icon: 'person', label: 'SIDEBAR.PROFILE', route: '/client/profile' },
-    { icon: 'directions_car', label: 'SIDEBAR.VEHICLES', route: '/client/vehicles' },
-    { icon: 'local_car_wash', label: 'SIDEBAR.RESERVE', route: '/client/reserve' },
-    { icon: 'credit_card', label: 'SIDEBAR.PAYMENT', route: '/client/payment' },
-    { icon: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', route: '/client/notifications' },
-    { icon: 'history', label: 'SIDEBAR.HISTORY', route: '/client/history' },
-    { icon: 'settings', label: 'SIDEBAR.CONFIG', route: '/client/configuration' }
-  ];
-  /*Menu opciones Operator */
-    operatorMenu = [
-  { icon: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', route: '/operator' },
-  { icon: 'person', label: 'SIDEBAR.PROFILE', route: '/operator/profile' },
-  { icon: 'calendar_month', label: 'SIDEBAR.SCHEDULE', route: '/operator/schedule' },
-  { icon: 'assignment', label: 'SIDEBAR.ASSIGNED_SERVICES', route: '/operator/assigned-services' },
-  { icon: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', route: '/operator/notifications' },
-  { icon: 'history', label: 'SIDEBAR.HISTORY', route: '/operator/service-history' },
-  { icon: 'star_outline', label: 'SIDEBAR.RATINGS', route: '/operator/qualifications' },
-  { icon: 'settings', label: 'SIDEBAR.CONFIG', route: '/operator/settings' }
-];
-
-/* Admin role menu — matches the approved mockups (Sept 2026) */
-  adminMenu = [
-    { icon: 'space_dashboard', label: 'SIDEBAR.DASHBOARD', route: '/admin' },
-    { icon: 'person', label: 'SIDEBAR.PROFILE', route: '/admin/profile' },
-    { icon: 'event_available', label: 'SIDEBAR.RESERVATIONS', route: '/admin/reservations' },
-    { icon: 'payments', label: 'SIDEBAR.PAYMENTS', route: '/admin/payments' },
-    { icon: 'admin_panel_settings', label: 'SIDEBAR.MANAGEMENT', route: '/admin/management' },
-    { icon: 'schedule', label: 'SIDEBAR.SCHEDULE_BAYS', route: '/admin/schedule' },
-    { icon: 'engineering', label: 'SIDEBAR.OPERATORS', route: '/admin/operators' },
-    { icon: 'bar_chart', label: 'SIDEBAR.REPORTS', route: '/admin/reports' },
-    { icon: 'notifications', label: 'SIDEBAR.NOTIFICATIONS', route: '/admin/notifications' },
-    { icon: 'settings', label: 'SIDEBAR.CONFIG', route: '/admin/settings' }
-  ];
-
-  menuItems: {
-    icon: string;
-    label: string;
-    route: string;
-  }[] = [];
-
-
-  // no leídas: el número junto a "Notificaciones" del menú (se actualiza solo)
-  readonly watcher = inject(NotificationWatcher);
 
   ngOnInit(): void {
-    this.watcher.start();
-
-    switch (this.rol) {
-
-      case 'CLIENT':
-        this.menuItems = this.clientMenu;
-        this.logoRoute = '/client';
-        break;
-
-      case 'OPERATOR':
-        this.menuItems = this.operatorMenu;
-        this.logoRoute = '/operator';
-
-        break;
-
-      case 'ADMIN':
-        this.menuItems = this.adminMenu;
-        this.logoRoute = '/admin';
-        break;
-
-    }
-
+    this.vm.start(this.rol);
   }
-
-  constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    private session: UserSession,
-    private auth: AuthService
-  ) {}
 
   // abre o cierra el sidebar en mobile
   toggleSidebar(): void {
@@ -121,16 +40,10 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    const dialogRef = this.dialog.open(ConfirmLogoutDialogComponent, {
+    this.dialog.open(ConfirmLogoutDialogComponent, {
       panelClass: 'custom-dialog'
-    });
-
-    dialogRef.afterClosed().subscribe(confirmed => {
-
-      // cierra la sesión en el servidor, limpia el navegador y vuelve al login
-      if (confirmed) {
-        this.auth.logout();
-      }
+    }).afterClosed().subscribe(confirmed => {
+      if (confirmed) this.vm.logout();
     });
   }
 }

@@ -198,6 +198,7 @@
       "LOYALTY_EMPTY": "No loyalty data yet",
       "POINTS_OF": "{{current}} of {{goal}} points",
       "ALL_UNLOCKED": "You unlocked every promotion · {{points}} points",
+      "NO_PROMOTIONS": "You have {{points}} points · No promotions available right now",
       "UNLOCKED": "Unlocked! Redeem it when you pay.",
       "LOCKED": "{{points}} points to go to unlock it"
     },

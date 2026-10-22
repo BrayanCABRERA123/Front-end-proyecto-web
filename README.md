@@ -29,11 +29,42 @@ Cuentas de prueba del perfil `dev` (solo en local): `admin@gmail.com`, `operador
 src/app/
 ├── core/         guards, interceptors (token y sesión vencida), services, models, constants, utils
 ├── features/     landing · auth · client · operator · admin · public-report · not-found
-├── layout/       barra de navegación
 └── shared/       componentes, diálogos, pipes y datos comunes
 src/assets/i18n/  textos en es, en, fr y pt
 src/styles/       tema, variables y mixins de diseño adaptable (mobile ≤ 768 px, tablet ≤ 1024 px)
 ```
+
+## Arquitectura: por features + MVVM
+
+Cada *feature* (`admin`, `client`, `operator`, `auth`, `landing`, `public-report`) tiene
+sus pantallas, y cada pantalla se divide en Vista, ViewModel y Modelo:
+
+```
+features/<feature>/
+├── pages/<pantalla>/                 VISTA: <pantalla>.ts + .html + .scss
+├── viewmodels/<pantalla>.viewmodel.ts   VIEWMODEL: estado (signals) y acciones de la pantalla
+├── services/                         estado compartido entre pantallas del rol (stores del admin)
+└── <feature>-routing-module.ts
+shared/components + shared/dialogs    VISTAS que usan los 3 roles (perfil, notificaciones, menú...)
+shared/viewmodels/                    sus VIEWMODELS (ej. profile.viewmodel.ts)
+core/models + core/services           MODELO: tipos y llamadas HTTP al gateway
+```
+
+- **Vista.** Muestra el estado del ViewModel y le pasa los eventos. Abre los modales (confirmar,
+  formularios) y navega, pero no llama a `core/services` ni decide reglas.
+- **ViewModel.** Clase `@Injectable()` que se registra en `providers` de su página, así vive y
+  muere con la pantalla. Guarda el estado en *signals* (la app es *zoneless*: la vista se repinta
+  sola) y expone las acciones; es lo único que habla con `core/services` y los stores. Avisa el
+  resultado con `FeedbackService`. No toca HTML.
+- **Modelo.** `core/models` (tipos del backend) y `core/services` (un servicio por microservicio).
+- Una pantalla con secciones o pasos (la landing, recuperar contraseña) tiene un solo ViewModel
+  que registra la página y que inyectan sus secciones.
+- Los componentes compartidos con lógica (perfil, notificaciones, configuración, menú lateral y los
+  modales que guardan solos) registran su ViewModel en sus propios `providers`.
+- Los modales que solo llenan un formulario y devuelven el resultado son parte de la vista.
+- Excepciones: la página 404 (lee la sesión para saber a qué inicio llevar) y la miniatura de una
+  foto de inspección (carga la imagen con el token) son vistas mínimas sin ViewModel.
+- Las pruebas del comportamiento van sobre el ViewModel, sin pantalla.
 
 ## Diseño adaptable
 

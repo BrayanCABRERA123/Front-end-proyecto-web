@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,15 +11,15 @@ import { AssignOperatorModal } from '../../../../shared/dialogs/assign-operator-
 import { AvailableOperator, AssignOperatorModalData, AssignOperatorResult } from '../../../../shared/dialogs/assign-operator-modal/assign-operator.model';
 import { ExportColumn, ExportDataModal, ExportDataModalData } from '../../../../shared/dialogs/export-data-modal/export-data-modal';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
-import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
-import { ReservationsStore, formatDate, formatTimeRange } from '../../services/reservations-store';
-import { OperatorsStore } from '../../services/operators-store';
+import { formatDate, formatTimeRange } from '../../services/reservations-store';
 import { Booking, BookingStatus } from '../../models/admin.models';
 import { BookingModal, BookingModalData } from './components/booking-modal/booking-modal';
-import { apiErrorKey } from '../../../../core/utils/api-error';
 import { isoDaysFromToday } from '../../../../core/utils/dates';
 import { BookingDetailModal, BookingDetailResult } from './components/booking-detail-modal/booking-detail-modal';
+import { ReservationsViewModel } from '../../viewmodels/reservations.viewmodel';
 
+// vista de Reservas del admin: filtros, páginas y acciones están en ReservationsViewModel; aquí
+// quedan las etiquetas de fecha, los modales, las confirmaciones y la exportación
 @Component({
   selector: 'app-reservations',
   standalone: true,
@@ -31,57 +31,24 @@ import { BookingDetailModal, BookingDetailResult } from './components/booking-de
     SidebarComponent,
     EmptyStateComponent,
   ],
+  providers: [ReservationsViewModel],
   templateUrl: './reservations.html',
   styleUrls: ['./reservations.scss']
 })
 export class ReservationsComponent implements OnInit {
 
-  searchTerm = '';
-  statusFilter: BookingStatus | '' = '';
-  operatorFilter = '';
-  selectedDate = '';
+  readonly vm = inject(ReservationsViewModel);
+  private readonly dialog = inject(MatDialog);
+  private readonly router = inject(Router);
+  private readonly translate = inject(TranslateService);
 
-  currentPage = 1;
-  pageSize = 6;
-
-  constructor(
-    private store: ReservationsStore,
-    private operators: OperatorsStore,
-    private dialog: MatDialog,
-    private feedback: FeedbackService,
-    private router: Router,
-    private translate: TranslateService,
-  ) {}
-
-  // se recarga al entrar para ver las reservas que llegaron desde la app del cliente
   ngOnInit(): void {
-    this.store.load();
-  }
-
-  get loading(): boolean { return this.store.loading(); }
-  get loadError(): string | null { return this.store.loadError(); }
-
-  reload(): void {
-    this.store.load();
-  }
-
-  /* ---------- datos ---------- */
-
-  get bookings(): Booking[] { return this.store.bookings(); }
-
-  get today(): string { return this.store.today; }
-
-  /** la reserva todavía necesita operario (misma regla que el inicio) */
-  isUnassigned(booking: Booking): boolean { return this.store.isUnassigned(booking); }
-
-  // nombres para el filtro "Todos los operarios"
-  get operatorNames(): string[] {
-    return this.operators.operators().map(o => o.name);
+    this.vm.load();
   }
 
   // etiqueta relativa de la fila: Hoy / Mañana / fecha
   dayLabel(date: string): string {
-    if (date === this.today) return this.translate.instant('ADMIN_RESERVATIONS.TABLE.TODAY');
+    if (date === this.vm.today) return this.translate.instant('ADMIN_RESERVATIONS.TABLE.TODAY');
     if (date === isoDaysFromToday(1)) return this.translate.instant('ADMIN_RESERVATIONS.TABLE.TOMORROW');
     return formatDate(date);
   }
@@ -90,134 +57,47 @@ export class ReservationsComponent implements OnInit {
     return formatTimeRange(booking.time, booking.durationMin);
   }
 
-  // aplica búsqueda + filtros de estado/operario/fecha sobre el listado completo
-  get filteredBookings(): Booking[] {
-    const term = this.searchTerm.trim().toLowerCase();
-
-    return this.bookings.filter(b => {
-      const matchesSearch = !term
-        || b.client.toLowerCase().includes(term)
-        || b.plate.toLowerCase().includes(term)
-        || b.code.toLowerCase().includes(term);
-
-      const matchesStatus = !this.statusFilter || b.status === this.statusFilter;
-      const matchesOperator = !this.operatorFilter || b.operator?.name === this.operatorFilter;
-      const matchesDate = !this.selectedDate || b.date === this.selectedDate;
-
-      return matchesSearch && matchesStatus && matchesOperator && matchesDate;
-    });
-  }
-
-  get hasActiveFilters(): boolean {
-    return !!this.searchTerm || !!this.statusFilter || !!this.operatorFilter || !!this.selectedDate;
-  }
-
-  get totalPages(): number {
-    return Math.max(1, Math.ceil(this.filteredBookings.length / this.pageSize));
-  }
-
-  get pageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-  }
-
-  get pagedBookings(): Booking[] {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.filteredBookings.slice(start, start + this.pageSize);
-  }
-
-  get rangeFrom(): number {
-    return this.filteredBookings.length === 0 ? 0 : (this.currentPage - 1) * this.pageSize + 1;
-  }
-
-  get rangeTo(): number {
-    return Math.min(this.currentPage * this.pageSize, this.filteredBookings.length);
-  }
-
-  // stats de las 4 tarjetas, calculadas sobre las reservas de HOY
-  get stats() {
-    const todayBookings = this.store.byDate(this.today);
-    return {
-      total: todayBookings.length,
-      confirmedInProgress: todayBookings.filter(b => b.status === 'confirmed' || b.status === 'in_progress').length,
-      unassigned: todayBookings.filter(b => this.store.isUnassigned(b)).length,
-      cancelled: todayBookings.filter(b => b.status === 'cancelled').length,
-    };
-  }
-
-  goToPage(page: number): void {
-    if (page < 1 || page > this.totalPages) return;
-    this.currentPage = page;
-  }
-
-  selectToday(): void {
-    this.selectedDate = this.today;
-    this.currentPage = 1;
-  }
-
-  clearFilters(): void {
-    this.searchTerm = '';
-    this.statusFilter = '';
-    this.operatorFilter = '';
-    this.selectedDate = '';
-    this.currentPage = 1;
-  }
-
   /* ---------- acciones ---------- */
 
   // el modal guarda en el backend y se cierra con la reserva ya confirmada
   openCreate(): void {
-    const dialogRef = this.dialog.open(BookingModal, { panelClass: 'custom-dialog', data: {} as BookingModalData });
-
-    dialogRef.afterClosed().subscribe((created: Booking | null) => {
-      if (!created) return;
-      this.feedback.success(
-        'ADMIN_RESERVATIONS.FEEDBACK.CREATED_TITLE',
-        'ADMIN_RESERVATIONS.FEEDBACK.CREATED_MESSAGE',
-        { messageParams: { code: created.code } }
-      );
-    });
+    this.dialog.open(BookingModal, { panelClass: 'custom-dialog', data: {} as BookingModalData })
+      .afterClosed()
+      .subscribe((created: Booking | null) => {
+        if (created) this.vm.bookingCreated(created);
+      });
   }
 
   // reprogramar: fecha, hora y servicios (el vehículo no cambia)
   openEdit(booking: Booking): void {
     const data: BookingModalData = { booking };
-    const dialogRef = this.dialog.open(BookingModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((updated: Booking | null) => {
-      if (!updated) return;
-      this.feedback.success(
-        'ADMIN_RESERVATIONS.FEEDBACK.UPDATED_TITLE',
-        'ADMIN_RESERVATIONS.FEEDBACK.UPDATED_MESSAGE',
-        { messageParams: { code: booking.code } }
-      );
-    });
+    this.dialog.open(BookingModal, { panelClass: 'custom-dialog', data })
+      .afterClosed()
+      .subscribe((updated: Booking | null) => {
+        if (updated) this.vm.bookingUpdated(booking.code);
+      });
   }
 
   openDetail(booking: Booking): void {
-    const dialogRef = this.dialog.open(BookingDetailModal, {
-      panelClass: 'custom-dialog',
-      data: booking,
-    });
-
-    dialogRef.afterClosed().subscribe((result: BookingDetailResult | null) => {
-      if (!result) return;
-
-      if (result.action === 'status' && result.status) {
-        this.changeStatus(booking, result.status);
-      } else if (result.action === 'assign') {
-        this.openAssignModal(booking);
-      } else if (result.action === 'edit') {
-        this.openEdit(booking);
-      } else if (result.action === 'inspection') {
-        this.router.navigate(['/admin/reservations', booking.id, 'inspection']);
-      }
-    });
+    this.dialog.open(BookingDetailModal, { panelClass: 'custom-dialog', data: booking })
+      .afterClosed()
+      .subscribe((result: BookingDetailResult | null) => {
+        if (!result) return;
+        if (result.action === 'status' && result.status) {
+          this.changeStatus(booking, result.status);
+        } else if (result.action === 'assign') {
+          this.openAssignModal(booking);
+        } else if (result.action === 'edit') {
+          this.openEdit(booking);
+        } else if (result.action === 'inspection') {
+          this.router.navigate(['/admin/reservations', booking.id, 'inspection']);
+        }
+      });
   }
 
-  // el cambio de estado importante (completar / cancelar) pide confirmación
+  // el cambio de estado importante (completar / cancelar / no asistió) pide confirmación
   changeStatus(booking: Booking, status: BookingStatus): void {
     const finishing = status === 'completed' || status === 'cancelled' || status === 'no_show';
-
     const confirm: ConfirmModalData = {
       title: finishing ? `ADMIN_RESERVATIONS.FEEDBACK.${status.toUpperCase()}_TITLE` : 'ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
       message: finishing ? `ADMIN_RESERVATIONS.FEEDBACK.${status.toUpperCase()}_CONFIRM` : 'ADMIN_RESERVATIONS.FEEDBACK.STATUS_CONFIRM',
@@ -226,34 +106,16 @@ export class ReservationsComponent implements OnInit {
       cancelText: 'COMMON.CANCEL',
       danger: status === 'cancelled',
     };
-
-    const confirmRef = this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data: confirm });
-    confirmRef.afterClosed().subscribe(confirmed => {
-      if (!confirmed) return;
-      // el admin cancela con el motivo OTHER (catálogo booking.cancellation_reason)
-      const reason = status === 'cancelled' ? 'OTHER' : undefined;
-      this.store.setStatus(booking.id, status, reason).subscribe({
-        next: () => {
-          // refresca la lista para que la tabla muestre el estado nuevo sin recargar la página
-          this.reload();
-          this.feedback.success(
-            'ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
-            `ADMIN_RESERVATIONS.FEEDBACK.STATUS_${status.toUpperCase()}_MESSAGE`,
-            { messageParams: { code: booking.code } }
-          );
-        },
-        error: (error) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+    this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data: confirm })
+      .afterClosed()
+      .subscribe(confirmed => {
+        if (confirmed) this.vm.changeStatus(booking, status);
       });
-    });
   }
-
 
   // primero pide a operations quién está disponible para esa reserva y luego abre el modal
   openAssignModal(booking: Booking): void {
-    this.operators.candidatesFor(booking.id).subscribe({
-      next: operators => this.showAssignModal(booking, operators),
-      error: error => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
-    });
+    this.vm.loadCandidates(booking, operators => this.showAssignModal(booking, operators));
   }
 
   private showAssignModal(booking: Booking, operators: AvailableOperator[]): void {
@@ -267,23 +129,11 @@ export class ReservationsComponent implements OnInit {
       bay: booking.bay ?? '—',
       operators,
     };
-
-    const dialogRef = this.dialog.open(AssignOperatorModal, {
-      panelClass: 'custom-dialog',
-      data: modalData
-    });
-
-    dialogRef.afterClosed().subscribe((result: AssignOperatorResult | null) => {
-      if (!result) return;
-      // el aviso de éxito sale solo si el backend aceptó la asignación
-      this.store.assignOperator(booking.id, result.operatorId, () =>
-        this.feedback.success(
-          'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE',
-          'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
-          { messageParams: { code: booking.code } }
-        )
-      );
-    });
+    this.dialog.open(AssignOperatorModal, { panelClass: 'custom-dialog', data: modalData })
+      .afterClosed()
+      .subscribe((result: AssignOperatorResult | null) => {
+        if (result) this.vm.assignOperator(booking, result.operatorId);
+      });
   }
 
   // exporta la lista que el admin está viendo (con los filtros aplicados)
@@ -300,7 +150,7 @@ export class ReservationsComponent implements OnInit {
       { key: 'status', labelKey: 'ADMIN_RESERVATIONS.TABLE.STATUS' },
     ];
 
-    const rows = this.filteredBookings.map(b => ({
+    const rows = this.vm.filteredBookings.map(b => ({
       code: b.code,
       client: b.client,
       vehicle: b.vehicle,

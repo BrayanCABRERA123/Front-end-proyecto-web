@@ -7,10 +7,10 @@
     <div class="top-row">
       <div class="welcome-text">
         <h1 class="page-title">
-          {{ 'OPERATOR_HOME.TITLE' | translate: { name: operatorName } }}
+          {{ 'OPERATOR_HOME.TITLE' | translate: { name: vm.operatorName() } }}
         </h1>
         <p class="page-subtitle">
-          {{ today | longDate }} · <span class="accent">{{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: pending } }}</span>
+          {{ today | longDate }} · <span class="accent">{{ 'OPERATOR_HOME.SUBTITLE' | translate: { count: vm.pending() } }}</span>
         </p>
       </div>
       <button class="btn-ver-servicios" (click)="goToAssignedServices()">
@@ -20,7 +20,7 @@
     </div>
 
     <div class="stats-grid">
-      @for (stat of stats; track stat.label) {
+      @for (stat of vm.stats(); track stat.label) {
         <app-stats-card [stat]="stat" (open)="goTo($event)"></app-stats-card>
       }
     </div>
@@ -37,12 +37,12 @@
           </span>
         </div>
         <p class="progress-numbers">
-          {{ completedToday }} / {{ totalToday }}
+          {{ vm.completedToday() }} / {{ vm.totalToday() }}
         </p>
         <div class="progress-bar">
           <div
             class="progress-fill"
-            [style.width.%]="progressPercentage">
+            [style.width.%]="vm.progressPercentage()">
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
         <div class="counter-icon">
           <mat-icon>calendar_month</mat-icon>
         </div>
-        <p class="counter-value">{{ pending }}</p>
+        <p class="counter-value">{{ vm.pending() }}</p>
         <p class="counter-label">{{ 'OPERATOR_HOME.PENDING' | translate }}</p>
       </div>
 
@@ -66,7 +66,7 @@
       </div>
 
       <div class="reservas-list">
-        @for (reservation of todayReservations; track reservation.id) {
+        @for (reservation of vm.todayReservations(); track reservation.id) {
           <app-pending-service-card
             [reservation]="reservation"
             (start)="startService($event)"

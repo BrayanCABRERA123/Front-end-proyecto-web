@@ -30,26 +30,26 @@
 
       <div class="card stat-card">
         <p class="stat-label">{{ 'ADMIN_PAYMENTS.STATS.PENDING' | translate }}</p>
-        <p class="stat-value">{{ stats.pending }}</p>
+        <p class="stat-value">{{ vm.stats.pending }}</p>
         <span class="badge badge--warning">{{ 'ADMIN_PAYMENTS.STATS.PENDING_NOTE' | translate }}</span>
       </div>
 
       <div class="card stat-card">
         <p class="stat-label">{{ 'ADMIN_PAYMENTS.STATS.APPROVED_TODAY' | translate }}</p>
-        <p class="stat-value">{{ stats.approvedToday }}</p>
-        <span class="badge badge--success">{{ cop(stats.approvedAmount) }} COP</span>
+        <p class="stat-value">{{ vm.stats.approvedToday }}</p>
+        <span class="badge badge--success">{{ cop(vm.stats.approvedAmount) }} COP</span>
       </div>
 
       <div class="card stat-card">
         <p class="stat-label">{{ 'ADMIN_PAYMENTS.STATS.REJECTED' | translate }}</p>
-        <p class="stat-value">{{ stats.rejected }}</p>
+        <p class="stat-value">{{ vm.stats.rejected }}</p>
         <span class="badge badge--error">{{ 'ADMIN_PAYMENTS.STATS.REJECTED_NOTE' | translate }}</span>
       </div>
 
       <div class="card stat-card">
         <p class="stat-label">{{ 'ADMIN_PAYMENTS.STATS.TOTAL_COLLECTED' | translate }}</p>
-        <p class="stat-value">{{ cop(stats.totalCollected) }}</p>
-        <span class="badge badge--primary">{{ 'ADMIN_PAYMENTS.STATS.TRANSACTIONS_NOTE' | translate:{ count: stats.transactionsCount } }}</span>
+        <p class="stat-value">{{ cop(vm.stats.totalCollected) }}</p>
+        <span class="badge badge--primary">{{ 'ADMIN_PAYMENTS.STATS.TRANSACTIONS_NOTE' | translate:{ count: vm.stats.transactionsCount } }}</span>
       </div>
 
     </div>
@@ -59,10 +59,10 @@
 
       <div class="search-box">
         <mat-icon>search</mat-icon>
-        <input type="text" [(ngModel)]="search" [placeholder]="'ADMIN_PAYMENTS.FILTERS.SEARCH_PLACEHOLDER' | translate">
+        <input type="text" [(ngModel)]="vm.search" [placeholder]="'ADMIN_PAYMENTS.FILTERS.SEARCH_PLACEHOLDER' | translate">
       </div>
 
-      <select [(ngModel)]="methodFilter">
+      <select [(ngModel)]="vm.methodFilter">
         <option value="">{{ 'ADMIN_PAYMENTS.FILTERS.ALL_METHODS' | translate }}</option>
         <option value="nequi">Nequi</option>
         <option value="daviplata">Daviplata</option>
@@ -70,7 +70,7 @@
         <option value="cash">Efectivo</option>
       </select>
 
-      <select [(ngModel)]="statusFilter">
+      <select [(ngModel)]="vm.statusFilter">
         <option value="">{{ 'ADMIN_PAYMENTS.FILTERS.ALL_STATUSES' | translate }}</option>
         <option value="pending">{{ 'ADMIN_PAYMENTS.FILTERS.PENDING_ONLY' | translate }}</option>
         <option value="approved">{{ 'ADMIN_PAYMENTS.STATUS.approved' | translate }}</option>
@@ -78,7 +78,7 @@
         <option value="refunded">{{ 'ADMIN_PAYMENTS.STATUS.refunded' | translate }}</option>
       </select>
 
-      <button class="btn-outline" (click)="clearFilters()">
+      <button class="btn-outline" (click)="vm.clearFilters()">
         {{ 'ADMIN_PAYMENTS.FILTERS.CLEAR_FILTERS' | translate }}
       </button>
 
@@ -87,7 +87,7 @@
     <!-- tabla -->
     <div class="card table-card">
 
-      @if (payments.length === 0) {
+      @if (vm.payments.length === 0) {
 
         <app-empty-state
           variant="empty"
@@ -96,14 +96,14 @@
           messageKey="ADMIN_PAYMENTS.EMPTY_MESSAGE">
         </app-empty-state>
 
-      } @else if (filteredPayments.length === 0) {
+      } @else if (vm.filteredPayments.length === 0) {
 
         <app-empty-state
           variant="filtered"
           titleKey="ADMIN_PAYMENTS.NO_RESULTS_TITLE"
           messageKey="ADMIN_PAYMENTS.NO_RESULTS_MESSAGE"
-          [params]="{ term: search }">
-          <button class="btn-outline" (click)="clearFilters()">
+          [params]="{ term: vm.search }">
+          <button class="btn-outline" (click)="vm.clearFilters()">
             {{ 'ADMIN_PAYMENTS.FILTERS.CLEAR_FILTERS' | translate }}
           </button>
         </app-empty-state>
@@ -124,7 +124,7 @@
               </tr>
             </thead>
             <tbody>
-              @for (p of filteredPayments; track p.code) {
+              @for (p of vm.filteredPayments; track p.code) {
                 <tr>
                   <td>
                     <strong>{{ p.client }}</strong>
@@ -134,7 +134,7 @@
                     <strong>{{ p.code }}</strong>
                     <span class="muted">{{ p.reference }}</span>
                   </td>
-                  <td><span [class]="'method-chip method-chip--' + p.method">{{ methodLabel(p.method) }}</span></td>
+                  <td><span [class]="'method-chip method-chip--' + p.method">{{ vm.methodLabel(p.method) }}</span></td>
                   <td class="amount-cell">{{ cop(p.amount) }} <span class="muted">COP</span></td>
                   <td>
                     <strong>{{ fmtDate(p.date) }}, {{ p.time }}</strong>
@@ -161,7 +161,7 @@
         </div>
 
         <div class="pagination-line muted">
-          {{ 'ADMIN_PAYMENTS.PAGINATION.SHOWING' | translate:{ from: 1, to: filteredPayments.length, total: filteredPayments.length } }}
+          {{ 'ADMIN_PAYMENTS.PAGINATION.SHOWING' | translate:{ from: 1, to: vm.filteredPayments.length, total: vm.filteredPayments.length } }}
         </div>
 
       }

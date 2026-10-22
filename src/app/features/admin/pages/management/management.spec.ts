@@ -55,34 +55,34 @@ describe('ManagementComponent (admin)', () => {
   afterEach(() => localStorage.removeItem('auth_session'));
 
   it('separa las cuentas habilitadas de las inhabilitadas y las cuenta', () => {
-    expect(component.enabledCount).toBe(3);
-    expect(component.disabledCount).toBe(1);
-    expect(component.filteredUsers.map(u => u.name)).toEqual(['Ana Demo', 'Oscar Demo', 'Lucia Demo']);
-    component.userFilter = 'disabled';
-    expect(component.filteredUsers.map(u => u.name)).toEqual(['Pedro Demo']);
+    expect(component.vm.enabledCount()).toBe(3);
+    expect(component.vm.disabledCount()).toBe(1);
+    expect(component.vm.filteredUsers().map(u => u.name)).toEqual(['Ana Demo', 'Oscar Demo', 'Lucia Demo']);
+    component.vm.userFilter.set('disabled');
+    expect(component.vm.filteredUsers().map(u => u.name)).toEqual(['Pedro Demo']);
   });
 
   it('busca por nombre, correo o tipo de usuario en el idioma de la pantalla', () => {
-    component.usersSearch = 'oscar@';
-    expect(component.filteredUsers.map(u => u.name)).toEqual(['Oscar Demo']);
-    component.usersSearch = 'operario';
-    expect(component.filteredUsers.map(u => u.name)).toEqual(['Oscar Demo']);
-    component.usersSearch = 'cliente';
-    expect(component.filteredUsers.map(u => u.name)).toEqual(['Lucia Demo']);
+    component.vm.usersSearch.set('oscar@');
+    expect(component.vm.filteredUsers().map(u => u.name)).toEqual(['Oscar Demo']);
+    component.vm.usersSearch.set('operario');
+    expect(component.vm.filteredUsers().map(u => u.name)).toEqual(['Oscar Demo']);
+    component.vm.usersSearch.set('cliente');
+    expect(component.vm.filteredUsers().map(u => u.name)).toEqual(['Lucia Demo']);
   });
 
   it('no deja desactivar la cuenta propia ni otra de administrador', () => {
-    const [ana, oscar] = component.users;
-    expect(component.disableBlockedKey(ana)).toBe('API_ERRORS.CANNOT_DISABLE_OWN_ACCOUNT');
-    expect(component.disableBlockedKey({ ...ana, id: '9' })).toBe('API_ERRORS.ADMIN_CANNOT_BE_DISABLED');
-    expect(component.disableBlockedKey(oscar)).toBeNull();
+    const [ana, oscar] = component.vm.users();
+    expect(component.vm.disableBlockedKey(ana)).toBe('API_ERRORS.CANNOT_DISABLE_OWN_ACCOUNT');
+    expect(component.vm.disableBlockedKey({ ...ana, id: '9' })).toBe('API_ERRORS.ADMIN_CANNOT_BE_DISABLED');
+    expect(component.vm.disableBlockedKey(oscar)).toBeNull();
   });
 
   it('la pestaña de roles muestra los 3 roles fijos con sus usuarios y el aviso de referencia', () => {
-    expect(component.roles.map(r => [r.id, r.usersCount])).toEqual([['ADMIN', 1], ['OPERATOR', 1], ['CLIENT', 2]]);
-    component.setTab('roles');
+    expect(component.vm.roles().map(r => [r.id, r.usersCount])).toEqual([['ADMIN', 1], ['OPERATOR', 1], ['CLIENT', 2]]);
+    component.vm.setTab('roles');
     const fixture = TestBed.createComponent(ManagementComponent);
-    fixture.componentInstance.setTab('roles');
+    fixture.componentInstance.vm.setTab('roles');
     fixture.detectChanges();
     flushLoad();
     fixture.detectChanges();

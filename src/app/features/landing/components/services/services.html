@@ -4,7 +4,7 @@
   <p class="services-subtitle">{{ 'RESERVE.STEP2.SUBTITLE' | translate }}</p>
 
   <div class="services-grid">
-    @for (plan of plans; track plan.anchorId) {
+    @for (plan of vm.plans(); track plan.anchorId) {
       <div [id]="plan.anchorId" class="service-card" [class.popular]="plan.popular">
 
         @if (plan.popular) {

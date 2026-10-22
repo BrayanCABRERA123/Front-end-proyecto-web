@@ -21,12 +21,16 @@ describe('Profile', () => {
     expect(component).toBeTruthy();
   });
 
-  it('muestra al operario de la sesión, no datos inventados', () => {
+  it('muestra al operario de la sesión, no datos inventados', async () => {
     TestBed.inject(UserSession).update({ name: 'Oscar Ruiz', email: 'oscar.ruiz@gmail.com', phone: '', address: '' });
+    // la tarjeta toma la sesión al crearse, mientras llega lo del backend
+    const page = TestBed.createComponent(ProfileComponent);
+    await page.whenStable();
+    const html: HTMLElement = page.nativeElement;
 
-    expect(component.user().name).toBe('Oscar Ruiz');
-    expect(component.user().email).toBe('oscar.ruiz@gmail.com');
-    expect(component.user().initials).toBe('OR');
-    expect(component.user().address).toBe('');
+    expect(html.querySelector('.user-name')?.textContent?.trim()).toBe('Oscar Ruiz');
+    expect(html.querySelector('.avatar')?.textContent?.trim()).toBe('OR');
+    expect(html.querySelector<HTMLInputElement>('input[formcontrolname="email"]')?.value).toBe('oscar.ruiz@gmail.com');
+    expect(html.querySelector<HTMLInputElement>('input[formcontrolname="address"]')?.value).toBe('');
   });
 });

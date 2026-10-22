@@ -33,10 +33,10 @@ describe('CarWashFormComponent', () => {
     vi.spyOn(TestBed.inject(MatDialog), 'open')
       .mockReturnValue({ afterClosed: () => of(undefined) } as never);
 
-    component.selectedVehicleId = 3;
-    component.selectedServiceId = 5;
-    component.date = '2026-10-30';
-    component.time = '10:00';
+    component.vm.selectedVehicleId.set(3);
+    component.vm.selectedServiceId.set(5);
+    component.vm.date.set('2026-10-30');
+    component.vm.time.set('10:00');
     component.onSubmit();
 
     http.expectOne(req => req.method === 'POST' && req.url.endsWith('/bookings')).flush({

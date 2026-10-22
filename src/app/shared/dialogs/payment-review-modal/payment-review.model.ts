@@ -27,6 +27,8 @@ export interface PaymentReviewData {
   receiptImage?: string | null;
   /** titular de la cuenta que recibió el pago */
   payee?: string;
+  /** quien revisa el pago pendiente: el admin que tiene la sesión abierta */
+  reviewerName: string;
 }
 
 // refunded: el admin pide reembolsar un pago aprobado (la pantalla confirma antes de llamar al backend)

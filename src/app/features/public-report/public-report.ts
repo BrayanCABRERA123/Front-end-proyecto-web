@@ -4,9 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { InspectionApiService } from '../../core/services/inspection-api';
 import { InspectionPhotoComponent } from '../../shared/components/inspection-photo/inspection-photo';
 import { InspectionFinding, PHASE_ICONS, PublicInspectionReport } from '../../core/models/inspection.models';
+import { PublicReportViewModel } from './viewmodels/public-report.viewmodel';
 
 /**
  * Reporte de inspección que ve el cliente desde el enlace que le comparte el admin.
@@ -20,28 +20,20 @@ import { InspectionFinding, PHASE_ICONS, PublicInspectionReport } from '../../co
   imports: [CommonModule, MatIconModule, TranslateModule, InspectionPhotoComponent],
   templateUrl: './public-report.html',
   styleUrl: './public-report.scss',
+  providers: [PublicReportViewModel],
 })
 export class PublicReportComponent {
 
+  readonly vm = inject(PublicReportViewModel);
   private readonly route = inject(ActivatedRoute);
-  private readonly inspections = inject(InspectionApiService);
 
   readonly phaseIcons = PHASE_ICONS;
 
-  readonly loading = signal(true);
-  readonly report = signal<PublicInspectionReport | null>(null);
+  // foto abierta en grande
   readonly preview = signal<string | null>(null);
 
   constructor() {
-    const token = this.route.snapshot.paramMap.get('token') ?? '';
-    this.inspections.published(token).subscribe({
-      next: report => {
-        this.report.set(report);
-        this.loading.set(false);
-      },
-      // no existe o no está publicado: la pantalla muestra "no disponible"
-      error: () => this.loading.set(false),
-    });
+    this.vm.load(this.route.snapshot.paramMap.get('token') ?? '');
   }
 
   dateLabel(iso: string): string {

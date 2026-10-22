@@ -23,15 +23,15 @@ describe('VehiclesComponent (cliente)', () => {
       { id: 4, status: 'CONFIRMED', date: '2026-10-25' },
     ]);
 
-    expect(component.totalWashes).toBe(2);
-    expect(component.lastWashOverall).toBe('14/10/2026');
+    expect(component.vm.totalWashes()).toBe(2);
+    expect(component.vm.lastWashOverall()).toBe('14/10/2026');
   });
 
   it('sin lavados terminados (o sin respuesta de booking) muestra 0 y "—"', () => {
     http.expectOne(req => req.url.endsWith('/bookings/me'))
       .flush('down', { status: 503, statusText: 'Service Unavailable' });
 
-    expect(component.totalWashes).toBe(0);
-    expect(component.lastWashOverall).toBe('—');
+    expect(component.vm.totalWashes()).toBe(0);
+    expect(component.vm.lastWashOverall()).toBe('—');
   });
 });

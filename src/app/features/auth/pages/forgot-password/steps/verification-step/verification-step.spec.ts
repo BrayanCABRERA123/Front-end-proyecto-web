@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ForgotPasswordViewModel } from '../../../../viewmodels/forgot-password.viewmodel';
 import { VerificationStepComponent } from './verification-step';
 
 describe('VerificationStep', () => {
@@ -9,6 +10,8 @@ describe('VerificationStep', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [VerificationStepComponent],
+      // el paso usa el ViewModel que provee la pantalla de recuperar contraseña
+      providers: [ForgotPasswordViewModel],
     }).compileComponents();
 
     fixture = TestBed.createComponent(VerificationStepComponent);

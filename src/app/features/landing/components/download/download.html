@@ -1,5 +1,5 @@
 <!-- descarga de la app Android: solo aparece si el servidor tiene un APK publicado -->
-@if (apk) {
+@if (vm.apk(); as apk) {
   <section id="download" class="download-section">
     <div class="download-card">
 
@@ -11,13 +11,13 @@
         <h2 class="download-title">{{ 'DOWNLOAD.TITLE' | translate }}</h2>
         <p class="download-description">{{ 'DOWNLOAD.DESCRIPTION' | translate }}</p>
 
-        <a class="download-button" [href]="downloadUrl" download="LavaRapidoVehicular.apk">
+        <a class="download-button" [href]="vm.downloadUrl()" download="LavaRapidoVehicular.apk">
           <mat-icon>download</mat-icon>
           {{ 'DOWNLOAD.BUTTON' | translate }}
         </a>
         <span class="download-meta">
           {{ 'DOWNLOAD.VERSION' | translate: { version: apk.versionCode } }}
-          @if (sizeLabel) { · {{ sizeLabel }} }
+          @if (vm.sizeLabel()) { · {{ vm.sizeLabel() }} }
         </span>
 
         <p class="download-hint">
@@ -26,9 +26,9 @@
         </p>
       </div>
 
-      @if (qrDataUrl) {
+      @if (vm.qrDataUrl()) {
         <div class="download-qr">
-          <img [src]="qrDataUrl" width="220" height="220" [alt]="'DOWNLOAD.QR_ALT' | translate">
+          <img [src]="vm.qrDataUrl()" width="220" height="220" [alt]="'DOWNLOAD.QR_ALT' | translate">
           <span>{{ 'DOWNLOAD.QR_HINT' | translate }}</span>
         </div>
       }

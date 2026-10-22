@@ -1,16 +1,12 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { BusinessStore } from '../../../../services/business-store';
-import { FeedbackService } from '../../../../../../shared/dialogs/feedback.service';
-import { BusinessData } from '../../../../models/admin.models';
-import { apiErrorKey } from '../../../../../../core/utils/api-error';
+import { BusinessDataViewModel } from '../../../../viewmodels/business-data.viewmodel';
 import {
   BusinessField,
-  BusinessFieldKey,
   BusinessSectionModal,
   BusinessSectionModalData,
   BusinessSectionModalResult,
@@ -79,60 +75,19 @@ const SECTIONS: BusinessSection[] = [
   selector: 'app-business-data',
   standalone: true,
   imports: [CommonModule, MatIconModule, TranslateModule],
+  providers: [BusinessDataViewModel],
   templateUrl: './business-data.html',
   styleUrl: './business-data.scss'
 })
 export class BusinessDataComponent implements OnInit {
 
+  readonly vm = inject(BusinessDataViewModel);
+  private readonly dialog = inject(MatDialog);
+
   readonly sections = SECTIONS;
 
-  // lo último guardado en booking-service
-  private saved: BusinessData;
-
-  // lo que se ve en pantalla: el lápiz lo cambia y "Guardar cambios" lo confirma
-  data: BusinessData;
-
-  loaded = false;
-  saving = false;
-
-  constructor(
-    private store: BusinessStore,
-    private feedback: FeedbackService,
-    private dialog: MatDialog,
-    private changes: ChangeDetectorRef,
-  ) {
-    this.saved = { ...this.store.empty };
-    this.data = { ...this.saved };
-  }
-
   ngOnInit(): void {
-    this.store.load().subscribe({
-      next: business => {
-        this.saved = business;
-        this.data = { ...business };
-        this.loaded = true;
-        this.changes.markForCheck();
-      },
-      error: err => {
-        this.feedback.error('BUSINESS_DATA.FEEDBACK.LOAD_ERROR_TITLE', apiErrorKey(err));
-        this.changes.markForCheck();
-      }
-    });
-  }
-
-  /** hay cambios hechos con el lápiz que todavía no se guardaron */
-  get dirty(): boolean {
-    return (Object.keys(this.data) as BusinessFieldKey[]).some(k => (this.data[k] ?? '') !== (this.saved[k] ?? ''));
-  }
-
-  /** valor para mostrar; la fecha va como dd/mm/aaaa */
-  display(key: BusinessFieldKey): string {
-    const value = String(this.data[key] ?? '').trim();
-    if (key === 'foundationDate' && value) {
-      const [y, m, d] = value.split('-');
-      return `${d}/${m}/${y}`;
-    }
-    return value;
+    this.vm.load();
   }
 
   editSection(section: BusinessSection): void {
@@ -141,41 +96,12 @@ export class BusinessDataComponent implements OnInit {
       subtitleKey: section.subtitleKey,
       icon: section.icon,
       fields: section.fields,
-      values: this.data,
+      values: this.vm.data(),
     };
     this.dialog.open(BusinessSectionModal, { panelClass: 'custom-dialog', data })
       .afterClosed()
       .subscribe((result: BusinessSectionModalResult | null | undefined) => {
-        if (!result) return;
-        this.data = { ...this.data, ...result };
-        this.changes.markForCheck();
+        if (result) this.vm.applySection(result);
       });
-  }
-
-  discard(): void {
-    this.data = { ...this.saved };
-    this.feedback.info('BUSINESS_DATA.FEEDBACK.DISCARDED_TITLE', 'BUSINESS_DATA.FEEDBACK.DISCARDED_MESSAGE');
-  }
-
-  save(): void {
-    this.saving = true;
-    this.store.save(this.data).subscribe({
-      next: business => {
-        this.saving = false;
-        this.saved = business;
-        this.data = { ...business };
-        this.feedback.success(
-          'BUSINESS_DATA.FEEDBACK.SAVED_TITLE',
-          'BUSINESS_DATA.FEEDBACK.SAVED_MESSAGE',
-          { details: [{ label: 'BUSINESS_DATA.GENERAL.LEGAL_NAME', value: business.legalName }] }
-        );
-        this.changes.markForCheck();
-      },
-      error: err => {
-        this.saving = false;
-        this.feedback.error('BUSINESS_DATA.FEEDBACK.INVALID_TITLE', apiErrorKey(err));
-        this.changes.markForCheck();
-      }
-    });
   }
 }

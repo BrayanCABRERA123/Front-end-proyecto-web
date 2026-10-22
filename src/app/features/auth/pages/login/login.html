@@ -16,11 +16,11 @@
                     {{ 'LOGIN.SUBTITLE' | translate }}
                 </p>
 
-                <p class="error-msg" role="status" *ngIf="sessionExpired && !errorKey()">
+                <p class="error-msg" role="status" *ngIf="sessionExpired && !vm.errorKey()">
                     {{ 'LOGIN.SESSION_EXPIRED' | translate }}
                 </p>
 
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+                <form [formGroup]="vm.form" (ngSubmit)="onSubmit()" novalidate>
 
                     <label>
                         {{ 'LOGIN.EMAIL' | translate }}
@@ -30,11 +30,11 @@
                         type="email"
                         formControlName="email"
                         [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
-                        (input)="stripEmailSpaces()">
+                        (input)="vm.stripEmailSpaces()">
 
                     <span
                         class="error-msg"
-                        *ngIf="f['email'].errors?.['required'] && f['email'].touched">
+                        *ngIf="vm.f['email'].errors?.['required'] && vm.f['email'].touched">
 
                         {{ 'LOGIN.EMAIL_REQUIRED' | translate }}
 
@@ -42,7 +42,7 @@
 
                     <span
                         class="error-msg"
-                        *ngIf="f['email'].errors?.['pattern'] && f['email'].touched">
+                        *ngIf="vm.f['email'].errors?.['pattern'] && vm.f['email'].touched">
 
                         {{ 'LOGIN.EMAIL_INVALID' | translate }}
 
@@ -59,7 +59,7 @@
 
                     <span
                         class="error-msg"
-                        *ngIf="f['password'].errors?.['required'] && f['password'].touched">
+                        *ngIf="vm.f['password'].errors?.['required'] && vm.f['password'].touched">
 
                         {{ 'LOGIN.PASSWORD_REQUIRED' | translate }}
 
@@ -70,15 +70,15 @@
                     </a>
 
                     <!-- error devuelto por el servidor (credenciales, cuenta desactivada, sin conexión...) -->
-                    <span class="error-msg" role="alert" *ngIf="errorKey()">
-                        {{ errorKey()! | translate }}
+                    <span class="error-msg" role="alert" *ngIf="vm.errorKey()">
+                        {{ vm.errorKey()! | translate }}
                     </span>
 
                     <button
                         type="submit"
-                        [disabled]="loginForm.invalid || loading()">
+                        [disabled]="vm.form.invalid || vm.loading()">
 
-                        {{ (loading() ? 'LOGIN.LOADING' : 'LOGIN.BUTTON') | translate }}
+                        {{ (vm.loading() ? 'LOGIN.LOADING' : 'LOGIN.BUTTON') | translate }}
 
                     </button>
 

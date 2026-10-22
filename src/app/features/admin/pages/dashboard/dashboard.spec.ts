@@ -29,6 +29,6 @@ describe('Dashboard', () => {
   });
 
   it('saluda con el primer nombre de quien inició sesión', () => {
-    expect(component.adminName).toBe('Ana');
+    expect(component.vm.adminName).toBe('Ana');
   });
 });

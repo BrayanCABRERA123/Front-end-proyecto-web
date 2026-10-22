@@ -37,15 +37,15 @@ describe('DashboardComponent (cliente)', () => {
   it('la barra apunta a la siguiente promoción bloqueada', () => {
     answerLoyalty(30, [promotion(1, 'Encerado', 10, 20, true), promotion(2, 'Full', 25, 120, false)]);
 
-    expect(component.loyalty).toEqual({ current: 30, goal: 120, percentage: 25 });
-    expect(component.benefits.map(b => b.title)).toEqual(['Encerado · 10% OFF', 'Full · 25% OFF']);
+    expect(component.vm.loyalty()).toEqual({ current: 30, goal: 120, percentage: 25 });
+    expect(component.vm.benefits().map(b => b.title)).toEqual(['Encerado · 10% OFF', 'Full · 25% OFF']);
   });
 
   it('sin nada por desbloquear la barra queda completa y no inventa una meta', () => {
     answerLoyalty(0, [promotion(1, 'Lavado con champú', 0, 0, true)]);
 
-    expect(component.loyalty).toEqual({ current: 0, goal: 0, percentage: 100, allUnlocked: true });
+    expect(component.vm.loyalty()).toEqual({ current: 0, goal: 0, percentage: 100, allUnlocked: true });
     // una promoción sin porcentaje no muestra "0% OFF"
-    expect(component.benefits[0].title).toBe('Lavado con champú');
+    expect(component.vm.benefits()[0].title).toBe('Lavado con champú');
   });
 });

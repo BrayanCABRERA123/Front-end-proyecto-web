@@ -156,8 +156,8 @@
 
   <div class="review-footer">
     <span class="muted">
-      @if (data.status === 'pending' && reviewerName) {
-        {{ 'PAYMENT_REVIEW_MODAL.AUDITED_BY' | translate }}: {{ reviewerName }}
+      @if (data.status === 'pending' && data.reviewerName) {
+        {{ 'PAYMENT_REVIEW_MODAL.AUDITED_BY' | translate }}: {{ data.reviewerName }}
       }
     </span>
 

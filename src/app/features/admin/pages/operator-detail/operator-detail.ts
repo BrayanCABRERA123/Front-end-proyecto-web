@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,87 +9,32 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { ExportColumn, ExportDataModal, ExportDataModalData } from '../../../../shared/dialogs/export-data-modal/export-data-modal';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
-import { OperatorsStore } from '../../services/operators-store';
-// reservas del día con su operario asignado (booking + operations)
-import { ReservationsStore, formatTimeRange } from '../../services/reservations-store';
-import { AvailabilitySlot, Operator, TodayService } from '../../models/admin.models';
-import { OperationsApiService, OperatorMetricsResponse } from '../../../../core/services/operations-api';
+import { AvailabilitySlot, TodayService } from '../../models/admin.models';
 import { OperatorAbsenceModal, AbsenceModalResult } from './components/operator-absence-modal/operator-absence-modal';
 import { OperatorProfileModal, OperatorProfileModalData, OperatorProfileModalResult } from './components/operator-profile-modal/operator-profile-modal';
-import { OperatorSkillLevel } from '../../../../core/services/operations-api';
-import { apiErrorKey } from '../../../../core/utils/api-error';
 import { AvailabilityModal, AvailabilityModalData } from './components/availability-modal/availability-modal';
+import { OperatorDetailViewModel } from '../../viewmodels/operator-detail.viewmodel';
 
+// vista de la ficha del operario: los datos y las acciones están en OperatorDetailViewModel
 @Component({
   selector: 'app-operator-detail',
   standalone: true,
   imports: [CommonModule, RouterModule, MatIconModule, TranslateModule, SidebarComponent, EmptyStateComponent],
+  providers: [OperatorDetailViewModel],
   templateUrl: './operator-detail.html',
   styleUrl: './operator-detail.scss'
 })
 export class OperatorDetailComponent implements OnInit {
 
-  private operatorId = '';
-  // métricas reales de la semana (operations-service); null mientras cargan o si fallan
-  metrics: OperatorMetricsResponse | null = null;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private store: OperatorsStore,
-    private dialog: MatDialog,
-    private feedback: FeedbackService,
-    private reservations: ReservationsStore,
-    private operationsApi: OperationsApiService,
-    private changes: ChangeDetectorRef,
-  ) {}
-
-  // se lee del store cada vez: llega aunque la ficha se abra antes de que carguen los operarios y
-  // refleja los cambios (activar, turno, ausencias) sin volver a buscarlo
-  get operator(): Operator | undefined {
-    return this.store.getById(this.operatorId);
-  }
-
-  get loading(): boolean {
-    return !this.store.loaded();
-  }
-
-  // servicios de hoy asignados a este operario
-  get todayServices(): TodayService[] {
-    if (!this.operator) return [];
-    const id = this.operator.id;
-    return this.reservations.byDate(this.reservations.today)
-      .filter(b => b.operator?.id === id && b.status !== 'cancelled' && b.status !== 'no_show')
-      .map((b): TodayService => ({
-        code: b.code,
-        vehicle: [b.vehicle, b.plate].filter(Boolean).join(' · '),
-        service: b.service,
-        bay: b.bay ?? '—',
-        time: formatTimeRange(b.time, b.durationMin),
-        status: b.status === 'completed' ? 'completed' : b.status === 'in_progress' ? 'in_progress' : 'scheduled'
-      }));
-  }
+  readonly vm = inject(OperatorDetailViewModel);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
+  private readonly feedback = inject(FeedbackService);
 
   ngOnInit(): void {
     // reactivo: al navegar de una ficha a otra cambia el id sin recargar la página
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id') ?? '';
-      this.operatorId = id;
-      this.loadMetrics(id);
-    });
-  }
-
-  // porcentaje de horas ocupadas, para la barra de progreso
-  private loadMetrics(id: string): void {
-    this.metrics = null;
-    if (!id) return;
-    this.operationsApi.operatorMetrics(Number(id)).subscribe({
-      next: metrics => {
-        this.metrics = metrics;
-        this.changes.markForCheck();
-      },
-      error: () => this.changes.markForCheck()
-    });
+    this.route.paramMap.subscribe(params => this.vm.select(params.get('id') ?? ''));
   }
 
   // formatea a pesos colombianos, ej: $1.420.000
@@ -102,73 +47,46 @@ export class OperatorDetailComponent implements OnInit {
   }
 
   goToCalendar(): void {
-    if (!this.operator) return;
-    this.router.navigate(['/admin/operators', this.operator.id, 'calendar']);
+    const operator = this.vm.operator;
+    if (operator) this.router.navigate(['/admin/operators', operator.id, 'calendar']);
   }
 
   /* ---------- acciones ---------- */
 
   registerAbsence(): void {
-    if (!this.operator) return;
-
-    const dialogRef = this.dialog.open(OperatorAbsenceModal, { panelClass: 'custom-dialog' });
-
-    const operator = this.operator;
-    dialogRef.afterClosed().subscribe((result: AbsenceModalResult | null) => {
-      if (!result) return;
-      // la incapacidad sale de las ausencias: al recargar, el operario aparece incapacitado
-      this.store.addAbsence(operator.id, result).subscribe({
-        next: () => this.feedback.success(
-          'OPERATOR_DETAIL.FEEDBACK.ABSENCE_TITLE',
-          'OPERATOR_DETAIL.FEEDBACK.ABSENCE_MESSAGE',
-          { messageParams: { name: operator.name } }
-        ),
-        error: (error: unknown) => this.feedback.error('OPERATOR_DETAIL.FEEDBACK.ABSENCE_ERROR_TITLE', apiErrorKey(error))
+    const operator = this.vm.operator;
+    if (!operator) return;
+    this.dialog.open(OperatorAbsenceModal, { panelClass: 'custom-dialog' })
+      .afterClosed()
+      .subscribe((result: AbsenceModalResult | null) => {
+        if (result) this.vm.addAbsence(operator, result);
       });
-    });
   }
 
-  // especialidad y habilidades (operations-service): guardar reemplaza la lista completa
   editProfile(): void {
-    const operator = this.operator;
+    const operator = this.vm.operator;
     if (!operator) return;
-
     const data: OperatorProfileModalData = {
       name: operator.name,
       specialty: operator.specialty,
-      skills: operator.certifications.map(c => ({ name: c.name, level: c.level as OperatorSkillLevel })),
+      skills: this.vm.skillsOf(operator),
     };
-    const dialogRef = this.dialog.open(OperatorProfileModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((result: OperatorProfileModalResult | null | undefined) => {
-      if (!result) return;
-      this.store.saveProfile(operator.id, result.specialty, result.skills).subscribe({
-        next: () => this.feedback.success('OPERATOR_PROFILE_MODAL.SAVED_TITLE', 'OPERATOR_PROFILE_MODAL.SAVED_MESSAGE',
-          { messageParams: { name: operator.name } }),
-        error: (error: unknown) => this.feedback.error('OPERATOR_PROFILE_MODAL.SAVE_ERROR_TITLE', apiErrorKey(error))
+    this.dialog.open(OperatorProfileModal, { panelClass: 'custom-dialog', data })
+      .afterClosed()
+      .subscribe((result: OperatorProfileModalResult | null | undefined) => {
+        if (result) this.vm.saveProfile(operator, result);
       });
-    });
   }
 
   editAvailability(): void {
-    const operator = this.operator;
+    const operator = this.vm.operator;
     if (!operator) return;
-
     const data: AvailabilityModalData = { slots: operator.availability };
-
-    const dialogRef = this.dialog.open(AvailabilityModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((slots: AvailabilitySlot[] | null) => {
-      if (!slots) return;
-      this.store.setAvailability(operator.id, slots).subscribe({
-        next: () => this.feedback.success(
-          'OPERATOR_DETAIL.FEEDBACK.AVAILABILITY_TITLE',
-          'OPERATOR_DETAIL.FEEDBACK.AVAILABILITY_MESSAGE',
-          { messageParams: { name: operator.name } }
-        ),
-        error: (error: unknown) => this.feedback.error('OPERATOR_DETAIL.FEEDBACK.AVAILABILITY_ERROR_TITLE', apiErrorKey(error))
+    this.dialog.open(AvailabilityModal, { panelClass: 'custom-dialog', data })
+      .afterClosed()
+      .subscribe((slots: AvailabilitySlot[] | null) => {
+        if (slots) this.vm.saveAvailability(operator, slots);
       });
-    });
   }
 
   // el "Detalles / Bitácora / Ver orden" del historial abre la orden del servicio
@@ -189,9 +107,9 @@ export class OperatorDetailComponent implements OnInit {
   }
 
   exportSheet(): void {
-    if (!this.operator) return;
+    const o = this.vm.operator;
+    if (!o) return;
 
-    const o = this.operator;
     const columns: ExportColumn[] = [
       { key: 'name', labelKey: 'OPERATOR_DETAIL.EXPORT_FIELDS.NAME' },
       { key: 'specialty', labelKey: 'OPERATOR_DETAIL.EXPORT_FIELDS.SPECIALTY' },

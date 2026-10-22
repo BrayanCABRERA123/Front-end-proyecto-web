@@ -1,5 +1,5 @@
 // definimos el componente
-import { ChangeDetectorRef, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 // para usar *ngFor y *ngIf en el HTML
 import { CommonModule } from '@angular/common';
 // importamos el sidebar
@@ -11,437 +11,46 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 // modal reutilizable para mostrar mensajes de éxito o error
-import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
+import { StatusModal } from '../../../../shared/dialogs/status-modal/status-modal';
 // modal reutilizable de confirmación para acciones peligrosas
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
-// datos reales de la reserva (booking-service)
-import { BookingApiService } from '../../../../core/services/booking-api';
-import { BookingResponse } from '../../../../core/models/booking.models';
-import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../../core/utils/booking-display';
-import { apiErrorKey } from '../../../../core/utils/api-error';
-// cuentas del lavadero y reporte del pago (payment-service)
-import { ALLOWED_IMAGE_TYPES, PaymentAccountResponse, PaymentsApiService, compressReceipt } from '../../../../core/services/payments-api';
-// canje de cupón de fidelización (payment-service, ADR-015)
-import { LoyaltyApiService, RedeemPromotionResult } from '../../../../core/services/loyalty-api';
 import { PaymentCouponComponent } from './components/payment-coupon/payment-coupon';
 import { PaymentHelpComponent } from './components/payment-help/payment-help';
 import { PaymentNoticeComponent } from './components/payment-notice/payment-notice';
 import { PaymentMissingComponent } from './components/payment-missing/payment-missing';
 import { PaymentQrZoomComponent } from './components/payment-qr-zoom/payment-qr-zoom';
+import { PaymentViewModel } from '../../viewmodels/payment.viewmodel';
 
-// tipos para que el código sea más claro
-type PaymentMethodId = 'NEQUI' | 'DAVIPLATA' | 'TRANSFER' | 'CASH';
-// PENDING: falta pagar · VERIFYING: el admin lo está revisando · APPROVED: el admin lo aprobó
-type FlowStep = 'PENDING' | 'VERIFYING' | 'APPROVED';
-
-interface PaymentMethod {
-  id: PaymentMethodId;
-  // cuenta del lavadero que representa la opción (efectivo no tiene cuenta)
-  accountId: number | null;
-  icon: string;
-  label: string;
-  desc: string;
-  // titular, solo cuando hay dos cuentas del mismo medio y hace falta distinguirlas
-  holder?: string;
-}
-
-// lo que se guarda del pago para que no se pierda al recargar la página
-interface SavedPaymentState {
-  flowStep: FlowStep;
-  method: PaymentMethodId;
-  accountId?: number | null;
-}
-
-// efectivo: se paga en el lavadero; solo aparece si el admin tiene activa la cuenta de caja
-const CASH_METHOD: PaymentMethod = { id: 'CASH', accountId: null, icon: 'payments', label: 'PAYMENT.METHOD.CASH', desc: 'PAYMENT.METHOD.CASH_DESC' };
-
-/** medio de la pantalla para el código de payment-service */
-function methodIdOf(code: string): PaymentMethodId {
-  if (code === 'NEQUI') return 'NEQUI';
-  if (code === 'DAVIPLATA') return 'DAVIPLATA';
-  if (code === 'EFECTIVO') return 'CASH';
-  return 'TRANSFER';
-}
-
-function methodOptionOf(account: PaymentAccountResponse): PaymentMethod | null {
-  const id = methodIdOf(account.methodCode);
-  if (id === 'CASH') return null;
-  const icon = id === 'NEQUI' ? 'smartphone' : id === 'DAVIPLATA' ? 'account_balance' : 'receipt_long';
-  return { id, accountId: account.id, icon, label: 'PAYMENT.METHOD.' + id, desc: 'PAYMENT.METHOD.' + id + '_DESC' };
-}
-
-// El QR es la imagen fija de la cuenta del lavadero (Nequi, Daviplata o transferencia) que sube el
-// admin: no es un cobro dinámico de una pasarela, así que no vence y no se muestra un temporizador.
-
+// vista del pago: el estado y las acciones están en PaymentViewModel; aquí queda lo de pantalla
+// (arrastrar el comprobante, QR en grande, copiar el número y las confirmaciones)
 @Component({
   selector: 'app-payment',
   standalone: true,
   imports: [CommonModule, SidebarComponent, MatIconModule, TranslateModule, FormsModule, PaymentCouponComponent,
     PaymentHelpComponent, PaymentNoticeComponent, PaymentMissingComponent, PaymentQrZoomComponent],
+  providers: [PaymentViewModel],
   templateUrl: './payment.html',
   styleUrls: ['./payment.scss']
 })
 export class PaymentComponent implements OnInit {
 
-  private readonly bookingApi = inject(BookingApiService);
-  private readonly paymentsApi = inject(PaymentsApiService);
-  private readonly loyaltyApi = inject(LoyaltyApiService);
-
-  // cuentas activas del lavadero (payment-service); cada medio tiene su titular, número y QR
-  private accounts: PaymentAccountResponse[] = [];
+  readonly vm = inject(PaymentViewModel);
   private readonly route = inject(ActivatedRoute);
-  private readonly changes = inject(ChangeDetectorRef);
+  private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
-  // reserva que se está pagando (viene de booking-service)
-  booking: BookingResponse | null = null;
-  loading = false;
-  notFound = false;
-  loadError: string | null = null;
-  private bookingId: number | null = null;
-
-  // estado del pago: pendiente de confirmación o en verificación
-  flowStep: FlowStep = 'PENDING';
-
-  // código de la reserva (lo llena el backend)
-  reservationCode = '';
-
-  // medios disponibles: los que el admin tiene activos (efectivo incluido, si su cuenta está activa)
-  paymentMethods: PaymentMethod[] = [];
-  private accountsLoaded = false;
-  // payment-service no respondió: no hay medios para elegir
-  accountsFailed = false;
-
-  // hay al menos un medio activo para pagar
-  get hasPaymentMethods(): boolean {
-    return this.accountsLoaded && this.paymentMethods.length > 0;
-  }
-
-  // ya se sabe que no hay medios (todos apagados o sin respuesta): se avisa en vez de ofrecer efectivo
-  get noPaymentMethods(): boolean {
-    return (this.accountsLoaded || this.accountsFailed) && this.paymentMethods.length === 0;
-  }
-
-  // método seleccionado por el usuario
-  selectedMethod: PaymentMethodId = 'CASH';
-  // cuenta elegida: con dos cuentas del mismo medio (por ejemplo, dos Nequi) el medio no basta
-  selectedAccountId: number | null = null;
-
-  // cuenta del medio elegido (su QR es el que se muestra)
-  get selectedAccount(): PaymentAccountResponse | null {
-    return this.accounts.find(a => a.id === this.selectedAccountId)
-      ?? this.accounts.find(a => methodIdOf(a.methodCode) === this.selectedMethod)
-      ?? null;
-  }
-
-  isSelected(method: PaymentMethod): boolean {
-    return method.accountId === null
-      ? this.selectedMethod === 'CASH'
-      : this.selectedMethod !== 'CASH' && this.selectedAccount?.id === method.accountId;
-  }
-
-  // datos de la cuenta que recibe el pago
-  get payee() {
-    const account = this.selectedAccount;
-    return {
-      name: account?.accountHolder ?? '',
-      key: account?.accountNumber ?? '',
-      accountType: 'PAYMENT.QR.ACCOUNT_TYPE_VALUE'
-    };
-  }
-
-  // resumen real de la reserva (se llena en applyBooking)
-  serviceSummary = {
-    serviceName: '',
-    vehicleModel: '',
-    plate: '',
-    schedule: '',
-    subtotal: 0,
-    // descuento por puntos redimidos (booking.pointsDiscountAmount)
-    pointsDiscount: 0
-  };
-
-  get totalToPay(): number {
-    const couponDiscount = this.couponResult?.discountAmount ?? 0;
-    return Math.max(0, this.serviceSummary.subtotal - this.serviceSummary.pointsDiscount - couponDiscount);
-  }
-
-  // --- canje de cupón de fidelización (payment-service, ADR-015) ---
-  couponCode = '';
-  couponResult: RedeemPromotionResult | null = null;
-  couponError: string | null = null;
-  redeemingCoupon = false;
-
-  get canRedeemCoupon(): boolean {
-    return !this.isVerifying && !this.couponResult && !this.redeemingCoupon && this.couponCode.trim().length >= 3;
-  }
-
-  redeemCoupon(): void {
-    if (!this.canRedeemCoupon || !this.booking) return;
-    this.redeemingCoupon = true;
-    this.couponError = null;
-    this.loyaltyApi.redeem(this.booking.id, this.couponCode.trim().toUpperCase()).subscribe({
-      next: (result) => {
-        this.couponResult = result;
-        this.redeemingCoupon = false;
-        this.changes.markForCheck();
-      },
-      error: (error) => {
-        this.couponError = apiErrorKey(error);
-        this.redeemingCoupon = false;
-        this.changes.markForCheck();
-      }
-    });
-  }
-
-  removeCoupon(): void {
-    this.couponResult = null;
-    this.couponCode = '';
-    this.couponError = null;
-  }
-
-  // confirmación del pago
-  receiptFile: File | null = null;
-  // el comprobante ya comprimido (lo que se envía) y su peso real
-  private receiptDataUrl: string | null = null;
-  private receiptBytes = 0;
-  compressingReceipt = false;
   isDragging = false;
-  transactionRef = '';
-  // monto que el cliente pagó según su comprobante; mientras no lo cambie, se asume el total
-  paidAmountInput: number | null = null;
-  // motivo del último pago rechazado de esta reserva (para que el cliente sepa qué corregir)
-  lastRejectionReason: string | null = null;
+  // QR en grande con lupa
+  qrZoomOpen = false;
   // signal para que el setTimeout de copyKey() repinte el botón (zoneless)
   copied = signal(false);
 
-  // la referencia debe tener entre 8 y 12 caracteres alfanuméricos
-  get isRefValid(): boolean {
-    return /^[A-Za-z0-9]{8,12}$/.test(this.transactionRef);
-  }
-
-  get paidAmount(): number {
-    return this.paidAmountInput ?? this.totalToPay;
-  }
-
-  get isPaidAmountValid(): boolean {
-    return Number.isFinite(this.paidAmount) && this.paidAmount > 0;
-  }
-
-  // el pago ya se envió y está en revisión
-  get isVerifying(): boolean {
-    return this.flowStep === 'VERIFYING';
-  }
-
-  // el administrador ya aprobó el pago de esta reserva
-  get isApproved(): boolean {
-    return this.flowStep === 'APPROVED';
-  }
-
-  // con el pago enviado (en revisión o aprobado) ya no se puede cambiar ni volver a pagar
-  get isLocked(): boolean {
-    return this.isVerifying || this.isApproved;
-  }
-
-  // el reporte va en camino: el botón queda bloqueado hasta que el servidor responda
-  reporting = false;
-
-  get canConfirm(): boolean {
-    // evita enviar el mismo pago dos veces (ya enviado, o con la petición en curso)
-    if (this.isLocked || this.reporting) return false;
-    // sin medios activos no se puede pagar, ni siquiera en efectivo
-    if (!this.hasPaymentMethods) return false;
-    if (this.selectedMethod === 'CASH') return true;
-    return !!this.receiptDataUrl && !this.compressingReceipt && this.isRefValid && this.isPaidAmountValid;
-  }
-
-  // lo que le falta al cliente para poder confirmar (se muestra debajo del botón deshabilitado,
-  // así sabe qué completar en vez de ver un botón bloqueado sin explicación)
-  get missingRequirements(): string[] {
-    if (this.isLocked || !this.hasPaymentMethods || this.selectedMethod === 'CASH') return [];
-    const missing: string[] = [];
-    if (!this.receiptFile) missing.push('PAYMENT.CONFIRM.MISSING.RECEIPT');
-    if (!this.isRefValid) missing.push('PAYMENT.CONFIRM.MISSING.REFERENCE');
-    if (!this.isPaidAmountValid) missing.push('PAYMENT.CONFIRM.MISSING.AMOUNT');
-    return missing;
-  }
-
-
-  constructor(
-    private dialog: MatDialog,
-    private router: Router
-  ) {}
-
   ngOnInit(): void {
-    this.bookingId = Number(this.route.snapshot.queryParamMap.get('booking')) || null;
-
-    // cuentas reales del lavadero (con su QR)
-    this.paymentsApi.accounts().subscribe({
-      next: (accounts) => {
-        this.accounts = accounts;
-        const digital = accounts.map(a => methodOptionOf(a)).filter((m): m is PaymentMethod => !!m);
-        for (const option of digital) {
-          if (digital.filter(other => other.id === option.id).length > 1) {
-            option.holder = accounts.find(a => a.id === option.accountId)?.accountHolder;
-          }
-        }
-        const cashActive = accounts.some(a => methodIdOf(a.methodCode) === 'CASH');
-        this.paymentMethods = cashActive ? [...digital, CASH_METHOD] : digital;
-        this.accountsLoaded = true;
-        if (!this.isLocked && this.paymentMethods.length > 0) {
-          this.selectedMethod = this.paymentMethods[0].id;
-          this.selectedAccountId = this.paymentMethods[0].accountId;
-        }
-        this.ensureAvailableMethod();
-        this.changes.markForCheck();
-      },
-      error: () => {
-        // sin payment-service no hay medios para elegir: se avisa y no se deja confirmar
-        this.accountsFailed = true;
-        this.changes.markForCheck();
-      }
-    });
-
-    this.loadBooking();
-  }
-
-  // trae las reservas del cliente y elige la que se va a pagar
-  private loadBooking(): void {
-    this.loading = true;
-    this.loadError = null;
-    this.bookingApi.myBookings().subscribe({
-      next: (bookings) => {
-        this.loading = false;
-        const booking = this.pickBooking(bookings);
-        if (!booking) {
-          this.notFound = true;
-          this.changes.markForCheck();
-          return;
-        }
-        this.booking = booking;
-        this.applyBooking(booking);
-        this.loadPaymentState(booking.id);
-        this.changes.markForCheck();
-      },
-      error: (error) => {
-        this.loading = false;
-        this.loadError = apiErrorKey(error);
-        this.changes.markForCheck();
-      }
-    });
-  }
-
-  // con id en la URL se paga esa reserva; sin id, la primera activa (o la más reciente)
-  private pickBooking(bookings: BookingResponse[]): BookingResponse | null {
-    if (this.bookingId) {
-      return bookings.find(booking => booking.id === this.bookingId) ?? null;
-    }
-    const bySchedule = (a: BookingResponse, b: BookingResponse) =>
-      `${a.date} ${a.startTime}`.localeCompare(`${b.date} ${b.startTime}`);
-    const active = [...bookings].filter(booking => isActiveStatus(booking.status)).sort(bySchedule);
-    return active[0] ?? [...bookings].sort(bySchedule).reverse()[0] ?? null;
-  }
-
-  private applyBooking(booking: BookingResponse): void {
-    this.reservationCode = booking.code;
-    this.serviceSummary = {
-      serviceName: servicesLabel(booking),
-      vehicleModel: vehicleLabel(booking.vehicle),
-      plate: booking.vehicle?.licensePlateFormatted ?? '',
-      schedule: `${isoToDisplayDate(booking.date)} · ${booking.startTime} - ${booking.endTime}`,
-      subtotal: booking.subtotal,
-      pointsDiscount: booking.pointsDiscountAmount
-    };
-
-    this.restoreState();
-  }
-
-  // el estado del pago lo dice payment-service: aprobado, en revisión o sin pagar (o rechazado)
-  private loadPaymentState(bookingId: number): void {
-    this.paymentsApi.mine().subscribe({
-      next: (payments) => {
-        // payment-service los devuelve del más reciente al más antiguo: el primero es el vigente
-        const current = payments.find(p => p.booking?.id === bookingId);
-        this.flowStep = current?.status === 'APPROVED' ? 'APPROVED'
-          : current && ['PENDING', 'IN_REVIEW'].includes(current.status) ? 'VERIFYING' : 'PENDING';
-        this.lastRejectionReason = current?.status === 'REJECTED' ? (current.rejectionReason ?? '—') : null;
-        this.saveState();
-        this.changes.markForCheck();
-      },
-      error: () => { /* sin payment-service se queda el estado local */ }
-    });
-  }
-
-  // --- estado guardado del pago ---
-  // el estado real (si el pago ya se reportó) lo manda loadPaymentState() desde payment-service y
-  // pisa lo que haya aquí; local solo queda el método elegido, que es de la sesión y no de la reserva
-  private get storageKey(): string {
-    return `payment-${this.reservationCode}`;
-  }
-
-  // recupera el método elegido la última vez (si no hay nada guardado, empieza un pago nuevo)
-  private restoreState() {
-    try {
-      const saved = localStorage.getItem(this.storageKey);
-      if (saved) {
-        const state: SavedPaymentState = JSON.parse(saved);
-        this.flowStep = state.flowStep;
-        this.selectedMethod = state.method;
-        this.selectedAccountId = state.accountId ?? null;
-        this.ensureAvailableMethod();
-        return;
-      }
-    } catch {
-      // si no se puede leer, se empieza un pago nuevo
-    }
-
-    this.saveState();
-  }
-
-  private saveState() {
-    const state: SavedPaymentState = {
-      flowStep: this.flowStep,
-      method: this.selectedMethod,
-      accountId: this.selectedAccountId
-    };
-
-    try {
-      localStorage.setItem(this.storageKey, JSON.stringify(state));
-    } catch {
-      // si el navegador no permite guardar, el estado queda solo en memoria
-    }
-  }
-
-  private clearState() {
-    try {
-      localStorage.removeItem(this.storageKey);
-    } catch {
-      // nada que limpiar
-    }
-  }
-
-  // el método guardado puede ya no estar activo (por ejemplo, el admin apagó el efectivo): se pasa
-  // al primero disponible. Con el pago enviado no se toca
-  private ensureAvailableMethod(): void {
-    if (!this.accountsLoaded || this.isLocked || this.paymentMethods.length === 0) return;
-    if (this.paymentMethods.some(m => this.isSelected(m))) return;
-    this.selectedMethod = this.paymentMethods[0].id;
-    this.selectedAccountId = this.paymentMethods[0].accountId;
-    this.saveState();
-  }
-
-  // QR en grande con lupa
-  qrZoomOpen = false;
-
-  selectMethod(method: PaymentMethod) {
-    // con el pago en revisión o aprobado ya no se puede cambiar el método
-    if (this.isLocked) return;
-    this.selectedMethod = method.id;
-    this.selectedAccountId = method.accountId;
-    this.saveState();
+    this.vm.init(Number(this.route.snapshot.queryParamMap.get('booking')) || null);
   }
 
   copyKey() {
-    navigator.clipboard?.writeText(this.payee.key.replace(/\s/g, ''));
+    navigator.clipboard?.writeText(this.vm.payee().key.replace(/\s/g, ''));
     this.copied.set(true);
     setTimeout(() => this.copied.set(false), 2000);
   }
@@ -460,149 +69,46 @@ export class PaymentComponent implements OnInit {
     event.preventDefault();
     this.isDragging = false;
     const file = event.dataTransfer?.files?.[0];
-    if (file) this.setReceipt(file);
+    if (file) this.vm.setReceipt(file);
   }
 
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) this.setReceipt(file);
-  }
-
-  private async setReceipt(file: File) {
-    // se deja elegir hasta 10 MB; antes de enviarlo se comprime a máximo 2 MB
-    const validType = ALLOWED_IMAGE_TYPES.includes(file.type);
-    const validSize = file.size <= 10 * 1024 * 1024;
-    if (!validType || !validSize) {
-      // mostramos el error en el modal de estado (en rojo) en lugar de alert()
-      this.showStatusModal({
-        type: 'error',
-        title: 'PAYMENT.INVALID_FILE_TITLE',
-        message: 'PAYMENT.INVALID_FILE_MESSAGE'
-      });
-      return;
-    }
-    // se comprime al elegirlo para mostrar ya el peso real que se va a enviar
-    this.compressingReceipt = true;
-    this.changes.markForCheck();
-    try {
-      const compressed = await compressReceipt(file);
-      if (!compressed) {
-        this.showStatusModal({ type: 'error', title: 'PAYMENT.INVALID_FILE_TITLE', message: 'PAYMENT.RECEIPT_TOO_LARGE' });
-        return;
-      }
-      this.receiptFile = file;
-      this.receiptDataUrl = compressed.dataUrl;
-      this.receiptBytes = compressed.size;
-    } catch {
-      this.showStatusModal({ type: 'error', title: 'PAYMENT.INVALID_FILE_TITLE', message: 'PAYMENT.INVALID_FILE_MESSAGE' });
-    } finally {
-      this.compressingReceipt = false;
-      this.changes.markForCheck();
-    }
-  }
-
-  removeReceipt() {
-    this.receiptFile = null;
-    this.receiptDataUrl = null;
-    this.receiptBytes = 0;
-  }
-
-  get receiptSize(): string {
-    if (!this.receiptFile) return '';
-    return (this.receiptBytes / (1024 * 1024)).toFixed(1) + 'MB';
-  }
-
-  async confirmPayment() {
-    if (!this.canConfirm || !this.booking) return;
-
-    // efectivo: se paga en el lavadero y lo registra el administrador ("Registrar pago en el
-    // local"), que lo deja aprobado. Aquí no se reporta nada ni queda "en verificación"
-    if (this.selectedMethod === 'CASH') {
-      this.showStatusModal({ title: 'PAYMENT.CASH_INFO_TITLE', message: 'PAYMENT.CASH_INFO_MESSAGE' });
-      return;
-    }
-    if (!this.selectedAccount || !this.receiptDataUrl) return;
-
-    // el monto a cobrar lo pone payment-service; paidAmount es lo que el cliente dice haber pagado
-    this.reporting = true;
-    this.paymentsApi.report(this.booking.id, this.selectedAccount.id, this.transactionRef, this.receiptDataUrl, this.paidAmount).subscribe({
-      next: () => {
-        this.reporting = false;
-        this.flowStep = 'VERIFYING';
-        this.lastRejectionReason = null;
-        this.saveState();
-        this.changes.markForCheck();
-        this.showStatusModal({ title: 'PAYMENT.SUCCESS_TITLE', message: 'PAYMENT.SUCCESS_MESSAGE' });
-      },
-      error: (error) => {
-        this.reporting = false;
-        this.showStatusModal({ type: 'error', title: 'COMMON.ERROR', message: apiErrorKey(error) });
-        this.changes.markForCheck();
-      }
-    });
-  }
-
-  // abre el modal de estado (éxito o error) con los textos indicados
-  private showStatusModal(data: StatusModalData, disableClose = false) {
-    return this.dialog.open(StatusModal, {
-      panelClass: 'custom-dialog',
-      disableClose,
-      data
-    });
+    if (file) this.vm.setReceipt(file);
   }
 
   // pide confirmación antes de cancelar la reserva (acción irreversible)
   cancelReservation() {
-    if (!this.booking) return;
+    const booking = this.vm.booking();
+    if (!booking) return;
 
     const data: ConfirmModalData = {
       title: 'PAYMENT.CANCEL_CONFIRM.TITLE',
       message: 'PAYMENT.CANCEL_CONFIRM.MESSAGE',
-      messageParams: { code: this.booking.code },
+      messageParams: { code: booking.code },
       confirmText: 'PAYMENT.CANCEL_CONFIRM.CONFIRM',
       // "Volver" en vez de "Cancelar" para no confundir con "cancelar reserva"
       cancelText: 'PAYMENT.CANCEL_CONFIRM.BACK',
       danger: true
     };
 
-    const dialogRef = this.dialog.open(ConfirmModal, {
+    this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data })
+      .afterClosed()
+      .subscribe((confirmed: boolean) => {
+        if (confirmed) this.vm.cancelBooking(code => this.onReservationCancelled(code));
+      });
+  }
+
+  // avisa la cancelación y, al cerrar el aviso, vuelve al inicio
+  private onReservationCancelled(code: string) {
+    this.dialog.open(StatusModal, {
       panelClass: 'custom-dialog',
-      data
-    });
-
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) this.onReservationCancelled();
-    });
-  }
-
-  // cancela de verdad en booking-service y, al cerrar el aviso, vuelve al inicio
-  private onReservationCancelled() {
-    if (!this.booking) return;
-    const code = this.booking.code;
-
-    this.bookingApi.cancelMyBooking(this.booking.id).subscribe({
-      next: () => {
-        this.clearState();
-        const dialogRef = this.showStatusModal({
-          title: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_TITLE',
-          message: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_MESSAGE',
-          messageParams: { code }
-        }, true);
-
-        dialogRef.afterClosed().subscribe(() => {
-          this.router.navigate(['/client']);
-        });
-      },
-      error: (error) => {
-        this.showStatusModal({
-          type: 'error',
-          title: 'COMMON.ERROR',
-          message: apiErrorKey(error)
-        });
-        this.changes.markForCheck();
+      disableClose: true,
+      data: {
+        title: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_TITLE',
+        message: 'PAYMENT.CANCEL_CONFIRM.SUCCESS_MESSAGE',
+        messageParams: { code }
       }
-    });
+    }).afterClosed().subscribe(() => this.router.navigate(['/client']));
   }
-
-
 }
