@@ -40,16 +40,16 @@
 
   <!-- Info del usuario -->
   <div class="sidebar-user">
-    <div class="avatar">{{ user().initials }}</div>
+    <div class="avatar">{{ vm.user().initials }}</div>
     <div class="user-info">
-      <p class="name">{{ user().name }}</p>
-      <p class="email">{{ user().email }}</p>
+      <p class="name">{{ vm.user().name }}</p>
+      <p class="email">{{ vm.user().email }}</p>
     </div>
   </div>
 
   <!-- Menú de navegación -->
   <nav class="sidebar-menu">
-    @for (item of menuItems; track item.route) {
+    @for (item of vm.menuItems(); track item.route) {
       <a [routerLink]="item.route"
          routerLinkActive="active"
          [routerLinkActiveOptions]="{ exact: true }"
@@ -59,9 +59,9 @@
 
 
         <span class="menu-label">{{ item.label | translate }}</span>
-        @if (item.icon === 'notifications' && watcher.unread() > 0) {
-          <span class="menu-badge" [attr.aria-label]="'NOTIFICATIONS.WATCHER.UNREAD' | translate: { count: watcher.unread() }">
-            {{ watcher.unread() > 99 ? '99+' : watcher.unread() }}
+        @if (item.icon === 'notifications' && vm.unread() > 0) {
+          <span class="menu-badge" [attr.aria-label]="'NOTIFICATIONS.WATCHER.UNREAD' | translate: { count: vm.unread() }">
+            {{ vm.unread() > 99 ? '99+' : vm.unread() }}
           </span>
         }
       </a>
