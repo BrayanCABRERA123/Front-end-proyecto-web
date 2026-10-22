@@ -6,6 +6,12 @@ import { PaymentAccountResponse } from '../../../../core/services/payments-api';
 import { BookingResponse } from '../../../../core/models/booking.models';
 import { PaymentViewModel } from '../../viewmodels/payment.viewmodel';
 
+// reserva mínima como la manda booking-service
+const booking = (id: number, date: string, status = 'CONFIRMED') => ({
+  id, code: `RES-${id}`, status, date, startTime: '09:00', endTime: '09:45',
+  subtotal: 20000, pointsDiscountAmount: 0, services: [{ name: 'Básico' }], vehicle: null,
+});
+
 const nequi = (id: number, holder: string): PaymentAccountResponse => ({
   id, methodCode: 'NEQUI', methodName: 'Nequi', accountHolder: holder, accountNumber: '3001234567',
   qrImageUrl: null, instructions: null, active: true, requiresReceipt: true,
@@ -93,21 +99,47 @@ describe('Payment', () => {
     expect(vm.canConfirm()).toBe(false);
   });
 
-  it('opens the booking of the URL and asks for receipt, reference and amount before paying', () => {
+  // reservas de booking-service y cuáles deja pagar payment-service
+  function flushBookings(bookings: object[], payableIds: number[]): void {
+    http.match(req => req.url.endsWith('/bookings/me'))[0].flush(bookings);
+    http.match(req => req.url.endsWith('/payments/me/bookings'))[0].flush(
+      bookings.map(b => ({ bookingId: (b as { id: number }).id, paymentStatus: null, payable: payableIds.includes((b as { id: number }).id) }))
+    );
+  }
+
+  it('opens the payable booking and asks for receipt, reference and amount before paying', () => {
     http.match(req => req.url.endsWith('/payment-accounts'))[0].flush([nequi(1, 'Lavadero Principal')]);
-    http.match(req => req.url.endsWith('/bookings/me'))[0].flush([
-      { id: 9, code: 'RES-9', status: 'CONFIRMED', date: '2026-10-23', startTime: '09:00', endTime: '09:45',
-        subtotal: 20000, pointsDiscountAmount: 0, services: [{ name: 'Básico' }], vehicle: null },
-    ]);
+    flushBookings([booking(9, '2099-10-23')], [9]);
 
     expect(vm.reservationCode()).toBe('RES-9');
     expect(vm.totalToPay()).toBe(20000);
     expect(vm.missingRequirements()).toEqual(['PAYMENT.CONFIRM.MISSING.RECEIPT', 'PAYMENT.CONFIRM.MISSING.REFERENCE']);
   });
 
+  it('from the menu opens the next payable booking, skipping the ones already paid or in review', () => {
+    flushBookings([
+      booking(1, '2020-09-30', 'IN_PROGRESS'), booking(2, '2099-01-01'), booking(3, '2099-01-05'), booking(4, '2099-01-03'),
+    ], [1, 3, 4]);
+
+    expect(vm.booking()?.id).toBe(4);
+  });
+
+  it('when every payable booking already passed, opens the most recent one', () => {
+    flushBookings([booking(1, '2020-09-30', 'IN_PROGRESS'), booking(5, '2020-10-16'), booking(6, '2020-10-20')], [1, 5]);
+
+    expect(vm.booking()?.id).toBe(5);
+  });
+
+  it('says there is nothing to pay when payment-service allows none of the bookings', () => {
+    flushBookings([booking(2, '2099-01-01'), booking(7, '2020-10-01', 'CANCELLED')], []);
+
+    expect(vm.booking()).toBeNull();
+    expect(vm.notFound()).toBe(true);
+  });
+
   it('shows "step 2 of 2" only when there is a booking to pay', async () => {
     http.match(req => req.url.endsWith('/payment-accounts'))[0].flush([nequi(1, 'Lavadero Principal')]);
-    http.match(req => req.url.endsWith('/bookings/me'))[0].flush([]);
+    flushBookings([], []);
     await fixture.whenStable();
     const html: HTMLElement = fixture.nativeElement;
 

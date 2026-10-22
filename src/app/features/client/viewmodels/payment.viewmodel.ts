@@ -1,12 +1,14 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { catchError, forkJoin, of } from 'rxjs';
 
 // datos reales de la reserva (booking-service)
 import { BookingApiService } from '../../../core/services/booking-api';
 import { BookingResponse } from '../../../core/models/booking.models';
 import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../core/utils/booking-display';
 import { apiErrorKey } from '../../../core/utils/api-error';
+import { todayIso } from '../../../core/utils/dates';
 // cuentas del lavadero y reporte del pago (payment-service)
-import { ALLOWED_IMAGE_TYPES, PaymentAccountResponse, PaymentsApiService, compressReceipt } from '../../../core/services/payments-api';
+import { ALLOWED_IMAGE_TYPES, BookingPaymentState, PaymentAccountResponse, PaymentsApiService, compressReceipt } from '../../../core/services/payments-api';
 // canje de cupón de fidelización (payment-service, ADR-015)
 import { LoyaltyApiService, RedeemPromotionResult } from '../../../core/services/loyalty-api';
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
@@ -323,10 +325,17 @@ export class PaymentViewModel {
   private loadBooking(): void {
     this.loading.set(true);
     this.loadError.set(null);
-    this.bookingApi.myBookings().subscribe({
-      next: bookings => {
+    forkJoin({
+      bookings: this.bookingApi.myBookings(),
+      // qué reservas se pueden pagar lo decide payment-service (la misma regla del botón "Pagar"
+      // del historial); con la reserva en la dirección no hace falta preguntarlo
+      payable: this.bookingId
+        ? of(null)
+        : this.paymentsApi.myBookings().pipe(catchError(() => of(null as BookingPaymentState[] | null)))
+    }).subscribe({
+      next: ({ bookings, payable }) => {
         this.loading.set(false);
-        const booking = this.pickBooking(bookings);
+        const booking = this.pickBooking(bookings, payable);
         if (!booking) {
           this.notFound.set(true);
           return;
@@ -342,14 +351,19 @@ export class PaymentViewModel {
     });
   }
 
-  private pickBooking(bookings: BookingResponse[]): BookingResponse | null {
+  // sin reserva en la dirección (entró desde el menú): de las que se pueden pagar, la próxima cita;
+  // si todas ya pasaron, la más reciente. Si payment-service no respondió, se usan las activas
+  private pickBooking(bookings: BookingResponse[], payable: BookingPaymentState[] | null): BookingResponse | null {
     if (this.bookingId) {
       return bookings.find(booking => booking.id === this.bookingId) ?? null;
     }
-    const bySchedule = (a: BookingResponse, b: BookingResponse) =>
-      `${a.date} ${a.startTime}`.localeCompare(`${b.date} ${b.startTime}`);
-    const active = [...bookings].filter(booking => isActiveStatus(booking.status)).sort(bySchedule);
-    return active[0] ?? [...bookings].sort(bySchedule).reverse()[0] ?? null;
+    const payableIds = payable ? new Set(payable.filter(state => state.payable).map(state => state.bookingId)) : null;
+    const candidates = bookings.filter(booking => payableIds ? payableIds.has(booking.id) : isActiveStatus(booking.status));
+    const when = (booking: BookingResponse) => `${booking.date} ${booking.startTime}`;
+    const now = `${todayIso()} ${new Date().toTimeString().slice(0, 5)}`;
+    const upcoming = candidates.filter(booking => when(booking) >= now).sort((a, b) => when(a).localeCompare(when(b)));
+    const past = candidates.filter(booking => when(booking) < now).sort((a, b) => when(b).localeCompare(when(a)));
+    return upcoming[0] ?? past[0] ?? null;
   }
 
   private applyBooking(booking: BookingResponse): void {
