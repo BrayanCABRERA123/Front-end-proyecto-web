@@ -3,6 +3,7 @@ import { HttpTestingController } from '@angular/common/http/testing';
 
 import { PaymentComponent } from './payment';
 import { PaymentAccountResponse } from '../../../../core/services/payments-api';
+import { BookingResponse } from '../../../../core/models/booking.models';
 
 const nequi = (id: number, holder: string): PaymentAccountResponse => ({
   id, methodCode: 'NEQUI', methodName: 'Nequi', accountHolder: holder, accountNumber: '3001234567',
@@ -53,6 +54,26 @@ describe('Payment', () => {
     expect(component.noPaymentMethods).toBe(true);
     expect(component.canConfirm).toBe(false);
     expect(component.missingRequirements).toEqual([]);
+  });
+
+  it('sends the payment only once when the button is pressed twice', () => {
+    http.match(req => req.url.endsWith('/payment-accounts'))[0].flush([nequi(1, 'Lavadero Principal')]);
+    component.booking = { id: 9 } as BookingResponse;
+    component['receiptDataUrl'] = 'data:image/png;base64,AAAA';
+    component.receiptFile = new File(['x'], 'comprobante.png', { type: 'image/png' });
+    component.transactionRef = 'ABC12345';
+    component.paidAmountInput = 35000;
+    expect(component.canConfirm).toBe(true);
+
+    component.confirmPayment();
+    component.confirmPayment();
+
+    const reports = http.match(req => req.method === 'POST' && req.url.endsWith('/payments'));
+    expect(reports.length).toBe(1);
+    expect(component.canConfirm).toBe(false);
+    // si el servidor rechaza, el botón vuelve a quedar disponible para corregir y reintentar
+    reports[0].flush({ code: 'TRANSACTION_REFERENCE_REUSED' }, { status: 409, statusText: 'Conflict' });
+    expect(component.canConfirm).toBe(true);
   });
 
   it('warns and blocks the payment when the payment accounts cannot be loaded', () => {

@@ -242,9 +242,12 @@ export class PaymentComponent implements OnInit {
     return this.isVerifying || this.isApproved;
   }
 
+  // el reporte va en camino: el botón queda bloqueado hasta que el servidor responda
+  reporting = false;
+
   get canConfirm(): boolean {
-    // evita enviar el mismo pago dos veces
-    if (this.isLocked) return false;
+    // evita enviar el mismo pago dos veces (ya enviado, o con la petición en curso)
+    if (this.isLocked || this.reporting) return false;
     // sin medios activos no se puede pagar, ni siquiera en efectivo
     if (!this.hasPaymentMethods) return false;
     if (this.selectedMethod === 'CASH') return true;
@@ -521,8 +524,10 @@ export class PaymentComponent implements OnInit {
     if (!this.selectedAccount || !this.receiptDataUrl) return;
 
     // el monto a cobrar lo pone payment-service; paidAmount es lo que el cliente dice haber pagado
+    this.reporting = true;
     this.paymentsApi.report(this.booking.id, this.selectedAccount.id, this.transactionRef, this.receiptDataUrl, this.paidAmount).subscribe({
       next: () => {
+        this.reporting = false;
         this.flowStep = 'VERIFYING';
         this.lastRejectionReason = null;
         this.saveState();
@@ -530,6 +535,7 @@ export class PaymentComponent implements OnInit {
         this.showStatusModal({ title: 'PAYMENT.SUCCESS_TITLE', message: 'PAYMENT.SUCCESS_MESSAGE' });
       },
       error: (error) => {
+        this.reporting = false;
         this.showStatusModal({ type: 'error', title: 'COMMON.ERROR', message: apiErrorKey(error) });
         this.changes.markForCheck();
       }
