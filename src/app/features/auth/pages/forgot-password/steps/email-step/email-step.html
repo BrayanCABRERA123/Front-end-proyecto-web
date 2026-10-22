@@ -57,20 +57,20 @@
           | translate
         "
 
-        [(ngModel)]="email"
+        [(ngModel)]="vm.email"
         name="email"
         required
         pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
 
         (keypress)="blockSpaces($event)"
-        (input)="stripEmailSpaces()"
+        (input)="vm.stripEmailSpaces()"
 
-        [class.input-error]="isEmailInvalid"
+        [class.input-error]="vm.isEmailInvalid()"
       >
 
     </div>
 
-    <span class="error-msg" *ngIf="isEmailInvalid">
+    <span class="error-msg" *ngIf="vm.isEmailInvalid()">
 
       {{ 'FORGOT.EMAIL.INVALID' | translate }}
 
@@ -78,16 +78,16 @@
 
   </div>
 
-  <span class="error-msg" role="alert" *ngIf="errorKey()">
-    {{ errorKey()! | translate }}
+  <span class="error-msg" role="alert" *ngIf="vm.errorKey()">
+    {{ vm.errorKey()! | translate }}
   </span>
 
   <button
     class="btn-primary"
-    (click)="onSubmit()"
-    [disabled]="!email || isEmailInvalid || sending()"
+    (click)="vm.requestCode()"
+    [disabled]="!vm.email() || vm.isEmailInvalid() || vm.sending()"
   >
-    {{ (sending() ? 'FORGOT.SENDING' : 'FORGOT.EMAIL.BUTTON') | translate }}
+    {{ (vm.sending() ? 'FORGOT.SENDING' : 'FORGOT.EMAIL.BUTTON') | translate }}
   </button>
 
   <a class="back-link" routerLink="/auth">

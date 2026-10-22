@@ -35,7 +35,7 @@
     {{ 'FORGOT.VERIFICATION.DESCRIPTION' | translate }}
 
     <span class="email-highlight">
-      {{ email }}
+      {{ vm.email() }}
     </span>
 
   </p>
@@ -61,24 +61,24 @@
     {{ 'FORGOT.VERIFICATION.RESEND' | translate }}
   </a>
 
-  @if (codeResent()) {
+  @if (vm.codeResent()) {
     <p class="step-description" role="status">
       {{ 'FORGOT.VERIFICATION.RESENT' | translate }}
     </p>
   }
 
-  @if (errorKey()) {
+  @if (vm.errorKey()) {
     <p class="error-msg" role="alert">
-      {{ errorKey()! | translate }}
+      {{ vm.errorKey()! | translate }}
     </p>
   }
 
   <button
     class="btn-primary"
     (click)="onVerify()"
-    [disabled]="verifying()"
+    [disabled]="vm.verifying()"
   >
-    {{ (verifying() ? 'FORGOT.VERIFYING' : 'FORGOT.VERIFICATION.BUTTON') | translate }}
+    {{ (vm.verifying() ? 'FORGOT.VERIFYING' : 'FORGOT.VERIFICATION.BUTTON') | translate }}
   </button>
 
   <a class="back-link" routerLink="/auth">
