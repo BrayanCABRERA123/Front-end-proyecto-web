@@ -9,8 +9,8 @@
         @for (t of tabs; track t.key) {
           <button
             class="tab"
-            [class.tab--active]="activeTab === t.key"
-            (click)="setTab(t.key)">
+            [class.tab--active]="vm.activeTab() === t.key"
+            (click)="vm.setTab(t.key)">
             <mat-icon>{{ t.icon }}</mat-icon>
             {{ ('ADMIN_MANAGEMENT.TABS.' + t.key.toUpperCase()) | translate }}
           </button>
@@ -20,7 +20,7 @@
     </div>
 
     <!-- ================= USUARIOS ================= -->
-    @if (activeTab === 'users') {
+    @if (vm.activeTab() === 'users') {
       <div class="card">
 
         <div class="card-header">
@@ -36,37 +36,37 @@
 
         <div class="filters-row">
           <div class="chips">
-            <button class="chip" [class.chip--active]="userFilter === 'enabled'" (click)="userFilter = 'enabled'">
-              {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.ENABLED' | translate }} <span class="chip-count">{{ enabledCount }}</span>
+            <button class="chip" [class.chip--active]="vm.userFilter() === 'enabled'" (click)="vm.userFilter.set('enabled')">
+              {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.ENABLED' | translate }} <span class="chip-count">{{ vm.enabledCount() }}</span>
             </button>
-            <button class="chip" [class.chip--active]="userFilter === 'disabled'" (click)="userFilter = 'disabled'">
-              {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.DISABLED' | translate }} <span class="chip-count">{{ disabledCount }}</span>
+            <button class="chip" [class.chip--active]="vm.userFilter() === 'disabled'" (click)="vm.userFilter.set('disabled')">
+              {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.DISABLED' | translate }} <span class="chip-count">{{ vm.disabledCount() }}</span>
             </button>
           </div>
 
           <div class="search-box">
             <mat-icon>search</mat-icon>
-            <input type="text" [(ngModel)]="usersSearch" [placeholder]="'ADMIN_MANAGEMENT.USERS.SEARCH_PLACEHOLDER' | translate">
+            <input type="text" [(ngModel)]="vm.usersSearch" [placeholder]="'ADMIN_MANAGEMENT.USERS.SEARCH_PLACEHOLDER' | translate">
           </div>
         </div>
 
-        @if (usersLoading()) {
+        @if (vm.usersLoading()) {
 
           <p class="loading-text">{{ 'ADMIN_MANAGEMENT.USERS.LOADING' | translate }}</p>
 
-        } @else if (usersErrorKey()) {
+        } @else if (vm.usersErrorKey()) {
 
           <app-empty-state
             variant="empty"
             icon="cloud_off"
             titleKey="ADMIN_MANAGEMENT.USERS.LOAD_ERROR_TITLE"
-            [messageKey]="usersErrorKey()!">
-            <button class="btn-outline" (click)="loadUsers()">
+            [messageKey]="vm.usersErrorKey()!">
+            <button class="btn-outline" (click)="vm.loadUsers()">
               {{ 'ADMIN_MANAGEMENT.USERS.RETRY' | translate }}
             </button>
           </app-empty-state>
 
-        } @else if (users.length === 0) {
+        } @else if (vm.users().length === 0) {
 
           <app-empty-state
             variant="empty"
@@ -79,14 +79,14 @@
             </button>
           </app-empty-state>
 
-        } @else if (filteredUsers.length === 0) {
+        } @else if (vm.filteredUsers().length === 0) {
 
           <app-empty-state
             variant="filtered"
             titleKey="ADMIN_MANAGEMENT.USERS.NO_RESULTS_TITLE"
             messageKey="ADMIN_MANAGEMENT.USERS.NO_RESULTS_MESSAGE"
-            [params]="{ term: usersSearch }">
-            <button class="btn-outline" (click)="userFilter = 'enabled'; usersSearch = ''">
+            [params]="{ term: vm.usersSearch() }">
+            <button class="btn-outline" (click)="vm.userFilter.set('enabled'); vm.usersSearch.set('')">
               {{ 'ADMIN_MANAGEMENT.USERS.FILTERS.CLEAR' | translate }}
             </button>
           </app-empty-state>
@@ -107,7 +107,7 @@
                 </tr>
               </thead>
               <tbody>
-                @for (u of filteredUsers; track u.id) {
+                @for (u of vm.filteredUsers(); track u.id) {
                   <tr>
                     <td class="avatar-cell">
                       <span class="avatar">{{ u.name.charAt(0) }}</span>
@@ -126,11 +126,11 @@
                       <!-- desactivar reemplaza a editar/eliminar: la cuenta no se borra (ADR-010) -->
                       <button
                         class="btn-icon"
-                        [class.btn-icon--danger]="u.status === 'active' && !disableBlockedKey(u)"
-                        [disabled]="!!disableBlockedKey(u)"
+                        [class.btn-icon--danger]="u.status === 'active' && !vm.disableBlockedKey(u)"
+                        [disabled]="!!vm.disableBlockedKey(u)"
                         (click)="toggleUserStatus(u)"
-                        [attr.aria-label]="(disableBlockedKey(u) ?? (u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE')) | translate"
-                        [title]="(disableBlockedKey(u) ?? (u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE')) | translate">
+                        [attr.aria-label]="(vm.disableBlockedKey(u) ?? (u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE')) | translate"
+                        [title]="(vm.disableBlockedKey(u) ?? (u.status === 'active' ? 'ADMIN_MANAGEMENT.USERS.DISABLE' : 'ADMIN_MANAGEMENT.USERS.ENABLE')) | translate">
                         <mat-icon>{{ u.status === 'active' ? 'block' : 'check_circle' }}</mat-icon>
                       </button>
                     </td>
@@ -146,7 +146,7 @@
     }
 
     <!-- ================= ROLES ================= -->
-    @if (activeTab === 'roles') {
+    @if (vm.activeTab() === 'roles') {
       <div class="card">
 
         <div class="card-header">
@@ -171,7 +171,7 @@
               </tr>
             </thead>
             <tbody>
-              @for (r of roles; track r.id) {
+              @for (r of vm.roles(); track r.id) {
                 <tr>
                   <td><strong>{{ r.name | translate }}</strong></td>
                   <td>
@@ -197,7 +197,7 @@
     }
 
     <!-- ================= SERVICIOS ================= -->
-    @if (activeTab === 'services') {
+    @if (vm.activeTab() === 'services') {
       <div class="card">
 
         <div class="card-header">
@@ -211,13 +211,13 @@
           </button>
         </div>
 
-        @if (servicesLoading()) {
+        @if (vm.servicesLoading()) {
           <p class="muted">{{ 'COMMON.LOADING' | translate }}</p>
-        } @else if (servicesErrorKey()) {
-          <app-empty-state variant="empty" icon="error" titleKey="COMMON.ERROR" [messageKey]="servicesErrorKey()!">
-            <button class="btn-outline" (click)="loadServices()">{{ 'NOTIFICATIONS.RETRY' | translate }}</button>
+        } @else if (vm.servicesErrorKey()) {
+          <app-empty-state variant="empty" icon="error" titleKey="COMMON.ERROR" [messageKey]="vm.servicesErrorKey()!">
+            <button class="btn-outline" (click)="vm.loadServices()">{{ 'NOTIFICATIONS.RETRY' | translate }}</button>
           </app-empty-state>
-        } @else if (services.length === 0) {
+        } @else if (vm.services().length === 0) {
 
           <app-empty-state
             variant="empty"
@@ -246,7 +246,7 @@
                 </tr>
               </thead>
               <tbody>
-                @for (s of services; track s.id) {
+                @for (s of vm.services(); track s.id) {
                   <tr>
                     <td><strong>{{ s.name }}</strong></td>
                     <td class="accent">
@@ -284,7 +284,7 @@
     }
 
     <!-- ================= PROMOCIONES ================= -->
-    @if (activeTab === 'promotions') {
+    @if (vm.activeTab() === 'promotions') {
       <div class="card">
 
         <div class="card-header">
@@ -298,7 +298,7 @@
           </button>
         </div>
 
-        @if (promotions.length === 0) {
+        @if (vm.promotions().length === 0) {
 
           <app-empty-state
             variant="empty"
@@ -314,7 +314,7 @@
         } @else {
 
           <div class="promo-grid">
-            @for (p of promotions; track p.id) {
+            @for (p of vm.promotions(); track p.id) {
               <article class="promo-card" [class.promo-card--featured]="p.featured">
                 <div class="promo-card__icon"><mat-icon>{{ p.icon }}</mat-icon></div>
 
@@ -376,11 +376,11 @@
           <div class="promo-stats">
             <div>
               <span class="muted">{{ 'ADMIN_MANAGEMENT.PROMOTIONS.STATS.TOTAL_REDEMPTIONS' | translate }}</span>
-              <strong>{{ totalRedemptions | number }}</strong>
+              <strong>{{ vm.totalRedemptions() | number }}</strong>
             </div>
             <div>
               <span class="muted">{{ 'ADMIN_MANAGEMENT.PROMOTIONS.STATS.CLIENT_SAVINGS' | translate }}</span>
-              <strong>{{ cop(clientSavings) }}</strong>
+              <strong>{{ cop(vm.clientSavings()) }}</strong>
             </div>
           </div>
 
