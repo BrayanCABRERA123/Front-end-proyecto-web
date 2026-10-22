@@ -36,15 +36,17 @@ src/styles/       tema, variables y mixins de diseño adaptable (mobile ≤ 768 
 
 ## Arquitectura: por features + MVVM
 
-Cada rol es una *feature* con sus pantallas, y cada pantalla se divide en Vista, ViewModel y
-Modelo:
+Cada *feature* (`admin`, `client`, `operator`, `auth`, `landing`, `public-report`) tiene
+sus pantallas, y cada pantalla se divide en Vista, ViewModel y Modelo:
 
 ```
-features/<rol>/
+features/<feature>/
 ├── pages/<pantalla>/                 VISTA: <pantalla>.ts + .html + .scss
 ├── viewmodels/<pantalla>.viewmodel.ts   VIEWMODEL: estado (signals) y acciones de la pantalla
 ├── services/                         estado compartido entre pantallas del rol (stores del admin)
-└── <rol>-routing-module.ts
+└── <feature>-routing-module.ts
+shared/components + shared/dialogs    VISTAS que usan los 3 roles (perfil, notificaciones, menú...)
+shared/viewmodels/                    sus VIEWMODELS (ej. profile.viewmodel.ts)
 core/models + core/services           MODELO: tipos y llamadas HTTP al gateway
 ```
 
@@ -55,7 +57,13 @@ core/models + core/services           MODELO: tipos y llamadas HTTP al gateway
   sola) y expone las acciones; es lo único que habla con `core/services` y los stores. Avisa el
   resultado con `FeedbackService`. No toca HTML.
 - **Modelo.** `core/models` (tipos del backend) y `core/services` (un servicio por microservicio).
+- Una pantalla con secciones o pasos (la landing, recuperar contraseña) tiene un solo ViewModel
+  que registra la página y que inyectan sus secciones.
+- Los componentes compartidos con lógica (perfil, notificaciones, configuración, menú lateral y los
+  modales que guardan solos) registran su ViewModel en sus propios `providers`.
 - Los modales que solo llenan un formulario y devuelven el resultado son parte de la vista.
+- Excepciones: la página 404 (lee la sesión para saber a qué inicio llevar) y la miniatura de una
+  foto de inspección (carga la imagen con el token) son vistas mínimas sin ViewModel.
 - Las pruebas del comportamiento van sobre el ViewModel, sin pantalla.
 
 ## Diseño adaptable
