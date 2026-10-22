@@ -1703,7 +1703,6 @@
     "EMPTY": "Todavía no hay cambios registrados"
   },
   "ADMIN_OPERATORS": {
-    "ASSIGN_SHIFTS": "Asignar turnos",
     "NEW_OPERATOR": "Nuevo operario",
     "STATS": {
       "ON_STAFF": "Operarios en plantilla",
@@ -1747,9 +1746,7 @@
       "CREATED_TITLE": "Operario creado",
       "CREATED_MESSAGE": "«{{name}}» se agregó al equipo.",
       "UPDATED_TITLE": "Operario actualizado",
-      "UPDATED_MESSAGE": "Los datos de «{{name}}» se actualizaron.",
-      "SHIFT_TITLE": "Turno asignado",
-      "SHIFT_MESSAGE": "El turno de «{{name}}» se actualizó."
+      "UPDATED_MESSAGE": "Los datos de «{{name}}» se actualizaron."
     }
   },
   "OPERATOR_DETAIL": {
@@ -1760,7 +1757,6 @@
     "ASSIGNED_BAY": "Bahía asignada",
     "REGISTER_ABSENCE": "Registrar ausencia",
     "EDIT_AVAILABILITY": "Editar disponibilidad",
-    "ASSIGN_BAY_SHIFT": "Asignar bahía / turno",
     "STATS": {
       "WEEKLY_SERVICES": "Servicios de la semana",
       "SERVICES_SUFFIX": "servicios",
@@ -1819,9 +1815,7 @@
       "AVAILABILITY_TITLE": "Disponibilidad guardada",
       "AVAILABILITY_MESSAGE": "El horario semanal de «{{name}}» se actualizó.",
       "ABSENCE_ERROR_TITLE": "No se pudo registrar la incapacidad",
-      "AVAILABILITY_ERROR_TITLE": "No se pudo guardar la disponibilidad",
-      "SHIFT_TITLE": "Turno asignado",
-      "SHIFT_MESSAGE": "El turno de «{{name}}» se actualizó."
+      "AVAILABILITY_ERROR_TITLE": "No se pudo guardar la disponibilidad"
     },
     "SERVICE_DETAIL_TITLE": "Servicio asignado",
     "SERVICE_DETAIL_MESSAGE": "Información del servicio que el operario debe atender.",
@@ -2117,16 +2111,6 @@
     "SAME_PASSWORD": "La nueva contraseña debe ser diferente a la actual",
     "NOT_MATCH": "Las contraseñas no coinciden",
     "SAVE": "Guardar"
-  },
-  "ASSIGN_SHIFT_MODAL": {
-    "TITLE": "Asignar turno",
-    "SUBTITLE": "Elige el operario, su estado y la bahía del turno.",
-    "OPERATOR_LABEL": "Operario",
-    "STATUS_LABEL": "Estado",
-    "BAY_LABEL": "Bahía",
-    "NO_BAY": "Sin bahía asignada",
-    "HINT": "La bahía no se puede asignar cuando el operario está en incapacidad.",
-    "ASSIGN": "Asignar turno"
   },
   "AVAILABILITY_MODAL": {
     "TITLE": "Disponibilidad semanal",

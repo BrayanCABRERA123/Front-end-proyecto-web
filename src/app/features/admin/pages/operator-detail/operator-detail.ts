@@ -10,7 +10,6 @@ import { EmptyStateComponent } from '../../../../shared/components/empty-state/e
 import { ExportColumn, ExportDataModal, ExportDataModalData } from '../../../../shared/dialogs/export-data-modal/export-data-modal';
 import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
 import { OperatorsStore } from '../../services/operators-store';
-import { ScheduleStore } from '../../services/schedule-store';
 // reservas del día con su operario asignado (booking + operations)
 import { ReservationsStore, formatTimeRange } from '../../services/reservations-store';
 import { AvailabilitySlot, Operator, TodayService } from '../../models/admin.models';
@@ -20,7 +19,6 @@ import { OperatorProfileModal, OperatorProfileModalData, OperatorProfileModalRes
 import { OperatorSkillLevel } from '../../../../core/services/operations-api';
 import { apiErrorKey } from '../../../../core/utils/api-error';
 import { AvailabilityModal, AvailabilityModalData } from './components/availability-modal/availability-modal';
-import { AssignShiftModal, AssignShiftModalData, AssignShiftResult } from '../operators/components/assign-shift-modal/assign-shift-modal';
 
 @Component({
   selector: 'app-operator-detail',
@@ -39,7 +37,6 @@ export class OperatorDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private store: OperatorsStore,
-    private schedule: ScheduleStore,
     private dialog: MatDialog,
     private feedback: FeedbackService,
     private reservations: ReservationsStore,
@@ -171,37 +168,6 @@ export class OperatorDetailComponent implements OnInit {
         ),
         error: (error: unknown) => this.feedback.error('OPERATOR_DETAIL.FEEDBACK.AVAILABILITY_ERROR_TITLE', apiErrorKey(error))
       });
-    });
-  }
-
-  assignBayShift(): void {
-    if (!this.operator) return;
-
-    const data: AssignShiftModalData = {
-      operators: [{
-        id: this.operator.id,
-        name: this.operator.name,
-        initials: this.operator.initials,
-        status: this.operator.status,
-      }],
-      bays: this.schedule.bays()
-        .filter(b => b.status === 'active')
-        .map(b => ({ id: b.id, name: b.name })),
-    };
-
-    const dialogRef = this.dialog.open(AssignShiftModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((result: AssignShiftResult | null) => {
-      if (!result) return;
-
-      this.store.setStatus(result.operatorId, result.status);
-      // los operarios ya no quedan atados a una bahía (ADR-010): la bahía se elige por reserva
-
-      this.feedback.success(
-        'OPERATOR_DETAIL.FEEDBACK.SHIFT_TITLE',
-        'OPERATOR_DETAIL.FEEDBACK.SHIFT_MESSAGE',
-        { messageParams: { name: this.operator!.name } }
-      );
     });
   }
 

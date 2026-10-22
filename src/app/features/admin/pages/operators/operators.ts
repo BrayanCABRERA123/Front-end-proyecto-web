@@ -3,17 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
-import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
-import { ScheduleStore } from '../../services/schedule-store';
 import { Operator, OperatorStatus, OperatorsStore } from '../../services/operators-store';
 import { TeamSummaryResponse } from '../../../../core/services/operations-api';
 import { OperatorModal, OperatorModalData, OperatorModalResult } from './components/operator-modal/operator-modal';
-import { AssignShiftModal, AssignShiftModalData, AssignShiftResult } from './components/assign-shift-modal/assign-shift-modal';
 
 type StatusFilter = 'all' | OperatorStatus;
 
@@ -32,20 +28,10 @@ export class OperatorsComponent {
   constructor(
     private router: Router,
     private store: OperatorsStore,
-    private schedule: ScheduleStore,
-    private dialog: MatDialog,
-    private feedback: FeedbackService,
   ) {}
 
   get operators(): Operator[] {
     return this.store.operators();
-  }
-
-  // bahías activas para poder asignar un operario nuevo o un turno
-  private get activeBays(): { id: string; name: string }[] {
-    return this.schedule.bays()
-      .filter(b => b.status === 'active')
-      .map(b => ({ id: b.id, name: b.name }));
   }
 
   get filteredOperators(): Operator[] {
@@ -81,30 +67,5 @@ export class OperatorsComponent {
 
   openEdit(_operator: Operator): void {
     this.router.navigate(['/admin/management']);
-  }
-
-  /* ---------- asignar turnos ---------- */
-
-  openAssignShifts(): void {
-    const data: AssignShiftModalData = {
-      operators: this.operators.map(o => ({ id: o.id, name: o.name, initials: o.initials, status: o.status })),
-      bays: this.activeBays,
-    };
-
-    const dialogRef = this.dialog.open(AssignShiftModal, { panelClass: 'custom-dialog', data });
-
-    dialogRef.afterClosed().subscribe((result: AssignShiftResult | null) => {
-      if (!result) return;
-
-      this.store.setStatus(result.operatorId, result.status);
-      // los operarios ya no quedan atados a una bahía (ADR-010): la bahía se elige por reserva
-
-      const operator = this.store.getById(result.operatorId);
-      this.feedback.success(
-        'ADMIN_OPERATORS.FEEDBACK.SHIFT_TITLE',
-        'ADMIN_OPERATORS.FEEDBACK.SHIFT_MESSAGE',
-        { messageParams: { name: operator?.name ?? '' } }
-      );
-    });
   }
 }

@@ -1703,7 +1703,6 @@
     "EMPTY": "Aucune modification enregistrée pour le moment"
   },
   "ADMIN_OPERATORS": {
-    "ASSIGN_SHIFTS": "Assigner des horaires",
     "NEW_OPERATOR": "Nouvel opérateur",
     "STATS": {
       "ON_STAFF": "Opérateurs au total",
@@ -1747,9 +1746,7 @@
       "CREATED_TITLE": "Opérateur créé",
       "CREATED_MESSAGE": "«{{name}}» a été ajouté à l’équipe.",
       "UPDATED_TITLE": "Opérateur mis à jour",
-      "UPDATED_MESSAGE": "Les informations de «{{name}}» ont été mises à jour.",
-      "SHIFT_TITLE": "Quart assigné",
-      "SHIFT_MESSAGE": "Le quart de «{{name}}» a été mis à jour."
+      "UPDATED_MESSAGE": "Les informations de «{{name}}» ont été mises à jour."
     }
   },
   "OPERATOR_DETAIL": {
@@ -1760,7 +1757,6 @@
     "ASSIGNED_BAY": "Baie assignée",
     "REGISTER_ABSENCE": "Enregistrer une absence",
     "EDIT_AVAILABILITY": "Modifier la disponibilité",
-    "ASSIGN_BAY_SHIFT": "Assigner baie / horaire",
     "STATS": {
       "WEEKLY_SERVICES": "Services de la semaine",
       "SERVICES_SUFFIX": "services",
@@ -1819,9 +1815,7 @@
       "AVAILABILITY_TITLE": "Disponibilité enregistrée",
       "AVAILABILITY_MESSAGE": "L’horaire hebdomadaire de «{{name}}» a été mis à jour.",
       "ABSENCE_ERROR_TITLE": "Impossible d’enregistrer le congé",
-      "AVAILABILITY_ERROR_TITLE": "Impossible d’enregistrer la disponibilité",
-      "SHIFT_TITLE": "Quart assigné",
-      "SHIFT_MESSAGE": "Le quart de «{{name}}» a été mis à jour."
+      "AVAILABILITY_ERROR_TITLE": "Impossible d’enregistrer la disponibilité"
     },
     "SERVICE_DETAIL_TITLE": "Service assigné",
     "SERVICE_DETAIL_MESSAGE": "Informations sur le service que l’opérateur doit traiter.",
@@ -2117,16 +2111,6 @@
     "SAME_PASSWORD": "Le nouveau mot de passe doit être différent de l’actuel",
     "NOT_MATCH": "Les mots de passe ne correspondent pas",
     "SAVE": "Enregistrer"
-  },
-  "ASSIGN_SHIFT_MODAL": {
-    "TITLE": "Assigner un quart",
-    "SUBTITLE": "Choisissez l’opérateur, son statut et la baie du quart.",
-    "OPERATOR_LABEL": "Opérateur",
-    "STATUS_LABEL": "Statut",
-    "BAY_LABEL": "Baie",
-    "NO_BAY": "Aucune baie assignée",
-    "HINT": "La baie ne peut pas être assignée lorsque l’opérateur est en congé médical.",
-    "ASSIGN": "Assigner le quart"
   },
   "AVAILABILITY_MODAL": {
     "TITLE": "Disponibilité hebdomadaire",

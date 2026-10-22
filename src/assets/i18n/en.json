@@ -1703,7 +1703,6 @@
     "EMPTY": "No changes recorded yet"
   },
   "ADMIN_OPERATORS": {
-    "ASSIGN_SHIFTS": "Assign shifts",
     "NEW_OPERATOR": "New operator",
     "STATS": {
       "ON_STAFF": "Operators on staff",
@@ -1747,9 +1746,7 @@
       "CREATED_TITLE": "Operator created",
       "CREATED_MESSAGE": "«{{name}}» was added to the team.",
       "UPDATED_TITLE": "Operator updated",
-      "UPDATED_MESSAGE": "«{{name}}»’s details were updated.",
-      "SHIFT_TITLE": "Shift assigned",
-      "SHIFT_MESSAGE": "«{{name}}»’s shift was updated."
+      "UPDATED_MESSAGE": "«{{name}}»’s details were updated."
     }
   },
   "OPERATOR_DETAIL": {
@@ -1760,7 +1757,6 @@
     "ASSIGNED_BAY": "Assigned bay",
     "REGISTER_ABSENCE": "Register absence",
     "EDIT_AVAILABILITY": "Edit availability",
-    "ASSIGN_BAY_SHIFT": "Assign bay / shift",
     "STATS": {
       "WEEKLY_SERVICES": "Services this week",
       "SERVICES_SUFFIX": "services",
@@ -1819,9 +1815,7 @@
       "AVAILABILITY_TITLE": "Availability saved",
       "AVAILABILITY_MESSAGE": "«{{name}}»’s weekly schedule was updated.",
       "ABSENCE_ERROR_TITLE": "Could not register the leave",
-      "AVAILABILITY_ERROR_TITLE": "Could not save the availability",
-      "SHIFT_TITLE": "Shift assigned",
-      "SHIFT_MESSAGE": "«{{name}}»’s shift was updated."
+      "AVAILABILITY_ERROR_TITLE": "Could not save the availability"
     },
     "SERVICE_DETAIL_TITLE": "Assigned service",
     "SERVICE_DETAIL_MESSAGE": "Details of the service the operator must handle.",
@@ -2117,16 +2111,6 @@
     "SAME_PASSWORD": "The new password must be different from the current one",
     "NOT_MATCH": "Passwords do not match",
     "SAVE": "Save"
-  },
-  "ASSIGN_SHIFT_MODAL": {
-    "TITLE": "Assign shift",
-    "SUBTITLE": "Choose the operator, their status and the shift bay.",
-    "OPERATOR_LABEL": "Operator",
-    "STATUS_LABEL": "Status",
-    "BAY_LABEL": "Bay",
-    "NO_BAY": "No bay assigned",
-    "HINT": "The bay cannot be assigned while the operator is on medical leave.",
-    "ASSIGN": "Assign shift"
   },
   "AVAILABILITY_MODAL": {
     "TITLE": "Weekly availability",

@@ -135,12 +135,6 @@ export class OperatorsStore {
       .join('');
   }
 
-  /** activo / inactivo: es lo único del estado que se guarda; la incapacidad sale de las ausencias */
-  setStatus(id: string, status: OperatorStatus): void {
-    if (status === 'medical_leave') return; // se registra como ausencia (addAbsence)
-    this.api.setActive(Number(id), true).subscribe({ next: () => this.refresh() });
-  }
-
   /** dar de baja = desactivar (no se borra: tiene servicios y calificaciones) */
   removeOperator(id: string): void {
     this.api.setActive(Number(id), false).subscribe({ next: () => this.refresh() });

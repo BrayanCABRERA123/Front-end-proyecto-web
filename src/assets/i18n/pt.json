@@ -1703,7 +1703,6 @@
     "EMPTY": "Ainda não há alterações registradas"
   },
   "ADMIN_OPERATORS": {
-    "ASSIGN_SHIFTS": "Atribuir turnos",
     "NEW_OPERATOR": "Novo operador",
     "STATS": {
       "ON_STAFF": "Operadores no quadro",
@@ -1747,9 +1746,7 @@
       "CREATED_TITLE": "Operador criado",
       "CREATED_MESSAGE": "«{{name}}» foi adicionado à equipe.",
       "UPDATED_TITLE": "Operador atualizado",
-      "UPDATED_MESSAGE": "Os dados de «{{name}}» foram atualizados.",
-      "SHIFT_TITLE": "Turno atribuído",
-      "SHIFT_MESSAGE": "O turno de «{{name}}» foi atualizado."
+      "UPDATED_MESSAGE": "Os dados de «{{name}}» foram atualizados."
     }
   },
   "OPERATOR_DETAIL": {
@@ -1760,7 +1757,6 @@
     "ASSIGNED_BAY": "Baia atribuída",
     "REGISTER_ABSENCE": "Registrar ausência",
     "EDIT_AVAILABILITY": "Editar disponibilidade",
-    "ASSIGN_BAY_SHIFT": "Atribuir baia / turno",
     "STATS": {
       "WEEKLY_SERVICES": "Serviços da semana",
       "SERVICES_SUFFIX": "serviços",
@@ -1819,9 +1815,7 @@
       "AVAILABILITY_TITLE": "Disponibilidade salva",
       "AVAILABILITY_MESSAGE": "O horário semanal de «{{name}}» foi atualizado.",
       "ABSENCE_ERROR_TITLE": "Não foi possível registrar a licença",
-      "AVAILABILITY_ERROR_TITLE": "Não foi possível salvar a disponibilidade",
-      "SHIFT_TITLE": "Turno atribuído",
-      "SHIFT_MESSAGE": "O turno de «{{name}}» foi atualizado."
+      "AVAILABILITY_ERROR_TITLE": "Não foi possível salvar a disponibilidade"
     },
     "SERVICE_DETAIL_TITLE": "Serviço atribuído",
     "SERVICE_DETAIL_MESSAGE": "Informações do serviço que o operador deve atender.",
@@ -2117,16 +2111,6 @@
     "SAME_PASSWORD": "A nova senha deve ser diferente da atual",
     "NOT_MATCH": "As senhas não coincidem",
     "SAVE": "Salvar"
-  },
-  "ASSIGN_SHIFT_MODAL": {
-    "TITLE": "Atribuir turno",
-    "SUBTITLE": "Escolha o operador, o status e a baia do turno.",
-    "OPERATOR_LABEL": "Operador",
-    "STATUS_LABEL": "Status",
-    "BAY_LABEL": "Baia",
-    "NO_BAY": "Sem baia atribuída",
-    "HINT": "A baia não pode ser atribuída quando o operador está de licença médica.",
-    "ASSIGN": "Atribuir turno"
   },
   "AVAILABILITY_MODAL": {
     "TITLE": "Disponibilidade semanal",
