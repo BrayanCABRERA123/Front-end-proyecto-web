@@ -95,7 +95,7 @@ export class PaymentsComponent implements OnInit {
     const labels: Record<Payment['method'], string> = {
       nequi: 'Nequi',
       daviplata: 'Daviplata',
-      bancolombia: 'Bancolombia',
+      transfer: 'Transferencia',
       cash: 'Efectivo',
     };
     return labels[method] ?? method;

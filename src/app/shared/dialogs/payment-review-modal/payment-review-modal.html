@@ -19,34 +19,25 @@
 
     <div class="review-columns">
 
-      <!-- comprobante: la imagen real que subió el cliente; si no hay, la representación visual -->
+      <!-- comprobante: la imagen real que subió el cliente; si no hay, se dice tal cual y se
+           muestran los datos reportados, sin dibujar un comprobante que no existe -->
       <div class="receipt-column">
-        <span class="eyebrow">{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_ATTACHED' | translate }}</span>
-
         @if (data.receiptImage) {
+          <span class="eyebrow">{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_ATTACHED' | translate }}</span>
           <img class="receipt-image" [src]="data.receiptImage" alt="" style="width:100%;max-height:420px;object-fit:contain;border-radius:12px" />
         } @else {
-        <div class="receipt-mock" [attr.data-method]="data.method">
+          <span class="eyebrow">{{ 'PAYMENT_REVIEW_MODAL.NO_RECEIPT_TITLE' | translate }}</span>
+          <div class="receipt-missing">
+            <mat-icon class="receipt-missing__icon">image_not_supported</mat-icon>
+            <p class="muted">{{ 'PAYMENT_REVIEW_MODAL.NO_RECEIPT_MESSAGE' | translate }}</p>
 
-          @switch (data.method) {
-            @case ('nequi') { <div class="receipt-mock__brand">Nequi Colombia</div> }
-            @case ('daviplata') { <div class="receipt-mock__brand">Daviplata</div> }
-            @case ('bancolombia') { <div class="receipt-mock__brand">Bancolombia</div> }
-            @default { <div class="receipt-mock__brand">{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_CASH_BRAND' | translate }}</div> }
-          }
-
-          <mat-icon class="receipt-mock__check">check_circle</mat-icon>
-          <span class="receipt-mock__amount">{{ cop(data.amountDeclared ?? data.amountDue) }},00</span>
-
-          <div class="receipt-mock__details">
-            <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_PAYEE' | translate }}</span><strong>{{ data.payee || '—' }}</strong></div>
-            <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_ACCOUNT' | translate }}</span><strong>{{ data.bankAccount }}</strong></div>
-            <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_REFERENCE' | translate }}</span><strong>{{ data.transactionReference }}</strong></div>
-            <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_DATE' | translate }}</span><strong>{{ data.receiptDate }}</strong></div>
+            <div class="receipt-missing__details">
+              <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_PAYEE' | translate }}</span><strong>{{ data.payee || '—' }}</strong></div>
+              <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_ACCOUNT' | translate }}</span><strong>{{ data.bankAccount || '—' }}</strong></div>
+              <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_REFERENCE' | translate }}</span><strong>{{ data.transactionReference || '—' }}</strong></div>
+              <div><span>{{ 'PAYMENT_REVIEW_MODAL.RECEIPT_DATE' | translate }}</span><strong>{{ data.receiptDate || '—' }}</strong></div>
+            </div>
           </div>
-
-          <div class="receipt-mock__barcode"></div>
-        </div>
         }
       </div>
 

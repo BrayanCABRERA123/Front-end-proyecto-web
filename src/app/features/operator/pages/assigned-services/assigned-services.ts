@@ -115,9 +115,18 @@ export class AssignedServicesComponent implements OnInit {
   onAdvance(status: 'IN_PROGRESS' | 'COMPLETED'): void {
     if (!this.selectedService) return;
     const id = this.selectedService.bookingId;
-    const call = status === 'IN_PROGRESS' ? this.operations.start(id) : this.operations.finish(id);
+    const code = this.selectedService.id;
+    const starting = status === 'IN_PROGRESS';
+    const call = starting ? this.operations.start(id) : this.operations.finish(id);
     call.subscribe({
-      next: () => this.load(),
+      next: () => {
+        this.load();
+        this.feedback.success(
+          starting ? 'ASSIGNED_SERVICES.DETAIL.STARTED_TITLE' : 'ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE',
+          starting ? 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE' : 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE',
+          { messageParams: { code } }
+        );
+      },
       error: err => this.feedback.error('COMMON.ERROR', apiErrorKey(err))
     });
   }

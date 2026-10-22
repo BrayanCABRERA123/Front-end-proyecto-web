@@ -7,6 +7,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 // modal reutilizable para consultar Términos y Condiciones / Política de Datos
 import { LegalDocumentModal, LegalDocumentType } from '../../dialogs/legal-document-modal/legal-document-modal';
@@ -15,6 +17,8 @@ import { StatusModal, StatusModalData } from '../../dialogs/status-modal/status-
 // dirección, teléfono y correo de la sede salen del booking-service (tabla booking.establishment,
 // la edita el admin desde "Datos del negocio")
 import { BookingApiService } from '../../../core/services/booking-api';
+import { BusinessHourDto } from '../../../core/models/booking.models';
+import { businessHoursSummary } from '../../../core/utils/booking-display';
 // tema, idioma e interruptores de notificaciones se guardan en la cuenta (security-service)
 import { NotificationChannels, PreferencesService } from '../../../core/services/preferences';
 import { FeedbackService } from '../../dialogs/feedback.service';
@@ -68,16 +72,26 @@ export class SettingsPanelComponent implements OnInit {
 
   // abre el Centro de ayuda con los canales de atención del lavadero
   openHelpCenter(): void {
-    this.bookingApi.establishment().subscribe({
-      next: (location) => this.showHelpCenter(location.address, location.supportLine || location.phone,
-        location.email, location.serviceHoursNote),
-      error: () => this.showHelpCenter('—', null, null, null)
+    forkJoin({
+      location: this.bookingApi.establishment(),
+      // sin el horario igual se abre el centro de ayuda
+      hours: this.bookingApi.businessHours().pipe(catchError(() => of([] as BusinessHourDto[]))),
+    }).subscribe({
+      next: ({ location, hours }) => this.showHelpCenter(location.address, location.supportLine || location.phone,
+        location.email, location.serviceHoursNote || this.hoursSummary(hours)),
+      error: () => this.showHelpCenter('—', null, null, '—')
     });
   }
 
+  // días que abre la sede, en el idioma elegido (1 = lunes ... 7 = domingo)
+  private hoursSummary(hours: BusinessHourDto[]): string {
+    const keys = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    return businessHoursSummary(hours, day => this.translate.instant('ADMIN_SCHEDULE.DAYS.' + keys[day - 1]));
+  }
+
   // línea de atención y horario salen de los datos del negocio (Configuración del admin); si el
-  // admin no los llenó se usa el teléfono y el horario general
-  private showHelpCenter(address: string, phone: string | null, email: string | null, hours: string | null): void {
+  // admin no escribió el horario se arma con el horario semanal de la sede
+  private showHelpCenter(address: string, phone: string | null, email: string | null, hours: string): void {
     // las novedades del servicio le llegan al cliente por sus notificaciones y su correo
     const data: StatusModalData = {
       type: 'info',
@@ -88,7 +102,7 @@ export class SettingsPanelComponent implements OnInit {
       details: [
         { label: 'CONFIG.HELP_MODAL.SUPPORT_LINE', value: phone ?? '—' },
         { label: 'CONFIG.HELP_MODAL.EMAIL', value: email ?? '—' },
-        { label: 'CONFIG.HELP_MODAL.HOURS', value: hours || this.translate.instant('CONFIG.HELP_MODAL.HOURS_VALUE') },
+        { label: 'CONFIG.HELP_MODAL.HOURS', value: hours },
         { label: 'CONFIG.HELP_MODAL.ADDRESS', value: address }
       ]
     };

@@ -21,7 +21,6 @@
       "SUPPORT_LINE": "Support line",
       "EMAIL": "Email",
       "HOURS": "Opening hours",
-      "HOURS_VALUE": "Monday to Saturday, 7:00 a.m. - 6:30 p.m.",
       "ADDRESS": "Address"
     },
     "OPEN": "Open",
@@ -775,7 +774,9 @@
       "TRANSFER": "Transfer",
       "TRANSFER_DESC": "Scan or use the account details",
       "CASH": "Cash",
-      "CASH_DESC": "Pay at the shop when you receive the service"
+      "CASH_DESC": "Pay at the shop when you receive the service",
+      "NONE": "There are no payment methods available right now. Contact the car wash to pay for your booking.",
+      "LOAD_ERROR": "We could not load the payment methods. Try again in a few minutes."
     },
     "QR": {
       "INSTANT": "INSTANT DIGITAL PAYMENT",
@@ -1347,6 +1348,10 @@
       "ASSIGNED_MESSAGE": "Booking {{code}} now has an assigned operator.",
       "NO_SHOW_TITLE": "Mark as no show",
       "NO_SHOW_CONFIRM": "Did the customer of booking {{code}} not arrive?",
+      "COMPLETED_TITLE": "Complete booking",
+      "COMPLETED_CONFIRM": "Mark booking {{code}} as completed?",
+      "CANCELLED_TITLE": "Cancel booking",
+      "CANCELLED_CONFIRM": "Cancel booking {{code}}? This cannot be undone.",
       "STATUS_NO_SHOW_MESSAGE": "Booking {{code}} was marked as no show.",
       "STATUS_SCHEDULED_MESSAGE": "Booking {{code}} is scheduled."
     }
@@ -1698,7 +1703,6 @@
     "EMPTY": "No changes recorded yet"
   },
   "ADMIN_OPERATORS": {
-    "ASSIGN_SHIFTS": "Assign shifts",
     "NEW_OPERATOR": "New operator",
     "STATS": {
       "ON_STAFF": "Operators on staff",
@@ -1742,9 +1746,7 @@
       "CREATED_TITLE": "Operator created",
       "CREATED_MESSAGE": "«{{name}}» was added to the team.",
       "UPDATED_TITLE": "Operator updated",
-      "UPDATED_MESSAGE": "«{{name}}»’s details were updated.",
-      "SHIFT_TITLE": "Shift assigned",
-      "SHIFT_MESSAGE": "«{{name}}»’s shift was updated."
+      "UPDATED_MESSAGE": "«{{name}}»’s details were updated."
     }
   },
   "OPERATOR_DETAIL": {
@@ -1755,7 +1757,6 @@
     "ASSIGNED_BAY": "Assigned bay",
     "REGISTER_ABSENCE": "Register absence",
     "EDIT_AVAILABILITY": "Edit availability",
-    "ASSIGN_BAY_SHIFT": "Assign bay / shift",
     "STATS": {
       "WEEKLY_SERVICES": "Services this week",
       "SERVICES_SUFFIX": "services",
@@ -1813,8 +1814,8 @@
       "ABSENCE_MESSAGE": "«{{name}}»’s leave was recorded and their status changed to medical leave.",
       "AVAILABILITY_TITLE": "Availability saved",
       "AVAILABILITY_MESSAGE": "«{{name}}»’s weekly schedule was updated.",
-      "SHIFT_TITLE": "Shift assigned",
-      "SHIFT_MESSAGE": "«{{name}}»’s shift was updated."
+      "ABSENCE_ERROR_TITLE": "Could not register the leave",
+      "AVAILABILITY_ERROR_TITLE": "Could not save the availability"
     },
     "SERVICE_DETAIL_TITLE": "Assigned service",
     "SERVICE_DETAIL_MESSAGE": "Details of the service the operator must handle.",
@@ -1930,7 +1931,8 @@
     "RECEIPT_ACCOUNT": "Tax ID / Phone",
     "RECEIPT_REFERENCE": "Reference",
     "RECEIPT_DATE": "Date and time",
-    "RECEIPT_CASH_BRAND": "Cash payment",
+    "NO_RECEIPT_TITLE": "No receipt attached",
+    "NO_RECEIPT_MESSAGE": "This payment has no receipt image. Check the reported details before approving it.",
     "LINKED_BOOKING": "Linked booking",
     "SERVICE_VEHICLE": "Service & vehicle",
     "SCHEDULE_BAY": "Schedule & bay",
@@ -2109,16 +2111,6 @@
     "SAME_PASSWORD": "The new password must be different from the current one",
     "NOT_MATCH": "Passwords do not match",
     "SAVE": "Save"
-  },
-  "ASSIGN_SHIFT_MODAL": {
-    "TITLE": "Assign shift",
-    "SUBTITLE": "Choose the operator, their status and the shift bay.",
-    "OPERATOR_LABEL": "Operator",
-    "STATUS_LABEL": "Status",
-    "BAY_LABEL": "Bay",
-    "NO_BAY": "No bay assigned",
-    "HINT": "The bay cannot be assigned while the operator is on medical leave.",
-    "ASSIGN": "Assign shift"
   },
   "AVAILABILITY_MODAL": {
     "TITLE": "Weekly availability",

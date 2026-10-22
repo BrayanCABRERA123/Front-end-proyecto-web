@@ -1,4 +1,4 @@
-export type PaymentMethod = 'nequi' | 'bancolombia' | 'daviplata' | 'cash';
+export type PaymentMethod = 'nequi' | 'transfer' | 'daviplata' | 'cash';
 
 // todo lo que la tabla de pagos le pasa al modal para revisar un pago pendiente
 export interface PaymentReviewData {

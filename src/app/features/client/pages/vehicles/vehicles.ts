@@ -18,6 +18,9 @@ import { VehiclesService } from '../../../../core/services/vehicles';
 import { VehicleRequest, VehicleResponse } from '../../../../core/models/vehicle.models';
 // convierte un error del backend en la llave de traducción API_ERRORS.<code>
 import { apiErrorKey } from '../../../../core/utils/api-error';
+// reservas del cliente (booking-service): de ahí salen los lavados hechos
+import { BookingApiService } from '../../../../core/services/booking-api';
+import { isFinishedStatus, isoToDisplayDate } from '../../../../core/utils/booking-display';
 
 // lo único que necesita la tarjeta de cada vehículo, armado desde la respuesta del backend
 interface VehicleCard {
@@ -51,15 +54,21 @@ export class VehiclesComponent implements OnInit {
   // vehículos registrados por el cliente (se llenan al entrar a la pantalla)
   vehicles: VehicleCard[] = [];
 
+  // lavados terminados (reservas COMPLETED) y la fecha del más reciente (dd/mm/aaaa)
+  totalWashes = 0;
+  lastWashOverall = '—';
+
   constructor(
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private vehiclesService: VehiclesService
+    private vehiclesService: VehiclesService,
+    private bookingApi: BookingApiService
   ) {}
 
-  // al abrir la pantalla pedimos los vehículos del cliente
+  // al abrir la pantalla pedimos los vehículos y las reservas del cliente
   ngOnInit(): void {
     this.reload();
+    this.loadWashes();
   }
 
   // número de vehículos que se muestra en la tarjeta de estadísticas
@@ -67,14 +76,19 @@ export class VehiclesComponent implements OnInit {
     return this.vehicles.length;
   }
 
-  // total y fecha del último lavado los entrega booking-service, que es el siguiente
-  // microservicio del proyecto. mientras no exista, no hay lavados reales que mostrar.
-  get totalWashes(): number {
-    return 0;
-  }
-
-  get lastWashOverall(): string {
-    return '—';
+  // cuenta las reservas terminadas; si booking-service no responde se queda en 0 y "—"
+  private loadWashes(): void {
+    this.bookingApi.myBookings().subscribe({
+      next: (bookings) => {
+        const washes = bookings.filter(booking => isFinishedStatus(booking.status));
+        this.totalWashes = washes.length;
+        // las fechas llegan como aaaa-mm-dd, así que ordenarlas como texto las ordena por fecha
+        const last = washes.map(booking => booking.date).sort().pop();
+        this.lastWashOverall = last ? isoToDisplayDate(last) : '—';
+        this.refreshView();
+      },
+      error: () => undefined
+    });
   }
 
   // pide los vehículos al backend y los deja listos para la pantalla

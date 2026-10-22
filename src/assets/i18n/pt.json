@@ -21,7 +21,6 @@
       "SUPPORT_LINE": "Central de atendimento",
       "EMAIL": "E-mail",
       "HOURS": "Horário",
-      "HOURS_VALUE": "Segunda a sábado, 7h00 - 18h30",
       "ADDRESS": "Endereço"
     },
     "OPEN": "Abrir",
@@ -775,7 +774,9 @@
       "TRANSFER": "Transferência",
       "TRANSFER_DESC": "Escaneie ou use os dados da conta",
       "CASH": "Dinheiro",
-      "CASH_DESC": "Pague no local ao receber o serviço"
+      "CASH_DESC": "Pague no local ao receber o serviço",
+      "NONE": "No momento não há meios de pagamento disponíveis. Entre em contato com o lava-jato para pagar sua reserva.",
+      "LOAD_ERROR": "Não foi possível carregar os meios de pagamento. Tente novamente em alguns minutos."
     },
     "QR": {
       "INSTANT": "PAGAMENTO DIGITAL IMEDIATO",
@@ -1347,6 +1348,10 @@
       "ASSIGNED_MESSAGE": "A reserva {{code}} agora tem operador atribuído.",
       "NO_SHOW_TITLE": "Marcar como não compareceu",
       "NO_SHOW_CONFIRM": "O cliente da reserva {{code}} não chegou?",
+      "COMPLETED_TITLE": "Concluir reserva",
+      "COMPLETED_CONFIRM": "Marcar a reserva {{code}} como concluída?",
+      "CANCELLED_TITLE": "Cancelar reserva",
+      "CANCELLED_CONFIRM": "Cancelar a reserva {{code}}? Esta ação não pode ser desfeita.",
       "STATUS_NO_SHOW_MESSAGE": "A reserva {{code}} ficou como não compareceu.",
       "STATUS_SCHEDULED_MESSAGE": "A reserva {{code}} ficou agendada."
     }
@@ -1698,7 +1703,6 @@
     "EMPTY": "Ainda não há alterações registradas"
   },
   "ADMIN_OPERATORS": {
-    "ASSIGN_SHIFTS": "Atribuir turnos",
     "NEW_OPERATOR": "Novo operador",
     "STATS": {
       "ON_STAFF": "Operadores no quadro",
@@ -1742,9 +1746,7 @@
       "CREATED_TITLE": "Operador criado",
       "CREATED_MESSAGE": "«{{name}}» foi adicionado à equipe.",
       "UPDATED_TITLE": "Operador atualizado",
-      "UPDATED_MESSAGE": "Os dados de «{{name}}» foram atualizados.",
-      "SHIFT_TITLE": "Turno atribuído",
-      "SHIFT_MESSAGE": "O turno de «{{name}}» foi atualizado."
+      "UPDATED_MESSAGE": "Os dados de «{{name}}» foram atualizados."
     }
   },
   "OPERATOR_DETAIL": {
@@ -1755,7 +1757,6 @@
     "ASSIGNED_BAY": "Baia atribuída",
     "REGISTER_ABSENCE": "Registrar ausência",
     "EDIT_AVAILABILITY": "Editar disponibilidade",
-    "ASSIGN_BAY_SHIFT": "Atribuir baia / turno",
     "STATS": {
       "WEEKLY_SERVICES": "Serviços da semana",
       "SERVICES_SUFFIX": "serviços",
@@ -1813,8 +1814,8 @@
       "ABSENCE_MESSAGE": "A licença de «{{name}}» foi registrada e o status mudou para licença médica.",
       "AVAILABILITY_TITLE": "Disponibilidade salva",
       "AVAILABILITY_MESSAGE": "O horário semanal de «{{name}}» foi atualizado.",
-      "SHIFT_TITLE": "Turno atribuído",
-      "SHIFT_MESSAGE": "O turno de «{{name}}» foi atualizado."
+      "ABSENCE_ERROR_TITLE": "Não foi possível registrar a licença",
+      "AVAILABILITY_ERROR_TITLE": "Não foi possível salvar a disponibilidade"
     },
     "SERVICE_DETAIL_TITLE": "Serviço atribuído",
     "SERVICE_DETAIL_MESSAGE": "Informações do serviço que o operador deve atender.",
@@ -1930,7 +1931,8 @@
     "RECEIPT_ACCOUNT": "NIT / Celular",
     "RECEIPT_REFERENCE": "Referência",
     "RECEIPT_DATE": "Data e hora",
-    "RECEIPT_CASH_BRAND": "Pagamento em dinheiro",
+    "NO_RECEIPT_TITLE": "Sem comprovante anexado",
+    "NO_RECEIPT_MESSAGE": "Este pagamento não tem imagem do comprovante. Confira os dados informados antes de aprová-lo.",
     "LINKED_BOOKING": "Reserva vinculada",
     "SERVICE_VEHICLE": "Serviço e veículo",
     "SCHEDULE_BAY": "Horário e baia",
@@ -2109,16 +2111,6 @@
     "SAME_PASSWORD": "A nova senha deve ser diferente da atual",
     "NOT_MATCH": "As senhas não coincidem",
     "SAVE": "Salvar"
-  },
-  "ASSIGN_SHIFT_MODAL": {
-    "TITLE": "Atribuir turno",
-    "SUBTITLE": "Escolha o operador, o status e a baia do turno.",
-    "OPERATOR_LABEL": "Operador",
-    "STATUS_LABEL": "Status",
-    "BAY_LABEL": "Baia",
-    "NO_BAY": "Sem baia atribuída",
-    "HINT": "A baia não pode ser atribuída quando o operador está de licença médica.",
-    "ASSIGN": "Atribuir turno"
   },
   "AVAILABILITY_MODAL": {
     "TITLE": "Disponibilidade semanal",

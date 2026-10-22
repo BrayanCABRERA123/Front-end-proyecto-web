@@ -166,7 +166,7 @@ export interface Payment {
   client: string;
   phone: string;
   reference: string;
-  method: 'nequi' | 'bancolombia' | 'daviplata' | 'cash';
+  method: 'nequi' | 'transfer' | 'daviplata' | 'cash';
   amount: number;
   /** fecha ISO (yyyy-MM-dd) */
   date: string;

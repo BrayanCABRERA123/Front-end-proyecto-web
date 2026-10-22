@@ -244,7 +244,7 @@ export class DashboardComponent {
     const labels: Record<Payment['method'], string> = {
       nequi: 'Nequi',
       daviplata: 'Daviplata',
-      bancolombia: 'Bancolombia',
+      transfer: 'Transferencia',
       cash: 'Efectivo',
     };
     return labels[method] ?? method;

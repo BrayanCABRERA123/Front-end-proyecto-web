@@ -135,34 +135,30 @@ export class OperatorsStore {
       .join('');
   }
 
-  /** activo / inactivo: es lo único del estado que se guarda; la incapacidad sale de las ausencias */
-  setStatus(id: string, status: OperatorStatus): void {
-    if (status === 'medical_leave') return; // se registra como ausencia (addAbsence)
-    this.api.setActive(Number(id), true).subscribe({ next: () => this.refresh() });
-  }
-
   /** dar de baja = desactivar (no se borra: tiene servicios y calificaciones) */
   removeOperator(id: string): void {
     this.api.setActive(Number(id), false).subscribe({ next: () => this.refresh() });
   }
 
-  /** reemplaza la disponibilidad semanal (día 0 = lunes en la pantalla, 1 = lunes en el backend) */
-  setAvailability(id: string, availability: AvailabilitySlot[]): void {
+  /**
+   * reemplaza la disponibilidad semanal (día 0 = lunes en la pantalla, 1 = lunes en el backend);
+   * quien llama se suscribe para avisar solo cuando el servidor la guardó
+   */
+  setAvailability(id: string, availability: AvailabilitySlot[]): Observable<OperatorResponse> {
     const week = availability.map(slot => ({
       dayOfWeek: slot.day + 1,
       startsAt: slot.startTime,
       endsAt: slot.endTime
     }));
-    this.api.setAvailability(Number(id), week).subscribe({ next: () => this.refresh() });
+    return this.api.setAvailability(Number(id), week).pipe(tap(() => this.refresh()));
   }
 
   /** ausencia de días completos: del inicio del primer día al final del último */
-  addAbsence(id: string, absence: Omit<Absence, 'id'>, onError?: (err: unknown) => void): Absence {
+  addAbsence(id: string, absence: Omit<Absence, 'id'>): Observable<AbsenceResponse> {
     const end = new Date(absence.endDate + 'T00:00:00');
     end.setDate(end.getDate() + 1);
-    this.api.addAbsence(Number(id), absence.startDate + 'T00:00:00', localIsoDate(end) + 'T00:00:00', absence.reason)
-      .subscribe({ next: () => this.refresh(), error: err => onError?.(err) });
-    return { id: 'pending', ...absence };
+    return this.api.addAbsence(Number(id), absence.startDate + 'T00:00:00', localIsoDate(end) + 'T00:00:00', absence.reason)
+      .pipe(tap(() => this.refresh()));
   }
 
   removeAbsence(id: string, absenceId: string): void {

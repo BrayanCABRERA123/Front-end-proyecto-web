@@ -19,6 +19,8 @@ import { OperationsApiService } from '../../../../core/services/operations-api';
 import { toWorkReservation } from '../../../../core/utils/operator-work';
 import { UserSession } from '../../../../core/services/user-session';
 import { LongDatePipe } from '../../../../shared/pipes/long-date.pipe';
+import { FeedbackService } from '../../../../shared/dialogs/feedback.service';
+import { apiErrorKey } from '../../../../core/utils/api-error';
 
 interface Stat {
   icon: string;
@@ -63,7 +65,8 @@ export class HomeComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private notificationsService: NotificationsService,
     private operations: OperationsApiService,
-    private session: UserSession
+    private session: UserSession,
+    private feedback: FeedbackService
   ) {}
 
   ngOnInit(): void {
@@ -164,9 +167,12 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      this.operations.start(r.id).subscribe(() => {
-        this.loadToday();
-        this.showSuccess('ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE', r.code);
+      this.operations.start(r.id).subscribe({
+        next: () => {
+          this.loadToday();
+          this.showSuccess('ASSIGNED_SERVICES.DETAIL.STARTED_TITLE', 'ASSIGNED_SERVICES.DETAIL.STARTED_MESSAGE', r.code);
+        },
+        error: err => this.showError(err)
       });
     });
   }
@@ -187,9 +193,12 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (!confirmed) return;
-      this.operations.finish(r.id).subscribe(() => {
-        this.loadToday();
-        this.showSuccess('ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE', r.code);
+      this.operations.finish(r.id).subscribe({
+        next: () => {
+          this.loadToday();
+          this.showSuccess('ASSIGNED_SERVICES.DETAIL.FINISHED_TITLE', 'ASSIGNED_SERVICES.DETAIL.FINISHED_MESSAGE', r.code);
+        },
+        error: err => this.showError(err)
       });
     });
   }
@@ -207,6 +216,13 @@ export class HomeComponent implements OnInit {
         this.requestFinish(r);
       }
     });
+  }
+
+  // el backend no dejó iniciar o finalizar (ej. aún no es la hora o ya la cerró el admin):
+  // se dice por qué y se recarga para mostrar el estado real
+  private showError(err: unknown) {
+    this.feedback.error('COMMON.ERROR', apiErrorKey(err));
+    this.loadToday();
   }
 
   // avisa que el servicio se inició o finalizó (mismo mensaje que en Servicios asignados)

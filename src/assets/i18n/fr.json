@@ -21,7 +21,6 @@
       "SUPPORT_LINE": "Service client",
       "EMAIL": "E-mail",
       "HOURS": "Horaires",
-      "HOURS_VALUE": "Du lundi au samedi, 7h00 - 18h30",
       "ADDRESS": "Adresse"
     },
     "OPEN": "Ouvrir",
@@ -775,7 +774,9 @@
       "TRANSFER": "Virement",
       "TRANSFER_DESC": "Scannez ou utilisez les coordonnées du compte",
       "CASH": "Espèces",
-      "CASH_DESC": "Payez sur place à la réception du service"
+      "CASH_DESC": "Payez sur place à la réception du service",
+      "NONE": "Aucun moyen de paiement n’est disponible pour le moment. Contactez la station de lavage pour payer votre réservation.",
+      "LOAD_ERROR": "Nous n’avons pas pu charger les moyens de paiement. Réessayez dans quelques minutes."
     },
     "QR": {
       "INSTANT": "PAIEMENT NUMÉRIQUE IMMÉDIAT",
@@ -1347,6 +1348,10 @@
       "ASSIGNED_MESSAGE": "La réservation {{code}} a maintenant un opérateur assigné.",
       "NO_SHOW_TITLE": "Marquer comme absent",
       "NO_SHOW_CONFIRM": "Le client de la réservation {{code}} n'est pas venu ?",
+      "COMPLETED_TITLE": "Terminer la réservation",
+      "COMPLETED_CONFIRM": "Marquer la réservation {{code}} comme terminée ?",
+      "CANCELLED_TITLE": "Annuler la réservation",
+      "CANCELLED_CONFIRM": "Annuler la réservation {{code}} ? Cette action est irréversible.",
       "STATUS_NO_SHOW_MESSAGE": "La réservation {{code}} est marquée comme absent.",
       "STATUS_SCHEDULED_MESSAGE": "La réservation {{code}} est planifiée."
     }
@@ -1698,7 +1703,6 @@
     "EMPTY": "Aucune modification enregistrée pour le moment"
   },
   "ADMIN_OPERATORS": {
-    "ASSIGN_SHIFTS": "Assigner des horaires",
     "NEW_OPERATOR": "Nouvel opérateur",
     "STATS": {
       "ON_STAFF": "Opérateurs au total",
@@ -1742,9 +1746,7 @@
       "CREATED_TITLE": "Opérateur créé",
       "CREATED_MESSAGE": "«{{name}}» a été ajouté à l’équipe.",
       "UPDATED_TITLE": "Opérateur mis à jour",
-      "UPDATED_MESSAGE": "Les informations de «{{name}}» ont été mises à jour.",
-      "SHIFT_TITLE": "Quart assigné",
-      "SHIFT_MESSAGE": "Le quart de «{{name}}» a été mis à jour."
+      "UPDATED_MESSAGE": "Les informations de «{{name}}» ont été mises à jour."
     }
   },
   "OPERATOR_DETAIL": {
@@ -1755,7 +1757,6 @@
     "ASSIGNED_BAY": "Baie assignée",
     "REGISTER_ABSENCE": "Enregistrer une absence",
     "EDIT_AVAILABILITY": "Modifier la disponibilité",
-    "ASSIGN_BAY_SHIFT": "Assigner baie / horaire",
     "STATS": {
       "WEEKLY_SERVICES": "Services de la semaine",
       "SERVICES_SUFFIX": "services",
@@ -1813,8 +1814,8 @@
       "ABSENCE_MESSAGE": "Le congé de «{{name}}» a été enregistré et son statut est passé en congé médical.",
       "AVAILABILITY_TITLE": "Disponibilité enregistrée",
       "AVAILABILITY_MESSAGE": "L’horaire hebdomadaire de «{{name}}» a été mis à jour.",
-      "SHIFT_TITLE": "Quart assigné",
-      "SHIFT_MESSAGE": "Le quart de «{{name}}» a été mis à jour."
+      "ABSENCE_ERROR_TITLE": "Impossible d’enregistrer le congé",
+      "AVAILABILITY_ERROR_TITLE": "Impossible d’enregistrer la disponibilité"
     },
     "SERVICE_DETAIL_TITLE": "Service assigné",
     "SERVICE_DETAIL_MESSAGE": "Informations sur le service que l’opérateur doit traiter.",
@@ -1930,7 +1931,8 @@
     "RECEIPT_ACCOUNT": "NIT / Téléphone",
     "RECEIPT_REFERENCE": "Référence",
     "RECEIPT_DATE": "Date et heure",
-    "RECEIPT_CASH_BRAND": "Paiement en espèces",
+    "NO_RECEIPT_TITLE": "Aucun justificatif joint",
+    "NO_RECEIPT_MESSAGE": "Ce paiement n’a pas d’image de justificatif. Vérifiez les informations déclarées avant de l’approuver.",
     "LINKED_BOOKING": "Réservation liée",
     "SERVICE_VEHICLE": "Service et véhicule",
     "SCHEDULE_BAY": "Horaire et baie",
@@ -2109,16 +2111,6 @@
     "SAME_PASSWORD": "Le nouveau mot de passe doit être différent de l’actuel",
     "NOT_MATCH": "Les mots de passe ne correspondent pas",
     "SAVE": "Enregistrer"
-  },
-  "ASSIGN_SHIFT_MODAL": {
-    "TITLE": "Assigner un quart",
-    "SUBTITLE": "Choisissez l’opérateur, son statut et la baie du quart.",
-    "OPERATOR_LABEL": "Opérateur",
-    "STATUS_LABEL": "Statut",
-    "BAY_LABEL": "Baie",
-    "NO_BAY": "Aucune baie assignée",
-    "HINT": "La baie ne peut pas être assignée lorsque l’opérateur est en congé médical.",
-    "ASSIGN": "Assigner le quart"
   },
   "AVAILABILITY_MODAL": {
     "TITLE": "Disponibilité hebdomadaire",
