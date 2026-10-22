@@ -90,7 +90,7 @@
 
   // todos los medios se pintan con el color del tema (nada de azul/verde
   // de identidad de marca cuando el tema es, por ejemplo, rosa)
-  &--nequi, &--bancolombia, &--daviplata { background: var(--primary-soft); color: var(--primary); }
+  &--nequi, &--transfer, &--daviplata { background: var(--primary-soft); color: var(--primary); }
   &--cash { background: var(--success-soft); color: var(--success); }
 }
 

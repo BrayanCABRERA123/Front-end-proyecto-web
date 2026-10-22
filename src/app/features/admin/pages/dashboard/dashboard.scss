@@ -332,7 +332,7 @@
 
   // todos los métodos se pintan con el color del tema para que nada quede
   // azul/morado cuando el tema es, por ejemplo, rosa
-  &--bancolombia, &--nequi, &--daviplata { background: var(--primary-soft); color: var(--primary); }
+  &--transfer, &--nequi, &--daviplata { background: var(--primary-soft); color: var(--primary); }
   &--time { background: var(--primary-soft); color: var(--primary); margin: 0 6px 0 0; }
 }
 

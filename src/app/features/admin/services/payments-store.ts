@@ -92,7 +92,8 @@ function methodOf(code: string | undefined): Payment['method'] {
     case 'NEQUI': return 'nequi';
     case 'DAVIPLATA': return 'daviplata';
     case 'EFECTIVO': return 'cash';
-    default: return 'bancolombia'; // transferencia
+    // TRANSFERENCIA: el banco no lo manda el API, así que no se adivina uno
+    default: return 'transfer';
   }
 }
 
