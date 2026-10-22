@@ -56,10 +56,14 @@
               <span class="method-desc">{{ method.holder || (method.desc | translate) }}</span>
             </button>
           </div>
+          <!-- todos los medios apagados o payment-service sin respuesta: no se ofrece ninguno -->
+          <p class="muted-note" *ngIf="noPaymentMethods">
+            {{ (accountsFailed ? 'PAYMENT.METHOD.LOAD_ERROR' : 'PAYMENT.METHOD.NONE') | translate }}
+          </p>
         </section>
 
         <!-- Pago digital con QR (Nequi / Daviplata / Transferencia) -->
-        <section class="card" *ngIf="!isApproved && selectedMethod !== 'CASH'">
+        <section class="card" *ngIf="!isApproved && hasPaymentMethods && selectedMethod !== 'CASH'">
           <div class="qr-top">
             <span class="tag">{{ 'PAYMENT.QR.INSTANT' | translate }}</span>
             <span class="via">{{ 'PAYMENT.QR.VIA' | translate }} {{ ('PAYMENT.METHOD.' + selectedMethod) | translate
@@ -126,7 +130,7 @@
         </section>
 
         <!-- Pago en efectivo -->
-        <section class="card cash-card" *ngIf="!isApproved && selectedMethod === 'CASH'">
+        <section class="card cash-card" *ngIf="!isApproved && hasPaymentMethods && selectedMethod === 'CASH'">
           <mat-icon>storefront</mat-icon>
           <div>
             <h2>{{ 'PAYMENT.CASH.TITLE' | translate }}</h2>
@@ -135,7 +139,7 @@
         </section>
 
         <!-- Confirmar pago -->
-        <section class="card" *ngIf="!isApproved && selectedMethod !== 'CASH'">
+        <section class="card" *ngIf="!isApproved && hasPaymentMethods && selectedMethod !== 'CASH'">
           <div class="card-title">
             <mat-icon>fact_check</mat-icon>
             <h2>{{ 'PAYMENT.CONFIRM.TITLE' | translate }}</h2>
@@ -260,7 +264,7 @@
               {{ 'PAYMENT.SUMMARY.VERIFYING_BUTTON' | translate }}
             } @else {
               <mat-icon>verified_user</mat-icon>
-              {{ (selectedMethod === 'CASH' ? 'PAYMENT.SUMMARY.CASH_BUTTON' : 'PAYMENT.SUMMARY.PAY_BUTTON') | translate }}
+              {{ (hasPaymentMethods && selectedMethod === 'CASH' ? 'PAYMENT.SUMMARY.CASH_BUTTON' : 'PAYMENT.SUMMARY.PAY_BUTTON') | translate }}
             }
           </button>
           }

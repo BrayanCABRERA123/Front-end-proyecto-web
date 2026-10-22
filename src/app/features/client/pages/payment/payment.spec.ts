@@ -45,4 +45,22 @@ describe('Payment', () => {
     expect(component.isSelected(second)).toBe(true);
     expect(component.selectedAccount?.id).toBe(2);
   });
+
+  it('does not offer cash nor let the customer confirm when every payment account is off', () => {
+    http.match(req => req.url.endsWith('/payment-accounts'))[0].flush([]);
+
+    expect(component.paymentMethods.length).toBe(0);
+    expect(component.noPaymentMethods).toBe(true);
+    expect(component.canConfirm).toBe(false);
+    expect(component.missingRequirements).toEqual([]);
+  });
+
+  it('warns and blocks the payment when the payment accounts cannot be loaded', () => {
+    http.match(req => req.url.endsWith('/payment-accounts'))[0]
+      .flush('down', { status: 503, statusText: 'Service Unavailable' });
+
+    expect(component.accountsFailed).toBe(true);
+    expect(component.noPaymentMethods).toBe(true);
+    expect(component.canConfirm).toBe(false);
+  });
 });

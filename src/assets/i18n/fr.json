@@ -775,7 +775,9 @@
       "TRANSFER": "Virement",
       "TRANSFER_DESC": "Scannez ou utilisez les coordonnées du compte",
       "CASH": "Espèces",
-      "CASH_DESC": "Payez sur place à la réception du service"
+      "CASH_DESC": "Payez sur place à la réception du service",
+      "NONE": "Aucun moyen de paiement n’est disponible pour le moment. Contactez la station de lavage pour payer votre réservation.",
+      "LOAD_ERROR": "Nous n’avons pas pu charger les moyens de paiement. Réessayez dans quelques minutes."
     },
     "QR": {
       "INSTANT": "PAIEMENT NUMÉRIQUE IMMÉDIAT",

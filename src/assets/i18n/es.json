@@ -775,7 +775,9 @@
       "TRANSFER": "Transferencia",
       "TRANSFER_DESC": "Escanea o usa los datos de cuenta",
       "CASH": "Efectivo",
-      "CASH_DESC": "Paga en el local al recibir el servicio"
+      "CASH_DESC": "Paga en el local al recibir el servicio",
+      "NONE": "Por ahora no hay medios de pago disponibles. Comunícate con el lavadero para pagar tu reserva.",
+      "LOAD_ERROR": "No pudimos cargar los medios de pago. Intenta de nuevo en unos minutos."
     },
     "QR": {
       "INSTANT": "PAGO DIGITAL INMEDIATO",

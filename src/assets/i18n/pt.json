@@ -775,7 +775,9 @@
       "TRANSFER": "Transferência",
       "TRANSFER_DESC": "Escaneie ou use os dados da conta",
       "CASH": "Dinheiro",
-      "CASH_DESC": "Pague no local ao receber o serviço"
+      "CASH_DESC": "Pague no local ao receber o serviço",
+      "NONE": "No momento não há meios de pagamento disponíveis. Entre em contato com o lava-jato para pagar sua reserva.",
+      "LOAD_ERROR": "Não foi possível carregar os meios de pagamento. Tente novamente em alguns minutos."
     },
     "QR": {
       "INSTANT": "PAGAMENTO DIGITAL IMEDIATO",

@@ -775,7 +775,9 @@
       "TRANSFER": "Transfer",
       "TRANSFER_DESC": "Scan or use the account details",
       "CASH": "Cash",
-      "CASH_DESC": "Pay at the shop when you receive the service"
+      "CASH_DESC": "Pay at the shop when you receive the service",
+      "NONE": "There are no payment methods available right now. Contact the car wash to pay for your booking.",
+      "LOAD_ERROR": "We could not load the payment methods. Try again in a few minutes."
     },
     "QR": {
       "INSTANT": "INSTANT DIGITAL PAYMENT",

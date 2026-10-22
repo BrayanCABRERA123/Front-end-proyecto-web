@@ -108,6 +108,18 @@ export class PaymentComponent implements OnInit {
   // medios disponibles: los que el admin tiene activos (efectivo incluido, si su cuenta está activa)
   paymentMethods: PaymentMethod[] = [];
   private accountsLoaded = false;
+  // payment-service no respondió: no hay medios para elegir
+  accountsFailed = false;
+
+  // hay al menos un medio activo para pagar
+  get hasPaymentMethods(): boolean {
+    return this.accountsLoaded && this.paymentMethods.length > 0;
+  }
+
+  // ya se sabe que no hay medios (todos apagados o sin respuesta): se avisa en vez de ofrecer efectivo
+  get noPaymentMethods(): boolean {
+    return (this.accountsLoaded || this.accountsFailed) && this.paymentMethods.length === 0;
+  }
 
   // método seleccionado por el usuario
   selectedMethod: PaymentMethodId = 'CASH';
@@ -233,6 +245,8 @@ export class PaymentComponent implements OnInit {
   get canConfirm(): boolean {
     // evita enviar el mismo pago dos veces
     if (this.isLocked) return false;
+    // sin medios activos no se puede pagar, ni siquiera en efectivo
+    if (!this.hasPaymentMethods) return false;
     if (this.selectedMethod === 'CASH') return true;
     return !!this.receiptDataUrl && !this.compressingReceipt && this.isRefValid && this.isPaidAmountValid;
   }
@@ -240,7 +254,7 @@ export class PaymentComponent implements OnInit {
   // lo que le falta al cliente para poder confirmar (se muestra debajo del botón deshabilitado,
   // así sabe qué completar en vez de ver un botón bloqueado sin explicación)
   get missingRequirements(): string[] {
-    if (this.isLocked || this.selectedMethod === 'CASH') return [];
+    if (this.isLocked || !this.hasPaymentMethods || this.selectedMethod === 'CASH') return [];
     const missing: string[] = [];
     if (!this.receiptFile) missing.push('PAYMENT.CONFIRM.MISSING.RECEIPT');
     if (!this.isRefValid) missing.push('PAYMENT.CONFIRM.MISSING.REFERENCE');
@@ -277,7 +291,11 @@ export class PaymentComponent implements OnInit {
         this.ensureAvailableMethod();
         this.changes.markForCheck();
       },
-      error: () => { /* sin payment-service no hay medios para elegir */ }
+      error: () => {
+        // sin payment-service no hay medios para elegir: se avisa y no se deja confirmar
+        this.accountsFailed = true;
+        this.changes.markForCheck();
+      }
     });
 
     this.loadBooking();
