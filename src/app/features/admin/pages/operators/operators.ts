@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,51 +7,22 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
-import { Operator, OperatorStatus, OperatorsStore } from '../../services/operators-store';
-import { TeamSummaryResponse } from '../../../../core/services/operations-api';
-import { OperatorModal, OperatorModalData, OperatorModalResult } from './components/operator-modal/operator-modal';
+import { Operator } from '../../services/operators-store';
+import { OperatorsViewModel } from '../../viewmodels/operators.viewmodel';
 
-type StatusFilter = 'all' | OperatorStatus;
-
+// vista de Operarios: la lista y los filtros están en OperatorsViewModel
 @Component({
   selector: 'app-admin-operators',
   standalone: true,
   imports: [CommonModule, FormsModule, MatIconModule, TranslateModule, SidebarComponent, EmptyStateComponent],
+  providers: [OperatorsViewModel],
   templateUrl: './operators.html',
   styleUrl: './operators.scss'
 })
 export class OperatorsComponent {
 
-  search = '';
-  statusFilter: StatusFilter = 'all';
-
-  constructor(
-    private router: Router,
-    private store: OperatorsStore,
-  ) {}
-
-  get operators(): Operator[] {
-    return this.store.operators();
-  }
-
-  get filteredOperators(): Operator[] {
-    const term = this.search.trim().toLowerCase();
-
-    return this.operators
-      .filter(o => this.statusFilter === 'all' || o.status === this.statusFilter)
-      .filter(o => !term
-        || o.name.toLowerCase().includes(term)
-        || o.specialty.toLowerCase().includes(term));
-  }
-
-  countByStatus(status: OperatorStatus): number {
-    return this.operators.filter(o => o.status === status).length;
-  }
-
-  // resumen del equipo (operations-service); null mientras carga o si falla
-  get summary(): TeamSummaryResponse | null {
-    return this.store.summary();
-  }
+  readonly vm = inject(OperatorsViewModel);
+  private readonly router = inject(Router);
 
   goToDetail(operator: Operator): void {
     this.router.navigate(['/admin/operators', operator.id]);

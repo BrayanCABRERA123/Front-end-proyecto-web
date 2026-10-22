@@ -4,16 +4,16 @@
     <div>
       <div class="title-row">
         <h2>{{ 'BUSINESS_DATA.TITLE' | translate }}</h2>
-        @if (dirty) {
+        @if (vm.dirty()) {
           <span class="status-badge status-badge--pending">{{ 'BUSINESS_DATA.UNSAVED_BADGE' | translate }}</span>
         }
       </div>
-      <p>{{ 'BUSINESS_DATA.SUBTITLE' | translate:{ name: data.legalName || ('BUSINESS_DATA.THE_BUSINESS' | translate) } }}</p>
+      <p>{{ 'BUSINESS_DATA.SUBTITLE' | translate:{ name: vm.data().legalName || ('BUSINESS_DATA.THE_BUSINESS' | translate) } }}</p>
     </div>
 
     <div class="section-header__actions">
-      <button class="btn-outline" (click)="discard()" [disabled]="!loaded || saving || !dirty">{{ 'BUSINESS_DATA.DISCARD' | translate }}</button>
-      <button class="btn-primary" (click)="save()" [disabled]="!loaded || saving || !dirty">
+      <button class="btn-outline" (click)="vm.discard()" [disabled]="!vm.loaded() || vm.saving() || !vm.dirty()">{{ 'BUSINESS_DATA.DISCARD' | translate }}</button>
+      <button class="btn-primary" (click)="vm.save()" [disabled]="!vm.loaded() || vm.saving() || !vm.dirty()">
         <mat-icon>check</mat-icon>
         {{ 'BUSINESS_DATA.SAVE' | translate }}
       </button>
@@ -42,7 +42,7 @@
             class="edit-btn"
             type="button"
             (click)="editSection(section)"
-            [disabled]="!loaded || saving"
+            [disabled]="!vm.loaded() || vm.saving()"
             [attr.aria-label]="('COMMON.EDIT' | translate) + ' — ' + (section.titleKey | translate)"
             [title]="'COMMON.EDIT' | translate">
             <mat-icon>edit</mat-icon>
@@ -60,8 +60,8 @@
           @for (field of section.fields; track field.key) {
             <div class="values__row">
               <dt>{{ field.labelKey | translate }}{{ field.required ? ' *' : '' }}</dt>
-              @if (display(field.key)) {
-                <dd>{{ display(field.key) }}</dd>
+              @if (vm.display(field.key)) {
+                <dd>{{ vm.display(field.key) }}</dd>
               } @else {
                 <dd class="values__pending">{{ 'BUSINESS_DATA.PENDING' | translate }}</dd>
               }

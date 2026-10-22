@@ -6,7 +6,7 @@ import { PaymentsApiService } from '../../../core/services/payments-api';
 import { apiErrorKey } from '../../../core/utils/api-error';
 import { PaymentsStore } from '../services/payments-store';
 import { Payment, PaymentStatus } from '../models/admin.models';
-import { ManualPaymentResult } from '../pages/payments/components/payment-modal/payment-modal';
+import { ManualPaymentResult } from './manual-payment.viewmodel';
 import { paymentMethodLabel, paymentReviewData } from './payment-review';
 
 /** Pagos del admin: filtros, tarjetas, revisar, reembolsar y registrar el pago en el local. */

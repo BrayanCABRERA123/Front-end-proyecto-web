@@ -4,7 +4,7 @@
     <div>
       <div class="title-row">
         <h2>{{ 'PAYMENT_METHODS_SECTION.TITLE' | translate }}</h2>
-        <span class="count-badge">{{ 'PAYMENT_METHODS_SECTION.ACTIVE_COUNT' | translate:{ count: activeCount } }}</span>
+        <span class="count-badge">{{ 'PAYMENT_METHODS_SECTION.ACTIVE_COUNT' | translate:{ count: vm.activeCount() } }}</span>
       </div>
       <p>{{ 'PAYMENT_METHODS_SECTION.SUBTITLE' | translate }}</p>
     </div>
@@ -16,7 +16,7 @@
   </div>
 
   <div class="methods-list">
-    @for (m of methods; track m.id) {
+    @for (m of vm.methods(); track m.id) {
       <div class="method-card">
 
         <div class="method-card__top">

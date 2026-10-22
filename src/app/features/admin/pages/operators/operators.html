@@ -27,8 +27,8 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.ON_STAFF' | translate }}</p>
-          <p class="stat-value">{{ summary?.totalOperators ?? '—' }}</p>
-          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.ON_STAFF_DETAIL' | translate:{ active: summary?.activeOperators ?? 0, inactive: summary ? summary.totalOperators - summary.activeOperators : 0 } }}</span>
+          <p class="stat-value">{{ vm.summary?.totalOperators ?? '—' }}</p>
+          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.ON_STAFF_DETAIL' | translate:{ active: vm.summary?.activeOperators ?? 0, inactive: vm.summary ? vm.summary.totalOperators - vm.summary.activeOperators : 0 } }}</span>
         </div>
         <div class="stat-icon"><mat-icon>badge</mat-icon></div>
       </div>
@@ -36,8 +36,8 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.AVAILABLE_TODAY' | translate }}</p>
-          <p class="stat-value">{{ summary?.availableToday ?? '—' }}</p>
-          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVAILABLE_DETAIL' | translate:{ count: summary?.absentToday ?? 0 } }}</span>
+          <p class="stat-value">{{ vm.summary?.availableToday ?? '—' }}</p>
+          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVAILABLE_DETAIL' | translate:{ count: vm.summary?.absentToday ?? 0 } }}</span>
         </div>
         <div class="stat-icon stat-icon--success"><mat-icon>check_circle</mat-icon></div>
       </div>
@@ -45,9 +45,9 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.WEEKLY_SERVICES' | translate }}</p>
-          <p class="stat-value">{{ summary?.completedServices ?? '—' }}</p>
-          @if (summary?.servicesTrendPercent != null) {
-            <span class="muted accent">{{ summary!.servicesTrendPercent! >= 0 ? '↗ +' : '↘ ' }}{{ summary!.servicesTrendPercent }}% {{ 'ADMIN_OPERATORS.STATS.WEEKLY_SERVICES_DETAIL' | translate }}</span>
+          <p class="stat-value">{{ vm.summary?.completedServices ?? '—' }}</p>
+          @if (vm.summary?.servicesTrendPercent != null) {
+            <span class="muted accent">{{ vm.summary!.servicesTrendPercent! >= 0 ? '↗ +' : '↘ ' }}{{ vm.summary!.servicesTrendPercent }}% {{ 'ADMIN_OPERATORS.STATS.WEEKLY_SERVICES_DETAIL' | translate }}</span>
           } @else {
             <span class="muted">{{ 'ADMIN_OPERATORS.STATS.NO_TREND' | translate }}</span>
           }
@@ -58,8 +58,8 @@
       <div class="card stat-card">
         <div>
           <p class="stat-label">{{ 'ADMIN_OPERATORS.STATS.AVG_RATING' | translate }}</p>
-          <p class="stat-value">{{ summary?.averageRating != null ? summary!.averageRating!.toFixed(1) : '—' }}<span class="muted">/5.0</span></p>
-          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVG_RATING_DETAIL' | translate:{ count: summary?.ratingsCount ?? 0 } }}</span>
+          <p class="stat-value">{{ vm.summary?.averageRating != null ? vm.summary!.averageRating!.toFixed(1) : '—' }}<span class="muted">/5.0</span></p>
+          <span class="muted">{{ 'ADMIN_OPERATORS.STATS.AVG_RATING_DETAIL' | translate:{ count: vm.summary?.ratingsCount ?? 0 } }}</span>
         </div>
         <div class="stat-icon stat-icon--warning"><mat-icon>star</mat-icon></div>
       </div>
@@ -71,28 +71,28 @@
 
       <div class="search-box">
         <mat-icon>search</mat-icon>
-        <input type="text" [(ngModel)]="search" [placeholder]="'ADMIN_OPERATORS.FILTERS.SEARCH_PLACEHOLDER' | translate">
+        <input type="text" [(ngModel)]="vm.search" [placeholder]="'ADMIN_OPERATORS.FILTERS.SEARCH_PLACEHOLDER' | translate">
       </div>
 
       <div class="chips">
-        <button class="chip" [class.chip--active]="statusFilter === 'all'" (click)="statusFilter = 'all'">
-          {{ 'ADMIN_OPERATORS.FILTERS.ALL' | translate }} <span class="chip-count">{{ operators.length }}</span>
+        <button class="chip" [class.chip--active]="vm.statusFilter === 'all'" (click)="vm.statusFilter = 'all'">
+          {{ 'ADMIN_OPERATORS.FILTERS.ALL' | translate }} <span class="chip-count">{{ vm.operators.length }}</span>
         </button>
-        <button class="chip" [class.chip--active]="statusFilter === 'available'" (click)="statusFilter = 'available'">
-          {{ 'ADMIN_OPERATORS.FILTERS.AVAILABLE' | translate }} <span class="chip-count">{{ countByStatus('available') }}</span>
+        <button class="chip" [class.chip--active]="vm.statusFilter === 'available'" (click)="vm.statusFilter = 'available'">
+          {{ 'ADMIN_OPERATORS.FILTERS.AVAILABLE' | translate }} <span class="chip-count">{{ vm.countByStatus('available') }}</span>
         </button>
-        <button class="chip" [class.chip--active]="statusFilter === 'in_service'" (click)="statusFilter = 'in_service'">
-          {{ 'ADMIN_OPERATORS.FILTERS.IN_SERVICE' | translate }} <span class="chip-count">{{ countByStatus('in_service') }}</span>
+        <button class="chip" [class.chip--active]="vm.statusFilter === 'in_service'" (click)="vm.statusFilter = 'in_service'">
+          {{ 'ADMIN_OPERATORS.FILTERS.IN_SERVICE' | translate }} <span class="chip-count">{{ vm.countByStatus('in_service') }}</span>
         </button>
-        <button class="chip" [class.chip--active]="statusFilter === 'medical_leave'" (click)="statusFilter = 'medical_leave'">
-          {{ 'ADMIN_OPERATORS.FILTERS.ABSENT' | translate }} <span class="chip-count">{{ countByStatus('medical_leave') }}</span>
+        <button class="chip" [class.chip--active]="vm.statusFilter === 'medical_leave'" (click)="vm.statusFilter = 'medical_leave'">
+          {{ 'ADMIN_OPERATORS.FILTERS.ABSENT' | translate }} <span class="chip-count">{{ vm.countByStatus('medical_leave') }}</span>
         </button>
       </div>
 
     </div>
 
     <!-- grid de operarios -->
-    @if (operators.length === 0) {
+    @if (vm.operators.length === 0) {
 
       <div class="card">
         <app-empty-state
@@ -107,15 +107,15 @@
         </app-empty-state>
       </div>
 
-    } @else if (filteredOperators.length === 0) {
+    } @else if (vm.filteredOperators.length === 0) {
 
       <div class="card">
         <app-empty-state
           variant="filtered"
           titleKey="ADMIN_OPERATORS.NO_RESULTS_TITLE"
           messageKey="ADMIN_OPERATORS.NO_RESULTS_MESSAGE"
-          [params]="{ term: search }">
-          <button class="btn-outline" (click)="search = ''; statusFilter = 'all'">
+          [params]="{ term: vm.search }">
+          <button class="btn-outline" (click)="vm.search = ''; vm.statusFilter = 'all'">
             {{ 'ADMIN_OPERATORS.FILTERS.CLEAR' | translate }}
           </button>
         </app-empty-state>
@@ -124,7 +124,7 @@
     } @else {
 
       <div class="operators-grid">
-        @for (o of filteredOperators; track o.id) {
+        @for (o of vm.filteredOperators; track o.id) {
           <article class="operator-card">
 
             <div class="operator-card__top">
@@ -176,7 +176,7 @@
       </div>
 
       <p class="showing-line">
-        {{ 'ADMIN_OPERATORS.SHOWING' | translate:{ shown: filteredOperators.length, total: operators.length } }}
+        {{ 'ADMIN_OPERATORS.SHOWING' | translate:{ shown: vm.filteredOperators.length, total: vm.operators.length } }}
       </p>
 
     }
