@@ -632,6 +632,7 @@
       "SERVICE_TYPE": "Tipo de servicio:",
       "SCHEDULED_TIME": "Hora programada:",
       "PAYMENT_METHOD": "Método de pago:",
+      "TOTAL": "Total de la reserva:",
       "PROGRESS_TITLE": "Estado y progreso",
       "START": "Iniciar Servicio",
       "FINISH": "Finalizar Servicio",

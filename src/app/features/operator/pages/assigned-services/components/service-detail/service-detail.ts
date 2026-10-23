@@ -52,7 +52,6 @@ export class ServiceDetailComponent {
       buttonText: 'COMMON.CLOSE',
       details: [
         { label: 'BOOKING_DETAIL.CLIENT', value: this.service.client },
-        { label: 'BOOKING_DETAIL.PHONE', value: this.service.phone },
         { label: 'BOOKING_DETAIL.VEHICLE', value: this.service.vehicle }
       ]
     };
