@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth';
 import { AuthUser } from '../../../core/models/auth.models';
 import { apiErrorCode, apiErrorKey } from '../../../core/utils/api-error';
+import { allowedEmailValidator } from '../../../core/utils/email';
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 
 /** Inicio de sesión: el formulario, el envío a security-service y los avisos de error. */
@@ -14,7 +15,7 @@ export class LoginViewModel {
   private readonly feedback = inject(FeedbackService);
 
   readonly form = inject(FormBuilder).group({
-    email: ['', [Validators.required, Validators.pattern(/^[^\s@]+@gmail\.com$/)]],
+    email: ['', [Validators.required, allowedEmailValidator()]],
     password: ['', Validators.required]
   });
 

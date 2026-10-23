@@ -339,7 +339,7 @@
       "NAME_MIN": "Name must be at least 3 characters",
       "NAME_INVALID": "Name can only contain letters",
       "EMAIL_REQUIRED": "Email is required",
-      "EMAIL_INVALID": "Please enter a valid email address",
+      "EMAIL_INVALID": "Please enter a valid @gmail.com email",
       "PHONE_REQUIRED": "Phone number is required",
       "PHONE_INVALID": "The number is not valid for the selected country",
       "ADDRESS_MIN": "Address must be at least 5 characters"
@@ -1576,7 +1576,7 @@
     "NAME_LABEL": "Full name",
     "NAME_PLACEHOLDER": "E.g. Maria Fernanda Lopez",
     "EMAIL_LABEL": "Email",
-    "EMAIL_PLACEHOLDER": "email@example.com",
+    "EMAIL_PLACEHOLDER": "user@gmail.com",
     "ROLE_LABEL": "Assigned role",
     "INVITE_LABEL": "Send email invitation",
     "CANCEL": "Cancel",
@@ -1584,7 +1584,7 @@
     "TITLE_EDIT": "Edit user",
     "SUBTITLE_EDIT": "Update the user’s details and role.",
     "ERROR_NAME": "Enter the full name",
-    "ERROR_EMAIL": "Enter a valid email",
+    "ERROR_EMAIL": "Only @gmail.com emails are allowed",
     "ACCOUNT_SUBTITLE": "The person will sign in with this email and the temporary password. They can change it in their profile.",
     "SHOW_PASSWORD": "Show password"
   },
