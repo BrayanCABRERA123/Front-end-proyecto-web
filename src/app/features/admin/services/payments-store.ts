@@ -104,6 +104,11 @@ function statusOf(code: string): PaymentStatus {
   return 'pending';
 }
 
+// día local (yyyy-MM-dd) de una fecha del servidor
+function localDay(value: Date): string {
+  return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, '0')}-${String(value.getDate()).padStart(2, '0')}`;
+}
+
 function toPayment(p: PaymentResponse): Payment {
   const reported = p.reportedAtUtc ? new Date(p.reportedAtUtc) : null;
   const date = reported
@@ -118,6 +123,8 @@ function toPayment(p: PaymentResponse): Payment {
     method: methodOf(p.account?.methodCode),
     amount: p.amount,
     date,
+    // A-17: el ingreso cuenta el día en que se aprobó, no el día en que el cliente lo reportó
+    approvedDate: p.status === 'APPROVED' && p.processedAtUtc ? localDay(new Date(p.processedAtUtc)) : null,
     time: reported ? reported.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' }) : '—',
     service: p.booking?.services ?? '—',
     status: statusOf(p.status),

@@ -12,6 +12,7 @@ import {
 } from '../models/admin.models';
 import {
   AbsenceResponse,
+  AssignmentResponse,
   OperationsApiService,
   OperatorProfileResponse,
   OperatorResponse,
@@ -95,12 +96,16 @@ export class OperatorsStore {
           return;
         }
         // sin perfiles (especialidad y habilidades) los operarios se muestran igual
+        const today = localIsoDate(new Date());
         forkJoin({
           absences: forkJoin(list.map(o => this.api.absences(o.id).pipe(catchError(() => of([] as AbsenceResponse[]))))),
-          profiles: this.api.operatorProfiles().pipe(catchError(() => of([] as OperatorProfileResponse[])))
-        }).subscribe(({ absences, profiles }) => {
+          profiles: this.api.operatorProfiles().pipe(catchError(() => of([] as OperatorProfileResponse[]))),
+          // A-19: quién tiene un servicio en curso hoy (antes nadie aparecía "En servicio")
+          today: this.api.assignments(today, today).pipe(catchError(() => of([] as AssignmentResponse[])))
+        }).subscribe(({ absences, profiles, today: assignmentsToday }) => {
           const profileById = new Map(profiles.map(p => [p.operatorId, p]));
-          this.state.set(list.map((o, i) => toOperator(o, absences[i], profileById.get(o.id) ?? null)));
+          const busy = new Set(assignmentsToday.filter(a => a.status === 'IN_PROGRESS').map(a => a.operatorId));
+          this.state.set(list.map((o, i) => toOperator(o, absences[i], profileById.get(o.id) ?? null, busy.has(o.id))));
           this.loadedState.set(true);
         });
       },
@@ -201,7 +206,8 @@ export function toHours(start: string, end: string): number {
 const hhmm = (time: string) => time.slice(0, 5);
 
 // operario de operations-service -> modelo de las pantallas del admin
-function toOperator(o: OperatorResponse, absences: AbsenceResponse[], profile: OperatorProfileResponse | null): Operator {
+function toOperator(o: OperatorResponse, absences: AbsenceResponse[], profile: OperatorProfileResponse | null,
+                    busyNow = false): Operator {
   const today = localIsoDate(new Date());
   const mapped: Absence[] = absences.map(a => {
     const end = new Date(a.endsAt);
@@ -225,7 +231,8 @@ function toOperator(o: OperatorResponse, absences: AbsenceResponse[], profile: O
     specialty: profile?.specialty ?? '',
     rating: o.averageRating ?? 0,
     reviewsCount: o.ratingsCount,
-    status: absentToday ? 'medical_leave' : 'available',
+    // con un servicio en curso está trabajando aunque tenga una ausencia registrada ese día
+    status: busyNow ? 'in_service' : absentToday ? 'medical_leave' : 'available',
     bay: null,
     weeklyServices: o.completedServices,
     tags: o.active ? [] : ['Inactivo'],

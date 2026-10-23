@@ -170,6 +170,8 @@ export interface Payment {
   amount: number;
   /** fecha ISO (yyyy-MM-dd) */
   date: string;
+  /** A-17: día en que el admin lo aprobó (processedAtUtc); null si no está aprobado */
+  approvedDate: string | null;
   time: string;
   service: string;
   status: PaymentStatus;
