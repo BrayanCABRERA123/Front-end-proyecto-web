@@ -105,10 +105,10 @@
       </button>
     }
 
-    @if (!booking.operator && booking.changeable) {
+    @if (assignAction; as action) {
       <button class="detail-dialog__btn" (click)="assignOperator()">
-        <mat-icon>person_add</mat-icon>
-        {{ 'BOOKING_DETAIL.ASSIGN' | translate }}
+        <mat-icon>{{ action === 'assign' ? 'person_add' : 'swap_horiz' }}</mat-icon>
+        {{ (action === 'assign' ? 'BOOKING_DETAIL.ASSIGN' : 'BOOKING_DETAIL.REASSIGN') | translate }}
       </button>
     }
 
