@@ -2367,6 +2367,8 @@
     "PROMOTION_NOT_FOUND": "Ese cupón no existe.",
     "PROMOTION_NOT_REDEEMABLE": "Ese cupón no está vigente o todavía no acumulas los puntos necesarios.",
     "PROMOTION_ALREADY_REDEEMED": "Ya canjeaste este cupón en esta reserva.",
+    "PROMOTION_ONE_PER_BOOKING": "Esta reserva ya tiene un cupón. Quítalo si quieres usar otro.",
+    "PROMOTION_REDEMPTION_NOT_FOUND": "Esta reserva ya no tiene ese cupón. Recarga la página.",
     "UNKNOWN_PERMISSION": "Uno de los permisos elegidos ya no existe. Recarga la página e inténtalo de nuevo.",
     "SERVICE_TOO_EARLY": "Todavía no puedes iniciar este servicio: se habilita 15 minutos antes de la hora de la reserva.",
     "BOOKING_IN_PAST": "Esta reserva ya pasó: no se le puede asignar un operario. Márcala como \"No asistió\" o cancélala.",
