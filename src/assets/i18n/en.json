@@ -1375,6 +1375,7 @@
     "REASONS": {
       "OPERATOR_INACTIVE": "Inactive",
       "OPERATOR_NOT_ON_SHIFT": "No shift at that time",
+      "OPERATOR_ACCOUNT_DISABLED": "Account disabled",
       "OPERATOR_ABSENT": "Absent",
       "OPERATOR_BUSY": "Busy at that time"
     }
@@ -2355,6 +2356,7 @@
     "CUSTOMER_SERVICE_UNAVAILABLE": "We could not validate your vehicle. Try again in a moment.",
     "BOOKING_NOT_CHANGEABLE": "This booking can no longer be changed.",
     "OPERATOR_NOT_ON_SHIFT": "The operator has no shift at that time. Check their weekly shift in Operators.",
+    "OPERATOR_ACCOUNT_DISABLED": "The operator's account is disabled. Enable it in Management > Users or choose another operator.",
     "OPERATOR_INACTIVE": "The operator is inactive.",
     "OPERATOR_ABSENT": "The operator has an absence registered at that time.",
     "OPERATOR_BUSY": "The operator already has another service at that time.",

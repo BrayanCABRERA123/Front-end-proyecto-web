@@ -47,6 +47,7 @@ const TRANSLATED_CODES = new Set([
   'BOOKING_NOT_CHANGEABLE',
   // códigos del operations-service (operarios, asignación, ejecución y calificaciones)
   'OPERATOR_NOT_ON_SHIFT',
+  'OPERATOR_ACCOUNT_DISABLED',
   'OPERATOR_INACTIVE',
   'OPERATOR_ABSENT',
   'OPERATOR_BUSY',
