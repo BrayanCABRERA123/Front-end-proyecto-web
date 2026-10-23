@@ -2279,7 +2279,7 @@
     "START_DATE_LABEL": "Fecha de inicio",
     "START_DATE_HINT": "Si es una fecha futura, la promoción queda programada hasta ese día.",
     "DISCOUNT_PERCENT_LABEL": "Descuento al canjear (%)",
-    "ERROR_DISCOUNT_PERCENT": "Ingresa un descuento entre 1 y 100",
+    "ERROR_DISCOUNT_PERCENT": "Ingresa un descuento entre 1 y 99",
     "REQUIRED_POINTS_LABEL": "Puntos de fidelización necesarios",
     "REQUIRED_POINTS_HINT": "Puntos que debe acumular el cliente para desbloquear el cupón. 0 = disponible para todos.",
     "ERROR_REQUIRED_POINTS": "Ingresa un número entero igual o mayor a 0",

@@ -68,7 +68,7 @@
 
     <label class="form-field" [class.form-field--invalid]="discountPercentInvalid">
       <span>{{ 'PROMOTION_MODAL.DISCOUNT_PERCENT_LABEL' | translate }} *</span>
-      <input type="number" min="1" max="100" [(ngModel)]="discountPercent">
+      <input type="number" min="1" [max]="maxDiscountPercent" [(ngModel)]="discountPercent">
       @if (discountPercentInvalid) {
         <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_DISCOUNT_PERCENT' | translate }}</span>
       }

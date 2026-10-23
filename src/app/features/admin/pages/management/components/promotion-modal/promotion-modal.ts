@@ -30,6 +30,9 @@ export interface PromotionModalResult {
   requiredPoints: number;
 }
 
+// payment-service no acepta 100 %: el pago exige un monto mayor que cero (E-07)
+export const MAX_DISCOUNT_PERCENT = 99;
+
 // íconos coherentes con el catálogo de servicios (los mismos de las tarjetas)
 const ICON_OPTIONS = ['directions_car', 'water_drop', 'auto_awesome', 'local_offer', 'star', 'savings'];
 
@@ -53,7 +56,8 @@ export class PromotionModal {
   // fecha mínima del calendario: hoy, o la que ya tenía la promoción si empezó antes
   minStartDate = todayIso();
   features: string[] = [];
-  discountPercent: number | null = 100;
+  discountPercent: number | null = 10;
+  maxDiscountPercent = MAX_DISCOUNT_PERCENT;
   // number | null: si el admin borra el campo, ngModel deja null
   requiredPoints: number | null = 0;
 
@@ -95,7 +99,7 @@ export class PromotionModal {
   }
 
   get discountPercentInvalid(): boolean {
-    return this.submitted && (!this.discountPercent || this.discountPercent < 1 || this.discountPercent > 100);
+    return this.submitted && (!this.discountPercent || this.discountPercent < 1 || this.discountPercent > MAX_DISCOUNT_PERCENT);
   }
 
   // entero mayor o igual a 0 (0 = el cupón está disponible para todos)
@@ -112,7 +116,7 @@ export class PromotionModal {
       && !!this.startDate && this.startDate >= this.minStartDate
       && this.description.trim().length >= 3
       && this.couponCode.trim().length >= 3
-      && !!this.discountPercent && this.discountPercent >= 1 && this.discountPercent <= 100
+      && !!this.discountPercent && this.discountPercent >= 1 && this.discountPercent <= MAX_DISCOUNT_PERCENT
       && this.requiredPointsValid;
   }
 
