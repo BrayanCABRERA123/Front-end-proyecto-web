@@ -1331,6 +1331,7 @@
     },
     "ASSIGN": "Asignar",
     "REASSIGN": "Reasignar",
+    "CANCEL_REASON": "Motivo de la cancelación",
     "EMPTY_TITLE": "No hay reservas todavía",
     "EMPTY_MESSAGE": "Crea la primera reserva para comenzar a organizar la agenda.",
     "NO_RESULTS_TITLE": "Sin resultados",
