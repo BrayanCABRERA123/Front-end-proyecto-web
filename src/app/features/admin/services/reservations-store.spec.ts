@@ -87,6 +87,17 @@ describe('ReservationsStore', () => {
     expect(store.getById('5')!.operator?.name).toBe('Oscar Ruiz');
   });
 
+  it('B-01: las notas del administrador viajan con la asignación', () => {
+    const store = TestBed.inject(ReservationsStore);
+    answerLoad([booking(5, 'CONFIRMED', day(1))], [], [5]);
+
+    store.assignOperator('5', '3', undefined, '  Llevar cera extra ');
+    const request = http.expectOne(r => r.method === 'PUT' && r.url === '/api/v1/admin/assignments/5');
+
+    expect(request.request.body).toEqual({ operatorId: 3, notes: 'Llevar cera extra' });
+    request.flush({ bookingId: 5, operatorId: 3, operatorName: 'Oscar Ruiz', status: 'PENDING', bay: null, notes: 'Llevar cera extra' });
+  });
+
   it('lista por cerrar las que operations marca y las saca al cerrarlas', () => {
     const store = TestBed.inject(ReservationsStore);
     answerLoad([booking(8, 'CONFIRMED', day(-1)), booking(9, 'IN_PROGRESS', day(-1), '12:00')], [], [],

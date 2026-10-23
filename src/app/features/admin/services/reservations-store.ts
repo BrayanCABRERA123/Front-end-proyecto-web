@@ -212,9 +212,9 @@ export class ReservationsStore {
    * cruces; si lo rechaza, se muestra el error aquí mismo.
    */
   // onAssigned solo corre si operations aceptó (turno, ausencias y cruces los valida el backend)
-  assignOperator(id: string, operatorId: string | null, onAssigned?: () => void): void {
+  assignOperator(id: string, operatorId: string | null, onAssigned?: () => void, notes = ''): void {
     if (!operatorId) return; // operations no tiene "quitar operario": se cambia por otro
-    this.operations.assign(Number(id), Number(operatorId)).subscribe({
+    this.operations.assign(Number(id), Number(operatorId), notes).subscribe({
       next: assignment => {
         this.assignments.set(id, assignment);
         this.state.update(list => list.map(b => (b.id === id ? { ...b, operator: this.operatorRef(id) } : b)));

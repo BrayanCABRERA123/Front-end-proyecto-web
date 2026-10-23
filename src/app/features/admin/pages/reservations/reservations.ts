@@ -136,7 +136,7 @@ export class ReservationsComponent implements OnInit {
     this.dialog.open(AssignOperatorModal, { panelClass: 'custom-dialog', data: modalData })
       .afterClosed()
       .subscribe((result: AssignOperatorResult | null) => {
-        if (result) this.vm.assignOperator(booking, result.operatorId);
+        if (result) this.vm.assignOperator(booking, result.operatorId, result.notes);
       });
   }
 
