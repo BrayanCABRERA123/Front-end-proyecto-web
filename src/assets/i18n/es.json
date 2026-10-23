@@ -1372,6 +1372,7 @@
     "REASONS": {
       "OPERATOR_INACTIVE": "Inactivo",
       "OPERATOR_NOT_ON_SHIFT": "Sin turno a esa hora",
+      "OPERATOR_ACCOUNT_DISABLED": "Cuenta desactivada",
       "OPERATOR_ABSENT": "Ausente",
       "OPERATOR_BUSY": "Ocupado a esa hora"
     }
@@ -2351,6 +2352,7 @@
     "CUSTOMER_SERVICE_UNAVAILABLE": "No pudimos validar tu vehículo. Intenta de nuevo en un momento.",
     "BOOKING_NOT_CHANGEABLE": "Esta reserva ya no se puede cambiar.",
     "OPERATOR_NOT_ON_SHIFT": "El operario no tiene turno en ese horario. Revisa su turno semanal en Operarios.",
+    "OPERATOR_ACCOUNT_DISABLED": "La cuenta del operario está desactivada. Actívala en Gestión > Usuarios o elige otro operario.",
     "OPERATOR_INACTIVE": "El operario está inactivo.",
     "OPERATOR_ABSENT": "El operario tiene una ausencia registrada en ese horario.",
     "OPERATOR_BUSY": "El operario ya tiene otro servicio en ese horario.",

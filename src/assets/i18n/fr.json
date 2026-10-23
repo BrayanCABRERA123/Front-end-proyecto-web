@@ -1372,6 +1372,7 @@
     "REASONS": {
       "OPERATOR_INACTIVE": "Inactif",
       "OPERATOR_NOT_ON_SHIFT": "Pas de créneau à cette heure",
+      "OPERATOR_ACCOUNT_DISABLED": "Compte désactivé",
       "OPERATOR_ABSENT": "Absent",
       "OPERATOR_BUSY": "Occupé à cette heure"
     }
@@ -2351,6 +2352,7 @@
     "CUSTOMER_SERVICE_UNAVAILABLE": "Nous n'avons pas pu valider votre véhicule. Réessayez dans un instant.",
     "BOOKING_NOT_CHANGEABLE": "Cette réservation ne peut plus être modifiée.",
     "OPERATOR_NOT_ON_SHIFT": "L'opérateur n'a pas de créneau à cette heure. Vérifiez son horaire hebdomadaire dans Opérateurs.",
+    "OPERATOR_ACCOUNT_DISABLED": "Le compte de l'opérateur est désactivé. Activez-le dans Gestion > Utilisateurs ou choisissez un autre opérateur.",
     "OPERATOR_INACTIVE": "L'opérateur est inactif.",
     "OPERATOR_ABSENT": "L'opérateur a une absence enregistrée à cette heure.",
     "OPERATOR_BUSY": "L'opérateur a déjà un autre service à cette heure.",

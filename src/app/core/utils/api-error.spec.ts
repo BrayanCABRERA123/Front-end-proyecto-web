@@ -10,6 +10,10 @@ describe('apiErrorCode', () => {
     expect(apiErrorKey(conflict({ code: 'VEHICLE_ALREADY_BOOKED' }))).toBe('API_ERRORS.VEHICLE_ALREADY_BOOKED');
   });
 
+  it('A-13: la cuenta desactivada del operario tiene su propio mensaje', () => {
+    expect(apiErrorKey(conflict({ code: 'OPERATOR_ACCOUNT_DISABLED' }))).toBe('API_ERRORS.OPERATOR_ACCOUNT_DISABLED');
+  });
+
   it('un código desconocido cae en UNEXPECTED y sin red es NETWORK_ERROR', () => {
     expect(apiErrorCode(conflict({ code: 'ALGO_NUEVO' }))).toBe('UNEXPECTED');
     expect(apiErrorCode(new HttpErrorResponse({ status: 0 }))).toBe('NETWORK_ERROR');

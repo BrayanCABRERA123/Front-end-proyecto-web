@@ -102,7 +102,8 @@ export interface CandidateResponse {
   ratingsCount: number;
   assigned: boolean;
   available: boolean;
-  unavailableReason: 'OPERATOR_INACTIVE' | 'OPERATOR_NOT_ON_SHIFT' | 'OPERATOR_ABSENT' | 'OPERATOR_BUSY' | null;
+  unavailableReason: 'OPERATOR_INACTIVE' | 'OPERATOR_NOT_ON_SHIFT' | 'OPERATOR_ABSENT' | 'OPERATOR_BUSY'
+    | 'OPERATOR_ACCOUNT_DISABLED' | null;
 }
 
 export interface OperatorServiceResponse {
