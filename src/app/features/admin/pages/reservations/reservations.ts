@@ -17,6 +17,7 @@ import { BookingModal, BookingModalData } from './components/booking-modal/booki
 import { isoDaysFromToday } from '../../../../core/utils/dates';
 import { BookingDetailModal, BookingDetailResult } from './components/booking-detail-modal/booking-detail-modal';
 import { ReservationsViewModel } from '../../viewmodels/reservations.viewmodel';
+import { assignActionOf } from '../../models/booking-assignment';
 
 // vista de Reservas del admin: filtros, páginas y acciones están en ReservationsViewModel; aquí
 // quedan las etiquetas de fecha, los modales, las confirmaciones y la exportación
@@ -114,6 +115,9 @@ export class ReservationsComponent implements OnInit {
   }
 
   // primero pide a operations quién está disponible para esa reserva y luego abre el modal
+  // A-02: asignar o reasignar operario (lo decide assignActionOf)
+  readonly assignActionOf = assignActionOf;
+
   openAssignModal(booking: Booking): void {
     this.vm.loadCandidates(booking, operators => this.showAssignModal(booking, operators));
   }

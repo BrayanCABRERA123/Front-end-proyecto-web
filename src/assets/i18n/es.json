@@ -1330,6 +1330,7 @@
       "NEXT": "Siguiente"
     },
     "ASSIGN": "Asignar",
+    "REASSIGN": "Reasignar",
     "EMPTY_TITLE": "No hay reservas todavía",
     "EMPTY_MESSAGE": "Crea la primera reserva para comenzar a organizar la agenda.",
     "NO_RESULTS_TITLE": "Sin resultados",
@@ -2153,6 +2154,7 @@
     "OPERATOR": "Operario",
     "NO_OPERATOR": "Sin asignar",
     "ASSIGN": "Asignar operario",
+    "REASSIGN": "Cambiar operario",
     "EDIT": "Editar reserva",
     "CANCEL_BOOKING": "Cancelar reserva",
     "RESTRICTED_HINT": "Los cambios de estado están restringidos según el flujo de atención.",

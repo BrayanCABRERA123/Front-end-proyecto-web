@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { Booking, BookingStatus } from '../../../../models/admin.models';
+import { AssignAction, assignActionOf } from '../../../../models/booking-assignment';
 import { supportsInspection } from '../../../inspection/inspection';
 
 // resultado de las acciones del modal: cambiar estado o abrir otra ventana
@@ -34,6 +35,11 @@ export class BookingDetailModal {
   }
 
   /** la única acción de avance que aplica en cada momento (el backend valida la transición) */
+  // A-02: asignar si no tiene operario, reasignar si ya tiene (mientras no haya empezado)
+  get assignAction(): AssignAction | null {
+    return assignActionOf(this.booking);
+  }
+
   get nextStatus(): 'in_progress' | 'completed' | null {
     if (this.booking.status === 'confirmed') return 'in_progress';
     if (this.booking.status === 'in_progress') return 'completed';
