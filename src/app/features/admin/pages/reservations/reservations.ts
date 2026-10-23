@@ -44,6 +44,7 @@ export class ReservationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.vm.load();
+    this.vm.loadCancellationReasons();
   }
 
   // etiqueta relativa de la fila: Hoy / Mañana / fecha
@@ -105,11 +106,16 @@ export class ReservationsComponent implements OnInit {
       confirmText: 'COMMON.ACCEPT',
       cancelText: 'COMMON.CANCEL',
       danger: status === 'cancelled',
+      // A-20: al cancelar, el administrador elige el motivo
+      options: status === 'cancelled'
+        ? this.vm.cancellationReasons().map(reason => ({ value: reason.code, label: reason.name }))
+        : undefined,
+      optionsLabel: 'ADMIN_RESERVATIONS.CANCEL_REASON',
     };
     this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data: confirm })
       .afterClosed()
-      .subscribe(confirmed => {
-        if (confirmed) this.vm.changeStatus(booking, status);
+      .subscribe((result: boolean | string) => {
+        if (result) this.vm.changeStatus(booking, status, typeof result === 'string' ? result : undefined);
       });
   }
 

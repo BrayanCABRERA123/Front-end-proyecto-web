@@ -1330,6 +1330,7 @@
       "NEXT": "Next"
     },
     "ASSIGN": "Assign",
+    "CANCEL_REASON": "Cancellation reason",
     "EMPTY_TITLE": "No bookings yet",
     "EMPTY_MESSAGE": "Create the first booking to start organizing the schedule.",
     "NO_RESULTS_TITLE": "No results",
