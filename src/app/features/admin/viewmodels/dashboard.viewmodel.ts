@@ -178,8 +178,13 @@ export class AdminDashboardViewModel {
 
   /* ---------- operarios ---------- */
 
+  // la tarjeta muestra los 5 primeros, pero los conteos usan todos (A-19)
   get operators(): OperatorStatusRow[] {
-    return this.operatorsStore.operators().slice(0, 5).map((o: Operator) => ({
+    return this.allOperatorRows().slice(0, 5);
+  }
+
+  private allOperatorRows(): OperatorStatusRow[] {
+    return this.operatorsStore.operators().map((o: Operator) => ({
       initials: o.initials,
       name: o.name,
       role: o.specialty,
@@ -189,7 +194,7 @@ export class AdminDashboardViewModel {
   }
 
   countByStatus(status: OperatorStatusRow['status']): number {
-    return this.operators.filter(o => o.status === status).length;
+    return this.allOperatorRows().filter(o => o.status === status).length;
   }
 
   /* ---------- pagos pendientes ---------- */

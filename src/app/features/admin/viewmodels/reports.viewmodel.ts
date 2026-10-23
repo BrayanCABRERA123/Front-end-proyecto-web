@@ -60,9 +60,10 @@ export class ReportsViewModel {
     return { services: this.servicesDone(start, this.reservations.today), revenue: this.revenue(p => p.date >= start) };
   }
 
-  // ingresos del año: pagos aprobados registrados
+  // ingresos del año actual: pagos aprobados este año (A-17: antes sumaba todos los años)
   get yearRevenue(): number {
-    return this.revenue(() => true);
+    const year = this.payments.today.slice(0, 4);
+    return this.revenue(p => p.date.startsWith(year));
   }
 
   /* ---------- gráfica por período ---------- */
@@ -126,9 +127,10 @@ export class ReportsViewModel {
   }
 
   // suma de los pagos aprobados que cumplen la condición
+  // A-17: la fecha que se compara es la de aprobación (si falta, la del reporte)
   private revenue(match: (p: { date: string; time: string }) => boolean): number {
     return this.payments.payments()
-      .filter(p => p.status === 'approved' && match(p))
+      .filter(p => p.status === 'approved' && match({ date: p.approvedDate ?? p.date, time: p.time }))
       .reduce((sum, p) => sum + p.amount, 0);
   }
 }
