@@ -4,8 +4,8 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { UserAdminService } from '../../core/services/user-admin';
 import { AuthUser, UserRole } from '../../core/models/auth.models';
 import { apiErrorKey } from '../../core/utils/api-error';
+import { isAllowedEmail } from '../../core/utils/email';
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const DOCUMENT_RE = /^[0-9]{5,20}$/;
 // mismas 4 reglas que el backend: 8+ caracteres, mayúscula, número y carácter especial
 const PASSWORD_RE = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])\S{8,72}$/;
@@ -44,7 +44,8 @@ export class CreateUserViewModel {
   private readonly firstNameOk = computed(() => this.firstName().trim().length >= 2);
   private readonly lastNameOk = computed(() => this.lastName().trim().length >= 2);
   // la validación tiene que ser razonable y entendible por cualquier persona
-  private readonly emailOk = computed(() => EMAIL_RE.test(this.email().trim()));
+  // A-01: mismo dominio que exige security-service (gmail.com)
+  private readonly emailOk = computed(() => isAllowedEmail(this.email()));
   private readonly passwordOk = computed(() => PASSWORD_RE.test(this.password()));
 
   readonly documentInvalid = computed(() => this.submitted() && !this.documentOk());

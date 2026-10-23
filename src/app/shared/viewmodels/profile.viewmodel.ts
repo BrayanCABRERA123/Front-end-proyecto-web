@@ -8,6 +8,7 @@ import { AuthUser } from '../../core/models/auth.models';
 // usuario de la sesión: el mismo que muestra el sidebar
 import { UserSession } from '../../core/services/user-session';
 import { apiErrorKey } from '../../core/utils/api-error';
+import { allowedEmailValidator } from '../../core/utils/email';
 
 export interface PhoneCountry {
   code: string;
@@ -50,7 +51,9 @@ export class ProfileViewModel {
     firstName: [this.splitName(this.initial.name).first, this.nameValidators],
     lastName: [this.splitName(this.initial.name).last, this.nameValidators],
     // el correo es el usuario de login: se puede cambiar, pero pidiendo la contraseña actual
-    email: [this.initial.email, [Validators.required, Validators.maxLength(60), Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
+    // A-01: un correo nuevo debe ser de un dominio permitido; el que ya tenía la cuenta se respeta
+    email: [this.initial.email, [Validators.required, Validators.maxLength(60),
+      allowedEmailValidator(() => this.currentEmail || this.initial.email)]],
     phoneCountry: [this.parsePhone(this.initial.phone).country, Validators.required],
     phoneNumber: [this.parsePhone(this.initial.phone).number, Validators.required],
     // opcional: el servicio es en la sede, la dirección queda solo como dato de contacto

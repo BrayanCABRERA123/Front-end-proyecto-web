@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 // registro real contra el security-service
 import { AuthService } from '../../../core/services/auth';
 import { apiErrorKey } from '../../../core/utils/api-error';
+import { allowedEmailValidator } from '../../../core/utils/email';
 import { LegalDocumentType } from '../../../shared/dialogs/legal-document-modal/legal-document-modal';
 
 /** Registro de un cliente: el formulario, sus limpiezas y el envío a security-service. */
@@ -17,7 +18,7 @@ export class RegisterViewModel {
     documentNumber: ['', [Validators.required, Validators.pattern('^[0-9]{5,20}$')]],
     firstName: ['', [Validators.required, Validators.minLength(3)]],
     lastName: ['', [Validators.required, Validators.minLength(2)]],
-    email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@gmail\\.com$')]],
+    email: ['', [Validators.required, allowedEmailValidator()]],
     phone: ['', [Validators.required, Validators.pattern('^3[0-9]{9}$'), Validators.minLength(10), Validators.maxLength(10)]],
     // mismas 4 reglas que muestra la lista de requisitos y que valida el backend
     password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/)]],

@@ -86,6 +86,17 @@ describe('ProfileViewModel', () => {
     expect(saved).toHaveBeenCalled();
   });
 
+  it('A-01: el correo nuevo debe ser de un dominio permitido (gmail.com)', () => {
+    const vm = TestBed.inject(ProfileViewModel);
+    vm.load();
+    vm.startEditing();
+    vm.form.patchValue({ email: 'ana@hotmail.com' });
+
+    expect(vm.form.get('email')?.hasError('allowedEmail')).toBe(true);
+    vm.save(() => of(true), vi.fn());
+    expect(auth.changeEmail).not.toHaveBeenCalled();
+  });
+
   it('un error del backend deja el formulario en edición con el mensaje', () => {
     auth.updateProfile.mockReturnValue(throwError(() => new HttpErrorResponse({ status: 400, error: { code: 'INVALID_PHONE' } })));
     const vm = TestBed.inject(ProfileViewModel);

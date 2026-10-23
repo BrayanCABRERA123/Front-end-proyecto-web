@@ -231,7 +231,7 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  vm.f['email'].errors?.['pattern'] &&
+                  vm.f['email'].errors?.['allowedEmail'] &&
                   vm.f['email'].touched
                 "
               >
