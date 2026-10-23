@@ -15,10 +15,10 @@ export interface OperatorServiceRow {
   dateTime: string;
   vehicle: string;
   client: string;
-  phone: string;
   status: string;
   statusColor: 'pending' | 'progress' | 'completed';
-  paymentMethod: string;
+  // total de la reserva (operations-service no conoce el medio de pago ni el teléfono del cliente)
+  total: string;
   startableAt: string | null;
 }
 
@@ -40,7 +40,11 @@ export class AssignedServicesViewModel {
   readonly dateFilter = signal('');
   readonly serviceTypeFilter = signal('');
   readonly vehicleFilter = signal('');
-  readonly serviceTypes = [{ value: '', label: 'ASSIGNED_SERVICES.FILTERS.ALL' }];
+  // A-18: los tipos salen de los servicios cargados (antes solo existía "Todos")
+  readonly serviceTypes = computed(() => [
+    { value: '', label: 'ASSIGNED_SERVICES.FILTERS.ALL' },
+    ...[...new Set(this.rows().map(r => r.serviceType))].sort().map(type => ({ value: type, label: type }))
+  ]);
 
   readonly selectedService = signal<OperatorServiceRow | null>(null);
 
@@ -55,11 +59,13 @@ export class AssignedServicesViewModel {
     ];
   });
 
-  // filtra por placa, vehículo o código
+  // filtra por tipo de servicio y por placa, vehículo o código
   readonly filteredServices = computed(() => {
     const term = this.vehicleFilter().trim().toLowerCase();
+    const type = this.serviceTypeFilter();
     return this.rows().filter(s =>
-      !term || s.vehicle.toLowerCase().includes(term) || s.id.toLowerCase().includes(term));
+      (!type || s.serviceType === type)
+      && (!term || s.vehicle.toLowerCase().includes(term) || s.id.toLowerCase().includes(term)));
   });
 
   // carga las del día elegido; sin fecha, las de hoy y los próximos 30 días (lo asignado para mañana también se ve)
@@ -114,10 +120,9 @@ export class AssignedServicesViewModel {
       dateTime: `${isoToDisplayDate(s.date)} - ${s.startTime.slice(0, 5)}`,
       vehicle: [s.vehicle, s.plate].filter(Boolean).join(' - '),
       client: s.clientName || '—',
-      phone: '—',
       status: this.translate.instant('STATUS.' + statusKey),
       statusColor,
-      paymentMethod: `$ ${s.total.toLocaleString('es-CO')}`,
+      total: `$ ${s.total.toLocaleString('es-CO')}`,
       startableAt: s.startableAt
     };
   }

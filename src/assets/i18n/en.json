@@ -632,6 +632,7 @@
       "SERVICE_TYPE": "Service type:",
       "SCHEDULED_TIME": "Scheduled time:",
       "PAYMENT_METHOD": "Payment method:",
+      "TOTAL": "Booking total:",
       "PROGRESS_TITLE": "Status and progress",
       "START": "Start Service",
       "FINISH": "Finish Service",

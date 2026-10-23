@@ -75,7 +75,8 @@ export class ServiceHistoryViewModel {
           service: s.services,
           vehicle: s.vehicle,
           plate: s.plate,
-          client: s.plate,
+          // A-18: el primer nombre del cliente (antes se repetía la placa)
+          client: s.clientName || '—',
           paymentMethod: '',
           amount: s.total,
           rating: s.rating,
