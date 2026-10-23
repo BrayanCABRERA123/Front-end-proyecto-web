@@ -102,6 +102,8 @@ export class PaymentViewModel {
   readonly couponResult = signal<RedeemPromotionResult | null>(null);
   readonly couponError = signal<string | null>(null);
   readonly redeemingCoupon = signal(false);
+  // lo que falta por pagar según payment-service tras canjear o quitar un cupón (manda sobre el cálculo local)
+  private readonly serverAmountDue = signal<number | null>(null);
 
   // comprobante: el archivo elegido, ya comprimido (lo que se envía) y su peso real
   readonly receiptFile = signal<File | null>(null);
@@ -135,6 +137,8 @@ export class PaymentViewModel {
   }));
 
   readonly totalToPay = computed(() => {
+    const fromServer = this.serverAmountDue();
+    if (fromServer !== null) return fromServer;
     const summary = this.serviceSummary();
     return Math.max(0, summary.subtotal - summary.pointsDiscount - (this.couponResult()?.discountAmount ?? 0));
   });
@@ -207,6 +211,7 @@ export class PaymentViewModel {
     this.loyaltyApi.redeem(booking.id, this.couponCode().trim().toUpperCase()).subscribe({
       next: result => {
         this.couponResult.set(result);
+        this.serverAmountDue.set(result.newTotal);
         this.redeemingCoupon.set(false);
       },
       error: (error: unknown) => {
@@ -216,10 +221,31 @@ export class PaymentViewModel {
     });
   }
 
+  // E-08: el canje se anula en payment-service (antes solo desaparecía de la pantalla y el descuento
+  // seguía aplicado); con un pago en revisión o aprobado el servidor responde 409 y el cupón sigue
   removeCoupon(): void {
-    this.couponResult.set(null);
-    this.couponCode.set('');
+    const booking = this.booking();
+    const coupon = this.couponResult();
+    if (!booking || !coupon) {
+      this.couponCode.set('');
+      this.couponError.set(null);
+      return;
+    }
+    if (this.redeemingCoupon()) return;
+    this.redeemingCoupon.set(true);
     this.couponError.set(null);
+    this.loyaltyApi.removeRedemption(booking.id, coupon.promotionId).subscribe({
+      next: due => {
+        this.couponResult.set(null);
+        this.couponCode.set('');
+        this.serverAmountDue.set(due.amountDue);
+        this.redeemingCoupon.set(false);
+      },
+      error: (error: unknown) => {
+        this.couponError.set(apiErrorKey(error));
+        this.redeemingCoupon.set(false);
+      }
+    });
   }
 
   // se deja elegir hasta 10 MB; al elegirlo se comprime a máximo 2 MB y se muestra el peso real

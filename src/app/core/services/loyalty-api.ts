@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { API_BASE_URL } from '../constants/api';
+import { AmountDueResponse } from './payments-api';
 
 export interface LoyaltyBalance {
   points: number;
@@ -46,5 +47,10 @@ export class LoyaltyApiService {
 
   redeem(bookingId: number, code: string): Observable<RedeemPromotionResult> {
     return this.http.post<RedeemPromotionResult>(`${API_BASE_URL}/loyalty/redeem`, { bookingId, code });
+  }
+
+  // "Quitar cupón" (E-08): anula el canje en el servidor y devuelve lo que ahora falta por pagar
+  removeRedemption(bookingId: number, promotionId: number): Observable<AmountDueResponse> {
+    return this.http.delete<AmountDueResponse>(`${API_BASE_URL}/loyalty/redemptions/${bookingId}/${promotionId}`);
   }
 }
