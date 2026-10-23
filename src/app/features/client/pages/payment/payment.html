@@ -1,0 +1,311 @@
+<div class="home-layout">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="CLIENT"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <main class="home-content">
+
+    <div class="payment-header">
+      <!-- "Paso 2 de 2" solo cuando ya hay una reserva para pagar -->
+      @if (vm.booking()) {
+        <span class="step-pill">
+          <mat-icon>check_circle</mat-icon>
+          {{ 'PAYMENT.STEP' | translate }} · #{{ vm.reservationCode() }}
+        </span>
+      }
+      <h1>{{ 'PAYMENT.TITLE' | translate }}</h1>
+      <p>{{ 'PAYMENT.SUBTITLE' | translate }}</p>
+    </div>
+
+    <div class="payment-layout" *ngIf="!vm.loading() && !vm.notFound() && !vm.loadError(); else paymentState">
+
+      <!-- ================= Columna izquierda ================= -->
+      <div class="payment-main">
+
+        <!-- el administrador ya aprobó el pago: no hay nada más que hacer -->
+        @if (vm.isApproved()) {
+          <app-payment-notice tone="success" icon="verified"
+            [title]="'PAYMENT.SUMMARY.APPROVED_TITLE' | translate"
+            [message]="'PAYMENT.SUMMARY.APPROVED_MESSAGE' | translate">
+          </app-payment-notice>
+        }
+
+        <!-- el último pago de esta reserva fue rechazado: se explica por qué antes de reportar otro -->
+        @if (vm.lastRejectionReason() && !vm.isLocked()) {
+          <app-payment-notice tone="error" icon="error_outline"
+            [title]="'ADMIN_PAYMENTS.FEEDBACK.REJECTED_TITLE' | translate"
+            [message]="('PAYMENT_REVIEW_MODAL.REJECT_REASON_LABEL' | translate) + ': ' + vm.lastRejectionReason()">
+          </app-payment-notice>
+        }
+
+        <!-- con el pago aprobado ya no se elige método ni se reporta nada: solo queda el resumen -->
+        <!-- Método de pago -->
+        <section class="card" *ngIf="!vm.isApproved()">
+          <div class="card-header">
+            <div class="card-title">
+              <mat-icon>credit_card</mat-icon>
+              <h2>{{ 'PAYMENT.METHOD.TITLE' | translate }}</h2>
+            </div>
+            <span class="muted-note">{{ 'PAYMENT.METHOD.NO_FEES' | translate }}</span>
+          </div>
+
+          <div class="method-grid">
+            <button type="button" class="method-option" *ngFor="let method of vm.paymentMethods()"
+              [class.selected]="vm.isSelected(method)" (click)="vm.selectMethod(method)">
+              <mat-icon class="check" *ngIf="vm.isSelected(method)">check_circle</mat-icon>
+              <span class="method-icon"><mat-icon>{{ method.icon }}</mat-icon></span>
+              <span class="method-label">{{ method.label | translate }}</span>
+              <span class="method-desc">{{ method.holder || (method.desc | translate) }}</span>
+            </button>
+          </div>
+          <!-- todos los medios apagados o payment-service sin respuesta: no se ofrece ninguno -->
+          <p class="muted-note" *ngIf="vm.noPaymentMethods()">
+            {{ (vm.accountsFailed() ? 'PAYMENT.METHOD.LOAD_ERROR' : 'PAYMENT.METHOD.NONE') | translate }}
+          </p>
+        </section>
+
+        <!-- Pago digital con QR (Nequi / Daviplata / Transferencia) -->
+        <section class="card" *ngIf="!vm.isApproved() && vm.hasPaymentMethods() && vm.selectedMethod() !== 'CASH'">
+          <div class="qr-top">
+            <span class="tag">{{ 'PAYMENT.QR.INSTANT' | translate }}</span>
+            <span class="via">{{ 'PAYMENT.QR.VIA' | translate }} {{ ('PAYMENT.METHOD.' + vm.selectedMethod()) | translate
+              }}</span>
+          </div>
+          <div class="qr-layout">
+            <div class="qr-box">
+              <div class="qr-code">
+                <!-- QR real de la cuenta del lavadero (lo sube el admin en Configuración); al
+                     tocarlo se abre en grande con lupa -->
+                @if (vm.selectedAccount()?.qrImageUrl) {
+                  <button type="button" class="qr-zoom-trigger" (click)="qrZoomOpen = true"
+                    [attr.aria-label]="'PAYMENT.QR.ZOOM' | translate">
+                    <img [src]="vm.selectedAccount()!.qrImageUrl" alt="QR" />
+                    <span class="qr-lens"><mat-icon>zoom_in</mat-icon></span>
+                  </button>
+                } @else {
+                  <mat-icon class="qr-img">qr_code_2</mat-icon>
+                  <span class="qr-center"><mat-icon>water_drop</mat-icon></span>
+                }
+              </div>
+              <small><mat-icon>qr_code_scanner</mat-icon> {{ 'PAYMENT.QR.SCAN_HINT' | translate }}</small>
+              @if (vm.selectedAccount()?.qrImageUrl) {
+                <button type="button" class="qr-zoom-link" (click)="qrZoomOpen = true">
+                  <mat-icon>search</mat-icon> {{ 'PAYMENT.QR.ZOOM' | translate }}
+                </button>
+              }
+            </div>
+
+            <div class="qr-info">
+              <p class="payee">
+                {{ vm.payee().name }}
+                <span class="verified"><mat-icon>verified</mat-icon> {{ 'PAYMENT.QR.VERIFIED' | translate }}</span>
+              </p>
+
+              <div class="key-box">
+                <div>
+                  <small>{{ 'PAYMENT.QR.KEY' | translate }}</small>
+                  <strong>{{ vm.payee().key }}</strong>
+                </div>
+                <button type="button" class="btn-outline" (click)="copyKey()">
+                  <mat-icon>{{ copied() ? 'check' : 'content_copy' }}</mat-icon>
+                  {{ (copied() ? 'PAYMENT.QR.COPIED' : 'PAYMENT.QR.COPY') | translate }}
+                </button>
+              </div>
+
+              <div class="amount-row">
+                <div>
+                  <small>{{ 'PAYMENT.QR.ACCOUNT_TYPE' | translate }}</small>
+                  <p>{{ vm.payee().accountType | translate }}</p>
+                </div>
+                <div class="amount">
+                  <small>{{ 'PAYMENT.QR.AMOUNT' | translate }}</small>
+                  <strong>${{ vm.totalToPay() | number }} COP</strong>
+                </div>
+              </div>
+
+              <div class="hint-box">
+                <mat-icon>smartphone</mat-icon>
+                <span>{{ 'PAYMENT.QR.HINT' | translate }}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pago en efectivo -->
+        <section class="card cash-card" *ngIf="!vm.isApproved() && vm.hasPaymentMethods() && vm.selectedMethod() === 'CASH'">
+          <mat-icon>storefront</mat-icon>
+          <div>
+            <h2>{{ 'PAYMENT.CASH.TITLE' | translate }}</h2>
+            <p>{{ 'PAYMENT.CASH.DESC' | translate }}</p>
+          </div>
+        </section>
+
+        <!-- Confirmar pago -->
+        <section class="card" *ngIf="!vm.isApproved() && vm.hasPaymentMethods() && vm.selectedMethod() !== 'CASH'">
+          <div class="card-title">
+            <mat-icon>fact_check</mat-icon>
+            <h2>{{ 'PAYMENT.CONFIRM.TITLE' | translate }}</h2>
+          </div>
+
+          <label class="dropzone" [class.dragging]="isDragging" (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave()" (drop)="onDrop($event)">
+            <input type="file" accept="image/png, image/jpeg" hidden (change)="onFileSelected($event)" />
+            <span class="drop-icon"><mat-icon>{{ vm.compressingReceipt() ? 'hourglass_top' : 'cloud_upload' }}</mat-icon></span>
+            <strong>{{ (vm.compressingReceipt() ? 'PAYMENT.RECEIPT_COMPRESSING' : 'PAYMENT.CONFIRM.DROP') | translate }}</strong>
+            <small>{{ 'PAYMENT.CONFIRM.FORMATS' | translate }}</small>
+
+            <span class="file-chip" *ngIf="vm.receiptFile() as file" (click)="$event.preventDefault()">
+              <mat-icon class="ok">check_circle</mat-icon>
+              {{ file.name }}
+              <em>{{ vm.receiptSize() }}</em>
+              <button type="button" class="chip-close" (click)="vm.removeReceipt()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </span>
+          </label>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label>{{ 'PAYMENT.CONFIRM.REFERENCE' | translate }} <span class="req">*</span></label>
+              <div class="input-icon">
+                <input type="text" [(ngModel)]="vm.transactionRef" name="ref" maxlength="12" placeholder="M18492048" />
+                <mat-icon *ngIf="vm.isRefValid()" class="ok">check_circle</mat-icon>
+              </div>
+              <small>{{ 'PAYMENT.CONFIRM.REFERENCE_HINT' | translate }}</small>
+            </div>
+
+            <div class="form-field">
+              <label>{{ 'PAYMENT.CONFIRM.AMOUNT' | translate }} <span class="req">*</span></label>
+              <div class="input-icon">
+                <input type="number" min="1" step="1" name="paidAmount" [disabled]="vm.isLocked()"
+                       [ngModel]="vm.paidAmount()" (ngModelChange)="vm.paidAmountInput.set($event)" />
+                <mat-icon *ngIf="vm.isPaidAmountValid()" class="ok">check_circle</mat-icon>
+              </div>
+              <small>{{ 'PAYMENT.CONFIRM.AMOUNT_HINT' | translate }}</small>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <mat-icon>info</mat-icon>
+            <span>{{ 'PAYMENT.CONFIRM.INFO' | translate }}</span>
+          </div>
+        </section>
+
+
+      </div>
+
+      <!-- ================= Columna derecha ================= -->
+      <aside class="summary-col">
+
+        <div class="card summary-card">
+          <div class="summary-head">
+            <div class="card-title">
+              <mat-icon>receipt</mat-icon>
+              <h2>{{ 'PAYMENT.SUMMARY.TITLE' | translate }}</h2>
+            </div>
+            <span class="code-pill">{{ vm.reservationCode() }}</span>
+          </div>
+
+          <div class="service-box">
+            <mat-icon>local_car_wash</mat-icon>
+            <div>
+              <strong>{{ vm.serviceSummary().serviceName }}</strong>
+            </div>
+          </div>
+
+          <div class="vehicle-box">
+            <mat-icon>directions_car</mat-icon>
+            <div>
+              <small>{{ 'PAYMENT.SUMMARY.VEHICLE' | translate }}</small>
+              <strong>{{ vm.serviceSummary().vehicleModel }}</strong>
+            </div>
+            <span class="plate">{{ vm.serviceSummary().plate }}</span>
+          </div>
+
+          <p class="schedule">
+            <mat-icon>event</mat-icon> {{ vm.serviceSummary().schedule }}
+          </p>
+
+          <div class="summary-row">
+            <span>{{ 'PAYMENT.SUMMARY.SUBTOTAL' | translate }}</span>
+            <strong>${{ vm.serviceSummary().subtotal | number }} COP</strong>
+          </div>
+          <div class="summary-row discount" *ngIf="vm.serviceSummary().pointsDiscount > 0">
+            <span>{{ 'PAYMENT.SUMMARY.DISCOUNT' | translate }}</span>
+            <strong>-${{ vm.serviceSummary().pointsDiscount | number }} COP</strong>
+          </div>
+
+          <!-- canjear un cupón de fidelización (ADR-015): puntos acumulados desbloquean la
+               promoción, se aplica un % de descuento real sobre el total -->
+          <!-- aprobado: solo se muestra el cupón si se usó, sin poder quitarlo -->
+          <app-payment-coupon *ngIf="!vm.isApproved() || vm.couponResult()"
+            [(code)]="vm.couponCode"
+            [result]="vm.couponResult()"
+            [error]="vm.couponError()"
+            [redeeming]="vm.redeemingCoupon()"
+            [canRedeem]="vm.canRedeemCoupon()"
+            [locked]="vm.isLocked()"
+            (redeem)="vm.redeemCoupon()"
+            (remove)="vm.removeCoupon()">
+          </app-payment-coupon>
+
+          <div class="summary-total">
+            <div>
+              <span>{{ 'PAYMENT.SUMMARY.TOTAL' | translate }}</span>
+              <small>{{ 'PAYMENT.SUMMARY.TAX' | translate }}</small>
+            </div>
+            <strong>${{ vm.totalToPay() | number }} <small>COP</small></strong>
+          </div>
+
+          <!-- aprobado: no hay nada que pagar, solo se puede cancelar la reserva -->
+          @if (!vm.isApproved()) {
+          <button class="btn-primary" [disabled]="!vm.canConfirm()" (click)="vm.confirmPayment()">
+            <!-- ya enviado: el botón queda bloqueado mostrando que está en revisión -->
+            @if (vm.isVerifying()) {
+              <mat-icon>hourglass_top</mat-icon>
+              {{ 'PAYMENT.SUMMARY.VERIFYING_BUTTON' | translate }}
+            } @else {
+              <mat-icon>verified_user</mat-icon>
+              {{ (vm.hasPaymentMethods() && vm.selectedMethod() === 'CASH' ? 'PAYMENT.SUMMARY.CASH_BUTTON' : 'PAYMENT.SUMMARY.PAY_BUTTON') | translate }}
+            }
+          </button>
+          }
+
+          <!-- por qué el botón sigue bloqueado: lo que falta completar -->
+          @if (vm.missingRequirements().length) {
+            <app-payment-missing [items]="vm.missingRequirements()"></app-payment-missing>
+          }
+
+          <button class="btn-link" (click)="cancelReservation()">
+            {{ 'PAYMENT.SUMMARY.CANCEL' | translate }}
+          </button>
+
+          <div class="secure-note">
+            <mat-icon>verified_user</mat-icon>
+            <span>{{ 'PAYMENT.SUMMARY.SECURE' | translate }}</span>
+          </div>
+        </div>
+
+        <app-payment-help [supportLine]="vm.supportLine()"></app-payment-help>
+
+      </aside>
+
+    </div>
+
+    <!-- Cargando / sin reserva / error -->
+    <ng-template #paymentState>
+      <div class="payment-state">
+        <mat-icon>{{ vm.loading() ? 'hourglass_top' : (vm.loadError() ? 'error_outline' : 'receipt_long') }}</mat-icon>
+        <p *ngIf="vm.loading()">{{ 'COMMON.LOADING' | translate }}</p>
+        <p *ngIf="vm.loadError()">{{ vm.loadError() | translate }}</p>
+        <p *ngIf="vm.notFound()">{{ 'PAYMENT.EMPTY' | translate }}</p>
+      </div>
+    </ng-template>
+  </main>
+</div>
+
+<!-- QR en grande con lupa -->
+<app-payment-qr-zoom [open]="qrZoomOpen" [src]="vm.selectedAccount()?.qrImageUrl ?? null"
+  [title]="('PAYMENT.QR.VIA' | translate) + ' ' + (('PAYMENT.METHOD.' + vm.selectedMethod()) | translate)"
+  (closed)="qrZoomOpen = false" />

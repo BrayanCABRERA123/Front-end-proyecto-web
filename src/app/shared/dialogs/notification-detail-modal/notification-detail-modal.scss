@@ -1,0 +1,130 @@
+@use '../../../../styles/mixins' as *;
+
+
+.dialog-container {
+  // el padding cuenta dentro del ancho: en celular no se sale del modal
+  box-sizing: border-box;
+  background: var(--card);
+  color: var(--text);
+  padding: 24px;
+  border-radius: 16px;
+  width: 380px;
+  max-width: 90vw;
+}
+
+.detail-header {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.icon-bubble {
+  padding: 10px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.dialog-title {
+  font-size: 18px;
+  font-weight: $fw-bold;
+  margin: 6px 0 0;
+}
+
+.dialog-text {
+  font-size: $fs-body;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.detail-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--item-bg);
+
+  mat-icon {
+    color: var(--text-muted);
+    font-size: 18px;
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn-close {
+  background: var(--item-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+}
+
+.btn-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+}
+
+.type-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: $fw-semibold;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.icon-bubble.type-primary,
+.type-badge.type-primary {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.icon-bubble.type-error,
+.type-badge.type-error {
+  background: var(--error-soft);
+  color: var(--error);
+}
+
+.icon-bubble.type-neutral,
+.type-badge.type-neutral {
+  background: var(--neutral-badge-soft);
+  color: var(--neutral-badge);
+}

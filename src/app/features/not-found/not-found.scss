@@ -1,0 +1,48 @@
+@use '../../../styles/variables' as *;
+
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: var(--bg);
+}
+
+.card {
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: $border-radius;
+  padding: 32px 24px;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: var(--primary);
+  }
+
+  h1 {
+    margin: 12px 0 8px;
+    font-size: 1.4rem;
+    color: var(--text);
+  }
+
+  p {
+    margin: 0 0 20px;
+    color: var(--text-secondary);
+  }
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: var(--on-primary, #ffffff);
+  font-weight: $fw-semibold;
+  text-decoration: none;
+}

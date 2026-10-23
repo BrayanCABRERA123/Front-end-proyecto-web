@@ -1,1 +1,352 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use 'styles/variables' as *;
+@use 'styles/breakpoints' as *;
+@use 'styles/mixins' as *;
+
+/*CONFIGURACIÓN BASE ANGULAR MATERIAL */
+html {
+  height: 100%;
+
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+/* TEMA BASE */
+body {
+  color-scheme: light;
+  background-color: var(--bg);
+  color: var(--text);
+  font: var(--mat-sys-body-medium);
+  margin: 0;
+  height: 100%;
+
+  /* COLOR PRINCIPAL */
+  --primary: #2ec4b6;
+  --primary-rgb: 46, 196, 182;
+  --primary-hover: #229990; 
+
+  /* COLORES DE GRÁFICAS (barras y ranking de reportes) */
+  --chart-1: #2ec4b6;
+  --chart-2: #1fa89c;
+  --chart-3: #0f7a72;
+
+  /* SIDEBAR */
+  --sidebar: #104039;
+
+  /* BACKGROUNDS */
+  --bg: #f5f6f8;
+  --bg-soft: #F9FBFB;
+  --card: #ffffff;
+
+  /* TEXTOS */
+  --text: #1a1a2e;
+  --text-secondary: #5f6f75;  
+  --text-muted: #6f8089;
+  --primary-text: #0e7a70;
+
+  /* BORDES */
+  --border: #e6eaea;
+
+  /* EFECTOS */
+  --primary-soft: rgba(var(--primary-rgb), 0.15);
+
+  /* ITEMS */
+  --item-bg: rgba(0, 0, 0, 0.04);
+  --item-hover: rgba(0, 0, 0, 0.07);
+
+  /* HERO */
+  --hero-image: url('/images/hero.png');
+
+  /* OVERLAY */
+  --overlay-dark: rgba(19, 28, 32, 0.80);
+  --overlay-light: rgba(0, 0, 0, 0.55);
+
+  --auth-shell: rgba(255,255,255,.75);
+--auth-card: #ffffff;
+--auth-panel: #f8fafb;
+--auth-glow: rgba(var(--primary-rgb), .20);
+
+--panel-overlay: rgba(255,255,255, .50);
+--panel-image: url('/images/panelLight.png');
+
+--success: #0e7a70;
+--success-soft: #E0EBEA;
+--error: #D32F2F;
+--error-soft: #FFEBEE;
+--warning: #B45309;
+--warning-soft: #FEF3C7;
+--on-warning: #ffffff;
+--on-error: #ffffff;
+--on-success: #ffffff;
+--neutral-badge: #67777E;
+--neutral-badge-soft: #EDF2F2;
+}
+
+/* VERDE OSCURO */
+body.green-dark {
+  color-scheme: dark;
+
+  --primary: #2ec4b6;
+  --primary-rgb: 46, 196, 182;
+  --primary-hover: #1fa89c;
+  --primary-text: #2ec4b6;
+
+  /* COLORES DE GRÁFICAS (barras y ranking de reportes) */
+  --chart-1: #2ec4b6;
+  --chart-2: #5eead4;
+  --chart-3: #a7f3e8;
+
+  --sidebar: #142927;
+
+  --bg: #1a1a1a;
+  --bg-soft: #131C20;
+  --card: #2a2a2a;
+
+  --text: #ffffff;
+  --text-secondary: #c2c2c2;
+  --text-muted: #8a8a8a;
+
+  --border: #2f2f2f;
+  --primary-soft: rgba(var(--primary-rgb), 0.2);
+
+  --item-bg: rgba(255, 255, 255, 0.05);
+  --item-hover: rgba(255, 255, 255, 0.08);
+
+  /* HERO */
+  --hero-image: url('/images/hero.png');
+
+  /* OVERLAY MÁS FUERTE */
+  --overlay-dark: rgba(0, 0, 0, 0.85);
+  --overlay-light: rgba(0, 0, 0, 0.65);
+
+  --auth-shell: #1f2324;
+--auth-card: #262b2c;
+--auth-panel: #202425;
+--auth-glow: rgba(var(--primary-rgb), .18);
+
+--panel-overlay: rgba(10,15,18, .52);
+--panel-image: url('/images/panelDark.png');
+
+--success: #2ec4b6;
+--success-soft: rgba(46, 196, 182, 0.18);
+--error: #ff6b6b;
+--error-soft: rgba(255, 107, 107, 0.15);
+--warning: #FBBF24;
+--warning-soft: rgba(251, 191, 36, 0.18);
+--on-warning: #211a06;
+--on-error: #2a0707;
+--on-success: #04211e;
+--neutral-badge: #c2c2c2;
+--neutral-badge-soft: rgba(255, 255, 255, 0.08);
+}
+
+/*  ROSADO CLARO */
+body.pink {
+  color-scheme: light;
+
+  --primary: #ff4fa3;
+  --primary-rgb: 255, 79, 163;
+  --primary-hover: #e13b8c;
+
+  /* COLORES DE GRÁFICAS (barras y ranking de reportes) */
+  --chart-1: #ff4fa3;
+  --chart-2: #e13b8c;
+  --chart-3: #c2185b;
+
+  --sidebar: #3d1a2a;
+
+  --bg: #f5f6f8;
+  --bg-soft: #ffe4ef;
+  --card: #ffffff;
+
+  --text: #1a1a2e;
+  --text-secondary: #5f6f75;
+  --text-muted: #6f8089;
+  --primary-text: #c2185b;
+
+  --border: #e6eaea;
+  --primary-soft: rgba(var(--primary-rgb), 0.15);
+
+  --item-bg: rgba(0, 0, 0, 0.04);
+  --item-hover: rgba(0, 0, 0, 0.07);
+
+  /* HERO ROSA*/
+  --hero-image: url('/images/car.png');
+
+  /* OVERLAY ROSADO */
+  --overlay-dark: rgba(255, 0, 120, 0.45);
+  --overlay-light: rgba(0, 0, 0, 0.45);
+
+  --auth-shell: rgba(255,255,255,.80);
+--auth-card: #ffffff;
+--auth-panel: #fff7fb;
+--auth-glow: rgba(var(--primary-rgb), .18);
+
+--panel-overlay: rgba(255,255,255, .50);
+--panel-image: url('/images/panelLight.png');
+
+--success: #c2185b;
+--success-soft: #ffe2ec;
+--error: #D32F2F;
+--error-soft: #FFEBEE;
+--warning: #B45309;
+--warning-soft: #FEF3C7;
+--on-warning: #ffffff;
+--on-error: #ffffff;
+--on-success: #ffffff;
+--neutral-badge: #67777E;
+--neutral-badge-soft: #EDF2F2;
+}
+
+/*ROSADO OSCURO*/
+body.pink-dark {
+  color-scheme: dark;
+
+  --primary: #ff4fa3;
+  --primary-rgb: 255, 79, 163;
+  --primary-hover: #e13b8c;
+  --primary-text: #ff4fa3;
+
+  /* COLORES DE GRÁFICAS (barras y ranking de reportes) */
+  --chart-1: #ff4fa3;
+  --chart-2: #ff7ab0;
+  --chart-3: #ffb3d4;
+
+  --sidebar: #2a1020;
+
+  --bg: #1a1a1a;
+  --bg-soft: #1f0f18;
+  --card: #2a2a2a;
+
+  --text: #ffffff;
+  --text-secondary: #c2c2c2;
+  --text-muted: #8a8a8a;
+
+  --border: #2f2f2f;
+  --primary-soft: rgba(var(--primary-rgb), 0.2);
+
+  --item-bg: rgba(255, 255, 255, 0.05);
+  --item-hover: rgba(255, 255, 255, 0.08);
+
+  /* HERO ROSA OSCURO */
+  --hero-image: url('/images/car.png');
+
+  /* OVERLAY */
+  --overlay-dark: rgba(0, 0, 0, 0.85);
+  --overlay-light: rgba(255, 0, 120, 0.35);
+
+  --auth-shell: #241d22;
+--auth-card: #2d252a;
+--auth-panel: #241d22;
+--auth-glow: rgba(var(--primary-rgb), .18);
+
+--panel-overlay: rgba(15,10,14, .52);
+--panel-image: url('/images/panelDark.png');
+
+--success: #ff7ab0;
+--success-soft: rgba(255, 122, 176, 0.16);
+--error: #ff6b6b;
+--error-soft: rgba(255, 107, 107, 0.15);
+--warning: #FBBF24;
+--warning-soft: rgba(251, 191, 36, 0.18);
+--on-warning: #211a06;
+--on-error: #2a0707;
+--on-success: #2a1020;
+--neutral-badge: #c2c2c2;
+--neutral-badge-soft: rgba(255, 255, 255, 0.08);
+}
+
+/* transiciones */
+* {
+  transition: 
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* selección de texto con color del tema */
+::selection {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
+}
+/* Reset del contenedor por defecto de Angular Material para diálogos con diseño propio (.modal-box) */
+.custom-dialog .mdc-dialog__surface {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+  border-radius: 16px;
+}
+
+.custom-dialog .mat-mdc-dialog-container,
+.custom-dialog .mat-mdc-dialog-surface {
+  overflow: visible;
+}
+
+
+// scroll suave para los enlaces de anclas del landing (navbar y footer)
+html {
+  scroll-behavior: smooth;
+}
+
+// opciones de las listas desplegables nativas (<select>)
+// algunos selects usan un fondo semitransparente (--item-bg) en tema oscuro; las opciones
+// heredaban la letra blanca pero Windows las pintaba sobre fondo claro y no se veían
+// hasta pasar el cursor. Aquí se les da un fondo sólido del tema en todas las pantallas.
+select option {
+  background-color: var(--card);
+  color: var(--text);
+}
+
+/* aviso flotante de notificación nueva (NotificationWatcher) */
+.notification-toast {
+  --mdc-snackbar-container-color: var(--primary);
+  --mdc-snackbar-supporting-text-color: #fff;
+  --mat-snack-bar-button-color: #fff;
+  --mat-snack-bar-container-color: var(--primary);
+  --mat-snack-bar-supporting-text-color: #fff;
+}
+
+/* En el celular el botón del menú del sidebar queda fijo arriba a la izquierda: el contenido de las
+   páginas con sidebar deja su espacio para que el botón no tape el título ni su ícono */
+@include mobile {
+  .home-layout > app-sidebar + .home-content {
+    padding-top: 72px;
+  }
+}
+
+/* El tema de Material le da al body un interlineado fijo de 20px que los títulos heredan en px: un
+   título de 30px con líneas de 20px se monta sobre sí mismo al partirse en dos. Interlineado
+   relativo para todos los títulos (los componentes que definen el suyo lo siguen usando). */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.25;
+}
+
+/* Un ícono dentro de una fila flex se encogía cuando el texto de al lado era largo (se veía cortado
+   o como medio círculo). Los íconos conservan su tamaño y el que cede es el texto. */
+mat-icon {
+  flex-shrink: 0;
+}

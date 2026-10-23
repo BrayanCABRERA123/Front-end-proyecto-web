@@ -1,0 +1,206 @@
+<div class="home-layout">
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <main class="home-content">
+
+    @if (vm.loading) {
+      <div class="card"><p class="muted">{{ 'COMMON.LOADING' | translate }}</p></div>
+    } @else if (!vm.operator) {
+      <div class="card">
+        <app-empty-state
+          variant="error"
+          icon="person_off"
+          titleKey="OPERATOR_DETAIL.NOT_FOUND_TITLE"
+          messageKey="OPERATOR_DETAIL.NOT_FOUND_MESSAGE">
+          <button class="btn-outline" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            {{ 'OPERATOR_DETAIL.BACK_TO_OPERATORS' | translate }}
+          </button>
+        </app-empty-state>
+      </div>
+    } @else {
+
+      <!-- breadcrumb -->
+      <nav class="breadcrumb">
+        <a (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'OPERATOR_DETAIL.BACK_TO_OPERATORS' | translate }}
+        </a>
+        <span>/</span>
+        <a (click)="goBack()">{{ 'ADMIN_PAGES.OPERATORS.TITLE' | translate }}</a>
+        <span>/</span>
+        <span class="current">{{ 'OPERATOR_DETAIL.BREADCRUMB_AVAILABILITY' | translate:{ name: vm.operator.name } }}</span>
+      </nav>
+
+      <!-- tarjeta de cabecera -->
+      <div class="card header-card">
+
+        <div class="header-card__identity">
+          <span class="avatar-lg">{{ vm.operator.initials }}</span>
+
+          <div>
+            <div class="name-row">
+              <strong>{{ vm.operator.name }}</strong>
+              <span [class]="'status-pill status-pill--' + vm.operator.status">
+                {{ ('ADMIN_OPERATORS.STATUS.' + vm.operator.status) | translate }}
+              </span>
+              <span class="id-chip">{{ 'OPERATOR_DETAIL.ID_LABEL' | translate }}: {{ vm.operator.id }}</span>
+            </div>
+
+            <p class="specialty">
+              <mat-icon>verified</mat-icon>
+              {{ vm.operator.specialty || ('OPERATOR_PROFILE_MODAL.NO_SPECIALTY' | translate) }}
+            </p>
+
+            <p class="sub-line">
+              <span>★ {{ vm.operator.rating }} ({{ 'OPERATOR_DETAIL.RATINGS_COUNT' | translate:{ count: vm.operator.reviewsCount } }})</span>
+              <span><mat-icon>directions_car</mat-icon> {{ 'OPERATOR_DETAIL.ASSIGNED_BAY' | translate }}: {{ vm.operator.bay ?? ('ADMIN_OPERATORS.CARD.UNASSIGNED' | translate) }}</span>
+            </p>
+
+            <p class="sub-line">
+              <span><mat-icon>call</mat-icon> {{ vm.operator.phone }}</span>
+              <span><mat-icon>mail</mat-icon> {{ vm.operator.email }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="header-card__actions">
+          <button class="btn-outline btn-danger" (click)="registerAbsence()">
+            <mat-icon>event_busy</mat-icon>
+            {{ 'OPERATOR_DETAIL.REGISTER_ABSENCE' | translate }}
+          </button>
+          <button class="btn-primary" (click)="editAvailability()">
+            <mat-icon>edit_calendar</mat-icon>
+            {{ 'OPERATOR_DETAIL.EDIT_AVAILABILITY' | translate }}
+          </button>
+        </div>
+
+      </div>
+
+      <!-- métricas reales de la semana (operations-service); "—" cuando no hay datos -->
+      <div class="stats-grid">
+
+        <div class="card stat-card">
+          <p class="stat-label">{{ 'OPERATOR_DETAIL.STATS.WEEKLY_SERVICES' | translate }}</p>
+          <p class="stat-value">{{ vm.metrics()?.completedServices ?? '—' }} <span class="muted">{{ 'OPERATOR_DETAIL.STATS.SERVICES_SUFFIX' | translate }}</span></p>
+          @if (vm.metrics()?.servicesTrendPercent != null) {
+            <span class="muted accent">{{ vm.metrics()!.servicesTrendPercent! >= 0 ? '↗ +' : '↘ ' }}{{ vm.metrics()!.servicesTrendPercent }}% {{ 'OPERATOR_DETAIL.STATS.VS_LAST_WEEK' | translate }}</span>
+          } @else {
+            <span class="muted">{{ 'OPERATOR_DETAIL.STATS.NO_TREND' | translate }}</span>
+          }
+        </div>
+
+        <div class="card stat-card">
+          <p class="stat-label">{{ 'OPERATOR_DETAIL.STATS.WORKED_HOURS' | translate }}</p>
+          <p class="stat-value">{{ vm.metrics()?.workedHours ?? '—' }} <span class="muted">/ {{ vm.metrics()?.availableHours ?? '—' }} hrs</span></p>
+          <div class="progress-bar"><div class="progress-bar__fill" [style.width.%]="vm.metrics()?.occupancyPercent ?? 0"></div></div>
+          <span class="muted">{{ 'OPERATOR_DETAIL.STATS.HOURS_USED_NOTE' | translate:{ percent: vm.metrics()?.occupancyPercent ?? 0 } }}</span>
+        </div>
+
+        <div class="card stat-card">
+          <p class="stat-label">{{ 'OPERATOR_DETAIL.STATS.PUNCTUALITY' | translate }}</p>
+          <p class="stat-value">{{ vm.metrics()?.punctualityPercent != null ? vm.metrics()!.punctualityPercent + '%' : '—' }}</p>
+          <span class="muted">{{ ('OPERATOR_DETAIL.STATS.PUNCTUALITY_LEVEL.' + (vm.metrics()?.punctualityLevel ?? 'NO_DATA')) | translate }}</span>
+        </div>
+
+        <div class="card stat-card">
+          <p class="stat-label">{{ 'OPERATOR_DETAIL.STATS.WEEKLY_REVENUE' | translate }}</p>
+          <p class="stat-value">{{ cop(vm.metrics()?.revenue ?? 0) }} <span class="muted">COP</span></p>
+          <span class="muted accent">{{ 'OPERATOR_DETAIL.STATS.REVENUE_NOTE' | translate }}</span>
+        </div>
+
+      </div>
+
+      <div class="row-2">
+
+        <!-- historial de hoy -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TITLE' | translate }}</h2>
+              <p>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.SUBTITLE' | translate:{ name: vm.operator.name } }}</p>
+            </div>
+            <span class="count-chip">{{ 'OPERATOR_DETAIL.TODAY_HISTORY.COUNT' | translate:{ count: vm.todayServices.length } }}</span>
+          </div>
+
+          @if (vm.todayServices.length === 0) {
+            <p class="muted today-empty">{{ 'OPERATOR_DETAIL.TODAY_HISTORY.EMPTY' | translate }}</p>
+          } @else {
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.SERVICE_VEHICLE' | translate }}</th>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.BAY' | translate }}</th>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.TIME' | translate }}</th>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.STATUS' | translate }}</th>
+                    <th>{{ 'OPERATOR_DETAIL.TODAY_HISTORY.TABLE.ACTION' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (s of vm.todayServices; track s.code) {
+                    <tr>
+                      <td>
+                        <strong>{{ s.code }} · {{ s.vehicle }}</strong>
+                        <span class="muted">{{ s.service }}</span>
+                      </td>
+                      <td>{{ s.bay }}</td>
+                      <td>{{ s.time }}</td>
+                      <td>
+                        <span [class]="'status-pill status-pill--' + s.status">
+                          {{ ('OPERATOR_DETAIL.TODAY_HISTORY.STATUS.' + s.status) | translate }}
+                        </span>
+                      </td>
+                      <td><a class="link" (click)="viewService(s)">{{ ('OPERATOR_DETAIL.TODAY_HISTORY.ACTION.' + s.status) | translate }}</a></td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+
+        <!-- habilidades -->
+        <div class="card">
+          <div class="card-header">
+            <h2>{{ 'OPERATOR_DETAIL.SKILLS.TITLE' | translate }}</h2>
+            <button class="edit-chip" type="button" (click)="editProfile()">
+              <mat-icon>edit</mat-icon>
+              {{ 'OPERATOR_PROFILE_MODAL.EDIT' | translate }}
+            </button>
+          </div>
+
+          <ul class="skills-list">
+            @for (c of vm.operator.certifications; track c.name) {
+              <li>
+                <span>{{ c.name }}</span>
+                <span class="skill-level">{{ ('OPERATOR_PROFILE_MODAL.LEVELS.' + c.level) | translate }}</span>
+              </li>
+            } @empty {
+              <li class="skills-empty">{{ 'OPERATOR_PROFILE_MODAL.EMPTY' | translate }}</li>
+            }
+          </ul>
+
+          <div class="bay-rule">
+            <mat-icon>info</mat-icon>
+            <div>
+              <strong>{{ 'OPERATOR_DETAIL.BAY_RULE.TITLE' | translate }}</strong>
+              <p>{{ 'OPERATOR_DETAIL.BAY_RULE.TEXT' | translate:{ name: vm.operator.name } }}</p>
+              <a class="link" (click)="exportSheet()">{{ 'OPERATOR_DETAIL.BAY_RULE.EXPORT' | translate }}</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-note">
+        <span class="muted">{{ 'OPERATOR_DETAIL.ASSIGNED_NOTE' | translate }}</span>
+        <a class="link" (click)="goToCalendar()">
+          {{ 'OPERATOR_DETAIL.VIEW_FULL_CALENDAR' | translate:{ name: vm.operator.name } }} →
+        </a>
+      </div>
+
+    }
+
+  </main>
+</div>

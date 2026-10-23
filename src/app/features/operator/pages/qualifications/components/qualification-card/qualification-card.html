@@ -1,0 +1,38 @@
+<div class="qualification-card">
+
+  <div class="card-header">
+    <div class="client-info">
+      <p class="client-name">{{ rating.client }}</p>
+      <p class="service-type">{{ rating.serviceType }}</p>
+      <div class="stars-row">
+        @for (star of stars; track $index) {
+          <mat-icon class="star" [class.filled]="star === 1">
+            {{ star === 1 ? 'star' : 'star_border' }}
+          </mat-icon>
+        }
+      </div>
+    </div>
+
+    <div class="card-actions">
+      <span class="card-date">{{ rating.date }}</span>
+      <button class="btn-view" (click)="viewDetail()">
+        <mat-icon>visibility</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <p class="card-comment">{{ rating.comment }}</p>
+
+  <div class="card-details">
+    @if (rating.duration) {
+      <span class="detail-item">
+        {{ 'QUALIFICATION_CARD.DURATION' | translate }}: {{ rating.duration }}
+      </span>
+      <span class="detail-separator">·</span>
+    }
+    <span class="detail-item">
+      {{ 'QUALIFICATION_CARD.ID' | translate }}: {{ rating.serviceId }}
+    </span>
+  </div>
+
+</div>

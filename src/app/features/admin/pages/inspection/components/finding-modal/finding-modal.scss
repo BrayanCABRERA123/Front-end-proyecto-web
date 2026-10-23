@@ -1,0 +1,114 @@
+@use '../../../../../../../styles/mixins' as *;
+@use '../../../../../../shared/dialogs/dialog-base';
+
+.finding-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &__icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--primary-soft);
+    color: var(--primary);
+
+    mat-icon { font-size: 20px; }
+  }
+}
+
+/* selector de severidad como píldoras grandes (se toca fácil en el celular) */
+.severity-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.severity-option {
+  flex: 1;
+  min-width: 90px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: $font-family-base;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
+  cursor: pointer;
+
+  &:hover { background: var(--item-hover); }
+
+  &--active.severity-option--INFO { background: var(--neutral-badge-soft); color: var(--neutral-badge); border-color: var(--neutral-badge); }
+  &--active.severity-option--MINOR { background: var(--warning-soft); color: var(--warning); border-color: var(--warning); }
+  &--active.severity-option--MAJOR { background: var(--error-soft); color: var(--error); border-color: var(--error); }
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 10px;
+}
+
+.photo-thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+
+  img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  &__remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    background: var(--overlay-light);
+    color: #ffffff;
+
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  }
+}
+
+.photo-add {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  border: 1.5px dashed var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  text-align: center;
+
+  small { @include caption-text; font-weight: $fw-semibold; line-height: 1.2; padding: 0 4px; }
+  input { display: none; }
+
+  &--busy { cursor: progress; }
+
+  &__spinner {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-soft);
+    border-top-color: var(--primary);
+    animation: finding-spin .8s linear infinite;
+  }
+}
+
+@keyframes finding-spin {
+  to { transform: rotate(360deg); }
+}

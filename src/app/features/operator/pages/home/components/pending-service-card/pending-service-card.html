@@ -1,0 +1,38 @@
+<div class="service-card">
+
+  <div class="card-content">
+
+    <div class="service-info">
+      <p class="service-title">
+        {{ reservation.service }} — {{ reservation.vehicle }}
+      </p>
+      <p class="service-date">{{ reservation.date | date: 'dd/MM/yyyy' }} · {{ reservation.time }}</p>
+      <p class="service-detail">
+        {{ reservation.client }}
+      </p>
+    </div>
+
+    <div class="card-actions">
+
+      <span class="status-badge" [ngClass]="statusClass(reservation.status)">
+        <mat-icon class="badge-icon">{{ statusIcon(reservation.status) }}</mat-icon>
+        {{ statusLabel(reservation.status) | translate }}
+      </span>
+
+      @if (reservation.status === 'pendiente') {
+        <button class="btn-start" [disabled]="!canStartNow(reservation.startableAt)"
+                [title]="canStartNow(reservation.startableAt) ? '' : ('OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(reservation.startableAt) })"
+                (click)="start.emit(reservation)">
+          {{ 'OPERATOR_HOME.BTN_START' | translate }}
+        </button>
+      }
+
+      <button class="btn-view" (click)="viewDetail.emit(reservation)">
+        <mat-icon>visibility</mat-icon>
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

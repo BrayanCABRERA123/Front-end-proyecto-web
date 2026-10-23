@@ -1,0 +1,176 @@
+@use '../../../styles/mixins' as *;
+
+// Base común de los diálogos de la aplicación.
+//
+// Agrupa el contenedor, la cabecera, el cuerpo, las acciones, los campos de
+// formulario y los botones para que los modales nuevos no repitan el mismo CSS
+// una y otra vez. Los diálogos existentes también lo consumen.
+
+.form-dialog {
+  background: var(--card);
+  color: var(--text);
+  border-radius: 16px;
+  width: min(460px, 92vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  // variante ancha para formularios con muchas columnas (2 filas de campos)
+  &--wide { width: min(680px, 94vw); }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+
+    h2 { @include subtitle; color: var(--text); font-weight: $fw-bold; margin: 0 0 2px; }
+    p { @include caption-text; color: var(--text-secondary); margin: 0; }
+  }
+
+  &__body {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+
+    button {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: $fw-semibold;
+      font-size: $fs-body;
+
+      mat-icon { font-size: 18px; width: 18px; height: 18px; }
+    }
+  }
+
+  // 2 y 3 columnas para formularios más largos; en móvil se apilan
+  &__grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  &__grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+  @include mobile {
+    &__grid-2, &__grid-3 { grid-template-columns: 1fr; }
+  }
+}
+
+.form-dialog__close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover { color: var(--text); }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+
+  > span { @include caption-text; color: var(--text-secondary); }
+
+  input, textarea, select {
+    font-family: $font-family-base;
+    font-size: $fs-body;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:focus { outline: none; border-color: var(--primary); }
+    &::placeholder { color: var(--text-muted); }
+    &:disabled { opacity: .55; cursor: not-allowed; }
+  }
+
+  textarea { resize: vertical; }
+  select { cursor: pointer; }
+
+  // estado de error del campo
+  &--invalid input,
+  &--invalid textarea,
+  &--invalid select { border-color: var(--error); }
+
+  &__error {
+    @include caption-text;
+    color: var(--error);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    mat-icon { font-size: 14px; width: 14px; height: 14px; }
+  }
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  @include body-text;
+  color: var(--text);
+  cursor: pointer;
+
+  input[type="checkbox"] { accent-color: var(--primary); width: 16px; height: 16px; }
+}
+
+.form-hint {
+  @include caption-text;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.form-error-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  @include caption-text;
+  color: var(--error);
+  background: var(--error-soft);
+  border: 1px solid var(--error);
+  border-radius: 10px;
+  padding: 10px 12px;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; flex-shrink: 0; }
+}
+
+.form-dialog__cancel {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+
+  &:hover { background: var(--item-hover); }
+}
+
+.form-dialog__submit {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+
+  &:hover:not(:disabled) { background: var(--primary-hover); }
+  &:disabled { opacity: .5; cursor: not-allowed; }
+}

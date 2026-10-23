@@ -1,0 +1,162 @@
+@use '../../../../styles/mixins' as *;
+
+.dialog-container {
+  position: relative;
+  background: var(--card);
+  color: var(--text);
+  padding: 24px;
+  border-radius: 16px;
+  width: 420px;
+  max-width: 90vw;
+}
+
+.btn-x {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-muted);
+
+  &:hover {
+    color: var(--text);
+  }
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-right: 24px;
+}
+
+.code {
+  font-size: $fs-caption;
+  color: var(--text-muted);
+  font-weight: $fw-semibold;
+}
+
+.dialog-title {
+  font-size: 18px;
+  font-weight: $fw-bold;
+  margin: 0 0 20px;
+  padding-right: 24px;
+}
+
+.detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--item-bg);
+
+  mat-icon {
+    color: var(--primary);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+.detail-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.detail-value {
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
+  color: var(--text);
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-confirm {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: $fs-body;
+  font-weight: $fw-bold;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+}
+
+.btn-close {
+  flex: 1;
+  background: var(--item-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 12px;
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+}
+
+.type-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
+  padding: 5px 12px;
+  border-radius: 999px;
+  width: fit-content;
+
+  mat-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+// las .badge-* vienen de reservationStatusClass (shared/dialogs/reservation-models)
+.badge-completed {
+  background: var(--success);
+  color: #ffffff;
+
+  mat-icon { color: #ffffff; }
+}
+
+.badge-in-progress {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.badge-pending {
+  background: var(--neutral-badge-soft);
+  color: var(--neutral-badge);
+}

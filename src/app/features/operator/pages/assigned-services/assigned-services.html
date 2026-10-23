@@ -1,0 +1,84 @@
+<div class="page-container">
+
+  <app-sidebar rol="OPERATOR"></app-sidebar>
+
+  <div class="main-content">
+
+    <div class="page-header">
+      <h1 class="page-title">{{ 'ASSIGNED_SERVICES.TITLE' | translate }}</h1>
+      <p class="page-subtitle">{{ 'ASSIGNED_SERVICES.SUBTITLE' | translate }}</p>
+    </div>
+
+    <div class="stats-badges">
+      @for (stat of vm.stats(); track stat.label) {
+        <div class="stat-badge" [class]="stat.color">
+          <span class="stat-value">{{ stat.value }}</span>
+          <span class="stat-label">{{ stat.label | translate }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="filters-card">
+      <p class="filters-title">{{ 'ASSIGNED_SERVICES.FILTERS.TITLE' | translate }}</p>
+
+      <div class="filters-row">
+
+        <div class="filter-group">
+          <label class="filter-label">{{ 'ASSIGNED_SERVICES.FILTERS.BY_DATE' | translate }}</label>
+          <div class="date-input-wrapper">
+            <input type="date" class="filter-input" [(ngModel)]="vm.dateFilter" (change)="vm.load()" />
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">{{ 'ASSIGNED_SERVICES.FILTERS.BY_TYPE' | translate }}</label>
+          <div class="select-wrapper">
+            <select class="filter-select" [(ngModel)]="vm.serviceTypeFilter">
+              @for (type of vm.serviceTypes; track type.value) {
+                <option [value]="type.value">{{ type.label | translate}}</option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">&nbsp;</label>
+          <label class="filter-label">{{ 'ASSIGNED_SERVICES.FILTERS.BY_SERVICE' | translate }}</label>
+          <div class="select-wrapper">
+            <input
+              type="text"
+              class="filter-select"
+              [placeholder]="'ASSIGNED_SERVICES.FILTERS.SEARCH_PLACEHOLDER' | translate"
+              [(ngModel)]="vm.vehicleFilter" />
+            <mat-icon class="select-icon">search</mat-icon>
+          </div>
+        </div>
+
+        <div class="filter-actions">
+          <button class="btn-reset" (click)="vm.resetFilters()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+          <button class="btn-filter" (click)="vm.load()">
+            <mat-icon>search</mat-icon>
+            {{ 'ASSIGNED_SERVICES.FILTERS.FILTER_BTN' | translate }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <app-service-table
+      [services]="vm.filteredServices()"
+      [selectedService]="vm.selectedService()"
+      (serviceSelected)="vm.select($event)">
+    </app-service-table>
+
+    @if (vm.selectedService(); as selected) {
+      <app-service-detail [service]="selected" (advance)="vm.advance($event)">
+      </app-service-detail>
+    }
+
+  </div>
+
+</div>

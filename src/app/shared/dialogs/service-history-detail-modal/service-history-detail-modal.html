@@ -1,0 +1,87 @@
+<div class="dialog-container">
+
+  <button class="btn-x" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="detail-header">
+    <span class="type-badge" [ngClass]="statusClass(service.status)">
+      <mat-icon>{{ statusIcon(service.status) }}</mat-icon>
+      {{ statusLabel(service.status) | translate }}
+    </span>
+    <span class="code">{{ service.code }}</span>
+  </div>
+
+  <h2 class="dialog-title">
+    {{ service.service }} — {{ service.client }}
+  </h2>
+
+  <div class="detail-grid">
+
+    <div class="detail-item">
+      <mat-icon>event</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.DATE' | translate }}</span>
+        <span class="detail-value">{{ service.date | date: 'dd/MM/yyyy' }} · {{ service.time }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>directions_car</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.VEHICLE' | translate }}</span>
+        <span class="detail-value">{{ service.vehicle }} · {{ service.plate }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>payments</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.PAYMENT' | translate }}</span>
+        <span class="detail-value">{{ service.paymentMethod ? (('SERVICE_HISTORY.METHODS.' + service.paymentMethod) | translate) + ' · ' : '' }}${{ service.amount | number }}</span>
+      </div>
+    </div>
+
+    @if (service.rating !== null) {
+      <div class="detail-item">
+        <mat-icon>star</mat-icon>
+        <div class="detail-full">
+          <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.RATING' | translate }}</span>
+          <span class="stars">
+            @for (s of stars; track s) {
+              <mat-icon [class.active]="s <= service.rating!">star</mat-icon>
+            }
+          </span>
+          @if (service.comment) {
+            <p class="comment">"{{ service.comment }}"</p>
+          }
+        </div>
+      </div>
+    }
+
+    @if (service.reason) {
+      <div class="detail-item">
+        <mat-icon>info</mat-icon>
+        <div>
+          <span class="detail-label">{{ 'SERVICE_HISTORY.DETAIL.REASON' | translate }}</span>
+          <span class="detail-value">{{ service.reason }}</span>
+        </div>
+      </div>
+    }
+
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn-close" (click)="close()">
+      {{ 'COMMON.CLOSE' | translate }}
+    </button>
+    <!-- con calificación: lleva a Calificaciones, donde se ve junto a las demás -->
+    @if (service.rating !== null) {
+      <button class="btn-go" (click)="goToRatings()">
+        {{ 'GO_TO.RATINGS' | translate }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    }
+  </div>
+
+</div>

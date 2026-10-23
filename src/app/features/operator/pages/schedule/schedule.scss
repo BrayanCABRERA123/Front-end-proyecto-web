@@ -1,0 +1,501 @@
+@use '../../../../../styles/mixins' as *;
+
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg);
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+// ---------- HEADER ----------
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: $fs-h2;
+  }
+}
+
+.page-title {
+  @include heading-2;
+  color: var(--text);
+  margin: 0;
+}
+
+.page-subtitle {
+  @include body-text;
+  color: var(--text-secondary);
+  margin: 2px 0 0;
+}
+
+// ---------- LAYOUT ----------
+.schedule-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.schedule-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+// ---------- PESTAÑAS ----------
+.tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--item-bg);
+  padding: 6px;
+  border-radius: 14px;
+  width: fit-content;
+}
+
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: $fs-body;
+  font-weight: $fw-semibold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    color: var(--text);
+  }
+
+  &.active {
+    background: var(--card);
+    color: var(--text);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+}
+
+// ---------- TARJETA DE LA LISTA ----------
+.list-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.list-title {
+  font-size: 18px;
+  font-weight: $fw-bold;
+  color: var(--text);
+  margin: 0 0 18px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// ---------- CADA RESERVA ----------
+.reservation-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: border-color 0.2s ease;
+  flex-wrap: wrap;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+}
+
+.reservation-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: $fw-bold;
+  color: var(--text);
+  font-size: 15px;
+  flex-shrink: 0;
+
+  mat-icon {
+    color: var(--primary);
+    font-size: 18px;
+  }
+}
+
+.reservation-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.reservation-title {
+  font-weight: $fw-semibold;
+  color: var(--text);
+  margin: 0;
+  font-size: $fs-body;
+}
+
+.reservation-detail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  color: var(--text-muted);
+  font-size: $fs-caption;
+  margin: 6px 0 0;
+
+  mat-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.reservation-duration,
+.reservation-code {
+  margin-left: 8px;
+  padding-left: 8px;
+  border-left: 1px solid var(--border);
+}
+
+// ---------- BADGE DE ESTADO ----------
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+// las .badge-* vienen de reservationStatusClass (shared/dialogs/reservation-models), no se traducen aquí
+.badge-completed {
+  background: var(--success);
+  color: #ffffff;
+}
+
+.badge-in-progress {
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid rgba(var(--primary-rgb), .3);
+}
+
+.badge-pending {
+  background: var(--neutral-badge-soft);
+  color: var(--neutral-badge);
+  border: 1px solid var(--border);
+}
+
+// ---------- ESTADO VACÍO ----------
+.empty-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 50px 20px;
+  color: var(--text-muted);
+
+  mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  p {
+    margin: 0;
+    font-size: $fs-body;
+  }
+}
+
+// ---------- ESTADISTICAS ----------
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.stat-card {
+  background: var(--item-bg);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: $fs-caption;
+  color: var(--text-secondary);
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: $fw-bold;
+  color: var(--text);
+}
+
+.stat-pending {
+  background: var(--neutral-badge-soft);
+
+  .stat-label, .stat-value { color: var(--neutral-badge); }
+}
+
+.stat-progress {
+  background: var(--primary-soft);
+
+  .stat-label, .stat-value { color: var(--primary); }
+}
+
+.stat-completed {
+  background: var(--success-soft);
+
+  .stat-label, .stat-value { color: var(--success); }
+}
+
+// ---------- PROXIMO SERVICIO ----------
+.next-card {
+  background: var(--primary-soft);
+  border: 1px solid rgba(var(--primary-rgb), .3);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.next-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  mat-icon {
+    color: var(--primary);
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.next-label {
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
+  color: var(--primary);
+  margin: 0;
+}
+
+.next-title {
+  font-size: 15px;
+  font-weight: $fw-bold;
+  color: var(--text);
+  margin: 2px 0 0;
+}
+
+.btn-next {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: $fw-bold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s;
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+}
+
+// ---------- ACCIONES POR RESERVA ----------
+.reservation-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-action {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: $fs-caption;
+  font-weight: $fw-bold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s;
+
+  mat-icon {
+    font-size: 15px;
+    width: 15px;
+    height: 15px;
+  }
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+}
+
+.btn-view-detail {
+  background: var(--card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s;
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+}
+
+:host-context(body.green-dark) .list-card,
+:host-context(body.pink-dark) .list-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}
+
+// ============ RESPONSIVE ============
+@media (max-width: 1100px) {
+  .main-content {
+    padding: 32px 28px;
+  }
+}
+
+@media (max-width: 900px) {
+  .schedule-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 24px 16px;
+    padding-top: 70px;
+  }
+
+  .page-title {
+    font-size: $fs-h3;
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .next-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-next {
+    text-align: center;
+  }
+
+  .tabs {
+    width: 100%;
+
+    .tab {
+      flex: 1;
+      text-align: center;
+    }
+  }
+
+  .reservation-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .status-badge {
+    align-self: flex-start;
+  }
+
+  .reservation-actions {
+    width: 100%;
+
+    .btn-action, .btn-view-detail {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 16px 12px;
+    padding-top: 66px;
+  }
+
+  .list-card {
+    padding: 16px;
+  }
+
+  .header-icon {
+    width: 40px;
+    height: 40px;
+
+    mat-icon {
+      font-size: $fs-h3;
+    }
+  }
+}
+
+// "Iniciar" antes de tiempo: deshabilitado y con la hora desde la que se puede
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.start-hint {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}

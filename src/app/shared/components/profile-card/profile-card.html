@@ -1,0 +1,214 @@
+<div class="profile-wrapper">
+
+  <h1 class="page-title">
+    {{ 'PROFILE.TITLE' | translate }}
+  </h1>
+
+  <!-- Resumen del usuario -->
+  <div class="card summary-card">
+    <div class="avatar">{{ vm.displayInitials() }}</div>
+
+    <div class="summary-info">
+      <h2 class="user-name">{{ vm.displayName() }}</h2>
+      <!-- rol real de la cuenta (viene del backend); la fecha de registro aún no se guarda -->
+      <p class="subtitle">{{ vm.roleLabelKey() | translate }}</p>
+    </div>
+
+    <div class="edit-status" [class.editing]="vm.editing()" [class.saved]="!vm.editing()">
+      <mat-icon>{{ vm.editing() ? 'edit' : 'check_circle' }}</mat-icon>
+      <span>
+        {{ vm.editing() ? ('PROFILE.EDIT_MODE' | translate) : ('PROFILE.SAVED_MODE' | translate) }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Campos editables -->
+  <form [formGroup]="vm.form">
+
+    <div class="fields-grid">
+
+      <!-- nombres y apellidos por separado: así los guarda security.person -->
+      @for (field of ['firstName', 'lastName']; track field) {
+        <div class="field-card" [class.field-error]="vm.form.get(field)?.invalid && vm.form.get(field)?.touched">
+          <div class="field-icon"><mat-icon>person</mat-icon></div>
+          <div class="field-body">
+            <label>{{ (field === 'firstName' ? 'PROFILE.FIRST_NAMES' : 'PROFILE.LAST_NAMES') | translate }}</label>
+            <input type="text" [formControlName]="field" maxlength="60"/>
+
+            @if (vm.form.get(field)?.invalid && vm.form.get(field)?.touched) {
+              <p class="error-msg">
+                @if (vm.form.get(field)?.hasError('required')) {
+                  {{ 'PROFILE.VALIDATION.NAME_REQUIRED' | translate }}
+                } @else if (vm.form.get(field)?.hasError('minlength')) {
+                  {{ 'PROFILE.VALIDATION.NAME_MIN' | translate }}
+                } @else if (vm.form.get(field)?.hasError('pattern')) {
+                  {{ 'PROFILE.VALIDATION.NAME_INVALID' | translate }}
+                }
+              </p>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- correo: es el usuario de login; si se cambia, se pide la contraseña actual -->
+      <div class="field-card" [class.field-error]="vm.form.get('email')?.invalid && vm.form.get('email')?.touched">
+        <div class="field-icon"><mat-icon>email</mat-icon></div>
+        <div class="field-body">
+          <label>{{ 'PROFILE.EMAIL' | translate }}</label>
+          <input type="email" formControlName="email" maxlength="60"/>
+
+          @if (vm.form.get('email')?.invalid && vm.form.get('email')?.touched) {
+            <p class="error-msg">
+              @if (vm.form.get('email')?.hasError('required')) {
+                {{ 'PROFILE.VALIDATION.EMAIL_REQUIRED' | translate }}
+              } @else {
+                {{ 'PROFILE.VALIDATION.EMAIL_INVALID' | translate }}
+              }
+            </p>
+          } @else if (vm.editing()) {
+            <p class="hint-msg">{{ 'PROFILE.EMAIL_CHANGE_HINT' | translate }}</p>
+          }
+        </div>
+      </div>
+
+      <!-- telefono -->
+      <div class="field-card" [class.field-error]="vm.form.get('phoneNumber')?.invalid && vm.form.get('phoneNumber')?.touched">
+        <div class="field-icon"><mat-icon>phone</mat-icon></div>
+        <div class="field-body">
+          <label>{{ 'PROFILE.PHONE' | translate }}</label>
+
+          <div class="phone-row">
+
+            <div class="phone-select-wrapper">
+              <button
+                type="button"
+                class="phone-select-trigger"
+                [disabled]="!vm.editing()"
+                (click)="togglePhoneDropdown()">
+
+                <span class="fi fi-{{ vm.selectedCountry.flagCode }} fis"></span>
+                <span class="phone-indicativo">{{ vm.selectedCountry.dialCode }}</span>
+                <mat-icon class="chevron">expand_more</mat-icon>
+              </button>
+
+              @if (phoneDropdownOpen) {
+                <div class="phone-dropdown">
+                  @for (country of vm.countries; track country.code) {
+                    <div
+                      class="phone-option"
+                      [class.active]="country.code === vm.form.get('phoneCountry')?.value"
+                      (click)="selectCountry(country.code)">
+                      <span class="fi fi-{{ country.flagCode }} fis"></span>
+                      <span>{{ country.dialCode }}</span>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+
+            <input
+              type="text"
+              class="phone-input"
+              formControlName="phoneNumber"
+              [maxlength]="vm.selectedCountry.digits"
+              inputmode="numeric"/>
+          </div>
+
+          @if (vm.form.get('phoneNumber')?.invalid && vm.form.get('phoneNumber')?.touched) {
+            <p class="error-msg">
+              @if (vm.form.get('phoneNumber')?.hasError('required')) {
+                {{ 'PROFILE.VALIDATION.PHONE_REQUIRED' | translate }}
+              } @else if (vm.form.get('phoneNumber')?.hasError('invalidPhone')) {
+                {{ 'PROFILE.VALIDATION.PHONE_INVALID' | translate }}
+              }
+            </p>
+          }
+        </div>
+      </div>
+
+      <!-- direccion -->
+      <div class="field-card" [class.field-error]="vm.form.get('address')?.invalid && vm.form.get('address')?.touched">
+        <div class="field-icon"><mat-icon>home</mat-icon></div>
+        <div class="field-body">
+          <!-- dirección opcional: el servicio es en la sede del lavadero -->
+          <label>{{ 'PROFILE.ADDRESS' | translate }} ({{ 'PROFILE.OPTIONAL' | translate }})</label>
+          <input type="text" formControlName="address"/>
+
+          @if (vm.form.get('address')?.hasError('minlength') && vm.form.get('address')?.touched) {
+            <p class="error-msg">
+              {{ 'PROFILE.VALIDATION.ADDRESS_MIN' | translate }}
+            </p>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- error devuelto por el servidor al guardar (teléfono inválido, sin conexión...) -->
+    @if (vm.errorKey()) {
+      <p class="error-msg" role="alert">{{ vm.errorKey()! | translate }}</p>
+    }
+
+    <div class="edit-container">
+      <button
+        type="button"
+        class="btn-edit"
+        [class.saved-mode]="!vm.editing()"
+        [disabled]="(vm.editing() && vm.form.invalid) || vm.saving()"
+        (click)="toggleEdit()">
+
+        <mat-icon>{{ vm.editing() ? 'save' : 'edit' }}</mat-icon>
+        <span>{{ vm.editing() ? ('PROFILE.SAVE' | translate) : ('PROFILE.EDIT' | translate) }}</span>
+      </button>
+    </div>
+
+  </form>
+
+  <!-- Acciones de cuenta -->
+  <div class="fields-grid actions-grid">
+
+    <div class="card modern-card">
+      <div class="card-header">
+        <div class="icon-box"><mat-icon>password</mat-icon></div>
+        <h3>{{ 'PROFILE.PASSWORD' | translate }}</h3>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="card-content">
+        <div class="left">
+          <div class="mini-icon"><mat-icon>vpn_key</mat-icon></div>
+          <div>
+            <p class="title">{{ 'PROFILE.CHANGE_PASSWORD' | translate }}</p>
+            <p class="subtitle">{{ 'PROFILE.PASSWORD_DESC' | translate }}</p>
+          </div>
+        </div>
+        <button class="btn-primary" (click)="openChangePassword()">{{ 'PROFILE.CHANGE' | translate }}</button>
+      </div>
+    </div>
+
+    @if (vm.canCloseAccount()) {
+    <div class="card modern-card danger">
+      <div class="card-header">
+        <div class="icon-box"><mat-icon>person</mat-icon></div>
+        <h3>{{ 'PROFILE.ACCOUNT' | translate }}</h3>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="card-content">
+        <div class="left">
+          <div class="mini-icon red"><mat-icon>delete</mat-icon></div>
+          <div>
+            <p class="title">{{ 'PROFILE.DELETE' | translate }}</p>
+            <p class="subtitle">{{ 'PROFILE.DELETE_DESC' | translate }}</p>
+          </div>
+        </div>
+        <button class="btn-danger" (click)="confirmDeleteAccount()">{{ 'PROFILE.DELETE' | translate }}</button>
+      </div>
+    </div>
+    }
+
+  </div>
+
+</div>

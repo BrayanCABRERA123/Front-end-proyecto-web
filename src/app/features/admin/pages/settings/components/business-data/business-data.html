@@ -1,0 +1,75 @@
+<div class="business-data">
+
+  <div class="section-header">
+    <div>
+      <div class="title-row">
+        <h2>{{ 'BUSINESS_DATA.TITLE' | translate }}</h2>
+        @if (vm.dirty()) {
+          <span class="status-badge status-badge--pending">{{ 'BUSINESS_DATA.UNSAVED_BADGE' | translate }}</span>
+        }
+      </div>
+      <p>{{ 'BUSINESS_DATA.SUBTITLE' | translate:{ name: vm.data().legalName || ('BUSINESS_DATA.THE_BUSINESS' | translate) } }}</p>
+    </div>
+
+    <div class="section-header__actions">
+      <button class="btn-outline" (click)="vm.discard()" [disabled]="!vm.loaded() || vm.saving() || !vm.dirty()">{{ 'BUSINESS_DATA.DISCARD' | translate }}</button>
+      <button class="btn-primary" (click)="vm.save()" [disabled]="!vm.loaded() || vm.saving() || !vm.dirty()">
+        <mat-icon>check</mat-icon>
+        {{ 'BUSINESS_DATA.SAVE' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- todo lo de esta pantalla se llena con los datos del negocio real cuando se implemente -->
+  <div class="real-business-notice">
+    <mat-icon>storefront</mat-icon>
+    <div>
+      <strong>{{ 'BUSINESS_DATA.NOTICE_TITLE' | translate }}</strong>
+      <p>{{ 'BUSINESS_DATA.NOTICE_MESSAGE' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    @for (section of sections; track section.id) {
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><mat-icon>{{ section.icon }}</mat-icon></div>
+          <div class="card-header__text">
+            <h3>{{ section.titleKey | translate }}</h3>
+            <p>{{ section.subtitleKey | translate }}</p>
+          </div>
+          <button
+            class="edit-btn"
+            type="button"
+            (click)="editSection(section)"
+            [disabled]="!vm.loaded() || vm.saving()"
+            [attr.aria-label]="('COMMON.EDIT' | translate) + ' — ' + (section.titleKey | translate)"
+            [title]="'COMMON.EDIT' | translate">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+
+        @if (section.realBusinessNoteKey) {
+          <p class="section-note">
+            <mat-icon>info</mat-icon>
+            {{ section.realBusinessNoteKey | translate }}
+          </p>
+        }
+
+        <dl class="values">
+          @for (field of section.fields; track field.key) {
+            <div class="values__row">
+              <dt>{{ field.labelKey | translate }}{{ field.required ? ' *' : '' }}</dt>
+              @if (vm.display(field.key)) {
+                <dd>{{ vm.display(field.key) }}</dd>
+              } @else {
+                <dd class="values__pending">{{ 'BUSINESS_DATA.PENDING' | translate }}</dd>
+              }
+            </div>
+          }
+        </dl>
+      </div>
+    }
+  </div>
+
+</div>

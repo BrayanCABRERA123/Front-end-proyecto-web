@@ -1,0 +1,109 @@
+<div class="form-dialog form-dialog--wide service-dialog">
+
+  <div class="form-dialog__header">
+    <div class="service-dialog__heading">
+      <div class="header-icon"><mat-icon>{{ isEditing ? 'edit' : 'add' }}</mat-icon></div>
+      <div>
+        <h2>{{ (isEditing ? 'SERVICE_MODAL.TITLE_EDIT' : 'SERVICE_MODAL.TITLE_CREATE') | translate }}</h2>
+        <p>{{ 'SERVICE_MODAL.SUBTITLE' | translate }}</p>
+      </div>
+    </div>
+    <button type="button" class="form-dialog__close" (click)="close()" [attr.aria-label]="'SERVICE_MODAL.CLOSE' | translate">×</button>
+  </div>
+
+  <div class="form-dialog__body">
+
+    <section class="service-section">
+      <h3 class="service-section__title">{{ 'SERVICE_MODAL.GENERAL_SECTION' | translate }}</h3>
+
+      <div class="form-dialog__grid-2">
+        <label class="form-field">
+          <span>{{ 'SERVICE_MODAL.NAME_LABEL' | translate }}</span>
+          <input type="text" maxlength="100" [(ngModel)]="name" [placeholder]="'SERVICE_MODAL.NAME_PLACEHOLDER' | translate">
+        </label>
+
+        <label class="form-field">
+          <span>{{ 'SERVICE_MODAL.CATEGORY_LABEL' | translate }}</span>
+          <select [(ngModel)]="categoryId">
+            @for (c of categories; track c.id) {
+              <option [ngValue]="c.id">{{ c.name }}</option>
+            }
+          </select>
+        </label>
+      </div>
+
+      <label class="form-field">
+        <span>{{ 'SERVICE_MODAL.DESCRIPTION_LABEL' | translate }}</span>
+        <textarea
+          rows="3"
+          [(ngModel)]="description"
+          [placeholder]="'SERVICE_MODAL.DESCRIPTION_PLACEHOLDER' | translate">
+        </textarea>
+      </label>
+
+      <!-- puntos de fidelización: los gana el cliente cuando su pago queda aprobado -->
+      <label class="form-field service-points" [class.form-field--invalid]="pointsInvalid">
+        <span>{{ 'SERVICE_MODAL.POINTS_LABEL' | translate }}</span>
+        <input type="number" min="0" step="1" [(ngModel)]="loyaltyPoints" placeholder="10">
+        <p class="form-hint">{{ 'SERVICE_MODAL.POINTS_HINT' | translate }}</p>
+        @if (pointsInvalid) {
+          <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'SERVICE_MODAL.POINTS_ERROR' | translate }}</span>
+        }
+      </label>
+    </section>
+
+    <!-- tarifa por tipo de vehículo (ADR-010): la fila vacía = no se ofrece para ese tipo -->
+    <section class="service-section">
+      <h3 class="service-section__title">{{ 'SERVICE_MODAL.PRICES_LABEL' | translate }}</h3>
+      <p class="form-hint">{{ 'SERVICE_MODAL.PRICES_HINT' | translate }}</p>
+
+      <div class="price-list">
+        <div class="price-list__head" aria-hidden="true">
+          <span>{{ 'SERVICE_MODAL.VEHICLE_TYPE' | translate }}</span>
+          <span>{{ 'SERVICE_MODAL.PRICE_LABEL' | translate }}</span>
+          <span>{{ 'SERVICE_MODAL.DURATION_LABEL' | translate }}</span>
+        </div>
+
+        @for (row of rows; track row.vehicleTypeId) {
+          <div class="price-row" [class.price-row--half]="isHalfRow(row)">
+            <span class="price-row__type">{{ row.vehicleTypeName }}</span>
+
+            <label class="price-input">
+              <span class="price-input__label">{{ 'SERVICE_MODAL.PRICE_LABEL' | translate }}</span>
+              <span class="price-input__box">
+                <span class="price-input__affix">$</span>
+                <input type="number" min="0" step="1000" [(ngModel)]="row.price" placeholder="45000"
+                  [attr.aria-label]="('SERVICE_MODAL.PRICE_LABEL' | translate) + ' — ' + row.vehicleTypeName">
+              </span>
+            </label>
+
+            <label class="price-input">
+              <span class="price-input__label">{{ 'SERVICE_MODAL.DURATION_LABEL' | translate }}</span>
+              <span class="price-input__box">
+                <input type="number" min="1" max="600" step="5" [(ngModel)]="row.minutes" placeholder="45"
+                  [attr.aria-label]="('SERVICE_MODAL.DURATION_LABEL' | translate) + ' — ' + row.vehicleTypeName">
+                <span class="price-input__affix">{{ 'SERVICE_MODAL.MINUTES_SUFFIX' | translate }}</span>
+              </span>
+            </label>
+          </div>
+        }
+      </div>
+
+      @if (hasHalfRow) {
+        <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'SERVICE_MODAL.HALF_ROW_ERROR' | translate }}</span>
+      }
+    </section>
+
+  </div>
+
+  <div class="form-dialog__actions">
+    <button class="form-dialog__cancel" type="button" (click)="close()">
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+    <button class="form-dialog__submit" type="button" [disabled]="!canSave" (click)="save()">
+      <mat-icon>save</mat-icon>
+      {{ 'SERVICE_MODAL.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,42 @@
+@use '../../../../../../../styles/variables' as *;
+
+:host {
+  display: block;
+}
+
+.help-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: $border-radius;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  gap: 12px;
+  padding: 18px;
+
+  mat-icon {
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  strong {
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  p {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+
+    b {
+      color: var(--text);
+      white-space: nowrap;
+    }
+  }
+}
+
+:host-context(body.green-dark) .help-card,
+:host-context(body.pink-dark) .help-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}

@@ -1,0 +1,91 @@
+<div class="page-container">
+  <app-sidebar rol="OPERATOR"></app-sidebar>
+
+  <div class="main-content">
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">{{ 'SERVICE_HISTORY.TITLE' | translate }}</h1>
+        <p class="page-subtitle">{{ 'SERVICE_HISTORY.SUBTITLE' | translate }}</p>
+      </div>
+    </div>
+
+    <app-history-stats
+      [completed]="vm.completed()"
+      [canceledOrReassigned]="vm.canceledOrReassigned()"
+      [totalGenerated]="vm.totalGenerated()"
+      [averageRating]="vm.averageRating()">
+    </app-history-stats>
+
+    <div class="progress-card">
+      <div class="progress-header">
+        <span>{{ 'SERVICE_HISTORY.COMPLETION_RATE' | translate }}</span>
+        <strong>{{ vm.completionRate() }}%</strong>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="vm.completionRate()"></div>
+      </div>
+    </div>
+
+    <div class="filters-card">
+
+      <div class="filters-row">
+
+        <div class="filter-group search-group">
+          <div class="search-wrapper">
+            <mat-icon>search</mat-icon>
+            <input
+              type="text"
+              class="search-input"
+              [(ngModel)]="vm.search"
+              [placeholder]="'SERVICE_HISTORY.SEARCH_PLACEHOLDER' | translate" />
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <input type="date" class="filter-input" [(ngModel)]="vm.dateFilter" [max]="vm.today" />
+        </div>
+
+        <div class="filter-group">
+          <div class="select-wrapper">
+            <select class="filter-select" [(ngModel)]="vm.serviceFilter">
+              <option value="">{{ 'SERVICE_HISTORY.ALL_SERVICES' | translate }}</option>
+              @for (type of vm.serviceTypes(); track type) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+        </div>
+
+        <button class="btn-reset" (click)="vm.clearFilters()">
+          <mat-icon>refresh</mat-icon>
+          {{ 'SERVICE_HISTORY.CLEAR' | translate }}
+        </button>
+
+      </div>
+
+      <div class="tabs">
+        <button class="tab" [class.active]="vm.activeTab() === 'todos'" (click)="vm.changeTab('todos')">
+          {{ 'SERVICE_HISTORY.TABS.ALL' | translate }} ({{ vm.countTab('todos') }})
+        </button>
+        <button class="tab" [class.active]="vm.activeTab() === 'finalizado'" (click)="vm.changeTab('finalizado')">
+          {{ 'SERVICE_HISTORY.TABS.DONE' | translate }} ({{ vm.countTab('finalizado') }})
+        </button>
+        <button class="tab" [class.active]="vm.activeTab() === 'cancelado'" (click)="vm.changeTab('cancelado')">
+          {{ 'SERVICE_HISTORY.TABS.CANCELED' | translate }} ({{ vm.countTab('cancelado') }})
+        </button>
+        <button class="tab" [class.active]="vm.activeTab() === 'reasignado'" (click)="vm.changeTab('reasignado')">
+          {{ 'SERVICE_HISTORY.TABS.REASSIGNED' | translate }} ({{ vm.countTab('reasignado') }})
+        </button>
+      </div>
+
+    </div>
+
+    <app-history-table
+      [services]="vm.filteredServices()"
+      (viewDetail)="viewDetail($event)">
+    </app-history-table>
+
+  </div>
+</div>

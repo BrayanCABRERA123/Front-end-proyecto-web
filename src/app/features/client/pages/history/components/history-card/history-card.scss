@@ -1,0 +1,210 @@
+@use '../../../../../../../styles/mixins' as *;
+
+.history-card {
+  cursor: pointer;
+  background-color: var(--card);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(var(--primary-rgb), 0.08);
+  transition: all 0.25s ease;
+  margin-bottom: 16px;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+    border-color: rgba(var(--primary-rgb), 0.25);
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  &.done { color: var(--primary); }
+  &.active { color: var(--warning); }
+  &.cancelled { color: var(--error); }
+}
+
+.card-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: $fw-semibold;
+  color: var(--text);
+}
+
+.card-date {
+  font-size: 13px;
+  font-weight: $fw-regular;
+  color: var(--text-muted);
+}
+
+.card-price {
+  font-size: 18px;
+  font-weight: $fw-semibold;
+  color: var(--primary);
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail-item {
+  font-size: $fs-body;
+  font-weight: $fw-regular;
+  color: var(--text);
+  margin: 0;
+}
+
+.detail-label {
+  font-weight: $fw-medium;
+  color: var(--text-secondary);
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+// etiqueta del estado del pago (informativa, no se puede hacer clic)
+.pay-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: $fw-medium;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+  &.paid {
+    background-color: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  &.pending {
+    background-color: var(--warning-soft);
+    color: var(--warning);
+  }
+}
+
+// botón para ir a pagar un servicio pendiente
+.btn-pay {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: $fw-medium;
+  cursor: pointer;
+  font-family: $font-family-base;
+  transition: 0.2s;
+  &:hover { filter: brightness(1.1); }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.btn-rate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: $fw-medium;
+  cursor: pointer;
+  font-family: $font-family-base;
+  transition: all 0.2s ease;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  &:hover { background-color: var(--primary); color: #ffffff; }
+}
+
+// botón para cancelar una reserva activa
+.btn-cancel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: var(--error);
+  border: 1.5px solid var(--error);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: $fw-medium;
+  cursor: pointer;
+  font-family: $font-family-base;
+  transition: all 0.2s ease;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  &:hover { background-color: var(--error); color: #ffffff; }
+}
+
+// reemplaza a "Calificar" cuando ya se calificó; al hacer clic permite editar
+.rated-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  color: var(--primary);
+  background-color: rgba(var(--primary-rgb), 0.08);
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: $fw-medium;
+  font-family: $font-family-base;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  .edit-icon { font-size: 15px; width: 15px; height: 15px; margin-left: 4px; opacity: .7; }
+  &:hover { border-color: var(--primary); }
+}
+
+@include tablet {
+  .history-card { margin: 0; }
+}
+
+@include mobile {
+  .history-card { margin: 0; padding: 16px; border-radius: 12px; }
+  .card-body { flex-direction: column; align-items: flex-start; }
+  .card-actions { width: 100%; align-items: stretch; }
+  .pay-badge, .btn-pay, .btn-rate, .btn-cancel, .rated-badge { width: 100%; justify-content: center; padding: 12px; }
+  .card-title { font-size: $fs-body; }
+  .card-price { font-size: $fs-subtitle; }
+}

@@ -1,0 +1,532 @@
+<div class="register-container">
+
+  <div class="auth-shell">
+
+    <app-auth-side-panel></app-auth-side-panel>
+
+    <div class="register-form-section">
+
+      <div class="register-card">
+
+        <app-back-button></app-back-button>
+
+        <div class="register-scroll">
+
+          <!-- HEADER -->
+          <div class="register-header">
+            <h2>{{ 'REGISTER.TITLE' | translate }}</h2>
+
+            <p>
+              {{ 'REGISTER.SUBTITLE' | translate }}
+            </p>
+          </div>
+
+          <!-- FORMULARIO -->
+          <form [formGroup]="vm.form" (ngSubmit)="onSubmit()" novalidate>
+
+            <!-- DOCUMENTO (security.person.document_number) -->
+            <div class="form-group">
+
+              <label>
+                {{ 'REGISTER.DOCUMENT' | translate }}
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon material-icons">
+                  badge
+                </span>
+
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  formControlName="documentNumber"
+                  maxlength="20"
+                  (input)="vm.sanitizeDocument()"
+
+                  [placeholder]="
+                    'REGISTER.DOCUMENT_PLACEHOLDER'
+                    | translate
+                  "
+
+                  [class.input-error]="
+                    vm.f['documentNumber'].invalid &&
+                    vm.f['documentNumber'].touched
+                  "
+                >
+
+              </div>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['documentNumber'].errors?.['required'] &&
+                  vm.f['documentNumber'].touched
+                "
+              >
+                {{ 'REGISTER.DOCUMENT_REQUIRED' | translate }}
+              </span>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['documentNumber'].errors?.['pattern'] &&
+                  vm.f['documentNumber'].touched
+                "
+              >
+                {{ 'REGISTER.DOCUMENT_INVALID' | translate }}
+              </span>
+
+            </div>
+
+            <!-- NOMBRES -->
+            <div class="form-group">
+
+              <label>
+                {{ 'REGISTER.FIRST_NAMES' | translate }}
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon material-icons">
+                  person
+                </span>
+
+                <input
+                  type="text"
+                  formControlName="firstName"
+                  maxlength="60"
+
+                  [placeholder]="
+                    'REGISTER.FIRST_NAMES_PLACEHOLDER'
+                    | translate
+                  "
+
+                  [class.input-error]="
+                    vm.f['firstName'].invalid &&
+                    vm.f['firstName'].touched
+                  "
+                >
+
+              </div>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['firstName'].errors?.['required'] &&
+                  vm.f['firstName'].touched
+                "
+              >
+                {{ 'REGISTER.NAME_REQUIRED' | translate }}
+              </span>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['firstName'].errors?.['minlength'] &&
+                  vm.f['firstName'].touched
+                "
+              >
+                {{ 'REGISTER.NAME_MIN' | translate }}
+              </span>
+
+            </div>
+
+            <!-- APELLIDOS -->
+            <div class="form-group">
+
+              <label>
+                {{ 'REGISTER.LAST_NAMES' | translate }}
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon material-icons">
+                  person
+                </span>
+
+                <input
+                  type="text"
+                  formControlName="lastName"
+                  maxlength="60"
+
+                  [placeholder]="
+                    'REGISTER.LAST_NAMES_PLACEHOLDER'
+                    | translate
+                  "
+
+                  [class.input-error]="
+                    vm.f['lastName'].invalid &&
+                    vm.f['lastName'].touched
+                  "
+                >
+
+              </div>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['lastName'].errors?.['required'] &&
+                  vm.f['lastName'].touched
+                "
+              >
+                {{ 'REGISTER.LAST_NAMES_REQUIRED' | translate }}
+              </span>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['lastName'].errors?.['minlength'] &&
+                  vm.f['lastName'].touched
+                "
+              >
+                {{ 'REGISTER.LAST_NAMES_MIN' | translate }}
+              </span>
+
+            </div>
+
+            <!-- CORREO -->
+            <div class="form-group">
+
+              <label>
+                {{ 'REGISTER.EMAIL' | translate }}
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon material-icons">
+                  mail
+                </span>
+
+                <input
+                  type="email"
+                  formControlName="email"
+
+                  [placeholder]="
+                    'REGISTER.EMAIL_PLACEHOLDER'
+                    | translate
+                  "
+
+                  (keypress)="blockSpaces($event)"
+                  (input)="vm.stripEmailSpaces()"
+
+                  [class.input-error]="
+                    vm.f['email'].invalid &&
+                    vm.f['email'].touched
+                  "
+                >
+
+              </div>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['email'].errors?.['required'] &&
+                  vm.f['email'].touched
+                "
+              >
+                {{ 'REGISTER.EMAIL_REQUIRED' | translate }}
+              </span>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['email'].errors?.['pattern'] &&
+                  vm.f['email'].touched
+                "
+              >
+                {{ 'REGISTER.EMAIL_INVALID' | translate }}
+              </span>
+
+            </div>
+
+            <!-- TELÉFONO -->
+            <div class="form-group">
+
+              <label>
+                {{ 'REGISTER.PHONE' | translate }}
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon material-icons">
+                  call
+                </span>
+
+                <input
+                  type="text"
+                  formControlName="phone"
+
+                  [placeholder]="
+                    'REGISTER.PHONE_PLACEHOLDER'
+                    | translate
+                  "
+
+                  maxlength="10"
+                  inputmode="numeric"
+                  autocomplete="off"
+
+                  (input)="vm.sanitizePhone()"
+
+                  [class.input-error]="
+                    vm.f['phone'].invalid &&
+                    vm.f['phone'].touched
+                  "
+                >
+
+              </div>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['phone'].errors?.['required'] &&
+                  vm.f['phone'].touched
+                "
+              >
+                {{ 'REGISTER.PHONE_REQUIRED' | translate }}
+              </span>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['phone'].errors?.['pattern'] &&
+                  vm.f['phone'].touched
+                "
+              >
+                {{ 'REGISTER.PHONE_INVALID' | translate }}
+              </span>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['phone'].errors?.['minlength'] &&
+                  vm.f['phone'].touched
+                "
+              >
+                {{ 'REGISTER.PHONE_MIN' | translate }}
+              </span>
+
+            </div>
+
+            <!-- CONTRASEÑA -->
+            <div class="form-group">
+
+              <label>
+                {{ 'REGISTER.PASSWORD' | translate }}
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon material-icons">
+                  lock
+                </span>
+
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  formControlName="password"
+
+                  [placeholder]="
+                    'REGISTER.PASSWORD_PLACEHOLDER'
+                    | translate
+                  "
+
+                  [class.input-error]="
+                    vm.f['password'].invalid &&
+                    vm.f['password'].touched
+                  "
+                >
+
+                <button
+                  type="button"
+                  class="toggle-btn"
+                  (click)="togglePassword()"
+                >
+
+                  <span
+                    class="material-icons"
+                    *ngIf="!showPassword"
+                  >
+                    visibility
+                  </span>
+
+                  <span
+                    class="material-icons"
+                    *ngIf="showPassword"
+                  >
+                    visibility_off
+                  </span>
+
+                </button>
+
+              </div>
+
+              <!-- CHECKLIST (componente compartido) -->
+              <app-password-requirements
+                [password]="vm.password"
+                [marginTop]="12">
+              </app-password-requirements>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['password'].errors?.['required'] &&
+                  vm.f['password'].touched
+                "
+              >
+                {{ 'REGISTER.PASSWORD_REQUIRED' | translate }}
+              </span>
+
+            </div>
+
+            <!-- CONFIRMAR -->
+            <div class="form-group">
+
+              <label>
+                {{ 'REGISTER.CONFIRM_PASSWORD' | translate }}
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon material-icons">
+                  lock
+                </span>
+
+                <input
+                  [type]="showConfirmPassword ? 'text' : 'password'"
+                  formControlName="confirmPassword"
+
+                  [placeholder]="
+                    'REGISTER.CONFIRM_PASSWORD_PLACEHOLDER'
+                    | translate
+                  "
+
+                  [class.input-error]="
+                    vm.f['confirmPassword'].errors?.['notMatch'] &&
+                    vm.f['confirmPassword'].touched
+                  "
+                >
+
+                <button
+                  type="button"
+                  class="toggle-btn"
+                  (click)="toggleConfirmPassword()"
+                >
+
+                  <span
+                    class="material-icons"
+                    *ngIf="!showConfirmPassword"
+                  >
+                    visibility
+                  </span>
+
+                  <span
+                    class="material-icons"
+                    *ngIf="showConfirmPassword"
+                  >
+                    visibility_off
+                  </span>
+
+                </button>
+
+              </div>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['confirmPassword'].errors?.['required'] &&
+                  vm.f['confirmPassword'].touched
+                "
+              >
+                {{ 'REGISTER.CONFIRM_REQUIRED' | translate }}
+              </span>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  vm.f['confirmPassword'].errors?.['notMatch'] &&
+                  vm.f['confirmPassword'].touched
+                "
+              >
+                {{ 'REGISTER.PASSWORDS_NOT_MATCH' | translate }}
+              </span>
+
+            </div>
+
+            <!-- ACEPTACIÓN LEGAL (Ley 1581 de 2012 - Habeas Data) -->
+            <div class="form-group legal-consent">
+
+              <label class="checkbox-row">
+                <input type="checkbox" formControlName="acceptTerms">
+                <span>
+                  {{ 'REGISTER.ACCEPT_TERMS' | translate }}
+                  <a href="#" (click)="openLegalDocument('terms', $event)">
+                    {{ 'REGISTER.TERMS_LINK' | translate }}
+                  </a>
+                </span>
+              </label>
+
+              <label class="checkbox-row">
+                <input type="checkbox" formControlName="acceptDataPolicy">
+                <span>
+                  {{ 'REGISTER.ACCEPT_PRIVACY' | translate }}
+                  <a href="#" (click)="openLegalDocument('privacy', $event)">
+                    {{ 'REGISTER.PRIVACY_LINK' | translate }}
+                  </a>
+                </span>
+              </label>
+
+              <span
+                class="error-msg"
+                *ngIf="
+                  (vm.f['acceptTerms'].invalid && vm.f['acceptTerms'].touched) ||
+                  (vm.f['acceptDataPolicy'].invalid && vm.f['acceptDataPolicy'].touched)
+                "
+              >
+                {{ 'REGISTER.TERMS_REQUIRED' | translate }}
+              </span>
+
+            </div>
+
+            <!-- error devuelto por el servidor (correo ya registrado, cédula duplicada, sin conexión...) -->
+            <p class="error-msg" role="alert" *ngIf="vm.errorKey()">
+              {{ vm.errorKey()! | translate }}
+            </p>
+
+            <button
+              type="submit"
+              class="btn-register"
+              [disabled]="vm.form.invalid || vm.loading()"
+            >
+
+              <span *ngIf="!vm.loading()">
+                {{ 'REGISTER.BUTTON' | translate }}
+              </span>
+
+              <span *ngIf="vm.loading()">
+                {{ 'REGISTER.BUTTON_LOADING' | translate }}
+              </span>
+
+            </button>
+
+          </form>
+
+          <!-- FOOTER -->
+          <p class="login-link">
+
+            {{ 'REGISTER.ALREADY_ACCOUNT' | translate }}
+
+            <a routerLink="/auth">
+              {{ 'REGISTER.LOGIN' | translate }}
+            </a>
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

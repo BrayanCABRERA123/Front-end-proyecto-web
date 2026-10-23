@@ -1,0 +1,230 @@
+<div class="home-layout">
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <main class="home-content">
+    <section class="dashboard">
+
+      <!-- encabezado -->
+      <header class="dash-header">
+        <div class="dash-header__left">
+          <div class="icon-box icon-box--lg"><mat-icon>storefront</mat-icon></div>
+          <div>
+            <h1>{{ 'ADMIN_DASHBOARD.GREETING' | translate:{ name: vm.adminName } }}</h1>
+            <p class="muted">{{ today | longDate }} · <span class="accent">{{ 'ADMIN_DASHBOARD.SUBTITLE' | translate }}</span></p>
+          </div>
+        </div>
+        <button class="btn btn--primary" (click)="goToReservations()">
+          <mat-icon>calendar_today</mat-icon>
+          {{ 'ADMIN_DASHBOARD.VIEW_TODAY_BOOKINGS' | translate }}
+        </button>
+      </header>
+
+      <!-- tarjetas resumen -->
+      <div class="stats">
+        <article class="card stat">
+          <div class="stat__top">
+            <div class="icon-box"><mat-icon>event</mat-icon></div>
+            <span class="badge" [class.badge--success]="vm.vsYesterday >= 0" [class.badge--warning]="vm.vsYesterday < 0">{{ vm.vsDirection }} {{ vm.vsYesterdayAbs }} {{ 'ADMIN_DASHBOARD.STATS.VS_YESTERDAY' | translate }}</span>
+          </div>
+          <strong class="stat__value">{{ vm.bookingsToday }}</strong>
+          <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.BOOKINGS_TODAY' | translate }}</span>
+        </article>
+
+        <article class="card stat">
+          <div class="stat__top">
+            <div class="icon-box"><mat-icon>autorenew</mat-icon></div>
+            <span class="badge badge--success">{{ vm.activeBays }} {{ 'ADMIN_DASHBOARD.STATS.ACTIVE_BAYS' | translate }}</span>
+          </div>
+          <strong class="stat__value">{{ vm.servicesInProgress }}</strong>
+          <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.IN_PROGRESS' | translate }}</span>
+        </article>
+
+        <article class="card stat">
+          <div class="stat__top">
+            <div class="icon-box icon-box--warning"><mat-icon>fact_check</mat-icon></div>
+            <span class="badge badge--warning">{{ 'ADMIN_DASHBOARD.STATS.PENDING_REVIEW' | translate }}</span>
+          </div>
+          <strong class="stat__value">{{ vm.pendingPaymentsCount }}</strong>
+          <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.PENDING_PAYMENTS' | translate }}</span>
+        </article>
+
+        <article class="card stat">
+          <div class="stat__top">
+            <div class="icon-box"><mat-icon>payments</mat-icon></div>
+            <span class="badge badge--success">COP</span>
+          </div>
+          <strong class="stat__value">{{ cop(vm.revenueToday) }}</strong>
+          <span class="stat__label">{{ 'ADMIN_DASHBOARD.STATS.REVENUE_TODAY' | translate }}</span>
+        </article>
+      </div>
+
+      <!-- gráfico + operarios -->
+      <div class="row row--main">
+        <article class="card chart">
+          <div class="card__head">
+            <div>
+              <h2><mat-icon class="accent">bar_chart</mat-icon> {{ 'ADMIN_DASHBOARD.REVENUE_CHART.TITLE' | translate }}</h2>
+              <p class="muted">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.SUBTITLE' | translate }}</p>
+            </div>
+            <div class="chart__total">
+              <span class="muted">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.WEEK_TOTAL' | translate }}</span>
+              <strong class="accent">{{ cop(vm.weekTotal) }} COP</strong>
+            </div>
+          </div>
+
+          <div class="bars">
+            @for (d of vm.weeklyRevenue; track d.day) {
+              <div class="bar-col" [class.bar-col--today]="d.isToday">
+                <span class="bar-col__tag">{{ d.label }}</span>
+                <div class="bar" [style.height.%]="vm.barHeight(d.amount)"></div>
+                <span class="bar-col__day">{{ d.day }}{{ d.isToday ? ' ' + ('ADMIN_DASHBOARD.TODAY_SUFFIX' | translate) : '' }}</span>
+              </div>
+            }
+          </div>
+
+          <footer class="chart__footer">
+            <span class="muted"><i class="dot"></i> {{ 'ADMIN_DASHBOARD.REVENUE_CHART.PEAK_DAY' | translate }}: {{ vm.peakDay }}</span>
+            <a class="link" (click)="goToReports()">{{ 'ADMIN_DASHBOARD.REVENUE_CHART.VIEW_REPORT' | translate }} →</a>
+          </footer>
+        </article>
+
+        <article class="card operators">
+          <div class="card__head">
+            <h2><mat-icon class="accent">groups</mat-icon> {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.TITLE' | translate }}</h2>
+            <span class="muted">{{ vm.operators.length }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.ON_STAFF' | translate }}</span>
+          </div>
+
+          <div class="status-summary">
+            <span><i class="dot dot--success"></i> {{ vm.countByStatus('available') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.AVAILABLE_SHORT' | translate }}</span>
+            <span><i class="dot dot--success"></i> {{ vm.countByStatus('busy') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.BUSY_SHORT' | translate }}</span>
+            <span><i class="dot dot--error"></i> {{ vm.countByStatus('absent') }} {{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.ABSENT_SHORT' | translate }}</span>
+          </div>
+
+          <ul class="list">
+            @for (o of vm.operators; track o.name) {
+              <li class="operator-row">
+                <span class="avatar" [class.avatar--error]="o.status === 'absent'">{{ o.initials }}</span>
+                <div class="operator-row__info">
+                  <strong>{{ o.name }}</strong>
+                  <span class="muted">{{ o.role }}</span>
+                </div>
+                <span [class]="'pill pill--' + o.status">
+                  {{ o.status === 'busy' ? o.bay : ('ADMIN_DASHBOARD.OPERATORS_STATUS.STATUS.' + o.status | translate) }}
+                </span>
+              </li>
+            }
+          </ul>
+
+          <a class="link link--center" (click)="goToOperators()">{{ 'ADMIN_DASHBOARD.OPERATORS_STATUS.MANAGE_SHIFTS' | translate }} →</a>
+        </article>
+      </div>
+
+      <!-- pagos + reservas sin operario -->
+      <!-- terminaron con operario y nadie las registró: el sistema no decide solo, las cierra el admin -->
+      @if (vm.toCloseRows.length > 0) {
+        <article class="card to-close">
+          <div class="card__head">
+            <div>
+              <h2><mat-icon class="warning">pending_actions</mat-icon> {{ 'ADMIN_DASHBOARD.TO_CLOSE.TITLE' | translate }}</h2>
+              <p class="muted">{{ 'ADMIN_DASHBOARD.TO_CLOSE.SUBTITLE' | translate }}</p>
+            </div>
+            <span class="badge badge--warning">{{ 'ADMIN_DASHBOARD.TO_CLOSE.COUNT' | translate:{ count: vm.toCloseRows.length } }}</span>
+          </div>
+
+          <ul class="list">
+            @for (r of vm.toCloseRows; track r.id) {
+              <li class="row-item">
+                <div class="row-item__info">
+                  <p>
+                    <span class="tag tag--time">{{ r.when }}</span>
+                    <span class="muted small">{{ r.code }}</span>
+                  </p>
+                  <strong>{{ r.client }} — {{ r.vehicle }}</strong>
+                  <p class="muted small">
+                    <mat-icon class="tiny">engineering</mat-icon>
+                    {{ ('ADMIN_DASHBOARD.TO_CLOSE.REASON_' + r.reason) | translate:{ operator: r.operator } }}
+                  </p>
+                </div>
+                <div class="to-close__actions">
+                  <button class="btn btn--primary btn--sm" (click)="closeAsAttended(r)">
+                    <mat-icon>task_alt</mat-icon> {{ 'ADMIN_DASHBOARD.TO_CLOSE.ATTENDED' | translate }}
+                  </button>
+                  @if (r.reason === 'NOT_STARTED') {
+                    <button class="btn btn--outline btn--sm" (click)="markNoShow(r)">
+                      <mat-icon>person_off</mat-icon> {{ 'ADMIN_DASHBOARD.TO_CLOSE.NO_SHOW' | translate }}
+                    </button>
+                  }
+                </div>
+              </li>
+            }
+          </ul>
+        </article>
+      }
+
+      <div class="row row--bottom">
+        <article class="card">
+          <div class="card__head">
+            <div>
+              <h2><mat-icon class="warning">payments</mat-icon> {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.TITLE' | translate }}</h2>
+              <p class="muted">{{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.SUBTITLE' | translate }}</p>
+            </div>
+            <span class="badge badge--warning">{{ vm.pendingPaymentsCount }} {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.PENDING' | translate }}</span>
+          </div>
+
+          <ul class="list">
+            @for (p of vm.pendingPayments; track p.reference) {
+              <li class="row-item">
+                <div class="row-item__info">
+                  <div>
+                    <strong>{{ p.client }}</strong>
+                    <span [class]="'tag tag--' + p.bankClass">{{ p.bank }}</span>
+                  </div>
+                  <p class="muted">{{ p.service }}</p>
+                  <p class="muted small">Ref: {{ p.reference }} <b class="accent">{{ cop(p.amount) }} COP</b></p>
+                </div>
+                <button class="btn btn--primary btn--sm" (click)="reviewPayment(p)">
+                  <mat-icon>visibility</mat-icon> {{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.REVIEW' | translate }}
+                </button>
+              </li>
+            }
+          </ul>
+
+          <a class="link link--center" (click)="goToPayments()">{{ 'ADMIN_DASHBOARD.PENDING_PAYMENTS_CARD.VIEW_ALL' | translate:{ count: vm.pendingPaymentsCount } }} →</a>
+        </article>
+
+        <article class="card">
+          <div class="card__head">
+            <div>
+              <h2><mat-icon class="accent">assignment_ind</mat-icon> {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.TITLE' | translate }}</h2>
+              <p class="muted">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.SUBTITLE' | translate }}</p>
+            </div>
+            <span class="badge badge--warning">{{ vm.unassignedCount }} {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.TO_ASSIGN' | translate }}</span>
+          </div>
+
+          <ul class="list">
+            @for (r of vm.unassignedBookings; track r.time) {
+              <li class="row-item">
+                <div class="row-item__info">
+                  <p>
+                    <span class="tag tag--time">{{ r.time }} · {{ r.bay }}</span>
+                    @if (r.isUpcoming) { <span class="muted small">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.UPCOMING' | translate }}</span> }
+                  </p>
+                  <strong>{{ r.client }} — {{ r.vehicle }}</strong>
+                  <p class="muted small accent">
+                    <mat-icon class="tiny">{{ r.icon }}</mat-icon> {{ r.service }}
+                  </p>
+                </div>
+                <button class="btn btn--primary btn--sm" (click)="assignOperator(r.id)">
+                  <mat-icon>person_add</mat-icon> {{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.ASSIGN' | translate }}
+                </button>
+              </li>
+            }
+          </ul>
+
+          <a class="link link--center" (click)="goToReservations()">{{ 'ADMIN_DASHBOARD.UNASSIGNED_BOOKINGS.VIEW_ALL' | translate }} →</a>
+        </article>
+      </div>
+
+    </section>
+  </main>
+</div>

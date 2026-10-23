@@ -1,0 +1,73 @@
+@use '../../../../styles/mixins' as *;
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  padding: 48px 24px;
+  box-sizing: border-box;
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--primary-soft);
+    color: var(--primary);
+    margin-bottom: 4px;
+
+    mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+
+    &--filtered { background: var(--warning-soft); color: var(--warning); }
+    &--error { background: var(--error-soft); color: var(--error); }
+    &--loading { background: var(--item-bg); color: var(--text-muted); }
+  }
+
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid var(--border);
+    border-top-color: var(--primary);
+    animation: empty-state-spin .8s linear infinite;
+    margin-bottom: 4px;
+  }
+
+  &__title {
+    @include heading-3;
+    color: var(--text);
+    margin: 0;
+  }
+
+  &__message {
+    @include body-text;
+    color: var(--text-secondary);
+    max-width: 420px;
+    margin: 0;
+  }
+
+  &__actions:empty {
+    display: none;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 6px;
+  }
+}
+
+@keyframes empty-state-spin {
+  to { transform: rotate(360deg); }
+}

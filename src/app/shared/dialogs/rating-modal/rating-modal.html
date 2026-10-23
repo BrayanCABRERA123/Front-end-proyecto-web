@@ -1,0 +1,55 @@
+<div class="modal-backdrop">
+
+  <div class="modal-box">
+
+    <button class="btn-close-icon" (click)="closeModal()">
+
+      ✕
+
+    </button>
+
+    <!-- el título y el botón cambian si se está editando una calificación -->
+    <h2>
+      {{ (isEditMode ? 'RATINGS.EDIT_TITLE' : 'RATINGS.TITLE') | translate }}
+    </h2>
+
+    <p class="subtitle">
+      {{ 'RATINGS.SUBTITLE' | translate }}
+    </p>
+
+    <p class="question">
+      {{ 'RATINGS.QUESTION' | translate }}
+    </p>
+
+    <div class="stars">
+
+      <mat-icon *ngFor="let star of [1,2,3,4,5]" (click)="rate(star)" [class.active]="star <= rating">
+
+        star
+
+      </mat-icon>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        {{ 'RATINGS.COMMENT' | translate }}
+      </label>
+
+      <textarea [(ngModel)]="comment" maxlength="500" [placeholder]="'RATINGS.PLACEHOLDER' | translate">
+
+      </textarea>
+
+    </div>
+
+    <!-- deshabilitado hasta que el usuario elija al menos una estrella -->
+    <button class="btn-submit" [disabled]="!canSubmit" (click)="submit()">
+
+      {{ (isEditMode ? 'RATINGS.EDIT_SUBMIT' : 'RATINGS.SUBMIT') | translate }}
+
+    </button>
+
+  </div>
+
+</div>

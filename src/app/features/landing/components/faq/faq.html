@@ -1,0 +1,24 @@
+<section id="faq" class="faq-section">
+  <span class="faq-eyebrow">{{ 'FAQ.EYEBROW' | translate }}</span>
+  <h2 class="faq-title">{{ 'FAQ.TITLE' | translate }}</h2>
+  <p class="faq-subtitle">{{ 'FAQ.SUBTITLE' | translate }}</p>
+
+  <div class="faq-list">
+    @for (key of questions; track key) {
+      <div class="faq-item" [class.open]="open() === key">
+        <button
+          type="button"
+          class="faq-question"
+          [attr.aria-expanded]="open() === key"
+          [attr.aria-controls]="'faq-answer-' + key"
+          (click)="toggle(key)">
+          <span>{{ ('FAQ.ITEMS.' + key + '.Q') | translate }}</span>
+          <mat-icon class="faq-arrow" aria-hidden="true">expand_more</mat-icon>
+        </button>
+        <div class="faq-panel" [id]="'faq-answer-' + key" role="region" [attr.aria-hidden]="open() !== key">
+          <p class="faq-answer">{{ ('FAQ.ITEMS.' + key + '.A') | translate }}</p>
+        </div>
+      </div>
+    }
+  </div>
+</section>

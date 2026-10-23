@@ -1,0 +1,67 @@
+<div class="dialog-container">
+
+  <button class="btn-x" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="detail-header">
+    <span class="type-badge" [ngClass]="statusClass(reservation.status)">
+      <mat-icon>{{ statusIcon(reservation.status) }}</mat-icon>
+      {{ statusLabel(reservation.status) | translate }}
+    </span>
+    <span class="code">{{ reservation.code }}</span>
+  </div>
+
+  <h2 class="dialog-title">
+    {{ reservation.service }} — {{ reservation.client }}
+  </h2>
+
+  <div class="detail-grid">
+
+    <div class="detail-item">
+      <mat-icon>event</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SCHEDULE.DETAIL.DATE' | translate }}</span>
+        <span class="detail-value">{{ reservation.date | date: 'dd/MM/yyyy' }} · {{ reservation.time }}</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>schedule</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SCHEDULE.DETAIL.DURATION' | translate }}</span>
+        <span class="detail-value">{{ reservation.durationMin }} min</span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <mat-icon>{{ vehicleIcon(reservation.vehicle) }}</mat-icon>
+      <div>
+        <span class="detail-label">{{ 'SCHEDULE.DETAIL.VEHICLE' | translate }}</span>
+        <span class="detail-value">{{ reservation.vehicle }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dialog-actions">
+
+    @if (reservation.status === 'pendiente') {
+      <button class="btn-confirm" (click)="start()">
+        <mat-icon>play_arrow</mat-icon>
+        {{ 'SCHEDULE.START' | translate }}
+      </button>
+    } @else if (reservation.status === 'en_progreso') {
+      <button class="btn-confirm" (click)="finish()">
+        <mat-icon>check</mat-icon>
+        {{ 'SCHEDULE.FINISH' | translate }}
+      </button>
+    }
+
+    <button class="btn-close" (click)="close()">
+      {{ 'COMMON.CLOSE' | translate }}
+    </button>
+
+  </div>
+
+</div>

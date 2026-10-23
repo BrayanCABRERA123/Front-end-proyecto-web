@@ -1,25 +1,57 @@
 import { Routes } from '@angular/router';
+import { authGuard, guestGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
-    {
-        path: 'admin',
-        loadChildren: () => import('./modules/admin/admin/admin-module').then(m => m.AdminModule)
-    },
-    {
-        path: 'cliente',
-        loadChildren: () => import('./modules/cliente/cliente/cliente-module').then(m => m.ClienteModule)
-    },
-    {
-        path: 'operario',
-        loadChildren: () => import('./modules/operario/operario/operario-module').then(m => m.OperarioModule)
-    },
-    {
-        path: 'auth',
-        loadChildren: () => import('./auth/auth/auth-module').then(m => m.AuthModule)
-    },
-    {
-        path: '',
-        redirectTo: 'auth',
-        pathMatch: 'full'
-    }
+  {
+    path: '',
+    loadComponent: () =>
+      import('./features/landing/pages/landing')
+      .then(c => c.LandingComponent)
+  },
+  {
+    path: 'auth',
+    canActivate: [guestGuard],
+    loadChildren: () =>
+      import('./features/auth/auth-module')
+        .then(m => m.AuthModule)
+  },
+  // cada área exige sesión y el rol correspondiente (ver core/guards/auth-guard)
+  {
+    path: 'client',
+    canActivate: [authGuard],
+    data: { roles: ['CLIENT'] },
+    loadChildren: () =>
+      import('./features/client/client-module')
+        .then(m => m.ClientModule)
+  },
+  // reporte de inspección que el admin comparte con el cliente: público y de solo lectura
+  {
+    path: 'report/:token',
+    loadComponent: () =>
+      import('./features/public-report/public-report')
+        .then(c => c.PublicReportComponent)
+  },
+  {
+    path: 'admin',
+    canActivate: [authGuard],
+    data: { roles: ['ADMIN'] },
+    loadChildren: () =>
+      import('./features/admin/admin-module')
+        .then(m => m.AdminModule)
+  },
+  {
+    path: 'operator',
+    canActivate: [authGuard],
+    data: { roles: ['OPERATOR'] },
+    loadChildren: () =>
+      import('./features/operator/operator-module')
+        .then(m => m.OperatorModule)
+  },
+  // cualquier otra dirección: página de "no encontrada" con enlace al inicio de cada rol
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./features/not-found/not-found')
+        .then(c => c.NotFoundComponent)
+  }
 ];

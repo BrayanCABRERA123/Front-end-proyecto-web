@@ -1,0 +1,92 @@
+<div class="page-container">
+
+  <app-sidebar rol="OPERATOR"></app-sidebar>
+
+  <div class="main-content">
+
+    <div class="page-header">
+      <h1 class="page-title">{{ 'QUALIFICATIONS.TITLE' | translate }}</h1>
+      <p class="page-subtitle">
+        {{ 'QUALIFICATIONS.SUBTITLE' | translate }}
+      </p>
+    </div>
+
+    <app-qualification-stats
+      [averageRating]="vm.averageRating()"
+      [satisfactionLevel]="vm.satisfactionLevel()"
+      [satisfactionPercentage]="vm.satisfactionPercentage()"
+      [totalRatings]="vm.totalRatings()">
+    </app-qualification-stats>
+
+    <div class="filters-card">
+      <p class="filters-title">{{ 'QUALIFICATIONS.FILTERS_TITLE' | translate }}</p>
+
+      <div class="filters-row">
+
+        <div class="filter-group">
+          <label class="filter-label">{{ 'QUALIFICATIONS.FILTER_DATE' | translate }}</label>
+          <div class="date-input-wrapper">
+            <input
+              type="date"
+              class="filter-input"
+              [(ngModel)]="vm.dateFilter"
+              [max]="vm.today"/>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">{{ 'QUALIFICATIONS.FILTER_TYPE' | translate }}</label>
+          <div class="select-wrapper">
+            <select class="filter-select" [(ngModel)]="vm.serviceTypeFilter">
+              @for (type of vm.serviceTypes(); track type.value) {
+                <option [value]="type.value">{{ type.label | translate }}</option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">{{ 'QUALIFICATIONS.FILTER_STARS' | translate }}</label>
+          <div class="select-wrapper">
+            <select class="filter-select" [(ngModel)]="vm.starsFilter">
+              @for (star of vm.starOptions; track star.value) {
+                <option [value]="star.value">{{ star.label | translate }}</option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+        </div>
+
+        <div class="filter-actions">
+          <button class="btn-reset" (click)="vm.clearFilters()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+          <button class="btn-filter">
+            <mat-icon>search</mat-icon>
+            {{ 'QUALIFICATIONS.BTN_FILTER' | translate }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="qualifications-list">
+      @for (rating of vm.filteredRatings(); track rating.id) {
+        <app-qualification-card
+          [rating]="rating"
+          [stars]="getStars(rating.rating)">
+        </app-qualification-card>
+      }
+
+      @if (vm.filteredRatings().length === 0) {
+        <div class="empty-state">
+          <mat-icon>star_border</mat-icon>
+          <p>{{ 'QUALIFICATIONS.EMPTY' | translate }}</p>
+        </div>
+      }
+    </div>
+
+  </div>
+
+</div>

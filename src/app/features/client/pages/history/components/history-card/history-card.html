@@ -1,0 +1,111 @@
+<!-- Tarjeta de cada reserva del historial -->
+<!-- clic en la tarjeta = ver el detalle; los botones hacen solo su acción -->
+<div class="history-card" (click)="open.emit(booking)">
+
+  <!-- Header -->
+  <div class="card-header">
+    <div class="card-header-left">
+
+      <!-- Estado -->
+      <mat-icon class="status-icon" [ngClass]="statusClass">
+        {{ statusIcon }}
+      </mat-icon>
+
+      <!-- Código y fecha -->
+      <div class="card-title-group">
+        <span class="card-title">{{ booking.code }}</span>
+        <span class="card-date">{{ booking.displayDate }} · {{ booking.timeRange }}</span>
+      </div>
+
+    </div>
+
+    <!-- Precio -->
+    <span class="card-price">{{ booking.total | copPrice }}</span>
+  </div>
+
+  <!-- Body -->
+  <div class="card-body">
+
+    <div class="card-details">
+
+      <!-- Servicios -->
+      <p class="detail-item">
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.TYPE' | translate }}:
+        </span>
+        {{ booking.services.join(' / ') }}
+      </p>
+
+      <!-- Vehículo -->
+      <p class="detail-item">
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.VEHICLE' | translate }}:
+        </span>
+        {{ booking.vehicle || '—' }}
+        <span *ngIf="booking.plate">· {{ booking.plate }}</span>
+      </p>
+
+      <!-- Estado -->
+      <p class="detail-item">
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.STATUS' | translate }}:
+        </span>
+        {{ ('STATUS.' + booking.status) | translate }}
+      </p>
+
+      <!-- Estado del pago (payment-service): explica por qué no aparece "Pagar" -->
+      @if (booking.paymentStatus) {
+      <p class="detail-item">
+        <span class="detail-label">
+          {{ 'HISTORY_CARD.PAYMENT' | translate }}:
+        </span>
+        {{ ('HISTORY_CARD.PAYMENT_STATUS.' + booking.paymentStatus) | translate }}
+      </p>
+      }
+
+    </div>
+
+    <!-- Acciones -->
+    <div class="card-actions">
+
+      <!-- Ir a pagar las reservas todavía activas -->
+      @if (booking.canPay) {
+      <button class="btn-pay" (click)="$event.stopPropagation(); goToPayment()">
+        {{ 'HISTORY_CARD.PAY_NOW' | translate }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+      }
+
+      <!-- Cancelar la reserva (solo si el backend la deja cambiar) -->
+      @if (booking.canCancel) {
+      <button class="btn-cancel" (click)="$event.stopPropagation(); requestCancel()">
+        {{ 'HISTORY_CARD.CANCEL' | translate }}
+        <mat-icon>cancel</mat-icon>
+      </button>
+      }
+
+      <!-- Calificar (solo si el lavado terminó y aún no se ha calificado) -->
+      @if (booking.canRate && !booking.rating) {
+      <button class="btn-rate" (click)="$event.stopPropagation(); openRating(booking)">
+        {{ 'HISTORY_CARD.RATE' | translate }}
+        <mat-icon>star_outline</mat-icon>
+      </button>
+      }
+
+      <!-- Ya calificado: la calificación es una sola vez (regla de operations-service) -->
+      @if (booking.rating) {
+      <span class="rated-badge" [attr.title]="booking.ratingComment || null">
+        {{ 'HISTORY_CARD.RATED' | translate }}
+        <mat-icon>star</mat-icon>
+        {{ booking.rating }}
+        @if (booking.ratingOperator) {
+          · {{ 'HISTORY_CARD.WASHED_BY' | translate:{ name: booking.ratingOperator } }}
+        }
+      </span>
+      }
+
+    </div>
+
+  </div>
+
+</div>

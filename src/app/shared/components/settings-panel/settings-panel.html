@@ -1,0 +1,270 @@
+    <div class="header">
+      <mat-icon>settings</mat-icon>
+      <h1>{{ 'CONFIG.TITLE' | translate }}</h1>
+    </div>
+
+    <div class="grid">
+
+      <!-- NOTIFICACIONES -->
+      <div class="card">
+
+        <div class="card-header">
+          <mat-icon>notifications</mat-icon>
+          <h2>{{ 'CONFIG.NOTIFICATIONS' | translate }}</h2>
+        </div>
+
+        <div class="item">
+          <div>
+            <p class="title">{{ 'CONFIG.PUSH' | translate }}</p>
+            <span class="subtitle">{{ 'CONFIG.PUSH_DESC' | translate }}</span>
+          </div>
+          <mat-slide-toggle [ngModel]="vm.channels().push" (ngModelChange)="vm.setChannel('push', $event)"></mat-slide-toggle>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="item">
+          <div>
+            <p class="title">{{ 'CONFIG.EMAIL' | translate }}</p>
+            <span class="subtitle">{{ 'CONFIG.EMAIL_DESC' | translate }}</span>
+          </div>
+          <mat-slide-toggle [ngModel]="vm.channels().email" (ngModelChange)="vm.setChannel('email', $event)"></mat-slide-toggle>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="item">
+          <div>
+            <p class="title">{{ 'CONFIG.PROMO' | translate }}</p>
+            <span class="subtitle">{{ 'CONFIG.PROMO_DESC' | translate }}</span>
+          </div>
+          <mat-slide-toggle [ngModel]="vm.channels().promo" (ngModelChange)="vm.setChannel('promo', $event)"></mat-slide-toggle>
+        </div>
+
+      </div>
+
+
+      <!-- APARIENCIA -->
+      <div class="card">
+
+        <div class="card-header">
+          <mat-icon>public</mat-icon>
+          <h2>{{ 'CONFIG.APPEARANCE' | translate }}</h2>
+        </div>
+
+        <!-- TEMAS -->
+        <p class="section-title">{{ 'CONFIG.THEME' | translate }}</p>
+        <span class="subtitle">
+          {{ 'CONFIG.THEME_DESC' | translate }}
+        </span>
+
+        <div class="themes">
+
+          <!-- VERDE CLARO -->
+          <div
+            class="theme-card green-light"
+            [class.active]="vm.theme() === 'green-light'"
+            (click)="vm.changeTheme('green-light')">
+
+            <div class="theme-top">
+              <mat-icon *ngIf="vm.theme() === 'green-light'">check_circle</mat-icon>
+            </div>
+
+            <div class="theme-body">
+              <div class="line small"></div>
+              <div class="line big"></div>
+            </div>
+
+          </div>
+
+          <!-- VERDE OSCURO -->
+          <div
+            class="theme-card green-dark"
+            [class.active]="vm.theme() === 'green-dark'"
+            (click)="vm.changeTheme('green-dark')">
+
+            <div class="theme-top">
+              <mat-icon *ngIf="vm.theme() === 'green-dark'">check_circle</mat-icon>
+            </div>
+
+            <div class="theme-body">
+              <div class="line small"></div>
+              <div class="line big"></div>
+            </div>
+
+          </div>
+
+          <!-- ROSADO CLARO -->
+          <div
+            class="theme-card pink"
+            [class.active]="vm.theme() === 'pink'"
+            (click)="vm.changeTheme('pink')">
+
+            <div class="theme-top">
+              <mat-icon *ngIf="vm.theme() === 'pink'">check_circle</mat-icon>
+            </div>
+
+            <div class="theme-body">
+              <div class="line small"></div>
+              <div class="line big"></div>
+            </div>
+
+          </div>
+
+          <!-- ROSADO OSCURO -->
+          <div
+            class="theme-card pink-dark"
+            [class.active]="vm.theme() === 'pink-dark'"
+            (click)="vm.changeTheme('pink-dark')">
+
+            <div class="theme-top">
+              <mat-icon *ngIf="vm.theme() === 'pink-dark'">check_circle</mat-icon>
+            </div>
+
+            <div class="theme-body">
+              <div class="line small"></div>
+              <div class="line big"></div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- IDIOMAS -->
+        <p class="section-title">{{ 'CONFIG.LANGUAGE' | translate }}</p>
+        <span class="subtitle">{{ 'CONFIG.LANGUAGE_DESC' | translate }}</span>
+
+        <div class="languages">
+
+          <!-- ESPAÑOL -->
+          <div
+            class="lang-card"
+            [class.active]="vm.language() === 'es'"
+            (click)="vm.changeLanguage('es')">
+
+            <div class="lang-top">
+              <div class="lang-left">
+                <span class="fi fi-es fis"></span>
+                <strong>Español</strong>
+              </div>
+              <mat-icon class="lang-check" [class.selected]="vm.language() === 'es'">check_circle_outline</mat-icon>
+            </div>
+            <span class="lang-sub">Interfaz en español</span>
+
+          </div>
+
+          <!-- ENGLISH -->
+          <div
+            class="lang-card"
+            [class.active]="vm.language() === 'en'"
+            (click)="vm.changeLanguage('en')">
+
+            <div class="lang-top">
+              <div class="lang-left">
+                <span class="fi fi-gb fis"></span>
+                <strong>English</strong>
+              </div>
+              <mat-icon class="lang-check" [class.selected]="vm.language() === 'en'">check_circle_outline</mat-icon>
+            </div>
+            <span class="lang-sub">Interface in english</span>
+
+          </div>
+
+          <!-- FRANCES -->
+          <div
+            class="lang-card"
+            [class.active]="vm.language() === 'fr'"
+            (click)="vm.changeLanguage('fr')">
+
+            <div class="lang-top">
+              <div class="lang-left">
+                <span class="fi fi-fr fis"></span>
+                <strong>Français</strong>
+              </div>
+              <mat-icon class="lang-check" [class.selected]="vm.language() === 'fr'">check_circle_outline</mat-icon>
+            </div>
+            <span class="lang-sub">Interface en français</span>
+
+          </div>
+
+          <!-- PORTUGUES -->
+          <div
+            class="lang-card"
+            [class.active]="vm.language() === 'pt'"
+            (click)="vm.changeLanguage('pt')">
+
+            <div class="lang-top">
+              <div class="lang-left">
+                <span class="fi fi-pt fis"></span>
+                <strong>Português</strong>
+              </div>
+              <mat-icon class="lang-check" [class.selected]="vm.language() === 'pt'">check_circle_outline</mat-icon>
+            </div>
+            <span class="lang-sub">Interface em português</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- AYUDA -->
+      <div class="card">
+
+        <div class="card-header">
+          <mat-icon>help_outline</mat-icon>
+          <h2>{{ 'CONFIG.HELP' | translate }}</h2>
+        </div>
+
+        <div class="help">
+
+          <div class="help-left">
+            <mat-icon>help</mat-icon>
+            <span>{{ 'CONFIG.HELP_CENTER' | translate }}</span>
+          </div>
+
+          <button class="btn" (click)="openHelpCenter()">
+            {{ 'CONFIG.OPEN' | translate }}
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="help">
+
+          <div class="help-left">
+            <mat-icon>description</mat-icon>
+            <span>{{ 'CONFIG.VIEW_TERMS' | translate }}</span>
+          </div>
+
+          <button class="btn" (click)="viewLegalDocument('terms')">
+            {{ 'CONFIG.OPEN' | translate }}
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="help">
+
+          <div class="help-left">
+            <mat-icon>privacy_tip</mat-icon>
+            <span>{{ 'CONFIG.VIEW_PRIVACY' | translate }}</span>
+          </div>
+
+          <button class="btn" (click)="viewLegalDocument('privacy')">
+            {{ 'CONFIG.OPEN' | translate }}
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>

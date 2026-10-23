@@ -1,0 +1,65 @@
+<div class="exception-dialog">
+
+  <div class="exception-dialog__header">
+    <h2>{{ (isEditing ? 'SCHEDULE_EXCEPTION_MODAL.TITLE_EDIT' : 'SCHEDULE_EXCEPTION_MODAL.TITLE_CREATE') | translate }}</h2>
+    <button type="button" class="close-x" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="exception-dialog__body">
+
+    <div class="row-2">
+      <label class="field">
+        <span>{{ 'SCHEDULE_EXCEPTION_MODAL.DATE_LABEL' | translate }}</span>
+        <input type="date" [(ngModel)]="date" [min]="minDate">
+      </label>
+      @if (isPastDate) {
+        <p class="field-error">{{ 'CALENDAR.ERROR_PAST_DATE' | translate }}</p>
+      }
+
+      
+    </div>
+
+    <label class="checkbox-row">
+      <input type="checkbox" [(ngModel)]="closedAllDay">
+      {{ 'SCHEDULE_EXCEPTION_MODAL.CLOSED_ALL_DAY_LABEL' | translate }}
+    </label>
+
+    @if (!closedAllDay) {
+      <div class="row-2">
+        <label class="field">
+          <span>{{ 'SCHEDULE_EXCEPTION_MODAL.OPEN_LABEL' | translate }}</span>
+          <input type="time" [(ngModel)]="openTime">
+        </label>
+
+        <label class="field">
+          <span>{{ 'SCHEDULE_EXCEPTION_MODAL.CLOSE_LABEL' | translate }}</span>
+          <input type="time" [(ngModel)]="closeTime">
+        </label>
+      </div>
+      @if (hasInvalidRange) {
+        <p class="field-error">{{ 'SCHEDULE_EXCEPTION_MODAL.ERROR_RANGE' | translate }}</p>
+      }
+    }
+
+    <label class="field">
+      <span>{{ 'SCHEDULE_EXCEPTION_MODAL.REASON_LABEL' | translate }}</span>
+      <textarea
+        rows="2"
+        maxlength="120"
+        [(ngModel)]="reason"
+        [placeholder]="'SCHEDULE_EXCEPTION_MODAL.REASON_PLACEHOLDER' | translate">
+      </textarea>
+    </label>
+
+  </div>
+
+  <div class="exception-dialog__actions">
+    <button class="btn-cancel" type="button" (click)="close()">
+      {{ 'SCHEDULE_EXCEPTION_MODAL.CANCEL' | translate }}
+    </button>
+    <button class="btn-confirm" type="button" [disabled]="!canSave" (click)="save()">
+      {{ 'SCHEDULE_EXCEPTION_MODAL.SAVE' | translate }}
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,107 @@
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { BusinessDataViewModel } from '../../../../viewmodels/business-data.viewmodel';
+import {
+  BusinessField,
+  BusinessSectionModal,
+  BusinessSectionModalData,
+  BusinessSectionModalResult,
+} from '../business-section-modal/business-section-modal';
+
+/** una tarjeta de la pantalla: se muestra en solo lectura y se edita con el lápiz */
+interface BusinessSection {
+  id: string;
+  icon: string;
+  titleKey: string;
+  subtitleKey: string;
+  // aviso de que se completa con los datos del negocio real (fiscal y canales)
+  realBusinessNoteKey?: string;
+  fields: BusinessField[];
+}
+
+const SECTIONS: BusinessSection[] = [
+  {
+    id: 'general', icon: 'domain',
+    titleKey: 'BUSINESS_DATA.GENERAL.TITLE', subtitleKey: 'BUSINESS_DATA.GENERAL.SUBTITLE',
+    fields: [
+      { key: 'legalName', labelKey: 'BUSINESS_DATA.GENERAL.LEGAL_NAME', required: true },
+      { key: 'taxId', labelKey: 'BUSINESS_DATA.GENERAL.TAX_ID', required: true },
+      { key: 'businessType', labelKey: 'BUSINESS_DATA.GENERAL.BUSINESS_TYPE' },
+      { key: 'foundationDate', labelKey: 'BUSINESS_DATA.GENERAL.FOUNDATION_DATE', type: 'date' },
+      { key: 'legalRep', labelKey: 'BUSINESS_DATA.GENERAL.LEGAL_REP' },
+      { key: 'legalRepDoc', labelKey: 'BUSINESS_DATA.GENERAL.LEGAL_REP_DOC' },
+    ],
+  },
+  {
+    id: 'contact', icon: 'location_on',
+    titleKey: 'BUSINESS_DATA.CONTACT.TITLE', subtitleKey: 'BUSINESS_DATA.CONTACT.SUBTITLE',
+    fields: [
+      { key: 'address', labelKey: 'BUSINESS_DATA.CONTACT.ADDRESS', required: true },
+      { key: 'phone', labelKey: 'BUSINESS_DATA.CONTACT.PHONE', required: true },
+      { key: 'email', labelKey: 'BUSINESS_DATA.CONTACT.EMAIL', type: 'email' },
+      { key: 'website', labelKey: 'BUSINESS_DATA.CONTACT.WEBSITE' },
+    ],
+  },
+  {
+    id: 'fiscal', icon: 'receipt_long',
+    titleKey: 'BUSINESS_DATA.FISCAL.TITLE', subtitleKey: 'BUSINESS_DATA.FISCAL.SUBTITLE',
+    realBusinessNoteKey: 'BUSINESS_DATA.FISCAL.REAL_BUSINESS_NOTE',
+    fields: [
+      { key: 'taxRegime', labelKey: 'BUSINESS_DATA.FISCAL.REGIME' },
+      { key: 'ciiuActivity', labelKey: 'BUSINESS_DATA.FISCAL.CIIU' },
+      { key: 'dianResolution', labelKey: 'BUSINESS_DATA.FISCAL.DIAN_RESOLUTION' },
+      { key: 'invoicePrefix', labelKey: 'BUSINESS_DATA.FISCAL.PREFIX' },
+      { key: 'invoiceRange', labelKey: 'BUSINESS_DATA.FISCAL.RANGE' },
+    ],
+  },
+  {
+    id: 'channels', icon: 'share',
+    titleKey: 'BUSINESS_DATA.CHANNELS.TITLE', subtitleKey: 'BUSINESS_DATA.CHANNELS.SUBTITLE',
+    realBusinessNoteKey: 'BUSINESS_DATA.CHANNELS.REAL_BUSINESS_NOTE',
+    fields: [
+      { key: 'instagram', labelKey: 'BUSINESS_DATA.CHANNELS.INSTAGRAM' },
+      { key: 'facebook', labelKey: 'BUSINESS_DATA.CHANNELS.FACEBOOK' },
+      { key: 'supportLine', labelKey: 'BUSINESS_DATA.CHANNELS.SUPPORT_LINE' },
+      { key: 'serviceHours', labelKey: 'BUSINESS_DATA.CHANNELS.SERVICE_HOURS' },
+    ],
+  },
+];
+
+@Component({
+  selector: 'app-business-data',
+  standalone: true,
+  imports: [CommonModule, MatIconModule, TranslateModule],
+  providers: [BusinessDataViewModel],
+  templateUrl: './business-data.html',
+  styleUrl: './business-data.scss'
+})
+export class BusinessDataComponent implements OnInit {
+
+  readonly vm = inject(BusinessDataViewModel);
+  private readonly dialog = inject(MatDialog);
+
+  readonly sections = SECTIONS;
+
+  ngOnInit(): void {
+    this.vm.load();
+  }
+
+  editSection(section: BusinessSection): void {
+    const data: BusinessSectionModalData = {
+      titleKey: section.titleKey,
+      subtitleKey: section.subtitleKey,
+      icon: section.icon,
+      fields: section.fields,
+      values: this.vm.data(),
+    };
+    this.dialog.open(BusinessSectionModal, { panelClass: 'custom-dialog', data })
+      .afterClosed()
+      .subscribe((result: BusinessSectionModalResult | null | undefined) => {
+        if (result) this.vm.applySection(result);
+      });
+  }
+}

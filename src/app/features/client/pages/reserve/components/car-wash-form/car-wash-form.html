@@ -1,0 +1,207 @@
+<div class="reserve-layout">
+
+  <!-- Columna principal: los 3 pasos -->
+  <div class="reserve-main">
+
+    <!-- PASO 1: Vehículo -->
+    <div class="step-card">
+      <div class="step-title">
+        <span class="step-number">1</span>
+        <div>
+          <h2>{{ 'RESERVE.STEP1.TITLE' | translate }} <mat-icon>directions_car</mat-icon></h2>
+          <p>{{ 'RESERVE.STEP1.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="vehicle-options">
+        @if (vm.vehiclesLoading()) {
+          <p class="vehicle-loading">{{ 'RESERVE.STEP1.LOADING' | translate }}</p>
+        } @else {
+          @for (v of vm.vehicles(); track v.id) {
+            <button
+              class="vehicle-option"
+              [class.selected]="vm.selectedVehicleId() === v.id"
+              (click)="vm.selectVehicle(v.id)">
+              <div class="vehicle-icon">
+                <mat-icon>{{ v.vehicleType === 'MOTO' ? 'two_wheeler' : (v.vehicleType === 'TRUCK' ? 'local_shipping' : 'directions_car') }}</mat-icon>
+              </div>
+              <div class="vehicle-info">
+                <p class="vehicle-name">{{ v.brand }} {{ v.model }}</p>
+                <p class="vehicle-detail">{{ ('VEHICLE.' + v.vehicleType) | translate }} · {{ v.licensePlateFormatted }}</p>
+              </div>
+            </button>
+          }
+        }
+      </div>
+
+      <p class="no-vehicle-note">
+        {{ 'RESERVE.STEP1.NO_VEHICLE' | translate }}
+        <a routerLink="/client/vehicles">{{ 'RESERVE.STEP1.NO_VEHICLE_LINK' | translate }}</a>.
+      </p>
+    </div>
+
+    <!-- PASO 2: Servicio -->
+    <div class="step-card">
+      <div class="step-title">
+        <span class="step-number">2</span>
+        <div>
+          <h2>{{ 'RESERVE.STEP2.TITLE' | translate }} <mat-icon>auto_awesome</mat-icon></h2>
+          <p>{{ 'RESERVE.STEP2.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <!-- los precios dependen del tipo de vehículo: primero se escoge el vehículo -->
+      @if (!vm.selectedVehicleId()) {
+        <p class="vehicle-loading">{{ 'RESERVE.STEP2.CHOOSE_VEHICLE_FIRST' | translate }}</p>
+      } @else if (vm.servicesLoading()) {
+        <p class="vehicle-loading">{{ 'RESERVE.STEP2.LOADING' | translate }}</p>
+      } @else {
+        <div class="service-options">
+          @for (s of vm.services(); track s.id) {
+            <button
+              class="service-option"
+              [class.selected]="vm.selectedServiceId() === s.id"
+              (click)="vm.selectService(s.id)">
+              <p class="service-name">{{ s.name }}</p>
+              <p class="service-price">{{ priceOf(s) | copPrice }}</p>
+              <p class="service-time"><mat-icon>schedule</mat-icon> {{ 'RESERVE.MINUTES' | translate:{ count: minutesOf(s) } }}</p>
+              <!-- puntos de fidelización que suma este servicio cuando se paga -->
+              @if (s.loyaltyPoints > 0) {
+                <p class="service-points"><mat-icon>stars</mat-icon> {{ 'RESERVE.POINTS' | translate:{ count: s.loyaltyPoints } }}</p>
+              }
+              @if (s.description) {
+                <p class="service-description">{{ s.description }}</p>
+              }
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- PASO 3: Fecha, hora y lugar (sede del lavadero) -->
+    <div class="step-card">
+      <div class="step-title">
+        <span class="step-number">3</span>
+        <div>
+          <h2>{{ 'RESERVE.STEP3.TITLE' | translate }} <mat-icon>event</mat-icon></h2>
+          <p>{{ 'RESERVE.STEP3.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">
+            {{ 'RESERVE.DATE' | translate }}
+            <mat-icon class="label-icon">calendar_today</mat-icon>
+          </label>
+          <div class="input-wrapper">
+            <input type="date" class="form-input" [(ngModel)]="vm.date" (ngModelChange)="vm.onDateChange()" [min]="vm.minDate" [max]="vm.maxDate" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            {{ 'RESERVE.TIME' | translate }}
+            <mat-icon class="label-icon">schedule</mat-icon>
+          </label>
+          <div class="select-wrapper">
+            <select class="form-select" [(ngModel)]="vm.time" (ngModelChange)="vm.onTimeChange()" [disabled]="vm.timesLoading() || !vm.availableTimes().length">
+              <option value="" disabled selected>
+                {{ (vm.timesLoading() ? 'RESERVE.LOADING_TIMES' : (vm.dayClosed() ? 'RESERVE.DAY_CLOSED' : (vm.date() && vm.selectedServiceId() && !vm.availableTimes().length ? 'RESERVE.NO_TIMES' : 'RESERVE.SELECT_TIME'))) | translate }}
+              </option>
+              @for (h of vm.availableTimes(); track h) {
+                <option [value]="h">{{ h }}</option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+        </div>
+      </div>
+
+      <!-- RF-010: operario (opcional). Sin preferencia, el lavadero asigna uno libre (RF-008) -->
+      @if (vm.time()) {
+        <div class="form-group">
+          <label class="form-label">
+            {{ 'RESERVE.OPERATOR.LABEL' | translate }}
+            <mat-icon class="label-icon">engineering</mat-icon>
+          </label>
+          <div class="select-wrapper">
+            <select class="form-select" [(ngModel)]="vm.preferredOperatorId" [disabled]="vm.operatorsLoading()">
+              <option [ngValue]="null">
+                {{ (vm.operatorsLoading() ? 'RESERVE.OPERATOR.LOADING' : 'RESERVE.OPERATOR.ANY') | translate }}
+              </option>
+              @for (o of vm.operators(); track o.operatorId) {
+                <option [ngValue]="o.operatorId">
+                  {{ o.firstName }}{{ o.averageRating != null ? ' · ★ ' + o.averageRating + ' (' + o.ratingsCount + ')' : '' }}
+                </option>
+              }
+            </select>
+            <mat-icon class="select-icon">expand_more</mat-icon>
+          </div>
+          <small class="form-hint">{{ (vm.operators().length || vm.operatorsLoading() ? 'RESERVE.OPERATOR.HINT' : 'RESERVE.OPERATOR.NONE_FREE') | translate }}</small>
+        </div>
+      }
+
+      <!-- LUGAR DEL SERVICIO: el cliente lleva su vehículo a la sede (no es a domicilio) -->
+      <div class="location-box">
+        <mat-icon>storefront</mat-icon>
+        <div>
+          <p class="location-title">{{ 'RESERVE.LOCATION.TITLE' | translate }}</p>
+          <p class="location-name">{{ vm.location()?.tradeName ?? '—' }}</p>
+          <p class="location-address">{{ vm.location()?.address ?? '' }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Columna lateral: resumen -->
+  <aside class="summary-card">
+    <h2><mat-icon>receipt_long</mat-icon> {{ 'RESERVE.SUMMARY.TITLE' | translate }}</h2>
+
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.VEHICLE' | translate }}</span>
+      <strong>{{ vm.vehicle() ? (vm.vehicle()!.brand + ' ' + vm.vehicle()!.model) : '—' }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.PLATE' | translate }}</span>
+      <strong>{{ vm.vehicle()?.licensePlateFormatted ?? '—' }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.SERVICE' | translate }}</span>
+      <strong>{{ vm.service()?.name ?? '—' }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.DURATION' | translate }}</span>
+      <strong>{{ vm.service() ? ('RESERVE.MINUTES' | translate:{ count: minutesOf(vm.service()!) }) : '—' }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.POINTS' | translate }}</span>
+      <strong>{{ (vm.service()?.loyaltyPoints ?? 0) > 0 ? ('RESERVE.POINTS' | translate:{ count: vm.service()!.loyaltyPoints }) : '—' }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.DATE' | translate }}</span>
+      <strong>{{ vm.date() || '—' }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.TIME' | translate }}</span>
+      <strong>{{ vm.time() || '—' }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.CAR_WASH' | translate }}</span>
+      <strong>{{ vm.location()?.tradeName ?? '—' }}</strong>
+    </div>
+
+    <div class="summary-total">
+      <span><mat-icon>attach_money</mat-icon> {{ 'RESERVE.SUMMARY.TOTAL' | translate }}</span>
+      <strong>{{ vm.serviceTotal() ? (vm.serviceTotal() | copPrice) : '$—' }}</strong>
+    </div>
+
+    <button class="btn-primary" [disabled]="!vm.isFormValid()" (click)="onSubmit()">
+      {{ 'RESERVE.SUMMARY.SUBMIT' | translate }} <mat-icon>arrow_forward</mat-icon>
+    </button>
+
+    <p class="summary-note">{{ 'RESERVE.SUMMARY.NOTE' | translate }}</p>
+  </aside>
+
+</div>

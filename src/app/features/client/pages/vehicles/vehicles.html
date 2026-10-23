@@ -1,0 +1,86 @@
+<div class="home-layout">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="CLIENT"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <main class="home-content">
+
+    <div class="vehicles-header">
+      <div>
+        <h1>{{ 'VEHICLES.TITLE' | translate }}</h1>
+        <p>{{ 'VEHICLES.SUBTITLE' | translate }}</p>
+      </div>
+
+      <button class="btn-primary" (click)="openRegisterModal()">
+        <mat-icon>add</mat-icon>
+        {{ 'VEHICLES.REGISTER_BUTTON' | translate }}
+      </button>
+    </div>
+
+    <!-- Estadísticas rápidas -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><mat-icon>directions_car</mat-icon></div>
+        <span class="stat-value">{{ vm.totalVehicles() }}</span>
+        <span class="stat-label">{{ 'VEHICLES.STATS.TOTAL' | translate }}</span>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><mat-icon>water_drop</mat-icon></div>
+        <span class="stat-value">{{ vm.totalWashes() }}</span>
+        <span class="stat-label">{{ 'VEHICLES.STATS.WASHES' | translate }}</span>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon"><mat-icon>schedule</mat-icon></div>
+        <span class="stat-value stat-value-date">{{ vm.lastWashOverall() }}</span>
+        <span class="stat-label">{{ 'VEHICLES.STATS.LAST_WASH' | translate }}</span>
+      </div>
+    </div>
+
+    <!-- Cuando aún no hay vehículos registrados -->
+    <div class="empty-state" *ngIf="vm.vehicles().length === 0">
+      <div class="empty-state-icon"><mat-icon>directions_car</mat-icon></div>
+      <p class="empty-state-title">{{ 'VEHICLES.EMPTY.TITLE' | translate }}</p>
+      <p class="empty-state-subtitle">{{ 'VEHICLES.EMPTY.SUBTITLE' | translate }}</p>
+    </div>
+
+    <!-- Grid de vehículos -->
+    <div class="vehicles-grid">
+      <div class="vehicle-card" *ngFor="let vehicle of vm.vehicles()">
+
+        <div class="vehicle-card-header">
+          <div class="vehicle-icon">
+            <mat-icon>{{ iconFor(vehicle.type) }}</mat-icon>
+          </div>
+
+          <div class="vehicle-title">
+            <p class="vehicle-name">{{ vehicle.brand }} {{ vehicle.model }}</p>
+            <p class="vehicle-subtitle">{{ ('VEHICLE.' + vehicle.type) | translate }} · {{ vehicle.color }}</p>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn-icon edit" (click)="openEditModal(vehicle.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button class="btn-icon" (click)="confirmRemoveVehicle(vehicle.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="vehicle-detail">
+          <div class="vehicle-detail-row">
+            <span>{{ 'VEHICLES.CARD.PLATE' | translate }}</span>
+            <strong>{{ vehicle.plate }}</strong>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+</div>

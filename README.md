@@ -1,59 +1,92 @@
-# Web
+# LavaRápido — aplicación web
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+Aplicación web de LavaRápido: página de inicio pública con preguntas frecuentes, registro e inicio
+de sesión, y los paneles del cliente (reservas, vehículos, pagos, historial y calificaciones), del
+operario (servicios asignados y ejecución) y del administrador (usuarios, catálogo, horarios,
+operarios, reservas, informe de inspección, pagos y reportes). Incluye el informe de inspección
+público que el cliente abre sin sesión.
 
-## Development server
+Stack: Angular 21 · Angular Material · RxJS · ngx-translate (español, inglés, francés y portugués) · Vitest.
 
-To start a local development server, run:
+## Cómo correrla
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Necesita el backend arriba (`docker compose --profile app up -d` desde `lavarapido-infra`).
+En desarrollo, `proxy.conf.json` envía `/api` al API Gateway (`http://localhost:8080`).
 
 ```bash
-ng generate component component-name
+npm install
+npm start                 # http://localhost:4200
+npm test                  # pruebas unitarias con Vitest
+npm run build             # compilación de producción en dist/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Cuentas de prueba del perfil `dev` (solo en local): `admin@gmail.com`, `operador@gmail.com` y
+`cliente@gmail.com`; las contraseñas están en `GUIA-EQUIPO.md` de `lavarapido-infra`.
 
-```bash
-ng generate --help
+## Estructura
+
+```
+src/app/
+├── core/         guards, interceptors (token y sesión vencida), services, models, constants, utils
+├── features/     landing · auth · client · operator · admin · public-report · not-found
+└── shared/       componentes, diálogos, pipes y datos comunes
+src/assets/i18n/  textos en es, en, fr y pt
+src/styles/       tema, variables y mixins de diseño adaptable (mobile ≤ 768 px, tablet ≤ 1024 px)
 ```
 
-## Building
+## Arquitectura: por features + MVVM
 
-To build the project run:
+Cada *feature* (`admin`, `client`, `operator`, `auth`, `landing`, `public-report`) tiene
+sus pantallas, y cada pantalla se divide en Vista, ViewModel y Modelo:
 
-```bash
-ng build
+```
+features/<feature>/
+├── pages/<pantalla>/                 VISTA: <pantalla>.ts + .html + .scss
+├── viewmodels/<pantalla>.viewmodel.ts   VIEWMODEL: estado (signals) y acciones de la pantalla
+├── services/                         estado compartido entre pantallas del rol (stores del admin)
+└── <feature>-routing-module.ts
+shared/components + shared/dialogs    VISTAS que usan los 3 roles (perfil, notificaciones, menú...)
+shared/viewmodels/                    sus VIEWMODELS (ej. profile.viewmodel.ts)
+core/models + core/services           MODELO: tipos y llamadas HTTP al gateway
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- **Vista.** Muestra el estado del ViewModel y le pasa los eventos. Abre los modales (confirmar,
+  formularios) y navega, pero no llama a `core/services` ni decide reglas.
+- **ViewModel.** Clase `@Injectable()` que se registra en `providers` de su página, así vive y
+  muere con la pantalla. Guarda el estado en *signals* (la app es *zoneless*: la vista se repinta
+  sola) y expone las acciones; es lo único que habla con `core/services` y los stores. Avisa el
+  resultado con `FeedbackService`. No toca HTML.
+- **Modelo.** `core/models` (tipos del backend) y `core/services` (un servicio por microservicio).
+- Una pantalla con secciones o pasos (la landing, recuperar contraseña) tiene un solo ViewModel
+  que registra la página y que inyectan sus secciones.
+- Los componentes compartidos con lógica (perfil, notificaciones, configuración, menú lateral y los
+  modales que guardan solos) registran su ViewModel en sus propios `providers`.
+- Los modales que solo llenan un formulario y devuelven el resultado son parte de la vista.
+- Excepciones: la página 404 (lee la sesión para saber a qué inicio llevar) y la miniatura de una
+  foto de inspección (carga la imagen con el token) son vistas mínimas sin ViewModel.
+- Las pruebas del comportamiento van sobre el ViewModel, sin pantalla.
 
-## Running unit tests
+## Diseño adaptable
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Cada pantalla se revisa a 360 px (celular) y 768 px (tableta) sin desbordamiento horizontal
+antes de fusionar a `develop`.
 
-```bash
-ng test
-```
+## Proyecto LavaRápido
 
-## Running end-to-end tests
+Este repositorio es parte de LavaRápido (Vehicle Washing), proyecto formativo del Tecnólogo en
+Análisis y Desarrollo de Software (ADSO), ficha 3145556, SENA Regional Huila.
 
-For end-to-end (e2e) testing, run:
+| Recurso | Enlace |
+|---|---|
+| Documentación y manuales (ES/EN, MD · PDF · Word) | [lavarapido-docs](https://github.com/BrayanCABRERA123/lavarapido-docs#readme) |
+| Manual técnico | [09_MANUALES/ES/MD/manual-tecnico.md](https://github.com/BrayanCABRERA123/lavarapido-docs/blob/main/09_MANUALES/ES/MD/manual-tecnico.md) |
+| Manual de instalación | [09_MANUALES/ES/MD/manual-de-instalacion.md](https://github.com/BrayanCABRERA123/lavarapido-docs/blob/main/09_MANUALES/ES/MD/manual-de-instalacion.md) |
+| Levantar todo el sistema | [lavarapido-infra](https://github.com/BrayanCABRERA123/lavarapido-infra) (`docker compose --profile app up -d`) |
+| Aplicación desplegada | https://lavarapidovehicular.northcentralus.cloudapp.azure.com |
 
-```bash
-ng e2e
-```
+**Ramas y commits:** se trabaja en `develop` con ramas `feature/`, `fix/` y `docs/` que se
+fusionan con `git merge --no-ff`; los commits siguen Conventional Commits
+(`feat(scope): ...`, `fix(scope): ...`). Detalle en la
+[guía de git del equipo](https://github.com/BrayanCABRERA123/lavarapido-docs#guía-de-git-del-equipo).
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Equipo:** Brayan Estiven Patiño Cabrera, Juan Camilo Guilombo Osorio y Merari Urbano Quintero.

@@ -1,0 +1,261 @@
+@use '../../../../../../../styles/mixins' as *;
+
+// card principal del detalle
+.detail-card {
+  background-color: var(--card);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
+}
+
+:host-context(body.green-dark) .detail-card,
+:host-context(body.pink-dark) .detail-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+// header con título y badge
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+// título del detalle
+.detail-title {
+  font-size: $fs-subtitle;
+  font-weight: $fw-bold;
+  color: var(--text);
+  margin: 0;
+}
+
+// badge de estado
+.status-badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
+
+  &.pending {
+    background-color: rgba(249, 168, 37, 0.15);
+    color: #F9A825;
+  }
+
+  &.progress {
+    background-color: rgba(30, 136, 229, 0.12);
+    color: #1E88E5;
+  }
+
+  &.completed {
+    background-color: rgba(var(--primary-rgb), 0.15);
+    color: var(--primary);
+  }
+}
+
+// grid de 2 columnas para la info
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+// cada columna
+.detail-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// cada línea de información
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: $fs-body;
+}
+
+// ícono pequeño de la línea
+.detail-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+}
+
+// label de la línea
+.detail-label {
+  color: var(--text-secondary);
+  font-weight: $fw-regular;
+}
+
+// valor de la línea
+.detail-value {
+  color: var(--text);
+
+  &.bold {
+    font-weight: $fw-semibold;
+  }
+}
+
+// sección de acciones
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// título de sección
+.actions-title {
+  @include body-text-bold;
+  color: var(--text);
+  margin: 0;
+}
+
+// fila de botones de acción
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+// botón iniciar 
+.btn-start {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  @include body-text-bold;
+  line-height: normal;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), .25);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: var(--primary-hover);
+  }
+}
+
+// botón finalizar — neutro
+.btn-finish {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background-color: var(--item-bg);
+  color: var(--text-secondary);
+  border: none;
+  border-radius: 10px;
+  @include body-text-bold;
+  line-height: normal;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background-color: var(--item-hover);
+    color: var(--text);
+  }
+}
+
+// sección de opciones adicionales
+.extra-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// botón contactar cliente
+.btn-contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: var(--card);
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: $fs-body;
+  font-weight: $fw-medium;
+  cursor: pointer;
+  font-family: $font-family-base;
+  transition: all 0.2s ease;
+  width: fit-content;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+  }
+
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+
+    mat-icon {
+      color: var(--primary);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-card {
+    padding: 20px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn-start,
+  .btn-finish,
+  .btn-contact {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-card {
+    padding: 16px;
+  }
+
+  .detail-title {
+    font-size: $fs-body;
+  }
+}
+
+// "Iniciar" antes de tiempo: deshabilitado y con la hora desde la que se puede
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.start-hint {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}

@@ -1,0 +1,22 @@
+<div class="dialog-container">
+
+  <div class="icon-circle" [class.danger]="danger">
+    <mat-icon>{{ danger ? 'warning' : 'help' }}</mat-icon>
+  </div>
+
+  <h2 class="dialog-title">{{ title | translate }}</h2>
+  <p class="dialog-text">{{ message | translate: messageParams }}</p>
+
+  <div class="dialog-actions">
+
+    <button class="btn-cancel" (click)="close(false)">
+      {{ cancelText | translate }}
+    </button>
+
+    <button class="btn-confirm" [class.danger]="danger" (click)="close(true)">
+      {{ confirmText | translate }}
+    </button>
+
+  </div>
+
+</div>

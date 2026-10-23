@@ -1,0 +1,82 @@
+<div class="detail-card">
+
+  <div class="detail-header">
+    <h3 class="detail-title">
+      {{ 'ASSIGNED_SERVICES.DETAIL.TITLE' | translate }} ({{ service.id }})
+    </h3>
+    <span
+      class="status-badge"
+      [class.pending]="service.statusColor === 'pending'"
+      [class.progress]="service.statusColor === 'progress'"
+      [class.completed]="service.statusColor === 'completed'">
+      {{ service.status }}
+    </span>
+  </div>
+
+  <div class="detail-grid">
+
+    <div class="detail-col">
+      <div class="detail-item">
+        <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.CLIENT' | translate }}</span>
+        <span class="detail-value">{{ service.client }}</span>
+      </div>
+      <!-- el cliente trae el vehículo a la sede: sirve para reconocerlo al llegar -->
+      <div class="detail-item">
+        <mat-icon class="detail-icon">directions_car</mat-icon>
+        <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.VEHICLE' | translate }}</span>
+        <span class="detail-value bold">{{ service.vehicle }}</span>
+      </div>
+    </div>
+
+    <div class="detail-col">
+      <div class="detail-item">
+        <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.SERVICE_TYPE' | translate }}</span>
+        <span class="detail-value bold">{{ service.serviceType }}</span>
+      </div>
+      <div class="detail-item">
+        <mat-icon class="detail-icon">schedule</mat-icon>
+        <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.SCHEDULED_TIME' | translate }}</span>
+        <span class="detail-value bold">{{ service.dateTime }}</span>
+      </div>
+      <div class="detail-item">
+        <mat-icon class="detail-icon">payments</mat-icon>
+        <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.PAYMENT_METHOD' | translate }}</span>
+        <span class="detail-value bold">{{ service.paymentMethod }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- acciones según el estado: pendiente -> iniciar; en progreso -> reportar o finalizar -->
+  @if (service.statusColor !== 'completed') {
+    <div class="actions-section">
+      <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.PROGRESS_TITLE' | translate }}</p>
+      <div class="action-buttons">
+        @if (service.statusColor === 'pending') {
+          <button class="btn-start" [disabled]="!canStartNow(service.startableAt)" (click)="startService()">
+            <mat-icon>play_circle_outline</mat-icon>
+            {{ 'ASSIGNED_SERVICES.DETAIL.START' | translate }}
+          </button>
+          @if (!canStartNow(service.startableAt)) {
+            <p class="start-hint">{{ 'OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(service.startableAt) } }}</p>
+          }
+        }
+        @if (service.statusColor === 'progress') {
+          <button class="btn-finish" (click)="finishService()">
+            <mat-icon>flag</mat-icon>
+            {{ 'ASSIGNED_SERVICES.DETAIL.FINISH' | translate }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="extra-section">
+    <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.EXTRA_TITLE' | translate }}</p>
+    <button class="btn-contact" (click)="contactClient()">
+      <mat-icon>phone</mat-icon>
+      {{ 'ASSIGNED_SERVICES.DETAIL.CONTACT' | translate }}
+    </button>
+  </div>
+
+</div>

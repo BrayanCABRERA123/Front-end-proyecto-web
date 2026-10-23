@@ -1,0 +1,53 @@
+<div class="calendar-card">
+
+  <div class="calendar-header">
+    <button class="btn-nav" (click)="previousMonth()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <h2 class="month-title">{{ monthTitle }}</h2>
+
+    <button class="btn-nav" (click)="nextMonth()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <div class="weekdays">
+    @for (day of shortWeekdays; track day) {
+      <span>{{ day }}</span>
+    }
+  </div>
+
+  <div class="weeks">
+    @for (week of weeks; track $index) {
+      <div class="week">
+        @for (day of week; track day.date) {
+          <button
+            class="day-cell"
+            [class.outside-month]="!day.isCurrentMonth"
+            [class.selected]="day.date === selectedDate"
+            [class.is-today]="day.isToday && day.date !== selectedDate"
+            [disabled]="!day.isCurrentMonth"
+            (click)="selectDay(day)">
+
+            <span class="day-number">{{ day.number }}</span>
+
+            @if (day.serviceCount > 0) {
+              <span class="day-dots">
+                @for (p of dots(day.serviceCount); track $index) {
+                  <span class="dot"></span>
+                }
+              </span>
+            }
+          </button>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="calendar-footer">
+    <span>{{ 'SCHEDULE.CALENDAR.SERVICES_OF_DAY' | translate }}</span>
+    <strong>{{ servicesByDate[selectedDate] ?? 0 }}</strong>
+  </div>
+
+</div>

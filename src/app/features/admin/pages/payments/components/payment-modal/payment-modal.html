@@ -1,0 +1,60 @@
+<div class="manual-dialog">
+
+  <div class="manual-dialog__header">
+    <div>
+      <h2>{{ 'MANUAL_PAYMENT_MODAL.TITLE' | translate }}</h2>
+      <p>{{ 'MANUAL_PAYMENT_MODAL.SUBTITLE' | translate }}</p>
+    </div>
+    <button type="button" class="close-x" (click)="close()" aria-label="close">×</button>
+  </div>
+
+  <div class="manual-dialog__body">
+
+    <!-- reserva real (booking-service): el monto sale de ella -->
+    <label class="field">
+      <span>{{ 'MANUAL_PAYMENT_MODAL.SERVICE_LABEL' | translate }}</span>
+      <select [ngModel]="vm.bookingId()" (ngModelChange)="vm.selectBooking($event)">
+        <option [ngValue]="null">—</option>
+        @for (b of vm.bookings(); track b.id) {
+          <option [ngValue]="b.id">{{ b.label }}</option>
+        }
+      </select>
+    </label>
+    @if (vm.selectedServices()) {
+      <p class="hint">{{ vm.selectedServices() }}</p>
+    }
+
+    <div class="row-2">
+      <label class="field">
+        <span>{{ 'MANUAL_PAYMENT_MODAL.AMOUNT_LABEL' | translate }}</span>
+        <input type="text" [value]="vm.amountLabel()" readonly>
+      </label>
+
+      <!-- cuentas del lavadero (payment-service), efectivo incluido -->
+      <label class="field">
+        <span>{{ 'MANUAL_PAYMENT_MODAL.METHOD_LABEL' | translate }}</span>
+        <select [(ngModel)]="vm.accountId">
+          @for (a of vm.accounts(); track a.id) {
+            <option [ngValue]="a.id">{{ a.methodName }} · {{ a.accountHolder }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    <label class="field">
+      <span>{{ 'PAYMENT.CONFIRM.REFERENCE' | translate }}</span>
+      <input type="text" [(ngModel)]="vm.transactionReference" maxlength="100">
+    </label>
+
+  </div>
+
+  <div class="manual-dialog__actions">
+    <button class="btn-cancel" type="button" (click)="close()">
+      {{ 'MANUAL_PAYMENT_MODAL.CANCEL' | translate }}
+    </button>
+    <button class="btn-confirm" type="button" [disabled]="!vm.canRegister()" (click)="register()">
+      {{ 'MANUAL_PAYMENT_MODAL.REGISTER' | translate }}
+    </button>
+  </div>
+
+</div>

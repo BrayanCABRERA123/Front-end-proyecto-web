@@ -1,0 +1,168 @@
+<div class="home-layout">
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <main class="home-content">
+
+    @if (vm.loading) {
+      <div class="card"><p class="muted">{{ 'COMMON.LOADING' | translate }}</p></div>
+    } @else if (!vm.operator) {
+      <div class="card">
+        <app-empty-state
+          variant="error"
+          icon="calendar_today"
+          titleKey="OPERATOR_DETAIL.NOT_FOUND_TITLE"
+          messageKey="OPERATOR_DETAIL.NOT_FOUND_MESSAGE">
+          <button class="btn-outline" (click)="goToOperatorsList()">
+            <mat-icon>arrow_back</mat-icon>
+            {{ 'OPERATOR_DETAIL.BACK_TO_OPERATORS' | translate }}
+          </button>
+        </app-empty-state>
+      </div>
+    } @else {
+
+      <!-- breadcrumb -->
+      <nav class="breadcrumb">
+        <a (click)="goToOperatorsList()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'OPERATOR_DETAIL.BACK_TO_OPERATORS' | translate }}
+        </a>
+        <span>/</span>
+        <a (click)="goToOperatorsList()">{{ 'ADMIN_PAGES.OPERATORS.TITLE' | translate }}</a>
+        <span>/</span>
+        <a (click)="goBack()">{{ 'OPERATOR_DETAIL.BREADCRUMB_AVAILABILITY' | translate:{ name: vm.operator.name } }}</a>
+      </nav>
+
+      <!-- encabezado: la navegación por semanas sirve a las vistas semana y día -->
+      <div class="week-header">
+        @if (vm.view !== 'month') {
+          <div class="week-nav">
+            <button class="nav-btn" (click)="vm.shiftWeek(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_WEEK' | translate">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button class="today-btn" (click)="vm.goToToday()">
+              {{ 'OPERATOR_CALENDAR.TODAY' | translate }}
+            </button>
+            <strong>
+              {{ 'OPERATOR_CALENDAR.WEEK_LABEL' | translate:{ week: vm.weekLabelContent.week, from: vm.weekLabelContent.from, to: vm.weekLabelContent.to } }}
+            </strong>
+            <button class="nav-btn" (click)="vm.shiftWeek(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_WEEK' | translate">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        }
+
+        <span class="full-day-chip">
+          <mat-icon>schedule</mat-icon>
+          {{ 'OPERATOR_CALENDAR.FULL_DAY' | translate:{ from: vm.fullDayContent.from, to: vm.fullDayContent.to } }}
+        </span>
+
+        <div class="view-toggle">
+          <button [class.view-toggle__btn--active]="vm.view === 'week'" class="view-toggle__btn" (click)="vm.setView('week')">{{ 'OPERATOR_CALENDAR.VIEW.WEEK' | translate }}</button>
+          <button [class.view-toggle__btn--active]="vm.view === 'day'" class="view-toggle__btn" (click)="vm.setView('day')">{{ 'OPERATOR_CALENDAR.VIEW.DAY' | translate }}</button>
+          <button [class.view-toggle__btn--active]="vm.view === 'month'" class="view-toggle__btn" (click)="vm.setView('month')">{{ 'OPERATOR_CALENDAR.VIEW.MONTH' | translate }}</button>
+        </div>
+      </div>
+
+      <!-- leyenda: solo lo que el calendario realmente pinta -->
+      <div class="legend">
+        <span><i class="dot dot--available"></i> {{ 'OPERATOR_CALENDAR.LEGEND.AVAILABLE' | translate }}</span>
+        <span><i class="dot dot--leave"></i> {{ 'OPERATOR_CALENDAR.LEGEND.LEAVE' | translate }}</span>
+        <span><i class="dot dot--off"></i> {{ 'OPERATOR_CALENDAR.LEGEND.OFF' | translate }}</span>
+      </div>
+
+      @if (vm.view === 'week') {
+        <div class="week-grid">
+          @for (dayIndex of vm.dayIndexes; track dayIndex) {
+            <div class="day-column" [class.day-column--today]="vm.isToday(dayIndex)" [class.day-column--past]="vm.isPast(dayIndex)">
+              <div class="day-column__header">
+                <span>{{ vm.dayLabel(dayIndex) }}</span>
+                <small>{{ vm.dayDateLabel(dayIndex) }}</small>
+              </div>
+
+              <div class="day-column__body">
+                @for (entry of vm.entriesForDay(dayIndex); track $index) {
+                  <div [class]="'block block--' + entry.type">
+                    @if (entry.startTime) { <span class="block__time">{{ entry.startTime }} - {{ entry.endTime }}</span> }
+                    <span class="block__label">{{ entry.label }}</span>
+                  </div>
+                } @empty {
+                  <div class="block block--off">
+                    <span class="block__label">{{ 'OPERATOR_CALENDAR.LEGEND.OFF' | translate }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      } @else if (vm.view === 'day') {
+        <div class="card day-view">
+          <div class="day-view__picker">
+            @for (dayIndex of vm.dayIndexes; track dayIndex) {
+              <button
+                class="day-chip"
+                [class.day-chip--active]="vm.selectedDayIndex === dayIndex"
+                [class.day-chip--today]="vm.isToday(dayIndex)"
+                [class.day-chip--past]="vm.isPast(dayIndex)"
+                (click)="vm.selectedDayIndex = dayIndex">
+                {{ vm.dayLabel(dayIndex) }}
+                <small>{{ vm.dayDateLabel(dayIndex) }}</small>
+              </button>
+            }
+          </div>
+
+          <div class="day-view__column">
+            @for (entry of vm.entriesForDay(vm.selectedDayIndex); track $index) {
+              <div [class]="'block block--' + entry.type">
+                @if (entry.startTime) { <span class="block__time">{{ entry.startTime }} - {{ entry.endTime }}</span> }
+                <span class="block__label">{{ entry.label }}</span>
+              </div>
+            } @empty {
+              <div class="day-view__empty">
+                <mat-icon>event_busy</mat-icon>
+                <p>{{ 'OPERATOR_CALENDAR.LEGEND.OFF' | translate }}</p>
+              </div>
+            }
+          </div>
+        </div>
+      } @else {
+        <div class="card month-view">
+          <div class="month-view__header">
+            <button class="nav-btn" (click)="vm.shiftMonth(-1)" [attr.aria-label]="'OPERATOR_CALENDAR.PREV_MONTH' | translate">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button class="today-btn" (click)="vm.goToToday()">
+              {{ 'OPERATOR_CALENDAR.TODAY' | translate }}
+            </button>
+            <strong>{{ vm.monthLabel }}</strong>
+            <button class="nav-btn" (click)="vm.shiftMonth(1)" [attr.aria-label]="'OPERATOR_CALENDAR.NEXT_MONTH' | translate">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+
+          <div class="month-view__weekdays">
+            @for (d of 'CALENDAR.DAYS_SHORT' | translate; track $index) {
+              <span>{{ d }}</span>
+            }
+          </div>
+
+          <div class="month-view__grid">
+            @for (cell of vm.monthCells; track $index) {
+              <div
+                class="month-cell"
+                [class.month-cell--empty]="cell.day === null"
+                [class.month-cell--today]="cell.isToday"
+                [class.month-cell--past]="cell.isPast">
+                @if (cell.day !== null) {
+                  <span class="month-cell__day">{{ cell.day }}</span>
+                  <i [class]="'dot dot--' + cell.kind"></i>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+    }
+
+  </main>
+</div>

@@ -1,0 +1,297 @@
+<div class="home-layout">
+  <app-sidebar rol="ADMIN"></app-sidebar>
+
+  <main class="home-content">
+
+    <!-- encabezado -->
+    <div class="page-header">
+      <div class="page-header__left">
+        <div class="header-icon"><mat-icon>schedule</mat-icon></div>
+        <div>
+          <h1>{{ 'ADMIN_PAGES.SCHEDULE_BAYS.TITLE' | translate }}</h1>
+          <p>{{ 'ADMIN_PAGES.SCHEDULE_BAYS.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="page-header__actions">
+        @if (vm.isOpenToday) {
+          <span class="open-badge">
+            <i class="dot"></i>
+            {{ 'ADMIN_SCHEDULE.OPEN_TODAY' | translate }} · {{ vm.todayLabel }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <!-- pestañas -->
+    <div class="tabs">
+      <button class="tab" [class.tab--active]="vm.activeTab === 'hours'" (click)="vm.setTab('hours')">
+        <mat-icon>event</mat-icon>
+        {{ 'ADMIN_SCHEDULE.TABS.BUSINESS_HOURS' | translate }}
+        <span class="tab-chip">{{ 'ADMIN_SCHEDULE.WEEKLY' | translate }}</span>
+      </button>
+
+      <button class="tab" [class.tab--active]="vm.activeTab === 'bays'" (click)="vm.setTab('bays')">
+        <mat-icon>directions_car</mat-icon>
+        {{ 'ADMIN_SCHEDULE.TABS.BAYS' | translate }}
+        <span class="tab-chip">{{ 'ADMIN_SCHEDULE.ACTIVE_BAYS_COUNT' | translate:{ count: vm.activeBaysCount } }}</span>
+      </button>
+    </div>
+
+    <!-- ================= HORARIO DEL NEGOCIO ================= -->
+    @if (vm.activeTab === 'hours') {
+
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h2>{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.TITLE' | translate }}</h2>
+            <p>{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.SUBTITLE' | translate }}</p>
+          </div>
+          <span class="timezone-chip">
+            <mat-icon>public</mat-icon>
+            {{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.TIMEZONE' | translate }}: America/Bogota (COT)
+          </span>
+        </div>
+
+        <div class="day-rows">
+          @for (d of vm.orderedSchedule; track d.key) {
+            <div class="day-row" [class.day-row--off]="!d.isWorking">
+
+              <label class="day-toggle">
+                <input type="checkbox" [checked]="d.isWorking" (change)="vm.toggleDay(d.key)">
+                <span class="switch"></span>
+              </label>
+
+              <div class="day-name">
+                <strong>{{ ('ADMIN_SCHEDULE.DAYS.' + d.key) | translate }}</strong>
+                <span class="muted">
+                  {{ (d.isWorking ? 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.WORKING' : 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.REST') | translate }}
+                </span>
+              </div>
+
+              <div class="time-field">
+                <span class="muted">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.OPEN_LABEL' | translate }}</span>
+                <input
+                  type="time"
+                  [ngModel]="d.openTime"
+                  (ngModelChange)="vm.setDayTime(d.key, 'openTime', $event)"
+                  [disabled]="!d.isWorking">
+              </div>
+
+              <span class="dash">–</span>
+
+              <div class="time-field">
+                <span class="muted">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.CLOSE_LABEL' | translate }}</span>
+                <input
+                  type="time"
+                  [ngModel]="d.closeTime"
+                  (ngModelChange)="vm.setDayTime(d.key, 'closeTime', $event)"
+                  [disabled]="!d.isWorking">
+              </div>
+
+              <div class="pause-field">
+                <span class="muted">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.PAUSE_LABEL' | translate }}</span>
+                @if (d.isWorking) {
+                  <select [ngModel]="d.pause" (ngModelChange)="vm.setDayPause(d.key, $event)">
+                    <option value="none">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.PAUSE_NONE' | translate }}</option>
+                    <option value="lunch">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.PAUSE_LUNCH' | translate }}</option>
+                  </select>
+                  @if (d.pause === 'lunch') {
+                    <input type="time" [ngModel]="d.breakStart" (ngModelChange)="vm.setDayTime(d.key, 'breakStart', $event)">
+                    <input type="time" [ngModel]="d.breakEnd" (ngModelChange)="vm.setDayTime(d.key, 'breakEnd', $event)">
+                  }
+                } @else {
+                  <span class="pause-chip">{{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.PAUSE_NOT_APPLICABLE' | translate }}</span>
+                }
+              </div>
+
+              <span [class]="'state-pill ' + (d.isWorking ? 'state-pill--open' : 'state-pill--closed')">
+                {{ (d.isWorking ? 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.OPEN_STATE' : 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.CLOSED_STATE') | translate }}
+              </span>
+
+            </div>
+          }
+        </div>
+
+        <div class="card-footer">
+          <span class="muted">
+            <mat-icon>info</mat-icon>
+            {{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.IMPACT_NOTE' | translate }}
+          </span>
+
+          <div class="card-footer__actions">
+            <button class="btn-outline" (click)="vm.resetSchedule()">
+              {{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.RESET' | translate }}
+            </button>
+            <button class="btn-primary" (click)="vm.saveSchedule()">
+              <mat-icon>check</mat-icon>
+              {{ 'ADMIN_SCHEDULE.BUSINESS_HOURS_SECTION.SAVE' | translate }}
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- excepciones -->
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h2>
+              {{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.TITLE' | translate }}
+              <span class="count-chip">{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.COUNT' | translate:{ count: vm.exceptions.length } }}</span>
+            </h2>
+            <p>{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.SUBTITLE' | translate }}</p>
+          </div>
+          <button class="btn-primary" (click)="openAddException()">
+            <mat-icon>add</mat-icon>
+            {{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.ADD' | translate }}
+          </button>
+        </div>
+
+        @if (vm.exceptions.length === 0) {
+          <app-empty-state
+            icon="event_busy"
+            [titleKey]="'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.EMPTY_TITLE'"
+            [messageKey]="'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.EMPTY_MESSAGE'">
+            <button class="btn-primary" (click)="openAddException()">
+              <mat-icon>add</mat-icon>
+              {{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.ADD' | translate }}
+            </button>
+          </app-empty-state>
+        } @else {
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.TABLE.DATE' | translate }}</th>
+                  <th>{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.TABLE.TYPE' | translate }}</th>
+                  <th>{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.TABLE.SCHEDULE' | translate }}</th>
+                  <th class="col-reason">{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.TABLE.REASON' | translate }}</th>
+                  <th class="col-actions">{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.TABLE.ACTIONS' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (e of vm.exceptions; track e.id) {
+                  <tr>
+                    <td><strong>{{ e.date }}</strong></td>
+                    <td>
+                      <span [class]="'type-pill type-pill--' + e.type">
+                        {{ ('ADMIN_SCHEDULE.EXCEPTIONS_SECTION.TYPE.' + e.type) | translate }}
+                      </span>
+                    </td>
+                    <td>
+                      @if (e.closedAllDay) {
+                        <span class="type-pill type-pill--holiday">{{ 'ADMIN_SCHEDULE.EXCEPTIONS_SECTION.CLOSED_ALL_DAY' | translate }}</span>
+                      } @else {
+                        {{ e.openTime }} - {{ e.closeTime }}
+                      }
+                    </td>
+                    <td class="description-cell">{{ e.reason }}</td>
+                    <td class="actions-cell">
+                      <button class="btn-icon" (click)="openEditException(e)" [attr.aria-label]="'COMMON.EDIT' | translate">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button class="btn-icon btn-icon--danger" (click)="deleteException(e)" [attr.aria-label]="'COMMON.DELETE' | translate">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+
+      </div>
+
+    }
+
+    <!-- ================= BAHÍAS ================= -->
+    @if (vm.activeTab === 'bays') {
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h2>{{ 'ADMIN_SCHEDULE.TABS.BAYS' | translate }}</h2>
+            <p>{{ 'ADMIN_SCHEDULE.BAYS_SECTION.SUBTITLE' | translate }}</p>
+          </div>
+          <button class="btn-primary" (click)="openAddBay()">
+            <mat-icon>add</mat-icon>
+            {{ 'ADMIN_SCHEDULE.BAYS_SECTION.ADD_BAY' | translate }}
+          </button>
+        </div>
+
+        @if (vm.bays.length === 0) {
+          <app-empty-state
+            icon="local_car_wash"
+            [titleKey]="'ADMIN_SCHEDULE.BAYS_SECTION.EMPTY_TITLE'"
+            [messageKey]="'ADMIN_SCHEDULE.BAYS_SECTION.EMPTY_MESSAGE'">
+            <button class="btn-primary" (click)="openAddBay()">
+              <mat-icon>add</mat-icon>
+              {{ 'ADMIN_SCHEDULE.BAYS_SECTION.ADD_BAY' | translate }}
+            </button>
+          </app-empty-state>
+        } @else {
+          <div class="bays-grid">
+            @for (b of vm.bays; track b.id) {
+              <article class="bay-card"
+                       [class.bay-card--active]="b.status === 'active'"
+                       [class.bay-card--maintenance]="b.status === 'maintenance'"
+                       [class.bay-card--inactive]="b.status === 'inactive'">
+
+                <div class="bay-card__top">
+                  <div class="bay-icon"><mat-icon>directions_car</mat-icon></div>
+                  <span [class]="'state-pill state-pill--icon ' + (b.status === 'active' ? 'state-pill--open' : b.status === 'maintenance' ? 'state-pill--warning' : 'state-pill--closed')">
+                    <mat-icon class="state-pill__icon">{{ vm.statusIcon(b.status) }}</mat-icon>
+                    {{ vm.statusLabelKey(b.status) | translate }}
+                  </span>
+                </div>
+
+                <strong class="bay-card__name">{{ b.name }}</strong>
+
+                <span class="muted bay-card__operator">
+                  <mat-icon>tag</mat-icon>
+                  {{ b.code }}
+                </span>
+
+                <!-- estado: lista desplegable con los tres estados permitidos -->
+                <div class="bay-status">
+                  <label class="bay-status__label" [attr.for]="'bay-status-' + b.id">
+                    {{ 'ADMIN_SCHEDULE.BAYS_SECTION.STATUS_LABEL' | translate }}
+                  </label>
+
+                  <div class="bay-status__control" [class]="'bay-status__control bay-status__control--' + b.status">
+                    <mat-icon class="bay-status__icon">{{ vm.statusIcon(b.status) }}</mat-icon>
+                    <select
+                      [id]="'bay-status-' + b.id"
+                      [ngModel]="b.status"
+                      (ngModelChange)="vm.changeBayStatus(b, $event)">
+                      @for (s of vm.bayStatuses; track s.value) {
+                        <option [ngValue]="s.value">{{ s.labelKey | translate }}</option>
+                      }
+                    </select>
+                    <mat-icon class="bay-status__chevron">expand_more</mat-icon>
+                  </div>
+                </div>
+
+                <div class="bay-card__actions">
+                  <button class="btn-icon" (click)="openEditBay(b)" [attr.aria-label]="'COMMON.EDIT' | translate">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button class="btn-icon btn-icon--danger" (click)="deleteBay(b)" [attr.aria-label]="'COMMON.DELETE' | translate">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+
+              </article>
+            }
+          </div>
+        }
+
+      </div>
+    }
+
+  </main>
+</div>

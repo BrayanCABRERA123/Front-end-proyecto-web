@@ -1,0 +1,174 @@
+@use '../../../../../../../styles/mixins' as *;
+
+.service-card {
+  background-color: var(--card);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1.5px solid var(--border);
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.service-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.service-title {
+  font-size: 15px;
+  font-weight: $fw-bold;
+  color: var(--text);
+  margin: 0;
+}
+
+.service-date {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.service-detail {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: $fw-semibold;
+
+  // las .badge-* vienen de reservationStatusClass (shared/dialogs/reservation-models), no se traducen aquí
+  &.badge-completed {
+    background-color: var(--success);
+    color: #ffffff;
+  }
+
+  &.badge-in-progress {
+    background-color: var(--primary-soft);
+    color: var(--primary);
+  }
+
+  &.badge-pending {
+    background-color: var(--neutral-badge-soft);
+    color: var(--neutral-badge);
+  }
+
+  .badge-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.btn-start {
+  padding: 8px 20px;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  @include body-text-bold;
+  line-height: normal;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 4px 10px rgba(var(--primary-rgb), .20);
+
+  &:hover {
+    background-color: var(--primary-hover);
+  }
+}
+
+.btn-view {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  mat-icon {
+    font-size: 18px;
+    color: var(--text-muted);
+  }
+
+  &:hover {
+    border-color: var(--primary);
+
+    mat-icon {
+      color: var(--primary);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .card-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-card {
+    padding: 16px;
+  }
+
+  .card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-start {
+    width: 100%;
+    text-align: center;
+  }
+
+  .status-badge {
+    justify-content: center;
+  }
+}
+
+// "Iniciar" antes de tiempo: deshabilitado y con la hora desde la que se puede
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.start-hint {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}

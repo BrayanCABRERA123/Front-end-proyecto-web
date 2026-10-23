@@ -1,0 +1,40 @@
+export type PaymentMethod = 'nequi' | 'transfer' | 'daviplata' | 'cash';
+
+// todo lo que la tabla de pagos le pasa al modal para revisar un pago pendiente
+export interface PaymentReviewData {
+  code: string; // #PAG-4902
+  status: 'pending' | 'approved' | 'rejected' | 'refunded';
+  client: string;
+  phone: string;
+  email: string;
+  bookingCode: string;
+  service: string;
+  vehicle: string;
+  plate: string;
+  scheduleLabel: string; // "Hoy, 15:00 - 16:00 (1 hora)"
+  bay: string;
+  operator: string;
+  method: PaymentMethod;
+  transactionReference: string;
+  amountDue: number;
+  /** monto que el cliente indicó al reportar; null si no lo indicó (pago en caja o versión anterior) */
+  amountDeclared: number | null;
+  receiptDate: string; // "Hoy, 14:48 COT"
+  bankAccount: string; // NIT/celular que aparece en el comprobante
+  /** motivo ya registrado, se muestra en modo lectura cuando el pago fue rechazado */
+  rejectionReason?: string;
+  /** imagen del comprobante que subió el cliente (payment-service) */
+  receiptImage?: string | null;
+  /** titular de la cuenta que recibió el pago */
+  payee?: string;
+  /** quien revisa el pago pendiente: el admin que tiene la sesión abierta */
+  reviewerName: string;
+}
+
+// refunded: el admin pide reembolsar un pago aprobado (la pantalla confirma antes de llamar al backend)
+export type PaymentReviewAction = 'approved' | 'rejected' | 'refunded';
+
+export interface PaymentReviewResult {
+  action: PaymentReviewAction;
+  reason?: string; // solo cuando action === 'rejected'
+}

@@ -1,0 +1,156 @@
+@use '../../../../../../../styles/mixins' as *;
+
+// card contenedora
+.qualification-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease;
+ 
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+ 
+  @media (max-width: 640px) {
+    padding: 16px;
+    border-radius: 12px;
+  }
+}
+ 
+// fila superior
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+ 
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+ 
+// info del cliente
+.client-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+ 
+// nombre del cliente
+.client-name {
+  font-size: 15px;
+  font-weight: $fw-bold;
+  color: var(--text);
+  margin: 0;
+}
+ 
+// tipo de servicio
+.service-type {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+ 
+// fila de estrellas
+.stars-row {
+  display: flex;
+  gap: 2px;
+  margin-top: 2px;
+}
+ 
+// estrella individual
+.star {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--border);
+ 
+  &.filled {
+    color: var(--primary);
+  }
+}
+ 
+// columna derecha con fecha y botón
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+ 
+  @media (max-width: 480px) {
+    align-self: flex-end;
+  }
+}
+ 
+// fecha de la calificación
+.card-date {
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+ 
+// botón ver detalles
+.btn-view {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+ 
+  mat-icon {
+    font-size: $fs-subtitle;
+    color: var(--text-secondary);
+  }
+ 
+  &:hover {
+    border-color: var(--primary);
+ 
+    mat-icon {
+      color: var(--primary);
+    }
+  }
+}
+ 
+// comentario del cliente
+.card-comment {
+  @include body-text;
+  color: var(--text);
+  margin: 0;
+  font-style: italic;
+}
+ 
+// detalles del servicio
+.card-details {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+ 
+// cada detalle
+.detail-item {
+  @include caption-text;
+  color: var(--text-secondary);
+}
+ 
+// separador entre detalles
+.detail-separator {
+  @include caption-text;
+  color: var(--border);
+ 
+  @media (max-width: 480px) {
+    display: none;
+  }
+}
+ 

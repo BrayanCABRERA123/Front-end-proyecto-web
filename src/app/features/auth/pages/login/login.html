@@ -1,0 +1,103 @@
+<div class="login-container">
+
+    <div class="auth-shell">
+
+        <app-auth-side-panel></app-auth-side-panel>
+
+        <div class="login-form-section">
+
+            <div class="login-card">
+
+                <app-back-button></app-back-button>
+
+                <h3>{{ 'LOGIN.TITLE' | translate }}</h3>
+
+                <p class="subtitle">
+                    {{ 'LOGIN.SUBTITLE' | translate }}
+                </p>
+
+                <p class="error-msg" role="status" *ngIf="sessionExpired && !vm.errorKey()">
+                    {{ 'LOGIN.SESSION_EXPIRED' | translate }}
+                </p>
+
+                <form [formGroup]="vm.form" (ngSubmit)="onSubmit()" novalidate>
+
+                    <label>
+                        {{ 'LOGIN.EMAIL' | translate }}
+                    </label>
+
+                    <input
+                        type="email"
+                        formControlName="email"
+                        [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
+                        (input)="vm.stripEmailSpaces()">
+
+                    <span
+                        class="error-msg"
+                        *ngIf="vm.f['email'].errors?.['required'] && vm.f['email'].touched">
+
+                        {{ 'LOGIN.EMAIL_REQUIRED' | translate }}
+
+                    </span>
+
+                    <span
+                        class="error-msg"
+                        *ngIf="vm.f['email'].errors?.['pattern'] && vm.f['email'].touched">
+
+                        {{ 'LOGIN.EMAIL_INVALID' | translate }}
+
+                    </span>
+
+                    <label>
+                        {{ 'LOGIN.PASSWORD' | translate }}
+                    </label>
+
+                    <input
+                        type="password"
+                        formControlName="password"
+                        [placeholder]="'LOGIN.PASSWORD_PLACEHOLDER' | translate">
+
+                    <span
+                        class="error-msg"
+                        *ngIf="vm.f['password'].errors?.['required'] && vm.f['password'].touched">
+
+                        {{ 'LOGIN.PASSWORD_REQUIRED' | translate }}
+
+                    </span>
+
+                    <a class="forgot" routerLink="/auth/forgot-password">
+                        {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
+                    </a>
+
+                    <!-- error devuelto por el servidor (credenciales, cuenta desactivada, sin conexión...) -->
+                    <span class="error-msg" role="alert" *ngIf="vm.errorKey()">
+                        {{ vm.errorKey()! | translate }}
+                    </span>
+
+                    <button
+                        type="submit"
+                        [disabled]="vm.form.invalid || vm.loading()">
+
+                        {{ (vm.loading() ? 'LOGIN.LOADING' : 'LOGIN.BUTTON') | translate }}
+
+                    </button>
+
+                </form>
+
+                <p class="register">
+
+                    {{ 'LOGIN.NO_ACCOUNT' | translate }}
+
+                    <span routerLink="/auth/register">
+                        {{ 'LOGIN.REGISTER' | translate }}
+                    </span>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

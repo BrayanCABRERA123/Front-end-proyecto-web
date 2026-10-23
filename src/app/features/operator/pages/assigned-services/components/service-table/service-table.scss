@@ -1,0 +1,149 @@
+@use '../../../../../../../styles/mixins' as *;
+
+// tarjeta contenedora de la tabla
+.table-card {
+  background-color: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
+}
+
+:host-context(body.green-dark) .table-card,
+:host-context(body.pink-dark) .table-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+// tabla principal
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+// encabezados
+thead tr {
+  background-color: var(--bg-soft);
+  border-bottom: 1.5px solid var(--border);
+}
+
+th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+// filas del cuerpo
+.table-row {
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--item-hover);
+  }
+
+  &.selected {
+    background-color: var(--primary-soft);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+td {
+  padding: 14px 16px;
+  color: var(--text);
+  vertical-align: middle;
+}
+
+// badge de estado
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: $fs-caption;
+  font-weight: $fw-semibold;
+  white-space: nowrap;
+
+  &.pending {
+    background-color: rgba(249, 168, 37, 0.15);
+    color: #F9A825;
+  }
+
+  &.progress {
+    background-color: rgba(30, 136, 229, 0.12);
+    color: #1E88E5;
+  }
+
+  &.completed {
+    background-color: rgba(var(--primary-rgb), 0.15);
+    color: var(--primary);
+  }
+}
+
+
+.empty-row {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .table-card {
+    overflow-x: auto;
+  }
+
+  .service-table {
+    min-width: 700px;
+  }
+}
+
+/* ── CELULAR: cada servicio como tarjeta en vez de una tabla que se desplaza de lado ── */
+@media (max-width: 600px) {
+  .table-card { overflow-x: visible; }
+
+  .service-table {
+    min-width: 0;
+
+    thead { display: none; }
+
+    tbody,
+    tr,
+    td { display: block; }
+  }
+
+  .table-row {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .table-row td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+    border: none;
+    text-align: right;
+
+    &::before {
+      content: attr(data-label);
+      flex-shrink: 0;
+      color: var(--text-secondary);
+      font-size: $fs-caption;
+      font-weight: $fw-semibold;
+      text-align: left;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  th, td {
+    padding: 10px 12px;
+    font-size: $fs-caption;
+  }
+}

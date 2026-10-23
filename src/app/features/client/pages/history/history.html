@@ -1,0 +1,115 @@
+<!-- Contenedor principal con sidebar y contenido -->
+<div class="page-container">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="CLIENT"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <div class="main-content">
+
+    <!-- Tarjeta de filtros -->
+    <div class="filters-card">
+
+      <!-- Fila 1: Estado -->
+      <div class="filter-section">
+        <span class="filter-label">
+          <mat-icon>filter_list</mat-icon>
+          {{ 'HISTORY.FILTERS' | translate }}
+        </span>
+        <div class="radio-group">
+          <label class="radio-filter" [class.active]="vm.activeFilter() === 'todas'">
+            <input type="radio" name="filtro" value="todas" [(ngModel)]="vm.activeFilter" />
+            {{ 'HISTORY.ALL' | translate }}
+          </label>
+          <label class="radio-filter" [class.active]="vm.activeFilter() === 'activas'">
+            <input type="radio" name="filtro" value="activas" [(ngModel)]="vm.activeFilter" />
+            {{ 'HISTORY.ACTIVE' | translate }}
+          </label>
+          <label class="radio-filter" [class.active]="vm.activeFilter() === 'completadas'">
+            <input type="radio" name="filtro" value="completadas" [(ngModel)]="vm.activeFilter" />
+            {{ 'HISTORY.COMPLETED' | translate }}
+          </label>
+          <label class="radio-filter" [class.active]="vm.activeFilter() === 'canceladas'">
+            <input type="radio" name="filtro" value="canceladas" [(ngModel)]="vm.activeFilter" />
+            {{ 'HISTORY.CANCELLED' | translate }}
+          </label>
+        </div>
+      </div>
+
+      <div class="filters-divider"></div>
+
+      <!-- Fila 2: Fecha + Búsqueda en la misma línea -->
+      <div class="filter-section row-inline">
+
+        <!-- Fechas -->
+        <div class="date-block">
+          <span class="filter-label">
+            <mat-icon>calendar_today</mat-icon>
+            {{ 'HISTORY.DATE' | translate }}
+          </span>
+          <div class="date-inputs">
+            <div class="date-group">
+              <span class="date-label">{{ 'HISTORY.FROM' | translate }}</span>
+              <input type="date" class="date-input" [(ngModel)]="vm.dateFrom" [max]="vm.dateTo() || vm.today" />
+            </div>
+            <span class="date-separator">→</span>
+            <div class="date-group">
+              <span class="date-label">{{ 'HISTORY.TO' | translate }}</span>
+              <input type="date" class="date-input" [(ngModel)]="vm.dateTo" [min]="vm.dateFrom()" [max]="vm.today" />
+            </div>
+          </div>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <!-- Búsqueda — ocupa el resto -->
+        <div class="search-block flex-grow">
+          <span class="filter-label">
+            <mat-icon>search</mat-icon>
+            {{ 'HISTORY.SEARCH_LABEL' | translate }}
+          </span>
+          <div class="search-input-wrapper flex-grow">
+            <mat-icon class="search-icon">search</mat-icon>
+            <input type="text" class="search-input" [(ngModel)]="vm.search"
+              [placeholder]="'HISTORY.SEARCH_PLACEHOLDER' | translate" />
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Lista -->
+    <div class="history-list">
+
+      @if (vm.loading()) {
+      <div class="empty-state">
+        <mat-icon>hourglass_top</mat-icon>
+        <p>{{ 'COMMON.LOADING' | translate }}</p>
+      </div>
+      } @else if (vm.loadError()) {
+      <div class="empty-state">
+        <mat-icon>error_outline</mat-icon>
+        <p>{{ vm.loadError() | translate }}</p>
+      </div>
+      } @else {
+
+      @for (item of vm.filteredBookings(); track item.id) {
+      <app-history-card [booking]="item" (cancel)="cancelBooking($event)" (open)="openDetail($event)" (rate)="rateBooking($event)"></app-history-card>
+      }
+
+      <!-- Vacío -->
+      @if (vm.filteredBookings().length === 0) {
+      <div class="empty-state">
+        <mat-icon>search_off</mat-icon>
+        <p>{{ 'HISTORY.EMPTY' | translate }}</p>
+      </div>
+      }
+
+      }
+
+    </div>
+
+  </div>
+
+</div>

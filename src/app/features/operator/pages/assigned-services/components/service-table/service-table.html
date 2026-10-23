@@ -1,0 +1,43 @@
+<div class="table-card">
+  <table class="service-table">
+
+    <thead>
+      <tr>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.SERVICE_TYPE' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.DATE_TIME' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.VEHICLE' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.CLIENT' | translate }}</th>
+        <th>{{ 'ASSIGNED_SERVICES.TABLE.STATUS' | translate }}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (service of services; track service.id) {
+        <tr
+          class="table-row"
+          [class.selected]="selectedService?.id === service.id"
+          (click)="onSelectService(service)">
+          <!-- data-label: en el celular cada fila se ve como tarjeta con "etiqueta: valor" -->
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.SERVICE_TYPE' | translate">{{ service.serviceType }}</td>
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.DATE_TIME' | translate">{{ service.dateTime }}</td>
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.VEHICLE' | translate">{{ service.vehicle }}</td>
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.CLIENT' | translate">{{ service.client }}</td>
+          <td [attr.data-label]="'ASSIGNED_SERVICES.TABLE.STATUS' | translate">
+            <span
+              class="status-badge"
+              [class.pending]="service.statusColor === 'pending'"
+              [class.progress]="service.statusColor === 'progress'"
+              [class.completed]="service.statusColor === 'completed'">
+              {{ service.status }}
+            </span>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td class="empty-row" colspan="5">{{ 'ASSIGNED_SERVICES.TABLE.EMPTY' | translate }}</td>
+        </tr>
+      }
+    </tbody>
+
+  </table>
+</div>

@@ -1,0 +1,17 @@
+<button class="stats-card" (click)="open.emit(stat.route)">
+
+  <div class="icon-wrapper">
+    <div class="stat-icon">
+      <mat-icon>{{ stat.icon }}</mat-icon>
+    </div>
+
+    @if (stat.notification > 0) {
+      <span class="notification-badge">{{ stat.notification }}</span>
+    }
+  </div>
+
+  <p class="stat-value">{{ stat.value }}</p>
+
+  <p class="stat-label">{{ stat.label | translate }}</p>
+
+</button>

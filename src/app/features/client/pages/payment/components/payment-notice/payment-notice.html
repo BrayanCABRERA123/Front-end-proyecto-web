@@ -1,0 +1,7 @@
+<section class="notice" [class.notice--error]="tone === 'error'" [attr.role]="tone === 'success' ? 'status' : null">
+  <mat-icon>{{ icon }}</mat-icon>
+  <div>
+    <h2>{{ title }}</h2>
+    <p>{{ message }}</p>
+  </div>
+</section>

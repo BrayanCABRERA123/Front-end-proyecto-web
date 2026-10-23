@@ -1,0 +1,41 @@
+<div class="stats-row">
+
+  <div class="stat-card">
+    <div class="stat-header">
+      <mat-icon class="stat-icon">star_outline</mat-icon>
+      <span class="stat-label">{{ 'QUALIFICATION_STATS.AVG_RATING' | translate }}</span>
+    </div>
+    <p class="stat-value">{{ averageRating > 0 ? averageRating : '—' }}</p>
+    <div class="stars-row">
+      @for (star of stars; track $index) {
+        <mat-icon class="star" [class.filled]="star === 1">
+          {{ star === 1 ? 'star' : 'star_border' }}
+        </mat-icon>
+      }
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-header">
+      <mat-icon class="stat-icon">trending_up</mat-icon>
+      <span class="stat-label">{{ 'QUALIFICATION_STATS.SATISFACTION_LEVEL' | translate }}</span>
+    </div>
+    <p class="stat-value">{{ satisfactionLevel }}</p>
+    <div class="progress-bar">
+      <div
+        class="progress-fill"
+        [style.width.%]="satisfactionPercentage">
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-header">
+      <mat-icon class="stat-icon">chat_bubble_outline</mat-icon>
+      <span class="stat-label">{{ 'QUALIFICATION_STATS.TOTAL' | translate }}</span>
+    </div>
+    <p class="stat-value">{{ totalRatings }}</p>
+    <p class="stat-sublabel">{{ 'QUALIFICATION_STATS.LAST_12_MONTHS' | translate }}</p>
+  </div>
+
+</div>

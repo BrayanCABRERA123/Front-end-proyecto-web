@@ -1,0 +1,30 @@
+<div class="empty-state"
+     [class.empty-state--empty]="variant === 'empty'"
+     [class.empty-state--filtered]="variant === 'filtered'"
+     [class.empty-state--loading]="variant === 'loading'"
+     [class.empty-state--error]="variant === 'error'">
+
+  @if (variant === 'loading') {
+    <div class="empty-state__spinner" aria-hidden="true"></div>
+  } @else {
+    <div class="empty-state__icon"
+         [class.empty-state__icon--filtered]="variant === 'filtered'"
+         [class.empty-state__icon--error]="variant === 'error'">
+      <mat-icon>{{ resolvedIcon }}</mat-icon>
+    </div>
+  }
+
+  @if (titleKey) {
+    <h3 class="empty-state__title">{{ titleKey | translate: params }}</h3>
+  }
+
+  @if (messageKey && showMessage) {
+    <p class="empty-state__message">{{ messageKey | translate: params }}</p>
+  }
+
+  <!-- acción opcional: limpiar filtros, reintentar, crear el primer registro -->
+  <div class="empty-state__actions">
+    <ng-content />
+  </div>
+
+</div>

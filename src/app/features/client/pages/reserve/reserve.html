@@ -1,0 +1,24 @@
+<!-- Contenedor principal con sidebar y contenido -->
+<div class="page-container">
+
+  <!-- Sidebar izquierdo -->
+  <app-sidebar rol="CLIENT"></app-sidebar>
+
+  <!-- Contenido principal derecho -->
+  <div class="main-content">
+
+    <!-- Título de la página -->
+    <h1 class="page-title">
+      {{ 'RESERVE.TITLE' | translate }}
+    </h1>
+
+    <p class="page-subtitle">
+      {{ 'RESERVE.SUBTITLE' | translate }}
+    </p>
+
+    <!-- Formulario de reserva -->
+    <app-car-wash-form></app-car-wash-form>
+
+  </div>
+
+</div>

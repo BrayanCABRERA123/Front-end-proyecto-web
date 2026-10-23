@@ -1,0 +1,48 @@
+@use '../../../../../../../styles/variables' as *;
+
+:host {
+  display: block;
+}
+
+.notice {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: $border-radius;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  background: var(--success-soft);
+  --notice-color: var(--success);
+
+  &--error {
+    background: var(--error-soft);
+    --notice-color: var(--error);
+
+    p {
+      color: var(--text);
+    }
+  }
+
+  > mat-icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    color: var(--notice-color);
+  }
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 1.05rem;
+    color: var(--notice-color);
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+:host-context(body.green-dark) .notice,
+:host-context(body.pink-dark) .notice {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}

@@ -1,0 +1,264 @@
+@use '../../../../styles/mixins' as *;
+
+:host {
+  display: block;
+  width: 270px;
+  flex-shrink: 0;
+}
+
+/* contenedor principal del sidebar */
+.sidebar {
+  box-sizing: border-box;
+  width: 270px;
+  height: 100vh;
+  background-color: var(--sidebar);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+
+/* LOGO */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px 18px;
+  color: #ffffff;
+  font-weight: $fw-semibold;
+  font-size: $fs-subtitle;
+  flex-shrink: 0;
+
+  .logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+}
+
+
+/* USUARIO */
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 8px;
+  flex-shrink: 0;
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.2);
+    border: 2px solid var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: $fw-semibold;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .name {
+    font-size: 13px;
+    font-weight: $fw-medium;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .email {
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    margin: 0;
+  }
+}
+
+
+/* MENU */
+.sidebar-menu {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+  padding-bottom: 60px;
+  overflow-y: auto;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.9); 
+  text-decoration: none;
+  font-size: 13px;
+  transition: 0.2s;
+  margin-bottom: 2px;
+  flex-shrink: 0;
+
+  /* HOVER */
+  &:hover {
+    background: rgba(var(--primary-rgb), 0.15);
+    color: #ffffff;
+  }
+
+  /* ACTIVO */
+  &.active {
+    background: rgba(var(--primary-rgb), 0.25);
+    color: #ffffff;
+    font-weight: $fw-medium;
+    border-left: 4px solid var(--primary);
+    padding-left: 10px;
+  }
+
+  .menu-icon {
+    font-size: 18px;
+    width: 22px;
+    text-align: center;
+    color: rgba(255,255,255,0.8);
+  }
+
+  &.active .menu-icon {
+    color: var(--primary);
+  }
+
+  // número de notificaciones sin leer
+  .menu-badge {
+    margin-left: auto;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: center;
+  }
+}
+
+
+/* FOOTER */ 
+.sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 20px;
+  background: var(--sidebar);
+  border-top: 2px solid rgba(255,255,255,0.08);
+
+  .btn-logout {
+    width: 100%;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.8);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+}
+
+/* BOTÓN HAMBURGUESA — solo visible en mobile */
+.hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1100;
+  background-color: var(--primary);
+  border: none;
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+
+  mat-icon {
+    color: #ffffff;
+    font-size: 22px;
+  }
+}
+
+/* OVERLAY detrás del sidebar en mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* TABLET */
+@include tablet {
+  :host {
+    width: 220px;
+  }
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .sidebar-logo {
+    font-size: $fs-body;
+  }
+
+  .menu-item {
+    font-size: $fs-caption;
+    padding: 10px 12px;
+  }
+}
+
+/* MOBILE */
+@include mobile {
+  :host {
+    width: 0;
+  }
+
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .sidebar-overlay {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -270px;
+    top: 0;
+    height: 100vh;
+    width: 270px;
+    z-index: 1000;
+    transition: left 0.3s ease;
+
+    &.active {
+      left: 0;
+    }
+  }
+}

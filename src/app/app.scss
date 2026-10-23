@@ -1,0 +1,6 @@
+@use 'styles/variables' as *;
+
+// Aplicamos la fuente a todo el proyecto globalmente
+* {
+  font-family: $font-family-base;
+}

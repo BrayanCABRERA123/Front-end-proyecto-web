@@ -1,0 +1,146 @@
+@use '../../../../styles/mixins' as *;
+@use '../dialog-base';
+
+.service-dialog__heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.header-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--primary-soft);
+  color: var(--primary);
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+}
+
+.service-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  & + & {
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $fs-body;
+    font-weight: $fw-semibold;
+    line-height: 1.3;
+    color: var(--text);
+  }
+}
+
+// los puntos son un número corto: no necesitan todo el ancho
+.service-points input { max-width: 200px; }
+
+// tarifas: una tarjeta por tipo de vehículo, en tres columnas que se reacomodan en el celular
+.price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+    padding: 0 12px;
+    @include caption-text;
+    font-weight: $fw-semibold;
+    color: var(--text-secondary);
+  }
+}
+
+.price-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+
+  &--half { border-color: var(--error); }
+
+  &__type {
+    font-size: $fs-body;
+    font-weight: $fw-semibold;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+}
+
+.price-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+
+  // en pantallas anchas el encabezado ya dice qué es cada columna
+  &__label {
+    display: none;
+    @include caption-text;
+    color: var(--text-secondary);
+  }
+
+  &__box {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    overflow: hidden;
+
+    &:focus-within { border-color: var(--primary); }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 9px 10px;
+      font-family: $font-family-base;
+      font-size: $fs-body;
+      color: var(--text);
+
+      &:focus { outline: none; }
+      &::placeholder { color: var(--text-muted); }
+    }
+  }
+
+  &__affix {
+    padding: 0 10px;
+    @include caption-text;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+}
+
+@include mobile {
+  .service-points input { max-width: none; }
+
+  .price-list__head { display: none; }
+
+  // en el celular: el tipo arriba y los dos campos lado a lado, cada uno con su etiqueta
+  .price-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px;
+
+    &__type { grid-column: 1 / -1; }
+  }
+
+  .price-input__label { display: block; }
+
+  .form-dialog__actions { flex-direction: column-reverse; }
+}

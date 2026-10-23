@@ -1,0 +1,84 @@
+<div class="table-card">
+  <table class="history-table">
+
+    <thead>
+      <tr>
+        <th>{{ 'HISTORY_TABLE.DATE_COMPLETED' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.SERVICE' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.VEHICLE' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.PAYMENT' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.AMOUNT' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.RATING' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.STATUS' | translate }}</th>
+        <th>{{ 'HISTORY_TABLE.DETAIL' | translate }}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (s of services; track s.id) {
+        <!-- clic en la fila = ver el detalle -->
+        <tr class="table-row" (click)="viewDetail.emit(s)">
+
+          <td [attr.data-label]="'HISTORY_TABLE.DATE_COMPLETED' | translate">
+            {{ s.date | date: 'dd/MM/yyyy' }} - {{ s.time }}
+          </td>
+
+          <td [attr.data-label]="'HISTORY_TABLE.SERVICE' | translate">
+            <span class="service-badge">{{ s.service }}</span>
+          </td>
+
+          <td [attr.data-label]="'HISTORY_TABLE.VEHICLE' | translate">
+            <div class="vehicle-cell">
+              <span>{{ s.vehicle }}</span>
+              <span class="plate">{{ s.plate }}</span>
+            </div>
+          </td>
+
+          <td [attr.data-label]="'HISTORY_TABLE.PAYMENT' | translate">
+            {{ s.paymentMethod ? (('SERVICE_HISTORY.METHODS.' + s.paymentMethod) | translate) : '—' }}
+          </td>
+
+          <td [attr.data-label]="'HISTORY_TABLE.AMOUNT' | translate">
+            <strong>${{ s.amount | number }}</strong>
+          </td>
+
+          <td [attr.data-label]="'HISTORY_TABLE.RATING' | translate">
+            @if (s.rating !== null) {
+              <span class="stars">
+                @for (e of filledStars(s.rating); track $index) {
+                  <mat-icon class="active">star</mat-icon>
+                }
+              </span>
+            } @else {
+              <span class="not-rated">—</span>
+            }
+          </td>
+
+          <td [attr.data-label]="'HISTORY_TABLE.STATUS' | translate">
+            <span class="status-badge" [ngClass]="statusClass(s.status)">
+              <mat-icon>{{ statusIcon(s.status) }}</mat-icon>
+              {{ statusLabel(s.status) | translate }}
+            </span>
+          </td>
+
+          <td>
+            <button class="btn-view" (click)="$event.stopPropagation(); viewDetail.emit(s)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
+
+        </tr>
+      }
+
+      @if (services.length === 0) {
+        <tr>
+          <td colspan="8" class="empty-row">
+            {{ 'HISTORY_TABLE.EMPTY' | translate }}
+          </td>
+        </tr>
+      }
+
+    </tbody>
+
+  </table>
+</div>
