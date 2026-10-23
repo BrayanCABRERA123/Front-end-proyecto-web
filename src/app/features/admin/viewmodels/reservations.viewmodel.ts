@@ -144,9 +144,9 @@ export class ReservationsViewModel {
   }
 
   // el aviso de éxito sale solo si el backend aceptó la asignación
-  assignOperator(booking: Booking, operatorId: string): void {
+  assignOperator(booking: Booking, operatorId: string, notes = ''): void {
     this.store.assignOperator(booking.id, operatorId, () =>
       this.feedback.success('ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE', 'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
-        { messageParams: { code: booking.code } }));
+        { messageParams: { code: booking.code } }), notes);
   }
 }
