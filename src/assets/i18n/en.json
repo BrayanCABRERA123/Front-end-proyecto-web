@@ -2279,7 +2279,7 @@
     "START_DATE_LABEL": "Start date",
     "START_DATE_HINT": "If the date is in the future, the promotion stays scheduled until that day.",
     "DISCOUNT_PERCENT_LABEL": "Discount on redemption (%)",
-    "ERROR_DISCOUNT_PERCENT": "Enter a discount between 1 and 100",
+    "ERROR_DISCOUNT_PERCENT": "Enter a discount between 1 and 99",
     "REQUIRED_POINTS_LABEL": "Loyalty points required",
     "REQUIRED_POINTS_HINT": "Points the customer must collect to unlock the coupon. 0 = available to everyone.",
     "ERROR_REQUIRED_POINTS": "Enter a whole number equal to or greater than 0",
