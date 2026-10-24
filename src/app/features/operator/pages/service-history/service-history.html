@@ -75,9 +75,6 @@
         <button class="tab" [class.active]="vm.activeTab() === 'cancelado'" (click)="vm.changeTab('cancelado')">
           {{ 'SERVICE_HISTORY.TABS.CANCELED' | translate }} ({{ vm.countTab('cancelado') }})
         </button>
-        <button class="tab" [class.active]="vm.activeTab() === 'reasignado'" (click)="vm.changeTab('reasignado')">
-          {{ 'SERVICE_HISTORY.TABS.REASSIGNED' | translate }} ({{ vm.countTab('reasignado') }})
-        </button>
       </div>
 
     </div>
