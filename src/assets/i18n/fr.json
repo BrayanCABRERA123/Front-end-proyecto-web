@@ -494,11 +494,11 @@
     "TITLE": "Connexion",
     "SUBTITLE": "Accédez à votre compte pour réserver",
     "EMAIL": "Adresse e-mail",
-    "EMAIL_PLACEHOLDER": "utilisateur@gmail.com",
+    "EMAIL_PLACEHOLDER": "utilisateur@email.com",
     "PASSWORD": "Mot de passe",
     "PASSWORD_PLACEHOLDER": "********",
     "EMAIL_REQUIRED": "L'e-mail est obligatoire",
-    "EMAIL_INVALID": "Veuillez entrer un e-mail valide @gmail.com",
+    "EMAIL_INVALID": "Veuillez entrer un e-mail valide",
     "PASSWORD_REQUIRED": "Le mot de passe est obligatoire",
     "FORGOT_PASSWORD": "Mot de passe oublié ?",
     "BUTTON": "Se connecter",
@@ -562,7 +562,7 @@
       "DESCRIPTION": "Entrez votre e-mail pour recevoir un code de vérification",
       "LABEL": "Adresse E-mail",
       "PLACEHOLDER": "utilisateur@gmail.com",
-      "INVALID": "Veuillez entrer un e-mail @gmail.com valide",
+      "INVALID": "Veuillez entrer un e-mail valide",
       "BUTTON": "Envoyer le Code"
     },
     "VERIFICATION": {

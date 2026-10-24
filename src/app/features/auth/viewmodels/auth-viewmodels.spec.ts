@@ -58,6 +58,25 @@ describe('ViewModels de autenticación', () => {
     expect(feedback.error.mock.calls[0][0]).toBe('AUTH_FEEDBACK.LOCKED_TITLE');
   });
 
+  it('A-01 Login: una cuenta antigua con otro dominio puede entrar (solo se valida el formato)', () => {
+    auth.login.mockReturnValue(of(user));
+    const vm = TestBed.inject(LoginViewModel);
+    vm.form.setValue({ email: 'ana@outlook.com', password: 'Clave123*' });
+
+    vm.submit(vi.fn());
+
+    expect(vm.form.controls.email.errors).toBeNull();
+    expect(auth.login).toHaveBeenCalledWith('ana@outlook.com', 'Clave123*');
+  });
+
+  it('A-01 Recuperar contraseña: acepta otros dominios y rechaza lo que no es un correo', () => {
+    const vm = TestBed.inject(ForgotPasswordViewModel);
+    vm.email.set('ana@outlook.com');
+    expect(vm.isEmailInvalid()).toBe(false);
+    vm.email.set('ana@outlook');
+    expect(vm.isEmailInvalid()).toBe(true);
+  });
+
   it('Recuperar contraseña: correo → código → contraseña nueva con el código confirmado', () => {
     auth.requestPasswordReset.mockReturnValue(of(undefined));
     auth.verifyResetCode.mockReturnValue(of(undefined));

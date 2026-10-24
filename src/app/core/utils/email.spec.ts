@@ -1,6 +1,6 @@
 import { FormControl } from '@angular/forms';
 
-import { allowedEmailValidator, isAllowedEmail } from './email';
+import { allowedEmailValidator, emailFormatValidator, isAllowedEmail, isEmailFormat } from './email';
 
 describe('correos permitidos (A-01)', () => {
   it('solo acepta los dominios de ALLOWED_EMAIL_DOMAINS (gmail.com), sin importar mayúsculas', () => {
@@ -18,5 +18,25 @@ describe('correos permitidos (A-01)', () => {
     const keep = allowedEmailValidator(() => 'ana@outlook.com');
     expect(keep(new FormControl('Ana@Outlook.com'))).toBeNull();
     expect(keep(new FormControl('ana@yahoo.com'))).toEqual({ allowedEmail: true });
+  });
+});
+
+describe('login y recuperación: solo formato (A-01, decisión del 23-10)', () => {
+  it('acepta cualquier dominio con formato válido y rechaza lo que no es un correo', () => {
+    expect(isEmailFormat(' Ana@Outlook.com ')).toBe(true);
+    expect(isEmailFormat('ana@gmail.com')).toBe(true);
+    expect(isEmailFormat('ana@')).toBe(false);
+    expect(isEmailFormat('ana.gmail.com')).toBe(false);
+  });
+
+  it('el validador del login no marca otros dominios, solo el formato', () => {
+    expect(emailFormatValidator()(new FormControl(''))).toBeNull();
+    expect(emailFormatValidator()(new FormControl('ana@hotmail.com'))).toBeNull();
+    expect(emailFormatValidator()(new FormControl('ana@hotmail'))).toEqual({ emailFormat: true });
+  });
+
+  it('en el perfil el correo actual se acepta aunque tenga espacios o mayúsculas distintas', () => {
+    const keep = allowedEmailValidator(() => ' Ana@Outlook.com ');
+    expect(keep(new FormControl('ana@outlook.com '))).toBeNull();
   });
 });
