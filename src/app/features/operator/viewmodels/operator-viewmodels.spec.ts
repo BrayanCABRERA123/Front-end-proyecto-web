@@ -156,6 +156,19 @@ describe('ViewModels del operario', () => {
     expect(vm.filteredServices().length).toBe(2);
   });
 
+  it('A-18: el estado del historial sale de los datos (cancelada o no asistió = cancelado) y no suma ingresos', () => {
+    operations.myServices.mockReturnValue(of([
+      service(1, '2026-10-20', '08:00', 'COMPLETED'), service(2, '2026-10-19', '08:00', 'PENDING', { bookingStatus: 'CANCELLED' }),
+      service(3, '2026-10-18', '08:00', 'PENDING', { bookingStatus: 'NO_SHOW' }), service(4, '2026-10-21', '08:00', 'PENDING'),
+    ]));
+    const vm = TestBed.inject(ServiceHistoryViewModel);
+    vm.load();
+
+    expect(vm.services().map(s => [s.id, s.status])).toEqual([[1, 'finalizado'], [2, 'cancelado'], [3, 'cancelado']]);
+    expect(vm.totalGenerated()).toBe(20000);
+    expect(vm.countTab('cancelado')).toBe(2);
+  });
+
   it('Calificaciones: promedio, satisfacción y filtro por estrellas', () => {
     operations.myRatings.mockReturnValue(of([rating(1, 5), rating(2, 4), rating(3, 2)]));
     const vm = TestBed.inject(QualificationsViewModel);
