@@ -117,6 +117,15 @@ describe('ViewModels del operario', () => {
     expect(operations.start).toHaveBeenCalledWith(2);
   });
 
+  it('B-01: el operario ve las notas que dejó el admin al asignar (sin notas, nada)', () => {
+    operations.myServices.mockReturnValue(of([
+      service(1, '2026-10-21', '08:00', 'PENDING', { notes: '  Llevar cera extra ' }), service(2, '2026-10-21', '09:00', 'PENDING')]));
+    const vm = TestBed.inject(AssignedServicesViewModel);
+    vm.load();
+
+    expect(vm.filteredServices().map(s => s.notes)).toEqual(['Llevar cera extra', '']);
+  });
+
   it('A-18: Servicios asignados usa los datos reales: tipos de servicio, filtro por tipo y total', () => {
     operations.myServices.mockReturnValue(of([
       service(1, '2026-10-21', '08:00', 'PENDING'), service(2, '2026-10-21', '09:00', 'PENDING', { services: 'Premium', total: 45000 })]));
