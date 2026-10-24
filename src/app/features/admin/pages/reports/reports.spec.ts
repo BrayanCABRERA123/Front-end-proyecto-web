@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 import { signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -73,6 +74,26 @@ describe('ReportsComponent (admin)', () => {
     expect(component.vm.dayReport.revenue).toBe(30000);
     expect(component.vm.weekReport.revenue).toBe(30000);
     expect(component.vm.yearRevenue).toBe(30000);
+    payments.set([]);
+  });
+
+  it('WEB-04: la gráfica se actualiza cuando llegan datos nuevos o cambia el periodo, sin crearla otra vez', () => {
+    const chart = { data: { labels: [] as string[], datasets: [{ data: [] as number[] }, { data: [] as number[] }] }, update: vi.fn(), destroy: vi.fn() };
+    (component as unknown as { chart: typeof chart }).chart = chart;
+
+    TestBed.tick();
+    expect(chart.update).toHaveBeenCalledTimes(1);
+    expect(chart.data.labels).toEqual(component.vm.chartData.labels);
+
+    payments.set([{ id: '9', status: 'approved', amount: 50000, date: TODAY, approvedDate: TODAY }]);
+    TestBed.tick();
+    expect(chart.update).toHaveBeenCalledTimes(2);
+    expect(chart.data.datasets[1].data).toEqual(component.vm.chartData.revenue);
+
+    component.changePeriod('month');
+    TestBed.tick();
+    expect(chart.update).toHaveBeenCalledTimes(3);
+    expect(chart.data.labels).toEqual(component.vm.chartData.labels);
     payments.set([]);
   });
 });

@@ -58,7 +58,8 @@
                   <span class="ranking-sales">{{ service.sales }} {{ 'REPORTS.TOP_SERVICES.SALES' | translate }}</span>
                 </div>
                 <div class="ranking-bar">
-                  <div class="ranking-fill" [attr.data-target]="service.percentage" [style.background]="service.color"></div>
+                  <!-- WEB-04: el ancho sale del dato (la transición del scss lo anima) y cambia cuando llegan los datos -->
+                  <div class="ranking-fill" [style.width.%]="service.percentage" [style.background]="service.color"></div>
                 </div>
               </div>
             }
