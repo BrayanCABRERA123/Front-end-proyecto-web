@@ -34,5 +34,14 @@ jobs:
       - name: Compilación de producción
         run: npx ng build --configuration production
 
-      - name: Pruebas
-        run: npx ng test --watch=false
+      # F-02: con cobertura (@vitest/coverage-v8); el reporte queda como artefacto del flujo
+      - name: Pruebas con cobertura
+        run: npx ng test --watch=false --coverage
+
+      - name: Reporte de cobertura
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cobertura-web
+          path: coverage/
+          if-no-files-found: ignore
