@@ -494,11 +494,11 @@
     "TITLE": "Login",
     "SUBTITLE": "Access your account to book a service",
     "EMAIL": "Email Address",
-    "EMAIL_PLACEHOLDER": "user@gmail.com",
+    "EMAIL_PLACEHOLDER": "user@email.com",
     "PASSWORD": "Password",
     "PASSWORD_PLACEHOLDER": "********",
     "EMAIL_REQUIRED": "Email is required",
-    "EMAIL_INVALID": "Please enter a valid @gmail.com email",
+    "EMAIL_INVALID": "Please enter a valid email",
     "PASSWORD_REQUIRED": "Password is required",
     "FORGOT_PASSWORD": "Forgot your password?",
     "BUTTON": "Login",
@@ -562,7 +562,7 @@
       "DESCRIPTION": "Enter your email to receive a verification code",
       "LABEL": "Email Address",
       "PLACEHOLDER": "user@gmail.com",
-      "INVALID": "Please enter a valid @gmail.com email",
+      "INVALID": "Please enter a valid email",
       "BUTTON": "Send Code"
     },
     "VERIFICATION": {

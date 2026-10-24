@@ -141,7 +141,8 @@ export class ProfileViewModel {
 
     const value = this.form.getRawValue();
     const newEmail = value.email.trim().toLowerCase();
-    const emailChanged = !!this.currentEmail && newEmail !== this.currentEmail.toLowerCase();
+    // A-01: igual que el validador, sin espacios ni mayúsculas (el mismo correo no pide contraseña)
+    const emailChanged = !!this.currentEmail && newEmail !== this.currentEmail.trim().toLowerCase();
     const firstName = value.firstName.trim();
     const lastName = value.lastName.trim();
     // sin espacio: el backend acepta "+573001234567"

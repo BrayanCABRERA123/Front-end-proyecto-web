@@ -42,7 +42,7 @@
 
                     <span
                         class="error-msg"
-                        *ngIf="vm.f['email'].errors?.['allowedEmail'] && vm.f['email'].touched">
+                        *ngIf="vm.f['email'].errors?.['emailFormat'] && vm.f['email'].touched">
 
                         {{ 'LOGIN.EMAIL_INVALID' | translate }}
 
