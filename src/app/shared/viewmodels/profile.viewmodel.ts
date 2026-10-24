@@ -7,7 +7,7 @@ import { AuthService } from '../../core/services/auth';
 import { AuthUser } from '../../core/models/auth.models';
 // usuario de la sesión: el mismo que muestra el sidebar
 import { UserSession } from '../../core/services/user-session';
-import { apiErrorKey } from '../../core/utils/api-error';
+import { apiErrorKey, applyFieldErrors } from '../../core/utils/api-error';
 import { allowedEmailValidator } from '../../core/utils/email';
 
 export interface PhoneCountry {
@@ -172,6 +172,8 @@ export class ProfileViewModel {
       error: (error: unknown) => {
         this.saving.set(false);
         this.errorKey.set(apiErrorKey(error));
+        // los campos que rechazó security-service se marcan en su sitio (WEB-05)
+        applyFieldErrors(this.form, error, { phone: 'phoneNumber' });
       }
     });
   }

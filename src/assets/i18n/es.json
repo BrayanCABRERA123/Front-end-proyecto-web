@@ -2530,7 +2530,8 @@
     "UNKNOWN_NOTIFICATION_TYPE": "El tipo de notificación no existe.",
     "UNSUPPORTED_MEDIA_TYPE": "El formato del archivo no es compatible.",
     "VEHICLE_HAS_ACTIVE_BOOKINGS": "Este vehículo tiene reservas activas o futuras: cancélalas antes de retirarlo.",
-    "VEHICLE_REQUIRED": "Elige un vehículo."
+    "VEHICLE_REQUIRED": "Elige un vehículo.",
+    "FIELD_INVALID": "Revisa este dato."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Contraseña actual",

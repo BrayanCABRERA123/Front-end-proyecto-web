@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { AbstractControl } from '@angular/forms';
 import { ApiProblem } from '../models/auth.models';
 
 // códigos de error que tienen traducción en API_ERRORS.* (assets/i18n).
@@ -259,4 +260,42 @@ export function apiErrorCode(error: unknown): string {
     return `SLOT_${problem.reason}`;
   }
   return code && TRANSLATED_CODES.has(code) ? code : 'UNEXPECTED';
+}
+
+/**
+ * WEB-05: un 400 de validación trae "errors" con los campos que fallaron. Los servicios Java mandan
+ * campo → texto y payment (.NET) campo → lista de textos. Los textos vienen en inglés, así que se
+ * devuelve una llave propia: la del código si el texto es uno conocido, si no FIELD_INVALID.
+ */
+export function apiFieldErrors(error: unknown): Record<string, string> {
+  if (!(error instanceof HttpErrorResponse) || error.status !== 400) return {};
+  const errors = (error.error as { errors?: unknown } | null)?.errors;
+  if (!errors || typeof errors !== 'object' || Array.isArray(errors)) return {};
+  const result: Record<string, string> = {};
+  for (const [field, value] of Object.entries(errors as Record<string, unknown>)) {
+    const message = Array.isArray(value) ? value[0] : value;
+    const code = typeof message === 'string' ? message.trim() : '';
+    // "address.city" → "city"; "FirstName" (.NET) → "firstName"
+    const name = field.split('.').pop() ?? field;
+    const key = name.charAt(0).toLowerCase() + name.slice(1);
+    result[key] = TRANSLATED_CODES.has(code) ? `API_ERRORS.${code}` : 'API_ERRORS.FIELD_INVALID';
+  }
+  return result;
+}
+
+/**
+ * Marca en el formulario los campos que rechazó el servidor con el error `server` (su llave de
+ * traducción) y los toca para que se vean. `aliases` traduce el nombre del servidor al del control
+ * (por ejemplo phone → phoneNumber). Devuelve true si marcó alguno.
+ */
+export function applyFieldErrors(form: AbstractControl, error: unknown, aliases: Record<string, string> = {}): boolean {
+  let marked = false;
+  for (const [field, key] of Object.entries(apiFieldErrors(error))) {
+    const control = form.get(aliases[field] ?? field);
+    if (!control) continue;
+    control.setErrors({ ...(control.errors ?? {}), server: key });
+    control.markAsTouched();
+    marked = true;
+  }
+  return marked;
 }

@@ -138,4 +138,19 @@ describe('ViewModels de autenticación', () => {
     expect(vm.loading()).toBe(false);
     expect(registered).not.toHaveBeenCalled();
   });
+
+  it('WEB-05 Registro: un 400 con errors marca el campo que rechazó el servidor', () => {
+    auth.register.mockReturnValue(throwError(() => new HttpErrorResponse({ status: 400,
+      error: { code: 'VALIDATION_ERROR', errors: { phone: 'must match "^3[0-9]{9}$"', acceptsDataPolicy: 'must be true' } } })));
+    const vm = TestBed.inject(RegisterViewModel);
+    vm.form.patchValue({ documentNumber: '1023456789', firstName: 'Ana', lastName: 'Ruiz', email: 'ana@gmail.com',
+      phone: '3001234567', password: 'Lavado2026!', confirmPassword: 'Lavado2026!', acceptTerms: true, acceptDataPolicy: true });
+
+    vm.submit(vi.fn());
+
+    expect(vm.errorKey()).toBe('API_ERRORS.VALIDATION_ERROR');
+    expect(vm.f.phone.getError('server')).toBe('API_ERRORS.FIELD_INVALID');
+    expect(vm.f.acceptDataPolicy.getError('server')).toBe('API_ERRORS.FIELD_INVALID');
+    expect(vm.f.email.errors).toBeNull();
+  });
 });

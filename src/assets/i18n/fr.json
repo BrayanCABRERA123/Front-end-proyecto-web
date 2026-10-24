@@ -2526,7 +2526,8 @@
     "VEHICLE_HAS_ACTIVE_BOOKINGS": "Ce véhicule a des réservations actives ou à venir : annulez-les avant de le retirer.",
     "VEHICLE_REQUIRED": "Choisissez un véhicule.",
     "PROMOTION_ONE_PER_BOOKING": "Cette réservation a déjà un coupon. Retirez-le si vous voulez en utiliser un autre.",
-    "PROMOTION_REDEMPTION_NOT_FOUND": "Cette réservation n'a plus ce coupon. Rechargez la page."
+    "PROMOTION_REDEMPTION_NOT_FOUND": "Cette réservation n'a plus ce coupon. Rechargez la page.",
+    "FIELD_INVALID": "Vérifiez ce champ."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",
