@@ -156,8 +156,8 @@
           </div>
         </div>
 
-        <!-- los 3 roles son fijos (ADR-015): no se crean ni se borran. La matriz de permisos se guarda
-             como referencia; el acceso lo decide el rol (cada servicio revisa el rol del token) -->
+        <!-- los 3 roles son fijos (ADR-015): no se crean ni se borran. H-05: la matriz de permisos es
+             solo de consulta; el acceso lo decide el rol (cada servicio revisa el rol del token) -->
         <p class="roles-note"><mat-icon>info</mat-icon>{{ 'ADMIN_MANAGEMENT.ROLES.FIXED_NOTE' | translate }}</p>
 
         <div class="table-wrapper">
@@ -167,7 +167,6 @@
                 <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.NAME' | translate }}</th>
                 <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.PERMISSIONS' | translate }}</th>
                 <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.USERS' | translate }}</th>
-                <th>{{ 'ADMIN_MANAGEMENT.ROLES.TABLE.ACTIONS' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -182,11 +181,6 @@
                     }
                   </td>
                   <td>{{ (r.usersCount === 1 ? 'ADMIN_MANAGEMENT.ROLES.USERS_COUNT_ONE' : 'ADMIN_MANAGEMENT.ROLES.USERS_COUNT') | translate:{ count: r.usersCount } }}</td>
-                  <td class="actions-cell">
-                    <button class="btn-icon" (click)="openEditRole(r)" [attr.aria-label]="'COMMON.EDIT' | translate">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </td>
                 </tr>
               }
             </tbody>

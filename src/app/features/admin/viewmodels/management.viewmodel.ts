@@ -152,17 +152,6 @@ export class ManagementViewModel {
     });
   }
 
-  updateRolePermissions(role: RoleCode, permissionIds: number[]): void {
-    this.rolesApi.update(role, permissionIds).subscribe({
-      next: () => {
-        this.loadRoles();
-        this.feedback.success('ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_TITLE', 'ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_MESSAGE',
-          { messageParams: { name: this.translate.instant(`PROFILE.ROLE.${role}`) } });
-      },
-      error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
-    });
-  }
-
   // --- servicios ---
 
   loadServices(): void {
