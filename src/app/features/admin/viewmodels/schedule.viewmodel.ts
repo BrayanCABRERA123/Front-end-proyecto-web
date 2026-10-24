@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 import { ScheduleExceptionResult } from '../../../shared/dialogs/schedule-exception-modal/schedule-exception-modal';
-import { apiErrorKey } from '../../../core/utils/api-error';
+import { apiErrorKey, apiErrorParams } from '../../../core/utils/api-error';
 import { BayStatus, DayKey, DaySchedule, ScheduleException, WashBay } from '../models/admin.models';
 import { ScheduleStore } from '../services/schedule-store';
 import { WashBayModalResult } from '../pages/schedule/components/bay-modal/bay-modal';
@@ -168,7 +168,8 @@ export class ScheduleViewModel {
     ];
   }
 
+  // SCHEDULE_CONFLICTS_BOOKINGS nombra las reservas que quedarían por fuera del horario (BIZ-10)
   private showError(error: unknown): void {
-    this.feedback.error('COMMON.ERROR', apiErrorKey(error));
+    this.feedback.error('COMMON.ERROR', apiErrorKey(error), { messageParams: apiErrorParams(error) });
   }
 }

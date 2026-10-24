@@ -1,5 +1,5 @@
 // definimos el componente
-import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, inject } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, effect, inject, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // importamos el sidebar del layout
@@ -12,6 +12,7 @@ import { Chart } from 'chart.js/auto';
 // modal de exportación de reportes
 import { ExportReportModalComponent } from '../../../../shared/dialogs/export-report-modal/export-report-modal';
 import { ReportPeriod, ReportsViewModel } from '../../viewmodels/reports.viewmodel';
+import { keepFresh } from '../../../../core/services/live-refresh';
 
 // vista de Reportes: los números están en ReportsViewModel; aquí quedan la gráfica (Chart.js),
 // los colores del tema, la animación del ranking y la exportación
@@ -29,17 +30,26 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
   private readonly dialog = inject(MatDialog);
   private readonly translate = inject(TranslateService);
 
+  // datos frescos sin recargar (WEB-16): al entrar, al volver a la pestaña y con cada notificación nueva
+  constructor() {
+    keepFresh(silent => this.vm.load(silent));
+    // WEB-04: la gráfica se arma una vez y se actualiza cuando llegan (o cambian) los datos o el
+    // periodo; antes se quedaba con lo que había al abrir la pantalla (casi siempre, vacío)
+    effect(() => {
+      const data = this.vm.chartData;
+      untracked(() => this.updateChart(data));
+    });
+  }
+
   @ViewChild('barCanvas') barCanvas!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('rankingCard') topServicesEl!: ElementRef<HTMLDivElement>;
 
   private chart?: Chart;
 
   periods: ReportPeriod[] = ['day', 'week', 'month'];
 
+  // una sola gráfica por pantalla: después solo se actualizan sus datos
   ngAfterViewInit(): void {
-    this.createChart();
-    // pequeño retraso para que el navegador aplique el estado inicial (0%) antes de animar
-    setTimeout(() => this.animateBars(), 100);
+    if (!this.chart) this.createChart();
   }
 
   ngOnDestroy(): void {
@@ -51,11 +61,20 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
     return '$' + amount.toLocaleString('es-CO');
   }
 
+  // el effect del constructor actualiza la gráfica con el periodo nuevo
   changePeriod(period: ReportPeriod): void {
     if (this.vm.period() === period) return;
     this.vm.setPeriod(period);
-    this.chart?.destroy();
-    this.createChart();
+  }
+
+  /** pone en la gráfica ya creada las etiquetas y los valores nuevos (sin crearla otra vez) */
+  private updateChart(data: { labels: string[]; services: number[]; revenue: number[] }): void {
+    const chart = this.chart;
+    if (!chart) return;
+    chart.data.labels = data.labels;
+    chart.data.datasets[0].data = data.services;
+    chart.data.datasets[1].data = data.revenue;
+    chart.update();
   }
 
   // servicios más pedidos con el color del tema de cada posición
@@ -171,17 +190,6 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
           }
         }
       }
-    });
-  }
-
-  // anima las barras de progreso de "servicios más vendidos" de 0 hasta su valor real
-  private animateBars(): void {
-    const bars = this.topServicesEl?.nativeElement.querySelectorAll<HTMLElement>('.ranking-fill');
-    bars?.forEach(bar => {
-      const target = bar.dataset['target'] ?? '0';
-      requestAnimationFrame(() => {
-        bar.style.width = target + '%';
-      });
     });
   }
 

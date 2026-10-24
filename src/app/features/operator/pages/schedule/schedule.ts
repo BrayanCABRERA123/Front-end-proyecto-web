@@ -12,7 +12,7 @@ import {
   reservationStatusLabel
 } from '../../../../shared/dialogs/reservation-models/reservation.model';
 import { MiniCalendarComponent } from './mini-calendar/mini-calendar';
-import { canStartNow, startFromLabel } from '../../../../core/utils/operator-work';
+import { canStartNow, startFromLabel, startHintKey } from '../../../../core/utils/operator-work';
 import { OperatorScheduleViewModel } from '../../viewmodels/schedule.viewmodel';
 import { OperatorWorkViewModel } from '../../viewmodels/operator-work.viewmodel';
 import { confirmFinish, confirmStart } from '../../components/work-confirm';
@@ -34,6 +34,7 @@ export class ScheduleComponent implements OnInit {
 
   statusClass = reservationStatusClass;
   canStartNow = canStartNow;
+  startHint = startHintKey;
   startFrom = startFromLabel;
   statusIcon = reservationStatusIcon;
   statusLabel = reservationStatusLabel;

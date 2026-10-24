@@ -1,5 +1,5 @@
 import { BusinessHourDto } from '../models/booking.models';
-import { businessHoursSummary } from './booking-display';
+import { businessAddress, businessHoursSummary, businessName } from './booking-display';
 
 const DAYS = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 const label = (day: number) => DAYS[day];
@@ -28,5 +28,15 @@ describe('businessHoursSummary', () => {
   it('sin días abiertos (o sin horario) no inventa uno', () => {
     expect(businessHoursSummary([], label)).toBe('—');
     expect(businessHoursSummary([day(1, '07:00', '18:00', false)], label)).toBe('—');
+  });
+});
+
+describe('sede con datos vacíos', () => {
+  it('sin nombre comercial ni dirección muestra un texto neutro en vez de un hueco', () => {
+    expect(businessName({ tradeName: '  ' })).toBe('LavaRápido');
+    expect(businessName(null)).toBe('LavaRápido');
+    expect(businessAddress({ address: '' })).toBeNull();
+    expect(businessName({ tradeName: 'Lavadero Centro' })).toBe('Lavadero Centro');
+    expect(businessAddress({ address: ' Calle 10 # 5-20 ' })).toBe('Calle 10 # 5-20');
   });
 });

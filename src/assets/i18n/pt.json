@@ -103,7 +103,8 @@
     "EDIT": "Editar",
     "SAVE": "Salvar",
     "VIEW": "Ver",
-    "LOADING": "Carregando..."
+    "LOADING": "Carregando...",
+    "ADDRESS_PENDING": "Endereço a confirmar"
   },
   "SERVICE": {
     "BASIC": "Básico",
@@ -494,11 +495,11 @@
     "TITLE": "Entrar",
     "SUBTITLE": "Acesse sua conta para reservar",
     "EMAIL": "E-mail",
-    "EMAIL_PLACEHOLDER": "usuario@gmail.com",
+    "EMAIL_PLACEHOLDER": "usuario@email.com",
     "PASSWORD": "Senha",
     "PASSWORD_PLACEHOLDER": "********",
     "EMAIL_REQUIRED": "O e-mail é obrigatório",
-    "EMAIL_INVALID": "Digite um e-mail válido @gmail.com",
+    "EMAIL_INVALID": "Digite um e-mail válido",
     "PASSWORD_REQUIRED": "A senha é obrigatória",
     "FORGOT_PASSWORD": "Esqueceu sua senha?",
     "BUTTON": "Entrar",
@@ -562,7 +563,7 @@
       "DESCRIPTION": "Digite seu e-mail para receber um código de verificação",
       "LABEL": "E-mail",
       "PLACEHOLDER": "usuario@gmail.com",
-      "INVALID": "Digite um e-mail @gmail.com válido",
+      "INVALID": "Digite um e-mail válido",
       "BUTTON": "Enviar Código"
     },
     "VERIFICATION": {
@@ -627,6 +628,7 @@
     },
     "DETAIL": {
       "TITLE": "Informações do serviço",
+      "NOTES": "Orientações do administrador",
       "CLIENT": "Cliente:",
       "VEHICLE": "Veículo:",
       "SERVICE_TYPE": "Tipo de serviço:",
@@ -644,7 +646,8 @@
       "STARTED_MESSAGE": "O serviço {{code}} já está em andamento.",
       "FINISHED_TITLE": "Serviço finalizado!",
       "FINISHED_MESSAGE": "O serviço {{code}} foi marcado como concluído.",
-      "CONTACT_MESSAGE": "Entre em contato com o cliente por qualquer um destes meios."
+      "CONTACT_MESSAGE": "Entre em contato com o cliente por qualquer um destes meios.",
+      "TOTAL": "Total da reserva:"
     }
   },
   "OPERATOR_HOME": {
@@ -832,7 +835,8 @@
       "APPROVED_TITLE": "Pagamento aprovado",
       "APPROVED_MESSAGE": "O administrador aprovou seu pagamento. Sua reserva está paga; não há mais nada a fazer.",
       "CANCEL": "Cancelar reserva",
-      "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box"
+      "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box",
+      "AMOUNT_UNAVAILABLE": "Não conseguimos consultar o valor a pagar. Verifique sua conexão e volte em alguns segundos."
     },
     "COUPON": {
       "PLACEHOLDER": "Código do cupom",
@@ -1355,7 +1359,9 @@
       "CANCELLED_CONFIRM": "Cancelar a reserva {{code}}? Esta ação não pode ser desfeita.",
       "STATUS_NO_SHOW_MESSAGE": "A reserva {{code}} ficou como não compareceu.",
       "STATUS_SCHEDULED_MESSAGE": "A reserva {{code}} ficou agendada."
-    }
+    },
+    "REASSIGN": "Reatribuir",
+    "CANCEL_REASON": "Motivo do cancelamento"
   },
   "ASSIGN_OPERATOR_MODAL": {
     "TITLE": "Atribuir Operador à Reserva {{code}}",
@@ -1372,6 +1378,7 @@
     "REASONS": {
       "OPERATOR_INACTIVE": "Inativo",
       "OPERATOR_NOT_ON_SHIFT": "Sem turno nesse horário",
+      "OPERATOR_ACCOUNT_DISABLED": "Conta desativada",
       "OPERATOR_ABSENT": "Ausente",
       "OPERATOR_BUSY": "Ocupado nesse horário"
     }
@@ -1421,7 +1428,7 @@
     "ROLES": {
       "CREATE_ROLE": "Criar função",
       "SUBTITLE": "Os três perfis (Administrador, Operador e Cliente) são fixos e cada conta tem um.",
-      "FIXED_NOTE": "O que cada pessoa pode fazer é decidido pelo seu perfil no sistema. As permissões desta tabela são salvas como referência da equipe, mas ainda não mudam o acesso.",
+      "FIXED_NOTE": "O que cada pessoa pode fazer é decidido pelo seu perfil no sistema. Esta tabela mostra as permissões de referência de cada perfil e é somente leitura.",
       "TABLE": {
         "NAME": "Função",
         "DESCRIPTION": "Descrição",
@@ -1481,7 +1488,8 @@
       "EMPTY_TITLE": "Nenhuma promoção ainda",
       "EMPTY_MESSAGE": "Crie uma promoção para impulsionar as vendas do lava-rápido.",
       "PAUSE": "Pausar",
-      "REACTIVATE": "Reativar"
+      "REACTIVATE": "Reativar",
+      "DISCOUNT_AMOUNT": "{{value}} de desconto"
     },
     "DELETE_CONFIRM": {
       "TITLE": "Excluir este registro?",
@@ -1922,6 +1930,10 @@
       "CONFIRM": "Sim, reembolsar",
       "DONE_TITLE": "Pagamento reembolsado",
       "DONE_MESSAGE": "O pagamento {{code}} foi reembolsado e os pontos da reserva foram estornados."
+    },
+    "BOOKING_CANCELLED": {
+      "refund": "Reserva cancelada: reembolsar",
+      "reject": "Reserva cancelada: rejeitar"
     }
   },
   "PAYMENT_REVIEW_MODAL": {
@@ -2163,7 +2175,8 @@
       "no_show": "Não compareceu"
     },
     "CANCEL_REASON": "Motivo do cancelamento",
-    "INSPECTION": "Relatório de inspeção"
+    "INSPECTION": "Relatório de inspeção",
+    "REASSIGN": "Trocar operador"
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nova reserva",
@@ -2197,7 +2210,8 @@
     "NO_OPERATOR": "Sem operador",
     "SEARCH": "Buscar",
     "VEHICLE_NOT_FOUND": "Nenhum veículo cadastrado com essa placa.",
-    "BAY_AUTO_HINT": "O sistema atribui o box ao salvar, conforme a disponibilidade."
+    "BAY_AUTO_HINT": "O sistema atribui o box ao salvar, conforme a disponibilidade.",
+    "PAID_SERVICES_WARNING": "Esta reserva já tem um pagamento informado ou aprovado. Mudar os serviços muda o total: um pagamento em análise terá de ser rejeitado, ou a diferença reembolsada ou cobrada."
   },
   "EXPORT_DATA": {
     "TITLE": "Exportar dados",
@@ -2287,7 +2301,9 @@
     "FEATURES_LABEL": "Benefícios",
     "FEATURES_ADD": "Adicionar benefício",
     "FEATURES_PLACEHOLDER": "Ex.: Cera protetora incluída",
-    "FEATURES_EMPTY": "Nenhum benefício ainda."
+    "FEATURES_EMPTY": "Nenhum benefício ainda.",
+    "DISCOUNT_FIXED_LABEL": "Desconto fixo (COP)",
+    "ERROR_DISCOUNT_FIXED": "Informe um valor maior que zero"
   },
   "QUICK_ACCESS": {
     "BOOK_WASH": "Agendar lavagem",
@@ -2330,7 +2346,7 @@
     "UNAUTHORIZED": "Sua sessão expirou. Entre novamente.",
     "FORBIDDEN": "Você não tem permissão para realizar esta ação",
     "USER_NOT_FOUND": "Conta não encontrada",
-    "CONFLICT": "Os dados conflitam com um registro existente",
+    "CONFLICT": "Os dados conflitam com um registro existente ou alguém os alterou enquanto você editava. Abra-os novamente e tente outra vez.",
     "PLATE_ALREADY_REGISTERED": "Já existe um veículo cadastrado com esta placa",
     "CUSTOMER_NOT_PROVISIONED": "Seu perfil de cliente ainda não está pronto. Tente novamente em alguns minutos.",
     "VEHICLE_NOT_FOUND": "O veículo não existe ou já foi removido",
@@ -2351,6 +2367,7 @@
     "CUSTOMER_SERVICE_UNAVAILABLE": "Não conseguimos validar seu veículo. Tente novamente em instantes.",
     "BOOKING_NOT_CHANGEABLE": "Esta reserva não pode mais ser alterada.",
     "OPERATOR_NOT_ON_SHIFT": "O operador não tem turno nesse horário. Verifique o turno semanal em Operadores.",
+    "OPERATOR_ACCOUNT_DISABLED": "A conta do operador está desativada. Ative-a em Gestão > Usuários ou escolha outro operador.",
     "OPERATOR_INACTIVE": "O operador está inativo.",
     "OPERATOR_ABSENT": "O operador tem uma ausência registrada nesse horário.",
     "OPERATOR_BUSY": "O operador já tem outro serviço nesse horário.",
@@ -2384,7 +2401,152 @@
     "CONTENT_TOO_LARGE": "As fotos são muito pesadas: cada uma pode ter até 2 MB",
     "BOOKING_WITHOUT_CLIENT": "A reserva não tem uma conta de cliente para avisar",
     "ABSENCE_IN_PAST": "A ausência não pode começar antes de hoje.",
-    "ADMIN_CANNOT_BE_DISABLED": "Uma conta de administrador não pode ser desativada."
+    "ADMIN_CANNOT_BE_DISABLED": "Uma conta de administrador não pode ser desativada.",
+    "ABSENCE_NOT_FOUND": "Ausência não encontrada.",
+    "AMOUNT_CHANGED": "O valor deste pagamento não corresponde mais ao que a reserva deve hoje (os serviços ou o cupom mudaram). Rejeite-o e peça ao cliente que pague o novo valor.",
+    "ASSIGNMENT_BUSY": "Esse operador já tem outro serviço nesse horário.",
+    "BAD_REQUEST": "A solicitação não é válida. Confira os dados e tente novamente.",
+    "BAY_HAS_BOOKINGS": "A baia tem reservas ativas: reagende-as antes de alterá-la.",
+    "BAY_NAME_TAKEN": "Já existe uma baia com esse nome.",
+    "BAY_NOT_FOUND": "Baia não encontrada.",
+    "BOOKING_NOT_EXPIRED": "A reserva ainda não terminou.",
+    "BOOKING_NOT_PAYABLE": "Esta reserva não pode mais ser paga (está cancelada, paga ou em análise).",
+    "BOOKING_NOT_TO_CLOSE": "Esta reserva não está pendente de fechamento.",
+    "BOOKING_SERVICES_LOCKED": "Ao reagendar você só pode mudar a data e o horário. Para mudar os serviços, cancele e faça uma nova reserva.",
+    "COMMENT_TOO_LONG": "O comentário é longo demais.",
+    "CONSENT_REQUIRED": "Você deve aceitar o tratamento de dados pessoais (Lei 1581) para se cadastrar.",
+    "DATA_CONFLICT": "Os dados entram em conflito com um registro existente.",
+    "DATE_REQUIRED": "Escolha uma data.",
+    "DUPLICATED_DAY": "Esse dia está repetido no horário.",
+    "DUPLICATED_SERVICE": "Esse serviço está repetido na reserva.",
+    "DUPLICATED_VEHICLE_TYPE": "Esse tipo de veículo tem dois preços: deixe apenas um.",
+    "EMAIL_DOMAIN_NOT_ALLOWED": "Apenas e-mails @gmail.com são aceitos.",
+    "EXCEPTION_DATE_TAKEN": "Já existe uma exceção de horário para essa data.",
+    "EXCEPTION_NOT_FOUND": "Exceção de horário não encontrada.",
+    "EXECUTION_ALREADY_COMPLETED": "Este serviço já foi concluído.",
+    "FINDING_NOT_FOUND": "Achado não encontrado.",
+    "INTERNAL_ERROR": "Ocorreu um erro no servidor. Tente novamente em alguns minutos.",
+    "INTERNAL_SERVER_ERROR": "Ocorreu um erro no servidor. Tente novamente em alguns minutos.",
+    "INVALID_ACCOUNT_HOLDER": "Informe o titular da conta.",
+    "INVALID_ACCOUNT_INSTRUCTIONS": "As instruções da conta são longas demais.",
+    "INVALID_ACCOUNT_NUMBER": "O número da conta não é válido.",
+    "INVALID_ADDRESS": "O endereço não é válido.",
+    "INVALID_ASSIGNMENT_NOTES": "As notas para o operador são longas demais.",
+    "INVALID_BAY_NAME": "O nome da baia não é válido.",
+    "INVALID_BAY_STATUS": "O status da baia não é válido.",
+    "INVALID_BREAK": "O intervalo deve ficar dentro do horário do dia.",
+    "INVALID_CANCELLATION_REASON": "Escolha um motivo de cancelamento válido.",
+    "INVALID_CATEGORY": "A categoria do serviço não é válida.",
+    "INVALID_CUSTOMER": "Os dados do cliente não são válidos.",
+    "INVALID_DATE_RANGE": "O intervalo de datas não é válido: a data inicial deve ser anterior à final.",
+    "INVALID_DAY": "O dia não é válido.",
+    "INVALID_DEVICE_TOKEN": "Não foi possível registrar o dispositivo para as notificações.",
+    "INVALID_DISCOUNT_TYPE": "O tipo de desconto não é válido.",
+    "INVALID_DURATION": "A duração não é válida.",
+    "INVALID_HOURS": "O horário não é válido: a abertura deve ser antes do fechamento.",
+    "INVALID_LANGUAGE": "O idioma escolhido não é válido.",
+    "INVALID_LOYALTY_BALANCE": "O saldo de pontos não é válido.",
+    "INVALID_LOYALTY_BOOKING": "A reserva dos pontos não é válida.",
+    "INVALID_LOYALTY_CUSTOMER": "O cliente dos pontos não é válido.",
+    "INVALID_LOYALTY_DESCRIPTION": "A descrição do movimento de pontos não é válida.",
+    "INVALID_LOYALTY_POINTS": "A quantidade de pontos não é válida.",
+    "INVALID_MESSAGE": "A mensagem não é válida.",
+    "INVALID_NOTES": "As notas são longas demais.",
+    "INVALID_OPERATOR_PROFILE": "A especialidade ou as habilidades do operador não são válidas.",
+    "INVALID_PAGE": "A página solicitada não é válida.",
+    "INVALID_PAYMENT_ACCOUNT": "Escolha uma conta de pagamento ativa.",
+    "INVALID_PAYMENT_AMOUNT": "O valor do pagamento não é válido.",
+    "INVALID_PAYMENT_BOOKING": "A reserva do pagamento não é válida.",
+    "INVALID_PAYMENT_METHOD": "O meio de pagamento não é válido.",
+    "INVALID_PAYMENT_STATUS": "O status do pagamento não é válido.",
+    "INVALID_PAYMENT_STATUS_TRANSITION": "O pagamento não pode mais passar para esse status.",
+    "INVALID_PERSON": "Os dados da pessoa não são válidos.",
+    "INVALID_PLATFORM": "A plataforma do dispositivo não é válida.",
+    "INVALID_POINTS": "A quantidade de pontos não é válida.",
+    "INVALID_PRICE": "O preço deve ser maior que zero.",
+    "INVALID_PROMOTION_BENEFITS": "Os benefícios da promoção não são válidos.",
+    "INVALID_PROMOTION_CODE": "O código da promoção não é válido (letras e números, sem espaços).",
+    "INVALID_PROMOTION_DESCRIPTION": "A descrição da promoção é longa demais.",
+    "INVALID_PROMOTION_DISCOUNT": "O desconto deve estar entre 1 % e 99 % e não pode ser o valor total do serviço.",
+    "INVALID_PROMOTION_DURATION": "A duração da promoção não é válida.",
+    "INVALID_PROMOTION_ICON": "O ícone da promoção não é válido.",
+    "INVALID_PROMOTION_NAME": "O nome da promoção não é válido.",
+    "INVALID_PROMOTION_PRICE": "O preço da promoção não é válido.",
+    "INVALID_PROMOTION_RANGE": "As datas da promoção não são válidas: o início deve ser antes do fim.",
+    "INVALID_PROMOTION_REQUIRED_POINTS": "Os pontos necessários da promoção não são válidos.",
+    "INVALID_QR_IMAGE": "A imagem do QR não é válida: use PNG ou JPG de até 2 MB.",
+    "INVALID_QUANTITY": "A quantidade não é válida.",
+    "INVALID_RANGE": "O intervalo de datas ou horários não é válido.",
+    "INVALID_RATING": "A avaliação deve ser de 1 a 5 estrelas.",
+    "INVALID_REASON": "Informe um motivo válido.",
+    "INVALID_RECEIPT_FILE": "O comprovante não é válido: use uma imagem PNG ou JPG.",
+    "INVALID_RECEIPT_UPLOADER": "Não foi possível identificar quem enviou o comprovante.",
+    "INVALID_RECIPIENT": "O destinatário da notificação não é válido.",
+    "INVALID_REDEMPTION_BOOKING": "O cupom não pode ser usado nessa reserva.",
+    "INVALID_REFERENCE": "A referência não é válida.",
+    "INVALID_REJECTION_REASON": "Informe o motivo da rejeição.",
+    "INVALID_REMINDER": "O lembrete não é válido.",
+    "INVALID_REPORTED_AMOUNT": "O valor pago deve ser maior que zero.",
+    "INVALID_REVIEWER": "Não foi possível identificar quem revisou o pagamento.",
+    "INVALID_REVIEW_COMMENT": "O comentário da revisão é longo demais.",
+    "INVALID_ROLES": "Os perfis escolhidos não são válidos.",
+    "INVALID_SERVICE_CODE": "O código do serviço não é válido.",
+    "INVALID_SERVICE_NAME": "O nome do serviço não é válido.",
+    "INVALID_SLOT": "A faixa de horário não é válida: o início deve ser antes do fim.",
+    "INVALID_STATUS": "O status não é válido.",
+    "INVALID_STATUS_TRANSITION": "A reserva não pode mais passar para esse status.",
+    "INVALID_THEME": "O tema escolhido não é válido.",
+    "INVALID_TITLE": "O título não é válido.",
+    "INVALID_TOKEN": "Sua sessão não é válida. Entre novamente.",
+    "INVALID_TRANSACTION_REFERENCE": "A referência deve ter de 8 a 12 letras ou números.",
+    "INVALID_VEHICLE": "O veículo não é válido.",
+    "INVALID_VEHICLE_TEXT": "A marca, o modelo ou a cor do veículo não são válidos.",
+    "INVALID_VERSION": "A versão não é válida.",
+    "INVALID_WEEK": "A semana não é válida.",
+    "LOYALTY_INSUFFICIENT_BALANCE": "Você não tem pontos suficientes.",
+    "METHOD_NOT_ALLOWED": "Esta ação não é permitida.",
+    "MISSING_FILTER": "Falta um filtro de busca.",
+    "NOTIFICATION_TYPE_NOT_ALLOWED": "Esse tipo de notificação não pode ser enviado a este usuário.",
+    "NOT_FOUND": "O que você procura não foi encontrado.",
+    "PAYLOAD_TOO_LARGE": "O arquivo é grande demais.",
+    "PAYMENT_ACCOUNT_NOT_FOUND": "Conta de pagamento não encontrada.",
+    "PAYMENT_ALREADY_APPROVED": "Esta reserva já tem um pagamento aprovado.",
+    "PAYMENT_ALREADY_REPORTED": "Já existe um pagamento em análise para esta reserva.",
+    "PAYMENT_NOT_FOUND": "Pagamento não encontrado.",
+    "PAYMENT_RECEIPT_REQUIRED": "Anexe o comprovante do pagamento.",
+    "PHOTO_NOT_FOUND": "Foto não encontrada.",
+    "PRICES_REQUIRED": "O serviço precisa de pelo menos um preço por tipo de veículo.",
+    "PROMOTION_CODE_TAKEN": "Já existe uma promoção com esse código.",
+    "PROMOTION_CUSTOMER_LIMIT_REACHED": "Você já usou este cupom o número de vezes permitido.",
+    "PROMOTION_DISCOUNT_UNSUPPORTED": "Esse tipo de desconto não está disponível.",
+    "PROMOTION_EXHAUSTED": "Este cupom esgotou.",
+    "PROMOTION_MIN_PURCHASE_NOT_MET": "A reserva não atinge o valor mínimo para usar este cupom.",
+    "PROMOTION_NOTHING_TO_DISCOUNT": "Não há mais nada a descontar nesta reserva.",
+    "RATE_LIMITED": "Muitas tentativas seguidas. Aguarde um momento e tente novamente.",
+    "RECEIPT_TOO_LARGE": "O comprovante é grande demais: pode ter até 2 MB.",
+    "SCHEDULE_BUSY": "Esse horário já está ocupado.",
+    "SCHEDULE_CONFLICT": "O horário se sobrepõe a outro.",
+    "SCHEDULE_CONFLICTS_BOOKINGS": "A mudança deixa {{count}} reserva(s) fora do horário ({{codes}}). Reagende-as ou cancele-as primeiro.",
+    "SERVICES_REQUIRED": "Escolha pelo menos um serviço.",
+    "SERVICE_CODE_TAKEN": "Já existe um serviço com esse código.",
+    "SERVICE_NOT_FOUND": "Serviço não encontrado.",
+    "SERVICE_UNAVAILABLE": "O serviço não está disponível no momento. Tente novamente em alguns minutos.",
+    "TIME_REQUIRED": "Escolha um horário.",
+    "TOO_MANY_ATTEMPTS": "Muitas tentativas falhas. Aguarde alguns minutos ou peça outro código para tentar novamente.",
+    "TOO_MANY_IDS": "Foram solicitados registros demais de uma vez.",
+    "TOO_MANY_REQUESTS": "Muitas solicitações seguidas. Aguarde um momento e tente novamente.",
+    "TRANSACTION_REFERENCE_REUSED": "Essa referência já foi usada em outro pagamento. Confira o número do seu comprovante.",
+    "UNKNOWN_NOTIFICATION_TYPE": "O tipo de notificação não existe.",
+    "UNSUPPORTED_MEDIA_TYPE": "O formato do arquivo não é compatível.",
+    "VEHICLE_HAS_ACTIVE_BOOKINGS": "Este veículo tem reservas ativas ou futuras: cancele-as antes de removê-lo.",
+    "VEHICLE_REQUIRED": "Escolha um veículo.",
+    "PROMOTION_ONE_PER_BOOKING": "Esta reserva já tem um cupom. Remova-o se quiser usar outro.",
+    "PROMOTION_REDEMPTION_NOT_FOUND": "Esta reserva não tem mais esse cupom. Recarregue a página.",
+    "FIELD_INVALID": "Confira este campo.",
+    "SERVICE_TOO_LATE": "Este serviço não pode mais ser iniciado: passaram mais de 4 horas do horário de término. Peça ao administrador para encerrá-lo.",
+    "NOTIFICATION_NOT_SENT": "Não foi possível enviar a notificação agora. Tente novamente em alguns minutos.",
+    "SECURITY_SERVICE_UNAVAILABLE": "O serviço de contas não está respondendo. Tente novamente em instantes.",
+    "DATABASE_UNAVAILABLE": "O banco de dados não está respondendo agora. Tente novamente em alguns minutos."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Senha atual",
@@ -2483,7 +2645,8 @@
     "DISCLAIMER": "As fotos e notas são registradas pelo lava-rápido ao revisar seu veículo em cada etapa do serviço."
   },
   "OPERATOR_WORK": {
-    "START_FROM": "Você poderá iniciá-lo a partir das {{time}} (15 minutos antes da reserva)."
+    "START_FROM": "Você poderá iniciá-lo a partir das {{time}} (15 minutos antes da reserva).",
+    "START_TOO_LATE": "Não pode mais ser iniciado: passaram mais de 4 h do horário de término"
   },
   "AUTH_FEEDBACK": {
     "LOGIN_SUCCESS_TITLE": "Login realizado com sucesso!",

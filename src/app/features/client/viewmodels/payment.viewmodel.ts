@@ -5,7 +5,7 @@ import { catchError, forkJoin, of } from 'rxjs';
 import { BookingApiService } from '../../../core/services/booking-api';
 import { BookingResponse } from '../../../core/models/booking.models';
 import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../core/utils/booking-display';
-import { apiErrorKey } from '../../../core/utils/api-error';
+import { apiErrorCode, apiErrorKey } from '../../../core/utils/api-error';
 import { todayIso } from '../../../core/utils/dates';
 // cuentas del lavadero y reporte del pago (payment-service)
 import { ALLOWED_IMAGE_TYPES, BookingPaymentState, PaymentAccountResponse, PaymentsApiService, compressReceipt } from '../../../core/services/payments-api';
@@ -102,6 +102,11 @@ export class PaymentViewModel {
   readonly couponResult = signal<RedeemPromotionResult | null>(null);
   readonly couponError = signal<string | null>(null);
   readonly redeemingCoupon = signal(false);
+  // lo que falta por pagar según payment-service (BIZ-02): llega al abrir la pantalla y tras canjear o
+  // quitar un cupón. La pantalla nunca lo calcula; null mientras no se sabe
+  private readonly serverAmountDue = signal<number | null>(null);
+  // payment-service no dijo cuánto se debe: no se muestra un total inventado
+  readonly amountDueFailed = signal(false);
 
   // comprobante: el archivo elegido, ya comprimido (lo que se envía) y su peso real
   readonly receiptFile = signal<File | null>(null);
@@ -134,10 +139,8 @@ export class PaymentViewModel {
     accountType: 'PAYMENT.QR.ACCOUNT_TYPE_VALUE'
   }));
 
-  readonly totalToPay = computed(() => {
-    const summary = this.serviceSummary();
-    return Math.max(0, summary.subtotal - summary.pointsDiscount - (this.couponResult()?.discountAmount ?? 0));
-  });
+  // el total es el que manda payment-service (ya resta puntos y cupón); null mientras no responde
+  readonly totalToPay = computed(() => this.serverAmountDue());
 
   readonly isVerifying = computed(() => this.flowStep() === 'VERIFYING');
   readonly isApproved = computed(() => this.flowStep() === 'APPROVED');
@@ -150,7 +153,10 @@ export class PaymentViewModel {
   // la referencia debe tener entre 8 y 12 caracteres alfanuméricos
   readonly isRefValid = computed(() => /^[A-Za-z0-9]{8,12}$/.test(this.transactionRef()));
   readonly paidAmount = computed(() => this.paidAmountInput() ?? this.totalToPay());
-  readonly isPaidAmountValid = computed(() => Number.isFinite(this.paidAmount()) && this.paidAmount() > 0);
+  readonly isPaidAmountValid = computed(() => {
+    const amount = this.paidAmount();
+    return amount !== null && Number.isFinite(amount) && amount > 0;
+  });
 
   readonly canConfirm = computed(() => {
     // evita enviar el mismo pago dos veces (ya enviado, o con la petición en curso)
@@ -185,6 +191,17 @@ export class PaymentViewModel {
     });
   }
 
+  /**
+   * Refresco automático (WEB-16): vuelve a preguntar el estado del pago y el monto, así el cliente ve
+   * sin recargar cuando el admin aprueba o rechaza. Si falla, se queda lo que ya se mostraba.
+   */
+  refresh(): void {
+    const booking = this.booking();
+    if (!booking) return;
+    this.loadPaymentState(booking.id);
+    this.loadAmountDue(booking.id, true);
+  }
+
   isSelected(method: PaymentMethod): boolean {
     return method.accountId === null
       ? this.selectedMethod() === 'CASH'
@@ -207,6 +224,36 @@ export class PaymentViewModel {
     this.loyaltyApi.redeem(booking.id, this.couponCode().trim().toUpperCase()).subscribe({
       next: result => {
         this.couponResult.set(result);
+        this.serverAmountDue.set(result.newTotal);
+        this.redeemingCoupon.set(false);
+      },
+      error: (error: unknown) => {
+        this.couponError.set(apiErrorKey(error));
+        this.redeemingCoupon.set(false);
+        // la reserva ya tenía un cupón (por ejemplo, desde otra pestaña): se trae para poder quitarlo
+        if (apiErrorCode(error) === 'PROMOTION_ONE_PER_BOOKING') this.loadAmountDue(booking.id);
+      }
+    });
+  }
+
+  // E-08: el canje se anula en payment-service (antes solo desaparecía de la pantalla y el descuento
+  // seguía aplicado); con un pago en revisión o aprobado el servidor responde 409 y el cupón sigue
+  removeCoupon(): void {
+    const booking = this.booking();
+    const coupon = this.couponResult();
+    if (!booking || !coupon) {
+      this.couponCode.set('');
+      this.couponError.set(null);
+      return;
+    }
+    if (this.redeemingCoupon()) return;
+    this.redeemingCoupon.set(true);
+    this.couponError.set(null);
+    this.loyaltyApi.removeRedemption(booking.id, coupon.promotionId).subscribe({
+      next: due => {
+        this.couponResult.set(null);
+        this.couponCode.set('');
+        this.serverAmountDue.set(due.amountDue);
         this.redeemingCoupon.set(false);
       },
       error: (error: unknown) => {
@@ -214,12 +261,6 @@ export class PaymentViewModel {
         this.redeemingCoupon.set(false);
       }
     });
-  }
-
-  removeCoupon(): void {
-    this.couponResult.set(null);
-    this.couponCode.set('');
-    this.couponError.set(null);
   }
 
   // se deja elegir hasta 10 MB; al elegirlo se comprime a máximo 2 MB y se muestra el peso real
@@ -263,11 +304,12 @@ export class PaymentViewModel {
     }
     const account = this.selectedAccount();
     const receipt = this.receiptDataUrl();
-    if (!account || !receipt) return;
+    const paidAmount = this.paidAmount();
+    if (!account || !receipt || paidAmount === null) return;
 
     // el monto a cobrar lo pone payment-service; paidAmount es lo que el cliente dice haber pagado
     this.reporting.set(true);
-    this.paymentsApi.report(booking.id, account.id, this.transactionRef(), receipt, this.paidAmount()).subscribe({
+    this.paymentsApi.report(booking.id, account.id, this.transactionRef(), receipt, paidAmount).subscribe({
       next: () => {
         this.reporting.set(false);
         this.flowStep.set('VERIFYING');
@@ -343,6 +385,7 @@ export class PaymentViewModel {
         this.booking.set(booking);
         this.applyBooking(booking);
         this.loadPaymentState(booking.id);
+        this.loadAmountDue(booking.id);
       },
       error: (error: unknown) => {
         this.loading.set(false);
@@ -393,6 +436,22 @@ export class PaymentViewModel {
       },
       // sin payment-service se queda el estado local
       error: () => undefined
+    });
+  }
+
+  // BIZ-02: monto a pagar y cupón aplicado según payment-service; así el cupón se ve (y se puede
+  // quitar) aunque el cliente recargue o vuelva a entrar
+  private loadAmountDue(bookingId: number, silent = false): void {
+    this.loyaltyApi.bookingRedemption(bookingId).subscribe({
+      next: due => {
+        this.amountDueFailed.set(false);
+        this.serverAmountDue.set(due.amountDue);
+        const redemption = due.redemption;
+        this.couponResult.set(redemption ? { ...redemption, newTotal: due.amountDue } : null);
+      },
+      error: () => {
+        if (!silent || this.serverAmountDue() === null) this.amountDueFailed.set(true);
+      }
     });
   }
 

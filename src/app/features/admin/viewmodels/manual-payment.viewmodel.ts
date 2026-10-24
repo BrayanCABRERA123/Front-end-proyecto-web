@@ -67,7 +67,9 @@ export class ManualPaymentViewModel {
         })));
     });
     this.paymentsApi.adminAccounts().subscribe(list => {
-      const active = list.filter(a => a.active);
+      // C-04: la caja (efectivo) se ofrece aunque esté inactiva: apagarla solo la esconde del cliente,
+      // pero el admin igual recibe efectivo en el local
+      const active = list.filter(a => a.active || a.methodCode === 'EFECTIVO');
       this.accounts.set(active);
       // efectivo primero: es el caso más común en caja
       this.accountId.set((active.find(a => a.methodCode === 'EFECTIVO') ?? active[0])?.id ?? null);

@@ -7,6 +7,17 @@
   <h2 class="dialog-title">{{ title | translate }}</h2>
   <p class="dialog-text">{{ message | translate: messageParams }}</p>
 
+  @if (options.length > 0) {
+    <label class="dialog-select">
+      <span>{{ optionsLabel | translate }}</span>
+      <select [(ngModel)]="selected">
+        @for (option of options; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    </label>
+  }
+
   <div class="dialog-actions">
 
     <button class="btn-cancel" (click)="close(false)">

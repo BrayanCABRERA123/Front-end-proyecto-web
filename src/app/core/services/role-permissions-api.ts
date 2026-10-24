@@ -41,8 +41,4 @@ export class RolePermissionsApiService {
   matrix(): Observable<RolePermissionsMatrix> {
     return this.http.get<RolePermissionsMatrix>(`${API_BASE_URL}/admin/roles-permissions`);
   }
-
-  update(role: RoleCode, permissionIds: number[]): Observable<RolePermissionsView> {
-    return this.http.put<RolePermissionsView>(`${API_BASE_URL}/admin/roles-permissions/${role}`, { permissionIds });
-  }
 }

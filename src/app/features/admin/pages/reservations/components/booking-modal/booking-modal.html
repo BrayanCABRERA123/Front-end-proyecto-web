@@ -52,6 +52,10 @@
             {{ s.name }} · {{ vm.priceOf(s) | copPrice }} · {{ 'RESERVE.MINUTES' | translate:{ count: vm.minutesOf(s) } }}
           </label>
         }
+        <!-- BIZ-01: con un pago reportado o aprobado, cambiar los servicios cambia lo que se debe -->
+        @if (vm.servicesChangeWarning()) {
+          <span class="form-field__error" role="alert"><mat-icon>warning</mat-icon>{{ 'BOOKING_MODAL.PAID_SERVICES_WARNING' | translate }}</span>
+        }
       </div>
 
       <!-- 3. fecha y hora libre -->

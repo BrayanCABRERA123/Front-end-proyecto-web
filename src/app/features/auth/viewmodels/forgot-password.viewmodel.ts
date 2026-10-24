@@ -2,6 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { AuthService } from '../../../core/services/auth';
 import { apiErrorKey } from '../../../core/utils/api-error';
+import { isEmailFormat } from '../../../core/utils/email';
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 
 /**
@@ -21,7 +22,8 @@ export class ForgotPasswordViewModel {
   // paso 1: el correo se muestra en el paso 2 y se reenvía en el paso 3
   readonly email = signal('');
   readonly sending = signal(false);
-  readonly isEmailInvalid = computed(() => !!this.email() && !/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(this.email()));
+  // A-01: solo el formato, como en el login (una cuenta antigua con otro dominio también recupera)
+  readonly isEmailInvalid = computed(() => !!this.email() && !isEmailFormat(this.email()));
 
   // paso 2: el código ya confirmado lo envía el paso 3 junto con la contraseña nueva
   readonly verifying = signal(false);

@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { AbstractControl } from '@angular/forms';
 import { ApiProblem } from '../models/auth.models';
 
 // códigos de error que tienen traducción en API_ERRORS.* (assets/i18n).
 // cualquier otro (un código nuevo del backend, un error del framework) cae en UNEXPECTED
 // para que el usuario nunca vea una llave de traducción sin traducir.
-const TRANSLATED_CODES = new Set([
+export const TRANSLATED_CODES: ReadonlySet<string> = new Set([
   'INVALID_CREDENTIALS',
   'ACCOUNT_DISABLED',
   'ACCOUNT_LOCKED',
@@ -47,6 +48,7 @@ const TRANSLATED_CODES = new Set([
   'BOOKING_NOT_CHANGEABLE',
   // códigos del operations-service (operarios, asignación, ejecución y calificaciones)
   'OPERATOR_NOT_ON_SHIFT',
+  'OPERATOR_ACCOUNT_DISABLED',
   'OPERATOR_INACTIVE',
   'OPERATOR_ABSENT',
   'OPERATOR_BUSY',
@@ -83,6 +85,160 @@ const TRANSLATED_CODES = new Set([
   'PROMOTION_NOT_FOUND',
   'PROMOTION_NOT_REDEEMABLE',
   'PROMOTION_ALREADY_REDEEMED',
+  'PROMOTION_ONE_PER_BOOKING',
+  'PROMOTION_REDEMPTION_NOT_FOUND',
+  // WEB-05: todos los demás códigos que lanzan los backends (git grep sobre develop del 23-10)
+  // contrato final del 24-10: operations, notification y la base caída
+  'SERVICE_TOO_LATE',
+  'NOTIFICATION_NOT_SENT',
+  'SECURITY_SERVICE_UNAVAILABLE',
+  'DATABASE_UNAVAILABLE',
+  // operations-service (operarios, asignación, ejecución e inspección)
+  'ABSENCE_NOT_FOUND',
+  'ASSIGNMENT_BUSY',
+  'BOOKING_NOT_TO_CLOSE',
+  'COMMENT_TOO_LONG',
+  'DUPLICATED_DAY',
+  'EXECUTION_ALREADY_COMPLETED',
+  'FINDING_NOT_FOUND',
+  'INVALID_ASSIGNMENT_NOTES',
+  'INVALID_OPERATOR_PROFILE',
+  'INVALID_RATING',
+  'INVALID_SLOT',
+  'PHOTO_NOT_FOUND',
+  // códigos nuevos del contrato del 23-10 (BIZ-01, BIZ-04, BIZ-08, BIZ-10, SEC-04, SEC-05, SEC-07)
+  'AMOUNT_CHANGED',
+  'BOOKING_SERVICES_LOCKED',
+  'CONSENT_REQUIRED',
+  'INVALID_PRICE',
+  'RATE_LIMITED',
+  'SCHEDULE_CONFLICTS_BOOKINGS',
+  'TOO_MANY_ATTEMPTS',
+  'VEHICLE_HAS_ACTIVE_BOOKINGS',
+  // errores genéricos (estado HTTP como código, servidor caído, límite de peticiones)
+  'BAD_REQUEST',
+  'DATA_CONFLICT',
+  'INTERNAL_ERROR',
+  'INTERNAL_SERVER_ERROR',
+  'METHOD_NOT_ALLOWED',
+  'NOT_FOUND',
+  'PAYLOAD_TOO_LARGE',
+  'SERVICE_UNAVAILABLE',
+  'TOO_MANY_REQUESTS',
+  'UNSUPPORTED_MEDIA_TYPE',
+  // booking-service (reservas, servicios, horario y bahías)
+  'BAY_HAS_BOOKINGS',
+  'BAY_NAME_TAKEN',
+  'BAY_NOT_FOUND',
+  'BOOKING_NOT_EXPIRED',
+  'DATE_REQUIRED',
+  'DUPLICATED_SERVICE',
+  'DUPLICATED_VEHICLE_TYPE',
+  'EXCEPTION_DATE_TAKEN',
+  'EXCEPTION_NOT_FOUND',
+  'INVALID_BAY_NAME',
+  'INVALID_BAY_STATUS',
+  'INVALID_BREAK',
+  'INVALID_CANCELLATION_REASON',
+  'INVALID_CATEGORY',
+  'INVALID_DAY',
+  'INVALID_DURATION',
+  'INVALID_HOURS',
+  'INVALID_LOYALTY_POINTS',
+  'INVALID_NOTES',
+  'INVALID_QUANTITY',
+  'INVALID_RANGE',
+  'INVALID_REASON',
+  'INVALID_SERVICE_CODE',
+  'INVALID_SERVICE_NAME',
+  'INVALID_STATUS',
+  'INVALID_STATUS_TRANSITION',
+  'INVALID_VEHICLE',
+  'INVALID_WEEK',
+  'PRICES_REQUIRED',
+  'SCHEDULE_BUSY',
+  'SCHEDULE_CONFLICT',
+  'SERVICES_REQUIRED',
+  'SERVICE_CODE_TAKEN',
+  'SERVICE_NOT_FOUND',
+  'TIME_REQUIRED',
+  'VEHICLE_REQUIRED',
+  // payment-service (pagos, cuentas, promociones y fidelización)
+  'BOOKING_NOT_PAYABLE',
+  'INVALID_ACCOUNT_HOLDER',
+  'INVALID_ACCOUNT_INSTRUCTIONS',
+  'INVALID_ACCOUNT_NUMBER',
+  'INVALID_DISCOUNT_TYPE',
+  'INVALID_LOYALTY_BALANCE',
+  'INVALID_LOYALTY_BOOKING',
+  'INVALID_LOYALTY_CUSTOMER',
+  'INVALID_LOYALTY_DESCRIPTION',
+  'INVALID_PAYMENT_ACCOUNT',
+  'INVALID_PAYMENT_AMOUNT',
+  'INVALID_PAYMENT_BOOKING',
+  'INVALID_PAYMENT_METHOD',
+  'INVALID_PAYMENT_STATUS',
+  'INVALID_PAYMENT_STATUS_TRANSITION',
+  'INVALID_PROMOTION_BENEFITS',
+  'INVALID_PROMOTION_CODE',
+  'INVALID_PROMOTION_DESCRIPTION',
+  'INVALID_PROMOTION_DISCOUNT',
+  'INVALID_PROMOTION_DURATION',
+  'INVALID_PROMOTION_ICON',
+  'INVALID_PROMOTION_NAME',
+  'INVALID_PROMOTION_PRICE',
+  'INVALID_PROMOTION_RANGE',
+  'INVALID_PROMOTION_REQUIRED_POINTS',
+  'INVALID_QR_IMAGE',
+  'INVALID_RECEIPT_FILE',
+  'INVALID_RECEIPT_UPLOADER',
+  'INVALID_REDEMPTION_BOOKING',
+  'INVALID_REJECTION_REASON',
+  'INVALID_REPORTED_AMOUNT',
+  'INVALID_REVIEWER',
+  'INVALID_REVIEW_COMMENT',
+  'INVALID_TRANSACTION_REFERENCE',
+  'LOYALTY_INSUFFICIENT_BALANCE',
+  'PAYMENT_ACCOUNT_NOT_FOUND',
+  'PAYMENT_ALREADY_APPROVED',
+  'PAYMENT_ALREADY_REPORTED',
+  'PAYMENT_NOT_FOUND',
+  'PAYMENT_RECEIPT_REQUIRED',
+  'PROMOTION_CODE_TAKEN',
+  'PROMOTION_CUSTOMER_LIMIT_REACHED',
+  'PROMOTION_DISCOUNT_UNSUPPORTED',
+  'PROMOTION_EXHAUSTED',
+  'PROMOTION_MIN_PURCHASE_NOT_MET',
+  'PROMOTION_NOTHING_TO_DISCOUNT',
+  'RECEIPT_TOO_LARGE',
+  'TRANSACTION_REFERENCE_REUSED',
+  // security-service (cuentas, contraseñas, registro)
+  'EMAIL_DOMAIN_NOT_ALLOWED',
+  'INVALID_ADDRESS',
+  'INVALID_LANGUAGE',
+  'INVALID_ROLES',
+  'INVALID_THEME',
+  // customer-service (vehículos)
+  'INVALID_CUSTOMER',
+  'INVALID_PERSON',
+  'INVALID_POINTS',
+  'INVALID_TOKEN',
+  'INVALID_VEHICLE_TEXT',
+  'MISSING_FILTER',
+  'TOO_MANY_IDS',
+  // notification-service
+  'INVALID_DATE_RANGE',
+  'INVALID_DEVICE_TOKEN',
+  'INVALID_MESSAGE',
+  'INVALID_PAGE',
+  'INVALID_PLATFORM',
+  'INVALID_RECIPIENT',
+  'INVALID_REFERENCE',
+  'INVALID_REMINDER',
+  'INVALID_TITLE',
+  'INVALID_VERSION',
+  'NOTIFICATION_TYPE_NOT_ALLOWED',
+  'UNKNOWN_NOTIFICATION_TYPE',
   'NETWORK_ERROR'
 ]);
 
@@ -109,4 +265,54 @@ export function apiErrorCode(error: unknown): string {
     return `SLOT_${problem.reason}`;
   }
   return code && TRANSLATED_CODES.has(code) ? code : 'UNEXPECTED';
+}
+
+/**
+ * WEB-05: un 400 de validación trae "errors" con los campos que fallaron. Los servicios Java mandan
+ * campo → texto y payment (.NET) campo → lista de textos. Los textos vienen en inglés, así que se
+ * devuelve una llave propia: la del código si el texto es uno conocido, si no FIELD_INVALID.
+ */
+export function apiFieldErrors(error: unknown): Record<string, string> {
+  if (!(error instanceof HttpErrorResponse) || error.status !== 400) return {};
+  const errors = (error.error as { errors?: unknown } | null)?.errors;
+  if (!errors || typeof errors !== 'object' || Array.isArray(errors)) return {};
+  const result: Record<string, string> = {};
+  for (const [field, value] of Object.entries(errors as Record<string, unknown>)) {
+    const message = Array.isArray(value) ? value[0] : value;
+    const code = typeof message === 'string' ? message.trim() : '';
+    // "address.city" → "city"; "FirstName" (.NET) → "firstName"
+    const name = field.split('.').pop() ?? field;
+    const key = name.charAt(0).toLowerCase() + name.slice(1);
+    result[key] = TRANSLATED_CODES.has(code) ? `API_ERRORS.${code}` : 'API_ERRORS.FIELD_INVALID';
+  }
+  return result;
+}
+
+/**
+ * Marca en el formulario los campos que rechazó el servidor con el error `server` (su llave de
+ * traducción) y los toca para que se vean. `aliases` traduce el nombre del servidor al del control
+ * (por ejemplo phone → phoneNumber). Devuelve true si marcó alguno.
+ */
+export function applyFieldErrors(form: AbstractControl, error: unknown, aliases: Record<string, string> = {}): boolean {
+  let marked = false;
+  for (const [field, key] of Object.entries(apiFieldErrors(error))) {
+    const control = form.get(aliases[field] ?? field);
+    if (!control) continue;
+    control.setErrors({ ...(control.errors ?? {}), server: key });
+    control.markAsTouched();
+    marked = true;
+  }
+  return marked;
+}
+
+/**
+ * Datos que acompañan a algunos códigos para armar el mensaje: SCHEDULE_CONFLICTS_BOOKINGS trae las
+ * reservas que quedarían por fuera (conflictingBookings y bookingCodes), y el texto las nombra.
+ */
+export function apiErrorParams(error: unknown): Record<string, string | number> {
+  if (!(error instanceof HttpErrorResponse)) return {};
+  const problem = error.error as { conflictingBookings?: unknown; bookingCodes?: unknown } | null;
+  const codes = Array.isArray(problem?.bookingCodes) ? problem.bookingCodes.map(String) : [];
+  const count = typeof problem?.conflictingBookings === 'number' ? problem.conflictingBookings : codes.length;
+  return { count, codes: codes.slice(0, 10).join(', ') || '—' };
 }

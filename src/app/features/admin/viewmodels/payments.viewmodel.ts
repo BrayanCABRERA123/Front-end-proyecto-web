@@ -6,6 +6,7 @@ import { PaymentsApiService } from '../../../core/services/payments-api';
 import { AuthService } from '../../../core/services/auth';
 import { apiErrorKey } from '../../../core/utils/api-error';
 import { PaymentsStore } from '../services/payments-store';
+import { ReservationsStore } from '../services/reservations-store';
 import { Payment, PaymentStatus } from '../models/admin.models';
 import { ManualPaymentResult } from './manual-payment.viewmodel';
 import { paymentMethodLabel, paymentReviewData } from './payment-review';
@@ -15,6 +16,7 @@ import { paymentMethodLabel, paymentReviewData } from './payment-review';
 export class PaymentsViewModel {
 
   private readonly store = inject(PaymentsStore);
+  private readonly reservations = inject(ReservationsStore);
   private readonly paymentsApi = inject(PaymentsApiService);
   private readonly feedback = inject(FeedbackService);
   private readonly auth = inject(AuthService);
@@ -23,9 +25,10 @@ export class PaymentsViewModel {
   methodFilter = '';
   statusFilter: PaymentStatus | '' = '';
 
-  // pagos reales de payment-service
-  load(): void {
-    this.store.refresh();
+  // pagos reales de payment-service; el cliente, la bahía y el operario salen de las reservas
+  load(silent = false): void {
+    this.store.refresh(silent);
+    this.reservations.load(silent);
   }
 
   get payments(): Payment[] { return this.store.payments(); }

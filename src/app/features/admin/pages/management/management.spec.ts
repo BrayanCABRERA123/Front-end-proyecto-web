@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
@@ -21,6 +21,7 @@ function account(id: number, firstName: string, role: string, active = true) {
 describe('ManagementComponent (admin)', () => {
   let http: HttpTestingController;
   let component: ManagementComponent;
+  let fixture: ComponentFixture<ManagementComponent>;
 
   /** responde la carga inicial de la pantalla (cuentas, roles, servicios y promociones) */
   function flushLoad(): void {
@@ -45,7 +46,7 @@ describe('ManagementComponent (admin)', () => {
     translate.use('es');
     http = TestBed.inject(HttpTestingController);
 
-    const fixture = TestBed.createComponent(ManagementComponent);
+    fixture = TestBed.createComponent(ManagementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
 
@@ -87,5 +88,15 @@ describe('ManagementComponent (admin)', () => {
     flushLoad();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.roles-note')?.textContent).toContain('ADMIN_MANAGEMENT.ROLES.FIXED_NOTE');
+  });
+
+  it('H-05: la matriz de permisos por rol es de solo lectura (sin botón para editar ni PUT)', () => {
+    component.vm.setTab('roles');
+    fixture.detectChanges();
+
+    const table = (fixture.nativeElement as HTMLElement).querySelector('table');
+    expect(table?.querySelectorAll('tbody tr').length).toBe(3);
+    expect(table?.querySelector('button')).toBeNull();
+    http.expectNone(r => r.method === 'PUT' && r.url.includes('/admin/roles-permissions'));
   });
 });

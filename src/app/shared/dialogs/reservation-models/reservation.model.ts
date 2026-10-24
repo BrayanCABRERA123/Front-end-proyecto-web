@@ -12,6 +12,7 @@ export interface Reservation {
   status: ReservationStatus;
   // desde cuándo se puede iniciar (lo calcula operations-service)
   startableAt?: string | null;
+  startableUntil?: string | null;
 }
 
 export function reservationStatusClass(status: ReservationStatus): string {

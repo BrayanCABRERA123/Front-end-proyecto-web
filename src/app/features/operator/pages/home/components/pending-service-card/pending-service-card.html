@@ -20,8 +20,8 @@
       </span>
 
       @if (reservation.status === 'pendiente') {
-        <button class="btn-start" [disabled]="!canStartNow(reservation.startableAt)"
-                [title]="canStartNow(reservation.startableAt) ? '' : ('OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(reservation.startableAt) })"
+        <button class="btn-start" [disabled]="!canStartNow(reservation.startableAt, reservation.startableUntil)"
+                [title]="canStartNow(reservation.startableAt, reservation.startableUntil) ? '' : (startHint(reservation.startableAt, reservation.startableUntil) | translate:{ time: startFrom(reservation.startableAt) })"
                 (click)="start.emit(reservation)">
           {{ 'OPERATOR_HOME.BTN_START' | translate }}
         </button>

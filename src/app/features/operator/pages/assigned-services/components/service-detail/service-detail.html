@@ -40,12 +40,21 @@
       </div>
       <div class="detail-item">
         <mat-icon class="detail-icon">payments</mat-icon>
-        <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.PAYMENT_METHOD' | translate }}</span>
-        <span class="detail-value bold">{{ service.paymentMethod }}</span>
+        <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.TOTAL' | translate }}</span>
+        <span class="detail-value bold">{{ service.total }}</span>
       </div>
     </div>
 
   </div>
+
+  <!-- B-01: lo que el admin escribió al asignar (por ejemplo, "llevar cera extra") -->
+  @if (service.notes) {
+    <div class="detail-item detail-notes">
+      <mat-icon class="detail-icon">sticky_note_2</mat-icon>
+      <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.NOTES' | translate }}</span>
+      <span class="detail-value">{{ service.notes }}</span>
+    </div>
+  }
 
   <!-- acciones según el estado: pendiente -> iniciar; en progreso -> reportar o finalizar -->
   @if (service.statusColor !== 'completed') {
@@ -53,12 +62,12 @@
       <p class="actions-title">{{ 'ASSIGNED_SERVICES.DETAIL.PROGRESS_TITLE' | translate }}</p>
       <div class="action-buttons">
         @if (service.statusColor === 'pending') {
-          <button class="btn-start" [disabled]="!canStartNow(service.startableAt)" (click)="startService()">
+          <button class="btn-start" [disabled]="!canStartNow(service.startableAt, service.startableUntil)" (click)="startService()">
             <mat-icon>play_circle_outline</mat-icon>
             {{ 'ASSIGNED_SERVICES.DETAIL.START' | translate }}
           </button>
-          @if (!canStartNow(service.startableAt)) {
-            <p class="start-hint">{{ 'OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(service.startableAt) } }}</p>
+          @if (!canStartNow(service.startableAt, service.startableUntil)) {
+            <p class="start-hint">{{ startHint(service.startableAt, service.startableUntil) | translate:{ time: startFrom(service.startableAt) } }}</p>
           }
         }
         @if (service.statusColor === 'progress') {

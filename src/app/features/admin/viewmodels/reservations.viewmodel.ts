@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 import { AvailableOperator } from '../../../shared/dialogs/assign-operator-modal/assign-operator.model';
@@ -6,6 +6,7 @@ import { ReservationsStore } from '../services/reservations-store';
 import { OperatorsStore } from '../services/operators-store';
 import { Booking, BookingStatus } from '../models/admin.models';
 import { apiErrorKey } from '../../../core/utils/api-error';
+import { BookingApiService } from '../../../core/services/booking-api';
 
 /**
  * Reservas del admin: búsqueda, filtros y páginas sobre las reservas del store, las tarjetas del
@@ -17,6 +18,10 @@ export class ReservationsViewModel {
   private readonly store = inject(ReservationsStore);
   private readonly operators = inject(OperatorsStore);
   private readonly feedback = inject(FeedbackService);
+  private readonly bookingApi = inject(BookingApiService);
+
+  // A-20: motivos de cancelación del catálogo de booking-service (sin el del sistema)
+  readonly cancellationReasons = signal<{ code: string; name: string }[]>([]);
 
   searchTerm = '';
   statusFilter: BookingStatus | '' = '';
@@ -27,8 +32,10 @@ export class ReservationsViewModel {
   readonly pageSize = 6;
 
   // se recarga al entrar para ver las reservas que llegaron desde la app del cliente
-  load(): void {
-    this.store.load();
+  load(silent = false): void {
+    this.store.load(silent);
+    // los nombres de los operarios (filtro) solo al entrar: cambian poco
+    if (!silent) this.operators.refresh();
   }
 
   get loading(): boolean { return this.store.loading(); }
@@ -121,13 +128,20 @@ export class ReservationsViewModel {
       { messageParams: { code } });
   }
 
-  // el admin cancela con el motivo OTHER (catálogo booking.cancellation_reason)
-  changeStatus(booking: Booking, status: BookingStatus): void {
-    const reason = status === 'cancelled' ? 'OTHER' : undefined;
+  loadCancellationReasons(): void {
+    this.bookingApi.cancellationReasons().subscribe({
+      next: reasons => this.cancellationReasons.set(reasons),
+      error: () => this.cancellationReasons.set([])
+    });
+  }
+
+  // A-20: el admin cancela con el motivo que eligió (si no eligió, OTHER del catálogo)
+  changeStatus(booking: Booking, status: BookingStatus, reasonCode?: string): void {
+    const reason = status === 'cancelled' ? (reasonCode || 'OTHER') : undefined;
     this.store.setStatus(booking.id, status, reason).subscribe({
       next: () => {
         // refresca la lista para que la tabla muestre el estado nuevo sin recargar la página
-        this.load();
+        this.store.load();
         this.feedback.success('ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
           `ADMIN_RESERVATIONS.FEEDBACK.STATUS_${status.toUpperCase()}_MESSAGE`, { messageParams: { code: booking.code } });
       },
@@ -144,9 +158,9 @@ export class ReservationsViewModel {
   }
 
   // el aviso de éxito sale solo si el backend aceptó la asignación
-  assignOperator(booking: Booking, operatorId: string): void {
+  assignOperator(booking: Booking, operatorId: string, notes = ''): void {
     this.store.assignOperator(booking.id, operatorId, () =>
       this.feedback.success('ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE', 'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
-        { messageParams: { code: booking.code } }));
+        { messageParams: { code: booking.code } }), notes);
   }
 }

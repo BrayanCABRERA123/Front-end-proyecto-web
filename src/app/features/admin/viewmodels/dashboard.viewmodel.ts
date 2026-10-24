@@ -87,7 +87,14 @@ export class AdminDashboardViewModel {
   // reservas de hoy frente a ayer: las cuenta booking-service con la fecha del lavadero
   readonly daySummary = signal<DaySummaryResponse | null>(null);
 
-  load(): void {
+  // al entrar se pide todo; el refresco automático (silent) solo lo que cambia por otras personas
+  load(silent = false): void {
+    this.reservations.load(silent);
+    this.payments.refresh(silent);
+    if (!silent) {
+      this.operatorsStore.refresh();
+      this.schedule.load();
+    }
     this.bookingApi.daySummary().subscribe({ next: summary => this.daySummary.set(summary), error: () => undefined });
   }
 
@@ -178,8 +185,13 @@ export class AdminDashboardViewModel {
 
   /* ---------- operarios ---------- */
 
+  // la tarjeta muestra los 5 primeros, pero los conteos usan todos (A-19)
   get operators(): OperatorStatusRow[] {
-    return this.operatorsStore.operators().slice(0, 5).map((o: Operator) => ({
+    return this.allOperatorRows().slice(0, 5);
+  }
+
+  private allOperatorRows(): OperatorStatusRow[] {
+    return this.operatorsStore.operators().map((o: Operator) => ({
       initials: o.initials,
       name: o.name,
       role: o.specialty,
@@ -189,7 +201,7 @@ export class AdminDashboardViewModel {
   }
 
   countByStatus(status: OperatorStatusRow['status']): number {
-    return this.operators.filter(o => o.status === status).length;
+    return this.allOperatorRows().filter(o => o.status === status).length;
   }
 
   /* ---------- pagos pendientes ---------- */
@@ -291,10 +303,10 @@ export class AdminDashboardViewModel {
   }
 
   // el aviso de éxito sale solo si el backend aceptó la asignación
-  assignOperator(booking: Booking, operatorId: string): void {
+  assignOperator(booking: Booking, operatorId: string, notes = ''): void {
     this.reservations.assignOperator(booking.id, operatorId, () =>
       this.feedback.success('ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_TITLE', 'ADMIN_RESERVATIONS.FEEDBACK.ASSIGNED_MESSAGE',
-        { messageParams: { code: booking.code } }));
+        { messageParams: { code: booking.code } }), notes);
   }
 }
 

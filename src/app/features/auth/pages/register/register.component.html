@@ -77,6 +77,11 @@
                 {{ 'REGISTER.DOCUMENT_INVALID' | translate }}
               </span>
 
+              <!-- dato que rechazó el servidor (WEB-05) -->
+              <span class="error-msg" *ngIf="vm.f['documentNumber'].errors?.['server']">
+                {{ vm.f['documentNumber'].errors?.['server'] | translate }}
+              </span>
+
             </div>
 
             <!-- NOMBRES -->
@@ -128,6 +133,11 @@
                 "
               >
                 {{ 'REGISTER.NAME_MIN' | translate }}
+              </span>
+
+              <!-- dato que rechazó el servidor (WEB-05) -->
+              <span class="error-msg" *ngIf="vm.f['firstName'].errors?.['server']">
+                {{ vm.f['firstName'].errors?.['server'] | translate }}
               </span>
 
             </div>
@@ -183,6 +193,11 @@
                 {{ 'REGISTER.LAST_NAMES_MIN' | translate }}
               </span>
 
+              <!-- dato que rechazó el servidor (WEB-05) -->
+              <span class="error-msg" *ngIf="vm.f['lastName'].errors?.['server']">
+                {{ vm.f['lastName'].errors?.['server'] | translate }}
+              </span>
+
             </div>
 
             <!-- CORREO -->
@@ -231,11 +246,16 @@
               <span
                 class="error-msg"
                 *ngIf="
-                  vm.f['email'].errors?.['pattern'] &&
+                  vm.f['email'].errors?.['allowedEmail'] &&
                   vm.f['email'].touched
                 "
               >
                 {{ 'REGISTER.EMAIL_INVALID' | translate }}
+              </span>
+
+              <!-- dato que rechazó el servidor (WEB-05) -->
+              <span class="error-msg" *ngIf="vm.f['email'].errors?.['server']">
+                {{ vm.f['email'].errors?.['server'] | translate }}
               </span>
 
             </div>
@@ -306,6 +326,11 @@
                 {{ 'REGISTER.PHONE_MIN' | translate }}
               </span>
 
+              <!-- dato que rechazó el servidor (WEB-05) -->
+              <span class="error-msg" *ngIf="vm.f['phone'].errors?.['server']">
+                {{ vm.f['phone'].errors?.['server'] | translate }}
+              </span>
+
             </div>
 
             <!-- CONTRASEÑA -->
@@ -374,6 +399,11 @@
                 "
               >
                 {{ 'REGISTER.PASSWORD_REQUIRED' | translate }}
+              </span>
+
+              <!-- dato que rechazó el servidor (WEB-05) -->
+              <span class="error-msg" *ngIf="vm.f['password'].errors?.['server']">
+                {{ vm.f['password'].errors?.['server'] | translate }}
               </span>
 
             </div>

@@ -55,6 +55,8 @@ export interface PaymentResponse {
   reportedBy: number | null;
   account: PaymentAccountResponse | null;
   booking: PaymentBookingInfo | null;
+  // la reserva del pago ya está cancelada (payment-service lo sabe por el evento de booking)
+  bookingCancelled?: boolean;
 }
 
 // cómo va el pago de cada reserva del cliente: el estado del último pago (null si no tiene) y si

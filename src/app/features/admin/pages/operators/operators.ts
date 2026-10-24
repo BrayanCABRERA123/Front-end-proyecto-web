@@ -9,6 +9,7 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { Operator } from '../../services/operators-store';
 import { OperatorsViewModel } from '../../viewmodels/operators.viewmodel';
+import { keepFresh } from '../../../../core/services/live-refresh';
 
 // vista de Operarios: la lista y los filtros están en OperatorsViewModel
 @Component({
@@ -23,6 +24,11 @@ export class OperatorsComponent {
 
   readonly vm = inject(OperatorsViewModel);
   private readonly router = inject(Router);
+
+  // datos frescos sin recargar (WEB-16): al entrar, al volver a la pestaña y con cada notificación nueva
+  constructor() {
+    keepFresh(silent => this.vm.load(silent));
+  }
 
   goToDetail(operator: Operator): void {
     this.router.navigate(['/admin/operators', operator.id]);

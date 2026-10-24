@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +15,7 @@ import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confi
 import { formatPaymentDate } from '../../services/payments-store';
 import { Payment } from '../../models/admin.models';
 import { PaymentsViewModel } from '../../viewmodels/payments.viewmodel';
+import { WAITING_POLL_MS, keepFresh } from '../../../../core/services/live-refresh';
 
 // vista de Pagos del admin: filtros y acciones están en PaymentsViewModel; aquí quedan los
 // modales, la confirmación del reembolso y la exportación
@@ -26,13 +27,15 @@ import { PaymentsViewModel } from '../../viewmodels/payments.viewmodel';
   templateUrl: './payments.html',
   styleUrls: ['./payments.scss']
 })
-export class PaymentsComponent implements OnInit {
+export class PaymentsComponent {
 
   readonly vm = inject(PaymentsViewModel);
   private readonly dialog = inject(MatDialog);
 
-  ngOnInit(): void {
-    this.vm.load();
+  // datos frescos sin recargar (WEB-16): al entrar, al volver a la pestaña, con cada notificación
+  // nueva y cada tanto mientras la pestaña esté visible, porque esta vista espera a otras personas
+  constructor() {
+    keepFresh(silent => this.vm.load(silent), { pollMs: WAITING_POLL_MS });
   }
 
   // formatea a pesos colombianos, ej: $85.000

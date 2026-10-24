@@ -7,12 +7,14 @@ import { AuthService } from '../../../core/services/auth';
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 import { LoginViewModel } from './login.viewmodel';
 import { ForgotPasswordViewModel } from './forgot-password.viewmodel';
+import { RegisterViewModel } from './register.viewmodel';
 
 const user = { id: 1, firstName: 'Ana', lastName: 'Ruiz', roles: ['CLIENT'] };
 
 describe('ViewModels de autenticación', () => {
   const auth = {
     login: vi.fn(), homeRoute: vi.fn(), requestPasswordReset: vi.fn(), verifyResetCode: vi.fn(), resetPassword: vi.fn(),
+    register: vi.fn(),
   };
   const feedback = { success: vi.fn(), error: vi.fn(), info: vi.fn() };
 
@@ -23,7 +25,7 @@ describe('ViewModels de autenticación', () => {
       providers: [
         { provide: AuthService, useValue: auth },
         { provide: FeedbackService, useValue: feedback },
-        LoginViewModel, ForgotPasswordViewModel,
+        LoginViewModel, ForgotPasswordViewModel, RegisterViewModel,
       ],
     });
   });
@@ -54,6 +56,25 @@ describe('ViewModels de autenticación', () => {
     expect(vm.loading()).toBe(false);
     expect(vm.errorKey()).toBe('API_ERRORS.ACCOUNT_LOCKED');
     expect(feedback.error.mock.calls[0][0]).toBe('AUTH_FEEDBACK.LOCKED_TITLE');
+  });
+
+  it('A-01 Login: una cuenta antigua con otro dominio puede entrar (solo se valida el formato)', () => {
+    auth.login.mockReturnValue(of(user));
+    const vm = TestBed.inject(LoginViewModel);
+    vm.form.setValue({ email: 'ana@outlook.com', password: 'Clave123*' });
+
+    vm.submit(vi.fn());
+
+    expect(vm.form.controls.email.errors).toBeNull();
+    expect(auth.login).toHaveBeenCalledWith('ana@outlook.com', 'Clave123*');
+  });
+
+  it('A-01 Recuperar contraseña: acepta otros dominios y rechaza lo que no es un correo', () => {
+    const vm = TestBed.inject(ForgotPasswordViewModel);
+    vm.email.set('ana@outlook.com');
+    expect(vm.isEmailInvalid()).toBe(false);
+    vm.email.set('ana@outlook');
+    expect(vm.isEmailInvalid()).toBe(true);
   });
 
   it('Recuperar contraseña: correo → código → contraseña nueva con el código confirmado', () => {
@@ -96,5 +117,59 @@ describe('ViewModels de autenticación', () => {
     expect(vm.step()).toBe(2);
     expect(vm.verifying()).toBe(false);
     expect(vm.errorKey()).toBe('API_ERRORS.INVALID_RESET_CODE');
+  });
+
+  it('F-02 Registro: limpia cédula y celular, exige que las contraseñas coincidan y envía los consentimientos', () => {
+    auth.register.mockReturnValue(of({}));
+    const vm = TestBed.inject(RegisterViewModel);
+    const registered = vi.fn();
+    vm.form.patchValue({ documentNumber: '1.023.456.789', firstName: ' Ana ', lastName: 'Ruiz', email: 'ana@gmail.com',
+      phone: '300-123-4567', password: 'Lavado2026!', confirmPassword: 'Otra2026!' });
+    vm.sanitizeDocument();
+    vm.sanitizePhone();
+    expect(vm.f.documentNumber.value).toBe('1023456789');
+    expect(vm.f.phone.value).toBe('3001234567');
+
+    vm.submit(registered);
+    expect(vm.f.confirmPassword.hasError('notMatch')).toBe(true);
+    expect(auth.register).not.toHaveBeenCalled();
+
+    vm.form.patchValue({ confirmPassword: 'Lavado2026!' });
+    vm.acceptDocument('terms');
+    vm.acceptDocument('privacy');
+    vm.submit(registered);
+
+    expect(auth.register).toHaveBeenCalledWith(expect.objectContaining({
+      documentNumber: '1023456789', firstName: 'Ana', acceptsTerms: true, acceptsDataPolicy: true }));
+    expect(registered).toHaveBeenCalled();
+  });
+
+  it('F-02 Registro: un error del servidor queda en errorKey y no avisa éxito', () => {
+    auth.register.mockReturnValue(throwError(() => new HttpErrorResponse({ status: 409, error: { code: 'EMAIL_ALREADY_REGISTERED' } })));
+    const vm = TestBed.inject(RegisterViewModel);
+    const registered = vi.fn();
+    vm.form.patchValue({ documentNumber: '1023456789', firstName: 'Ana', lastName: 'Ruiz', email: 'ana@gmail.com',
+      phone: '3001234567', password: 'Lavado2026!', confirmPassword: 'Lavado2026!', acceptTerms: true, acceptDataPolicy: true });
+
+    vm.submit(registered);
+
+    expect(vm.errorKey()).toBe('API_ERRORS.EMAIL_ALREADY_REGISTERED');
+    expect(vm.loading()).toBe(false);
+    expect(registered).not.toHaveBeenCalled();
+  });
+
+  it('WEB-05 Registro: un 400 con errors marca el campo que rechazó el servidor', () => {
+    auth.register.mockReturnValue(throwError(() => new HttpErrorResponse({ status: 400,
+      error: { code: 'VALIDATION_ERROR', errors: { phone: 'must match "^3[0-9]{9}$"', acceptsDataPolicy: 'must be true' } } })));
+    const vm = TestBed.inject(RegisterViewModel);
+    vm.form.patchValue({ documentNumber: '1023456789', firstName: 'Ana', lastName: 'Ruiz', email: 'ana@gmail.com',
+      phone: '3001234567', password: 'Lavado2026!', confirmPassword: 'Lavado2026!', acceptTerms: true, acceptDataPolicy: true });
+
+    vm.submit(vi.fn());
+
+    expect(vm.errorKey()).toBe('API_ERRORS.VALIDATION_ERROR');
+    expect(vm.f.phone.getError('server')).toBe('API_ERRORS.FIELD_INVALID');
+    expect(vm.f.acceptDataPolicy.getError('server')).toBe('API_ERRORS.FIELD_INVALID');
+    expect(vm.f.email.errors).toBeNull();
   });
 });

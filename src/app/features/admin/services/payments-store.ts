@@ -41,20 +41,28 @@ export class PaymentsStore {
   readonly pendingPayments = computed(() => this.payments().filter(p => p.status === 'pending'));
   readonly today = todayIso();
 
-  constructor() {
-    this.refresh();
-  }
+  // hay una carga en curso: un refresco automático no pide lo mismo otra vez
+  private inFlight = false;
 
-  /** vuelve a pedir los pagos (solo tiene sentido con sesión de admin) */
-  refresh(): void {
+  /**
+   * Vuelve a pedir los pagos (solo tiene sentido con sesión de admin). Cada pantalla lo pide al entrar
+   * y LiveRefresh lo repite (WEB-16); con `silent`, si falla, se quedan los pagos que había.
+   */
+  refresh(silent = false): void {
     if (!this.auth.hasAnyRole(['ADMIN'])) return;
+    if (silent && this.inFlight) return;
+    this.inFlight = true;
     this.api.adminList().subscribe({
       next: payments => {
+        this.inFlight = false;
         this.source.clear();
         payments.forEach(p => this.source.set(String(p.id), p));
         this.state.set(payments.map(toPayment));
       },
-      error: () => this.state.set([])
+      error: () => {
+        this.inFlight = false;
+        if (!silent) this.state.set([]);
+      }
     });
   }
 
@@ -104,6 +112,11 @@ function statusOf(code: string): PaymentStatus {
   return 'pending';
 }
 
+// día local (yyyy-MM-dd) de una fecha del servidor
+function localDay(value: Date): string {
+  return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, '0')}-${String(value.getDate()).padStart(2, '0')}`;
+}
+
 function toPayment(p: PaymentResponse): Payment {
   const reported = p.reportedAtUtc ? new Date(p.reportedAtUtc) : null;
   const date = reported
@@ -118,6 +131,8 @@ function toPayment(p: PaymentResponse): Payment {
     method: methodOf(p.account?.methodCode),
     amount: p.amount,
     date,
+    // A-17: el ingreso cuenta el día en que se aprobó, no el día en que el cliente lo reportó
+    approvedDate: p.status === 'APPROVED' && p.processedAtUtc ? localDay(new Date(p.processedAtUtc)) : null,
     time: reported ? reported.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' }) : '—',
     service: p.booking?.services ?? '—',
     status: statusOf(p.status),
@@ -131,7 +146,15 @@ function toPayment(p: PaymentResponse): Payment {
     email: '—',
     bankAccount: p.account?.accountNumber ?? '—',
     amountDeclared: p.reportedAmount,
+    cancelledBookingAction: cancelledBookingAction(p),
   };
+}
+
+// qué tiene que hacer el admin con el pago de una reserva que se canceló
+function cancelledBookingAction(p: PaymentResponse): Payment['cancelledBookingAction'] {
+  if (!p.bookingCancelled) return null;
+  if (p.status === 'APPROVED') return 'refund';
+  return p.status === 'IN_REVIEW' || p.status === 'PENDING' ? 'reject' : null;
 }
 
 /** completa el pago con los datos de su reserva; sin reserva cargada quedan los del pago */

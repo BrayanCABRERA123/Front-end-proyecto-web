@@ -16,7 +16,8 @@ En desarrollo, `proxy.conf.json` envía `/api` al API Gateway (`http://localhost
 ```bash
 npm install
 npm start                 # http://localhost:4200
-npm test                  # pruebas unitarias con Vitest
+npm test                  # pruebas unitarias con Vitest (146 al 24-10-2026)
+npx ng test --watch=false --coverage   # con cobertura (carpeta coverage/; el CI la publica como artefacto)
 npm run build             # compilación de producción en dist/
 ```
 

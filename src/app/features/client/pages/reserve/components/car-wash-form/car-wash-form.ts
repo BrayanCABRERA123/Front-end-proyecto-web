@@ -10,6 +10,7 @@ import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/s
 import { CopPricePipe } from '../../../../../../shared/pipes/cop-price.pipe';
 import { BookingResponse } from '../../../../../../core/models/booking.models';
 import { ReserveViewModel, minutesOf, priceOf } from '../../../../viewmodels/reserve.viewmodel';
+import { businessAddress, businessName } from '../../../../../../core/utils/booking-display';
 
 // vista del formulario de reserva: la selección, las horas libres y la creación están en ReserveViewModel
 @Component({
@@ -23,6 +24,9 @@ import { ReserveViewModel, minutesOf, priceOf } from '../../../../viewmodels/res
 export class CarWashFormComponent implements OnInit {
 
   readonly vm = inject(ReserveViewModel);
+  // nombre y dirección de la sede con texto neutro si vienen vacíos
+  readonly name = businessName;
+  readonly address = businessAddress;
   private readonly dialog = inject(MatDialog);
   private readonly router = inject(Router);
 
@@ -54,7 +58,7 @@ export class CarWashFormComponent implements OnInit {
         { label: 'RESERVE.SUMMARY.DATE', value: booking.date },
         { label: 'RESERVE.SUMMARY.TIME', value: `${booking.startTime} - ${booking.endTime}` },
         { label: 'RESERVE.SUMMARY.BAY', value: booking.bay?.name ?? '' },
-        { label: 'RESERVE.SUMMARY.CAR_WASH', value: this.vm.location()?.address ?? '' },
+        { label: 'RESERVE.SUMMARY.CAR_WASH', value: businessAddress(this.vm.location()) ?? '—' },
         { label: 'RESERVE.SUMMARY.TOTAL', value: new CopPricePipe().transform(booking.total) }
       ]
     };

@@ -20,6 +20,7 @@ describe('OperatorDetailComponent (admin)', () => {
   const store = {
     getById: () => OSCAR,
     loaded: () => true,
+    refresh: () => undefined,
     addAbsence: vi.fn(),
     setAvailability: vi.fn(),
   };

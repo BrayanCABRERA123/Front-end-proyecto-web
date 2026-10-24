@@ -198,10 +198,10 @@
                   </td>
                   <td class="actions-cell">
                     <div class="actions">
-                      @if (!b.operator && b.changeable) {
+                      @if (assignActionOf(b); as action) {
                         <button class="btn-assign" (click)="openAssignModal(b)">
-                          <mat-icon>person_add</mat-icon>
-                          {{ 'ADMIN_RESERVATIONS.ASSIGN' | translate }}
+                          <mat-icon>{{ action === 'assign' ? 'person_add' : 'swap_horiz' }}</mat-icon>
+                          {{ (action === 'assign' ? 'ADMIN_RESERVATIONS.ASSIGN' : 'ADMIN_RESERVATIONS.REASSIGN') | translate }}
                         </button>
                       }
                       <button class="btn-icon" (click)="openDetail(b)" [attr.aria-label]="'COMMON.VIEW' | translate">

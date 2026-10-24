@@ -69,9 +69,15 @@ describe('ViewModels de los formularios de cuenta', () => {
     vm.sanitizeDocument();
     vm.firstName.set(' Oscar ');
     vm.lastName.set('Ruiz');
-    vm.email.set('oscar.ruiz@gmail.com');
+    // A-01: crear usuario tambien exige un dominio permitido (gmail.com)
+    vm.email.set('oscar.ruiz@hotmail.com');
     vm.password.set('Temporal1!');
     vm.role.set('CLIENT');
+    vm.create(done);
+    expect(vm.emailInvalid()).toBe(true);
+    expect(userAdmin.createAccount).not.toHaveBeenCalled();
+
+    vm.email.set('oscar.ruiz@gmail.com');
     vm.create(done);
 
     expect(userAdmin.createAccount).toHaveBeenCalledWith({

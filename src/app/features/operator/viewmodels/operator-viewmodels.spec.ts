@@ -117,6 +117,37 @@ describe('ViewModels del operario', () => {
     expect(operations.start).toHaveBeenCalledWith(2);
   });
 
+  it('B-01: el operario ve las notas que dejó el admin al asignar (sin notas, nada)', () => {
+    operations.myServices.mockReturnValue(of([
+      service(1, '2026-10-21', '08:00', 'PENDING', { notes: '  Llevar cera extra ' }), service(2, '2026-10-21', '09:00', 'PENDING')]));
+    const vm = TestBed.inject(AssignedServicesViewModel);
+    vm.load();
+
+    expect(vm.filteredServices().map(s => s.notes)).toEqual(['Llevar cera extra', '']);
+  });
+
+  it('A-18: Servicios asignados usa los datos reales: tipos de servicio, filtro por tipo y total', () => {
+    operations.myServices.mockReturnValue(of([
+      service(1, '2026-10-21', '08:00', 'PENDING'), service(2, '2026-10-21', '09:00', 'PENDING', { services: 'Premium', total: 45000 })]));
+    const vm = TestBed.inject(AssignedServicesViewModel);
+    vm.load();
+
+    expect(vm.serviceTypes().map(t => t.value)).toEqual(['', 'Básico', 'Premium']);
+    vm.serviceTypeFilter.set('Premium');
+    expect(vm.filteredServices().map(s => s.bookingId)).toEqual([2]);
+    expect(vm.filteredServices()[0].total).toBe('$ 45.000');
+  });
+
+  it('A-18: el historial muestra el nombre del cliente, no la placa', () => {
+    operations.myServices.mockReturnValue(of([
+      service(1, '2026-10-20', '08:00', 'COMPLETED', { clientName: 'Lucía' }),
+      service(2, '2026-10-19', '08:00', 'COMPLETED', { clientName: '' })]));
+    const vm = TestBed.inject(ServiceHistoryViewModel);
+    vm.load();
+
+    expect(vm.services().map(s => s.client)).toEqual(['Lucía', '—']);
+  });
+
   it('Historial: solo terminados, con tasa, total generado y filtros', () => {
     operations.myServices.mockReturnValue(of([
       service(1, '2026-10-20', '08:00', 'COMPLETED', { rating: 5 }), service(2, '2026-10-19', '08:00', 'COMPLETED', { rating: 3, services: 'Premium' }),
@@ -132,6 +163,19 @@ describe('ViewModels del operario', () => {
     expect(vm.filteredServices().map(s => s.id)).toEqual([2]);
     vm.clearFilters();
     expect(vm.filteredServices().length).toBe(2);
+  });
+
+  it('A-18: el estado del historial sale de los datos (cancelada o no asistió = cancelado) y no suma ingresos', () => {
+    operations.myServices.mockReturnValue(of([
+      service(1, '2026-10-20', '08:00', 'COMPLETED'), service(2, '2026-10-19', '08:00', 'PENDING', { bookingStatus: 'CANCELLED' }),
+      service(3, '2026-10-18', '08:00', 'PENDING', { bookingStatus: 'NO_SHOW' }), service(4, '2026-10-21', '08:00', 'PENDING'),
+    ]));
+    const vm = TestBed.inject(ServiceHistoryViewModel);
+    vm.load();
+
+    expect(vm.services().map(s => [s.id, s.status])).toEqual([[1, 'finalizado'], [2, 'cancelado'], [3, 'cancelado']]);
+    expect(vm.totalGenerated()).toBe(20000);
+    expect(vm.countTab('cancelado')).toBe(2);
   });
 
   it('Calificaciones: promedio, satisfacción y filtro por estrellas', () => {
