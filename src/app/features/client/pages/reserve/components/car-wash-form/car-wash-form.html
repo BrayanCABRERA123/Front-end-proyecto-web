@@ -147,8 +147,8 @@
         <mat-icon>storefront</mat-icon>
         <div>
           <p class="location-title">{{ 'RESERVE.LOCATION.TITLE' | translate }}</p>
-          <p class="location-name">{{ vm.location()?.tradeName ?? '—' }}</p>
-          <p class="location-address">{{ vm.location()?.address ?? '' }}</p>
+          <p class="location-name">{{ name(vm.location()) }}</p>
+          <p class="location-address">{{ address(vm.location()) ?? ('COMMON.ADDRESS_PENDING' | translate) }}</p>
         </div>
       </div>
     </div>
@@ -189,7 +189,7 @@
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.CAR_WASH' | translate }}</span>
-      <strong>{{ vm.location()?.tradeName ?? '—' }}</strong>
+      <strong>{{ name(vm.location()) }}</strong>
     </div>
 
     <div class="summary-total">
