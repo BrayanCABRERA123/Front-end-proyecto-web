@@ -224,8 +224,11 @@ export interface Promotion {
   status: 'active' | 'scheduled' | 'inactive';
   /** fecha ISO (yyyy-MM-dd) en que la promoción pasa a activa */
   startDate: string;
-  /** descuento real que se aplica al canjear el cupón en el pago (1-100; 100 = gratis) */
+  /** descuento real que se aplica al canjear el cupón en el pago (1-99 %; 0 en un FIXED) */
   discountPercent: number;
+  /** D-01: tipo y valor reales (PERCENT = %, FIXED = pesos); se editan sin convertirlos */
+  discountType: 'PERCENT' | 'FIXED' | 'PACKAGE';
+  discountValue: number;
   /** puntos de fidelización acumulados que hay que tener para que el cupón se desbloquee */
   requiredPoints: number;
 }

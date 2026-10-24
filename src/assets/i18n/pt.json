@@ -1482,7 +1482,8 @@
       "EMPTY_TITLE": "Nenhuma promoção ainda",
       "EMPTY_MESSAGE": "Crie uma promoção para impulsionar as vendas do lava-rápido.",
       "PAUSE": "Pausar",
-      "REACTIVATE": "Reativar"
+      "REACTIVATE": "Reativar",
+      "DISCOUNT_AMOUNT": "{{value}} de desconto"
     },
     "DELETE_CONFIRM": {
       "TITLE": "Excluir este registro?",
@@ -2288,7 +2289,9 @@
     "FEATURES_LABEL": "Benefícios",
     "FEATURES_ADD": "Adicionar benefício",
     "FEATURES_PLACEHOLDER": "Ex.: Cera protetora incluída",
-    "FEATURES_EMPTY": "Nenhum benefício ainda."
+    "FEATURES_EMPTY": "Nenhum benefício ainda.",
+    "DISCOUNT_FIXED_LABEL": "Desconto fixo (COP)",
+    "ERROR_DISCOUNT_FIXED": "Informe um valor maior que zero"
   },
   "QUICK_ACCESS": {
     "BOOK_WASH": "Agendar lavagem",

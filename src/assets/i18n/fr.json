@@ -1482,7 +1482,8 @@
       "EMPTY_TITLE": "Aucune promotion pour l’instant",
       "EMPTY_MESSAGE": "Créez une promotion pour stimuler les ventes du lavage.",
       "PAUSE": "Mettre en pause",
-      "REACTIVATE": "Réactiver"
+      "REACTIVATE": "Réactiver",
+      "DISCOUNT_AMOUNT": "{{value}} de remise"
     },
     "DELETE_CONFIRM": {
       "TITLE": "Supprimer cet enregistrement ?",
@@ -2288,7 +2289,9 @@
     "FEATURES_LABEL": "Avantages",
     "FEATURES_ADD": "Ajouter un avantage",
     "FEATURES_PLACEHOLDER": "Ex. Cire protectrice incluse",
-    "FEATURES_EMPTY": "Aucun avantage pour l’instant."
+    "FEATURES_EMPTY": "Aucun avantage pour l’instant.",
+    "DISCOUNT_FIXED_LABEL": "Remise fixe (COP)",
+    "ERROR_DISCOUNT_FIXED": "Saisissez un montant supérieur à zéro"
   },
   "QUICK_ACCESS": {
     "BOOK_WASH": "Réserver un lavage",

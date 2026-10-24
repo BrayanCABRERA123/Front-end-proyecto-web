@@ -57,6 +57,8 @@ describe('ViewModels del cliente', () => {
     loyalty.promotions.mockReturnValue(of([
       { name: 'Lavado gratis', discountPercent: 0, requiredPoints: 50, unlocked: false },
       { name: 'Cera', discountPercent: 10, requiredPoints: 20, unlocked: true },
+      // D-01: un descuento fijo se muestra en pesos, no como 0 %
+      { name: 'Bono', discountPercent: 0, discountType: 'FIXED', discountValue: 5000, requiredPoints: 90, unlocked: false },
     ]));
     const vm = TestBed.inject(ClientDashboardViewModel);
 
@@ -69,6 +71,7 @@ describe('ViewModels del cliente', () => {
     expect(vm.benefits()).toEqual([
       { title: 'Lavado gratis', unlocked: false, pointsLeft: 20 },
       { title: 'Cera · 10% OFF', unlocked: true, pointsLeft: -10 },
+      { title: 'Bono · $5.000 OFF', unlocked: false, pointsLeft: 60 },
     ]);
   });
 

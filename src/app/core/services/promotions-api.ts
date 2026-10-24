@@ -19,6 +19,9 @@ export interface PromotionView {
   redemptions: number;
   discountPercent: number;
   requiredPoints: number;
+  // D-01: el descuento real; en un FIXED discountPercent vale 0 y discountValue son pesos
+  discountType?: DiscountTypeCode;
+  discountValue?: number;
 }
 
 export interface PromotionMetrics {
@@ -37,6 +40,18 @@ export interface SavePromotionRequest {
   validTo: string;
   discountPercent: number;
   requiredPoints: number;
+  // se envían tal como vienen: editar un FIXED no lo convierte a porcentaje
+  discountType: DiscountTypeCode;
+  discountValue: number;
+}
+
+export type DiscountTypeCode = 'PERCENT' | 'FIXED' | 'PACKAGE';
+
+/** "10%" o "$5.000" según el tipo de descuento (sin tipo, el porcentaje de siempre) */
+export function discountLabel(promotion: { discountType?: DiscountTypeCode | string; discountValue?: number; discountPercent: number }): string {
+  if (promotion.discountType === 'FIXED') return '$' + Number(promotion.discountValue ?? 0).toLocaleString('es-CO');
+  const percent = promotion.discountType === 'PERCENT' && promotion.discountValue != null ? promotion.discountValue : promotion.discountPercent;
+  return `${percent}%`;
 }
 
 // gestión de promociones (cupones de descuento que se desbloquean con puntos) contra el

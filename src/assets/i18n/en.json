@@ -1485,7 +1485,8 @@
       "EMPTY_TITLE": "No promotions yet",
       "EMPTY_MESSAGE": "Create a promotion to boost car wash sales.",
       "PAUSE": "Pause",
-      "REACTIVATE": "Reactivate"
+      "REACTIVATE": "Reactivate",
+      "DISCOUNT_AMOUNT": "{{value}} off"
     },
     "DELETE_CONFIRM": {
       "TITLE": "Delete this record?",
@@ -2292,7 +2293,9 @@
     "FEATURES_LABEL": "Benefits",
     "FEATURES_ADD": "Add benefit",
     "FEATURES_PLACEHOLDER": "e.g. Protective wax included",
-    "FEATURES_EMPTY": "No benefits yet."
+    "FEATURES_EMPTY": "No benefits yet.",
+    "DISCOUNT_FIXED_LABEL": "Fixed discount (COP)",
+    "ERROR_DISCOUNT_FIXED": "Enter an amount greater than zero"
   },
   "QUICK_ACCESS": {
     "BOOK_WASH": "Book a wash",

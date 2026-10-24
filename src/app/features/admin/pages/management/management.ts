@@ -16,6 +16,7 @@ import { AdminUser, Promotion, UserRole } from '../../models/admin.models';
 import { CatalogServiceResponse, ServicePriceResponse } from '../../../../core/models/booking.models';
 import { PromotionModal, PromotionModalData, PromotionModalResult } from './components/promotion-modal/promotion-modal';
 import { ManagementTab, ManagementViewModel } from '../../viewmodels/management.viewmodel';
+import { discountLabel } from '../../../../core/services/promotions-api';
 
 // vista de Gestión: los datos y las acciones están en ManagementViewModel; aquí quedan las
 // pestañas, los modales y las confirmaciones
@@ -81,6 +82,11 @@ export class ManagementComponent implements OnInit {
       .subscribe((result: CreateRoleResult | null) => {
         if (result) this.vm.updateRolePermissions(result.role, result.permissionIds);
       });
+  }
+
+  // descuento de la tarjeta: "10%" o "$5.000" (D-01)
+  discountText(promotion: Promotion): string {
+    return discountLabel(promotion);
   }
 
   // --- SERVICIOS (booking-service) ---
