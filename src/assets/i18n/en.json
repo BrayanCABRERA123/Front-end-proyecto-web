@@ -2210,7 +2210,8 @@
     "NO_OPERATOR": "No operator",
     "SEARCH": "Search",
     "VEHICLE_NOT_FOUND": "No vehicle is registered with that plate.",
-    "BAY_AUTO_HINT": "The system assigns the bay when saving, based on availability."
+    "BAY_AUTO_HINT": "The system assigns the bay when saving, based on availability.",
+    "PAID_SERVICES_WARNING": "This booking already has a reported or approved payment. Changing the services changes the total: a payment under review will have to be rejected, or the difference refunded or charged."
   },
   "EXPORT_DATA": {
     "TITLE": "Export data",

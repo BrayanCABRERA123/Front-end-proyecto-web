@@ -2210,7 +2210,8 @@
     "NO_OPERATOR": "Sem operador",
     "SEARCH": "Buscar",
     "VEHICLE_NOT_FOUND": "Nenhum veículo cadastrado com essa placa.",
-    "BAY_AUTO_HINT": "O sistema atribui o box ao salvar, conforme a disponibilidade."
+    "BAY_AUTO_HINT": "O sistema atribui o box ao salvar, conforme a disponibilidade.",
+    "PAID_SERVICES_WARNING": "Esta reserva já tem um pagamento informado ou aprovado. Mudar os serviços muda o total: um pagamento em análise terá de ser rejeitado, ou a diferença reembolsada ou cobrada."
   },
   "EXPORT_DATA": {
     "TITLE": "Exportar dados",

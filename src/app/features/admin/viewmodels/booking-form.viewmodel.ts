@@ -3,6 +3,8 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Booking } from '../models/admin.models';
 import { BookingApiService, slotAlternatives, slotTakenByOthers } from '../../../core/services/booking-api';
 import { ReservationsStore } from '../services/reservations-store';
+// BIZ-01: si la reserva ya tiene un pago, cambiar sus servicios cambia lo que se debe
+import { PaymentsApiService } from '../../../core/services/payments-api';
 import { CatalogServiceResponse, OwnedVehicleResponse } from '../../../core/models/booking.models';
 import { apiErrorKey } from '../../../core/utils/api-error';
 import { isoDaysFromToday, todayIso } from '../../../core/utils/dates';
@@ -28,6 +30,19 @@ export class BookingFormViewModel {
 
   private readonly api = inject(BookingApiService);
   private readonly store = inject(ReservationsStore);
+  private readonly paymentsApi = inject(PaymentsApiService);
+
+  // BIZ-01: la reserva que se reprograma tiene un pago en revisión o aprobado
+  readonly hasPayment = signal(false);
+  private readonly originalServiceIds = signal<ReadonlySet<number>>(new Set());
+  // el admin cambió los servicios de una reserva con pago: el monto del pago ya no cuadrará y
+  // payment-service lo rechaza al aprobar (AMOUNT_CHANGED); se avisa antes de guardar
+  readonly servicesChangeWarning = computed(() => {
+    if (!this.editing() || !this.hasPayment()) return false;
+    const now = this.selectedServiceIds();
+    const before = this.originalServiceIds();
+    return now.size !== before.size || [...now].some(id => !before.has(id));
+  });
 
   readonly saving = signal(false);
   readonly saveErrorKey = signal<string | null>(null);
@@ -67,7 +82,19 @@ export class BookingFormViewModel {
     this.date.set(booking.date < this.minDate ? this.minDate : booking.date);
     this.notes.set(booking.notes);
     this.selectedServiceIds.set(new Set(booking.serviceIds));
+    this.originalServiceIds.set(new Set(booking.serviceIds));
+    this.loadPaymentState(this.bookingId);
     this.searchVehicle();
+  }
+
+  // pagos de la reserva en payment-service: si alguno está en revisión o aprobado, hay que avisar
+  private loadPaymentState(bookingId: number): void {
+    this.paymentsApi.adminList().subscribe({
+      next: payments => this.hasPayment.set(payments.some(p => p.booking?.id === bookingId
+        && (p.status === 'PENDING' || p.status === 'IN_REVIEW' || p.status === 'APPROVED'))),
+      // sin payment-service no se sabe: no se avisa (el servidor igual protege con AMOUNT_CHANGED)
+      error: () => this.hasPayment.set(false)
+    });
   }
 
   /** busca el vehículo por placa (customer-service) y carga los precios de su tipo */

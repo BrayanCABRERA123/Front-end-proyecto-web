@@ -2210,7 +2210,8 @@
     "NO_OPERATOR": "Sin operario",
     "SEARCH": "Buscar",
     "VEHICLE_NOT_FOUND": "No hay ningún vehículo registrado con esa placa.",
-    "BAY_AUTO_HINT": "La bahía la asigna el sistema al guardar, según la disponibilidad."
+    "BAY_AUTO_HINT": "La bahía la asigna el sistema al guardar, según la disponibilidad.",
+    "PAID_SERVICES_WARNING": "Esta reserva ya tiene un pago reportado o aprobado. Si cambias los servicios cambia el total: el pago en revisión habrá que rechazarlo, o reembolsar o cobrar la diferencia."
   },
   "EXPORT_DATA": {
     "TITLE": "Exportar datos",

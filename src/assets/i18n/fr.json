@@ -2210,7 +2210,8 @@
     "NO_OPERATOR": "Aucun opérateur",
     "SEARCH": "Rechercher",
     "VEHICLE_NOT_FOUND": "Aucun véhicule n'est enregistré avec cette plaque.",
-    "BAY_AUTO_HINT": "Le système attribue la baie à l'enregistrement, selon la disponibilité."
+    "BAY_AUTO_HINT": "Le système attribue la baie à l'enregistrement, selon la disponibilité.",
+    "PAID_SERVICES_WARNING": "Cette réservation a déjà un paiement signalé ou approuvé. Changer les services modifie le total : un paiement en vérification devra être refusé, ou la différence remboursée ou facturée."
   },
   "EXPORT_DATA": {
     "TITLE": "Exporter les données",
