@@ -144,6 +144,13 @@
                     <span [class]="'status-pill status-pill--' + p.status">
                       {{ ('ADMIN_PAYMENTS.STATUS.' + p.status) | translate }}
                     </span>
+                    <!-- la reserva se canceló después del pago: se avisa qué falta hacer con él -->
+                    @if (p.cancelledBookingAction) {
+                      <span class="muted" role="note">
+                        <mat-icon inline aria-hidden="true">warning</mat-icon>
+                        {{ ('ADMIN_PAYMENTS.BOOKING_CANCELLED.' + p.cancelledBookingAction) | translate }}
+                      </span>
+                    }
                   </td>
                   <td class="actions-cell">
                     @if (p.status === 'pending') {

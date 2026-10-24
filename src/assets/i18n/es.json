@@ -1926,6 +1926,10 @@
       "CONFIRM": "Sí, reembolsar",
       "DONE_TITLE": "Pago reembolsado",
       "DONE_MESSAGE": "El pago {{code}} quedó reembolsado y se revirtieron los puntos de la reserva."
+    },
+    "BOOKING_CANCELLED": {
+      "refund": "Reserva cancelada: reembolsar",
+      "reject": "Reserva cancelada: rechazar"
     }
   },
   "PAYMENT_REVIEW_MODAL": {
