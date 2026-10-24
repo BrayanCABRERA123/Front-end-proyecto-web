@@ -644,7 +644,8 @@
       "STARTED_MESSAGE": "O serviço {{code}} já está em andamento.",
       "FINISHED_TITLE": "Serviço finalizado!",
       "FINISHED_MESSAGE": "O serviço {{code}} foi marcado como concluído.",
-      "CONTACT_MESSAGE": "Entre em contato com o cliente por qualquer um destes meios."
+      "CONTACT_MESSAGE": "Entre em contato com o cliente por qualquer um destes meios.",
+      "TOTAL": "Total da reserva:"
     }
   },
   "OPERATOR_HOME": {
@@ -1356,7 +1357,9 @@
       "CANCELLED_CONFIRM": "Cancelar a reserva {{code}}? Esta ação não pode ser desfeita.",
       "STATUS_NO_SHOW_MESSAGE": "A reserva {{code}} ficou como não compareceu.",
       "STATUS_SCHEDULED_MESSAGE": "A reserva {{code}} ficou agendada."
-    }
+    },
+    "REASSIGN": "Reatribuir",
+    "CANCEL_REASON": "Motivo do cancelamento"
   },
   "ASSIGN_OPERATOR_MODAL": {
     "TITLE": "Atribuir Operador à Reserva {{code}}",
@@ -2165,7 +2168,8 @@
       "no_show": "Não compareceu"
     },
     "CANCEL_REASON": "Motivo do cancelamento",
-    "INSPECTION": "Relatório de inspeção"
+    "INSPECTION": "Relatório de inspeção",
+    "REASSIGN": "Trocar operador"
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nova reserva",
