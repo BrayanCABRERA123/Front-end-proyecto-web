@@ -47,6 +47,15 @@
 
   </div>
 
+  <!-- B-01: lo que el admin escribió al asignar (por ejemplo, "llevar cera extra") -->
+  @if (service.notes) {
+    <div class="detail-item detail-notes">
+      <mat-icon class="detail-icon">sticky_note_2</mat-icon>
+      <span class="detail-label">{{ 'ASSIGNED_SERVICES.DETAIL.NOTES' | translate }}</span>
+      <span class="detail-value">{{ service.notes }}</span>
+    </div>
+  }
+
   <!-- acciones según el estado: pendiente -> iniciar; en progreso -> reportar o finalizar -->
   @if (service.statusColor !== 'completed') {
     <div class="actions-section">

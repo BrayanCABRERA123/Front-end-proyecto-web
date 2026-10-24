@@ -627,6 +627,7 @@
     },
     "DETAIL": {
       "TITLE": "Informações do serviço",
+      "NOTES": "Orientações do administrador",
       "CLIENT": "Cliente:",
       "VEHICLE": "Veículo:",
       "SERVICE_TYPE": "Tipo de serviço:",

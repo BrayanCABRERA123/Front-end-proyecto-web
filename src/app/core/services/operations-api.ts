@@ -128,6 +128,8 @@ export interface OperatorServiceResponse {
   startableAt: string | null;
   // primer nombre del cliente (vacío si security-service no respondió)
   clientName?: string;
+  // B-01: indicaciones que dejó el admin al asignar (null o ausente = sin notas)
+  notes?: string | null;
 }
 
 // especialidad y habilidades del operario (ficha del operario)
