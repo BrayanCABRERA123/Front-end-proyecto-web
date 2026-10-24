@@ -103,7 +103,8 @@
     "EDIT": "Modifier",
     "SAVE": "Enregistrer",
     "VIEW": "Voir",
-    "LOADING": "Chargement..."
+    "LOADING": "Chargement...",
+    "ADDRESS_PENDING": "Adresse à confirmer"
   },
   "SERVICE": {
     "BASIC": "Basique",

@@ -59,7 +59,7 @@
             <p class="next-service-date">{{ next.date }}</p>
 
             <div class="next-service-meta">
-              <span><mat-icon>storefront</mat-icon> {{ vm.location()?.tradeName ?? '—' }} · {{ vm.location()?.address ?? '' }}</span>
+              <span><mat-icon>storefront</mat-icon> {{ name(vm.location()) }} · {{ address(vm.location()) ?? ('COMMON.ADDRESS_PENDING' | translate) }}</span>
               <span><mat-icon>person</mat-icon> {{ 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED' | translate }}: {{ next.operator || '—' }}</span>
             </div>
           </div>

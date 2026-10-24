@@ -54,3 +54,17 @@ export function businessHoursSummary(hours: BusinessHourDto[], dayLabel: (dayOfW
     .map(g => `${g.from === g.to ? dayLabel(g.from) : `${dayLabel(g.from)} - ${dayLabel(g.to)}`} ${g.range}`)
     .join(' · ');
 }
+
+// la sede puede venir sin nombre, razón social, NIT o dirección (datos del negocio sin llenar):
+// en vez de un hueco se muestra un texto neutro
+export const BUSINESS_NAME_FALLBACK = 'LavaRápido';
+export const ADDRESS_PENDING_KEY = 'COMMON.ADDRESS_PENDING';
+
+export function businessName(location: { tradeName?: string | null } | null | undefined): string {
+  return location?.tradeName?.trim() || BUSINESS_NAME_FALLBACK;
+}
+
+/** dirección de la sede, o null si no tiene (la vista muestra ADDRESS_PENDING_KEY traducida) */
+export function businessAddress(location: { address?: string | null } | null | undefined): string | null {
+  return location?.address?.trim() || null;
+}
