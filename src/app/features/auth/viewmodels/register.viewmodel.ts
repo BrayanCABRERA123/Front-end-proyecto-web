@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 // registro real contra el security-service
 import { AuthService } from '../../../core/services/auth';
-import { apiErrorKey } from '../../../core/utils/api-error';
+import { apiErrorKey, applyFieldErrors } from '../../../core/utils/api-error';
 import { allowedEmailValidator } from '../../../core/utils/email';
 import { LegalDocumentType } from '../../../shared/dialogs/legal-document-modal/legal-document-modal';
 
@@ -105,6 +105,8 @@ export class RegisterViewModel {
       error: (error: unknown) => {
         this.loading.set(false);
         this.errorKey.set(apiErrorKey(error));
+        // los campos que rechazó security-service se marcan en su sitio (WEB-05)
+        applyFieldErrors(this.form, error, { acceptsTerms: 'acceptTerms', acceptsDataPolicy: 'acceptDataPolicy' });
       }
     });
   }

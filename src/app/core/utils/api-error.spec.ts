@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { TRANSLATED_CODES, apiErrorCode, apiErrorKey } from './api-error';
+import { FormControl, FormGroup } from '@angular/forms';
+
+import { TRANSLATED_CODES, apiErrorCode, apiErrorKey, apiFieldErrors, applyFieldErrors } from './api-error';
 import es from '../../../assets/i18n/es.json';
 import en from '../../../assets/i18n/en.json';
 import fr from '../../../assets/i18n/fr.json';
@@ -64,5 +66,35 @@ describe('WEB-05: traducción de todos los códigos', () => {
       'INVALID_RATING', 'RECEIPT_TOO_LARGE', 'SERVICE_UNAVAILABLE']) {
       expect(apiErrorCode(conflict({ code }))).toBe(code);
     }
+  });
+});
+
+describe('WEB-05: errores por campo de un 400', () => {
+  const badRequest = (errors: unknown) => new HttpErrorResponse({ status: 400, error: { code: 'VALIDATION_ERROR', errors } });
+
+  it('Java: campo → texto en inglés se muestra con un mensaje propio', () => {
+    expect(apiFieldErrors(badRequest({ licensePlate: 'licensePlate is required', 'address.city': 'too long' })))
+      .toEqual({ licensePlate: 'API_ERRORS.FIELD_INVALID', city: 'API_ERRORS.FIELD_INVALID' });
+  });
+
+  it('.NET: campo → lista; si el texto es un código conocido usa su traducción', () => {
+    expect(apiFieldErrors(badRequest({ TransactionReference: ['INVALID_TRANSACTION_REFERENCE'] })))
+      .toEqual({ transactionReference: 'API_ERRORS.INVALID_TRANSACTION_REFERENCE' });
+  });
+
+  it('sin mapa errors, o con otro estado, no marca nada', () => {
+    expect(apiFieldErrors(new HttpErrorResponse({ status: 400, error: { code: 'VALIDATION_ERROR' } }))).toEqual({});
+    expect(apiFieldErrors(new HttpErrorResponse({ status: 409, error: { errors: { email: 'x' } } }))).toEqual({});
+  });
+
+  it('marca el control que corresponde (con alias) y deja el resto igual', () => {
+    const form = new FormGroup({ phoneNumber: new FormControl('300'), email: new FormControl('a@gmail.com') });
+
+    const marked = applyFieldErrors(form, badRequest({ phone: 'must match', unknownField: 'x' }), { phone: 'phoneNumber' });
+
+    expect(marked).toBe(true);
+    expect(form.controls.phoneNumber.getError('server')).toBe('API_ERRORS.FIELD_INVALID');
+    expect(form.controls.phoneNumber.touched).toBe(true);
+    expect(form.controls.email.errors).toBeNull();
   });
 });

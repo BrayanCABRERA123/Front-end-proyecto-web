@@ -2531,7 +2531,8 @@
     "UNKNOWN_NOTIFICATION_TYPE": "The notification type does not exist.",
     "UNSUPPORTED_MEDIA_TYPE": "The file format is not supported.",
     "VEHICLE_HAS_ACTIVE_BOOKINGS": "This vehicle has active or upcoming bookings: cancel them before removing it.",
-    "VEHICLE_REQUIRED": "Choose a vehicle."
+    "VEHICLE_REQUIRED": "Choose a vehicle.",
+    "FIELD_INVALID": "Check this field."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",

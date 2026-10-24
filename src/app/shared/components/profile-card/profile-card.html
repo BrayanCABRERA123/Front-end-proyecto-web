@@ -37,7 +37,9 @@
 
             @if (vm.form.get(field)?.invalid && vm.form.get(field)?.touched) {
               <p class="error-msg">
-                @if (vm.form.get(field)?.hasError('required')) {
+                @if (vm.form.get(field)?.hasError('server')) {
+                  {{ vm.form.get(field)?.getError('server') | translate }}
+                } @else if (vm.form.get(field)?.hasError('required')) {
                   {{ 'PROFILE.VALIDATION.NAME_REQUIRED' | translate }}
                 } @else if (vm.form.get(field)?.hasError('minlength')) {
                   {{ 'PROFILE.VALIDATION.NAME_MIN' | translate }}
@@ -59,7 +61,9 @@
 
           @if (vm.form.get('email')?.invalid && vm.form.get('email')?.touched) {
             <p class="error-msg">
-              @if (vm.form.get('email')?.hasError('required')) {
+              @if (vm.form.get('email')?.hasError('server')) {
+                {{ vm.form.get('email')?.getError('server') | translate }}
+              } @else if (vm.form.get('email')?.hasError('required')) {
                 {{ 'PROFILE.VALIDATION.EMAIL_REQUIRED' | translate }}
               } @else {
                 {{ 'PROFILE.VALIDATION.EMAIL_INVALID' | translate }}
@@ -116,7 +120,9 @@
 
           @if (vm.form.get('phoneNumber')?.invalid && vm.form.get('phoneNumber')?.touched) {
             <p class="error-msg">
-              @if (vm.form.get('phoneNumber')?.hasError('required')) {
+              @if (vm.form.get('phoneNumber')?.hasError('server')) {
+                {{ vm.form.get('phoneNumber')?.getError('server') | translate }}
+              } @else if (vm.form.get('phoneNumber')?.hasError('required')) {
                 {{ 'PROFILE.VALIDATION.PHONE_REQUIRED' | translate }}
               } @else if (vm.form.get('phoneNumber')?.hasError('invalidPhone')) {
                 {{ 'PROFILE.VALIDATION.PHONE_INVALID' | translate }}
@@ -136,7 +142,7 @@
 
           @if (vm.form.get('address')?.hasError('minlength') && vm.form.get('address')?.touched) {
             <p class="error-msg">
-              {{ 'PROFILE.VALIDATION.ADDRESS_MIN' | translate }}
+              {{ (vm.form.get('address')?.getError('server') ?? 'PROFILE.VALIDATION.ADDRESS_MIN') | translate }}
             </p>
           }
         </div>
