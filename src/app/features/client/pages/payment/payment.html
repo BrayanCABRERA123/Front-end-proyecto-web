@@ -39,6 +39,14 @@
           </app-payment-notice>
         }
 
+        <!-- BIZ-02: el total lo dice payment-service; si no responde no se muestra un monto inventado -->
+        @if (vm.amountDueFailed()) {
+          <app-payment-notice tone="error" icon="error_outline"
+            [title]="'COMMON.ERROR' | translate"
+            [message]="'PAYMENT.SUMMARY.AMOUNT_UNAVAILABLE' | translate">
+          </app-payment-notice>
+        }
+
         <!-- con el pago aprobado ya no se elige método ni se reporta nada: solo queda el resumen -->
         <!-- Método de pago -->
         <section class="card" *ngIf="!vm.isApproved()">
@@ -120,7 +128,7 @@
                 </div>
                 <div class="amount">
                   <small>{{ 'PAYMENT.QR.AMOUNT' | translate }}</small>
-                  <strong>${{ vm.totalToPay() | number }} COP</strong>
+                  <strong>{{ vm.totalToPay() === null ? '—' : '$' + (vm.totalToPay() | number) + ' COP' }}</strong>
                 </div>
               </div>
 
@@ -255,7 +263,11 @@
               <span>{{ 'PAYMENT.SUMMARY.TOTAL' | translate }}</span>
               <small>{{ 'PAYMENT.SUMMARY.TAX' | translate }}</small>
             </div>
-            <strong>${{ vm.totalToPay() | number }} <small>COP</small></strong>
+            @if (vm.totalToPay() !== null) {
+              <strong>${{ vm.totalToPay() | number }} <small>COP</small></strong>
+            } @else {
+              <strong>—</strong>
+            }
           </div>
 
           <!-- aprobado: no hay nada que pagar, solo se puede cancelar la reserva -->

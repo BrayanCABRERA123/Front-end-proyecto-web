@@ -23,6 +23,19 @@ export interface PromotionForCustomer {
   unlocked: boolean;
 }
 
+// cupón aplicado a una reserva (a lo sumo uno, E-09)
+export interface BookingRedemption {
+  promotionId: number;
+  promotionCode: string;
+  promotionName: string;
+  discountAmount: number;
+}
+
+// lo que se debe hoy por la reserva y su cupón (BIZ-02); redemption es null si no tiene cupón
+export interface BookingRedemptionResponse extends AmountDueResponse {
+  redemption: BookingRedemption | null;
+}
+
 export interface RedeemPromotionResult {
   promotionId: number;
   promotionCode: string;
@@ -47,6 +60,12 @@ export class LoyaltyApiService {
 
   redeem(bookingId: number, code: string): Observable<RedeemPromotionResult> {
     return this.http.post<RedeemPromotionResult>(`${API_BASE_URL}/loyalty/redeem`, { bookingId, code });
+  }
+
+  // monto a pagar y cupón aplicado de una reserva del cliente (BIZ-02): la pantalla de pago lo pide
+  // al abrir, así el cupón y el total se ven igual aunque se recargue
+  bookingRedemption(bookingId: number): Observable<BookingRedemptionResponse> {
+    return this.http.get<BookingRedemptionResponse>(`${API_BASE_URL}/loyalty/redemptions/${bookingId}`);
   }
 
   // "Quitar cupón" (E-08): anula el canje en el servidor y devuelve lo que ahora falta por pagar
