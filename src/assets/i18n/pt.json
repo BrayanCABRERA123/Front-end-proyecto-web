@@ -1422,7 +1422,7 @@
     "ROLES": {
       "CREATE_ROLE": "Criar função",
       "SUBTITLE": "Os três perfis (Administrador, Operador e Cliente) são fixos e cada conta tem um.",
-      "FIXED_NOTE": "O que cada pessoa pode fazer é decidido pelo seu perfil no sistema. As permissões desta tabela são salvas como referência da equipe, mas ainda não mudam o acesso.",
+      "FIXED_NOTE": "O que cada pessoa pode fazer é decidido pelo seu perfil no sistema. Esta tabela mostra as permissões de referência de cada perfil e é somente leitura.",
       "TABLE": {
         "NAME": "Função",
         "DESCRIPTION": "Descrição",
