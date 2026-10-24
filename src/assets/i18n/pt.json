@@ -832,7 +832,8 @@
       "APPROVED_TITLE": "Pagamento aprovado",
       "APPROVED_MESSAGE": "O administrador aprovou seu pagamento. Sua reserva está paga; não há mais nada a fazer.",
       "CANCEL": "Cancelar reserva",
-      "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box"
+      "SECURE": "Pagamento 100% seguro · Verificação imediata pela equipe do box",
+      "AMOUNT_UNAVAILABLE": "Não conseguimos consultar o valor a pagar. Verifique sua conexão e volte em alguns segundos."
     },
     "COUPON": {
       "PLACEHOLDER": "Código do cupom",

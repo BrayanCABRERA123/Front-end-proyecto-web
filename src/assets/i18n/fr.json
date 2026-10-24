@@ -832,7 +832,8 @@
       "APPROVED_TITLE": "Paiement approuvé",
       "APPROVED_MESSAGE": "L'administrateur a approuvé votre paiement. Votre réservation est payée ; vous n'avez rien d'autre à faire.",
       "CANCEL": "Annuler la réservation",
-      "SECURE": "Paiement 100 % sécurisé · Vérification immédiate par l'équipe de la baie"
+      "SECURE": "Paiement 100 % sécurisé · Vérification immédiate par l'équipe de la baie",
+      "AMOUNT_UNAVAILABLE": "Nous n'avons pas pu obtenir le montant à payer. Vérifiez votre connexion et revenez dans quelques secondes."
     },
     "COUPON": {
       "PLACEHOLDER": "Code promo",
