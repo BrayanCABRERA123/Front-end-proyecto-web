@@ -88,6 +88,11 @@ export const TRANSLATED_CODES: ReadonlySet<string> = new Set([
   'PROMOTION_ONE_PER_BOOKING',
   'PROMOTION_REDEMPTION_NOT_FOUND',
   // WEB-05: todos los demás códigos que lanzan los backends (git grep sobre develop del 23-10)
+  // contrato final del 24-10: operations, notification y la base caída
+  'SERVICE_TOO_LATE',
+  'NOTIFICATION_NOT_SENT',
+  'SECURITY_SERVICE_UNAVAILABLE',
+  'DATABASE_UNAVAILABLE',
   // operations-service (operarios, asignación, ejecución e inspección)
   'ABSENCE_NOT_FOUND',
   'ASSIGNMENT_BUSY',
@@ -298,4 +303,16 @@ export function applyFieldErrors(form: AbstractControl, error: unknown, aliases:
     marked = true;
   }
   return marked;
+}
+
+/**
+ * Datos que acompañan a algunos códigos para armar el mensaje: SCHEDULE_CONFLICTS_BOOKINGS trae las
+ * reservas que quedarían por fuera (conflictingBookings y bookingCodes), y el texto las nombra.
+ */
+export function apiErrorParams(error: unknown): Record<string, string | number> {
+  if (!(error instanceof HttpErrorResponse)) return {};
+  const problem = error.error as { conflictingBookings?: unknown; bookingCodes?: unknown } | null;
+  const codes = Array.isArray(problem?.bookingCodes) ? problem.bookingCodes.map(String) : [];
+  const count = typeof problem?.conflictingBookings === 'number' ? problem.conflictingBookings : codes.length;
+  return { count, codes: codes.slice(0, 10).join(', ') || '—' };
 }

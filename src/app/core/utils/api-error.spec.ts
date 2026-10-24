@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { TRANSLATED_CODES, apiErrorCode, apiErrorKey, apiFieldErrors, applyFieldErrors } from './api-error';
+import { TRANSLATED_CODES, apiErrorCode, apiErrorKey, apiErrorParams, apiFieldErrors, applyFieldErrors } from './api-error';
 import es from '../../../assets/i18n/es.json';
 import en from '../../../assets/i18n/en.json';
 import fr from '../../../assets/i18n/fr.json';
@@ -96,5 +96,20 @@ describe('WEB-05: errores por campo de un 400', () => {
     expect(form.controls.phoneNumber.getError('server')).toBe('API_ERRORS.FIELD_INVALID');
     expect(form.controls.phoneNumber.touched).toBe(true);
     expect(form.controls.email.errors).toBeNull();
+  });
+});
+
+describe('contrato final del 24-10', () => {
+  it('traduce los códigos nuevos de operations, notification y la base caída', () => {
+    for (const code of ['SERVICE_TOO_LATE', 'NOTIFICATION_NOT_SENT', 'SECURITY_SERVICE_UNAVAILABLE', 'DATABASE_UNAVAILABLE']) {
+      expect(apiErrorCode(conflict({ code }))).toBe(code);
+    }
+  });
+
+  it('SCHEDULE_CONFLICTS_BOOKINGS: el mensaje nombra las reservas que quedarían por fuera', () => {
+    const error = conflict({ code: 'SCHEDULE_CONFLICTS_BOOKINGS', conflictingBookings: 2, bookingCodes: ['RES-1', 'RES-2'] });
+    expect(apiErrorParams(error)).toEqual({ count: 2, codes: 'RES-1, RES-2' });
+    expect(apiErrorParams(conflict({ code: 'CONFLICT' }))).toEqual({ count: 0, codes: '—' });
+    expect((es as { API_ERRORS: Record<string, string> }).API_ERRORS['SCHEDULE_CONFLICTS_BOOKINGS']).toContain('{{codes}}');
   });
 });
