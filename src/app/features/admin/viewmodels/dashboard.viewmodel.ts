@@ -87,7 +87,14 @@ export class AdminDashboardViewModel {
   // reservas de hoy frente a ayer: las cuenta booking-service con la fecha del lavadero
   readonly daySummary = signal<DaySummaryResponse | null>(null);
 
-  load(): void {
+  // al entrar se pide todo; el refresco automático (silent) solo lo que cambia por otras personas
+  load(silent = false): void {
+    this.reservations.load(silent);
+    this.payments.refresh(silent);
+    if (!silent) {
+      this.operatorsStore.refresh();
+      this.schedule.load();
+    }
     this.bookingApi.daySummary().subscribe({ next: summary => this.daySummary.set(summary), error: () => undefined });
   }
 

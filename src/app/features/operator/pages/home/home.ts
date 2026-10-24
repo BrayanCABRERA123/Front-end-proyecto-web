@@ -13,6 +13,7 @@ import { LongDatePipe } from '../../../../shared/pipes/long-date.pipe';
 import { OperatorHomeViewModel } from '../../viewmodels/home.viewmodel';
 import { OperatorWorkViewModel } from '../../viewmodels/operator-work.viewmodel';
 import { confirmFinish, confirmStart } from '../../components/work-confirm';
+import { keepFresh } from '../../../../core/services/live-refresh';
 
 // vista del Inicio del operario: el estado y las acciones están en OperatorHomeViewModel
 @Component({
@@ -36,6 +37,11 @@ export class HomeComponent implements OnInit {
   readonly vm = inject(OperatorHomeViewModel);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
+
+  // datos frescos sin recargar (WEB-16): al volver a la pestaña y con cada notificación nueva
+  constructor() {
+    keepFresh(() => this.vm.load(), { initial: false });
+  }
 
   readonly today = new Date();
 

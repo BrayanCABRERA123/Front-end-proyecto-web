@@ -38,9 +38,9 @@ describe('ReportsComponent (admin)', () => {
     TestBed.configureTestingModule({
       imports: [ReportsComponent, TranslateModule.forRoot()],
       providers: [
-        { provide: ReservationsStore, useValue: { bookings, today: TODAY,
+        { provide: ReservationsStore, useValue: { bookings, today: TODAY, load: () => undefined,
           byDate: (date: string) => bookings().filter(b => b.date === date) } },
-        { provide: PaymentsStore, useValue: { payments, today: TODAY } },
+        { provide: PaymentsStore, useValue: { payments, today: TODAY, refresh: () => undefined } },
       ],
     });
     // sin detectChanges: la gráfica (canvas) no se pinta, solo se prueban los conteos

@@ -37,6 +37,12 @@ export class ReportsViewModel {
 
   readonly period = signal<ReportPeriod>('week');
 
+  // reservas y pagos frescos al entrar y al volver a la pestaña (WEB-16)
+  load(silent = false): void {
+    this.reservations.load(silent);
+    this.payments.refresh(silent);
+  }
+
   setPeriod(period: ReportPeriod): void {
     this.period.set(period);
   }

@@ -44,7 +44,7 @@ describe('ReservationsComponent (admin)', () => {
       imports: [ReservationsComponent, TranslateModule.forRoot()],
       providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([]),
         { provide: ReservationsStore, useValue: store },
-        { provide: OperatorsStore, useValue: { operators: signal([{ name: 'Oscar Ruiz' }]) } }],
+        { provide: OperatorsStore, useValue: { operators: signal([{ name: 'Oscar Ruiz' }]), refresh: () => undefined } }],
     });
     component = TestBed.createComponent(ReservationsComponent).componentInstance;
   });

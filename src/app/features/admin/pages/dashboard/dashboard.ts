@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +15,7 @@ import { formatTimeRange } from '../../services/reservations-store';
 import { Booking } from '../../models/admin.models';
 import { LongDatePipe } from '../../../../shared/pipes/long-date.pipe';
 import { AdminDashboardViewModel, PendingPaymentRow, ToCloseRow } from '../../viewmodels/dashboard.viewmodel';
+import { WAITING_POLL_MS, keepFresh } from '../../../../core/services/live-refresh';
 
 // vista del dashboard del admin: los datos y las acciones están en AdminDashboardViewModel
 @Component({
@@ -25,17 +26,19 @@ import { AdminDashboardViewModel, PendingPaymentRow, ToCloseRow } from '../../vi
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
   readonly vm = inject(AdminDashboardViewModel);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
-  readonly today = new Date();
-
-  ngOnInit(): void {
-    this.vm.load();
+  // datos frescos sin recargar (WEB-16): al entrar, al volver a la pestaña, con cada notificación
+  // nueva y cada tanto mientras la pestaña esté visible, porque esta vista espera a otras personas
+  constructor() {
+    keepFresh(silent => this.vm.load(silent), { pollMs: WAITING_POLL_MS });
   }
+
+  readonly today = new Date();
 
   // formatea a pesos colombianos, ej: $680.000
   cop(amount: number): string {

@@ -18,6 +18,7 @@ import { isoDaysFromToday } from '../../../../core/utils/dates';
 import { BookingDetailModal, BookingDetailResult } from './components/booking-detail-modal/booking-detail-modal';
 import { ReservationsViewModel } from '../../viewmodels/reservations.viewmodel';
 import { assignActionOf } from '../../models/booking-assignment';
+import { WAITING_POLL_MS, keepFresh } from '../../../../core/services/live-refresh';
 
 // vista de Reservas del admin: filtros, páginas y acciones están en ReservationsViewModel; aquí
 // quedan las etiquetas de fecha, los modales, las confirmaciones y la exportación
@@ -43,8 +44,13 @@ export class ReservationsComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
 
+  // datos frescos sin recargar (WEB-16): al entrar, al volver a la pestaña, con cada notificación
+  // nueva y cada tanto mientras la pestaña esté visible, porque esta vista espera a otras personas
+  constructor() {
+    keepFresh(silent => this.vm.load(silent), { pollMs: WAITING_POLL_MS });
+  }
+
   ngOnInit(): void {
-    this.vm.load();
     this.vm.loadCancellationReasons();
   }
 

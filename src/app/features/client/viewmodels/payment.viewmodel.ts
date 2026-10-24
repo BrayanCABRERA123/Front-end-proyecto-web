@@ -191,6 +191,17 @@ export class PaymentViewModel {
     });
   }
 
+  /**
+   * Refresco automático (WEB-16): vuelve a preguntar el estado del pago y el monto, así el cliente ve
+   * sin recargar cuando el admin aprueba o rechaza. Si falla, se queda lo que ya se mostraba.
+   */
+  refresh(): void {
+    const booking = this.booking();
+    if (!booking) return;
+    this.loadPaymentState(booking.id);
+    this.loadAmountDue(booking.id, true);
+  }
+
   isSelected(method: PaymentMethod): boolean {
     return method.accountId === null
       ? this.selectedMethod() === 'CASH'
@@ -430,7 +441,7 @@ export class PaymentViewModel {
 
   // BIZ-02: monto a pagar y cupón aplicado según payment-service; así el cupón se ve (y se puede
   // quitar) aunque el cliente recargue o vuelva a entrar
-  private loadAmountDue(bookingId: number): void {
+  private loadAmountDue(bookingId: number, silent = false): void {
     this.loyaltyApi.bookingRedemption(bookingId).subscribe({
       next: due => {
         this.amountDueFailed.set(false);
@@ -438,7 +449,9 @@ export class PaymentViewModel {
         const redemption = due.redemption;
         this.couponResult.set(redemption ? { ...redemption, newTotal: due.amountDue } : null);
       },
-      error: () => this.amountDueFailed.set(true)
+      error: () => {
+        if (!silent || this.serverAmountDue() === null) this.amountDueFailed.set(true);
+      }
     });
   }
 

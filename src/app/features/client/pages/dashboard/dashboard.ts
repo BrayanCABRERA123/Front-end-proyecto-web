@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
 import { LongDatePipe } from '../../../../shared/pipes/long-date.pipe';
 import { ClientDashboardViewModel } from '../../viewmodels/dashboard.viewmodel';
+import { keepFresh } from '../../../../core/services/live-refresh';
 
 // vista del inicio del cliente: los datos están en ClientDashboardViewModel
 @Component({
@@ -29,6 +30,11 @@ export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly translate = inject(TranslateService);
+
+  // datos frescos sin recargar (WEB-16): al volver a la pestaña y con cada notificación nueva
+  constructor() {
+    keepFresh(() => this.vm.load(), { initial: false });
+  }
 
   readonly today = new Date();
 

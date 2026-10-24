@@ -20,6 +20,13 @@ export class OperatorDetailViewModel {
   private readonly feedback = inject(FeedbackService);
 
   private operatorId = '';
+
+  // la ficha y los servicios de hoy, frescos al entrar y al volver a la pestaña (WEB-16)
+  load(silent = false): void {
+    this.store.refresh(silent);
+    this.reservations.load(silent);
+  }
+
   // métricas reales de la semana (operations-service); null mientras cargan o si fallan
   readonly metrics = signal<OperatorMetricsResponse | null>(null);
 

@@ -69,7 +69,8 @@ export class AssignedServicesViewModel {
   });
 
   // carga las del día elegido; sin fecha, las de hoy y los próximos 30 días (lo asignado para mañana también se ve)
-  load(): void {
+  // con `silent` (refresco automático, WEB-16) un fallo no abre un mensaje: se queda lo que había
+  load(silent = false): void {
     let from = this.dateFilter();
     let to = this.dateFilter();
     if (!from) {
@@ -85,7 +86,9 @@ export class AssignedServicesViewModel {
         const selected = this.selectedService();
         this.selectedService.set(rows.find(r => r.bookingId === selected?.bookingId) ?? rows[0] ?? null);
       },
-      error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+      error: (error: unknown) => {
+        if (!silent) this.feedback.error('COMMON.ERROR', apiErrorKey(error));
+      }
     });
   }
 

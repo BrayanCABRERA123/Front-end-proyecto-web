@@ -12,6 +12,7 @@ import { Chart } from 'chart.js/auto';
 // modal de exportación de reportes
 import { ExportReportModalComponent } from '../../../../shared/dialogs/export-report-modal/export-report-modal';
 import { ReportPeriod, ReportsViewModel } from '../../viewmodels/reports.viewmodel';
+import { keepFresh } from '../../../../core/services/live-refresh';
 
 // vista de Reportes: los números están en ReportsViewModel; aquí quedan la gráfica (Chart.js),
 // los colores del tema, la animación del ranking y la exportación
@@ -28,6 +29,11 @@ export class ReportsComponent implements AfterViewInit, OnDestroy {
   readonly vm = inject(ReportsViewModel);
   private readonly dialog = inject(MatDialog);
   private readonly translate = inject(TranslateService);
+
+  // datos frescos sin recargar (WEB-16): al entrar, al volver a la pestaña y con cada notificación nueva
+  constructor() {
+    keepFresh(silent => this.vm.load(silent));
+  }
 
   @ViewChild('barCanvas') barCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('rankingCard') topServicesEl!: ElementRef<HTMLDivElement>;

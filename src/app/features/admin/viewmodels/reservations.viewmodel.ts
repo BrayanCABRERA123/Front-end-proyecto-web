@@ -32,8 +32,10 @@ export class ReservationsViewModel {
   readonly pageSize = 6;
 
   // se recarga al entrar para ver las reservas que llegaron desde la app del cliente
-  load(): void {
-    this.store.load();
+  load(silent = false): void {
+    this.store.load(silent);
+    // los nombres de los operarios (filtro) solo al entrar: cambian poco
+    if (!silent) this.operators.refresh();
   }
 
   get loading(): boolean { return this.store.loading(); }
@@ -139,7 +141,7 @@ export class ReservationsViewModel {
     this.store.setStatus(booking.id, status, reason).subscribe({
       next: () => {
         // refresca la lista para que la tabla muestre el estado nuevo sin recargar la página
-        this.load();
+        this.store.load();
         this.feedback.success('ADMIN_RESERVATIONS.FEEDBACK.STATUS_TITLE',
           `ADMIN_RESERVATIONS.FEEDBACK.STATUS_${status.toUpperCase()}_MESSAGE`, { messageParams: { code: booking.code } });
       },
