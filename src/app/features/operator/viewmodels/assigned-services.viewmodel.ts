@@ -20,6 +20,7 @@ export interface OperatorServiceRow {
   // total de la reserva (operations-service no conoce el medio de pago ni el teléfono del cliente)
   total: string;
   startableAt: string | null;
+  startableUntil: string | null;
   // B-01: indicaciones del admin para este servicio ('' = sin notas)
   notes: string;
 }
@@ -126,6 +127,7 @@ export class AssignedServicesViewModel {
       statusColor,
       total: `$ ${s.total.toLocaleString('es-CO')}`,
       startableAt: s.startableAt,
+      startableUntil: s.startableUntil ?? null,
       notes: (s.notes ?? '').trim()
     };
   }

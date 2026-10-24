@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
-import { canStartNow, startFromLabel } from '../../../../../../core/utils/operator-work';
+import { canStartNow, startFromLabel, startHintKey } from '../../../../../../core/utils/operator-work';
 // modal de estado (contacto del cliente) y confirmaciones de iniciar/finalizar
 import { StatusModal, StatusModalData } from '../../../../../../shared/dialogs/status-modal/status-modal';
 import { confirmFinish, confirmStart } from '../../../../components/work-confirm';
@@ -25,6 +25,7 @@ export class ServiceDetailComponent {
 
   // el botón "Iniciar" se habilita desde la hora que dice operations-service
   canStartNow = canStartNow;
+  startHint = startHintKey;
   startFrom = startFromLabel;
 
   constructor(private dialog: MatDialog) {}

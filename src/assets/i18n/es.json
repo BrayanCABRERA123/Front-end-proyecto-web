@@ -2492,7 +2492,8 @@
     "DISCLAIMER": "Las fotos y notas las registra el lavadero al revisar tu vehículo en cada fase del servicio."
   },
   "OPERATOR_WORK": {
-    "START_FROM": "Podrás iniciarlo desde las {{time}} (15 minutos antes de la reserva)."
+    "START_FROM": "Podrás iniciarlo desde las {{time}} (15 minutos antes de la reserva).",
+    "START_TOO_LATE": "Ya no se puede iniciar: pasaron más de 4 h de la hora de fin"
   },
   "AUTH_FEEDBACK": {
     "LOGIN_SUCCESS_TITLE": "¡Inicio de sesión correcto!",

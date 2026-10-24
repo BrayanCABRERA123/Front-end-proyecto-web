@@ -2486,7 +2486,8 @@
     "DISCLAIMER": "As fotos e notas são registradas pelo lava-rápido ao revisar seu veículo em cada etapa do serviço."
   },
   "OPERATOR_WORK": {
-    "START_FROM": "Você poderá iniciá-lo a partir das {{time}} (15 minutos antes da reserva)."
+    "START_FROM": "Você poderá iniciá-lo a partir das {{time}} (15 minutos antes da reserva).",
+    "START_TOO_LATE": "Não pode mais ser iniciado: passaram mais de 4 h do horário de término"
   },
   "AUTH_FEEDBACK": {
     "LOGIN_SUCCESS_TITLE": "Login realizado com sucesso!",

@@ -2492,7 +2492,8 @@
     "DISCLAIMER": "Photos and notes are recorded by the car wash while checking your vehicle in each phase of the service."
   },
   "OPERATOR_WORK": {
-    "START_FROM": "You can start it from {{time}} (15 minutes before the booking)."
+    "START_FROM": "You can start it from {{time}} (15 minutes before the booking).",
+    "START_TOO_LATE": "It can no longer be started: more than 4 h have passed since the end time"
   },
   "AUTH_FEEDBACK": {
     "LOGIN_SUCCESS_TITLE": "Signed in successfully!",

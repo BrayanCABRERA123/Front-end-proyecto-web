@@ -2486,7 +2486,8 @@
     "DISCLAIMER": "Les photos et notes sont enregistrées par la station lors de l'inspection de votre véhicule à chaque étape du service."
   },
   "OPERATOR_WORK": {
-    "START_FROM": "Vous pourrez le démarrer à partir de {{time}} (15 minutes avant la réservation)."
+    "START_FROM": "Vous pourrez le démarrer à partir de {{time}} (15 minutes avant la réservation).",
+    "START_TOO_LATE": "Il ne peut plus être démarré : plus de 4 h se sont écoulées depuis l'heure de fin"
   },
   "AUTH_FEEDBACK": {
     "LOGIN_SUCCESS_TITLE": "Connexion réussie !",
