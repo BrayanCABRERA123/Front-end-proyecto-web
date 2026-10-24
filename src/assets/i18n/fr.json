@@ -1426,7 +1426,7 @@
     "ROLES": {
       "CREATE_ROLE": "Créer un rôle",
       "SUBTITLE": "Les trois rôles (Administrateur, Opérateur et Client) sont fixes et chaque compte en a un.",
-      "FIXED_NOTE": "Ce que chaque personne peut faire dépend de son rôle dans le système. Les permissions de ce tableau sont enregistrées comme référence pour l’équipe, mais elles ne changent pas encore l’accès.",
+      "FIXED_NOTE": "Ce que chaque personne peut faire dépend de son rôle dans le système. Ce tableau montre les permissions de référence de chaque rôle et est en lecture seule.",
       "TABLE": {
         "NAME": "Rôle",
         "DESCRIPTION": "Description",

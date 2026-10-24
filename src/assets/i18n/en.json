@@ -1426,7 +1426,7 @@
     "ROLES": {
       "CREATE_ROLE": "Create role",
       "SUBTITLE": "The three roles (Administrator, Operator and Client) are fixed and each account has one.",
-      "FIXED_NOTE": "What each person can do is decided by their role in the system. The permissions in this table are saved as a reference for the team, but they do not change access yet.",
+      "FIXED_NOTE": "What each person can do is decided by their role in the system. This table shows each role's reference permissions and is read-only.",
       "TABLE": {
         "NAME": "Role",
         "DESCRIPTION": "Description",

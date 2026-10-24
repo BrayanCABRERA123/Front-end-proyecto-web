@@ -8,11 +8,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { CreateUserModal, CreateUserResult } from '../../../../shared/dialogs/create-user-modal/create-user-modal';
-import { CreateRoleModal, CreateRoleData, CreateRoleResult } from '../../../../shared/dialogs/create-role-modal/create-role-modal';
-import { RoleCode } from '../../../../core/services/role-permissions-api';
 import { ServiceModal, ServiceModalData, ServiceModalResult } from '../../../../shared/dialogs/service-modal/service-modal';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
-import { AdminUser, Promotion, UserRole } from '../../models/admin.models';
+import { AdminUser, Promotion } from '../../models/admin.models';
 import { CatalogServiceResponse, ServicePriceResponse } from '../../../../core/models/booking.models';
 import { PromotionModal, PromotionModalData, PromotionModalResult } from './components/promotion-modal/promotion-modal';
 import { ManagementTab, ManagementViewModel } from '../../viewmodels/management.viewmodel';
@@ -68,20 +66,7 @@ export class ManagementComponent implements OnInit {
     this.confirm(data, () => this.vm.setUserActive(user, !disabling));
   }
 
-  // --- ROLES (ADR-015: los 3 roles son fijos, solo se editan sus permisos) ---
-
-  openEditRole(role: UserRole): void {
-    const data: CreateRoleData = {
-      roles: this.vm.roleMatrix().roles,
-      permissions: this.vm.roleMatrix().permissions,
-      initialRole: role.id as RoleCode,
-    };
-    this.dialog.open(CreateRoleModal, { panelClass: 'custom-dialog', data })
-      .afterClosed()
-      .subscribe((result: CreateRoleResult | null) => {
-        if (result) this.vm.updateRolePermissions(result.role, result.permissionIds);
-      });
-  }
+  // --- ROLES: H-05, la matriz de permisos es solo de consulta (no hay acciones) ---
 
   // --- SERVICIOS (booking-service) ---
 
