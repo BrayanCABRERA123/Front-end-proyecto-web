@@ -644,7 +644,8 @@
       "STARTED_MESSAGE": "Le service {{code}} est maintenant en cours.",
       "FINISHED_TITLE": "Service terminé !",
       "FINISHED_MESSAGE": "Le service {{code}} a été marqué comme terminé.",
-      "CONTACT_MESSAGE": "Contactez le client par l'un de ces moyens."
+      "CONTACT_MESSAGE": "Contactez le client par l'un de ces moyens.",
+      "TOTAL": "Total de la réservation :"
     }
   },
   "OPERATOR_HOME": {
@@ -1355,7 +1356,9 @@
       "CANCELLED_CONFIRM": "Annuler la réservation {{code}} ? Cette action est irréversible.",
       "STATUS_NO_SHOW_MESSAGE": "La réservation {{code}} est marquée comme absent.",
       "STATUS_SCHEDULED_MESSAGE": "La réservation {{code}} est planifiée."
-    }
+    },
+    "REASSIGN": "Réaffecter",
+    "CANCEL_REASON": "Motif de l'annulation"
   },
   "ASSIGN_OPERATOR_MODAL": {
     "TITLE": "Assigner un opérateur à la réservation {{code}}",
@@ -2164,7 +2167,8 @@
       "no_show": "Absent"
     },
     "CANCEL_REASON": "Motif d'annulation",
-    "INSPECTION": "Rapport d'inspection"
+    "INSPECTION": "Rapport d'inspection",
+    "REASSIGN": "Changer d'opérateur"
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nouvelle réservation",
