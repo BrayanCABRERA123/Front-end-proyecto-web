@@ -146,7 +146,15 @@ function toPayment(p: PaymentResponse): Payment {
     email: '—',
     bankAccount: p.account?.accountNumber ?? '—',
     amountDeclared: p.reportedAmount,
+    cancelledBookingAction: cancelledBookingAction(p),
   };
+}
+
+// qué tiene que hacer el admin con el pago de una reserva que se canceló
+function cancelledBookingAction(p: PaymentResponse): Payment['cancelledBookingAction'] {
+  if (!p.bookingCancelled) return null;
+  if (p.status === 'APPROVED') return 'refund';
+  return p.status === 'IN_REVIEW' || p.status === 'PENDING' ? 'reject' : null;
 }
 
 /** completa el pago con los datos de su reserva; sin reserva cargada quedan los del pago */

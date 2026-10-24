@@ -1930,6 +1930,10 @@
       "CONFIRM": "Yes, refund",
       "DONE_TITLE": "Payment refunded",
       "DONE_MESSAGE": "Payment {{code}} was refunded and the booking points were reversed."
+    },
+    "BOOKING_CANCELLED": {
+      "refund": "Booking cancelled: refund",
+      "reject": "Booking cancelled: reject"
     }
   },
   "PAYMENT_REVIEW_MODAL": {

@@ -188,6 +188,8 @@ export interface Payment {
   bankAccount: string;
   /** lo que el cliente dice que pagó según su comprobante; null si no lo indicó */
   amountDeclared: number | null;
+  /** la reserva se canceló: un pago aprobado hay que reembolsarlo y uno en revisión, rechazarlo */
+  cancelledBookingAction?: 'refund' | 'reject' | null;
 }
 
 /* ================= GESTIÓN ================= */

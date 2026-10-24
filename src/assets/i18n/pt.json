@@ -1930,6 +1930,10 @@
       "CONFIRM": "Sim, reembolsar",
       "DONE_TITLE": "Pagamento reembolsado",
       "DONE_MESSAGE": "O pagamento {{code}} foi reembolsado e os pontos da reserva foram estornados."
+    },
+    "BOOKING_CANCELLED": {
+      "refund": "Reserva cancelada: reembolsar",
+      "reject": "Reserva cancelada: rejeitar"
     }
   },
   "PAYMENT_REVIEW_MODAL": {

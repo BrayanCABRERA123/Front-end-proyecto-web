@@ -1930,6 +1930,10 @@
       "CONFIRM": "Oui, rembourser",
       "DONE_TITLE": "Paiement remboursé",
       "DONE_MESSAGE": "Le paiement {{code}} a été remboursé et les points de la réservation ont été annulés."
+    },
+    "BOOKING_CANCELLED": {
+      "refund": "Réservation annulée : rembourser",
+      "reject": "Réservation annulée : refuser"
     }
   },
   "PAYMENT_REVIEW_MODAL": {
