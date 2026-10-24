@@ -100,14 +100,21 @@ export class ReservationsStore {
     [...this.state()].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
   );
 
-  constructor() {
-    this.load();
-  }
+  // hay una carga en curso: un refresco automático no pide lo mismo otra vez
+  private inFlight = false;
 
-  /** carga las reservas de la ventana y las cuentas de los clientes */
-  load(): void {
-    this.loading.set(true);
-    this.loadError.set(null);
+  /**
+   * Carga las reservas de la ventana y las cuentas de los clientes. Ya no se carga una sola vez al
+   * crear el store: cada pantalla la pide al entrar y LiveRefresh la repite (WEB-16). Con `silent`
+   * (refresco automático) no muestra el indicador de carga y, si falla, deja los datos que había.
+   */
+  load(silent = false): void {
+    if (silent && this.inFlight) return;
+    this.inFlight = true;
+    if (!silent) {
+      this.loading.set(true);
+      this.loadError.set(null);
+    }
     forkJoin({
       bookings: this.api.adminBookings(isoDate(-DAYS_BACK), isoDate(DAYS_AHEAD)),
       // si falla la lista de clientes, las reservas igual se muestran (sin nombre)
@@ -134,9 +141,13 @@ export class ReservationsStore {
           // operations no respondió: misma regla calculada aquí para no dejar el conteo en cero
           : this.state().filter(b => this.needsOperatorLocally(b)).map(b => b.id)));
         this.toCloseReasons.set(new Map(toClose.map(item => [String(item.bookingId), item.reason])));
+        this.loadError.set(null);
         this.loading.set(false);
+        this.inFlight = false;
       },
       error: (error) => {
+        this.inFlight = false;
+        if (silent) return;
         this.loadError.set(apiErrorKey(error));
         this.loading.set(false);
       }

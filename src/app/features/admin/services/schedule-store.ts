@@ -64,11 +64,10 @@ export class ScheduleStore {
 
   readonly activeBaysCount = computed(() => this.bayList().filter(b => b.status === 'active').length);
 
-  constructor() {
-    this.load();
-  }
-
-  /** pide horario, excepciones y bahías al backend */
+  /**
+   * Pide horario, excepciones y bahías al backend. Lo pide cada pantalla al entrar (WEB-16); no se
+   * refresca solo porque el horario se edita en memoria hasta guardar y se perderían los cambios.
+   */
   load(): void {
     this.loading.set(true);
     this.loadError.set(null);

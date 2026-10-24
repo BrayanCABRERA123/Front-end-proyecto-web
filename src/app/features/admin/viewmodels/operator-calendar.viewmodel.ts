@@ -40,6 +40,11 @@ export class OperatorCalendarViewModel {
   private operatorId = '';
   view: CalendarView = 'week';
 
+  // disponibilidad y ausencias frescas al entrar y al volver a la pestaña (WEB-16)
+  load(silent = false): void {
+    this.store.refresh(silent);
+  }
+
   // la semana completa, de lunes a domingo
   readonly dayIndexes = [0, 1, 2, 3, 4, 5, 6];
 

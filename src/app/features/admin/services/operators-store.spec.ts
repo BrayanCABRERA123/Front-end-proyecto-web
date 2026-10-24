@@ -25,6 +25,7 @@ describe('OperatorsStore (A-19)', () => {
 
   it('el operario con un servicio en curso hoy queda "En servicio" y se cuentan todos', () => {
     const store = TestBed.inject(OperatorsStore);
+    store.refresh();
 
     http.match(r => r.url === '/api/v1/admin/operators/summary').forEach(r => r.flush(null));
     const ids = [1, 2, 3, 4, 5, 6];

@@ -77,20 +77,25 @@ export class OperatorsStore {
     this.state().filter(o => o.status !== 'medical_leave')
   );
 
-  constructor() {
-    this.refresh();
-  }
+  // hay una carga en curso: un refresco automático no pide lo mismo otra vez
+  private inFlight = false;
 
-  /** vuelve a pedir los operarios y sus ausencias (solo con sesión de admin) */
-  refresh(): void {
+  /**
+   * Vuelve a pedir los operarios y sus ausencias (solo con sesión de admin). Cada pantalla lo pide al
+   * entrar y LiveRefresh lo repite (WEB-16); con `silent`, si falla, se quedan los datos que había.
+   */
+  refresh(silent = false): void {
     if (!this.auth.hasAnyRole(['ADMIN'])) return;
+    if (silent && this.inFlight) return;
+    this.inFlight = true;
     this.api.teamSummary().subscribe({
       next: summary => this.summaryState.set(summary),
-      error: () => this.summaryState.set(null)
+      error: () => { if (!silent) this.summaryState.set(null); }
     });
     this.api.operators().subscribe({
       next: list => {
         if (list.length === 0) {
+          this.inFlight = false;
           this.state.set([]);
           this.loadedState.set(true);
           return;
@@ -107,9 +112,12 @@ export class OperatorsStore {
           const busy = new Set(assignmentsToday.filter(a => a.status === 'IN_PROGRESS').map(a => a.operatorId));
           this.state.set(list.map((o, i) => toOperator(o, absences[i], profileById.get(o.id) ?? null, busy.has(o.id))));
           this.loadedState.set(true);
+          this.inFlight = false;
         });
       },
       error: () => {
+        this.inFlight = false;
+        if (silent) return;
         this.state.set([]);
         this.loadedState.set(true);
       }

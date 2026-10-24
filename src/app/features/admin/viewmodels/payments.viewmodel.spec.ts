@@ -7,6 +7,7 @@ import { PaymentsApiService } from '../../../core/services/payments-api';
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 import { Payment } from '../models/admin.models';
 import { PaymentsStore } from '../services/payments-store';
+import { ReservationsStore } from '../services/reservations-store';
 import { PaymentsViewModel } from './payments.viewmodel';
 
 const TODAY = '2026-10-23';
@@ -34,6 +35,7 @@ describe('PaymentsViewModel (F-02)', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: PaymentsStore, useValue: store },
+        { provide: ReservationsStore, useValue: { load: vi.fn() } },
         { provide: PaymentsApiService, useValue: {} },
         { provide: AuthService, useValue: { user: () => null } },
         { provide: FeedbackService, useValue: feedback },

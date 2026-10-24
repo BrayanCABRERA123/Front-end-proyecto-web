@@ -14,6 +14,7 @@ import { OperatorAbsenceModal, AbsenceModalResult } from './components/operator-
 import { OperatorProfileModal, OperatorProfileModalData, OperatorProfileModalResult } from './components/operator-profile-modal/operator-profile-modal';
 import { AvailabilityModal, AvailabilityModalData } from './components/availability-modal/availability-modal';
 import { OperatorDetailViewModel } from '../../viewmodels/operator-detail.viewmodel';
+import { keepFresh } from '../../../../core/services/live-refresh';
 
 // vista de la ficha del operario: los datos y las acciones están en OperatorDetailViewModel
 @Component({
@@ -31,6 +32,11 @@ export class OperatorDetailComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly feedback = inject(FeedbackService);
+
+  // datos frescos sin recargar (WEB-16): al entrar, al volver a la pestaña y con cada notificación nueva
+  constructor() {
+    keepFresh(silent => this.vm.load(silent));
+  }
 
   ngOnInit(): void {
     // reactivo: al navegar de una ficha a otra cambia el id sin recargar la página

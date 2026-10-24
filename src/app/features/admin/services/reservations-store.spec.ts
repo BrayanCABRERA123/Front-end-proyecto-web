@@ -56,6 +56,7 @@ describe('ReservationsStore', () => {
 
   it('toma de operations las reservas sin operario (una sola regla)', () => {
     const store = TestBed.inject(ReservationsStore);
+    store.load();
     answerLoad([booking(1, 'CONFIRMED', day(1)), booking(2, 'CONFIRMED', day(1), '12:00'), booking(3, 'COMPLETED', day(-1))],
       [], [2]);
 
@@ -67,6 +68,7 @@ describe('ReservationsStore', () => {
 
   it('si operations no responde, calcula la misma regla con lo que tiene', () => {
     const store = TestBed.inject(ReservationsStore);
+    store.load();
     answerLoad([booking(1, 'CONFIRMED', day(1)), booking(2, 'CANCELLED', day(1)), booking(3, 'CONFIRMED', day(-2))],
       [], null);
 
@@ -75,6 +77,7 @@ describe('ReservationsStore', () => {
 
   it('al asignar un operario la reserva deja de estar sin asignar', () => {
     const store = TestBed.inject(ReservationsStore);
+    store.load();
     answerLoad([booking(5, 'CONFIRMED', day(1))], [], [5]);
     let done = false;
 
@@ -89,6 +92,7 @@ describe('ReservationsStore', () => {
 
   it('B-01: las notas del administrador viajan con la asignación', () => {
     const store = TestBed.inject(ReservationsStore);
+    store.load();
     answerLoad([booking(5, 'CONFIRMED', day(1))], [], [5]);
 
     store.assignOperator('5', '3', undefined, '  Llevar cera extra ');
@@ -100,6 +104,7 @@ describe('ReservationsStore', () => {
 
   it('lista por cerrar las que operations marca y las saca al cerrarlas', () => {
     const store = TestBed.inject(ReservationsStore);
+    store.load();
     answerLoad([booking(8, 'CONFIRMED', day(-1)), booking(9, 'IN_PROGRESS', day(-1), '12:00')], [], [],
       [{ bookingId: 8, reason: 'NOT_STARTED', operatorId: 3 }, { bookingId: 9, reason: 'NOT_FINISHED', operatorId: 3 }]);
 
@@ -116,6 +121,7 @@ describe('ReservationsStore', () => {
 
   it('si operations no responde, por cerrar queda vacío y las reservas igual se ven', () => {
     const store = TestBed.inject(ReservationsStore);
+    store.load();
     http.expectOne(r => r.url === '/api/v1/admin/bookings').flush([booking(8, 'CONFIRMED', day(-1))]);
     http.expectOne(r => r.url === '/api/v1/admin/users').flush({ items: [], page: 0, size: 100, totalItems: 0, totalPages: 0 });
     http.expectOne(r => r.url === '/api/v1/admin/assignments').flush([]);
@@ -125,5 +131,27 @@ describe('ReservationsStore', () => {
 
     expect(store.toClose()).toEqual([]);
     expect(store.bookings().length).toBe(1);
+  });
+  it('WEB-16: no carga sola al crearse; la pide cada pantalla al entrar', () => {
+    TestBed.inject(ReservationsStore);
+
+    http.expectNone(r => r.url === '/api/v1/admin/bookings');
+  });
+
+  it('WEB-16: el refresco automático no muestra cargando, no se duplica y si falla deja lo que había', () => {
+    const store = TestBed.inject(ReservationsStore);
+    store.load();
+    answerLoad([booking(1, 'CONFIRMED', day(1))], [], []);
+
+    store.load(true);
+    // mientras la anterior sigue en curso, otro refresco no pide lo mismo otra vez
+    store.load(true);
+    expect(store.loading()).toBe(false);
+    http.expectOne(r => r.url === '/api/v1/admin/bookings').flush('down', { status: 503, statusText: 'Service Unavailable' });
+    // el resto de peticiones quedó cancelado con el fallo
+    http.match(() => true);
+
+    expect(store.loadError()).toBeNull();
+    expect(store.bookings().map(b => b.id)).toEqual(['1']);
   });
 });
