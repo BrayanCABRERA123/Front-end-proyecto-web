@@ -21,6 +21,9 @@ export interface PromotionForCustomer {
   discountPercent: number;
   requiredPoints: number;
   unlocked: boolean;
+  // D-01: el descuento real (un FIXED trae discountPercent en 0 y discountValue en pesos)
+  discountType?: 'PERCENT' | 'FIXED' | 'PACKAGE';
+  discountValue?: number;
 }
 
 // cupón aplicado a una reserva (a lo sumo uno, E-09)

@@ -330,7 +330,7 @@
 
                 <!-- lo que obtiene el cliente: descuento al canjear y puntos para desbloquearlo -->
                 <div class="promo-card__reward">
-                  {{ 'ADMIN_MANAGEMENT.PROMOTIONS.DISCOUNT_VALUE' | translate:{ percent: p.discountPercent } }}
+                  {{ 'ADMIN_MANAGEMENT.PROMOTIONS.DISCOUNT_AMOUNT' | translate:{ value: discountText(p) } }}
                   <span class="muted">· {{ (p.requiredPoints ? 'ADMIN_MANAGEMENT.PROMOTIONS.POINTS_VALUE' : 'ADMIN_MANAGEMENT.PROMOTIONS.NO_POINTS') | translate:{ count: p.requiredPoints } }}</span>
                 </div>
 

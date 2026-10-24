@@ -1486,7 +1486,8 @@
       "EMPTY_TITLE": "No hay promociones",
       "EMPTY_MESSAGE": "Crea una promoción para impulsar las ventas del lavadero.",
       "PAUSE": "Pausar",
-      "REACTIVATE": "Reactivar"
+      "REACTIVATE": "Reactivar",
+      "DISCOUNT_AMOUNT": "{{value}} de descuento"
     },
     "DELETE_CONFIRM": {
       "TITLE": "¿Eliminar este registro?",
@@ -2293,7 +2294,9 @@
     "FEATURES_LABEL": "Beneficios",
     "FEATURES_ADD": "Agregar beneficio",
     "FEATURES_PLACEHOLDER": "Ej. Cera protectante incluida",
-    "FEATURES_EMPTY": "Aún no hay beneficios."
+    "FEATURES_EMPTY": "Aún no hay beneficios.",
+    "DISCOUNT_FIXED_LABEL": "Descuento fijo (COP)",
+    "ERROR_DISCOUNT_FIXED": "Escribe un monto mayor que cero"
   },
   "QUICK_ACCESS": {
     "BOOK_WASH": "Agendar lavado",

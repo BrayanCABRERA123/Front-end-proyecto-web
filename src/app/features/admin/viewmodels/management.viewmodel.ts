@@ -333,6 +333,8 @@ function toPromotion(p: PromotionView): Promotion {
     status: p.status === 'paused' ? 'inactive' : p.status,
     startDate: p.validFrom,
     discountPercent: p.discountPercent,
+    discountType: p.discountType ?? 'PERCENT',
+    discountValue: p.discountValue ?? p.discountPercent,
     requiredPoints: p.requiredPoints,
   };
 }
@@ -349,7 +351,10 @@ function toSaveRequest(result: PromotionModalResult): SavePromotionRequest {
     benefits: result.features,
     validFrom: result.startDate,
     validTo: '9999-12-31',
-    discountPercent: result.discountPercent,
+    // D-01: se manda el tipo y el valor tal como los dejó el admin (un FIXED sigue siendo FIXED)
+    discountPercent: result.discountType === 'PERCENT' ? result.discountValue : 0,
+    discountType: result.discountType,
+    discountValue: result.discountValue,
     requiredPoints: result.requiredPoints,
   };
 }
