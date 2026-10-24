@@ -126,6 +126,8 @@ export interface OperatorServiceResponse {
   comment: string | null;
   // desde cuándo se puede iniciar (operations-service: 15 minutos antes de la reserva)
   startableAt: string | null;
+  // hasta cuándo se puede iniciar (4 h después de la hora de fin); después responde SERVICE_TOO_LATE
+  startableUntil?: string | null;
   // primer nombre del cliente (vacío si security-service no respondió)
   clientName?: string;
   // B-01: indicaciones que dejó el admin al asignar (null o ausente = sin notas)
