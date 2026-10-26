@@ -421,7 +421,8 @@
       "SUBMIT": "Reservar Ahora",
       "NOTE": "Te esperamos en nuestra sede. Llega unos minutos antes de tu hora. Puedes pagar en línea o en el lavadero.",
       "CODE": "Código",
-      "BAY": "Bahía"
+      "BAY": "Bahía",
+      "PAYMENT": "Forma de pago"
     },
     "MINUTES": "{{count}} min",
     "POINTS": "Suma {{count}} puntos",
@@ -437,7 +438,16 @@
       "LOADING": "Buscando operarios libres...",
       "HINT": "Si el operario que elegiste ya no está libre al confirmar, te asignamos otro.",
       "NONE_FREE": "No hay operarios libres para elegir a esa hora; igual te asignamos uno."
-    }
+    },
+    "STEP4": {
+      "TITLE": "¿Cómo vas a pagar?",
+      "SUBTITLE": "Elige el medio antes de confirmar la reserva",
+      "DIGITAL": "Pago digital ahora",
+      "DIGITAL_DESC": "Nequi, Daviplata o transferencia: escaneas el QR y subes el comprobante dentro de los 30 minutos siguientes.",
+      "CASH": "Efectivo en el lavadero",
+      "CASH_DESC": "Pagas al llegar y el administrador registra el pago. Solo puedes tener una reserva activa en efectivo."
+    },
+    "SUCCESS_MESSAGE_CASH": "Tu lavado quedó programado. Pagas en efectivo en el lavadero. Este es el resumen de tu reserva:"
   },
   "APP": {
     "TITLE": "LavaRápido"
@@ -850,7 +860,15 @@
     "CASH_INFO_TITLE": "Pagas en el local",
     "CASH_INFO_MESSAGE": "Paga en efectivo cuando llegues por tu vehículo. El administrador registrará el pago y te llegará la notificación de pago aprobado.",
     "RECEIPT_COMPRESSING": "Preparando el comprobante...",
-    "RECEIPT_TOO_LARGE": "No pudimos reducir la imagen a menos de 2 MB. Prueba con una captura de pantalla del comprobante."
+    "RECEIPT_TOO_LARGE": "No pudimos reducir la imagen a menos de 2 MB. Prueba con una captura de pantalla del comprobante.",
+    "DEADLINE": {
+      "TITLE": "Tienes un plazo para pagar",
+      "MESSAGE": "Sube el comprobante antes de las {{time}} o la reserva se libera."
+    },
+    "CASH_MODE": {
+      "TITLE": "Pagas en efectivo en el lavadero",
+      "MESSAGE": "El administrador registra el pago cuando llegues; no necesitas subir comprobante."
+    }
   },
   "VEHICLES": {
     "TITLE": "Mis Vehículos",

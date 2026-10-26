@@ -32,6 +32,19 @@ export function isFinishedStatus(status: string): boolean {
 }
 
 /**
+ * Hora local (HH:mm) hasta la que el cliente debe subir el comprobante, para la insignia
+ * "Paga antes de las HH:mm". Solo si la reserva sigue activa, tiene plazo y el pago no se ha
+ * reportado; si no, null. El plazo lo pone booking-service: aquí no se calcula.
+ */
+export function paymentDeadlineTime(booking: Pick<BookingResponse, 'status' | 'paymentDeadline' | 'paymentReported'>): string | null {
+  if (!isActiveStatus(booking.status) || !booking.paymentDeadline || booking.paymentReported) return null;
+  const deadline = new Date(booking.paymentDeadline);
+  if (Number.isNaN(deadline.getTime())) return null;
+  const pad = (value: number) => String(value).padStart(2, '0');
+  return `${pad(deadline.getHours())}:${pad(deadline.getMinutes())}`;
+}
+
+/**
  * horario de atención en una línea a partir del horario del negocio (booking-service), juntando los
  * días seguidos que abren igual: "Lunes - Viernes 07:00 - 18:00 · Sábado 08:00 - 14:00".
  * dayOfWeek va de 1 (lunes) a 7 (domingo); dayLabel traduce ese número. Sin días abiertos: "—".

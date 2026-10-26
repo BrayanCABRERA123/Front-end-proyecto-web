@@ -421,7 +421,8 @@
       "SUBMIT": "Réserver maintenant",
       "NOTE": "Nous vous attendons dans notre station. Arrivez quelques minutes en avance. Vous pouvez payer en ligne ou sur place.",
       "CODE": "Code",
-      "BAY": "Baie"
+      "BAY": "Baie",
+      "PAYMENT": "Mode de paiement"
     },
     "MINUTES": "{{count}} min",
     "POINTS": "Rapporte {{count}} points",
@@ -437,7 +438,16 @@
       "LOADING": "Recherche d'opérateurs libres...",
       "HINT": "Si l'opérateur choisi n'est plus libre à la confirmation, nous en attribuons un autre.",
       "NONE_FREE": "Aucun opérateur libre à choisir à cette heure ; nous en attribuerons quand même un."
-    }
+    },
+    "STEP4": {
+      "TITLE": "Comment allez-vous payer ?",
+      "SUBTITLE": "Choisissez le moyen avant de confirmer la réservation",
+      "DIGITAL": "Paiement numérique maintenant",
+      "DIGITAL_DESC": "Nequi, Daviplata ou virement : scannez le QR et téléchargez le justificatif dans les 30 minutes qui suivent.",
+      "CASH": "Espèces au lavage",
+      "CASH_DESC": "Vous payez à votre arrivée et l'administrateur enregistre le paiement. Vous ne pouvez avoir qu'une seule réservation active en espèces."
+    },
+    "SUCCESS_MESSAGE_CASH": "Votre lavage est programmé. Vous payez en espèces au lavage. Voici le résumé de votre réservation :"
   },
   "APP": {
     "TITLE": "LavaRápido"
@@ -850,7 +860,15 @@
     "CASH_INFO_TITLE": "Vous payez sur place",
     "CASH_INFO_MESSAGE": "Payez en espèces lorsque vous récupérez votre véhicule. L'administrateur enregistrera le paiement et vous recevrez la notification de paiement approuvé.",
     "RECEIPT_COMPRESSING": "Préparation du justificatif...",
-    "RECEIPT_TOO_LARGE": "Impossible de réduire l'image sous 2 Mo. Essayez avec une capture d'écran du justificatif."
+    "RECEIPT_TOO_LARGE": "Impossible de réduire l'image sous 2 Mo. Essayez avec une capture d'écran du justificatif.",
+    "DEADLINE": {
+      "TITLE": "Vous avez un délai pour payer",
+      "MESSAGE": "Téléchargez le justificatif avant {{time}} ou la réservation sera libérée."
+    },
+    "CASH_MODE": {
+      "TITLE": "Vous payez en espèces au lavage",
+      "MESSAGE": "L'administrateur enregistre le paiement à votre arrivée ; aucun justificatif n'est nécessaire."
+    }
   },
   "VEHICLES": {
     "TITLE": "Mes Véhicules",

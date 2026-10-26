@@ -26,7 +26,7 @@ describe('ViewModels del cliente', () => {
   const vehicles = { list: vi.fn() };
   const loyalty = { balance: vi.fn(), promotions: vi.fn() };
   const operations = { myBookingOperators: vi.fn(), givenRatings: vi.fn(), rate: vi.fn() };
-  const payments = { myBookings: vi.fn() };
+  const payments = { myBookings: vi.fn(), accounts: vi.fn() };
   const feedback = { success: vi.fn(), error: vi.fn() };
 
   beforeEach(() => {
@@ -36,6 +36,7 @@ describe('ViewModels del cliente', () => {
     operations.myBookingOperators.mockReturnValue(of([{ bookingId: 2, operatorName: 'Oscar' }]));
     operations.givenRatings.mockReturnValue(of([]));
     payments.myBookings.mockReturnValue(of([]));
+    payments.accounts.mockReturnValue(of([]));
     TestBed.configureTestingModule({
       providers: [
         { provide: BookingApiService, useValue: bookingApi },
@@ -132,5 +133,54 @@ describe('ViewModels del cliente', () => {
     expect(vm.time()).toBe('');
     expect(vm.availableTimes()).toEqual(['10:00', '10:30']);
     expect(feedback.error).toHaveBeenCalledWith('RESERVE.SLOT_TAKEN_TITLE', 'RESERVE.SLOT_TAKEN_MESSAGE');
+  });
+
+  // cuentas activas del lavadero como las manda payment-service
+  const account = (id: number, methodCode: string) => ({ id, methodCode, methodName: methodCode, accountHolder: 'Lavadero' });
+
+  function readyToBook(vm: ReserveViewModel): void {
+    vm.selectedVehicleId.set(3);
+    vm.selectedServiceId.set(5);
+    vm.date.set(tomorrow);
+    vm.time.set('09:00');
+  }
+
+  it('Reservar: manda el modo de pago elegido (efectivo si el lavadero lo tiene activo)', () => {
+    payments.accounts.mockReturnValue(of([account(1, 'NEQUI'), account(2, 'EFECTIVO')]));
+    bookingApi.createBooking.mockReturnValue(of({ id: 9, paymentMode: 'CASH' }));
+    const vm = TestBed.inject(ReserveViewModel);
+    vm.load();
+    readyToBook(vm);
+
+    expect(vm.cashAvailable()).toBe(true);
+    vm.selectPaymentMode('CASH');
+    vm.submit(vi.fn());
+
+    expect(bookingApi.createBooking).toHaveBeenCalledWith(expect.objectContaining({ paymentMode: 'CASH' }));
+  });
+
+  it('Reservar: sin cuenta de efectivo activa no ofrece efectivo y manda DIGITAL', () => {
+    payments.accounts.mockReturnValue(of([account(1, 'NEQUI'), account(3, 'TRANSFERENCIA')]));
+    bookingApi.createBooking.mockReturnValue(of({ id: 9, paymentMode: 'DIGITAL' }));
+    const vm = TestBed.inject(ReserveViewModel);
+    vm.load();
+    readyToBook(vm);
+
+    vm.selectPaymentMode('CASH');
+    vm.submit(vi.fn());
+
+    expect(vm.cashAvailable()).toBe(false);
+    expect(vm.paymentMode()).toBe('DIGITAL');
+    expect(bookingApi.createBooking).toHaveBeenCalledWith(expect.objectContaining({ paymentMode: 'DIGITAL' }));
+  });
+
+  it('Reservar: si payment-service no responde, queda solo el pago digital', () => {
+    payments.accounts.mockReturnValue(throwError(() => new HttpErrorResponse({ status: 503 })));
+    const vm = TestBed.inject(ReserveViewModel);
+
+    vm.load();
+
+    expect(vm.cashAvailable()).toBe(false);
+    expect(vm.paymentMode()).toBe('DIGITAL');
   });
 });

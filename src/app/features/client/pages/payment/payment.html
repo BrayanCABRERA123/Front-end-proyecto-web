@@ -31,6 +31,22 @@
           </app-payment-notice>
         }
 
+        <!-- pago digital: si no sube el comprobante antes del plazo, booking-service cancela la reserva -->
+        @if (vm.payBefore()) {
+          <app-payment-notice tone="warning" icon="timer" data-notice="deadline"
+            [title]="'PAYMENT.DEADLINE.TITLE' | translate"
+            [message]="'PAYMENT.DEADLINE.MESSAGE' | translate:{ time: vm.payBefore() }">
+          </app-payment-notice>
+        }
+
+        <!-- eligió efectivo al reservar: lo cobra y lo registra el administrador en el lavadero -->
+        @if (vm.isCashBooking()) {
+          <app-payment-notice tone="warning" icon="payments" data-notice="cash"
+            [title]="'PAYMENT.CASH_MODE.TITLE' | translate"
+            [message]="'PAYMENT.CASH_MODE.MESSAGE' | translate">
+          </app-payment-notice>
+        }
+
         <!-- el último pago de esta reserva fue rechazado: se explica por qué antes de reportar otro -->
         @if (vm.lastRejectionReason() && !vm.isLocked()) {
           <app-payment-notice tone="error" icon="error_outline"

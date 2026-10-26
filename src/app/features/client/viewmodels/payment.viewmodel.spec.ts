@@ -143,3 +143,53 @@ describe('PaymentViewModel (monto del servidor, BIZ-02)', () => {
     expect(vm.totalToPay()).toBe(36000);
   });
 });
+
+describe('PaymentViewModel (plazo del pago digital)', () => {
+  let vm: PaymentViewModel;
+  // 14:30 en la hora local del navegador, sin depender de su zona horaria
+  const deadline = new Date(2099, 9, 23, 14, 30).toISOString();
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: BookingApiService, useValue: {} },
+        { provide: PaymentsApiService, useValue: {} },
+        { provide: LoyaltyApiService, useValue: {} },
+        { provide: FeedbackService, useValue: { success: vi.fn(), error: vi.fn() } },
+        PaymentViewModel,
+      ],
+    });
+    vm = TestBed.inject(PaymentViewModel);
+  });
+
+  const withBooking = (changes: Partial<BookingResponse>) =>
+    vm.booking.set({ id: 7, status: 'CONFIRMED', paymentMode: 'DIGITAL', paymentDeadline: deadline, paymentReported: false, ...changes } as BookingResponse);
+
+  it('avisa hasta qué hora (local) hay que subir el comprobante', () => {
+    withBooking({});
+    expect(vm.payBefore()).toBe('14:30');
+    expect(vm.isCashBooking()).toBe(false);
+  });
+
+  it('no avisa si el comprobante ya se reportó, si se envió desde aquí o si la reserva no está activa', () => {
+    withBooking({ paymentReported: true });
+    expect(vm.payBefore()).toBeNull();
+
+    withBooking({ status: 'CANCELLED' });
+    expect(vm.payBefore()).toBeNull();
+
+    withBooking({});
+    vm.flowStep.set('VERIFYING');
+    expect(vm.payBefore()).toBeNull();
+  });
+
+  it('las reservas en efectivo o anteriores al cambio no tienen plazo', () => {
+    withBooking({ paymentMode: 'CASH', paymentDeadline: null });
+    expect(vm.payBefore()).toBeNull();
+    expect(vm.isCashBooking()).toBe(true);
+
+    withBooking({ paymentMode: null, paymentDeadline: null, paymentReported: undefined });
+    expect(vm.payBefore()).toBeNull();
+    expect(vm.isCashBooking()).toBe(false);
+  });
+});

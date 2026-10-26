@@ -421,7 +421,8 @@
       "SUBMIT": "Reservar Agora",
       "NOTE": "Esperamos você na nossa unidade. Chegue alguns minutos antes do horário. Você pode pagar online ou no lava-rápido.",
       "CODE": "Código",
-      "BAY": "Box"
+      "BAY": "Box",
+      "PAYMENT": "Forma de pagamento"
     },
     "MINUTES": "{{count}} min",
     "POINTS": "Soma {{count}} pontos",
@@ -437,7 +438,16 @@
       "LOADING": "Procurando operadores livres...",
       "HINT": "Se o operador escolhido não estiver mais livre ao confirmar, atribuímos outro.",
       "NONE_FREE": "Não há operadores livres para escolher nesse horário; mesmo assim atribuiremos um."
-    }
+    },
+    "STEP4": {
+      "TITLE": "Como você vai pagar?",
+      "SUBTITLE": "Escolha o meio antes de confirmar a reserva",
+      "DIGITAL": "Pagamento digital agora",
+      "DIGITAL_DESC": "Nequi, Daviplata ou transferência: escaneie o QR e envie o comprovante nos 30 minutos seguintes.",
+      "CASH": "Dinheiro no lava-rápido",
+      "CASH_DESC": "Você paga ao chegar e o administrador registra o pagamento. Você só pode ter uma reserva ativa em dinheiro."
+    },
+    "SUCCESS_MESSAGE_CASH": "Sua lavagem foi agendada. Você paga em dinheiro no lava-rápido. Este é o resumo da sua reserva:"
   },
   "APP": {
     "TITLE": "LavaRápido"
@@ -850,7 +860,15 @@
     "CASH_INFO_TITLE": "Você paga no local",
     "CASH_INFO_MESSAGE": "Pague em dinheiro quando buscar seu veículo. O administrador registrará o pagamento e você receberá a notificação de pagamento aprovado.",
     "RECEIPT_COMPRESSING": "Preparando o comprovante...",
-    "RECEIPT_TOO_LARGE": "Não conseguimos reduzir a imagem para menos de 2 MB. Tente uma captura de tela do comprovante."
+    "RECEIPT_TOO_LARGE": "Não conseguimos reduzir a imagem para menos de 2 MB. Tente uma captura de tela do comprovante.",
+    "DEADLINE": {
+      "TITLE": "Você tem um prazo para pagar",
+      "MESSAGE": "Envie o comprovante antes das {{time}} ou a reserva será liberada."
+    },
+    "CASH_MODE": {
+      "TITLE": "Você paga em dinheiro no lava-rápido",
+      "MESSAGE": "O administrador registra o pagamento quando você chegar; não é preciso enviar comprovante."
+    }
   },
   "VEHICLES": {
     "TITLE": "Meus Veículos",

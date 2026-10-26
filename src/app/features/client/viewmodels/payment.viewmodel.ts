@@ -4,7 +4,7 @@ import { catchError, forkJoin, of } from 'rxjs';
 // datos reales de la reserva (booking-service)
 import { BookingApiService } from '../../../core/services/booking-api';
 import { BookingResponse } from '../../../core/models/booking.models';
-import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../core/utils/booking-display';
+import { isActiveStatus, isoToDisplayDate, paymentDeadlineTime, servicesLabel, vehicleLabel } from '../../../core/utils/booking-display';
 import { apiErrorCode, apiErrorKey } from '../../../core/utils/api-error';
 import { todayIso } from '../../../core/utils/dates';
 // cuentas del lavadero y reporte del pago (payment-service)
@@ -146,6 +146,15 @@ export class PaymentViewModel {
   readonly isApproved = computed(() => this.flowStep() === 'APPROVED');
   // con el pago enviado (en revisión o aprobado) ya no se puede cambiar ni volver a pagar
   readonly isLocked = computed(() => this.isVerifying() || this.isApproved());
+
+  // pago digital con plazo y sin comprobante: "Sube el comprobante antes de las HH:mm o la reserva
+  // se libera". El plazo lo pone booking-service; con el pago ya enviado desde aquí no se muestra
+  readonly payBefore = computed(() => {
+    const booking = this.booking();
+    return booking && !this.isLocked() ? paymentDeadlineTime(booking) : null;
+  });
+  // el cliente eligió pagar en efectivo en el lavadero al reservar
+  readonly isCashBooking = computed(() => this.booking()?.paymentMode === 'CASH' && !this.isApproved());
 
   readonly canRedeemCoupon = computed(() => !this.isVerifying() && !this.couponResult() && !this.redeemingCoupon()
     && this.couponCode().trim().length >= 3);
