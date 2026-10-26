@@ -7,12 +7,14 @@ import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar'
 // iconos de Angular Material
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ADDRESS_PENDING_KEY, businessAddress, businessName } from '../../../../core/utils/booking-display';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 // modal reutilizable que también muestra una lista de detalles
 import { StatusModal, StatusModalData } from '../../../../shared/dialogs/status-modal/status-modal';
 import { LongDatePipe } from '../../../../shared/pipes/long-date.pipe';
 import { ClientDashboardViewModel } from '../../viewmodels/dashboard.viewmodel';
+import { keepFresh } from '../../../../core/services/live-refresh';
 
 // vista del inicio del cliente: los datos están en ClientDashboardViewModel
 @Component({
@@ -29,6 +31,14 @@ export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly translate = inject(TranslateService);
+  // nombre y dirección de la sede con texto neutro si vienen vacíos
+  readonly name = businessName;
+  readonly address = businessAddress;
+
+  // datos frescos sin recargar (WEB-16): al volver a la pestaña y con cada notificación nueva
+  constructor() {
+    keepFresh(() => this.vm.load(), { initial: false });
+  }
 
   readonly today = new Date();
 
@@ -68,7 +78,7 @@ export class DashboardComponent implements OnInit {
         { label: 'RESERVE.SUMMARY.SERVICE', value: service.serviceName },
         { label: 'RESERVE.SUMMARY.VEHICLE', value: `${service.vehicle} · ${service.plate}`.trim() },
         { label: 'RESERVE.SUMMARY.DATE', value: service.date },
-        { label: 'RESERVE.SUMMARY.CAR_WASH', value: this.vm.location()?.address ?? '' },
+        { label: 'RESERVE.SUMMARY.CAR_WASH', value: businessAddress(this.vm.location()) ?? this.translate.instant(ADDRESS_PENDING_KEY) },
         { label: 'DASHBOARD.NEXT_SERVICE.OPERATOR_ASSIGNED', value: service.operator || '—' },
         { label: 'DASHBOARD.NEXT_SERVICE.STATUS', value: this.translate.instant(`STATUS.${service.status}`) },
         { label: 'DASHBOARD.NEXT_SERVICE.PROGRESS', value: `${this.vm.nextServiceProgress()}%` }

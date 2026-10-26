@@ -1,3 +1,5 @@
+import { BookingPaymentMode } from '../../../core/models/booking.models';
+
 
 /* ================= OPERARIOS ================= */
 
@@ -140,6 +142,10 @@ export interface Booking {
   /** true si todavía se puede cambiar o cancelar (lo decide el backend, RF-007) */
   changeable: boolean;
   cancellationReason: string | null;
+  /** llave traducida del motivo cuando la web lo traduce por código (PAYMENT_TIMEOUT) */
+  cancellationReasonKey?: string | null;
+  /** cómo dijo el cliente que paga; null en las reservas del admin y en las anteriores al cambio */
+  paymentMode?: BookingPaymentMode | null;
   /** fecha en formato ISO (yyyy-MM-dd) para poder filtrar de verdad */
   date: string;
   /** hora de inicio en formato 24h (HH:mm) */
@@ -170,6 +176,8 @@ export interface Payment {
   amount: number;
   /** fecha ISO (yyyy-MM-dd) */
   date: string;
+  /** A-17: día en que el admin lo aprobó (processedAtUtc); null si no está aprobado */
+  approvedDate: string | null;
   time: string;
   service: string;
   status: PaymentStatus;
@@ -186,6 +194,8 @@ export interface Payment {
   bankAccount: string;
   /** lo que el cliente dice que pagó según su comprobante; null si no lo indicó */
   amountDeclared: number | null;
+  /** la reserva se canceló: un pago aprobado hay que reembolsarlo y uno en revisión, rechazarlo */
+  cancelledBookingAction?: 'refund' | 'reject' | null;
 }
 
 /* ================= GESTIÓN ================= */
@@ -222,8 +232,11 @@ export interface Promotion {
   status: 'active' | 'scheduled' | 'inactive';
   /** fecha ISO (yyyy-MM-dd) en que la promoción pasa a activa */
   startDate: string;
-  /** descuento real que se aplica al canjear el cupón en el pago (1-100; 100 = gratis) */
+  /** descuento real que se aplica al canjear el cupón en el pago (1-99 %; 0 en un FIXED) */
   discountPercent: number;
+  /** D-01: tipo y valor reales (PERCENT = %, FIXED = pesos); se editan sin convertirlos */
+  discountType: 'PERCENT' | 'FIXED' | 'PACKAGE';
+  discountValue: number;
   /** puntos de fidelización acumulados que hay que tener para que el cupón se desbloquee */
   requiredPoints: number;
 }

@@ -110,6 +110,9 @@ describe('Payment', () => {
   it('opens the payable booking and asks for receipt, reference and amount before paying', () => {
     http.match(req => req.url.endsWith('/payment-accounts'))[0].flush([nequi(1, 'Lavadero Principal')]);
     flushBookings([booking(9, '2099-10-23')], [9]);
+    // el total lo dice payment-service (BIZ-02), no se calcula con el subtotal
+    http.expectOne(req => req.method === 'GET' && req.url.endsWith('/loyalty/redemptions/9'))
+      .flush({ bookingId: 9, bookingTotal: 20000, appliedDiscounts: 0, amountDue: 20000, redemption: null });
 
     expect(vm.reservationCode()).toBe('RES-9');
     expect(vm.totalToPay()).toBe(20000);

@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { OperatorCalendarViewModel } from '../../viewmodels/operator-calendar.viewmodel';
+import { keepFresh } from '../../../../core/services/live-refresh';
 
 // vista del calendario del operario: fechas, vistas y disponibilidad están en OperatorCalendarViewModel
 @Component({
@@ -22,6 +23,11 @@ export class OperatorCalendarComponent implements OnInit {
   readonly vm = inject(OperatorCalendarViewModel);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+
+  // datos frescos sin recargar (WEB-16): al entrar, al volver a la pestaña y con cada notificación nueva
+  constructor() {
+    keepFresh(silent => this.vm.load(silent));
+  }
 
   ngOnInit(): void {
     // reactivo: al navegar entre fichas cambia el id sin recargar

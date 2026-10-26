@@ -11,6 +11,7 @@ import {
   RescheduleBookingRequest,
 } from '../../../core/models/booking.models';
 import { apiErrorKey } from '../../../core/utils/api-error';
+import { cancellationReasonKey } from '../../../core/utils/booking-display';
 import { Booking, BookingStatus } from '../models/admin.models';
 // quién tiene cada reserva (operations-service)
 import { AssignmentResponse, OperationsApiService, UnassignedResponse, ToCloseResponse } from '../../../core/services/operations-api';
@@ -100,14 +101,21 @@ export class ReservationsStore {
     [...this.state()].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))
   );
 
-  constructor() {
-    this.load();
-  }
+  // hay una carga en curso: un refresco automático no pide lo mismo otra vez
+  private inFlight = false;
 
-  /** carga las reservas de la ventana y las cuentas de los clientes */
-  load(): void {
-    this.loading.set(true);
-    this.loadError.set(null);
+  /**
+   * Carga las reservas de la ventana y las cuentas de los clientes. Ya no se carga una sola vez al
+   * crear el store: cada pantalla la pide al entrar y LiveRefresh la repite (WEB-16). Con `silent`
+   * (refresco automático) no muestra el indicador de carga y, si falla, deja los datos que había.
+   */
+  load(silent = false): void {
+    if (silent && this.inFlight) return;
+    this.inFlight = true;
+    if (!silent) {
+      this.loading.set(true);
+      this.loadError.set(null);
+    }
     forkJoin({
       bookings: this.api.adminBookings(isoDate(-DAYS_BACK), isoDate(DAYS_AHEAD)),
       // si falla la lista de clientes, las reservas igual se muestran (sin nombre)
@@ -134,9 +142,13 @@ export class ReservationsStore {
           // operations no respondió: misma regla calculada aquí para no dejar el conteo en cero
           : this.state().filter(b => this.needsOperatorLocally(b)).map(b => b.id)));
         this.toCloseReasons.set(new Map(toClose.map(item => [String(item.bookingId), item.reason])));
+        this.loadError.set(null);
         this.loading.set(false);
+        this.inFlight = false;
       },
       error: (error) => {
+        this.inFlight = false;
+        if (silent) return;
         this.loadError.set(apiErrorKey(error));
         this.loading.set(false);
       }
@@ -212,9 +224,9 @@ export class ReservationsStore {
    * cruces; si lo rechaza, se muestra el error aquí mismo.
    */
   // onAssigned solo corre si operations aceptó (turno, ausencias y cruces los valida el backend)
-  assignOperator(id: string, operatorId: string | null, onAssigned?: () => void): void {
+  assignOperator(id: string, operatorId: string | null, onAssigned?: () => void, notes = ''): void {
     if (!operatorId) return; // operations no tiene "quitar operario": se cambia por otro
-    this.operations.assign(Number(id), Number(operatorId)).subscribe({
+    this.operations.assign(Number(id), Number(operatorId), notes).subscribe({
       next: assignment => {
         this.assignments.set(id, assignment);
         this.state.update(list => list.map(b => (b.id === id ? { ...b, operator: this.operatorRef(id) } : b)));
@@ -278,6 +290,8 @@ export class ReservationsStore {
       status: STATUS_BY_CODE[response.status],
       changeable: response.changeable,
       cancellationReason: response.cancellationReason?.name ?? null,
+      cancellationReasonKey: cancellationReasonKey(response.cancellationReason?.code),
+      paymentMode: response.paymentMode ?? null,
       operator: this.operatorRef(id),
       notes: response.notes ?? '',
       createdAt: response.createdAt ?? '',

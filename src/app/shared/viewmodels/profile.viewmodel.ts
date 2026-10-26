@@ -7,7 +7,8 @@ import { AuthService } from '../../core/services/auth';
 import { AuthUser } from '../../core/models/auth.models';
 // usuario de la sesión: el mismo que muestra el sidebar
 import { UserSession } from '../../core/services/user-session';
-import { apiErrorKey } from '../../core/utils/api-error';
+import { apiErrorKey, applyFieldErrors } from '../../core/utils/api-error';
+import { allowedEmailValidator } from '../../core/utils/email';
 
 export interface PhoneCountry {
   code: string;
@@ -50,7 +51,9 @@ export class ProfileViewModel {
     firstName: [this.splitName(this.initial.name).first, this.nameValidators],
     lastName: [this.splitName(this.initial.name).last, this.nameValidators],
     // el correo es el usuario de login: se puede cambiar, pero pidiendo la contraseña actual
-    email: [this.initial.email, [Validators.required, Validators.maxLength(60), Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
+    // A-01: un correo nuevo debe ser de un dominio permitido; el que ya tenía la cuenta se respeta
+    email: [this.initial.email, [Validators.required, Validators.maxLength(60),
+      allowedEmailValidator(() => this.currentEmail || this.initial.email)]],
     phoneCountry: [this.parsePhone(this.initial.phone).country, Validators.required],
     phoneNumber: [this.parsePhone(this.initial.phone).number, Validators.required],
     // opcional: el servicio es en la sede, la dirección queda solo como dato de contacto
@@ -138,7 +141,8 @@ export class ProfileViewModel {
 
     const value = this.form.getRawValue();
     const newEmail = value.email.trim().toLowerCase();
-    const emailChanged = !!this.currentEmail && newEmail !== this.currentEmail.toLowerCase();
+    // A-01: igual que el validador, sin espacios ni mayúsculas (el mismo correo no pide contraseña)
+    const emailChanged = !!this.currentEmail && newEmail !== this.currentEmail.trim().toLowerCase();
     const firstName = value.firstName.trim();
     const lastName = value.lastName.trim();
     // sin espacio: el backend acepta "+573001234567"
@@ -169,6 +173,8 @@ export class ProfileViewModel {
       error: (error: unknown) => {
         this.saving.set(false);
         this.errorKey.set(apiErrorKey(error));
+        // los campos que rechazó security-service se marcan en su sitio (WEB-05)
+        applyFieldErrors(this.form, error, { phone: 'phoneNumber' });
       }
     });
   }

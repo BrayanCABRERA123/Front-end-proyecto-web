@@ -20,6 +20,7 @@ import { PaymentNoticeComponent } from './components/payment-notice/payment-noti
 import { PaymentMissingComponent } from './components/payment-missing/payment-missing';
 import { PaymentQrZoomComponent } from './components/payment-qr-zoom/payment-qr-zoom';
 import { PaymentViewModel } from '../../viewmodels/payment.viewmodel';
+import { WAITING_POLL_MS, keepFresh } from '../../../../core/services/live-refresh';
 
 // vista del pago: el estado y las acciones están en PaymentViewModel; aquí queda lo de pantalla
 // (arrastrar el comprobante, QR en grande, copiar el número y las confirmaciones)
@@ -38,6 +39,12 @@ export class PaymentComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
+
+  // datos frescos sin recargar (WEB-16): al volver a la pestaña, con cada notificación nueva y cada
+  // tanto mientras la pestaña esté visible, porque esta vista espera a otra persona
+  constructor() {
+    keepFresh(() => this.vm.refresh(), { pollMs: WAITING_POLL_MS, initial: false });
+  }
 
   isDragging = false;
   // QR en grande con lupa

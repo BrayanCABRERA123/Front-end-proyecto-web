@@ -11,6 +11,11 @@ export class OperatorsViewModel {
 
   private readonly store = inject(OperatorsStore);
 
+  // operarios frescos al entrar y al volver a la pestaña (WEB-16)
+  load(silent = false): void {
+    this.store.refresh(silent);
+  }
+
   search = '';
   statusFilter: OperatorStatusFilter = 'all';
 

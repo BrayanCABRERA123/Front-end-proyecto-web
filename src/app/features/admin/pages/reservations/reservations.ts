@@ -17,6 +17,8 @@ import { BookingModal, BookingModalData } from './components/booking-modal/booki
 import { isoDaysFromToday } from '../../../../core/utils/dates';
 import { BookingDetailModal, BookingDetailResult } from './components/booking-detail-modal/booking-detail-modal';
 import { ReservationsViewModel } from '../../viewmodels/reservations.viewmodel';
+import { assignActionOf } from '../../models/booking-assignment';
+import { WAITING_POLL_MS, keepFresh } from '../../../../core/services/live-refresh';
 
 // vista de Reservas del admin: filtros, páginas y acciones están en ReservationsViewModel; aquí
 // quedan las etiquetas de fecha, los modales, las confirmaciones y la exportación
@@ -42,8 +44,14 @@ export class ReservationsComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly translate = inject(TranslateService);
 
+  // datos frescos sin recargar (WEB-16): al entrar, al volver a la pestaña, con cada notificación
+  // nueva y cada tanto mientras la pestaña esté visible, porque esta vista espera a otras personas
+  constructor() {
+    keepFresh(silent => this.vm.load(silent), { pollMs: WAITING_POLL_MS });
+  }
+
   ngOnInit(): void {
-    this.vm.load();
+    this.vm.loadCancellationReasons();
   }
 
   // etiqueta relativa de la fila: Hoy / Mañana / fecha
@@ -105,15 +113,23 @@ export class ReservationsComponent implements OnInit {
       confirmText: 'COMMON.ACCEPT',
       cancelText: 'COMMON.CANCEL',
       danger: status === 'cancelled',
+      // A-20: al cancelar, el administrador elige el motivo
+      options: status === 'cancelled'
+        ? this.vm.cancellationReasons().map(reason => ({ value: reason.code, label: reason.name }))
+        : undefined,
+      optionsLabel: 'ADMIN_RESERVATIONS.CANCEL_REASON',
     };
     this.dialog.open(ConfirmModal, { panelClass: 'custom-dialog', data: confirm })
       .afterClosed()
-      .subscribe(confirmed => {
-        if (confirmed) this.vm.changeStatus(booking, status);
+      .subscribe((result: boolean | string) => {
+        if (result) this.vm.changeStatus(booking, status, typeof result === 'string' ? result : undefined);
       });
   }
 
   // primero pide a operations quién está disponible para esa reserva y luego abre el modal
+  // A-02: asignar o reasignar operario (lo decide assignActionOf)
+  readonly assignActionOf = assignActionOf;
+
   openAssignModal(booking: Booking): void {
     this.vm.loadCandidates(booking, operators => this.showAssignModal(booking, operators));
   }
@@ -132,7 +148,7 @@ export class ReservationsComponent implements OnInit {
     this.dialog.open(AssignOperatorModal, { panelClass: 'custom-dialog', data: modalData })
       .afterClosed()
       .subscribe((result: AssignOperatorResult | null) => {
-        if (result) this.vm.assignOperator(booking, result.operatorId);
+        if (result) this.vm.assignOperator(booking, result.operatorId, result.notes);
       });
   }
 

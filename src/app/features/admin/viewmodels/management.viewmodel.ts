@@ -152,17 +152,6 @@ export class ManagementViewModel {
     });
   }
 
-  updateRolePermissions(role: RoleCode, permissionIds: number[]): void {
-    this.rolesApi.update(role, permissionIds).subscribe({
-      next: () => {
-        this.loadRoles();
-        this.feedback.success('ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_TITLE', 'ADMIN_MANAGEMENT.FEEDBACK.ROLE_UPDATED_MESSAGE',
-          { messageParams: { name: this.translate.instant(`PROFILE.ROLE.${role}`) } });
-      },
-      error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
-    });
-  }
-
   // --- servicios ---
 
   loadServices(): void {
@@ -344,6 +333,8 @@ function toPromotion(p: PromotionView): Promotion {
     status: p.status === 'paused' ? 'inactive' : p.status,
     startDate: p.validFrom,
     discountPercent: p.discountPercent,
+    discountType: p.discountType ?? 'PERCENT',
+    discountValue: p.discountValue ?? p.discountPercent,
     requiredPoints: p.requiredPoints,
   };
 }
@@ -360,7 +351,10 @@ function toSaveRequest(result: PromotionModalResult): SavePromotionRequest {
     benefits: result.features,
     validFrom: result.startDate,
     validTo: '9999-12-31',
-    discountPercent: result.discountPercent,
+    // D-01: se manda el tipo y el valor tal como los dejó el admin (un FIXED sigue siendo FIXED)
+    discountPercent: result.discountType === 'PERCENT' ? result.discountValue : 0,
+    discountType: result.discountType,
+    discountValue: result.discountValue,
     requiredPoints: result.requiredPoints,
   };
 }

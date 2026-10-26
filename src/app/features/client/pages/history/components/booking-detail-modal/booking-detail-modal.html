@@ -9,6 +9,12 @@
       {{ ('STATUS.' + booking.status) | translate }}
     </span>
     <span class="code">{{ booking.code }}</span>
+    <!-- pago digital con plazo y sin comprobante todavía -->
+    @if (booking.payBefore) {
+      <span class="type-badge badge-deadline" data-badge="pay-before">
+        {{ 'HISTORY_CARD.PAY_BEFORE' | translate:{ time: booking.payBefore } }}
+      </span>
+    }
   </div>
 
   <h2 class="dialog-title">{{ 'HISTORY.DETAIL_TITLE' | translate }}</h2>
@@ -52,6 +58,17 @@
       </div>
     </div>
 
+    <!-- por qué se canceló (por ejemplo, el comprobante no se subió a tiempo) -->
+    @if (booking.cancellationReasonKey || booking.cancellationReason) {
+      <div class="detail-item" data-detail="cancel-reason">
+        <mat-icon>info</mat-icon>
+        <div>
+          <span class="detail-label">{{ 'HISTORY.CANCEL_REASON' | translate }}</span>
+          <span class="detail-value">{{ booking.cancellationReasonKey ? (booking.cancellationReasonKey | translate) : booking.cancellationReason }}</span>
+        </div>
+      </div>
+    }
+
     @if (booking.rating) {
       <div class="detail-item">
         <mat-icon>star</mat-icon>
@@ -75,8 +92,13 @@
     <button class="btn-close" (click)="close()">
       {{ 'COMMON.CLOSE' | translate }}
     </button>
-    <!-- lleva a la pantalla de pago de esta reserva -->
-    @if (canGoToPayment) {
+    <!-- lleva a la pantalla de pago de esta reserva; en efectivo se paga en el lavadero -->
+    @if (canGoToPayment && booking.paymentMode === 'CASH') {
+      <span class="type-badge badge-deadline cash-note" data-badge="pay-in-cash">
+        <mat-icon>payments</mat-icon>
+        {{ 'HISTORY_CARD.PAY_IN_CASH' | translate }}
+      </span>
+    } @else if (canGoToPayment) {
       <button class="btn-go" (click)="goToPayment()">
         {{ 'GO_TO.PAYMENT' | translate }}
         <mat-icon>arrow_forward</mat-icon>

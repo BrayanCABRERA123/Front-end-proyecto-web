@@ -24,16 +24,24 @@ export function toWorkReservation(s: OperatorServiceResponse): Reservation {
     vehicle: s.vehicle,
     durationMin: Math.max(0, eh * 60 + em - (sh * 60 + sm)),
     status: workStatus(s.status),
-    startableAt: s.startableAt
+    startableAt: s.startableAt,
+    startableUntil: s.startableUntil ?? null
   };
 }
 
 /**
- * Si el botón "Iniciar" ya se puede usar. La regla (15 minutos antes de la reserva) la decide
- * operations-service en startableAt; aquí solo se compara con la hora actual.
+ * Si el botón "Iniciar" ya se puede usar. La ventana la decide operations-service: desde startableAt
+ * (15 minutos antes de la reserva) hasta startableUntil (4 h después de la hora de fin); aquí solo se
+ * compara con la hora actual.
  */
-export function canStartNow(startableAt: string | null | undefined): boolean {
-  return !startableAt || Date.now() >= Date.parse(startableAt);
+export function canStartNow(startableAt: string | null | undefined, startableUntil?: string | null): boolean {
+  const now = Date.now();
+  return (!startableAt || now >= Date.parse(startableAt)) && (!startableUntil || now <= Date.parse(startableUntil));
+}
+
+/** aviso junto al botón deshabilitado: todavía es temprano, o ya pasó el límite para iniciar */
+export function startHintKey(startableAt: string | null | undefined, startableUntil?: string | null): string {
+  return startableUntil && Date.now() > Date.parse(startableUntil) ? 'OPERATOR_WORK.START_TOO_LATE' : 'OPERATOR_WORK.START_FROM';
 }
 
 /** Hora local (HH:mm) desde la que se podrá iniciar, para el aviso junto al botón. */

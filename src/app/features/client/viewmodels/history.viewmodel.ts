@@ -55,10 +55,13 @@ export class ClientHistoryViewModel {
   });
 
   // si operations-service o payment-service no responden, las reservas se muestran igual
-  // (sin calificaciones o sin estado de pago)
-  load(): void {
-    this.loading.set(true);
-    this.loadError.set(null);
+  // (sin calificaciones o sin estado de pago). Con `silent` (refresco automático, WEB-16) no se
+  // muestra el indicador de carga y, si falla, se queda lo que ya había
+  load(silent = false): void {
+    if (!silent) {
+      this.loading.set(true);
+      this.loadError.set(null);
+    }
     forkJoin({
       bookings: this.bookingApi.myBookings(),
       ratings: this.operations.givenRatings().pipe(catchError(() => of([]))),
@@ -81,8 +84,10 @@ export class ClientHistoryViewModel {
           // de la más nueva a la más antigua (fecha y hora de la reserva)
           .sort((a, b) => `${b.date} ${b.timeRange}`.localeCompare(`${a.date} ${a.timeRange}`)));
         this.loading.set(false);
+        this.loadError.set(null);
       },
       error: (error: unknown) => {
+        if (silent) return;
         this.loading.set(false);
         this.loadError.set(apiErrorKey(error));
       }

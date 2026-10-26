@@ -15,11 +15,14 @@ export interface OperatorServiceRow {
   dateTime: string;
   vehicle: string;
   client: string;
-  phone: string;
   status: string;
   statusColor: 'pending' | 'progress' | 'completed';
-  paymentMethod: string;
+  // total de la reserva (operations-service no conoce el medio de pago ni el teléfono del cliente)
+  total: string;
   startableAt: string | null;
+  startableUntil: string | null;
+  // B-01: indicaciones del admin para este servicio ('' = sin notas)
+  notes: string;
 }
 
 /**
@@ -40,7 +43,11 @@ export class AssignedServicesViewModel {
   readonly dateFilter = signal('');
   readonly serviceTypeFilter = signal('');
   readonly vehicleFilter = signal('');
-  readonly serviceTypes = [{ value: '', label: 'ASSIGNED_SERVICES.FILTERS.ALL' }];
+  // A-18: los tipos salen de los servicios cargados (antes solo existía "Todos")
+  readonly serviceTypes = computed(() => [
+    { value: '', label: 'ASSIGNED_SERVICES.FILTERS.ALL' },
+    ...[...new Set(this.rows().map(r => r.serviceType))].sort((a, b) => a.localeCompare(b)).map(type => ({ value: type, label: type }))
+  ]);
 
   readonly selectedService = signal<OperatorServiceRow | null>(null);
 
@@ -55,15 +62,18 @@ export class AssignedServicesViewModel {
     ];
   });
 
-  // filtra por placa, vehículo o código
+  // filtra por tipo de servicio y por placa, vehículo o código
   readonly filteredServices = computed(() => {
     const term = this.vehicleFilter().trim().toLowerCase();
+    const type = this.serviceTypeFilter();
     return this.rows().filter(s =>
-      !term || s.vehicle.toLowerCase().includes(term) || s.id.toLowerCase().includes(term));
+      (!type || s.serviceType === type)
+      && (!term || s.vehicle.toLowerCase().includes(term) || s.id.toLowerCase().includes(term)));
   });
 
   // carga las del día elegido; sin fecha, las de hoy y los próximos 30 días (lo asignado para mañana también se ve)
-  load(): void {
+  // con `silent` (refresco automático, WEB-16) un fallo no abre un mensaje: se queda lo que había
+  load(silent = false): void {
     let from = this.dateFilter();
     let to = this.dateFilter();
     if (!from) {
@@ -79,7 +89,9 @@ export class AssignedServicesViewModel {
         const selected = this.selectedService();
         this.selectedService.set(rows.find(r => r.bookingId === selected?.bookingId) ?? rows[0] ?? null);
       },
-      error: (error: unknown) => this.feedback.error('COMMON.ERROR', apiErrorKey(error))
+      error: (error: unknown) => {
+        if (!silent) this.feedback.error('COMMON.ERROR', apiErrorKey(error));
+      }
     });
   }
 
@@ -114,11 +126,12 @@ export class AssignedServicesViewModel {
       dateTime: `${isoToDisplayDate(s.date)} - ${s.startTime.slice(0, 5)}`,
       vehicle: [s.vehicle, s.plate].filter(Boolean).join(' - '),
       client: s.clientName || '—',
-      phone: '—',
       status: this.translate.instant('STATUS.' + statusKey),
       statusColor,
-      paymentMethod: `$ ${s.total.toLocaleString('es-CO')}`,
-      startableAt: s.startableAt
+      total: `$ ${s.total.toLocaleString('es-CO')}`,
+      startableAt: s.startableAt,
+      startableUntil: s.startableUntil ?? null,
+      notes: (s.notes ?? '').trim()
     };
   }
 }

@@ -22,4 +22,20 @@ describe('NewPasswordStep', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('WEB-12: ver/ocultar usan mat-icon con aria-label y cada uno sigue a su propio campo', () => {
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('iconify-icon')).toBeNull();
+    const [newToggle, confirmToggle] = Array.from(el.querySelectorAll<HTMLButtonElement>('button.toggle-password'));
+    expect(newToggle.getAttribute('aria-label')).toBeTruthy();
+    expect(el.querySelector('label[for="forgot-new-password"]')).not.toBeNull();
+
+    confirmToggle.click();
+    fixture.detectChanges();
+
+    expect(confirmToggle.getAttribute('aria-pressed')).toBe('true');
+    expect(newToggle.getAttribute('aria-pressed')).toBe('false');
+    expect(confirmToggle.querySelector('mat-icon')?.textContent?.trim()).toBe('visibility');
+    expect(newToggle.querySelector('mat-icon')?.textContent?.trim()).toBe('visibility_off');
+  });
 });

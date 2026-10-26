@@ -72,7 +72,8 @@
     "CANCEL_SUCCESS": {
       "TITLE": "Réservation annulée",
       "MESSAGE": "La réservation {{code}} a bien été annulée."
-    }
+    },
+    "CANCEL_REASON": "Motif d'annulation"
   },
   "HISTORY_CARD": {
     "TYPE": "Type de service",
@@ -91,7 +92,9 @@
     "RATED": "Évalué",
     "EDIT_RATING": "Modifier l’évaluation",
     "RATE": "Évaluer le service",
-    "WASHED_BY": "Servi par {{name}}"
+    "WASHED_BY": "Servi par {{name}}",
+    "PAY_BEFORE": "Payez avant {{time}}",
+    "PAY_IN_CASH": "Vous payez en espèces au lavage"
   },
   "COMMON": {
     "CLOSE": "Fermer",
@@ -103,7 +106,8 @@
     "EDIT": "Modifier",
     "SAVE": "Enregistrer",
     "VIEW": "Voir",
-    "LOADING": "Chargement..."
+    "LOADING": "Chargement...",
+    "ADDRESS_PENDING": "Adresse à confirmer"
   },
   "SERVICE": {
     "BASIC": "Basique",
@@ -420,7 +424,8 @@
       "SUBMIT": "Réserver maintenant",
       "NOTE": "Nous vous attendons dans notre station. Arrivez quelques minutes en avance. Vous pouvez payer en ligne ou sur place.",
       "CODE": "Code",
-      "BAY": "Baie"
+      "BAY": "Baie",
+      "PAYMENT": "Mode de paiement"
     },
     "MINUTES": "{{count}} min",
     "POINTS": "Rapporte {{count}} points",
@@ -436,7 +441,17 @@
       "LOADING": "Recherche d'opérateurs libres...",
       "HINT": "Si l'opérateur choisi n'est plus libre à la confirmation, nous en attribuons un autre.",
       "NONE_FREE": "Aucun opérateur libre à choisir à cette heure ; nous en attribuerons quand même un."
-    }
+    },
+    "STEP4": {
+      "TITLE": "Comment allez-vous payer ?",
+      "SUBTITLE": "Choisissez le moyen avant de confirmer la réservation",
+      "DIGITAL": "Paiement numérique maintenant",
+      "DIGITAL_DESC": "Nequi, Daviplata ou virement : scannez le QR et téléchargez le justificatif dans les 30 minutes qui suivent.",
+      "CASH": "Espèces au lavage",
+      "CASH_DESC": "Vous payez à votre arrivée et l'administrateur enregistre le paiement. Vous ne pouvez avoir qu'une seule réservation active en espèces."
+    },
+    "SUCCESS_MESSAGE_CASH": "Votre lavage est programmé. Vous payez en espèces au lavage. Voici le résumé de votre réservation :",
+    "SUCCESS_BUTTON_CASH": "Voir mes réservations"
   },
   "APP": {
     "TITLE": "LavaRápido"
@@ -494,11 +509,11 @@
     "TITLE": "Connexion",
     "SUBTITLE": "Accédez à votre compte pour réserver",
     "EMAIL": "Adresse e-mail",
-    "EMAIL_PLACEHOLDER": "utilisateur@gmail.com",
+    "EMAIL_PLACEHOLDER": "utilisateur@email.com",
     "PASSWORD": "Mot de passe",
     "PASSWORD_PLACEHOLDER": "********",
     "EMAIL_REQUIRED": "L'e-mail est obligatoire",
-    "EMAIL_INVALID": "Veuillez entrer un e-mail valide @gmail.com",
+    "EMAIL_INVALID": "Veuillez entrer un e-mail valide",
     "PASSWORD_REQUIRED": "Le mot de passe est obligatoire",
     "FORGOT_PASSWORD": "Mot de passe oublié ?",
     "BUTTON": "Se connecter",
@@ -562,7 +577,7 @@
       "DESCRIPTION": "Entrez votre e-mail pour recevoir un code de vérification",
       "LABEL": "Adresse E-mail",
       "PLACEHOLDER": "utilisateur@gmail.com",
-      "INVALID": "Veuillez entrer un e-mail @gmail.com valide",
+      "INVALID": "Veuillez entrer un e-mail valide",
       "BUTTON": "Envoyer le Code"
     },
     "VERIFICATION": {
@@ -627,6 +642,7 @@
     },
     "DETAIL": {
       "TITLE": "Informations du service",
+      "NOTES": "Indications de l'administrateur",
       "CLIENT": "Client :",
       "VEHICLE": "Véhicule :",
       "SERVICE_TYPE": "Type de service :",
@@ -644,7 +660,8 @@
       "STARTED_MESSAGE": "Le service {{code}} est maintenant en cours.",
       "FINISHED_TITLE": "Service terminé !",
       "FINISHED_MESSAGE": "Le service {{code}} a été marqué comme terminé.",
-      "CONTACT_MESSAGE": "Contactez le client par l'un de ces moyens."
+      "CONTACT_MESSAGE": "Contactez le client par l'un de ces moyens.",
+      "TOTAL": "Total de la réservation :"
     }
   },
   "OPERATOR_HOME": {
@@ -832,7 +849,8 @@
       "APPROVED_TITLE": "Paiement approuvé",
       "APPROVED_MESSAGE": "L'administrateur a approuvé votre paiement. Votre réservation est payée ; vous n'avez rien d'autre à faire.",
       "CANCEL": "Annuler la réservation",
-      "SECURE": "Paiement 100 % sécurisé · Vérification immédiate par l'équipe de la baie"
+      "SECURE": "Paiement 100 % sécurisé · Vérification immédiate par l'équipe de la baie",
+      "AMOUNT_UNAVAILABLE": "Nous n'avons pas pu obtenir le montant à payer. Vérifiez votre connexion et revenez dans quelques secondes."
     },
     "COUPON": {
       "PLACEHOLDER": "Code promo",
@@ -846,7 +864,15 @@
     "CASH_INFO_TITLE": "Vous payez sur place",
     "CASH_INFO_MESSAGE": "Payez en espèces lorsque vous récupérez votre véhicule. L'administrateur enregistrera le paiement et vous recevrez la notification de paiement approuvé.",
     "RECEIPT_COMPRESSING": "Préparation du justificatif...",
-    "RECEIPT_TOO_LARGE": "Impossible de réduire l'image sous 2 Mo. Essayez avec une capture d'écran du justificatif."
+    "RECEIPT_TOO_LARGE": "Impossible de réduire l'image sous 2 Mo. Essayez avec une capture d'écran du justificatif.",
+    "DEADLINE": {
+      "TITLE": "Vous avez un délai pour payer",
+      "MESSAGE": "Téléchargez le justificatif avant {{time}} ou la réservation sera libérée."
+    },
+    "CASH_MODE": {
+      "TITLE": "Vous payez en espèces au lavage",
+      "MESSAGE": "L'administrateur enregistre le paiement à votre arrivée ; aucun justificatif n'est nécessaire."
+    }
   },
   "VEHICLES": {
     "TITLE": "Mes Véhicules",
@@ -1069,7 +1095,7 @@
     "CANCEL": "Annuler",
     "SCROLL_HINT": "Faites défiler pour lire le document complet",
     "DEMO_NOTICE": "Document d'exemple préparé pour un projet de formation. Avant toute utilisation commerciale réelle, il doit être révisé par un avocat et mis à jour avec les informations réelles de l'entreprise.",
-    "LAST_UPDATED_DATE": "17 septembre 2026",
+    "LAST_UPDATED_DATE": "26 octobre 2026",
     "COMPANY_NAME": "Express Car Wash S.A.S.",
     "TERMS": {
       "TITLE": "Conditions Générales",
@@ -1096,11 +1122,11 @@
         },
         {
           "HEADING": "6. Réservations, annulations et prestation du service",
-          "BODY": "Le Client sélectionne la date, l'heure et le type de lavage selon la disponibilité affichée par le système. Une réservation peut être modifiée ou annulée gratuitement avant le début du service ; une fois que l'opérateur la marque « en cours », l'annulation n'est plus possible. Le service n'est fourni que dans l'établissement physique indiqué lors de la réservation."
+          "BODY": "Le Client sélectionne la date, l'heure et le type de lavage selon la disponibilité affichée par le système. Une réservation peut être modifiée ou annulée gratuitement avant le début du service ; une fois que l'opérateur la marque « en cours », l'annulation n'est plus possible. Le service n'est fourni que dans l'établissement physique indiqué lors de la réservation. Si vous choisissez le paiement numérique, vous devez télécharger le justificatif dans les 30 minutes suivant la réservation (ou avant l'heure du service, si elle est plus proche) ; à défaut, la réservation est annulée automatiquement et le créneau est libéré. Avec le paiement en espèces, vous ne pouvez avoir qu'une seule réservation active à la fois."
         },
         {
           "HEADING": "7. Paiements et justificatifs",
-          "BODY": "Le paiement s'effectue en scannant le code QR de l'établissement pour le moyen choisi (espèces, Nequi, Daviplata ou virement bancaire) et en téléchargeant le justificatif correspondant, vérifié par un Administrateur avant confirmation. La Plateforme ne demande ni ne conserve jamais de données de carte bancaire. Un justificatif dont la référence de transaction a déjà été utilisée pour un autre paiement approuvé sera rejeté."
+          "BODY": "Lors de la réservation, le Client choisit comment il paiera. Le paiement numérique (Nequi, Daviplata ou virement bancaire) s'effectue en scannant le code QR de l'établissement et en téléchargeant le justificatif correspondant, vérifié par un Administrateur avant confirmation. Le paiement en espèces se fait dans l'établissement et est enregistré par l'Administrateur, sans justificatif. La Plateforme ne demande ni ne conserve jamais de données de carte bancaire. Un justificatif dont la référence de transaction a déjà été utilisée pour un autre paiement approuvé sera rejeté."
         },
         {
           "HEADING": "8. Évaluations et commentaires",
@@ -1355,7 +1381,9 @@
       "CANCELLED_CONFIRM": "Annuler la réservation {{code}} ? Cette action est irréversible.",
       "STATUS_NO_SHOW_MESSAGE": "La réservation {{code}} est marquée comme absent.",
       "STATUS_SCHEDULED_MESSAGE": "La réservation {{code}} est planifiée."
-    }
+    },
+    "REASSIGN": "Réaffecter",
+    "CANCEL_REASON": "Motif de l'annulation"
   },
   "ASSIGN_OPERATOR_MODAL": {
     "TITLE": "Assigner un opérateur à la réservation {{code}}",
@@ -1372,6 +1400,7 @@
     "REASONS": {
       "OPERATOR_INACTIVE": "Inactif",
       "OPERATOR_NOT_ON_SHIFT": "Pas de créneau à cette heure",
+      "OPERATOR_ACCOUNT_DISABLED": "Compte désactivé",
       "OPERATOR_ABSENT": "Absent",
       "OPERATOR_BUSY": "Occupé à cette heure"
     }
@@ -1421,7 +1450,7 @@
     "ROLES": {
       "CREATE_ROLE": "Créer un rôle",
       "SUBTITLE": "Les trois rôles (Administrateur, Opérateur et Client) sont fixes et chaque compte en a un.",
-      "FIXED_NOTE": "Ce que chaque personne peut faire dépend de son rôle dans le système. Les permissions de ce tableau sont enregistrées comme référence pour l’équipe, mais elles ne changent pas encore l’accès.",
+      "FIXED_NOTE": "Ce que chaque personne peut faire dépend de son rôle dans le système. Ce tableau montre les permissions de référence de chaque rôle et est en lecture seule.",
       "TABLE": {
         "NAME": "Rôle",
         "DESCRIPTION": "Description",
@@ -1481,7 +1510,8 @@
       "EMPTY_TITLE": "Aucune promotion pour l’instant",
       "EMPTY_MESSAGE": "Créez une promotion pour stimuler les ventes du lavage.",
       "PAUSE": "Mettre en pause",
-      "REACTIVATE": "Réactiver"
+      "REACTIVATE": "Réactiver",
+      "DISCOUNT_AMOUNT": "{{value}} de remise"
     },
     "DELETE_CONFIRM": {
       "TITLE": "Supprimer cet enregistrement ?",
@@ -1922,6 +1952,10 @@
       "CONFIRM": "Oui, rembourser",
       "DONE_TITLE": "Paiement remboursé",
       "DONE_MESSAGE": "Le paiement {{code}} a été remboursé et les points de la réservation ont été annulés."
+    },
+    "BOOKING_CANCELLED": {
+      "refund": "Réservation annulée : rembourser",
+      "reject": "Réservation annulée : refuser"
     }
   },
   "PAYMENT_REVIEW_MODAL": {
@@ -2163,7 +2197,13 @@
       "no_show": "Absent"
     },
     "CANCEL_REASON": "Motif d'annulation",
-    "INSPECTION": "Rapport d'inspection"
+    "INSPECTION": "Rapport d'inspection",
+    "REASSIGN": "Changer d'opérateur",
+    "PAYMENT_MODE": "Mode de paiement",
+    "PAYMENT_MODES": {
+      "DIGITAL": "Numérique (QR et justificatif)",
+      "CASH": "Espèces au lavage"
+    }
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nouvelle réservation",
@@ -2197,7 +2237,8 @@
     "NO_OPERATOR": "Aucun opérateur",
     "SEARCH": "Rechercher",
     "VEHICLE_NOT_FOUND": "Aucun véhicule n'est enregistré avec cette plaque.",
-    "BAY_AUTO_HINT": "Le système attribue la baie à l'enregistrement, selon la disponibilité."
+    "BAY_AUTO_HINT": "Le système attribue la baie à l'enregistrement, selon la disponibilité.",
+    "PAID_SERVICES_WARNING": "Cette réservation a déjà un paiement signalé ou approuvé. Changer les services modifie le total : un paiement en vérification devra être refusé, ou la différence remboursée ou facturée."
   },
   "EXPORT_DATA": {
     "TITLE": "Exporter les données",
@@ -2287,7 +2328,9 @@
     "FEATURES_LABEL": "Avantages",
     "FEATURES_ADD": "Ajouter un avantage",
     "FEATURES_PLACEHOLDER": "Ex. Cire protectrice incluse",
-    "FEATURES_EMPTY": "Aucun avantage pour l’instant."
+    "FEATURES_EMPTY": "Aucun avantage pour l’instant.",
+    "DISCOUNT_FIXED_LABEL": "Remise fixe (COP)",
+    "ERROR_DISCOUNT_FIXED": "Saisissez un montant supérieur à zéro"
   },
   "QUICK_ACCESS": {
     "BOOK_WASH": "Réserver un lavage",
@@ -2330,7 +2373,7 @@
     "UNAUTHORIZED": "Votre session a expiré. Veuillez vous reconnecter.",
     "FORBIDDEN": "Vous n'avez pas l'autorisation d'effectuer cette action",
     "USER_NOT_FOUND": "Compte introuvable",
-    "CONFLICT": "Les données entrent en conflit avec un enregistrement existant",
+    "CONFLICT": "Les données entrent en conflit avec un enregistrement existant ou quelqu'un les a modifiées pendant votre modification. Rouvrez-les et réessayez.",
     "PLATE_ALREADY_REGISTERED": "Un véhicule est déjà enregistré avec cette plaque",
     "CUSTOMER_NOT_PROVISIONED": "Votre profil client n'est pas encore prêt. Réessayez dans quelques minutes.",
     "VEHICLE_NOT_FOUND": "Le véhicule n'existe pas ou a déjà été supprimé",
@@ -2351,6 +2394,7 @@
     "CUSTOMER_SERVICE_UNAVAILABLE": "Nous n'avons pas pu valider votre véhicule. Réessayez dans un instant.",
     "BOOKING_NOT_CHANGEABLE": "Cette réservation ne peut plus être modifiée.",
     "OPERATOR_NOT_ON_SHIFT": "L'opérateur n'a pas de créneau à cette heure. Vérifiez son horaire hebdomadaire dans Opérateurs.",
+    "OPERATOR_ACCOUNT_DISABLED": "Le compte de l'opérateur est désactivé. Activez-le dans Gestion > Utilisateurs ou choisissez un autre opérateur.",
     "OPERATOR_INACTIVE": "L'opérateur est inactif.",
     "OPERATOR_ABSENT": "L'opérateur a une absence enregistrée à cette heure.",
     "OPERATOR_BUSY": "L'opérateur a déjà un autre service à cette heure.",
@@ -2384,7 +2428,154 @@
     "CONTENT_TOO_LARGE": "Les photos sont trop lourdes : chacune peut peser jusqu'à 2 Mo",
     "BOOKING_WITHOUT_CLIENT": "La réservation n'a pas de compte client à prévenir",
     "ABSENCE_IN_PAST": "L'absence ne peut pas commencer avant aujourd'hui.",
-    "ADMIN_CANNOT_BE_DISABLED": "Un compte administrateur ne peut pas être désactivé."
+    "ADMIN_CANNOT_BE_DISABLED": "Un compte administrateur ne peut pas être désactivé.",
+    "ABSENCE_NOT_FOUND": "Absence introuvable.",
+    "AMOUNT_CHANGED": "Le montant de ce paiement ne correspond plus à ce que doit la réservation aujourd'hui (ses services ou son coupon ont changé). Refusez-le et demandez au client de payer le nouveau montant.",
+    "ASSIGNMENT_BUSY": "Cet opérateur a déjà un autre service à cette heure.",
+    "BAD_REQUEST": "La demande n'est pas valide. Vérifiez les données et réessayez.",
+    "BAY_HAS_BOOKINGS": "La baie a des réservations actives : reprogrammez-les avant de la modifier.",
+    "BAY_NAME_TAKEN": "Une baie porte déjà ce nom.",
+    "BAY_NOT_FOUND": "Baie introuvable.",
+    "BOOKING_NOT_EXPIRED": "La réservation n'est pas encore terminée.",
+    "BOOKING_NOT_PAYABLE": "Cette réservation ne peut plus être payée (annulée, payée ou en cours de vérification).",
+    "BOOKING_NOT_TO_CLOSE": "Cette réservation n'est pas en attente de clôture.",
+    "BOOKING_SERVICES_LOCKED": "Lors d'une reprogrammation, seuls la date et l'heure peuvent changer. Pour changer les services, annulez et faites une nouvelle réservation.",
+    "COMMENT_TOO_LONG": "Le commentaire est trop long.",
+    "CONSENT_REQUIRED": "Vous devez accepter le traitement des données personnelles (loi 1581) pour vous inscrire.",
+    "DATA_CONFLICT": "Les données sont en conflit avec un enregistrement existant.",
+    "DATE_REQUIRED": "Choisissez une date.",
+    "DUPLICATED_DAY": "Ce jour apparaît deux fois dans l'horaire.",
+    "DUPLICATED_SERVICE": "Ce service apparaît deux fois dans la réservation.",
+    "DUPLICATED_VEHICLE_TYPE": "Ce type de véhicule a deux prix : n'en gardez qu'un.",
+    "EMAIL_DOMAIN_NOT_ALLOWED": "Seules les adresses @gmail.com sont acceptées.",
+    "EXCEPTION_DATE_TAKEN": "Une exception d'horaire existe déjà pour cette date.",
+    "EXCEPTION_NOT_FOUND": "Exception d'horaire introuvable.",
+    "EXECUTION_ALREADY_COMPLETED": "Ce service est déjà terminé.",
+    "FINDING_NOT_FOUND": "Constat introuvable.",
+    "INTERNAL_ERROR": "Une erreur serveur s'est produite. Réessayez dans quelques minutes.",
+    "INTERNAL_SERVER_ERROR": "Une erreur serveur s'est produite. Réessayez dans quelques minutes.",
+    "INVALID_ACCOUNT_HOLDER": "Saisissez le titulaire du compte.",
+    "INVALID_ACCOUNT_INSTRUCTIONS": "Les instructions du compte sont trop longues.",
+    "INVALID_ACCOUNT_NUMBER": "Le numéro de compte n'est pas valide.",
+    "INVALID_ADDRESS": "L'adresse n'est pas valide.",
+    "INVALID_ASSIGNMENT_NOTES": "Les notes pour l'opérateur sont trop longues.",
+    "INVALID_BAY_NAME": "Le nom de la baie n'est pas valide.",
+    "INVALID_BAY_STATUS": "L'état de la baie n'est pas valide.",
+    "INVALID_BREAK": "La pause doit être comprise dans l'horaire du jour.",
+    "INVALID_CANCELLATION_REASON": "Choisissez un motif d'annulation valide.",
+    "INVALID_CATEGORY": "La catégorie du service n'est pas valide.",
+    "INVALID_CUSTOMER": "Les données du client ne sont pas valides.",
+    "INVALID_DATE_RANGE": "La plage de dates n'est pas valide : la date de début doit précéder la date de fin.",
+    "INVALID_DAY": "Le jour n'est pas valide.",
+    "INVALID_DEVICE_TOKEN": "L'appareil n'a pas pu être enregistré pour les notifications.",
+    "INVALID_DISCOUNT_TYPE": "Le type de remise n'est pas valide.",
+    "INVALID_DURATION": "La durée n'est pas valide.",
+    "INVALID_HOURS": "L'horaire n'est pas valide : l'ouverture doit précéder la fermeture.",
+    "INVALID_LANGUAGE": "La langue choisie n'est pas valide.",
+    "INVALID_LOYALTY_BALANCE": "Le solde de points n'est pas valide.",
+    "INVALID_LOYALTY_BOOKING": "La réservation liée aux points n'est pas valide.",
+    "INVALID_LOYALTY_CUSTOMER": "Le client lié aux points n'est pas valide.",
+    "INVALID_LOYALTY_DESCRIPTION": "La description du mouvement de points n'est pas valide.",
+    "INVALID_LOYALTY_POINTS": "Le nombre de points n'est pas valide.",
+    "INVALID_MESSAGE": "Le message n'est pas valide.",
+    "INVALID_NOTES": "Les notes sont trop longues.",
+    "INVALID_OPERATOR_PROFILE": "La spécialité ou les compétences de l'opérateur ne sont pas valides.",
+    "INVALID_PAGE": "La page demandée n'est pas valide.",
+    "INVALID_PAYMENT_ACCOUNT": "Choisissez un compte de paiement actif.",
+    "INVALID_PAYMENT_AMOUNT": "Le montant du paiement n'est pas valide.",
+    "INVALID_PAYMENT_BOOKING": "La réservation du paiement n'est pas valide.",
+    "INVALID_PAYMENT_METHOD": "Le moyen de paiement n'est pas valide.",
+    "INVALID_PAYMENT_STATUS": "L'état du paiement n'est pas valide.",
+    "INVALID_PAYMENT_STATUS_TRANSITION": "Le paiement ne peut plus passer à cet état.",
+    "INVALID_PERSON": "Les données de la personne ne sont pas valides.",
+    "INVALID_PLATFORM": "La plateforme de l'appareil n'est pas valide.",
+    "INVALID_POINTS": "Le nombre de points n'est pas valide.",
+    "INVALID_PRICE": "Le prix doit être supérieur à zéro.",
+    "INVALID_PROMOTION_BENEFITS": "Les avantages de la promotion ne sont pas valides.",
+    "INVALID_PROMOTION_CODE": "Le code de la promotion n'est pas valide (lettres et chiffres, sans espaces).",
+    "INVALID_PROMOTION_DESCRIPTION": "La description de la promotion est trop longue.",
+    "INVALID_PROMOTION_DISCOUNT": "La remise doit être comprise entre 1 % et 99 % et ne peut pas couvrir tout le service.",
+    "INVALID_PROMOTION_DURATION": "La durée de la promotion n'est pas valide.",
+    "INVALID_PROMOTION_ICON": "L'icône de la promotion n'est pas valide.",
+    "INVALID_PROMOTION_NAME": "Le nom de la promotion n'est pas valide.",
+    "INVALID_PROMOTION_PRICE": "Le prix de la promotion n'est pas valide.",
+    "INVALID_PROMOTION_RANGE": "Les dates de la promotion ne sont pas valides : le début doit précéder la fin.",
+    "INVALID_PROMOTION_REQUIRED_POINTS": "Les points requis par la promotion ne sont pas valides.",
+    "INVALID_QR_IMAGE": "L'image du QR n'est pas valide : utilisez un PNG ou JPG de 2 Mo maximum.",
+    "INVALID_QUANTITY": "La quantité n'est pas valide.",
+    "INVALID_RANGE": "La plage de dates ou d'heures n'est pas valide.",
+    "INVALID_RATING": "La note doit être de 1 à 5 étoiles.",
+    "INVALID_REASON": "Saisissez un motif valide.",
+    "INVALID_RECEIPT_FILE": "Le justificatif n'est pas valide : utilisez une image PNG ou JPG.",
+    "INVALID_RECEIPT_UPLOADER": "Impossible d'identifier qui a envoyé le justificatif.",
+    "INVALID_RECIPIENT": "Le destinataire de la notification n'est pas valide.",
+    "INVALID_REDEMPTION_BOOKING": "Le coupon ne peut pas être utilisé pour cette réservation.",
+    "INVALID_REFERENCE": "La référence n'est pas valide.",
+    "INVALID_REJECTION_REASON": "Saisissez le motif du refus.",
+    "INVALID_REMINDER": "Le rappel n'est pas valide.",
+    "INVALID_REPORTED_AMOUNT": "Le montant payé doit être supérieur à zéro.",
+    "INVALID_REVIEWER": "Impossible d'identifier qui a vérifié le paiement.",
+    "INVALID_REVIEW_COMMENT": "Le commentaire de vérification est trop long.",
+    "INVALID_ROLES": "Les rôles choisis ne sont pas valides.",
+    "INVALID_SERVICE_CODE": "Le code du service n'est pas valide.",
+    "INVALID_SERVICE_NAME": "Le nom du service n'est pas valide.",
+    "INVALID_SLOT": "Le créneau n'est pas valide : le début doit précéder la fin.",
+    "INVALID_STATUS": "L'état n'est pas valide.",
+    "INVALID_STATUS_TRANSITION": "La réservation ne peut plus passer à cet état.",
+    "INVALID_THEME": "Le thème choisi n'est pas valide.",
+    "INVALID_TITLE": "Le titre n'est pas valide.",
+    "INVALID_TOKEN": "Votre session n'est pas valide. Reconnectez-vous.",
+    "INVALID_TRANSACTION_REFERENCE": "La référence doit comporter 8 à 12 lettres ou chiffres.",
+    "INVALID_VEHICLE": "Le véhicule n'est pas valide.",
+    "INVALID_VEHICLE_TEXT": "La marque, le modèle ou la couleur du véhicule ne sont pas valides.",
+    "INVALID_VERSION": "La version n'est pas valide.",
+    "INVALID_WEEK": "La semaine n'est pas valide.",
+    "LOYALTY_INSUFFICIENT_BALANCE": "Vous n'avez pas assez de points.",
+    "METHOD_NOT_ALLOWED": "Cette action n'est pas autorisée.",
+    "MISSING_FILTER": "Un filtre de recherche manque.",
+    "NOTIFICATION_TYPE_NOT_ALLOWED": "Ce type de notification ne peut pas être envoyé à cet utilisateur.",
+    "NOT_FOUND": "L'élément recherché est introuvable.",
+    "PAYLOAD_TOO_LARGE": "Le fichier est trop volumineux.",
+    "PAYMENT_ACCOUNT_NOT_FOUND": "Compte de paiement introuvable.",
+    "PAYMENT_ALREADY_APPROVED": "Cette réservation a déjà un paiement approuvé.",
+    "PAYMENT_ALREADY_REPORTED": "Un paiement est déjà en cours de vérification pour cette réservation.",
+    "PAYMENT_NOT_FOUND": "Paiement introuvable.",
+    "PAYMENT_RECEIPT_REQUIRED": "Joignez le justificatif de paiement.",
+    "PHOTO_NOT_FOUND": "Photo introuvable.",
+    "PRICES_REQUIRED": "Le service a besoin d'au moins un prix par type de véhicule.",
+    "PROMOTION_CODE_TAKEN": "Une promotion avec ce code existe déjà.",
+    "PROMOTION_CUSTOMER_LIMIT_REACHED": "Vous avez déjà utilisé ce coupon le nombre de fois autorisé.",
+    "PROMOTION_DISCOUNT_UNSUPPORTED": "Ce type de remise n'est pas disponible.",
+    "PROMOTION_EXHAUSTED": "Ce coupon est épuisé.",
+    "PROMOTION_MIN_PURCHASE_NOT_MET": "La réservation n'atteint pas le montant minimum pour ce coupon.",
+    "PROMOTION_NOTHING_TO_DISCOUNT": "Il ne reste rien à déduire sur cette réservation.",
+    "RATE_LIMITED": "Trop de tentatives d'affilée. Patientez un instant et réessayez.",
+    "RECEIPT_TOO_LARGE": "Le justificatif est trop lourd : 2 Mo maximum.",
+    "SCHEDULE_BUSY": "Ce créneau est déjà occupé.",
+    "SCHEDULE_CONFLICT": "L'horaire chevauche un autre.",
+    "SCHEDULE_CONFLICTS_BOOKINGS": "Ce changement laisse {{count}} réservation(s) hors horaire ({{codes}}). Reprogrammez-les ou annulez-les d'abord.",
+    "SERVICES_REQUIRED": "Choisissez au moins un service.",
+    "SERVICE_CODE_TAKEN": "Un service avec ce code existe déjà.",
+    "SERVICE_NOT_FOUND": "Service introuvable.",
+    "SERVICE_UNAVAILABLE": "Le service n'est pas disponible pour le moment. Réessayez dans quelques minutes.",
+    "TIME_REQUIRED": "Choisissez une heure.",
+    "TOO_MANY_ATTEMPTS": "Trop de tentatives échouées. Patientez quelques minutes ou demandez un autre code pour réessayer.",
+    "TOO_MANY_IDS": "Trop d'enregistrements ont été demandés à la fois.",
+    "TOO_MANY_REQUESTS": "Trop de demandes d'affilée. Patientez un instant et réessayez.",
+    "TRANSACTION_REFERENCE_REUSED": "Cette référence a déjà été utilisée pour un autre paiement. Vérifiez le numéro de votre justificatif.",
+    "UNKNOWN_NOTIFICATION_TYPE": "Le type de notification n'existe pas.",
+    "UNSUPPORTED_MEDIA_TYPE": "Le format du fichier n'est pas pris en charge.",
+    "VEHICLE_HAS_ACTIVE_BOOKINGS": "Ce véhicule a des réservations actives ou à venir : annulez-les avant de le retirer.",
+    "VEHICLE_REQUIRED": "Choisissez un véhicule.",
+    "PROMOTION_ONE_PER_BOOKING": "Cette réservation a déjà un coupon. Retirez-le si vous voulez en utiliser un autre.",
+    "PROMOTION_REDEMPTION_NOT_FOUND": "Cette réservation n'a plus ce coupon. Rechargez la page.",
+    "FIELD_INVALID": "Vérifiez ce champ.",
+    "SERVICE_TOO_LATE": "Ce service ne peut plus être démarré : plus de 4 heures se sont écoulées depuis l'heure de fin. Demandez à l'administrateur de le clôturer.",
+    "NOTIFICATION_NOT_SENT": "La notification n'a pas pu être envoyée pour le moment. Réessayez dans quelques minutes.",
+    "SECURITY_SERVICE_UNAVAILABLE": "Le service des comptes ne répond pas. Réessayez dans un instant.",
+    "DATABASE_UNAVAILABLE": "La base de données ne répond pas pour le moment. Réessayez dans quelques minutes.",
+    "CASH_BOOKING_LIMIT": "Vous avez déjà une réservation active payée en espèces. Payez-la ou annulez-la, ou choisissez le paiement numérique.",
+    "INVALID_PAYMENT_MODE": "Choisissez comment vous allez payer : paiement numérique ou espèces au lavage."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",
@@ -2483,7 +2674,8 @@
     "DISCLAIMER": "Les photos et notes sont enregistrées par la station lors de l'inspection de votre véhicule à chaque étape du service."
   },
   "OPERATOR_WORK": {
-    "START_FROM": "Vous pourrez le démarrer à partir de {{time}} (15 minutes avant la réservation)."
+    "START_FROM": "Vous pourrez le démarrer à partir de {{time}} (15 minutes avant la réservation).",
+    "START_TOO_LATE": "Il ne peut plus être démarré : plus de 4 h se sont écoulées depuis l'heure de fin"
   },
   "AUTH_FEEDBACK": {
     "LOGIN_SUCCESS_TITLE": "Connexion réussie !",
@@ -2573,5 +2765,8 @@
     "RESERVATIONS": "Aller aux réservations",
     "PAYMENT": "Aller au paiement",
     "RATINGS": "Aller aux évaluations"
+  },
+  "CANCEL_REASONS": {
+    "PAYMENT_TIMEOUT": "Le justificatif de paiement n'a pas été téléchargé à temps"
   }
 }

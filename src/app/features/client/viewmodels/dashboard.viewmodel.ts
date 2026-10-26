@@ -7,6 +7,7 @@ import { VehiclesService } from '../../../core/services/vehicles';
 import { UserSession } from '../../../core/services/user-session';
 import { LoyaltyApiService, PromotionForCustomer } from '../../../core/services/loyalty-api';
 import { OperationsApiService, localIsoDate } from '../../../core/services/operations-api';
+import { discountLabel } from '../../../core/services/promotions-api';
 
 // avance de la barra según el estado de la reserva
 const PROGRESS_BY_STATUS: Record<string, number> = {
@@ -156,7 +157,9 @@ export class ClientDashboardViewModel {
     }
 
     this.benefits.set(promotions.map(p => ({
-      title: p.discountPercent > 0 ? `${p.name} · ${p.discountPercent}% OFF` : p.name,
+      // un descuento fijo se muestra en pesos, no como "0 %"
+      title: (p.discountType === 'FIXED' ? (p.discountValue ?? 0) > 0 : p.discountPercent > 0)
+        ? `${p.name} · ${discountLabel(p)} OFF` : p.name,
       unlocked: p.unlocked,
       pointsLeft: p.requiredPoints - points
     })));

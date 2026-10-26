@@ -34,7 +34,7 @@
           <label class="filter-label">{{ 'ASSIGNED_SERVICES.FILTERS.BY_TYPE' | translate }}</label>
           <div class="select-wrapper">
             <select class="filter-select" [(ngModel)]="vm.serviceTypeFilter">
-              @for (type of vm.serviceTypes; track type.value) {
+              @for (type of vm.serviceTypes(); track type.value) {
                 <option [value]="type.value">{{ type.label | translate}}</option>
               }
             </select>

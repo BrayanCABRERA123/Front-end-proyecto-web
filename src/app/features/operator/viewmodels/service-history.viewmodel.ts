@@ -9,6 +9,11 @@ import { ServiceHistoryItem } from '../../../shared/dialogs/history-models/servi
 export type HistoryTab = 'todos' | 'finalizado' | 'cancelado' | 'reasignado';
 
 /** Historial del operario: servicios terminados de los últimos 60 días con su calificación. */
+// reserva cancelada o en la que el cliente no llegó (estado de booking-service)
+function isCancelledBooking(status: string): boolean {
+  return status === 'CANCELLED' || status === 'NO_SHOW';
+}
+
 @Injectable()
 export class ServiceHistoryViewModel {
 
@@ -60,13 +65,15 @@ export class ServiceHistoryViewModel {
     });
   });
 
-  // servicios terminados de los últimos 60 días, del más nuevo al más antiguo
+  // servicios de los últimos 60 días, del más nuevo al más antiguo. A-18: el estado sale de los datos:
+  // terminado (la ejecución se completó) o cancelado (la reserva se canceló o el cliente no llegó);
+  // lo pendiente o en curso no es historial. Medio de pago no hay: operations-service no lo conoce
   load(): void {
     const from = new Date();
     from.setDate(from.getDate() - 60);
     this.operations.myServices(localIsoDate(from), localIsoDate(new Date())).subscribe({
       next: list => this.services.set(list
-        .filter(s => s.status === 'COMPLETED')
+        .filter(s => s.status === 'COMPLETED' || isCancelledBooking(s.bookingStatus))
         .map((s, i) => ({
           id: s.bookingId ?? i,
           code: s.code,
@@ -75,12 +82,13 @@ export class ServiceHistoryViewModel {
           service: s.services,
           vehicle: s.vehicle,
           plate: s.plate,
-          client: s.plate,
+          // A-18: el primer nombre del cliente (antes se repetía la placa)
+          client: s.clientName || '—',
           paymentMethod: '',
           amount: s.total,
           rating: s.rating,
           comment: s.comment,
-          status: 'finalizado',
+          status: s.status === 'COMPLETED' ? 'finalizado' : 'cancelado',
           reason: null
         } as ServiceHistoryItem))
         .sort((a, b) => `${b.date} ${b.time}`.localeCompare(`${a.date} ${a.time}`))),

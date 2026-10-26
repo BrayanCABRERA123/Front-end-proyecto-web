@@ -66,11 +66,12 @@
       </label>
     </div>
 
-    <label class="form-field" [class.form-field--invalid]="discountPercentInvalid">
-      <span>{{ 'PROMOTION_MODAL.DISCOUNT_PERCENT_LABEL' | translate }} *</span>
-      <input type="number" min="1" max="100" [(ngModel)]="discountPercent">
-      @if (discountPercentInvalid) {
-        <span class="form-field__error"><mat-icon>error</mat-icon>{{ 'PROMOTION_MODAL.ERROR_DISCOUNT_PERCENT' | translate }}</span>
+    <label class="form-field" [class.form-field--invalid]="discountValueInvalid">
+      <!-- D-01: un descuento fijo se edita en pesos; no se convierte a porcentaje -->
+      <span>{{ (isFixed ? 'PROMOTION_MODAL.DISCOUNT_FIXED_LABEL' : 'PROMOTION_MODAL.DISCOUNT_PERCENT_LABEL') | translate }} *</span>
+      <input type="number" min="1" [attr.max]="isFixed ? null : maxDiscountPercent" [(ngModel)]="discountValue">
+      @if (discountValueInvalid) {
+        <span class="form-field__error"><mat-icon>error</mat-icon>{{ (isFixed ? 'PROMOTION_MODAL.ERROR_DISCOUNT_FIXED' : 'PROMOTION_MODAL.ERROR_DISCOUNT_PERCENT') | translate }}</span>
       }
     </label>
 

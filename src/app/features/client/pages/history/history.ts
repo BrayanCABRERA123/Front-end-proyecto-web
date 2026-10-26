@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
 import { ClientBookingItem } from '../../../../core/models/booking-view.models';
 import { ClientHistoryViewModel } from '../../viewmodels/history.viewmodel';
+import { WAITING_POLL_MS, keepFresh } from '../../../../core/services/live-refresh';
 
 // vista del historial del cliente: los datos, filtros y acciones están en ClientHistoryViewModel
 @Component({
@@ -31,6 +32,12 @@ export class HistoryComponent implements OnInit {
 
   readonly vm = inject(ClientHistoryViewModel);
   private readonly dialog = inject(MatDialog);
+
+  // datos frescos sin recargar (WEB-16): al volver a la pestaña, con cada notificación nueva y cada
+  // tanto mientras la pestaña esté visible, porque esta vista espera a otra persona
+  constructor() {
+    keepFresh(silent => this.vm.load(silent), { pollMs: WAITING_POLL_MS, initial: false });
+  }
 
   ngOnInit(): void {
     this.vm.load();

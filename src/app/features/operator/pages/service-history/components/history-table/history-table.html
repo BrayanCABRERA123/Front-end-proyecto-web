@@ -6,7 +6,6 @@
         <th>{{ 'HISTORY_TABLE.DATE_COMPLETED' | translate }}</th>
         <th>{{ 'HISTORY_TABLE.SERVICE' | translate }}</th>
         <th>{{ 'HISTORY_TABLE.VEHICLE' | translate }}</th>
-        <th>{{ 'HISTORY_TABLE.PAYMENT' | translate }}</th>
         <th>{{ 'HISTORY_TABLE.AMOUNT' | translate }}</th>
         <th>{{ 'HISTORY_TABLE.RATING' | translate }}</th>
         <th>{{ 'HISTORY_TABLE.STATUS' | translate }}</th>
@@ -32,10 +31,6 @@
               <span>{{ s.vehicle }}</span>
               <span class="plate">{{ s.plate }}</span>
             </div>
-          </td>
-
-          <td [attr.data-label]="'HISTORY_TABLE.PAYMENT' | translate">
-            {{ s.paymentMethod ? (('SERVICE_HISTORY.METHODS.' + s.paymentMethod) | translate) : '—' }}
           </td>
 
           <td [attr.data-label]="'HISTORY_TABLE.AMOUNT' | translate">

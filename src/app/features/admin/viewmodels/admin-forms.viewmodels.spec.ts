@@ -74,6 +74,19 @@ describe('ViewModels de formularios del admin', () => {
     expect(vm.result()).toEqual({ bookingId: 9, paymentAccountId: 2, transactionReference: null });
   });
 
+  it('C-04 Pago en el local: la caja aparece aunque esté inactiva; las otras inactivas no', () => {
+    bookingApi.adminBookings.mockReturnValue(of([]));
+    paymentsApi.adminAccounts.mockReturnValue(of([
+      { id: 1, methodCode: 'NEQUI', active: false }, { id: 2, methodCode: 'EFECTIVO', active: false },
+      { id: 3, methodCode: 'DAVIPLATA', active: true },
+    ]));
+    const vm = TestBed.inject(ManualPaymentViewModel);
+    vm.load();
+
+    expect(vm.accounts().map(a => a.id)).toEqual([2, 3]);
+    expect(vm.accountId()).toBe(2);
+  });
+
   it('Medios de pago: un QR que no es PNG ni JPG no se sube', async () => {
     const vm = TestBed.inject(PaymentMethodsViewModel);
     const svg = new File(['<svg/>'], 'qr.svg', { type: 'image/svg+xml' });

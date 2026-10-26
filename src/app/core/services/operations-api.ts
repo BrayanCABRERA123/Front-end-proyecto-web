@@ -79,6 +79,8 @@ export interface AssignmentResponse {
   operatorId: number;
   operatorName: string;
   status: ExecutionStatusCode;
+  /** B-01: indicaciones del administrador para el operario */
+  notes?: string | null;
 }
 
 /** Reservas sin operario (programadas o confirmadas, sin terminar, sin operario en ninguna línea). */
@@ -102,7 +104,8 @@ export interface CandidateResponse {
   ratingsCount: number;
   assigned: boolean;
   available: boolean;
-  unavailableReason: 'OPERATOR_INACTIVE' | 'OPERATOR_NOT_ON_SHIFT' | 'OPERATOR_ABSENT' | 'OPERATOR_BUSY' | null;
+  unavailableReason: 'OPERATOR_INACTIVE' | 'OPERATOR_NOT_ON_SHIFT' | 'OPERATOR_ABSENT' | 'OPERATOR_BUSY'
+    | 'OPERATOR_ACCOUNT_DISABLED' | null;
 }
 
 export interface OperatorServiceResponse {
@@ -123,8 +126,12 @@ export interface OperatorServiceResponse {
   comment: string | null;
   // desde cuándo se puede iniciar (operations-service: 15 minutos antes de la reserva)
   startableAt: string | null;
+  // hasta cuándo se puede iniciar (4 h después de la hora de fin); después responde SERVICE_TOO_LATE
+  startableUntil?: string | null;
   // primer nombre del cliente (vacío si security-service no respondió)
   clientName?: string;
+  // B-01: indicaciones que dejó el admin al asignar (null o ausente = sin notas)
+  notes?: string | null;
 }
 
 // especialidad y habilidades del operario (ficha del operario)
@@ -228,8 +235,11 @@ export class OperationsApiService {
     return this.http.delete<void>(`${this.api}/admin/operators/${id}/absences/${absenceId}`);
   }
 
-  assign(bookingId: number, operatorId: number): Observable<AssignmentResponse> {
-    return this.http.put<AssignmentResponse>(`${this.api}/admin/assignments/${bookingId}`, { operatorId });
+  // B-01: notes son las indicaciones para el operario (vacías = sin notas)
+  assign(bookingId: number, operatorId: number, notes = ''): Observable<AssignmentResponse> {
+    const clean = notes.trim();
+    const body = clean ? { operatorId, notes: clean } : { operatorId };
+    return this.http.put<AssignmentResponse>(`${this.api}/admin/assignments/${bookingId}`, body);
   }
 
   // quién se puede asignar a esa reserva (turno, ausencias, cruces y estado los calcula el backend)

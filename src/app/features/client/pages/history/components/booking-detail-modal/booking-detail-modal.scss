@@ -7,6 +7,24 @@
   color: var(--primary);
 }
 
+// con la insignia del plazo caben tres elementos: que bajen de línea en pantallas angostas
+.detail-header {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+// "Paga antes de las HH:mm": plazo del pago digital
+.badge-deadline {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+
+// "Pagas en efectivo en el lavadero": ocupa el lugar del botón "Ir al pago"
+.cash-note {
+  flex: 1;
+  justify-content: center;
+}
+
 .modal-actions {
   display: flex;
   gap: 10px;

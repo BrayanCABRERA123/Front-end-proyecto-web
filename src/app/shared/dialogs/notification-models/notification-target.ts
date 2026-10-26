@@ -23,6 +23,8 @@ const TABLES: Record<Role, Record<string, NotificationTarget>> = {
     BOOKING_CREATED: CLIENT_HISTORY,
     BOOKING_CONFIRMED: CLIENT_HISTORY,
     BOOKING_CANCELLED: CLIENT_HISTORY,
+    // "no asistió": se ve igual que una cancelada (la categoría la manda el backend)
+    BOOKING_NO_SHOW: CLIENT_HISTORY,
     BOOKING_REMINDER: CLIENT_HISTORY,
     OPERATOR_ASSIGNED: CLIENT_HISTORY,
     SERVICE_STARTED: CLIENT_HISTORY,

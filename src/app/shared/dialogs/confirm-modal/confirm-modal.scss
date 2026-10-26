@@ -87,3 +87,21 @@
     filter: brightness(0.92);
   }
 }
+// lista opcional (ej. motivo de cancelación)
+.dialog-select {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 20px;
+  text-align: left;
+  font-size: 14px;
+
+  select {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color, #d0d5dd);
+    border-radius: 8px;
+    background: var(--card-bg, #fff);
+    color: inherit;
+    font: inherit;
+  }
+}

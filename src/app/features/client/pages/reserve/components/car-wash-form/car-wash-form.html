@@ -147,9 +147,43 @@
         <mat-icon>storefront</mat-icon>
         <div>
           <p class="location-title">{{ 'RESERVE.LOCATION.TITLE' | translate }}</p>
-          <p class="location-name">{{ vm.location()?.tradeName ?? '—' }}</p>
-          <p class="location-address">{{ vm.location()?.address ?? '' }}</p>
+          <p class="location-name">{{ name(vm.location()) }}</p>
+          <p class="location-address">{{ address(vm.location()) ?? ('COMMON.ADDRESS_PENDING' | translate) }}</p>
         </div>
+      </div>
+    </div>
+
+    <!-- PASO 4: ¿Cómo vas a pagar? (el efectivo solo si el lavadero lo tiene activo) -->
+    <div class="step-card">
+      <div class="step-title">
+        <span class="step-number">4</span>
+        <div>
+          <h2>{{ 'RESERVE.STEP4.TITLE' | translate }} <mat-icon>payments</mat-icon></h2>
+          <p>{{ 'RESERVE.STEP4.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+
+      <div class="service-options payment-mode-options">
+        <button
+          type="button"
+          class="service-option"
+          data-mode="DIGITAL"
+          [class.selected]="vm.paymentMode() === 'DIGITAL'"
+          (click)="vm.selectPaymentMode('DIGITAL')">
+          <p class="service-name"><mat-icon>qr_code_2</mat-icon> {{ 'RESERVE.STEP4.DIGITAL' | translate }}</p>
+          <p class="service-description">{{ 'RESERVE.STEP4.DIGITAL_DESC' | translate }}</p>
+        </button>
+        @if (vm.cashAvailable()) {
+          <button
+            type="button"
+            class="service-option"
+            data-mode="CASH"
+            [class.selected]="vm.paymentMode() === 'CASH'"
+            (click)="vm.selectPaymentMode('CASH')">
+            <p class="service-name"><mat-icon>payments</mat-icon> {{ 'RESERVE.STEP4.CASH' | translate }}</p>
+            <p class="service-description">{{ 'RESERVE.STEP4.CASH_DESC' | translate }}</p>
+          </button>
+        }
       </div>
     </div>
 
@@ -189,7 +223,11 @@
     </div>
     <div class="summary-row">
       <span>{{ 'RESERVE.SUMMARY.CAR_WASH' | translate }}</span>
-      <strong>{{ vm.location()?.tradeName ?? '—' }}</strong>
+      <strong>{{ name(vm.location()) }}</strong>
+    </div>
+    <div class="summary-row">
+      <span>{{ 'RESERVE.SUMMARY.PAYMENT' | translate }}</span>
+      <strong>{{ ('RESERVE.STEP4.' + vm.paymentMode()) | translate }}</strong>
     </div>
 
     <div class="summary-total">

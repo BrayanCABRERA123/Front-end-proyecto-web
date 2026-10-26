@@ -151,6 +151,21 @@
   }
 }
 
+// paso 4: solo dos opciones (digital y efectivo)
+.payment-mode-options {
+  grid-template-columns: repeat(2, 1fr);
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+
+  .service-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
 .service-option {
   position: relative;
   display: flex;

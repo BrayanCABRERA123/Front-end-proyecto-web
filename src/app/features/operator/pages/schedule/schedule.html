@@ -72,11 +72,11 @@
             </div>
 
             @if (next.status === 'pendiente') {
-              <button class="btn-next" [disabled]="!canStartNow(next.startableAt)" (click)="startService(next)">
+              <button class="btn-next" [disabled]="!canStartNow(next.startableAt, next.startableUntil)" (click)="startService(next)">
                 {{ 'SCHEDULE.START' | translate }}
               </button>
-              @if (!canStartNow(next.startableAt)) {
-                <p class="start-hint">{{ 'OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(next.startableAt) } }}</p>
+              @if (!canStartNow(next.startableAt, next.startableUntil)) {
+                <p class="start-hint">{{ startHint(next.startableAt, next.startableUntil) | translate:{ time: startFrom(next.startableAt) } }}</p>
               }
             } @else {
               <button class="btn-next" (click)="requestFinish(next)">
@@ -126,8 +126,8 @@
 
                 <div class="reservation-actions">
                   @if (r.status === 'pendiente') {
-                    <button class="btn-action" [disabled]="!canStartNow(r.startableAt)"
-                            [title]="canStartNow(r.startableAt) ? '' : ('OPERATOR_WORK.START_FROM' | translate:{ time: startFrom(r.startableAt) })"
+                    <button class="btn-action" [disabled]="!canStartNow(r.startableAt, r.startableUntil)"
+                            [title]="canStartNow(r.startableAt, r.startableUntil) ? '' : (startHint(r.startableAt, r.startableUntil) | translate:{ time: startFrom(r.startableAt) })"
                             (click)="startService(r)">
                       <mat-icon>play_arrow</mat-icon>
                       {{ 'SCHEDULE.START' | translate }}

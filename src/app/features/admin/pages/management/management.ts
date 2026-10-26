@@ -8,14 +8,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from '../../../../shared/components/sidebar/sidebar';
 import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state';
 import { CreateUserModal, CreateUserResult } from '../../../../shared/dialogs/create-user-modal/create-user-modal';
-import { CreateRoleModal, CreateRoleData, CreateRoleResult } from '../../../../shared/dialogs/create-role-modal/create-role-modal';
-import { RoleCode } from '../../../../core/services/role-permissions-api';
 import { ServiceModal, ServiceModalData, ServiceModalResult } from '../../../../shared/dialogs/service-modal/service-modal';
 import { ConfirmModal, ConfirmModalData } from '../../../../shared/dialogs/confirm-modal/confirm-modal';
-import { AdminUser, Promotion, UserRole } from '../../models/admin.models';
+import { AdminUser, Promotion } from '../../models/admin.models';
 import { CatalogServiceResponse, ServicePriceResponse } from '../../../../core/models/booking.models';
 import { PromotionModal, PromotionModalData, PromotionModalResult } from './components/promotion-modal/promotion-modal';
 import { ManagementTab, ManagementViewModel } from '../../viewmodels/management.viewmodel';
+import { discountLabel } from '../../../../core/services/promotions-api';
 
 // vista de Gestión: los datos y las acciones están en ManagementViewModel; aquí quedan las
 // pestañas, los modales y las confirmaciones
@@ -68,19 +67,11 @@ export class ManagementComponent implements OnInit {
     this.confirm(data, () => this.vm.setUserActive(user, !disabling));
   }
 
-  // --- ROLES (ADR-015: los 3 roles son fijos, solo se editan sus permisos) ---
+  // --- ROLES: H-05, la matriz de permisos es solo de consulta (no hay acciones) ---
 
-  openEditRole(role: UserRole): void {
-    const data: CreateRoleData = {
-      roles: this.vm.roleMatrix().roles,
-      permissions: this.vm.roleMatrix().permissions,
-      initialRole: role.id as RoleCode,
-    };
-    this.dialog.open(CreateRoleModal, { panelClass: 'custom-dialog', data })
-      .afterClosed()
-      .subscribe((result: CreateRoleResult | null) => {
-        if (result) this.vm.updateRolePermissions(result.role, result.permissionIds);
-      });
+  // descuento de la tarjeta: "10%" o "$5.000" (D-01)
+  discountText(promotion: Promotion): string {
+    return discountLabel(promotion);
   }
 
   // --- SERVICIOS (booking-service) ---

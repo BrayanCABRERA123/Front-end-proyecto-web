@@ -24,11 +24,15 @@ export interface PromotionModalResult {
   icon: string;
   features: string[];
   startDate: string;
-  // cupón real (ADR-015): descuento % que se aplica al canjear, y puntos de fidelización
-  // necesarios para que se desbloquee; icon/featured/features son solo la tarjeta
-  discountPercent: number;
+  // cupón real (ADR-015): descuento que se aplica al canjear (PERCENT = %, FIXED = pesos), y puntos
+  // de fidelización necesarios para que se desbloquee; icon/featured/features son solo la tarjeta
+  discountType: 'PERCENT' | 'FIXED' | 'PACKAGE';
+  discountValue: number;
   requiredPoints: number;
 }
+
+// payment-service no acepta 100 %: el pago exige un monto mayor que cero (E-07)
+export const MAX_DISCOUNT_PERCENT = 99;
 
 // íconos coherentes con el catálogo de servicios (los mismos de las tarjetas)
 const ICON_OPTIONS = ['directions_car', 'water_drop', 'auto_awesome', 'local_offer', 'star', 'savings'];
@@ -53,7 +57,10 @@ export class PromotionModal {
   // fecha mínima del calendario: hoy, o la que ya tenía la promoción si empezó antes
   minStartDate = todayIso();
   features: string[] = [];
-  discountPercent: number | null = 100;
+  // D-01: una promoción nueva es por porcentaje; al editar se conservan el tipo y el valor que tenía
+  discountType: PromotionModalResult['discountType'] = 'PERCENT';
+  discountValue: number | null = 10;
+  maxDiscountPercent = MAX_DISCOUNT_PERCENT;
   // number | null: si el admin borra el campo, ngModel deja null
   requiredPoints: number | null = 0;
 
@@ -75,7 +82,8 @@ export class PromotionModal {
       this.startDate = p.startDate;
       if (p.startDate < this.minStartDate) this.minStartDate = p.startDate;
       this.features = [...p.features];
-      this.discountPercent = p.discountPercent;
+      this.discountType = p.discountType;
+      this.discountValue = p.discountValue;
       this.requiredPoints = p.requiredPoints;
     }
   }
@@ -94,8 +102,19 @@ export class PromotionModal {
     return this.submitted && this.couponCode.trim().length < 3;
   }
 
-  get discountPercentInvalid(): boolean {
-    return this.submitted && (!this.discountPercent || this.discountPercent < 1 || this.discountPercent > 100);
+  // un % va de 1 a 99 (E-07); un monto fijo solo tiene que ser mayor que cero (el servidor lo topa)
+  private get discountValid(): boolean {
+    const value = this.discountValue;
+    if (!value || value < 1) return false;
+    return this.discountType !== 'PERCENT' || value <= MAX_DISCOUNT_PERCENT;
+  }
+
+  get isFixed(): boolean {
+    return this.discountType === 'FIXED';
+  }
+
+  get discountValueInvalid(): boolean {
+    return this.submitted && !this.discountValid;
   }
 
   // entero mayor o igual a 0 (0 = el cupón está disponible para todos)
@@ -112,7 +131,7 @@ export class PromotionModal {
       && !!this.startDate && this.startDate >= this.minStartDate
       && this.description.trim().length >= 3
       && this.couponCode.trim().length >= 3
-      && !!this.discountPercent && this.discountPercent >= 1 && this.discountPercent <= 100
+      && this.discountValid
       && this.requiredPointsValid;
   }
 
@@ -146,7 +165,8 @@ export class PromotionModal {
       icon: this.icon,
       features: this.features.map(f => f.trim()).filter(f => f.length > 0),
       startDate: this.startDate,
-      discountPercent: this.discountPercent ?? 100,
+      discountType: this.discountType,
+      discountValue: this.discountValue ?? 0,
       requiredPoints: this.requiredPoints ?? 0,
     };
 
