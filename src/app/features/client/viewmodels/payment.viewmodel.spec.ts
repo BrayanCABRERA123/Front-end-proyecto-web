@@ -193,3 +193,38 @@ describe('PaymentViewModel (plazo del pago digital)', () => {
     expect(vm.isCashBooking()).toBe(false);
   });
 });
+
+describe('PaymentViewModel (medios según el modo de pago de la reserva)', () => {
+  const account = (id: number, methodCode: string, requiresReceipt: boolean) =>
+    ({ id, methodCode, methodName: methodCode, accountHolder: 'Lavadero', accountNumber: null, qrImageUrl: null, requiresReceipt });
+  const accounts = [account(1, 'NEQUI', true), account(2, 'TRANSFERENCIA', true), account(3, 'EFECTIVO', false)];
+
+  function vmFor(paymentMode: 'DIGITAL' | 'CASH' | null): PaymentViewModel {
+    const booking = { id: 7, code: 'RES-7', status: 'CONFIRMED', date: '2099-10-23', startTime: '09:00', endTime: '09:45',
+      subtotal: 40000, pointsDiscountAmount: 0, services: [{ name: 'Básico' }], vehicle: null, paymentMode } as unknown as BookingResponse;
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: BookingApiService, useValue: { myBookings: () => of([booking]), establishment: () => of({}) } },
+        { provide: PaymentsApiService, useValue: { accounts: () => of(accounts), mine: () => of([]) } },
+        { provide: LoyaltyApiService, useValue: { bookingRedemption: () => of({ amountDue: 40000, redemption: null }) } },
+        { provide: FeedbackService, useValue: { success: vi.fn(), error: vi.fn() } },
+        PaymentViewModel,
+      ],
+    });
+    const vm = TestBed.inject(PaymentViewModel);
+    vm.init(7);
+    return vm;
+  }
+
+  it('con una reserva DIGITAL no ofrece efectivo, solo las cuentas que piden comprobante', () => {
+    const vm = vmFor('DIGITAL');
+    expect(vm.paymentMethods().map(m => m.id)).toEqual(['NEQUI', 'TRANSFER']);
+    expect(vm.selectedMethod()).not.toBe('CASH');
+  });
+
+  it('las reservas en efectivo o antiguas (sin modo) siguen viendo el efectivo', () => {
+    expect(vmFor('CASH').paymentMethods().map(m => m.id)).toEqual(['NEQUI', 'TRANSFER', 'CASH']);
+    TestBed.resetTestingModule();
+    expect(vmFor(null).paymentMethods().map(m => m.id)).toEqual(['NEQUI', 'TRANSFER', 'CASH']);
+  });
+});

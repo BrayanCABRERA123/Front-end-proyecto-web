@@ -88,7 +88,17 @@ export class PaymentViewModel {
   readonly lastRejectionReason = signal<string | null>(null);
 
   // medios disponibles: los que el admin tiene activos (efectivo incluido, si su cuenta está activa)
-  readonly paymentMethods = signal<PaymentMethod[]>([]);
+  private readonly availableMethods = signal<PaymentMethod[]>([]);
+  // si el cliente eligió pago digital al reservar, no se le ofrece efectivo: solo las cuentas que
+  // piden comprobante (el plazo se cumple subiéndolo). Las reservas en efectivo o antiguas (sin modo)
+  // ven todos los medios activos
+  readonly paymentMethods = computed(() => {
+    const methods = this.availableMethods();
+    if (this.booking()?.paymentMode !== 'DIGITAL') return methods;
+    const accounts = this.accounts();
+    return methods.filter(method => method.accountId !== null
+      && accounts.find(account => account.id === method.accountId)?.requiresReceipt !== false);
+  });
   private readonly accountsLoaded = signal(false);
   // payment-service no respondió: no hay medios para elegir
   readonly accountsFailed = signal(false);
@@ -359,11 +369,12 @@ export class PaymentViewModel {
         }
         const cashActive = accounts.some(a => methodIdOf(a.methodCode) === 'CASH');
         const methods = cashActive ? [...digital, CASH_METHOD] : digital;
-        this.paymentMethods.set(methods);
+        this.availableMethods.set(methods);
         this.accountsLoaded.set(true);
-        if (!this.isLocked() && methods.length > 0) {
-          this.selectedMethod.set(methods[0].id);
-          this.selectedAccountId.set(methods[0].accountId);
+        const offered = this.paymentMethods();
+        if (!this.isLocked() && offered.length > 0) {
+          this.selectedMethod.set(offered[0].id);
+          this.selectedAccountId.set(offered[0].accountId);
         }
         this.ensureAvailableMethod();
       },
