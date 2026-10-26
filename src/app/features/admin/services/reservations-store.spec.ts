@@ -66,6 +66,15 @@ describe('ReservationsStore', () => {
     expect(store.isUnassigned(store.getById('3')!)).toBe(false);
   });
 
+  it('trae el modo de pago que eligió el cliente (null en las reservas del admin)', () => {
+    const store = TestBed.inject(ReservationsStore);
+    store.load();
+    answerLoad([{ ...booking(1, 'CONFIRMED', day(1)), paymentMode: 'CASH' }, booking(2, 'CONFIRMED', day(1), '12:00')], [], []);
+
+    expect(store.getById('1')?.paymentMode).toBe('CASH');
+    expect(store.getById('2')?.paymentMode).toBeNull();
+  });
+
   it('si operations no responde, calcula la misma regla con lo que tiene', () => {
     const store = TestBed.inject(ReservationsStore);
     store.load();

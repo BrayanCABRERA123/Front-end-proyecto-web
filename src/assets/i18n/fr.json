@@ -2196,7 +2196,12 @@
     },
     "CANCEL_REASON": "Motif d'annulation",
     "INSPECTION": "Rapport d'inspection",
-    "REASSIGN": "Changer d'opérateur"
+    "REASSIGN": "Changer d'opérateur",
+    "PAYMENT_MODE": "Mode de paiement",
+    "PAYMENT_MODES": {
+      "DIGITAL": "Numérique (QR et justificatif)",
+      "CASH": "Espèces au lavage"
+    }
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nouvelle réservation",

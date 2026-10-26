@@ -2196,7 +2196,12 @@
     },
     "CANCEL_REASON": "Motivo do cancelamento",
     "INSPECTION": "Relatório de inspeção",
-    "REASSIGN": "Trocar operador"
+    "REASSIGN": "Trocar operador",
+    "PAYMENT_MODE": "Forma de pagamento",
+    "PAYMENT_MODES": {
+      "DIGITAL": "Digital (QR e comprovante)",
+      "CASH": "Dinheiro no lava-rápido"
+    }
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nova reserva",

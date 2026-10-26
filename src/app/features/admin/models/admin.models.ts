@@ -1,3 +1,5 @@
+import { BookingPaymentMode } from '../../../core/models/booking.models';
+
 
 /* ================= OPERARIOS ================= */
 
@@ -142,6 +144,8 @@ export interface Booking {
   cancellationReason: string | null;
   /** llave traducida del motivo cuando la web lo traduce por código (PAYMENT_TIMEOUT) */
   cancellationReasonKey?: string | null;
+  /** cómo dijo el cliente que paga; null en las reservas del admin y en las anteriores al cambio */
+  paymentMode?: BookingPaymentMode | null;
   /** fecha en formato ISO (yyyy-MM-dd) para poder filtrar de verdad */
   date: string;
   /** hora de inicio en formato 24h (HH:mm) */

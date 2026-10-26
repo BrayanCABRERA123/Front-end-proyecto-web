@@ -2196,7 +2196,12 @@
       "no_show": "No show"
     },
     "CANCEL_REASON": "Cancellation reason",
-    "INSPECTION": "Inspection report"
+    "INSPECTION": "Inspection report",
+    "PAYMENT_MODE": "Payment method",
+    "PAYMENT_MODES": {
+      "DIGITAL": "Digital (QR and receipt)",
+      "CASH": "Cash at the car wash"
+    }
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "New booking",

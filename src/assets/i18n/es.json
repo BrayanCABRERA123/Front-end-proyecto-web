@@ -2196,7 +2196,12 @@
       "no_show": "No asistió"
     },
     "CANCEL_REASON": "Motivo de cancelación",
-    "INSPECTION": "Reporte de inspección"
+    "INSPECTION": "Reporte de inspección",
+    "PAYMENT_MODE": "Forma de pago",
+    "PAYMENT_MODES": {
+      "DIGITAL": "Digital (QR y comprobante)",
+      "CASH": "Efectivo en el lavadero"
+    }
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nueva reserva",

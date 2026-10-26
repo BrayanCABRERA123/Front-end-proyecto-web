@@ -291,6 +291,7 @@ export class ReservationsStore {
       changeable: response.changeable,
       cancellationReason: response.cancellationReason?.name ?? null,
       cancellationReasonKey: cancellationReasonKey(response.cancellationReason?.code),
+      paymentMode: response.paymentMode ?? null,
       operator: this.operatorRef(id),
       notes: response.notes ?? '',
       createdAt: response.createdAt ?? '',

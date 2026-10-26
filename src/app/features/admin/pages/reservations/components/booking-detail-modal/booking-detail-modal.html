@@ -63,6 +63,13 @@
         <span>{{ 'BOOKING_DETAIL.OPERATOR' | translate }}</span>
         <strong>{{ booking.operator?.name ?? ('BOOKING_DETAIL.NO_OPERATOR' | translate) }}</strong>
       </div>
+      <!-- cómo dijo el cliente que paga (las reservas del admin y las antiguas no lo tienen) -->
+      @if (booking.paymentMode) {
+        <div class="detail-row" data-detail="payment-mode">
+          <span>{{ 'BOOKING_DETAIL.PAYMENT_MODE' | translate }}</span>
+          <strong>{{ ('BOOKING_DETAIL.PAYMENT_MODES.' + booking.paymentMode) | translate }}</strong>
+        </div>
+      }
     </div>
 
     @if (booking.notes) {
