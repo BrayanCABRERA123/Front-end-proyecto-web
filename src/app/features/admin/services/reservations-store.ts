@@ -11,6 +11,7 @@ import {
   RescheduleBookingRequest,
 } from '../../../core/models/booking.models';
 import { apiErrorKey } from '../../../core/utils/api-error';
+import { cancellationReasonKey } from '../../../core/utils/booking-display';
 import { Booking, BookingStatus } from '../models/admin.models';
 // quién tiene cada reserva (operations-service)
 import { AssignmentResponse, OperationsApiService, UnassignedResponse, ToCloseResponse } from '../../../core/services/operations-api';
@@ -289,6 +290,7 @@ export class ReservationsStore {
       status: STATUS_BY_CODE[response.status],
       changeable: response.changeable,
       cancellationReason: response.cancellationReason?.name ?? null,
+      cancellationReasonKey: cancellationReasonKey(response.cancellationReason?.code),
       operator: this.operatorRef(id),
       notes: response.notes ?? '',
       createdAt: response.createdAt ?? '',

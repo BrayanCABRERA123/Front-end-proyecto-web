@@ -183,4 +183,34 @@ describe('ViewModels del cliente', () => {
     expect(vm.cashAvailable()).toBe(false);
     expect(vm.paymentMode()).toBe('DIGITAL');
   });
+
+  it('Reservar: el 409 CASH_BOOKING_LIMIT se muestra traducido', () => {
+    payments.accounts.mockReturnValue(of([account(2, 'EFECTIVO')]));
+    bookingApi.createBooking.mockReturnValue(throwError(() => new HttpErrorResponse({
+      status: 409, error: { code: 'CASH_BOOKING_LIMIT' },
+    })));
+    const vm = TestBed.inject(ReserveViewModel);
+    vm.load();
+    readyToBook(vm);
+    vm.selectPaymentMode('CASH');
+
+    vm.submit(vi.fn());
+
+    expect(feedback.error).toHaveBeenCalledWith('COMMON.ERROR', 'API_ERRORS.CASH_BOOKING_LIMIT');
+  });
+
+  it('Historial: el motivo PAYMENT_TIMEOUT se traduce y los demás usan el nombre del backend', () => {
+    bookingApi.myBookings.mockReturnValue(of([
+      booking(1, 'CANCELLED', '2026-10-01', { cancellationReason: { code: 'PAYMENT_TIMEOUT', name: 'Pago no reportado' } }),
+      booking(2, 'CANCELLED', '2026-10-02', { cancellationReason: { code: 'CUSTOMER_REQUEST', name: 'Solicitud del cliente' } }),
+    ]));
+    const vm = TestBed.inject(ClientHistoryViewModel);
+
+    vm.load();
+
+    const byId = (id: number) => vm.bookings().find(b => b.id === id);
+    expect(byId(1)?.cancellationReasonKey).toBe('CANCEL_REASONS.PAYMENT_TIMEOUT');
+    expect(byId(2)?.cancellationReasonKey).toBeNull();
+    expect(byId(2)?.cancellationReason).toBe('Solicitud del cliente');
+  });
 });

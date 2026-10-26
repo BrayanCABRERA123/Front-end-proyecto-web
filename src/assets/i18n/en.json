@@ -72,7 +72,8 @@
     "CANCEL_SUCCESS": {
       "TITLE": "Booking cancelled",
       "MESSAGE": "Booking {{code}} was cancelled successfully."
-    }
+    },
+    "CANCEL_REASON": "Cancellation reason"
   },
   "HISTORY_CARD": {
     "TYPE": "Service type",
@@ -2564,7 +2565,9 @@
     "SERVICE_TOO_LATE": "This service can no longer be started: more than 4 hours have passed since its end time. Ask the administrator to close it.",
     "NOTIFICATION_NOT_SENT": "The notification could not be sent right now. Please try again in a few minutes.",
     "SECURITY_SERVICE_UNAVAILABLE": "The accounts service is not responding. Try again in a moment.",
-    "DATABASE_UNAVAILABLE": "The database is not responding right now. Please try again in a few minutes."
+    "DATABASE_UNAVAILABLE": "The database is not responding right now. Please try again in a few minutes.",
+    "CASH_BOOKING_LIMIT": "You already have an active booking paid in cash. Pay it or cancel it, or choose digital payment.",
+    "INVALID_PAYMENT_MODE": "Choose how you will pay: digital payment or cash at the car wash."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",
@@ -2754,5 +2757,8 @@
     "RESERVATIONS": "Go to bookings",
     "PAYMENT": "Go to payment",
     "RATINGS": "Go to ratings"
+  },
+  "CANCEL_REASONS": {
+    "PAYMENT_TIMEOUT": "The payment receipt was not uploaded in time"
   }
 }

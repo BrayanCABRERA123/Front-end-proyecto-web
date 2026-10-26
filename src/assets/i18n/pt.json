@@ -72,7 +72,8 @@
     "CANCEL_SUCCESS": {
       "TITLE": "Reserva cancelada",
       "MESSAGE": "A reserva {{code}} foi cancelada com sucesso."
-    }
+    },
+    "CANCEL_REASON": "Motivo do cancelamento"
   },
   "HISTORY_CARD": {
     "TYPE": "Tipo de serviço",
@@ -2564,7 +2565,9 @@
     "SERVICE_TOO_LATE": "Este serviço não pode mais ser iniciado: passaram mais de 4 horas do horário de término. Peça ao administrador para encerrá-lo.",
     "NOTIFICATION_NOT_SENT": "Não foi possível enviar a notificação agora. Tente novamente em alguns minutos.",
     "SECURITY_SERVICE_UNAVAILABLE": "O serviço de contas não está respondendo. Tente novamente em instantes.",
-    "DATABASE_UNAVAILABLE": "O banco de dados não está respondendo agora. Tente novamente em alguns minutos."
+    "DATABASE_UNAVAILABLE": "O banco de dados não está respondendo agora. Tente novamente em alguns minutos.",
+    "CASH_BOOKING_LIMIT": "Você já tem uma reserva ativa com pagamento em dinheiro. Pague-a ou cancele-a, ou escolha o pagamento digital.",
+    "INVALID_PAYMENT_MODE": "Escolha como você vai pagar: pagamento digital ou dinheiro no lava-rápido."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Senha atual",
@@ -2754,5 +2757,8 @@
     "RESERVATIONS": "Ir para reservas",
     "PAYMENT": "Ir para o pagamento",
     "RATINGS": "Ir para avaliações"
+  },
+  "CANCEL_REASONS": {
+    "PAYMENT_TIMEOUT": "O comprovante de pagamento não foi enviado a tempo"
   }
 }

@@ -72,7 +72,8 @@
     "CANCEL_SUCCESS": {
       "TITLE": "Réservation annulée",
       "MESSAGE": "La réservation {{code}} a bien été annulée."
-    }
+    },
+    "CANCEL_REASON": "Motif d'annulation"
   },
   "HISTORY_CARD": {
     "TYPE": "Type de service",
@@ -2564,7 +2565,9 @@
     "SERVICE_TOO_LATE": "Ce service ne peut plus être démarré : plus de 4 heures se sont écoulées depuis l'heure de fin. Demandez à l'administrateur de le clôturer.",
     "NOTIFICATION_NOT_SENT": "La notification n'a pas pu être envoyée pour le moment. Réessayez dans quelques minutes.",
     "SECURITY_SERVICE_UNAVAILABLE": "Le service des comptes ne répond pas. Réessayez dans un instant.",
-    "DATABASE_UNAVAILABLE": "La base de données ne répond pas pour le moment. Réessayez dans quelques minutes."
+    "DATABASE_UNAVAILABLE": "La base de données ne répond pas pour le moment. Réessayez dans quelques minutes.",
+    "CASH_BOOKING_LIMIT": "Vous avez déjà une réservation active payée en espèces. Payez-la ou annulez-la, ou choisissez le paiement numérique.",
+    "INVALID_PAYMENT_MODE": "Choisissez comment vous allez payer : paiement numérique ou espèces au lavage."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",
@@ -2754,5 +2757,8 @@
     "RESERVATIONS": "Aller aux réservations",
     "PAYMENT": "Aller au paiement",
     "RATINGS": "Aller aux évaluations"
+  },
+  "CANCEL_REASONS": {
+    "PAYMENT_TIMEOUT": "Le justificatif de paiement n'a pas été téléchargé à temps"
   }
 }

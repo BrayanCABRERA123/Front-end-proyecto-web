@@ -140,6 +140,8 @@ export interface Booking {
   /** true si todavía se puede cambiar o cancelar (lo decide el backend, RF-007) */
   changeable: boolean;
   cancellationReason: string | null;
+  /** llave traducida del motivo cuando la web lo traduce por código (PAYMENT_TIMEOUT) */
+  cancellationReasonKey?: string | null;
   /** fecha en formato ISO (yyyy-MM-dd) para poder filtrar de verdad */
   date: string;
   /** hora de inicio en formato 24h (HH:mm) */

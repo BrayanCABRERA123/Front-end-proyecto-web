@@ -52,6 +52,17 @@
       </div>
     </div>
 
+    <!-- por qué se canceló (por ejemplo, el comprobante no se subió a tiempo) -->
+    @if (booking.cancellationReasonKey || booking.cancellationReason) {
+      <div class="detail-item" data-detail="cancel-reason">
+        <mat-icon>info</mat-icon>
+        <div>
+          <span class="detail-label">{{ 'HISTORY.CANCEL_REASON' | translate }}</span>
+          <span class="detail-value">{{ booking.cancellationReasonKey ? (booking.cancellationReasonKey | translate) : booking.cancellationReason }}</span>
+        </div>
+      </div>
+    }
+
     @if (booking.rating) {
       <div class="detail-item">
         <mat-icon>star</mat-icon>

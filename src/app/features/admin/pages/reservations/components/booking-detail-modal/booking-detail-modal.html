@@ -73,7 +73,7 @@
     }
 
     @if (booking.cancellationReason) {
-      <p class="detail-dialog__hint">{{ 'BOOKING_DETAIL.CANCEL_REASON' | translate }}: {{ booking.cancellationReason }}</p>
+      <p class="detail-dialog__hint">{{ 'BOOKING_DETAIL.CANCEL_REASON' | translate }}: {{ booking.cancellationReasonKey ? (booking.cancellationReasonKey | translate) : booking.cancellationReason }}</p>
     }
 
     @if (!booking.changeable) {

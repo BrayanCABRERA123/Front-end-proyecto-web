@@ -1,6 +1,6 @@
 import { BookingResponse, BookingStatusCode } from './booking.models';
 import { BookingPaymentState, PaymentStatusCode } from '../services/payments-api';
-import { isActiveStatus, isoToDisplayDate, vehicleLabel } from '../utils/booking-display';
+import { cancellationReasonKey, isActiveStatus, isoToDisplayDate, vehicleLabel } from '../utils/booking-display';
 
 // fila del historial del cliente: la reserva cruda del backend ya lista para pintar.
 // el booking-service no maneja el estado de pago: el último pago y si la reserva todavía se puede
@@ -25,6 +25,9 @@ export interface ClientBookingItem {
   ratingComment?: string;
   // primer nombre del operario que lavó el vehículo (operations-service)
   ratingOperator?: string;
+  // motivo de la cancelación: llave traducida (p. ej. PAYMENT_TIMEOUT) o el nombre del backend
+  cancellationReasonKey?: string | null;
+  cancellationReason?: string | null;
 }
 
 /** @param payment estado del pago de la reserva según payment-service (null si no respondió) */
@@ -48,5 +51,7 @@ export function toClientBookingItem(booking: BookingResponse,
     // changeable lo decide el backend (RF-007: ni empezada ni pasada)
     canCancel: active && booking.changeable,
     canRate: booking.status === 'COMPLETED',
+    cancellationReasonKey: cancellationReasonKey(booking.cancellationReason?.code),
+    cancellationReason: booking.cancellationReason?.name ?? null,
   };
 }

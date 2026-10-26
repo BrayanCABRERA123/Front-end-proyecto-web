@@ -31,6 +31,15 @@ export function isFinishedStatus(status: string): boolean {
   return status === 'COMPLETED';
 }
 
+// motivos de cancelación que la web traduce por su código (CANCEL_REASONS.*); los demás se muestran
+// con el nombre que ya manda booking-service
+const TRANSLATED_CANCEL_REASONS: ReadonlySet<string> = new Set(['PAYMENT_TIMEOUT']);
+
+/** llave de traducción del motivo de cancelación, o null si se usa el nombre del backend */
+export function cancellationReasonKey(code: string | null | undefined): string | null {
+  return code && TRANSLATED_CANCEL_REASONS.has(code) ? `CANCEL_REASONS.${code}` : null;
+}
+
 /**
  * Hora local (HH:mm) hasta la que el cliente debe subir el comprobante, para la insignia
  * "Paga antes de las HH:mm". Solo si la reserva sigue activa, tiene plazo y el pago no se ha

@@ -61,6 +61,19 @@ describe('WEB-05: traducción de todos los códigos', () => {
     }
   });
 
+  it('traduce los códigos del pago de la reserva (contrato del 26-10)', () => {
+    expect(apiErrorKey(conflict({ code: 'CASH_BOOKING_LIMIT' }))).toBe('API_ERRORS.CASH_BOOKING_LIMIT');
+    expect(apiErrorKey(new HttpErrorResponse({ status: 400, error: { code: 'INVALID_PAYMENT_MODE' } })))
+      .toBe('API_ERRORS.INVALID_PAYMENT_MODE');
+    for (const file of [es, en, fr, pt]) {
+      expect(file.API_ERRORS.CASH_BOOKING_LIMIT).toBeTruthy();
+      expect(file.API_ERRORS.INVALID_PAYMENT_MODE).toBeTruthy();
+      expect(file.CANCEL_REASONS.PAYMENT_TIMEOUT).toBeTruthy();
+    }
+    expect(es.API_ERRORS.CASH_BOOKING_LIMIT)
+      .toBe('Ya tienes una reserva activa con pago en efectivo. Págala o cancélala, o elige pago digital.');
+  });
+
   it('traduce los de payment-service, booking y operations que antes salían como inesperados', () => {
     for (const code of ['TRANSACTION_REFERENCE_REUSED', 'PAYMENT_ALREADY_REPORTED', 'BAY_HAS_BOOKINGS', 'ASSIGNMENT_BUSY',
       'INVALID_RATING', 'RECEIPT_TOO_LARGE', 'SERVICE_UNAVAILABLE']) {
