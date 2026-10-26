@@ -142,9 +142,12 @@ describe('ReservationsStore', () => {
     expect(store.bookings().length).toBe(1);
   });
   it('WEB-16: no carga sola al crearse; la pide cada pantalla al entrar', () => {
-    TestBed.inject(ReservationsStore);
+    const store = TestBed.inject(ReservationsStore);
 
     http.expectNone(r => r.url === '/api/v1/admin/bookings');
+    // sin carga no hay reservas ni indicador de cargando
+    expect(store.bookings()).toEqual([]);
+    expect(store.loading()).toBe(false);
   });
 
   it('WEB-16: el refresco automático no muestra cargando, no se duplica y si falla deja lo que había', () => {
