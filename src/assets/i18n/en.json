@@ -92,7 +92,8 @@
     "RATED": "Rated",
     "EDIT_RATING": "Edit rating",
     "RATE": "Rate Service",
-    "WASHED_BY": "Served by {{name}}"
+    "WASHED_BY": "Served by {{name}}",
+    "PAY_BEFORE": "Pay before {{time}}"
   },
   "COMMON": {
     "CLOSE": "Close",

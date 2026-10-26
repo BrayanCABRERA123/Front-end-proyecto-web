@@ -92,7 +92,8 @@
     "RATED": "Calificado",
     "EDIT_RATING": "Editar calificación",
     "RATE": "Calificar Servicio",
-    "WASHED_BY": "Te atendió {{name}}"
+    "WASHED_BY": "Te atendió {{name}}",
+    "PAY_BEFORE": "Paga antes de las {{time}}"
   },
   "COMMON": {
     "CLOSE": "Cerrar",

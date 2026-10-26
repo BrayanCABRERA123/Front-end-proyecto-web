@@ -213,4 +213,21 @@ describe('ViewModels del cliente', () => {
     expect(byId(2)?.cancellationReasonKey).toBeNull();
     expect(byId(2)?.cancellationReason).toBe('Solicitud del cliente');
   });
+
+  it('Historial: la reserva digital sin comprobante trae la hora límite para la insignia', () => {
+    const deadline = new Date(2099, 9, 23, 8, 40).toISOString();
+    bookingApi.myBookings.mockReturnValue(of([
+      booking(1, 'CONFIRMED', tomorrow, { paymentMode: 'DIGITAL', paymentDeadline: deadline, paymentReported: false }),
+      booking(2, 'CONFIRMED', tomorrow, { paymentMode: 'DIGITAL', paymentDeadline: deadline, paymentReported: true }),
+      booking(3, 'CONFIRMED', tomorrow, { paymentMode: 'CASH', paymentDeadline: null, paymentReported: false }),
+    ]));
+    const vm = TestBed.inject(ClientHistoryViewModel);
+
+    vm.load();
+
+    const payBefore = (id: number) => vm.bookings().find(b => b.id === id)?.payBefore;
+    expect(payBefore(1)).toBe('08:40');
+    expect(payBefore(2)).toBeNull();
+    expect(payBefore(3)).toBeNull();
+  });
 });

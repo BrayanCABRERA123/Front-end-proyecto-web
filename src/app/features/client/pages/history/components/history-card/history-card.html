@@ -68,6 +68,14 @@
     <!-- Acciones -->
     <div class="card-actions">
 
+      <!-- pago digital con plazo: si no sube el comprobante a tiempo, la reserva se libera -->
+      @if (booking.payBefore) {
+      <span class="pay-badge pending" data-badge="pay-before">
+        <mat-icon>timer</mat-icon>
+        {{ 'HISTORY_CARD.PAY_BEFORE' | translate:{ time: booking.payBefore } }}
+      </span>
+      }
+
       <!-- Ir a pagar las reservas todavía activas -->
       @if (booking.canPay) {
       <button class="btn-pay" (click)="$event.stopPropagation(); goToPayment()">

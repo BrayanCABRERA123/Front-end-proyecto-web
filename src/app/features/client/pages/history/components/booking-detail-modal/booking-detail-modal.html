@@ -9,6 +9,12 @@
       {{ ('STATUS.' + booking.status) | translate }}
     </span>
     <span class="code">{{ booking.code }}</span>
+    <!-- pago digital con plazo y sin comprobante todavía -->
+    @if (booking.payBefore) {
+      <span class="type-badge badge-deadline" data-badge="pay-before">
+        {{ 'HISTORY_CARD.PAY_BEFORE' | translate:{ time: booking.payBefore } }}
+      </span>
+    }
   </div>
 
   <h2 class="dialog-title">{{ 'HISTORY.DETAIL_TITLE' | translate }}</h2>

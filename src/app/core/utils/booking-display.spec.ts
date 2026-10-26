@@ -1,5 +1,5 @@
 import { BusinessHourDto } from '../models/booking.models';
-import { businessAddress, businessHoursSummary, businessName } from './booking-display';
+import { businessAddress, businessHoursSummary, businessName, paymentDeadlineTime } from './booking-display';
 
 const DAYS = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 const label = (day: number) => DAYS[day];
@@ -38,5 +38,21 @@ describe('sede con datos vacíos', () => {
     expect(businessAddress({ address: '' })).toBeNull();
     expect(businessName({ tradeName: 'Lavadero Centro' })).toBe('Lavadero Centro');
     expect(businessAddress({ address: ' Calle 10 # 5-20 ' })).toBe('Calle 10 # 5-20');
+  });
+});
+
+describe('plazo del pago digital', () => {
+  // 14:05 en la hora local del navegador, sin depender de su zona horaria
+  const deadline = new Date(2099, 9, 23, 14, 5).toISOString();
+
+  it('una reserva activa con plazo y sin comprobante muestra la hora local', () => {
+    expect(paymentDeadlineTime({ status: 'SCHEDULED', paymentDeadline: deadline, paymentReported: false })).toBe('14:05');
+  });
+
+  it('sin plazo, con el comprobante reportado o ya no activa, no hay insignia', () => {
+    expect(paymentDeadlineTime({ status: 'CONFIRMED', paymentDeadline: null, paymentReported: false })).toBeNull();
+    expect(paymentDeadlineTime({ status: 'CONFIRMED', paymentDeadline: deadline, paymentReported: true })).toBeNull();
+    expect(paymentDeadlineTime({ status: 'CANCELLED', paymentDeadline: deadline, paymentReported: false })).toBeNull();
+    expect(paymentDeadlineTime({ status: 'COMPLETED', paymentDeadline: deadline })).toBeNull();
   });
 });
