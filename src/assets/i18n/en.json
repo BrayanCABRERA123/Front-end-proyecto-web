@@ -1093,7 +1093,7 @@
     "CANCEL": "Cancel",
     "SCROLL_HINT": "Scroll to read the full document",
     "DEMO_NOTICE": "Sample document prepared for a training project. Before real commercial use, it must be reviewed by a lawyer and updated with the company's real information.",
-    "LAST_UPDATED_DATE": "September 17, 2026",
+    "LAST_UPDATED_DATE": "October 26, 2026",
     "COMPANY_NAME": "Express Car Wash S.A.S.",
     "TERMS": {
       "TITLE": "Terms and Conditions",
@@ -1120,11 +1120,11 @@
         },
         {
           "HEADING": "6. Bookings, cancellations and service delivery",
-          "BODY": "The Customer selects the date, time and wash type based on the availability shown by the system. A booking can be changed or cancelled at no cost before the service starts; once the operator marks it as 'in progress', cancellation is no longer possible. The service is only provided at the physical location indicated in the booking."
+          "BODY": "The Customer selects the date, time and wash type based on the availability shown by the system. A booking can be changed or cancelled at no cost before the service starts; once the operator marks it as 'in progress', cancellation is no longer possible. The service is only provided at the physical location indicated in the booking. If you choose digital payment, you must upload the receipt within 30 minutes of booking (or before the service time, if that is sooner); otherwise the booking is cancelled automatically and the time slot is released. With cash payment you can have at most one active booking at a time."
         },
         {
           "HEADING": "7. Payments and receipts",
-          "BODY": "Payment is made by scanning the shop's QR code for the chosen method (cash, Nequi, Daviplata or bank transfer) and uploading the corresponding receipt, which an Administrator verifies before confirming it. The Platform never asks for or stores debit or credit card data. A receipt whose transaction reference has already been used on another approved payment will be rejected."
+          "BODY": "When booking, the Customer chooses how to pay. Digital payment (Nequi, Daviplata or bank transfer) is made by scanning the shop's QR code and uploading the corresponding receipt, which an Administrator verifies before confirming it. Cash payment is made at the shop and recorded by the Administrator, without a receipt. The Platform never asks for or stores debit or credit card data. A receipt whose transaction reference has already been used on another approved payment will be rejected."
         },
         {
           "HEADING": "8. Ratings and comments",

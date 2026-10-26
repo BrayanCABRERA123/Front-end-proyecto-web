@@ -1093,7 +1093,7 @@
     "CANCEL": "Cancelar",
     "SCROLL_HINT": "Desplázate para leer el documento completo",
     "DEMO_NOTICE": "Documento de ejemplo elaborado para un proyecto formativo. Antes de un uso comercial real, debe ser revisado por un abogado y actualizado con los datos reales de la empresa.",
-    "LAST_UPDATED_DATE": "17 de septiembre de 2026",
+    "LAST_UPDATED_DATE": "26 de octubre de 2026",
     "COMPANY_NAME": "Express Car Wash S.A.S.",
     "TERMS": {
       "TITLE": "Términos y Condiciones",
@@ -1120,11 +1120,11 @@
         },
         {
           "HEADING": "6. Reservas, cancelaciones y prestación del servicio",
-          "BODY": "El Cliente selecciona la fecha, hora y tipo de lavado según la disponibilidad mostrada por el sistema. Una reserva puede modificarse o cancelarse sin costo antes de que el servicio inicie; una vez el operario marca el servicio como 'en progreso', la cancelación queda bloqueada. El servicio se presta únicamente en el establecimiento físico indicado en la reserva."
+          "BODY": "El Cliente selecciona la fecha, hora y tipo de lavado según la disponibilidad mostrada por el sistema. Una reserva puede modificarse o cancelarse sin costo antes de que el servicio inicie; una vez el operario marca el servicio como 'en progreso', la cancelación queda bloqueada. El servicio se presta únicamente en el establecimiento físico indicado en la reserva. Si eliges pago digital, debes cargar el comprobante dentro de los 30 minutos siguientes a la reserva (o antes de la hora del servicio, si es más pronto); si no, la reserva se cancela automáticamente y el horario se libera. Con pago en efectivo puedes tener como máximo una reserva activa a la vez."
         },
         {
           "HEADING": "7. Pagos y comprobantes",
-          "BODY": "El pago se realiza escaneando el código QR del establecimiento para el medio elegido (efectivo, Nequi, Daviplata o transferencia bancaria) y cargando el comprobante correspondiente, que será verificado por un Administrador antes de confirmarse. La Plataforma nunca solicita ni almacena datos de tarjetas débito o crédito. Un comprobante cuya referencia de transacción ya haya sido usada en otro pago aprobado será rechazado."
+          "BODY": "Al reservar, el Cliente elige cómo pagará. El pago digital (Nequi, Daviplata o transferencia bancaria) se realiza escaneando el código QR del establecimiento y cargando el comprobante correspondiente, que verifica un Administrador antes de confirmarlo. El pago en efectivo se hace en el establecimiento y lo registra el Administrador, sin comprobante. La Plataforma nunca solicita ni almacena datos de tarjetas débito o crédito. Un comprobante cuya referencia de transacción ya haya sido usada en otro pago aprobado será rechazado."
         },
         {
           "HEADING": "8. Calificaciones y comentarios",

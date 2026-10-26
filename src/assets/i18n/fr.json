@@ -1093,7 +1093,7 @@
     "CANCEL": "Annuler",
     "SCROLL_HINT": "Faites défiler pour lire le document complet",
     "DEMO_NOTICE": "Document d'exemple préparé pour un projet de formation. Avant toute utilisation commerciale réelle, il doit être révisé par un avocat et mis à jour avec les informations réelles de l'entreprise.",
-    "LAST_UPDATED_DATE": "17 septembre 2026",
+    "LAST_UPDATED_DATE": "26 octobre 2026",
     "COMPANY_NAME": "Express Car Wash S.A.S.",
     "TERMS": {
       "TITLE": "Conditions Générales",
@@ -1120,11 +1120,11 @@
         },
         {
           "HEADING": "6. Réservations, annulations et prestation du service",
-          "BODY": "Le Client sélectionne la date, l'heure et le type de lavage selon la disponibilité affichée par le système. Une réservation peut être modifiée ou annulée gratuitement avant le début du service ; une fois que l'opérateur la marque « en cours », l'annulation n'est plus possible. Le service n'est fourni que dans l'établissement physique indiqué lors de la réservation."
+          "BODY": "Le Client sélectionne la date, l'heure et le type de lavage selon la disponibilité affichée par le système. Une réservation peut être modifiée ou annulée gratuitement avant le début du service ; une fois que l'opérateur la marque « en cours », l'annulation n'est plus possible. Le service n'est fourni que dans l'établissement physique indiqué lors de la réservation. Si vous choisissez le paiement numérique, vous devez télécharger le justificatif dans les 30 minutes suivant la réservation (ou avant l'heure du service, si elle est plus proche) ; à défaut, la réservation est annulée automatiquement et le créneau est libéré. Avec le paiement en espèces, vous ne pouvez avoir qu'une seule réservation active à la fois."
         },
         {
           "HEADING": "7. Paiements et justificatifs",
-          "BODY": "Le paiement s'effectue en scannant le code QR de l'établissement pour le moyen choisi (espèces, Nequi, Daviplata ou virement bancaire) et en téléchargeant le justificatif correspondant, vérifié par un Administrateur avant confirmation. La Plateforme ne demande ni ne conserve jamais de données de carte bancaire. Un justificatif dont la référence de transaction a déjà été utilisée pour un autre paiement approuvé sera rejeté."
+          "BODY": "Lors de la réservation, le Client choisit comment il paiera. Le paiement numérique (Nequi, Daviplata ou virement bancaire) s'effectue en scannant le code QR de l'établissement et en téléchargeant le justificatif correspondant, vérifié par un Administrateur avant confirmation. Le paiement en espèces se fait dans l'établissement et est enregistré par l'Administrateur, sans justificatif. La Plateforme ne demande ni ne conserve jamais de données de carte bancaire. Un justificatif dont la référence de transaction a déjà été utilisée pour un autre paiement approuvé sera rejeté."
         },
         {
           "HEADING": "8. Évaluations et commentaires",
