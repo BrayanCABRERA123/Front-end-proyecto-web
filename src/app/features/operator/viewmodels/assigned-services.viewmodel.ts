@@ -46,7 +46,7 @@ export class AssignedServicesViewModel {
   // A-18: los tipos salen de los servicios cargados (antes solo existía "Todos")
   readonly serviceTypes = computed(() => [
     { value: '', label: 'ASSIGNED_SERVICES.FILTERS.ALL' },
-    ...[...new Set(this.rows().map(r => r.serviceType))].sort().map(type => ({ value: type, label: type }))
+    ...[...new Set(this.rows().map(r => r.serviceType))].sort((a, b) => a.localeCompare(b)).map(type => ({ value: type, label: type }))
   ]);
 
   readonly selectedService = signal<OperatorServiceRow | null>(null);

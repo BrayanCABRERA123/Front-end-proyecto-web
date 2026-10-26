@@ -29,14 +29,17 @@ jobs:
           node-version: '22'
           cache: npm
 
-      - run: npm ci
+      # sin scripts de instalación: esbuild, lmdb, msgpackr-extract y @parcel/watcher traen el binario
+      # en sus dependencias opcionales (el script solo es respaldo) y el de core-js es un aviso
+      - run: npm ci --ignore-scripts
 
       - name: Compilación de producción
-        run: npx ng build --configuration production
+        run: npm run build -- --configuration production
 
-      # F-02: con cobertura (@vitest/coverage-v8); el reporte queda como artefacto del flujo
+      # F-02: con cobertura (@vitest/coverage-v8); el reporte queda como artefacto del flujo.
+      # Con "npm run"/"npm test" se usa el Angular CLI fijado en package-lock.json, nunca uno descargado por npx
       - name: Pruebas con cobertura
-        run: npx ng test --watch=false --coverage
+        run: npm test -- --watch=false --coverage
 
       - name: Reporte de cobertura
         if: always()
