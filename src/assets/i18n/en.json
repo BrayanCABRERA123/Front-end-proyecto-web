@@ -93,7 +93,8 @@
     "EDIT_RATING": "Edit rating",
     "RATE": "Rate Service",
     "WASHED_BY": "Served by {{name}}",
-    "PAY_BEFORE": "Pay before {{time}}"
+    "PAY_BEFORE": "Pay before {{time}}",
+    "PAY_IN_CASH": "You pay in cash at the car wash"
   },
   "COMMON": {
     "CLOSE": "Close",
@@ -449,7 +450,8 @@
       "CASH": "Cash at the car wash",
       "CASH_DESC": "You pay when you arrive and the administrator records the payment. You can only have one active cash booking."
     },
-    "SUCCESS_MESSAGE_CASH": "Your wash is scheduled. You pay in cash at the car wash. Here is your booking summary:"
+    "SUCCESS_MESSAGE_CASH": "Your wash is scheduled. You pay in cash at the car wash. Here is your booking summary:",
+    "SUCCESS_BUTTON_CASH": "View my bookings"
   },
   "APP": {
     "TITLE": "LavaRápido"

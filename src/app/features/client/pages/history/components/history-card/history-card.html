@@ -76,12 +76,19 @@
       </span>
       }
 
-      <!-- Ir a pagar las reservas todavía activas -->
+      <!-- Ir a pagar las reservas todavía activas; en efectivo se paga en el lavadero -->
       @if (booking.canPay) {
+      @if (booking.paymentMode === 'CASH') {
+      <span class="pay-badge pending" data-badge="pay-in-cash">
+        <mat-icon>payments</mat-icon>
+        {{ 'HISTORY_CARD.PAY_IN_CASH' | translate }}
+      </span>
+      } @else {
       <button class="btn-pay" (click)="$event.stopPropagation(); goToPayment()">
         {{ 'HISTORY_CARD.PAY_NOW' | translate }}
         <mat-icon>arrow_forward</mat-icon>
       </button>
+      }
       }
 
       <!-- Cancelar la reserva (solo si el backend la deja cambiar) -->

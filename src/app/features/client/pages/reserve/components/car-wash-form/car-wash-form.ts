@@ -58,14 +58,14 @@ export class CarWashFormComponent implements OnInit {
   }
 
   // efectivo: modal de reserva exitosa con lo que guardó el backend y el aviso de pagar en el
-  // lavadero; al cerrarlo lleva a la pantalla de pago (cupones y resumen)
+  // lavadero; no hay nada que pagar en línea, así que al cerrarlo lleva a "Mis reservas"
   private showReservationSuccess(booking: BookingResponse): void {
     const vehicle = booking.vehicle;
 
     const data: StatusModalData = {
       title: 'RESERVE.SUCCESS_TITLE',
       message: 'RESERVE.SUCCESS_MESSAGE_CASH',
-      buttonText: 'RESERVE.SUCCESS_BUTTON',
+      buttonText: 'RESERVE.SUCCESS_BUTTON_CASH',
       details: [
         { label: 'RESERVE.SUMMARY.CODE', value: booking.code },
         { label: 'RESERVE.SUMMARY.VEHICLE', value: `${vehicle?.brand ?? ''} ${vehicle?.model ?? ''}`.trim() },
@@ -87,6 +87,6 @@ export class CarWashFormComponent implements OnInit {
       data
     });
 
-    dialogRef.afterClosed().subscribe(() => this.goToPayment(booking));
+    dialogRef.afterClosed().subscribe(() => this.router.navigate(['/client/history']));
   }
 }

@@ -63,7 +63,7 @@ describe('CarWashFormComponent', () => {
     expect(navigate).toHaveBeenCalledWith(['/client/payment'], { queryParams: { booking: 42 } });
   });
 
-  it('with CASH shows the cash notice and then opens the payment of that booking', () => {
+  it('with CASH shows the cash notice and "View my bookings" goes to the history', () => {
     const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
     const open = vi.spyOn(TestBed.inject(MatDialog), 'open')
       .mockReturnValue({ afterClosed: () => of(undefined) } as never);
@@ -76,9 +76,10 @@ describe('CarWashFormComponent', () => {
     request.flush(created('CASH'));
 
     expect(open).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({
-      data: expect.objectContaining({ message: 'RESERVE.SUCCESS_MESSAGE_CASH' }),
+      data: expect.objectContaining({ message: 'RESERVE.SUCCESS_MESSAGE_CASH', buttonText: 'RESERVE.SUCCESS_BUTTON_CASH' }),
     }));
-    expect(navigate).toHaveBeenCalledWith(['/client/payment'], { queryParams: { booking: 42 } });
+    expect(navigate).toHaveBeenCalledWith(['/client/history']);
+    expect(navigate).not.toHaveBeenCalledWith(['/client/payment'], expect.anything());
   });
 
   it('shows the cash option only when the car wash has its cash account active', () => {

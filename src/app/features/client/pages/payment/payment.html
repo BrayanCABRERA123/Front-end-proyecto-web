@@ -90,7 +90,7 @@
         </section>
 
         <!-- Pago digital con QR (Nequi / Daviplata / Transferencia) -->
-        <section class="card" *ngIf="!vm.isApproved() && vm.hasPaymentMethods() && vm.selectedMethod() !== 'CASH'">
+        <section class="card" *ngIf="!vm.isApproved() && vm.hasPaymentMethods() && !vm.noMethodSelected() && vm.selectedMethod() !== 'CASH'">
           <div class="qr-top">
             <span class="tag">{{ 'PAYMENT.QR.INSTANT' | translate }}</span>
             <span class="via">{{ 'PAYMENT.QR.VIA' | translate }} {{ ('PAYMENT.METHOD.' + vm.selectedMethod()) | translate
@@ -157,7 +157,7 @@
         </section>
 
         <!-- Pago en efectivo -->
-        <section class="card cash-card" *ngIf="!vm.isApproved() && vm.hasPaymentMethods() && vm.selectedMethod() === 'CASH'">
+        <section class="card cash-card" *ngIf="!vm.isApproved() && vm.hasPaymentMethods() && !vm.noMethodSelected() && vm.selectedMethod() === 'CASH'">
           <mat-icon>storefront</mat-icon>
           <div>
             <h2>{{ 'PAYMENT.CASH.TITLE' | translate }}</h2>
@@ -166,7 +166,7 @@
         </section>
 
         <!-- Confirmar pago -->
-        <section class="card" *ngIf="!vm.isApproved() && vm.hasPaymentMethods() && vm.selectedMethod() !== 'CASH'">
+        <section class="card" *ngIf="!vm.isApproved() && vm.hasPaymentMethods() && !vm.noMethodSelected() && vm.selectedMethod() !== 'CASH'">
           <div class="card-title">
             <mat-icon>fact_check</mat-icon>
             <h2>{{ 'PAYMENT.CONFIRM.TITLE' | translate }}</h2>

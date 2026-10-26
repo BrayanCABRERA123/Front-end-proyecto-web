@@ -92,8 +92,13 @@
     <button class="btn-close" (click)="close()">
       {{ 'COMMON.CLOSE' | translate }}
     </button>
-    <!-- lleva a la pantalla de pago de esta reserva -->
-    @if (canGoToPayment) {
+    <!-- lleva a la pantalla de pago de esta reserva; en efectivo se paga en el lavadero -->
+    @if (canGoToPayment && booking.paymentMode === 'CASH') {
+      <span class="type-badge badge-deadline cash-note" data-badge="pay-in-cash">
+        <mat-icon>payments</mat-icon>
+        {{ 'HISTORY_CARD.PAY_IN_CASH' | translate }}
+      </span>
+    } @else if (canGoToPayment) {
       <button class="btn-go" (click)="goToPayment()">
         {{ 'GO_TO.PAYMENT' | translate }}
         <mat-icon>arrow_forward</mat-icon>

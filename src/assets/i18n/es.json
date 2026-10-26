@@ -93,7 +93,8 @@
     "EDIT_RATING": "Editar calificación",
     "RATE": "Calificar Servicio",
     "WASHED_BY": "Te atendió {{name}}",
-    "PAY_BEFORE": "Paga antes de las {{time}}"
+    "PAY_BEFORE": "Paga antes de las {{time}}",
+    "PAY_IN_CASH": "Pagas en efectivo en el lavadero"
   },
   "COMMON": {
     "CLOSE": "Cerrar",
@@ -449,7 +450,8 @@
       "CASH": "Efectivo en el lavadero",
       "CASH_DESC": "Pagas al llegar y el administrador registra el pago. Solo puedes tener una reserva activa en efectivo."
     },
-    "SUCCESS_MESSAGE_CASH": "Tu lavado quedó programado. Pagas en efectivo en el lavadero. Este es el resumen de tu reserva:"
+    "SUCCESS_MESSAGE_CASH": "Tu lavado quedó programado. Pagas en efectivo en el lavadero. Este es el resumen de tu reserva:",
+    "SUCCESS_BUTTON_CASH": "Ver mis reservas"
   },
   "APP": {
     "TITLE": "LavaRápido"

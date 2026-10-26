@@ -93,7 +93,8 @@
     "EDIT_RATING": "Modifier l’évaluation",
     "RATE": "Évaluer le service",
     "WASHED_BY": "Servi par {{name}}",
-    "PAY_BEFORE": "Payez avant {{time}}"
+    "PAY_BEFORE": "Payez avant {{time}}",
+    "PAY_IN_CASH": "Vous payez en espèces au lavage"
   },
   "COMMON": {
     "CLOSE": "Fermer",
@@ -449,7 +450,8 @@
       "CASH": "Espèces au lavage",
       "CASH_DESC": "Vous payez à votre arrivée et l'administrateur enregistre le paiement. Vous ne pouvez avoir qu'une seule réservation active en espèces."
     },
-    "SUCCESS_MESSAGE_CASH": "Votre lavage est programmé. Vous payez en espèces au lavage. Voici le résumé de votre réservation :"
+    "SUCCESS_MESSAGE_CASH": "Votre lavage est programmé. Vous payez en espèces au lavage. Voici le résumé de votre réservation :",
+    "SUCCESS_BUTTON_CASH": "Voir mes réservations"
   },
   "APP": {
     "TITLE": "LavaRápido"

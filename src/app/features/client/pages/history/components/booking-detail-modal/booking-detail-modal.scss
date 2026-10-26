@@ -19,6 +19,12 @@
   color: var(--warning);
 }
 
+// "Pagas en efectivo en el lavadero": ocupa el lugar del botón "Ir al pago"
+.cash-note {
+  flex: 1;
+  justify-content: center;
+}
+
 .modal-actions {
   display: flex;
   gap: 10px;

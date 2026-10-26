@@ -93,7 +93,8 @@
     "EDIT_RATING": "Editar avaliação",
     "RATE": "Avaliar serviço",
     "WASHED_BY": "Atendido por {{name}}",
-    "PAY_BEFORE": "Pague antes das {{time}}"
+    "PAY_BEFORE": "Pague antes das {{time}}",
+    "PAY_IN_CASH": "Você paga em dinheiro no lava-rápido"
   },
   "COMMON": {
     "CLOSE": "Fechar",
@@ -449,7 +450,8 @@
       "CASH": "Dinheiro no lava-rápido",
       "CASH_DESC": "Você paga ao chegar e o administrador registra o pagamento. Você só pode ter uma reserva ativa em dinheiro."
     },
-    "SUCCESS_MESSAGE_CASH": "Sua lavagem foi agendada. Você paga em dinheiro no lava-rápido. Este é o resumo da sua reserva:"
+    "SUCCESS_MESSAGE_CASH": "Sua lavagem foi agendada. Você paga em dinheiro no lava-rápido. Este é o resumo da sua reserva:",
+    "SUCCESS_BUTTON_CASH": "Ver minhas reservas"
   },
   "APP": {
     "TITLE": "LavaRápido"

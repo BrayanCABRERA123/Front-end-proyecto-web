@@ -1,4 +1,4 @@
-import { BookingResponse, BookingStatusCode } from './booking.models';
+import { BookingPaymentMode, BookingResponse, BookingStatusCode } from './booking.models';
 import { BookingPaymentState, PaymentStatusCode } from '../services/payments-api';
 import { cancellationReasonKey, isActiveStatus, isoToDisplayDate, paymentDeadlineTime, vehicleLabel } from '../utils/booking-display';
 
@@ -30,6 +30,8 @@ export interface ClientBookingItem {
   cancellationReason?: string | null;
   // insignia "Paga antes de las HH:mm": pago digital activo sin comprobante (null = no aplica)
   payBefore?: string | null;
+  // cómo dijo el cliente que paga: con CASH no se ofrece "Pagar ahora" (paga en el lavadero)
+  paymentMode?: BookingPaymentMode | null;
 }
 
 /** @param payment estado del pago de la reserva según payment-service (null si no respondió) */
@@ -56,5 +58,6 @@ export function toClientBookingItem(booking: BookingResponse,
     cancellationReasonKey: cancellationReasonKey(booking.cancellationReason?.code),
     cancellationReason: booking.cancellationReason?.name ?? null,
     payBefore: paymentDeadlineTime(booking),
+    paymentMode: booking.paymentMode ?? null,
   };
 }
