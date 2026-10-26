@@ -4,7 +4,7 @@ import { catchError, forkJoin, of } from 'rxjs';
 // datos reales de la reserva (booking-service)
 import { BookingApiService } from '../../../core/services/booking-api';
 import { BookingResponse } from '../../../core/models/booking.models';
-import { isActiveStatus, isoToDisplayDate, servicesLabel, vehicleLabel } from '../../../core/utils/booking-display';
+import { isActiveStatus, isoToDisplayDate, paymentDeadlineTime, servicesLabel, vehicleLabel } from '../../../core/utils/booking-display';
 import { apiErrorCode, apiErrorKey } from '../../../core/utils/api-error';
 import { todayIso } from '../../../core/utils/dates';
 // cuentas del lavadero y reporte del pago (payment-service)
@@ -88,7 +88,17 @@ export class PaymentViewModel {
   readonly lastRejectionReason = signal<string | null>(null);
 
   // medios disponibles: los que el admin tiene activos (efectivo incluido, si su cuenta está activa)
-  readonly paymentMethods = signal<PaymentMethod[]>([]);
+  private readonly availableMethods = signal<PaymentMethod[]>([]);
+  // si el cliente eligió pago digital al reservar, no se le ofrece efectivo: solo las cuentas que
+  // piden comprobante (el plazo se cumple subiéndolo). Las reservas en efectivo o antiguas (sin modo)
+  // ven todos los medios activos
+  readonly paymentMethods = computed(() => {
+    const methods = this.availableMethods();
+    if (this.booking()?.paymentMode !== 'DIGITAL') return methods;
+    const accounts = this.accounts();
+    return methods.filter(method => method.accountId !== null
+      && accounts.find(account => account.id === method.accountId)?.requiresReceipt !== false);
+  });
   private readonly accountsLoaded = signal(false);
   // payment-service no respondió: no hay medios para elegir
   readonly accountsFailed = signal(false);
@@ -96,6 +106,9 @@ export class PaymentViewModel {
   readonly selectedMethod = signal<PaymentMethodId>('CASH');
   // con dos cuentas del mismo medio (por ejemplo, dos Nequi) el medio no basta
   readonly selectedAccountId = signal<number | null>(null);
+  // reserva en efectivo sin cuenta de caja activa: no se preselecciona ningún medio (queda el aviso)
+  readonly noMethodSelected = signal(false);
+  private bookingModeApplied = false;
 
   // canje de cupón
   readonly couponCode = signal('');
@@ -147,6 +160,15 @@ export class PaymentViewModel {
   // con el pago enviado (en revisión o aprobado) ya no se puede cambiar ni volver a pagar
   readonly isLocked = computed(() => this.isVerifying() || this.isApproved());
 
+  // pago digital con plazo y sin comprobante: "Sube el comprobante antes de las HH:mm o la reserva
+  // se libera". El plazo lo pone booking-service; con el pago ya enviado desde aquí no se muestra
+  readonly payBefore = computed(() => {
+    const booking = this.booking();
+    return booking && !this.isLocked() ? paymentDeadlineTime(booking) : null;
+  });
+  // el cliente eligió pagar en efectivo en el lavadero al reservar
+  readonly isCashBooking = computed(() => this.booking()?.paymentMode === 'CASH' && !this.isApproved());
+
   readonly canRedeemCoupon = computed(() => !this.isVerifying() && !this.couponResult() && !this.redeemingCoupon()
     && this.couponCode().trim().length >= 3);
 
@@ -162,14 +184,14 @@ export class PaymentViewModel {
     // evita enviar el mismo pago dos veces (ya enviado, o con la petición en curso)
     if (this.isLocked() || this.reporting()) return false;
     // sin medios activos no se puede pagar, ni siquiera en efectivo
-    if (!this.hasPaymentMethods()) return false;
+    if (!this.hasPaymentMethods() || this.noMethodSelected()) return false;
     if (this.selectedMethod() === 'CASH') return true;
     return !!this.receiptDataUrl() && !this.compressingReceipt() && this.isRefValid() && this.isPaidAmountValid();
   });
 
   // lo que le falta al cliente para poder confirmar (se muestra debajo del botón deshabilitado)
   readonly missingRequirements = computed(() => {
-    if (this.isLocked() || !this.hasPaymentMethods() || this.selectedMethod() === 'CASH') return [];
+    if (this.isLocked() || !this.hasPaymentMethods() || this.noMethodSelected() || this.selectedMethod() === 'CASH') return [];
     const missing: string[] = [];
     if (!this.receiptFile()) missing.push('PAYMENT.CONFIRM.MISSING.RECEIPT');
     if (!this.isRefValid()) missing.push('PAYMENT.CONFIRM.MISSING.REFERENCE');
@@ -203,6 +225,7 @@ export class PaymentViewModel {
   }
 
   isSelected(method: PaymentMethod): boolean {
+    if (this.noMethodSelected()) return false;
     return method.accountId === null
       ? this.selectedMethod() === 'CASH'
       : this.selectedMethod() !== 'CASH' && this.selectedAccount()?.id === method.accountId;
@@ -211,6 +234,7 @@ export class PaymentViewModel {
   selectMethod(method: PaymentMethod): void {
     // con el pago en revisión o aprobado ya no se puede cambiar el método
     if (this.isLocked()) return;
+    this.noMethodSelected.set(false);
     this.selectedMethod.set(method.id);
     this.selectedAccountId.set(method.accountId);
     this.saveState();
@@ -350,13 +374,15 @@ export class PaymentViewModel {
         }
         const cashActive = accounts.some(a => methodIdOf(a.methodCode) === 'CASH');
         const methods = cashActive ? [...digital, CASH_METHOD] : digital;
-        this.paymentMethods.set(methods);
+        this.availableMethods.set(methods);
         this.accountsLoaded.set(true);
-        if (!this.isLocked() && methods.length > 0) {
-          this.selectedMethod.set(methods[0].id);
-          this.selectedAccountId.set(methods[0].accountId);
+        const offered = this.paymentMethods();
+        if (!this.isLocked() && offered.length > 0) {
+          this.selectedMethod.set(offered[0].id);
+          this.selectedAccountId.set(offered[0].accountId);
         }
         this.ensureAvailableMethod();
+        this.applyBookingMode();
       },
       // sin payment-service no hay medios para elegir: se avisa y no se deja confirmar
       error: () => this.accountsFailed.set(true)
@@ -384,6 +410,7 @@ export class PaymentViewModel {
         }
         this.booking.set(booking);
         this.applyBooking(booking);
+        this.applyBookingMode();
         this.loadPaymentState(booking.id);
         this.loadAmountDue(booking.id);
       },
@@ -501,11 +528,27 @@ export class PaymentViewModel {
     }
   }
 
+  // la reserva se hizo para pagar en efectivo: se preselecciona Efectivo; si el lavadero no tiene la
+  // cuenta de caja activa no se preselecciona nada y queda el aviso amarillo. Se aplica una sola vez,
+  // cuando ya se conocen la reserva y las cuentas
+  private applyBookingMode(): void {
+    const booking = this.booking();
+    if (this.bookingModeApplied || !booking || !this.accountsLoaded()) return;
+    this.bookingModeApplied = true;
+    if (booking.paymentMode !== 'CASH' || this.isLocked()) return;
+    const cash = this.paymentMethods().find(method => method.id === 'CASH');
+    if (cash) {
+      this.selectMethod(cash);
+    } else {
+      this.noMethodSelected.set(true);
+    }
+  }
+
   // el método guardado puede ya no estar activo (por ejemplo, el admin apagó el efectivo): se pasa
   // al primero disponible. Con el pago enviado no se toca
   private ensureAvailableMethod(): void {
     const methods = this.paymentMethods();
-    if (!this.accountsLoaded() || this.isLocked() || methods.length === 0) return;
+    if (!this.accountsLoaded() || this.isLocked() || this.noMethodSelected() || methods.length === 0) return;
     if (methods.some(m => this.isSelected(m))) return;
     this.selectedMethod.set(methods[0].id);
     this.selectedAccountId.set(methods[0].accountId);

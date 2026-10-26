@@ -72,7 +72,8 @@
     "CANCEL_SUCCESS": {
       "TITLE": "Booking cancelled",
       "MESSAGE": "Booking {{code}} was cancelled successfully."
-    }
+    },
+    "CANCEL_REASON": "Cancellation reason"
   },
   "HISTORY_CARD": {
     "TYPE": "Service type",
@@ -91,7 +92,9 @@
     "RATED": "Rated",
     "EDIT_RATING": "Edit rating",
     "RATE": "Rate Service",
-    "WASHED_BY": "Served by {{name}}"
+    "WASHED_BY": "Served by {{name}}",
+    "PAY_BEFORE": "Pay before {{time}}",
+    "PAY_IN_CASH": "You pay in cash at the car wash"
   },
   "COMMON": {
     "CLOSE": "Close",
@@ -421,7 +424,8 @@
       "SUBMIT": "Book Now",
       "NOTE": "We will be waiting for you at our location. Please arrive a few minutes early. You can pay online or at the car wash.",
       "CODE": "Code",
-      "BAY": "Bay"
+      "BAY": "Bay",
+      "PAYMENT": "Payment method"
     },
     "MINUTES": "{{count}} min",
     "POINTS": "Earns {{count}} points",
@@ -437,7 +441,17 @@
       "LOADING": "Looking for free operators...",
       "HINT": "If the operator you chose is no longer free when we confirm, we assign another one.",
       "NONE_FREE": "No operators free to choose at that time; we will still assign one."
-    }
+    },
+    "STEP4": {
+      "TITLE": "How will you pay?",
+      "SUBTITLE": "Choose the method before confirming the booking",
+      "DIGITAL": "Digital payment now",
+      "DIGITAL_DESC": "Nequi, Daviplata or bank transfer: scan the QR and upload the receipt within the next 30 minutes.",
+      "CASH": "Cash at the car wash",
+      "CASH_DESC": "You pay when you arrive and the administrator records the payment. You can only have one active cash booking."
+    },
+    "SUCCESS_MESSAGE_CASH": "Your wash is scheduled. You pay in cash at the car wash. Here is your booking summary:",
+    "SUCCESS_BUTTON_CASH": "View my bookings"
   },
   "APP": {
     "TITLE": "LavaRápido"
@@ -850,7 +864,15 @@
     "CASH_INFO_TITLE": "You pay at the car wash",
     "CASH_INFO_MESSAGE": "Pay in cash when you pick up your vehicle. The administrator will record the payment and you will get the payment-approved notification.",
     "RECEIPT_COMPRESSING": "Preparing the receipt...",
-    "RECEIPT_TOO_LARGE": "We could not reduce the image below 2 MB. Try a screenshot of the receipt."
+    "RECEIPT_TOO_LARGE": "We could not reduce the image below 2 MB. Try a screenshot of the receipt.",
+    "DEADLINE": {
+      "TITLE": "You have a deadline to pay",
+      "MESSAGE": "Upload the receipt before {{time}} or the booking will be released."
+    },
+    "CASH_MODE": {
+      "TITLE": "You pay in cash at the car wash",
+      "MESSAGE": "The administrator records the payment when you arrive; you don't need to upload a receipt."
+    }
   },
   "VEHICLES": {
     "TITLE": "My Vehicles",
@@ -1073,7 +1095,7 @@
     "CANCEL": "Cancel",
     "SCROLL_HINT": "Scroll to read the full document",
     "DEMO_NOTICE": "Sample document prepared for a training project. Before real commercial use, it must be reviewed by a lawyer and updated with the company's real information.",
-    "LAST_UPDATED_DATE": "September 17, 2026",
+    "LAST_UPDATED_DATE": "October 26, 2026",
     "COMPANY_NAME": "Express Car Wash S.A.S.",
     "TERMS": {
       "TITLE": "Terms and Conditions",
@@ -1100,11 +1122,11 @@
         },
         {
           "HEADING": "6. Bookings, cancellations and service delivery",
-          "BODY": "The Customer selects the date, time and wash type based on the availability shown by the system. A booking can be changed or cancelled at no cost before the service starts; once the operator marks it as 'in progress', cancellation is no longer possible. The service is only provided at the physical location indicated in the booking."
+          "BODY": "The Customer selects the date, time and wash type based on the availability shown by the system. A booking can be changed or cancelled at no cost before the service starts; once the operator marks it as 'in progress', cancellation is no longer possible. The service is only provided at the physical location indicated in the booking. If you choose digital payment, you must upload the receipt within 30 minutes of booking (or before the service time, if that is sooner); otherwise the booking is cancelled automatically and the time slot is released. With cash payment you can have at most one active booking at a time."
         },
         {
           "HEADING": "7. Payments and receipts",
-          "BODY": "Payment is made by scanning the shop's QR code for the chosen method (cash, Nequi, Daviplata or bank transfer) and uploading the corresponding receipt, which an Administrator verifies before confirming it. The Platform never asks for or stores debit or credit card data. A receipt whose transaction reference has already been used on another approved payment will be rejected."
+          "BODY": "When booking, the Customer chooses how to pay. Digital payment (Nequi, Daviplata or bank transfer) is made by scanning the shop's QR code and uploading the corresponding receipt, which an Administrator verifies before confirming it. Cash payment is made at the shop and recorded by the Administrator, without a receipt. The Platform never asks for or stores debit or credit card data. A receipt whose transaction reference has already been used on another approved payment will be rejected."
         },
         {
           "HEADING": "8. Ratings and comments",
@@ -2176,7 +2198,12 @@
       "no_show": "No show"
     },
     "CANCEL_REASON": "Cancellation reason",
-    "INSPECTION": "Inspection report"
+    "INSPECTION": "Inspection report",
+    "PAYMENT_MODE": "Payment method",
+    "PAYMENT_MODES": {
+      "DIGITAL": "Digital (QR and receipt)",
+      "CASH": "Cash at the car wash"
+    }
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "New booking",
@@ -2546,7 +2573,9 @@
     "SERVICE_TOO_LATE": "This service can no longer be started: more than 4 hours have passed since its end time. Ask the administrator to close it.",
     "NOTIFICATION_NOT_SENT": "The notification could not be sent right now. Please try again in a few minutes.",
     "SECURITY_SERVICE_UNAVAILABLE": "The accounts service is not responding. Try again in a moment.",
-    "DATABASE_UNAVAILABLE": "The database is not responding right now. Please try again in a few minutes."
+    "DATABASE_UNAVAILABLE": "The database is not responding right now. Please try again in a few minutes.",
+    "CASH_BOOKING_LIMIT": "You already have an active booking paid in cash. Pay it or cancel it, or choose digital payment.",
+    "INVALID_PAYMENT_MODE": "Choose how you will pay: digital payment or cash at the car wash."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Current password",
@@ -2736,5 +2765,8 @@
     "RESERVATIONS": "Go to bookings",
     "PAYMENT": "Go to payment",
     "RATINGS": "Go to ratings"
+  },
+  "CANCEL_REASONS": {
+    "PAYMENT_TIMEOUT": "The payment receipt was not uploaded in time"
   }
 }

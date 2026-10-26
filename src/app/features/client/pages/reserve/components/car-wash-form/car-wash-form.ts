@@ -39,17 +39,33 @@ export class CarWashFormComponent implements OnInit {
 
   // se ejecuta al hacer clic en "Reservar Ahora"
   onSubmit(): void {
-    this.vm.submit(booking => this.showReservationSuccess(booking));
+    this.vm.submit(booking => {
+      // pago digital: hay plazo para subir el comprobante, así que se va directo a pagar ESTA reserva
+      // (allí se avisa hasta qué hora). Si el backend no devolviera el modo, vale el que se eligió
+      const mode = booking.paymentMode ?? this.vm.paymentMode();
+      if (mode === 'DIGITAL') {
+        this.goToPayment(booking);
+        return;
+      }
+      this.showReservationSuccess(booking);
+    });
   }
 
-  // muestra el modal de reserva exitosa con lo que guardó el backend y, al cerrarlo, lleva al pago
+  // el siguiente paso del flujo es pagar ESTA reserva: sin el id, la pantalla de pago
+  // elegiría la próxima activa, que puede ser otra reserva del cliente
+  private goToPayment(booking: BookingResponse): void {
+    this.router.navigate(['/client/payment'], { queryParams: { booking: booking.id } });
+  }
+
+  // efectivo: modal de reserva exitosa con lo que guardó el backend y el aviso de pagar en el
+  // lavadero; no hay nada que pagar en línea, así que al cerrarlo lleva a "Mis reservas"
   private showReservationSuccess(booking: BookingResponse): void {
     const vehicle = booking.vehicle;
 
     const data: StatusModalData = {
       title: 'RESERVE.SUCCESS_TITLE',
-      message: 'RESERVE.SUCCESS_MESSAGE',
-      buttonText: 'RESERVE.SUCCESS_BUTTON',
+      message: 'RESERVE.SUCCESS_MESSAGE_CASH',
+      buttonText: 'RESERVE.SUCCESS_BUTTON_CASH',
       details: [
         { label: 'RESERVE.SUMMARY.CODE', value: booking.code },
         { label: 'RESERVE.SUMMARY.VEHICLE', value: `${vehicle?.brand ?? ''} ${vehicle?.model ?? ''}`.trim() },
@@ -71,10 +87,6 @@ export class CarWashFormComponent implements OnInit {
       data
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      // el siguiente paso del flujo es pagar ESTA reserva: sin el id, la pantalla de pago
-      // elegiría la próxima activa, que puede ser otra reserva del cliente
-      this.router.navigate(['/client/payment'], { queryParams: { booking: booking.id } });
-    });
+    dialogRef.afterClosed().subscribe(() => this.router.navigate(['/client/history']));
   }
 }

@@ -24,6 +24,16 @@
     }
   }
 
+  // plazo del pago digital o pago en efectivo: informa, no es un error
+  &--warning {
+    background: var(--warning-soft);
+    --notice-color: var(--warning);
+
+    p {
+      color: var(--text);
+    }
+  }
+
   > mat-icon {
     font-size: 2rem;
     width: 2rem;

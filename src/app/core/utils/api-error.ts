@@ -115,6 +115,9 @@ export const TRANSLATED_CODES: ReadonlySet<string> = new Set([
   'SCHEDULE_CONFLICTS_BOOKINGS',
   'TOO_MANY_ATTEMPTS',
   'VEHICLE_HAS_ACTIVE_BOOKINGS',
+  // contrato del 26-10 (booking-service): límite de reservas en efectivo y modo de pago obligatorio
+  'CASH_BOOKING_LIMIT',
+  'INVALID_PAYMENT_MODE',
   // errores genéricos (estado HTTP como código, servidor caído, límite de peticiones)
   'BAD_REQUEST',
   'DATA_CONFLICT',

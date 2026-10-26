@@ -3,9 +3,11 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { VehiclesService } from '../../../core/services/vehicles';
 import { VehicleResponse } from '../../../core/models/vehicle.models';
 import { BookingApiService, slotAlternatives, slotTakenByOthers } from '../../../core/services/booking-api';
-import { BookingResponse, CatalogServiceResponse, EstablishmentResponse } from '../../../core/models/booking.models';
+import { BookingPaymentMode, BookingResponse, CatalogServiceResponse, EstablishmentResponse } from '../../../core/models/booking.models';
 import { AvailableOperatorResponse, OperationsApiService, localIsoDate } from '../../../core/services/operations-api';
 import { apiErrorKey } from '../../../core/utils/api-error';
+// cuentas activas del lavadero (las mismas que usa la pantalla de pago): dicen si hay efectivo
+import { PaymentsApiService } from '../../../core/services/payments-api';
 import { FeedbackService } from '../../../shared/dialogs/feedback.service';
 
 // precio y duración del servicio para el tipo del vehículo (vienen del backend)
@@ -28,6 +30,7 @@ export class ReserveViewModel {
   private readonly vehiclesService = inject(VehiclesService);
   private readonly bookingApi = inject(BookingApiService);
   private readonly operationsApi = inject(OperationsApiService);
+  private readonly paymentsApi = inject(PaymentsApiService);
   private readonly feedback = inject(FeedbackService);
 
   // vehículos registrados del cliente
@@ -58,6 +61,11 @@ export class ReserveViewModel {
   readonly location = signal<EstablishmentResponse | null>(null);
   readonly submitting = signal(false);
 
+  // paso "¿Cómo vas a pagar?": por defecto el pago digital (QR + comprobante, con plazo)
+  readonly paymentMode = signal<BookingPaymentMode>('DIGITAL');
+  // el efectivo solo se ofrece si el admin tiene activa la cuenta de caja (EFECTIVO)
+  readonly cashAvailable = signal(false);
+
   // rango de fechas permitido (el backend también lo valida): hoy y los próximos 60 días
   readonly minDate = localIsoDate(new Date());
   readonly maxDate = localIsoDate(new Date(Date.now() + 60 * 24 * 60 * 60 * 1000));
@@ -86,6 +94,12 @@ export class ReserveViewModel {
       next: location => this.location.set(location),
       error: () => this.location.set(null)
     });
+    this.loadPaymentOptions();
+  }
+
+  selectPaymentMode(mode: BookingPaymentMode): void {
+    if (mode === 'CASH' && !this.cashAvailable()) return;
+    this.paymentMode.set(mode);
   }
 
   // al cambiar de vehículo cambian los precios: se piden los de su tipo
@@ -147,7 +161,8 @@ export class ReserveViewModel {
       serviceIds: [serviceId],
       date: this.date(),
       time: this.time(),
-      preferredOperatorId: this.preferredOperatorId()
+      preferredOperatorId: this.preferredOperatorId(),
+      paymentMode: this.paymentMode()
     }).subscribe({
       next: booking => {
         this.submitting.set(false);
@@ -168,6 +183,21 @@ export class ReserveViewModel {
         } else {
           this.feedback.error('RESERVE.SLOT_NOT_BOOKABLE_TITLE', apiErrorKey(error));
         }
+      }
+    });
+  }
+
+  // sin respuesta de payment-service no se ofrece el efectivo: queda el pago digital
+  private loadPaymentOptions(): void {
+    this.paymentsApi.accounts().subscribe({
+      next: accounts => {
+        const cash = accounts.some(account => account.methodCode === 'EFECTIVO');
+        this.cashAvailable.set(cash);
+        if (!cash) this.paymentMode.set('DIGITAL');
+      },
+      error: () => {
+        this.cashAvailable.set(false);
+        this.paymentMode.set('DIGITAL');
       }
     });
   }

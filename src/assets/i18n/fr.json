@@ -72,7 +72,8 @@
     "CANCEL_SUCCESS": {
       "TITLE": "Réservation annulée",
       "MESSAGE": "La réservation {{code}} a bien été annulée."
-    }
+    },
+    "CANCEL_REASON": "Motif d'annulation"
   },
   "HISTORY_CARD": {
     "TYPE": "Type de service",
@@ -91,7 +92,9 @@
     "RATED": "Évalué",
     "EDIT_RATING": "Modifier l’évaluation",
     "RATE": "Évaluer le service",
-    "WASHED_BY": "Servi par {{name}}"
+    "WASHED_BY": "Servi par {{name}}",
+    "PAY_BEFORE": "Payez avant {{time}}",
+    "PAY_IN_CASH": "Vous payez en espèces au lavage"
   },
   "COMMON": {
     "CLOSE": "Fermer",
@@ -421,7 +424,8 @@
       "SUBMIT": "Réserver maintenant",
       "NOTE": "Nous vous attendons dans notre station. Arrivez quelques minutes en avance. Vous pouvez payer en ligne ou sur place.",
       "CODE": "Code",
-      "BAY": "Baie"
+      "BAY": "Baie",
+      "PAYMENT": "Mode de paiement"
     },
     "MINUTES": "{{count}} min",
     "POINTS": "Rapporte {{count}} points",
@@ -437,7 +441,17 @@
       "LOADING": "Recherche d'opérateurs libres...",
       "HINT": "Si l'opérateur choisi n'est plus libre à la confirmation, nous en attribuons un autre.",
       "NONE_FREE": "Aucun opérateur libre à choisir à cette heure ; nous en attribuerons quand même un."
-    }
+    },
+    "STEP4": {
+      "TITLE": "Comment allez-vous payer ?",
+      "SUBTITLE": "Choisissez le moyen avant de confirmer la réservation",
+      "DIGITAL": "Paiement numérique maintenant",
+      "DIGITAL_DESC": "Nequi, Daviplata ou virement : scannez le QR et téléchargez le justificatif dans les 30 minutes qui suivent.",
+      "CASH": "Espèces au lavage",
+      "CASH_DESC": "Vous payez à votre arrivée et l'administrateur enregistre le paiement. Vous ne pouvez avoir qu'une seule réservation active en espèces."
+    },
+    "SUCCESS_MESSAGE_CASH": "Votre lavage est programmé. Vous payez en espèces au lavage. Voici le résumé de votre réservation :",
+    "SUCCESS_BUTTON_CASH": "Voir mes réservations"
   },
   "APP": {
     "TITLE": "LavaRápido"
@@ -850,7 +864,15 @@
     "CASH_INFO_TITLE": "Vous payez sur place",
     "CASH_INFO_MESSAGE": "Payez en espèces lorsque vous récupérez votre véhicule. L'administrateur enregistrera le paiement et vous recevrez la notification de paiement approuvé.",
     "RECEIPT_COMPRESSING": "Préparation du justificatif...",
-    "RECEIPT_TOO_LARGE": "Impossible de réduire l'image sous 2 Mo. Essayez avec une capture d'écran du justificatif."
+    "RECEIPT_TOO_LARGE": "Impossible de réduire l'image sous 2 Mo. Essayez avec une capture d'écran du justificatif.",
+    "DEADLINE": {
+      "TITLE": "Vous avez un délai pour payer",
+      "MESSAGE": "Téléchargez le justificatif avant {{time}} ou la réservation sera libérée."
+    },
+    "CASH_MODE": {
+      "TITLE": "Vous payez en espèces au lavage",
+      "MESSAGE": "L'administrateur enregistre le paiement à votre arrivée ; aucun justificatif n'est nécessaire."
+    }
   },
   "VEHICLES": {
     "TITLE": "Mes Véhicules",
@@ -1073,7 +1095,7 @@
     "CANCEL": "Annuler",
     "SCROLL_HINT": "Faites défiler pour lire le document complet",
     "DEMO_NOTICE": "Document d'exemple préparé pour un projet de formation. Avant toute utilisation commerciale réelle, il doit être révisé par un avocat et mis à jour avec les informations réelles de l'entreprise.",
-    "LAST_UPDATED_DATE": "17 septembre 2026",
+    "LAST_UPDATED_DATE": "26 octobre 2026",
     "COMPANY_NAME": "Express Car Wash S.A.S.",
     "TERMS": {
       "TITLE": "Conditions Générales",
@@ -1100,11 +1122,11 @@
         },
         {
           "HEADING": "6. Réservations, annulations et prestation du service",
-          "BODY": "Le Client sélectionne la date, l'heure et le type de lavage selon la disponibilité affichée par le système. Une réservation peut être modifiée ou annulée gratuitement avant le début du service ; une fois que l'opérateur la marque « en cours », l'annulation n'est plus possible. Le service n'est fourni que dans l'établissement physique indiqué lors de la réservation."
+          "BODY": "Le Client sélectionne la date, l'heure et le type de lavage selon la disponibilité affichée par le système. Une réservation peut être modifiée ou annulée gratuitement avant le début du service ; une fois que l'opérateur la marque « en cours », l'annulation n'est plus possible. Le service n'est fourni que dans l'établissement physique indiqué lors de la réservation. Si vous choisissez le paiement numérique, vous devez télécharger le justificatif dans les 30 minutes suivant la réservation (ou avant l'heure du service, si elle est plus proche) ; à défaut, la réservation est annulée automatiquement et le créneau est libéré. Avec le paiement en espèces, vous ne pouvez avoir qu'une seule réservation active à la fois."
         },
         {
           "HEADING": "7. Paiements et justificatifs",
-          "BODY": "Le paiement s'effectue en scannant le code QR de l'établissement pour le moyen choisi (espèces, Nequi, Daviplata ou virement bancaire) et en téléchargeant le justificatif correspondant, vérifié par un Administrateur avant confirmation. La Plateforme ne demande ni ne conserve jamais de données de carte bancaire. Un justificatif dont la référence de transaction a déjà été utilisée pour un autre paiement approuvé sera rejeté."
+          "BODY": "Lors de la réservation, le Client choisit comment il paiera. Le paiement numérique (Nequi, Daviplata ou virement bancaire) s'effectue en scannant le code QR de l'établissement et en téléchargeant le justificatif correspondant, vérifié par un Administrateur avant confirmation. Le paiement en espèces se fait dans l'établissement et est enregistré par l'Administrateur, sans justificatif. La Plateforme ne demande ni ne conserve jamais de données de carte bancaire. Un justificatif dont la référence de transaction a déjà été utilisée pour un autre paiement approuvé sera rejeté."
         },
         {
           "HEADING": "8. Évaluations et commentaires",
@@ -2176,7 +2198,12 @@
     },
     "CANCEL_REASON": "Motif d'annulation",
     "INSPECTION": "Rapport d'inspection",
-    "REASSIGN": "Changer d'opérateur"
+    "REASSIGN": "Changer d'opérateur",
+    "PAYMENT_MODE": "Mode de paiement",
+    "PAYMENT_MODES": {
+      "DIGITAL": "Numérique (QR et justificatif)",
+      "CASH": "Espèces au lavage"
+    }
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nouvelle réservation",
@@ -2546,7 +2573,9 @@
     "SERVICE_TOO_LATE": "Ce service ne peut plus être démarré : plus de 4 heures se sont écoulées depuis l'heure de fin. Demandez à l'administrateur de le clôturer.",
     "NOTIFICATION_NOT_SENT": "La notification n'a pas pu être envoyée pour le moment. Réessayez dans quelques minutes.",
     "SECURITY_SERVICE_UNAVAILABLE": "Le service des comptes ne répond pas. Réessayez dans un instant.",
-    "DATABASE_UNAVAILABLE": "La base de données ne répond pas pour le moment. Réessayez dans quelques minutes."
+    "DATABASE_UNAVAILABLE": "La base de données ne répond pas pour le moment. Réessayez dans quelques minutes.",
+    "CASH_BOOKING_LIMIT": "Vous avez déjà une réservation active payée en espèces. Payez-la ou annulez-la, ou choisissez le paiement numérique.",
+    "INVALID_PAYMENT_MODE": "Choisissez comment vous allez payer : paiement numérique ou espèces au lavage."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Mot de passe actuel",
@@ -2736,5 +2765,8 @@
     "RESERVATIONS": "Aller aux réservations",
     "PAYMENT": "Aller au paiement",
     "RATINGS": "Aller aux évaluations"
+  },
+  "CANCEL_REASONS": {
+    "PAYMENT_TIMEOUT": "Le justificatif de paiement n'a pas été téléchargé à temps"
   }
 }

@@ -72,7 +72,8 @@
     "CANCEL_SUCCESS": {
       "TITLE": "Reserva cancelada",
       "MESSAGE": "A reserva {{code}} foi cancelada com sucesso."
-    }
+    },
+    "CANCEL_REASON": "Motivo do cancelamento"
   },
   "HISTORY_CARD": {
     "TYPE": "Tipo de serviço",
@@ -91,7 +92,9 @@
     "RATED": "Avaliado",
     "EDIT_RATING": "Editar avaliação",
     "RATE": "Avaliar serviço",
-    "WASHED_BY": "Atendido por {{name}}"
+    "WASHED_BY": "Atendido por {{name}}",
+    "PAY_BEFORE": "Pague antes das {{time}}",
+    "PAY_IN_CASH": "Você paga em dinheiro no lava-rápido"
   },
   "COMMON": {
     "CLOSE": "Fechar",
@@ -421,7 +424,8 @@
       "SUBMIT": "Reservar Agora",
       "NOTE": "Esperamos você na nossa unidade. Chegue alguns minutos antes do horário. Você pode pagar online ou no lava-rápido.",
       "CODE": "Código",
-      "BAY": "Box"
+      "BAY": "Box",
+      "PAYMENT": "Forma de pagamento"
     },
     "MINUTES": "{{count}} min",
     "POINTS": "Soma {{count}} pontos",
@@ -437,7 +441,17 @@
       "LOADING": "Procurando operadores livres...",
       "HINT": "Se o operador escolhido não estiver mais livre ao confirmar, atribuímos outro.",
       "NONE_FREE": "Não há operadores livres para escolher nesse horário; mesmo assim atribuiremos um."
-    }
+    },
+    "STEP4": {
+      "TITLE": "Como você vai pagar?",
+      "SUBTITLE": "Escolha o meio antes de confirmar a reserva",
+      "DIGITAL": "Pagamento digital agora",
+      "DIGITAL_DESC": "Nequi, Daviplata ou transferência: escaneie o QR e envie o comprovante nos 30 minutos seguintes.",
+      "CASH": "Dinheiro no lava-rápido",
+      "CASH_DESC": "Você paga ao chegar e o administrador registra o pagamento. Você só pode ter uma reserva ativa em dinheiro."
+    },
+    "SUCCESS_MESSAGE_CASH": "Sua lavagem foi agendada. Você paga em dinheiro no lava-rápido. Este é o resumo da sua reserva:",
+    "SUCCESS_BUTTON_CASH": "Ver minhas reservas"
   },
   "APP": {
     "TITLE": "LavaRápido"
@@ -850,7 +864,15 @@
     "CASH_INFO_TITLE": "Você paga no local",
     "CASH_INFO_MESSAGE": "Pague em dinheiro quando buscar seu veículo. O administrador registrará o pagamento e você receberá a notificação de pagamento aprovado.",
     "RECEIPT_COMPRESSING": "Preparando o comprovante...",
-    "RECEIPT_TOO_LARGE": "Não conseguimos reduzir a imagem para menos de 2 MB. Tente uma captura de tela do comprovante."
+    "RECEIPT_TOO_LARGE": "Não conseguimos reduzir a imagem para menos de 2 MB. Tente uma captura de tela do comprovante.",
+    "DEADLINE": {
+      "TITLE": "Você tem um prazo para pagar",
+      "MESSAGE": "Envie o comprovante antes das {{time}} ou a reserva será liberada."
+    },
+    "CASH_MODE": {
+      "TITLE": "Você paga em dinheiro no lava-rápido",
+      "MESSAGE": "O administrador registra o pagamento quando você chegar; não é preciso enviar comprovante."
+    }
   },
   "VEHICLES": {
     "TITLE": "Meus Veículos",
@@ -1073,7 +1095,7 @@
     "CANCEL": "Cancelar",
     "SCROLL_HINT": "Role para ler o documento completo",
     "DEMO_NOTICE": "Documento de exemplo elaborado para um projeto formativo. Antes de um uso comercial real, deve ser revisado por um advogado e atualizado com os dados reais da empresa.",
-    "LAST_UPDATED_DATE": "17 de setembro de 2026",
+    "LAST_UPDATED_DATE": "26 de outubro de 2026",
     "COMPANY_NAME": "Express Car Wash S.A.S.",
     "TERMS": {
       "TITLE": "Termos e Condições",
@@ -1100,11 +1122,11 @@
         },
         {
           "HEADING": "6. Reservas, cancelamentos e prestação do serviço",
-          "BODY": "O Cliente seleciona data, horário e tipo de lavagem conforme a disponibilidade exibida pelo sistema. Uma reserva pode ser alterada ou cancelada sem custo antes do início do serviço; uma vez marcada como 'em andamento' pelo operador, o cancelamento não é mais possível. O serviço é prestado apenas no estabelecimento físico indicado na reserva."
+          "BODY": "O Cliente seleciona data, horário e tipo de lavagem conforme a disponibilidade exibida pelo sistema. Uma reserva pode ser alterada ou cancelada sem custo antes do início do serviço; uma vez marcada como 'em andamento' pelo operador, o cancelamento não é mais possível. O serviço é prestado apenas no estabelecimento físico indicado na reserva. Se você escolher o pagamento digital, deve enviar o comprovante nos 30 minutos seguintes à reserva (ou antes do horário do serviço, se for antes); caso contrário, a reserva é cancelada automaticamente e o horário é liberado. Com pagamento em dinheiro você pode ter no máximo uma reserva ativa por vez."
         },
         {
           "HEADING": "7. Pagamentos e comprovantes",
-          "BODY": "O pagamento é feito escaneando o código QR do estabelecimento para o método escolhido (dinheiro, Nequi, Daviplata ou transferência bancária) e enviando o comprovante correspondente, verificado por um Administrador antes da confirmação. A Plataforma nunca solicita nem armazena dados de cartão de débito ou crédito. Um comprovante cuja referência de transação já tenha sido usada em outro pagamento aprovado será rejeitado."
+          "BODY": "Ao reservar, o Cliente escolhe como vai pagar. O pagamento digital (Nequi, Daviplata ou transferência bancária) é feito escaneando o código QR do estabelecimento e enviando o comprovante correspondente, verificado por um Administrador antes da confirmação. O pagamento em dinheiro é feito no estabelecimento e registrado pelo Administrador, sem comprovante. A Plataforma nunca solicita nem armazena dados de cartão de débito ou crédito. Um comprovante cuja referência de transação já tenha sido usada em outro pagamento aprovado será rejeitado."
         },
         {
           "HEADING": "8. Avaliações e comentários",
@@ -2176,7 +2198,12 @@
     },
     "CANCEL_REASON": "Motivo do cancelamento",
     "INSPECTION": "Relatório de inspeção",
-    "REASSIGN": "Trocar operador"
+    "REASSIGN": "Trocar operador",
+    "PAYMENT_MODE": "Forma de pagamento",
+    "PAYMENT_MODES": {
+      "DIGITAL": "Digital (QR e comprovante)",
+      "CASH": "Dinheiro no lava-rápido"
+    }
   },
   "BOOKING_MODAL": {
     "TITLE_CREATE": "Nova reserva",
@@ -2546,7 +2573,9 @@
     "SERVICE_TOO_LATE": "Este serviço não pode mais ser iniciado: passaram mais de 4 horas do horário de término. Peça ao administrador para encerrá-lo.",
     "NOTIFICATION_NOT_SENT": "Não foi possível enviar a notificação agora. Tente novamente em alguns minutos.",
     "SECURITY_SERVICE_UNAVAILABLE": "O serviço de contas não está respondendo. Tente novamente em instantes.",
-    "DATABASE_UNAVAILABLE": "O banco de dados não está respondendo agora. Tente novamente em alguns minutos."
+    "DATABASE_UNAVAILABLE": "O banco de dados não está respondendo agora. Tente novamente em alguns minutos.",
+    "CASH_BOOKING_LIMIT": "Você já tem uma reserva ativa com pagamento em dinheiro. Pague-a ou cancele-a, ou escolha o pagamento digital.",
+    "INVALID_PAYMENT_MODE": "Escolha como você vai pagar: pagamento digital ou dinheiro no lava-rápido."
   },
   "PASSWORD_CONFIRM_MODAL": {
     "LABEL": "Senha atual",
@@ -2736,5 +2765,8 @@
     "RESERVATIONS": "Ir para reservas",
     "PAYMENT": "Ir para o pagamento",
     "RATINGS": "Ir para avaliações"
+  },
+  "CANCEL_REASONS": {
+    "PAYMENT_TIMEOUT": "O comprovante de pagamento não foi enviado a tempo"
   }
 }

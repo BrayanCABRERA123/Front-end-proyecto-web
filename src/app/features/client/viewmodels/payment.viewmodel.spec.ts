@@ -143,3 +143,115 @@ describe('PaymentViewModel (monto del servidor, BIZ-02)', () => {
     expect(vm.totalToPay()).toBe(36000);
   });
 });
+
+describe('PaymentViewModel (plazo del pago digital)', () => {
+  let vm: PaymentViewModel;
+  // 14:30 en la hora local del navegador, sin depender de su zona horaria
+  const deadline = new Date(2099, 9, 23, 14, 30).toISOString();
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: BookingApiService, useValue: {} },
+        { provide: PaymentsApiService, useValue: {} },
+        { provide: LoyaltyApiService, useValue: {} },
+        { provide: FeedbackService, useValue: { success: vi.fn(), error: vi.fn() } },
+        PaymentViewModel,
+      ],
+    });
+    vm = TestBed.inject(PaymentViewModel);
+  });
+
+  const withBooking = (changes: Partial<BookingResponse>) =>
+    vm.booking.set({ id: 7, status: 'CONFIRMED', paymentMode: 'DIGITAL', paymentDeadline: deadline, paymentReported: false, ...changes } as BookingResponse);
+
+  it('avisa hasta qué hora (local) hay que subir el comprobante', () => {
+    withBooking({});
+    expect(vm.payBefore()).toBe('14:30');
+    expect(vm.isCashBooking()).toBe(false);
+  });
+
+  it('no avisa si el comprobante ya se reportó, si se envió desde aquí o si la reserva no está activa', () => {
+    withBooking({ paymentReported: true });
+    expect(vm.payBefore()).toBeNull();
+
+    withBooking({ status: 'CANCELLED' });
+    expect(vm.payBefore()).toBeNull();
+
+    withBooking({});
+    vm.flowStep.set('VERIFYING');
+    expect(vm.payBefore()).toBeNull();
+  });
+
+  it('las reservas en efectivo o anteriores al cambio no tienen plazo', () => {
+    withBooking({ paymentMode: 'CASH', paymentDeadline: null });
+    expect(vm.payBefore()).toBeNull();
+    expect(vm.isCashBooking()).toBe(true);
+
+    withBooking({ paymentMode: null, paymentDeadline: null, paymentReported: undefined });
+    expect(vm.payBefore()).toBeNull();
+    expect(vm.isCashBooking()).toBe(false);
+  });
+});
+
+describe('PaymentViewModel (medios según el modo de pago de la reserva)', () => {
+  const account = (id: number, methodCode: string, requiresReceipt: boolean) =>
+    ({ id, methodCode, methodName: methodCode, accountHolder: 'Lavadero', accountNumber: null, qrImageUrl: null, requiresReceipt });
+  const accounts = [account(1, 'NEQUI', true), account(2, 'TRANSFERENCIA', true), account(3, 'EFECTIVO', false)];
+  // el medio elegido se guarda por código de reserva: cada prueba empieza sin lo de la anterior
+  beforeEach(() => localStorage.clear());
+
+  function vmFor(paymentMode: 'DIGITAL' | 'CASH' | null, active = accounts): PaymentViewModel {
+    const booking = { id: 7, code: 'RES-7', status: 'CONFIRMED', date: '2099-10-23', startTime: '09:00', endTime: '09:45',
+      subtotal: 40000, pointsDiscountAmount: 0, services: [{ name: 'Básico' }], vehicle: null, paymentMode } as unknown as BookingResponse;
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: BookingApiService, useValue: { myBookings: () => of([booking]), establishment: () => of({}) } },
+        { provide: PaymentsApiService, useValue: { accounts: () => of(active), mine: () => of([]) } },
+        { provide: LoyaltyApiService, useValue: { bookingRedemption: () => of({ amountDue: 40000, redemption: null }) } },
+        { provide: FeedbackService, useValue: { success: vi.fn(), error: vi.fn() } },
+        PaymentViewModel,
+      ],
+    });
+    const vm = TestBed.inject(PaymentViewModel);
+    vm.init(7);
+    return vm;
+  }
+
+  it('con una reserva DIGITAL no ofrece efectivo, solo las cuentas que piden comprobante', () => {
+    const vm = vmFor('DIGITAL');
+    expect(vm.paymentMethods().map(m => m.id)).toEqual(['NEQUI', 'TRANSFER']);
+    expect(vm.selectedMethod()).not.toBe('CASH');
+  });
+
+  it('una reserva CASH abre con Efectivo preseleccionado, no con Nequi', () => {
+    const vm = vmFor('CASH');
+    expect(vm.selectedMethod()).toBe('CASH');
+    expect(vm.noMethodSelected()).toBe(false);
+    expect(vm.isSelected(vm.paymentMethods().find(m => m.id === 'NEQUI')!)).toBe(false);
+  });
+
+  it('una reserva CASH sin cuenta de efectivo activa no preselecciona nada', () => {
+    const vm = vmFor('CASH', accounts.slice(0, 2));
+    expect(vm.noMethodSelected()).toBe(true);
+    expect(vm.paymentMethods().some(m => vm.isSelected(m))).toBe(false);
+    expect(vm.canConfirm()).toBe(false);
+    expect(vm.isCashBooking()).toBe(true);
+
+    vm.selectMethod(vm.paymentMethods()[0]);
+    expect(vm.noMethodSelected()).toBe(false);
+    expect(vm.selectedMethod()).toBe('NEQUI');
+  });
+
+  it('las reservas DIGITAL o antiguas (sin modo) abren con el primer medio, como antes', () => {
+    expect(vmFor('DIGITAL').selectedMethod()).toBe('NEQUI');
+    TestBed.resetTestingModule();
+    expect(vmFor(null).selectedMethod()).toBe('NEQUI');
+  });
+
+  it('las reservas en efectivo o antiguas (sin modo) siguen viendo el efectivo', () => {
+    expect(vmFor('CASH').paymentMethods().map(m => m.id)).toEqual(['NEQUI', 'TRANSFER', 'CASH']);
+    TestBed.resetTestingModule();
+    expect(vmFor(null).paymentMethods().map(m => m.id)).toEqual(['NEQUI', 'TRANSFER', 'CASH']);
+  });
+});
