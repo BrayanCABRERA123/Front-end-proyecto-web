@@ -1122,43 +1122,47 @@
         },
         {
           "HEADING": "6. Bookings, cancellations and service delivery",
-          "BODY": "The Customer selects the date, time and wash type based on the availability shown by the system. A booking can be changed or cancelled at no cost before the service starts; once the operator marks it as 'in progress', cancellation is no longer possible. The service is only provided at the physical location indicated in the booking. If you choose digital payment, you must upload the receipt within 30 minutes of booking (or before the service time, if that is sooner); otherwise the booking is cancelled automatically and the time slot is released. With cash payment you can have at most one active booking at a time."
+          "BODY": "The Customer selects the date, time and wash type based on the availability shown by the system. A booking can be changed or cancelled at no cost before the service starts; once the operator marks it as 'in progress', cancellation is no longer possible. The service is only provided at the physical location indicated in the booking. If the Customer chooses digital payment, they must upload the receipt within 30 minutes of booking (or before the service time, if that is sooner); otherwise, the booking is cancelled automatically and the time slot is released. With cash payment, the Customer can have at most one active booking at a time."
         },
         {
           "HEADING": "7. Payments and receipts",
           "BODY": "When booking, the Customer chooses how to pay. Digital payment (Nequi, Daviplata or bank transfer) is made by scanning the shop's QR code and uploading the corresponding receipt, which an Administrator verifies before confirming it. Cash payment is made at the shop and recorded by the Administrator, without a receipt. The Platform never asks for or stores debit or credit card data. A receipt whose transaction reference has already been used on another approved payment will be rejected."
         },
         {
-          "HEADING": "8. Ratings and comments",
+          "HEADING": "8. Inspection report and vehicle photographs",
+          "BODY": "For services that include an inspection (those lasting three hours or more), the Administrator may prepare an inspection report that records the vehicle's condition before and after the service, by phase: reception, exterior, interior, engine and delivery. For each finding, the Administrator may upload up to five photographs of the vehicle (JPEG or PNG, up to 2 MB each). The photographs are taken to record the vehicle's condition and to handle damage claims. The report is seen by the Administrator and, once published, by the Customer who owns the booking, who receives the link to the report when the Administrator shares it. The link works without signing in, so anyone who has it can view the report: the booking code, the vehicle, the services, the date and time, the findings with their photographs and the plate, which is partially hidden in the report text but may be visible in the photographs. For this reason, the link is personal and the Customer must not share it."
+        },
+        {
+          "HEADING": "9. Ratings and comments",
           "BODY": "Once a service is completed, the Customer may rate it and leave a comment. Published content must be respectful and truthful; the Platform may remove comments that break this rule or that contain third parties' personal data, insults or unlawful content."
         },
         {
-          "HEADING": "9. Promotions and loyalty points",
+          "HEADING": "10. Promotions and loyalty points",
           "BODY": "Promotions, discounts and the loyalty points program are defined and may be changed by the Administrator at any time, respecting benefits already earned for services completed before the change."
         },
         {
-          "HEADING": "10. Intellectual property",
+          "HEADING": "11. Intellectual property",
           "BODY": "The name, logo, interface design and original content of the Platform belong to Express Car Wash S.A.S. or its licensors and are protected under Colombian copyright and industrial property law. Unauthorized use is prohibited."
         },
         {
-          "HEADING": "11. Limitation of liability",
+          "HEADING": "12. Limitation of liability",
           "BODY": "The Platform is a booking and payment-verification channel; the wash itself is performed physically at the shop. Express Car Wash is not liable for damages arising from acts of God, force majeure, misuse of the Platform by the User, or false information supplied by the User."
         },
         {
-          "HEADING": "12. Suspension and termination",
+          "HEADING": "13. Suspension and termination",
           "BODY": "The User may request account deletion at any time from the Settings section or by emailing our contact address. The Platform may suspend or cancel accounts that breach these Terms, with prior notice whenever reasonably possible."
         },
         {
-          "HEADING": "13. Changes to these Terms",
+          "HEADING": "14. Changes to these Terms",
           "BODY": "These Terms may be updated to reflect legal, technical or operational changes. Material changes will be announced within the Platform and, where applicable, will require renewed acceptance."
         },
         {
-          "HEADING": "14. Governing law and jurisdiction",
+          "HEADING": "15. Governing law and jurisdiction",
           "BODY": "These Terms are governed by the laws of the Republic of Colombia. Any dispute will be submitted to the competent courts of Bogotá D.C., without prejudice to the consumer-protection remedies under Law 1480 of 2011 before the Superintendencia de Industria y Comercio."
         },
         {
-          "HEADING": "15. Contact",
-          "BODY": "For questions about these Terms, write to datos@expresscarwash.co or call +57 300 123 4567."
+          "HEADING": "16. Contact",
+          "BODY": "For questions about these Terms, the User may write to datos@expresscarwash.co or call +57 300 123 4567."
         }
       ]
     },
@@ -1179,11 +1183,11 @@
         },
         {
           "HEADING": "4. Data we collect",
-          "BODY": "Full name, email, phone number, address, password (always stored encrypted, never in plain text), vehicle data (plate, type, brand), booking and service history, ratings and comments, payment receipts, and language/theme preferences. We never collect debit or credit card data under any circumstance."
+          "BODY": "Full name, email, phone number, address, password (always stored encrypted, never in plain text), vehicle data (plate, type, brand), booking and service history, ratings and comments, payment receipts, photographs of the vehicle taken during the inspection, and language/theme preferences. We never collect debit or credit card data under any circumstance."
         },
         {
           "HEADING": "5. Purposes of processing",
-          "BODY": "Data is used to: create and manage the User's account; manage bookings, operator assignments and service execution; verify QR-based payments; send notifications about booking and payment status; administer the promotions and loyalty program; generate aggregated operational reports; and comply with legal obligations or requests from competent authorities."
+          "BODY": "Data is used to: create and manage the User's account; manage bookings, operator assignments and service execution; verify QR-based payments; send notifications about booking and payment status; administer the promotions and loyalty program; record the vehicle's condition in the inspection report, with its photographs, and handle damage claims; generate aggregated operational reports; and comply with legal obligations or requests from competent authorities."
         },
         {
           "HEADING": "6. Sensitive data and minors",
@@ -1211,7 +1215,7 @@
         },
         {
           "HEADING": "12. Data retention",
-          "BODY": "Personal data is kept while the account remains active and, after deletion, for as long as needed to meet legal, accounting or defense-related obligations, after which it is securely deleted or anonymized."
+          "BODY": "Personal data is kept while the account remains active and, after deletion, for as long as needed to meet legal, accounting or defense-related obligations, after which it is securely deleted or anonymized. Photographs of the vehicle taken during the inspection are kept for as long as needed to handle claims about the service, in accordance with this policy."
         },
         {
           "HEADING": "13. Supervisory authority",
