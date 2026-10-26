@@ -1122,43 +1122,47 @@
         },
         {
           "HEADING": "6. Réservations, annulations et prestation du service",
-          "BODY": "Le Client sélectionne la date, l'heure et le type de lavage selon la disponibilité affichée par le système. Une réservation peut être modifiée ou annulée gratuitement avant le début du service ; une fois que l'opérateur la marque « en cours », l'annulation n'est plus possible. Le service n'est fourni que dans l'établissement physique indiqué lors de la réservation. Si vous choisissez le paiement numérique, vous devez télécharger le justificatif dans les 30 minutes suivant la réservation (ou avant l'heure du service, si elle est plus proche) ; à défaut, la réservation est annulée automatiquement et le créneau est libéré. Avec le paiement en espèces, vous ne pouvez avoir qu'une seule réservation active à la fois."
+          "BODY": "Le Client sélectionne la date, l'heure et le type de lavage selon la disponibilité affichée par le système. Une réservation peut être modifiée ou annulée gratuitement avant le début du service ; une fois que l'opérateur la marque « en cours », l'annulation n'est plus possible. Le service n'est fourni que dans l'établissement physique indiqué lors de la réservation. Si le Client choisit le paiement numérique, il doit télécharger le justificatif dans les 30 minutes suivant la réservation (ou avant l'heure du service, si elle est plus proche) ; à défaut, la réservation est annulée automatiquement et le créneau est libéré. Avec le paiement en espèces, le Client ne peut avoir qu'une seule réservation active à la fois."
         },
         {
           "HEADING": "7. Paiements et justificatifs",
           "BODY": "Lors de la réservation, le Client choisit comment il paiera. Le paiement numérique (Nequi, Daviplata ou virement bancaire) s'effectue en scannant le code QR de l'établissement et en téléchargeant le justificatif correspondant, vérifié par un Administrateur avant confirmation. Le paiement en espèces se fait dans l'établissement et est enregistré par l'Administrateur, sans justificatif. La Plateforme ne demande ni ne conserve jamais de données de carte bancaire. Un justificatif dont la référence de transaction a déjà été utilisée pour un autre paiement approuvé sera rejeté."
         },
         {
-          "HEADING": "8. Évaluations et commentaires",
+          "HEADING": "8. Rapport d'inspection et photographies du véhicule",
+          "BODY": "Pour les services qui comprennent une inspection (ceux de trois heures ou plus), l'Administrateur peut établir un rapport d'inspection qui consigne l'état du véhicule avant et après le service, par phase : réception, extérieur, intérieur, moteur et livraison. Pour chaque constat, l'Administrateur peut téléverser jusqu'à cinq photographies du véhicule (JPEG ou PNG, 2 Mo maximum chacune). Les photographies sont prises pour consigner l'état du véhicule et traiter les réclamations pour dommages. Le rapport est consulté par l'Administrateur et, une fois publié, par le Client titulaire de la réservation, qui en reçoit le lien lorsque l'Administrateur le lui partage. Ce lien fonctionne sans connexion : toute personne qui le possède peut donc voir le rapport, à savoir le code de la réservation, le véhicule, les services, la date et l'heure, les constats avec leurs photographies et la plaque, partiellement masquée dans le texte du rapport mais susceptible d'apparaître sur les photographies. C'est pourquoi le lien est personnel et le Client ne doit pas le partager."
+        },
+        {
+          "HEADING": "9. Évaluations et commentaires",
           "BODY": "Une fois le service terminé, le Client peut l'évaluer et laisser un commentaire. Le contenu publié doit être respectueux et véridique ; la Plateforme peut supprimer les commentaires qui enfreignent cette règle ou qui contiennent des données personnelles de tiers, des insultes ou un contenu illégal."
         },
         {
-          "HEADING": "9. Promotions et points de fidélité",
+          "HEADING": "10. Promotions et points de fidélité",
           "BODY": "Les promotions, remises et le programme de points de fidélité sont définis et peuvent être modifiés par l'Administrateur à tout moment, dans le respect des avantages déjà acquis pour les services réalisés avant la modification."
         },
         {
-          "HEADING": "10. Propriété intellectuelle",
+          "HEADING": "11. Propriété intellectuelle",
           "BODY": "Le nom, le logo, le design de l'interface et les contenus propres de la Plateforme appartiennent à Express Car Wash S.A.S. ou à ses concédants et sont protégés par le droit colombien de la propriété intellectuelle et industrielle. Toute utilisation non autorisée est interdite."
         },
         {
-          "HEADING": "11. Limitation de responsabilité",
+          "HEADING": "12. Limitation de responsabilité",
           "BODY": "La Plateforme est un canal de réservation et de vérification des paiements ; le lavage lui-même est réalisé physiquement dans l'établissement. Express Car Wash ne saurait être tenu responsable des dommages résultant d'un cas fortuit, d'un cas de force majeure, d'une mauvaise utilisation de la Plateforme par l'Utilisateur ou d'informations fausses fournies par celui-ci."
         },
         {
-          "HEADING": "12. Suspension et résiliation",
+          "HEADING": "13. Suspension et résiliation",
           "BODY": "L'Utilisateur peut demander la suppression de son compte à tout moment depuis la section Paramètres ou par courriel. La Plateforme peut suspendre ou résilier les comptes qui enfreignent les présentes Conditions, avec notification préalable lorsque cela est raisonnablement possible."
         },
         {
-          "HEADING": "13. Modifications des présentes conditions",
+          "HEADING": "14. Modifications des présentes conditions",
           "BODY": "Les présentes Conditions peuvent être mises à jour pour refléter des changements légaux, techniques ou opérationnels. Les changements substantiels seront annoncés dans la Plateforme et, le cas échéant, nécessiteront une nouvelle acceptation."
         },
         {
-          "HEADING": "14. Loi applicable et juridiction",
+          "HEADING": "15. Loi applicable et juridiction",
           "BODY": "Les présentes Conditions sont régies par les lois de la République de Colombie. Tout litige sera soumis aux tribunaux compétents de Bogotá D.C., sans préjudice des mécanismes de protection du consommateur prévus par la loi 1480 de 2011 devant la Superintendencia de Industria y Comercio."
         },
         {
-          "HEADING": "15. Contact",
-          "BODY": "Pour toute question sur ces Conditions, écrivez à datos@expresscarwash.co ou appelez le +57 300 123 4567."
+          "HEADING": "16. Contact",
+          "BODY": "Pour toute question sur ces Conditions, l'Utilisateur peut écrire à datos@expresscarwash.co ou appeler le +57 300 123 4567."
         }
       ]
     },
@@ -1179,11 +1183,11 @@
         },
         {
           "HEADING": "4. Données collectées",
-          "BODY": "Nom complet, e-mail, téléphone, adresse, mot de passe (toujours stocké chiffré, jamais en texte clair), données du véhicule (plaque, type, marque), historique des réservations et services, évaluations et commentaires, justificatifs de paiement, préférences de langue et de thème. Nous ne collectons jamais de données de carte bancaire, en aucune circonstance."
+          "BODY": "Nom complet, e-mail, téléphone, adresse, mot de passe (toujours stocké chiffré, jamais en texte clair), données du véhicule (plaque, type, marque), historique des réservations et services, évaluations et commentaires, justificatifs de paiement, photographies du véhicule prises lors de l'inspection, préférences de langue et de thème. Nous ne collectons jamais de données de carte bancaire, en aucune circonstance."
         },
         {
           "HEADING": "5. Finalités du traitement",
-          "BODY": "Les données servent à : créer et gérer le compte de l'Utilisateur ; gérer les réservations, les affectations d'opérateurs et l'exécution du service ; vérifier les paiements par QR ; envoyer des notifications sur l'état des réservations et des paiements ; administrer le programme de promotions et de fidélité ; générer des rapports opérationnels agrégés ; et respecter les obligations légales ou les demandes des autorités compétentes."
+          "BODY": "Les données servent à : créer et gérer le compte de l'Utilisateur ; gérer les réservations, les affectations d'opérateurs et l'exécution du service ; vérifier les paiements par QR ; envoyer des notifications sur l'état des réservations et des paiements ; administrer le programme de promotions et de fidélité ; consigner l'état du véhicule dans le rapport d'inspection, avec ses photographies, et traiter les réclamations pour dommages ; générer des rapports opérationnels agrégés ; et respecter les obligations légales ou les demandes des autorités compétentes."
         },
         {
           "HEADING": "6. Données sensibles et mineurs",
@@ -1211,7 +1215,7 @@
         },
         {
           "HEADING": "12. Conservation des données",
-          "BODY": "Les données personnelles sont conservées tant que le compte est actif et, après suppression, pendant la durée nécessaire pour répondre à des obligations légales, comptables ou de défense, après quoi elles sont supprimées ou anonymisées en toute sécurité."
+          "BODY": "Les données personnelles sont conservées tant que le compte est actif et, après suppression, pendant la durée nécessaire pour répondre à des obligations légales, comptables ou de défense, après quoi elles sont supprimées ou anonymisées en toute sécurité. Les photographies du véhicule prises lors de l'inspection sont conservées pendant la durée nécessaire pour traiter les réclamations relatives au service, conformément à la présente politique."
         },
         {
           "HEADING": "13. Autorité de contrôle",

@@ -1122,43 +1122,47 @@
         },
         {
           "HEADING": "6. Reservas, cancelaciones y prestación del servicio",
-          "BODY": "El Cliente selecciona la fecha, hora y tipo de lavado según la disponibilidad mostrada por el sistema. Una reserva puede modificarse o cancelarse sin costo antes de que el servicio inicie; una vez el operario marca el servicio como 'en progreso', la cancelación queda bloqueada. El servicio se presta únicamente en el establecimiento físico indicado en la reserva. Si eliges pago digital, debes cargar el comprobante dentro de los 30 minutos siguientes a la reserva (o antes de la hora del servicio, si es más pronto); si no, la reserva se cancela automáticamente y el horario se libera. Con pago en efectivo puedes tener como máximo una reserva activa a la vez."
+          "BODY": "El Cliente selecciona la fecha, hora y tipo de lavado según la disponibilidad mostrada por el sistema. Una reserva puede modificarse o cancelarse sin costo antes de que el servicio inicie; una vez el operario marca el servicio como 'en progreso', la cancelación queda bloqueada. El servicio se presta únicamente en el establecimiento físico indicado en la reserva. Si el Cliente elige pago digital, debe cargar el comprobante dentro de los 30 minutos siguientes a la reserva (o antes de la hora del servicio, si esta es más pronto); de lo contrario, la reserva se cancela automáticamente y el horario se libera. Con pago en efectivo, el Cliente puede tener como máximo una reserva activa a la vez."
         },
         {
           "HEADING": "7. Pagos y comprobantes",
           "BODY": "Al reservar, el Cliente elige cómo pagará. El pago digital (Nequi, Daviplata o transferencia bancaria) se realiza escaneando el código QR del establecimiento y cargando el comprobante correspondiente, que verifica un Administrador antes de confirmarlo. El pago en efectivo se hace en el establecimiento y lo registra el Administrador, sin comprobante. La Plataforma nunca solicita ni almacena datos de tarjetas débito o crédito. Un comprobante cuya referencia de transacción ya haya sido usada en otro pago aprobado será rechazado."
         },
         {
-          "HEADING": "8. Calificaciones y comentarios",
+          "HEADING": "8. Informe de inspección y fotografías del vehículo",
+          "BODY": "En los servicios que incluyen inspección (los de tres horas o más), el Administrador puede elaborar un informe de inspección que registra el estado del vehículo antes y después del servicio, por fases: recepción, exterior, interior, motor y entrega. En cada hallazgo, el Administrador puede subir hasta cinco fotografías del vehículo (JPEG o PNG, de máximo 2 MB cada una). Las fotografías se toman para dejar constancia del estado del vehículo y atender reclamaciones por daños. El informe lo ven el Administrador y, una vez publicado, el Cliente dueño de la reserva, que recibe el enlace al informe cuando el Administrador se lo comparte. Ese enlace funciona sin iniciar sesión, de modo que cualquier persona que lo tenga puede ver el informe: el código de la reserva, el vehículo, los servicios, la fecha y hora, los hallazgos con sus fotografías y la placa, que aparece parcialmente oculta en el texto del informe, aunque puede verse en las fotografías. Por eso, el enlace es personal y el Cliente no debe compartirlo."
+        },
+        {
+          "HEADING": "9. Calificaciones y comentarios",
           "BODY": "Una vez finalizado el servicio, el Cliente puede calificarlo y dejar un comentario. El contenido publicado debe ser respetuoso y veraz; la Plataforma puede eliminar comentarios que incumplan esta regla o que contengan datos personales de terceros, insultos o contenido ilegal."
         },
         {
-          "HEADING": "9. Promociones y puntos de fidelidad",
+          "HEADING": "10. Promociones y puntos de fidelidad",
           "BODY": "Las promociones, descuentos y el programa de puntos de fidelidad son definidos y pueden ser modificados por el Administrador en cualquier momento, respetando las condiciones ya adquiridas por servicios completados antes del cambio."
         },
         {
-          "HEADING": "10. Propiedad intelectual",
+          "HEADING": "11. Propiedad intelectual",
           "BODY": "El nombre, el logotipo, el diseño de la interfaz y los contenidos propios de la Plataforma son propiedad de Express Car Wash S.A.S. o de sus licenciantes y están protegidos por la legislación colombiana de derechos de autor y propiedad industrial. Su uso no autorizado está prohibido."
         },
         {
-          "HEADING": "11. Limitación de responsabilidad",
+          "HEADING": "12. Limitación de responsabilidad",
           "BODY": "La Plataforma es un canal de agendamiento y verificación de pagos; el servicio de lavado en sí es prestado físicamente por el establecimiento. Express Car Wash no será responsable por daños derivados de caso fortuito, fuerza mayor, mal uso de la Plataforma por el Usuario, o de información falsa suministrada por este."
         },
         {
-          "HEADING": "12. Suspensión y terminación",
+          "HEADING": "13. Suspensión y terminación",
           "BODY": "El Usuario puede solicitar la eliminación de su cuenta en cualquier momento desde la sección de Configuración o escribiendo al correo de contacto. La Plataforma puede suspender o cancelar cuentas que incumplan estos Términos, previa notificación cuando sea razonablemente posible."
         },
         {
-          "HEADING": "13. Modificaciones a estos términos",
+          "HEADING": "14. Modificaciones a estos términos",
           "BODY": "Estos Términos pueden actualizarse para reflejar cambios legales, técnicos u operativos. Los cambios sustanciales se notificarán dentro de la Plataforma y, cuando aplique, se solicitará una nueva aceptación."
         },
         {
-          "HEADING": "14. Ley aplicable y jurisdicción",
+          "HEADING": "15. Ley aplicable y jurisdicción",
           "BODY": "Estos Términos se rigen por las leyes de la República de Colombia. Cualquier controversia se someterá a los jueces competentes de Bogotá D.C., sin perjuicio de los mecanismos de protección al consumidor previstos en la Ley 1480 de 2011 ante la Superintendencia de Industria y Comercio."
         },
         {
-          "HEADING": "15. Contacto",
-          "BODY": "Para preguntas sobre estos Términos, escribe a datos@expresscarwash.co o al teléfono +57 300 123 4567."
+          "HEADING": "16. Contacto",
+          "BODY": "Para preguntas sobre estos Términos, el Usuario puede escribir a datos@expresscarwash.co o llamar al teléfono +57 300 123 4567."
         }
       ]
     },
@@ -1179,11 +1183,11 @@
         },
         {
           "HEADING": "4. Datos que recolectamos",
-          "BODY": "Nombre completo, correo electrónico, teléfono, dirección, contraseña (almacenada siempre cifrada, nunca en texto plano), datos del vehículo (placa, tipo, marca), historial de reservas y servicios, calificaciones y comentarios, comprobantes de pago, y preferencias de idioma y tema. No recolectamos datos de tarjetas débito o crédito bajo ninguna circunstancia."
+          "BODY": "Nombre completo, correo electrónico, teléfono, dirección, contraseña (almacenada siempre cifrada, nunca en texto plano), datos del vehículo (placa, tipo, marca), historial de reservas y servicios, calificaciones y comentarios, comprobantes de pago, fotografías del vehículo tomadas durante la inspección, y preferencias de idioma y tema. No recolectamos datos de tarjetas débito o crédito bajo ninguna circunstancia."
         },
         {
           "HEADING": "5. Finalidades del tratamiento",
-          "BODY": "Los datos se usan para: crear y administrar la cuenta del Usuario; gestionar reservas, asignaciones de operario y ejecución del servicio; verificar pagos reportados por QR; enviar notificaciones sobre el estado de reservas y pagos; administrar el programa de promociones y puntos de fidelidad; generar reportes operativos agregados; y cumplir obligaciones legales o requerimientos de autoridades competentes."
+          "BODY": "Los datos se usan para: crear y administrar la cuenta del Usuario; gestionar reservas, asignaciones de operario y ejecución del servicio; verificar pagos reportados por QR; enviar notificaciones sobre el estado de reservas y pagos; administrar el programa de promociones y puntos de fidelidad; registrar el estado del vehículo en el informe de inspección, con sus fotografías, y atender reclamaciones por daños; generar reportes operativos agregados; y cumplir obligaciones legales o requerimientos de autoridades competentes."
         },
         {
           "HEADING": "6. Datos sensibles y menores de edad",
@@ -1211,7 +1215,7 @@
         },
         {
           "HEADING": "12. Conservación de los datos",
-          "BODY": "Los datos personales se conservarán mientras la cuenta esté activa y, tras su eliminación, durante el tiempo necesario para atender obligaciones legales, contables o de defensa ante autoridades, después del cual serán eliminados o anonimizados de forma segura."
+          "BODY": "Los datos personales se conservarán mientras la cuenta esté activa y, tras su eliminación, durante el tiempo necesario para atender obligaciones legales, contables o de defensa ante autoridades, después del cual serán eliminados o anonimizados de forma segura. Las fotografías del vehículo tomadas durante la inspección se conservan durante el tiempo necesario para atender reclamaciones sobre el servicio, conforme a esta política."
         },
         {
           "HEADING": "13. Autoridad de control",
