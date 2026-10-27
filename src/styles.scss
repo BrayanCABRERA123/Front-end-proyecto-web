@@ -63,7 +63,7 @@ body {
   --item-hover: rgba(0, 0, 0, 0.07);
 
   /* HERO */
-  --hero-image: url('/images/hero.png');
+  --hero-image: url('/images/hero.webp');
 
   /* OVERLAY */
   --overlay-dark: rgba(19, 28, 32, 0.80);
@@ -75,7 +75,7 @@ body {
 --auth-glow: rgba(var(--primary-rgb), .20);
 
 --panel-overlay: rgba(255,255,255, .50);
---panel-image: url('/images/panelLight.png');
+--panel-image: url('/images/panelLight.webp');
 
 --success: #0e7a70;
 --success-soft: #E0EBEA;
@@ -121,7 +121,7 @@ body.green-dark {
   --item-hover: rgba(255, 255, 255, 0.08);
 
   /* HERO */
-  --hero-image: url('/images/hero.png');
+  --hero-image: url('/images/hero.webp');
 
   /* OVERLAY MÁS FUERTE */
   --overlay-dark: rgba(0, 0, 0, 0.85);
@@ -133,7 +133,7 @@ body.green-dark {
 --auth-glow: rgba(var(--primary-rgb), .18);
 
 --panel-overlay: rgba(10,15,18, .52);
---panel-image: url('/images/panelDark.png');
+--panel-image: url('/images/panelDark.webp');
 
 --success: #2ec4b6;
 --success-soft: rgba(46, 196, 182, 0.18);
@@ -179,7 +179,7 @@ body.pink {
   --item-hover: rgba(0, 0, 0, 0.07);
 
   /* HERO ROSA*/
-  --hero-image: url('/images/car.png');
+  --hero-image: url('/images/car.webp');
 
   /* OVERLAY ROSADO */
   --overlay-dark: rgba(255, 0, 120, 0.45);
@@ -191,7 +191,7 @@ body.pink {
 --auth-glow: rgba(var(--primary-rgb), .18);
 
 --panel-overlay: rgba(255,255,255, .50);
---panel-image: url('/images/panelLight.png');
+--panel-image: url('/images/panelLight.webp');
 
 --success: #c2185b;
 --success-soft: #ffe2ec;
@@ -237,7 +237,7 @@ body.pink-dark {
   --item-hover: rgba(255, 255, 255, 0.08);
 
   /* HERO ROSA OSCURO */
-  --hero-image: url('/images/car.png');
+  --hero-image: url('/images/car.webp');
 
   /* OVERLAY */
   --overlay-dark: rgba(0, 0, 0, 0.85);
@@ -249,7 +249,7 @@ body.pink-dark {
 --auth-glow: rgba(var(--primary-rgb), .18);
 
 --panel-overlay: rgba(15,10,14, .52);
---panel-image: url('/images/panelDark.png');
+--panel-image: url('/images/panelDark.webp');
 
 --success: #ff7ab0;
 --success-soft: rgba(255, 122, 176, 0.16);
